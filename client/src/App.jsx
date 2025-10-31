@@ -8,17 +8,14 @@ import SplashScreen from "./pages/SplashScreen"; // adjust path if needed
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
-  const [footerContent, setFooterContent] = useState(""); // "" | "about" | "contact"
+  const [footerContent, setFooterContent] = useState("");
 
-  // Callback for SplashScreen button
-  const handleStart = () => {
-    setShowSplash(false);
-  };
+  const handleStart = () => setShowSplash(false);
 
-  // If splash screen should be shown
   if (showSplash) {
     return <SplashScreen onStart={handleStart} />;
   }
+
 
   // Main homepage after splash screen
   return (
