@@ -24,12 +24,24 @@ function App() {
       <Header setFooterContent={setFooterContent} />
 
       {/* Main content */}
-      <SignedIn>
-        <div className="max-w-sm mx-auto mt-10 p-6 bg-white rounded-lg shadow-md flex flex-col items-center">
-          <h2 className="text-2xl font-semibold text-gray-800">Welcome 💖</h2>
-          <p className="text-gray-600 mt-2">Here you go and enjoy! 😉</p>
-        </div>
-      </SignedIn>
+     <div className="w-full flex justify-center mt-4">
+  <div className="flex flex-wrap justify-center gap-4">
+    <button className="px-4 py-2 bg-pink-600 text-white rounded-full shadow hover:bg-pink-700 transition">
+      Search All
+    </button>
+    <button className="px-4 py-2 bg-pink-600 text-white rounded-full shadow hover:bg-pink-700 transition">
+      Hotels
+    </button>
+    <button className="px-4 py-2 bg-pink-600 text-white rounded-full shadow hover:bg-pink-700 transition">
+      Things To Do
+    </button>
+    <button className="px-4 py-2 bg-pink-600 text-white rounded-full shadow hover:bg-pink-700 transition">
+      Restaurants
+    </button>
+  </div>
+</div>
+
+
 
       {/* Footer */}
       <footer className="bg-pink-100 p-6 text-center">
@@ -85,12 +97,6 @@ function App() {
             </div>
             <p className="mt-2">We’re here to help you plan your dream trips! ⛰️🌄✈️</p>
           </div>
-        )}
-
-        {!footerContent && (
-          <p className="text-lg font-handwritten font-bold text-black-600 text-center mt-4">
-            Welcome to Roamio Wanderly! 🌄
-          </p>
         )}
       </footer>
     </div>
