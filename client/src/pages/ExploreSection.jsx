@@ -1,29 +1,28 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 
-// ✅ Import images
-import pashupatinath from "../assets/Fspots/Pashupatinath.jpeg";
-import swayambhunath from "../assets/Fspots/Swayambhunath.jpeg";
-import pokhara from "../assets/Fspots/Pokhara.jpg";
-import annapurna from "../assets/Fspots/ABC.jpeg";
-import chitwan from "../assets/Fspots/Chitwan.jpeg";
-import lumbini from "../assets/Fspots/Lumbini.jpeg";
-import mustang from "../assets/Fspots/Mustang.jpeg";
-import nagarkot from "../assets/Fspots/Nagarkot.jpeg";
+// ✅ Correct paths to images
+import basantapur from "../assets/basantapur.jpeg";
+import bhainsepati from "../assets/bhainsepati.jpeg";
+import bhaktapur from "../assets/bhaktapur-durbar-square.jpeg";
+import boudhanath from "../assets/boudhanath-stupa.jpeg";
+import changu from "../assets/changu-narayan-temple.jpeg";
+import dakshinkali from "../assets/dakshinkali-temple.jpeg";
+import kathmanduDurbar from "../assets/kathmandu-durbar-square.jpeg";
+import kathmandu from "../assets/kathmandu.jpeg";
 
-// ✅ Data for cards
-const spots = [
-  { id: 1, name: "Pashupatinath Temple", img: pashupatinath },
-  { id: 2, name: "Swayambhunath Stupa", img: swayambhunath },
-  { id: 3, name: "Pokhara", img: pokhara },
-  { id: 4, name: "Annapurna Base Camp", img: annapurna },
-  { id: 5, name: "Chitwan National Park", img: chitwan },
-  { id: 6, name: "Lumbini", img: lumbini },
-  { id: 7, name: "Mustang", img: mustang },
-  { id: 8, name: "Nagarkot", img: nagarkot },
+// Data for cards
+const places = [
+  { id: 1, name: "Basantapur", img: basantapur },
+  { id: 2, name: "Bhainsepati", img: bhainsepati },
+  { id: 3, name: "Bhaktapur-Durbar-Square", img: bhaktapur },
+  { id: 4, name: "Bouddhanath-Stupa", img: boudhanath },
+  { id: 5, name: "Changu-Narayan-Temple", img: changu },
+  { id: 6, name: "Dakshinkali-Temple", img: dakshinkali },
+  { id: 7, name: "Kathmandu-Durbar-Square", img: kathmanduDurbar },
+  { id: 8, name: "Kathmandu", img: kathmandu },
 ];
 
-export default function FamousSpots() {
+export default function ExploreSection() {
   const scrollRef = useRef(null);
   const [paused, setPaused] = useState(false);
 
@@ -33,9 +32,10 @@ export default function FamousSpots() {
 
     const scrollInterval = setInterval(() => {
       if (scrollContainer && !paused) {
-        scrollAmount += 1; // scroll speed
+        scrollAmount += 1; // adjust speed (lower = faster)
         if (scrollAmount >= scrollContainer.scrollWidth / 2) {
-          scrollAmount = 0; // reset for infinite loop
+          // reset for infinite scroll
+          scrollAmount = 0;
         }
         scrollContainer.scrollTo({
           left: scrollAmount,
@@ -48,9 +48,9 @@ export default function FamousSpots() {
   }, [paused]);
 
   return (
-    <div className="p-6 flex flex-col w-full max-w-6xl mx-auto mt-10">
+    <div className="p-6 flex flex-col w-full max-w-6xl mx-auto">
       <h2 className="text-black font-bold text-2xl mb-6">
-        Famous Spots to Travel in Nepal
+        Explore experiences near Capital
       </h2>
 
       <div
@@ -59,20 +59,18 @@ export default function FamousSpots() {
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {spots.concat(spots).map((spot, index) => (
+        {places.concat(places).map((place, index) => (
+          // duplicate for infinite scroll
           <div key={index} className="min-w-[250px] flex-shrink-0">
-            {/* ✅ Link to all famous spots page */}
-            <Link to="/famous-spots">
-              <div className="w-full h-52 bg-gray-200 rounded-xl overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-110">
-                <img
-                  src={spot.img}
-                  alt={spot.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </Link>
+            <div className="w-full h-52 bg-gray-200 rounded-xl overflow-hidden shadow-md">
+              <img
+                src={place.img}
+                alt={place.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
             <p className="text-center text-black font-semibold mt-2">
-              {spot.name}
+              {place.name}
             </p>
           </div>
         ))}
