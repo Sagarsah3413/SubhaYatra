@@ -4,6 +4,8 @@ import "./App.css";
 import { SignedIn } from "@clerk/clerk-react";
 import SplashScreen from "./pages/SplashScreen"; // adjust path if needed
 import { FaSearch, FaHotel, FaUtensils, FaMapMarkedAlt } from "react-icons/fa";
+import ExploreSection from "./pages/ExploreSection"; // correct path
+import FamousSpots from "./pages/FamousSpots"; // correct path
 
 function App() {
   const [showSplash, setShowSplash] = useState(true);
@@ -32,7 +34,9 @@ function App() {
       <div className="flex justify-center gap-12 mt-6">
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "WHERE SHALL OUR ADVENTURE BEGIN? ✨" ? "border-pink-600" : "border-transparent"
+            message === "WHERE SHALL OUR ADVENTURE BEGIN? ✨"
+              ? "border-pink-600"
+              : "border-transparent"
           }`}
           onClick={() => {
             setMessage("WHERE SHALL OUR ADVENTURE BEGIN? ✨");
@@ -44,7 +48,9 @@ function App() {
 
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "A COZY STAY AWAITS… 🏨" ? "border-pink-600" : "border-transparent"
+            message === "A COZY STAY AWAITS… 🏨"
+              ? "border-pink-600"
+              : "border-transparent"
           }`}
           onClick={() => {
             setMessage("A COZY STAY AWAITS… 🏨");
@@ -56,7 +62,9 @@ function App() {
 
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "EXCITING EXPERIENCES AHEAD! 🎢" ? "border-pink-600" : "border-transparent"
+            message === "EXCITING EXPERIENCES AHEAD! 🎢"
+              ? "border-pink-600"
+              : "border-transparent"
           }`}
           onClick={() => {
             setMessage("EXCITING EXPERIENCES AHEAD! 🎢");
@@ -68,7 +76,9 @@ function App() {
 
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "TIME TO TANTALIZE YOUR TASTE BUDS 🍴" ? "border-pink-600" : "border-transparent"
+            message === "TIME TO TANTALIZE YOUR TASTE BUDS 🍴"
+              ? "border-pink-600"
+              : "border-transparent"
           }`}
           onClick={() => {
             setMessage("TIME TO TANTALIZE YOUR TASTE BUDS 🍴");
@@ -80,32 +90,30 @@ function App() {
       </div>
 
       {/* Search bar below buttons */}
-      {/* Search bar below buttons */}
-<div className="flex justify-center mt-8 w-full">
-  <div className="flex w-fit min-w-[640px]">
-    {/* Input with icon */}
-    <div className="relative flex-1">
-      <input
-        type="text"
-        placeholder={searchPlaceholder}
-        className="w-full px-4 py-3 pl-10 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-700"
-      />
-      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-        🔍
-      </span>
-    </div>
+      <div className="flex justify-center mt-8 w-full">
+        <div className="flex w-fit min-w-[640px]">
+          {/* Input with icon */}
+          <div className="relative flex-1">
+            <input
+              type="text"
+              placeholder={searchPlaceholder}
+              className="w-full px-4 py-3 pl-10 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-700"
+            />
+            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+              🔍
+            </span>
+          </div>
 
-    {/* Search button */}
-    <button
-      type="button"
-      className="px-6 bg-black text-white rounded-r-md hover:bg-gray-900 transition"
-      onClick={() => alert("Search clicked!")}
-    >
-      Search
-    </button>
-  </div>
-</div>
-
+          {/* Search button */}
+          <button
+            type="button"
+            className="px-6 bg-black text-white rounded-r-md hover:bg-gray-900 transition"
+            onClick={() => alert("Search clicked!")}
+          >
+            Search
+          </button>
+        </div>
+      </div>
 
       {/* Signed-in content */}
       <SignedIn>
@@ -114,6 +122,12 @@ function App() {
           <p className="text-gray-600 mt-2">Here you go and enjoy!</p>
         </div>
       </SignedIn>
+
+      {/* ✅ Explore Experiences Section */}
+      <ExploreSection />
+
+      {/* Famous Spots Section */}
+      <FamousSpots />
     </div>
   );
 }
