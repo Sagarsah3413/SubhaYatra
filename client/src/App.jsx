@@ -1,16 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Header } from "../components/header/Header";
 import "./App.css";
 import { SignedIn } from "@clerk/clerk-react";
-import SplashScreen from "./pages/SplashScreen"; // adjust path if needed
+import SplashScreen from "./pages/SplashScreen";
 import { FaSearch, FaHotel, FaUtensils, FaMapMarkedAlt } from "react-icons/fa";
-import ExploreSection from "./pages/ExploreSection"; // correct path
-import FamousSpots from "./pages/FamousSpots"; // correct path
+import ExploreSection from "./pages/ExploreSection";
+import FamousSpots from "./pages/FamousSpots";
+import NaturePlaces from "./pages/NaturePlaces";
+import AllPlacesDetail from "./pages/AllPlacesDetail";
 
-function App() {
-  const [showSplash, setShowSplash] = useState(true);
+function HeaderWithNav() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleHomeClick = () => {
+    // Navigate back if not on home page
+    if (location.pathname !== "/") {
+      navigate(-1);
+    }
+  };
+
+  return <Header onHomeClick={handleHomeClick} />;
+}
+
+function MainApp() {
+  const [showSplash, setShowSplash] = useState(false);
   const [message, setMessage] = useState("WHERE SHALL OUR ADVENTURE BEGIN? ✨");
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search everything...");
+
+  // ✅ Show splash only once per reload
+  useEffect(() => {
+    const hasShown = sessionStorage.getItem("splashShown");
+    if (!hasShown) {
+      setShowSplash(true);
+      sessionStorage.setItem("splashShown", "true");
+    }
+  }, []);
 
   const handleStart = () => setShowSplash(false);
 
@@ -21,16 +47,16 @@ function App() {
   return (
     <div className="h-screen bg-gray-100 flex flex-col">
       {/* Header */}
-      <Header />
+      <HeaderWithNav />
 
-      {/* Message just below header */}
+      {/* Message */}
       {message && (
         <p className="font-bold text-black uppercase text-center text-xl mt-4">
           {message}
         </p>
       )}
 
-      {/* Buttons below message */}
+      {/* Buttons */}
       <div className="flex justify-center gap-12 mt-6">
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
@@ -89,10 +115,9 @@ function App() {
         </button>
       </div>
 
-      {/* Search bar below buttons */}
+      {/* Search bar */}
       <div className="flex justify-center mt-8 w-full">
         <div className="flex w-fit min-w-[640px]">
-          {/* Input with icon */}
           <div className="relative flex-1">
             <input
               type="text"
@@ -104,7 +129,6 @@ function App() {
             </span>
           </div>
 
-          {/* Search button */}
           <button
             type="button"
             className="px-6 bg-black text-white rounded-r-md hover:bg-gray-900 transition"
@@ -123,12 +147,24 @@ function App() {
         </div>
       </SignedIn>
 
-      {/* ✅ Explore Experiences Section */}
+      {/* Sections */}
       <ExploreSection />
-
-      {/* Famous Spots Section */}
       <FamousSpots />
+      <NaturePlaces />
     </div>
+  );
+}
+
+// ✅ Routing
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainApp />} />
+        {/* Just render the component itself; Header is already inside */}
+        <Route path="/all-places" element={<AllPlacesDetail />} />
+      </Routes>
+    </Router>
   );
 }
 

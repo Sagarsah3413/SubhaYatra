@@ -1,48 +1,37 @@
 import React from "react";
 import { UserButton, SignUpButton, SignedIn, SignedOut } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
-export const Header = ({ setFooterContent }) => {
+export const Header = () => {
+  const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    // Redirect to splash page (you can change the URL if needed)
-    window.location.href = "/"; // if you have a separate splash route, use that
+    // Navigate to homepage without reloading
+    navigate("/");
   };
 
   return (
     <header className="sticky top-0 z-50 w-full px-6 py-4 bg-pink-100 border-b shadow-sm flex justify-between items-center">
-         
-    {/* Logo + App Name */}
-<div 
-  className="flex items-center cursor-pointer"
-  onClick={handleLogoClick}
->
-  {/* Logo */}
-  <span className="text-2xl md:text-2xl font-bold">🌄</span>
+      {/* Logo + App Name */}
+      <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
+        <span className="text-2xl md:text-2xl font-bold">🌄</span>
+        <span className="ml-0 text-2xl md:text-2xl font-serif Times New Roman text-pink-500 hidden md:inline">
+          Roamio Wanderly
+        </span>
+      </div>
 
-  {/* App Name: same height, bold, curvy style */}
-  <span className="ml-0 text-2xl md:text-2xl font-serif Times New Roman text-pink-500 hidden md:inline">
-    Roamio Wanderly
-  </span>
-</div>
-    {/* Navigation / Sign Up / UserButton */}
+      {/* Navigation / Sign Up / UserButton */}
       <div className="flex items-center gap-4">
-        {/* Home / About / Contact */}
         <button
-          onClick={() => setFooterContent("")}
+          onClick={() => navigate("/")}
           className="px-2 py-1 text-pink-600 hover:text-pink-800 font-semibold"
         >
           Home
         </button>
-        <button
-          onClick={() => setFooterContent("about")}
-          className="px-2 py-1 text-pink-600 hover:text-pink-800 font-semibold"
-        >
+        <button className="px-2 py-1 text-pink-600 hover:text-pink-800 font-semibold">
           About Us
         </button>
-        <button
-          onClick={() => setFooterContent("contact")}
-          className="px-2 py-1 text-pink-600 hover:text-pink-800 font-semibold"
-        >
+        <button className="px-2 py-1 text-pink-600 hover:text-pink-800 font-semibold">
           Contact Us
         </button>
 

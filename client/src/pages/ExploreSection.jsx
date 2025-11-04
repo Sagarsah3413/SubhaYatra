@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
-// ✅ Correct paths to images
+import { Link } from "react-router-dom"; // for navigation
 import basantapur from "../assets/basantapur.jpeg";
 import bhainsepati from "../assets/bhainsepati.jpeg";
 import bhaktapur from "../assets/bhaktapur-durbar-square.jpeg";
@@ -10,7 +9,6 @@ import dakshinkali from "../assets/dakshinkali-temple.jpeg";
 import kathmanduDurbar from "../assets/kathmandu-durbar-square.jpeg";
 import kathmandu from "../assets/kathmandu.jpeg";
 
-// Data for cards
 const places = [
   { id: 1, name: "Basantapur", img: basantapur },
   { id: 2, name: "Bhainsepati", img: bhainsepati },
@@ -32,10 +30,9 @@ export default function ExploreSection() {
 
     const scrollInterval = setInterval(() => {
       if (scrollContainer && !paused) {
-        scrollAmount += 1; // adjust speed (lower = faster)
+        scrollAmount += 1; // adjust speed
         if (scrollAmount >= scrollContainer.scrollWidth / 2) {
-          // reset for infinite scroll
-          scrollAmount = 0;
+          scrollAmount = 0; // infinite scroll
         }
         scrollContainer.scrollTo({
           left: scrollAmount,
@@ -60,15 +57,17 @@ export default function ExploreSection() {
         onMouseLeave={() => setPaused(false)}
       >
         {places.concat(places).map((place, index) => (
-          // duplicate for infinite scroll
           <div key={index} className="min-w-[250px] flex-shrink-0">
-            <div className="w-full h-52 bg-gray-200 rounded-xl overflow-hidden shadow-md">
-              <img
-                src={place.img}
-                alt={place.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            {/* ✅ Link to single page */}
+            <Link to="/all-places">
+              <div className="w-full h-52 bg-gray-200 rounded-xl overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-110">
+                <img
+                  src={place.img}
+                  alt={place.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </Link>
             <p className="text-center text-black font-semibold mt-2">
               {place.name}
             </p>
