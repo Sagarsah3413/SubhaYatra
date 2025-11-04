@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState} from "react";
-import Shivapuri from "../assets/Nature/Shivapuri.jpeg";
-import Lomanthang from "../assets/Nature/Lomanthang.jpeg";
-import Langtang from "../assets/Nature/Langtang.jpeg";
-import Bardiya from "../assets/Nature/Bardiya.jpeg";
-import Khaptad from "../assets/Nature/Khaptad.jpeg";
-import Gosaikunda from "../assets/Nature/Gosaikunda.jpeg";
-import Shuklaphanta from "../assets/Nature/Shuklaphanta.jpeg";
-import Ghandruk from "../assets/Nature/Ghandruk.jpeg";
-import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+
+import Shivapuri from "../assets/Nature/shivapuri.jpeg";
+import Lomanthang from "../assets/Nature/lomanthang.jpeg";
+import Langtang from "../assets/Nature/langtang.jpeg";
+import Bardiya from "../assets/Nature/bardiya.jpeg";
+import Khaptad from "../assets/Nature/khaptad.jpeg";
+import Gosaikunda from "../assets/Nature/gosaikunda.jpeg";
+import Shuklaphanta from "../assets/Nature/shuklaphanta.jpeg";
+import Ghandruk from "../assets/Nature/ghandruk.jpeg";
 
 const places = [
   { id: 1, name: "Shivapuri National Park", img: Shivapuri },
@@ -22,17 +22,16 @@ const places = [
 
 export default function NaturePlaces() {
   const scrollRef = useRef(null);
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     let scrollAmount = 0;
 
     const scrollInterval = setInterval(() => {
-      if (scrollContainer && !paused) {
-        scrollAmount += 1; // scrolling speed
-        if (scrollAmount >= scrollContainer.scrollWidth / 2) {
-          scrollAmount = 0; // reset for infinite scroll
+      if (scrollContainer) {
+        scrollAmount += 1;
+        if (scrollAmount >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
+          scrollAmount = 0;
         }
         scrollContainer.scrollTo({
           left: scrollAmount,
@@ -42,35 +41,31 @@ export default function NaturePlaces() {
     }, 20);
 
     return () => clearInterval(scrollInterval);
-  }, [paused]);
+  }, []);
 
   return (
     <div className="p-6 flex flex-col w-full max-w-6xl mx-auto">
-      <h2 className="text-black font-bold text-2xl mb-6">
-        Discover Famous Tourist Spots in Nepal
+      {/* Title aligned to the right */}
+      <h2 className="text-black font-bold text-2xl mb-6 text-left">
+        Nature Spots of Nepal
       </h2>
 
-      <div
-        ref={scrollRef}
-        className="flex space-x-6 overflow-x-hidden"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
-        {places.concat(places).map((places, index) => (
-          <div key={index} className="min-w-[250px] flex-shrink-0">
-            {/* ✅ Each spot links to /famous-places page */}
-            <Link to="/all-nature-places">
-
-              <div className="w-full h-52 bg-gray-200 rounded-xl overflow-hidden shadow-md transform transition-transform duration-300 hover:scale-110">
-                <img
-                  src={places.img}
-                  alt={places.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </Link>
+      {/* Scrolling card container */}
+      <div ref={scrollRef} className="flex space-x-6 overflow-x-hidden">
+        {places.map((place) => (
+          <div
+            key={place.id}
+            className="min-w-[250px] flex-shrink-0"
+          >
+            <div className="w-full h-52 bg-gray-200 rounded-xl overflow-hidden shadow-md hover:scale-105 transition-transform duration-300">
+              <img
+                src={place.img}
+                alt={place.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
             <p className="text-center text-black font-semibold mt-2">
-              {places.name}
+              {place.name}
             </p>
           </div>
         ))}
