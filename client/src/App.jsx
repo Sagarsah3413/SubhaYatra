@@ -9,6 +9,8 @@ import ExploreSection from "./pages/ExploreSection";
 import FamousSpots from "./pages/FamousSpots";
 import NaturePlaces from "./pages/NaturePlaces";
 import AllPlacesDetail from "./pages/AllPlacesDetail";
+import AllSpotsDetails from "./pages/AllSpotsDetail";
+import AllNatureDetail from "./pages/AllNatureDetail";
 
 function HeaderWithNav() {
   const navigate = useNavigate();
@@ -163,6 +165,9 @@ function App() {
         <Route path="/" element={<MainApp />} />
         {/* Just render the component itself; Header is already inside */}
         <Route path="/all-places" element={<AllPlacesDetail />} />
+        <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
+        <Route path="/all-nature-places" element={<AllNatureDetail />} />
+
       </Routes>
     </Router>
   );
