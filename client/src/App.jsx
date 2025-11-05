@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Header } from "../components/header/Header";
 import "./App.css";
-import { SignedIn } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 import SplashScreen from "./pages/SplashScreen";
 import { FaSearch, FaHotel, FaUtensils, FaMapMarkedAlt } from "react-icons/fa";
 import ExploreSection from "./pages/ExploreSection";
@@ -11,13 +11,13 @@ import NaturePlaces from "./pages/NaturePlaces";
 import AllPlacesDetail from "./pages/AllPlacesDetail";
 import AllSpotsDetails from "./pages/AllSpotsDetail";
 import AllNatureDetail from "./pages/AllNatureDetail";
+import InspireIcon from "./assets/try-icon.jpg"; // make sure this path is correct
 
 function HeaderWithNav() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleHomeClick = () => {
-    // Navigate back if not on home page
     if (location.pathname !== "/") {
       navigate(-1);
     }
@@ -27,11 +27,12 @@ function HeaderWithNav() {
 }
 
 function MainApp() {
+  const navigate = useNavigate();
+  const { isSignedIn } = useUser();
   const [showSplash, setShowSplash] = useState(false);
   const [message, setMessage] = useState("WHERE SHALL OUR ADVENTURE BEGIN? ✨");
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search everything...");
 
-  // ✅ Show splash only once per reload
   useEffect(() => {
     const hasShown = sessionStorage.getItem("splashShown");
     if (!hasShown) {
@@ -46,25 +47,34 @@ function MainApp() {
     return <SplashScreen onStart={handleStart} />;
   }
 
+  // Handle Inspire My Trip click
+  const handleInspireClick = () => {
+    if (isSignedIn) {
+      navigate("/recommendation");
+    } else {
+      alert(
+        "✨ Please sign up to enjoy our personalized recommendation system! ✨"
+      );
+    }
+  };
+
   return (
-    <div className="h-screen bg-gray-100 flex flex-col">
+    <div className="h-screen bg-gray-100 flex flex-col relative">
       {/* Header */}
       <HeaderWithNav />
 
-      {/* Message */}
+      {/* Top Message */}
       {message && (
         <p className="font-bold text-black uppercase text-center text-xl mt-4">
           {message}
         </p>
       )}
 
-      {/* Buttons */}
+      {/* Category Buttons */}
       <div className="flex justify-center gap-12 mt-6">
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "WHERE SHALL OUR ADVENTURE BEGIN? ✨"
-              ? "border-pink-600"
-              : "border-transparent"
+            message === "WHERE SHALL OUR ADVENTURE BEGIN? ✨" ? "border-pink-600" : "border-transparent"
           }`}
           onClick={() => {
             setMessage("WHERE SHALL OUR ADVENTURE BEGIN? ✨");
@@ -76,9 +86,7 @@ function MainApp() {
 
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "A COZY STAY AWAITS… 🏨"
-              ? "border-pink-600"
-              : "border-transparent"
+            message === "A COZY STAY AWAITS… 🏨" ? "border-pink-600" : "border-transparent"
           }`}
           onClick={() => {
             setMessage("A COZY STAY AWAITS… 🏨");
@@ -90,9 +98,7 @@ function MainApp() {
 
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "EXCITING EXPERIENCES AHEAD! 🎢"
-              ? "border-pink-600"
-              : "border-transparent"
+            message === "EXCITING EXPERIENCES AHEAD! 🎢" ? "border-pink-600" : "border-transparent"
           }`}
           onClick={() => {
             setMessage("EXCITING EXPERIENCES AHEAD! 🎢");
@@ -104,9 +110,7 @@ function MainApp() {
 
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "TIME TO TANTALIZE YOUR TASTE BUDS 🍴"
-              ? "border-pink-600"
-              : "border-transparent"
+            message === "TIME TO TANTALIZE YOUR TASTE BUDS 🍴" ? "border-pink-600" : "border-transparent"
           }`}
           onClick={() => {
             setMessage("TIME TO TANTALIZE YOUR TASTE BUDS 🍴");
@@ -117,7 +121,7 @@ function MainApp() {
         </button>
       </div>
 
-      {/* Search bar */}
+      {/* Search Bar */}
       <div className="flex justify-center mt-8 w-full">
         <div className="flex w-fit min-w-[640px]">
           <div className="relative flex-1">
@@ -141,7 +145,7 @@ function MainApp() {
         </div>
       </div>
 
-      {/* Signed-in content */}
+      {/* Signed-in Content */}
       <SignedIn>
         <div className="mx-auto mt-6 p-6 bg-white rounded-lg shadow-md flex flex-col items-center">
           <h2 className="text-2xl font-semibold text-gray-800">Welcome!</h2>
@@ -153,21 +157,37 @@ function MainApp() {
       <ExploreSection />
       <FamousSpots />
       <NaturePlaces />
+
+      {/* Floating Inspire My Trip button near search bar */}
+      <div className="fixed left-4 top-40 z-50 flex flex-col items-center">
+        <button
+          onClick={handleInspireClick}
+          className="w-20 h-20 rounded-full overflow-hidden shadow-lg relative flex items-center justify-center hover:scale-105 transform transition duration-300"
+          style={{
+            backgroundImage: `url(${InspireIcon})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <span className="text-black font-semibold text-center text-sm">
+            Inspire My Trip!
+          </span>
+        </button>
+      </div>
     </div>
   );
 }
 
-// ✅ Routing
+// Routing
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<MainApp />} />
-        {/* Just render the component itself; Header is already inside */}
         <Route path="/all-places" element={<AllPlacesDetail />} />
         <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
         <Route path="/all-nature-places" element={<AllNatureDetail />} />
-
+        <Route path="/recommendation" element={<div>Recommendation Page</div>} />
       </Routes>
     </Router>
   );
