@@ -184,7 +184,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainApp />} />
-        <Route path="/all-places" element={<AllPlacesDetail />} />
+        <Route path="/all-places-detail" element={<AllPlacesDetail />} />
         <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
         <Route path="/all-nature-places" element={<AllNatureDetail />} />
         <Route path="/recommendation" element={<div>Recommendation Page</div>} />
