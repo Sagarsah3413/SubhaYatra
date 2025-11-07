@@ -12,7 +12,7 @@ import AllPlacesDetail from "./pages/AllPlacesDetail";
 import AllSpotsDetails from "./pages/AllSpotsDetail";
 import AllNatureDetail from "./pages/AllNatureDetail";
 import InspireIcon from "./assets/try-icon.jpg"; // make sure this path is correct
-import NepalMap from "./pages/NepalMap";
+
 // ✅ import Footer from your correct folder
 import Footer from "../components/footer/Footer";
 
