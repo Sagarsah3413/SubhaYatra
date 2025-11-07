@@ -12,6 +12,9 @@ import AllPlacesDetail from "./pages/AllPlacesDetail";
 import AllSpotsDetails from "./pages/AllSpotsDetail";
 import AllNatureDetail from "./pages/AllNatureDetail";
 import InspireIcon from "./assets/try-icon.jpg"; // make sure this path is correct
+import NepalMap from "./pages/NepalMap";
+// ✅ import Footer from your correct folder
+import Footer from "../components/footer/Footer";
 
 function HeaderWithNav() {
   const navigate = useNavigate();
@@ -52,14 +55,12 @@ function MainApp() {
     if (isSignedIn) {
       navigate("/recommendation");
     } else {
-      alert(
-        "✨ Please sign up to enjoy our personalized recommendation system! ✨"
-      );
+      alert("✨ Please sign up to enjoy our personalized recommendation system! ✨");
     }
   };
 
   return (
-    <div className="h-screen bg-gray-100 flex flex-col relative">
+    <div className="min-h-screen bg-gray-100 flex flex-col relative">
       {/* Header */}
       <HeaderWithNav />
 
@@ -74,7 +75,9 @@ function MainApp() {
       <div className="flex justify-center gap-12 mt-6">
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "WHERE SHALL OUR ADVENTURE BEGIN? ✨" ? "border-pink-600" : "border-transparent"
+            message === "WHERE SHALL OUR ADVENTURE BEGIN? ✨"
+              ? "border-pink-600"
+              : "border-transparent"
           }`}
           onClick={() => {
             setMessage("WHERE SHALL OUR ADVENTURE BEGIN? ✨");
@@ -86,7 +89,9 @@ function MainApp() {
 
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "A COZY STAY AWAITS… 🏨" ? "border-pink-600" : "border-transparent"
+            message === "A COZY STAY AWAITS… 🏨"
+              ? "border-pink-600"
+              : "border-transparent"
           }`}
           onClick={() => {
             setMessage("A COZY STAY AWAITS… 🏨");
@@ -98,7 +103,9 @@ function MainApp() {
 
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "EXCITING EXPERIENCES AHEAD! 🎢" ? "border-pink-600" : "border-transparent"
+            message === "EXCITING EXPERIENCES AHEAD! 🎢"
+              ? "border-pink-600"
+              : "border-transparent"
           }`}
           onClick={() => {
             setMessage("EXCITING EXPERIENCES AHEAD! 🎢");
@@ -110,7 +117,9 @@ function MainApp() {
 
         <button
           className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "TIME TO TANTALIZE YOUR TASTE BUDS 🍴" ? "border-pink-600" : "border-transparent"
+            message === "TIME TO TANTALIZE YOUR TASTE BUDS 🍴"
+              ? "border-pink-600"
+              : "border-transparent"
           }`}
           onClick={() => {
             setMessage("TIME TO TANTALIZE YOUR TASTE BUDS 🍴");
@@ -158,7 +167,7 @@ function MainApp() {
       <FamousSpots />
       <NaturePlaces />
 
-      {/* Floating Inspire My Trip button near search bar */}
+      {/* Floating Inspire My Trip button */}
       <div className="fixed left-4 top-40 z-50 flex flex-col items-center">
         <button
           onClick={handleInspireClick}
@@ -174,6 +183,9 @@ function MainApp() {
           </span>
         </button>
       </div>
+
+      {/* ✅ Footer (added at the very bottom so it appears on every page) */}
+      <Footer />
     </div>
   );
 }
@@ -188,6 +200,7 @@ function App() {
         <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
         <Route path="/all-nature-places" element={<AllNatureDetail />} />
         <Route path="/recommendation" element={<div>Recommendation Page</div>} />
+        
       </Routes>
     </Router>
   );
