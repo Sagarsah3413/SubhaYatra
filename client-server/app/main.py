@@ -1,8 +1,7 @@
-# app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from . import models, database
-from .routes import users, rooms
+from .routes import users, rooms, search
 
 models.Base.metadata.create_all(bind=database.engine)
 
@@ -29,3 +28,4 @@ def read_root():
 # Include routers
 app.include_router(users.router)
 app.include_router(rooms.router)
+app.include_router(search.router)

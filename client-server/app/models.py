@@ -1,6 +1,8 @@
 # app/models.py
 from sqlalchemy import Column, Integer, String, Float
 from .database import Base
+from sqlalchemy import Column, Integer, String, Text
+from .database import Base
 
 class User(Base):
     __tablename__ = "users"
@@ -19,3 +21,11 @@ class Room(Base):
     description = Column(String)
     price = Column(Float)
     image = Column(String)
+
+class SearchItem(Base):
+    __tablename__ = "search_items"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(255), nullable=False, index=True)
+    description = Column(Text, nullable=True)
+    tags = Column(String(255), nullable=True)
