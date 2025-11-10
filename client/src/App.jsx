@@ -11,6 +11,7 @@ import NaturePlaces from "./pages/NaturePlaces";
 import AllPlacesDetail from "./pages/AllPlacesDetail";
 import AllSpotsDetails from "./pages/AllSpotsDetail";
 import AllNatureDetail from "./pages/AllNatureDetail";
+import SearchBar from "./pages/SearchBar";
 import InspireIcon from "./assets/try-icon.jpg"; // make sure this path is correct
 
 // ✅ import Footer from your correct folder
@@ -131,28 +132,11 @@ function MainApp() {
       </div>
 
       {/* Search Bar */}
-      <div className="flex justify-center mt-8 w-full">
-        <div className="flex w-fit min-w-[640px]">
-          <div className="relative flex-1">
-            <input
-              type="text"
-              placeholder={searchPlaceholder}
-              className="w-full px-4 py-3 pl-10 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-700"
-            />
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-              🔍
-            </span>
-          </div>
+       <div className="flex justify-center mt-8 w-full">
+         <SearchBar placeholder={searchPlaceholder} />
+       </div>
 
-          <button
-            type="button"
-            className="px-6 bg-black text-white rounded-r-md hover:bg-gray-900 transition"
-            onClick={() => alert("Search clicked!")}
-          >
-            Search
-          </button>
-        </div>
-      </div>
+
 
       {/* Signed-in Content */}
       <SignedIn>
