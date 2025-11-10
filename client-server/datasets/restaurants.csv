@@ -1,0 +1,498 @@
+SN,Name,Location,Rating,Price Range,Province
+1,Deurali Restaurant & Bar,Biratnagar (Morang),4.5,mid,1
+2,Bhet Ghat Restaurant,Biratnagar (Morang),4.3,mid,1
+3,Chhahari Fast Food,Biratnagar (Morang),4.2,mid,1
+4,Dream Night Restaurant & Bar,Biratnagar (Morang),4.3,high,1
+5,Hotel Sunrise Restaurant & Bar,Biratnagar (Morang),4.3,high,1
+6,Milan Hotel Restaurant & Bar,Biratnagar (Morang),4.4,mid,1
+7,Angan Sweets & Veg. Restaurant,Biratnagar (Morang),4.4,mid,1
+8,Rongo's Momo Hut,Biratnagar (Morang),4.2,mid,1
+9,Feel Good Bar & Grill Pvt. Ltd.,Biratnagar (Morang),4.3,mid,1
+10,The Irish Restaurant & Bar (Biratnagar),Biratnagar (Morang),4.2,mid,1
+11,The Dharan View,Dharan (Sunsari),4.1,low,1
+12,The Saze Restaurant & Bar,Dharan (Sunsari),4.4,mid,1
+13,Jason's Restro And Bar,Dharan (Sunsari),4.5,mid,1
+14,Paradise Sweets & Snacks,Dharan (Sunsari),4.2,mid,1
+15,Sabitri Didi Ko Thukpa Pasal,Dharan (Sunsari),4.2,mid,1
+16,Hessed Cafe,Dharan (Sunsari),4.1,mid,1
+17,Chintan Chautari,Itahari (Sunsari),4.3,low,1
+18,Coffeeghar,Itahari (Sunsari),4,low,1
+19,Mustang House Authentic Restaurant,Itahari (Sunsari),4.1,low,1
+20,Naivedya,Birtamod (Jhapa),4.1,low,1
+21,Le Ad's Fried Chicken & ...,Birtamod (Jhapa),3.8,low,1
+22,CP Hotel — Restaurant (Birtamod),Birtamod (Jhapa),3.9,low,1
+23,Mandro Restaurant & Bar (Charali / near Birtamod),Charali / Birtamod (Jhapa),4,mid,1
+24,Deurali Restaurant & Bar (Charali / nearby),Charali / Jhapa,4,low,1
+25,Agro Organic Cafe (Agro Organic Cafe Hotel & Lodge),Ilam (Ilam),4.1,low,1
+26,Muskan Restaurant,Ilam (Ilam),4,mid,1
+27,Restaurant Baloot,Ilam / Kanyam (Ilam),4,low,1
+28,Karako Restaurant,Ilam (Ilam),4.2,mid,1
+29,Gilanah Restaurant,Ilam (Ilam),4.1,low,1
+30,Kuhiro Restaurant (Kanyam),Kanyam / Ilam (Ilam),4,low,1
+31,Hotel Resma & Sekuwa Corner,Sunsari (Sunsari),4.1,mid,1
+32,Food Plaza Family Restaurant,Sunsari / Inaruwa area,4,mid,1
+33,Turning Point Restaurant,Sunsari / Inaruwa,4,mid,1
+34,New Fujan Restaurant & Bar,Sunsari / Inaruwa,4,low,1
+35,Everest Coffee Cafe,Lukla (Solukhumbu),4,low,1
+36,The Little Lukla Restaurant,Lukla (Solukhumbu),4,low,1
+37,Illy Cafe & Espresso Bar,Lukla (Solukhumbu),4.1,low,1
+38,HighCamp Cafe,Namche Bazaar (Solukhumbu),4,low,1
+39,The Irish Pub (Namche Bazaar),Namche Bazaar (Solukhumbu),4,low,1
+40,Everest Burger & Steak House,Namche Bazaar (Solukhumbu),4.4,mid,1
+41,Paradise Lodge & Restaurant,Lukla (Solukhumbu),4.1,low,1
+42,Sireto Hill Resort (restaurant),Taplejung (Taplejung),4,low,1
+43,Mewa Khola Hill Resort (restaurant),Taplejung (Taplejung),4.8,mid,1
+44,Al Fresco (Taplejung area),Taplejung (Taplejung),4.4,mid,1
+45,Hile Kitchen,Hile / Dhankuta (Dhankuta),4.2,mid,1
+46,Pip and Restaurant,Dhankuta (Dhankuta),4,low,1
+47,Hotel Resma Restaurant (Damak / Jhapa area),Damak / Jhapa,4,low,1
+48,Sekuwa Ghar / Ramjham Restaurant,Inaruwa / Sunsari,4,low,1
+49,Turning Point / Food Hub (Itahari/Sunsari region),Itahari / Sunsari,4.1,low,1
+50,Sherpa Barista / Bakery (Namche),Namche Bazaar (Solukhumbu),4.2,mid,1
+51,Magic Bells Restaurant,Birgunj (Parsa),4.5,mid,1
+52,Blue Coriander - The Restaurant,Birgunj (Parsa),4.3,mid,2
+53,Sky Lounge Bar & Restaurant,Birgunj (Parsa),4.2,mid,2
+54,MAHAAJA Apartment & Restaurant,Birgunj (Parsa),4.3,high,2
+55,Ruchi Restaurant & Bar,Birgunj (Parsa),4.3,high,2
+56,Amrit Cabin Restaurant & Bar,Birgunj (Parsa),4.4,mid,2
+57,Crazy Restaurant (Birgunj),Birgunj (Parsa),4.4,mid,2
+58,Hotel Himal & Bhanchha Ghar,Birgunj (Parsa),4.2,mid,2
+59,Cafe De Genre,Birgunj (Parsa),4.3,mid,2
+60,Royal Penguin Boutique Hotel (restaurant),Birgunj (Parsa),4.2,mid,2
+61,Royal Mithila Food Palace,Janakpur / Janakpurdham (Dhanusha),4.1,low,2
+62,Mithila Thali (by Chef Santosh Shah — listing),Janakpur (Dhanusha),4.4,mid,2
+63,Chicken Station Janakpur,Janakpur (Dhanusha),4.5,mid,2
+64,Manaki Restaurant,Janakpur (Dhanusha),4.2,mid,2
+65,Shivam Restaurant & Sweets,Janakpur (Dhanusha),4.2,mid,2
+66,London Cafe (Janakpur),Janakpur (Dhanusha),4.1,mid,2
+67,Hotel Vivaan (restaurant),Janakpur (Dhanusha),4.3,low,2
+68,Kesarvani Restaurant & Hotel,Janakpur (Dhanusha),4,low,2
+69,Amber Veg Restaurant (Janakpur),Janakpur (Dhanusha),4.1,low,2
+70,Lahan Chulo Thakali Hotel,Lahan (Siraha),4.1,low,2
+71,Orchid Cafe,Lahan (Siraha),3.8,low,2
+72,Laziz Pizza Lahan,Lahan (Siraha),3.9,low,2
+73,24th March Cafe (Lahan),Lahan (Siraha),4,mid,2
+74,Royal Prakash Hotel & Sekuwa Corner,Rajbiraj (Saptari),4,low,2
+75,Khan’s Kitchen (Rajbiraj),Rajbiraj (Saptari),4.1,low,2
+76,Mamacha (Rajbiraj),Rajbiraj (Saptari),4,mid,2
+77,TenZero Restaurant & Bar,Rajbiraj (Saptari),4,low,2
+78,Mount Blue Hotel (restaurant),Rajbiraj (Saptari),4.2,mid,2
+79,Siddhi Line Hotel (restaurant),Rajbiraj (Saptari),4.1,low,2
+80,Apna Dhaba (Rajbiraj),Rajbiraj (Saptari),4,low,2
+81,SP Brothers Machha House,Rajbiraj (Saptari),4.1,mid,2
+82,Hotel Satyam Palace & Resort (restaurant),Janakpur (Dhanusha),4,mid,2
+83,Hotel Naivedyam / Naivedyam Hotel & Dine Inn,Janakpur (Dhanusha),4,mid,2
+84,Hotel Royal (Damak-style name appears in Rajbiraj lists),Rajbiraj (Saptari),4,low,2
+85,SP Restaurant / Food's Street (Janakpur area listings),Janakpur (Dhanusha),4,low,2
+86,Mount Heaven / Mount-view (local eateries in Bara/Biratnagar travel lists),Gaur / Gauriganj area (Rautahat),4,low,2
+87,Hotel Mount View / Mount-view Restaurant (local),Gaur (Rautahat),4.1,low,2
+88,Hotel Sunsari-style local listing (regional),Simra / Birgunj area (Parsa),4,low,2
+89,Hotel & Sekuwa corner (various towns — named entries),Various towns (Province 2),4,low,2
+90,Hariyalee / local family restaurants (Birgunj area),Birgunj (Parsa),4.4,mid,2
+91,Lazeez / Laziz style Pizza / Fast-food (district listings),Multiple towns (Province 2),4.1,low,2
+92,Mount (small hotels’ restaurants listed in Trip.com pages),Rajbiraj / Saptari,4,low,2
+93,Apna Bhojan / local Dhabas (Janakpur–Dhanusha area),Janakpur (Dhanusha),4.8,mid,2
+94,Hotel / Restaurant combos (Bara / Nijgadh area),Nijgadh / Bara (Bara),4.4,mid,2
+95,Family Food Plaza / Food Hubs (parsa & surrounding),Birgunj / Parsa,4.2,mid,2
+96,Gagan Restaurant & Cake Shop (Janakpur listings),Janakpur (Dhanusha),4,low,2
+97,Vinayak Veg Restaurant (Janakpur / local),Janakpur (Dhanusha),4,low,2
+98,Guru Kripa Restaurant (Janakpur listing),Janakpur (Dhanusha),4,low,2
+99,Kanha / Khajuraho-style Pure Veg restaurants (Janakpur area),Janakpur (Dhanusha),4.1,low,2
+100,Local bakeries & cafés offering meals (Janakpur / Lahan / Birgunj),Various towns (Province 2),4.2,mid,2
+101,The Chimney Restaurant,Kathmandu (Kathmandu),4.5,mid,3
+102,Lavie Garden,Kathmandu (Kathmandu),4.3,mid,3
+103,Yala Cafe / Yala Garden Cafe,Patan (Lalitpur),4.2,mid,3
+104,Jimbu Thakali by Capital Grill,Kathmandu / Patan (Kathmandu/Lalitpur),4.3,high,3
+105,Kathmandu Grill Restaurant & Wine Bar,Kathmandu (Kathmandu),4.3,high,3
+106,Thamel Kitchen,Kathmandu (Kathmandu),4.4,mid,3
+107,Walnut Bistro,Kathmandu (Kathmandu),4.4,mid,3
+108,OR2K (Thamel),Kathmandu (Kathmandu),4.2,mid,3
+109,Garden Terrace Restaurant,Kathmandu (Kathmandu),4.3,mid,3
+110,Avocado Cafe (Thamel),Kathmandu (Kathmandu),4.2,mid,3
+111,Community at The Nanee,Bhaktapur (Bhaktapur),4.1,low,3
+112,Mayur Restaurant,Bhaktapur (Bhaktapur),4.4,mid,3
+113,Newa Lahana,Bhaktapur (Bhaktapur),4.5,mid,3
+114,Alphabet Pizzeria,Bhaktapur (Bhaktapur),4.2,mid,3
+115,Peaceful Korean Restaurant,Bhaktapur (Bhaktapur),4.2,mid,3
+116,Bamboo Cafe,Dhulikhel (Kavrepalanchok),4.1,mid,3
+117,Gaia Holiday Home Restaurant (Dhulikhel),Dhulikhel (Kavre),4.3,low,3
+118,Cheers Lounge Bar & Restro (Dhulikhel),Dhulikhel (Kavre),4,low,3
+119,Dwarika's / Dwarika Himalayan Wellbeing (Dhulikhel - dining),Dhulikhel (Kavre),4.1,low,3
+120,Hotel Bihani — Restaurant (Dhulikhel),Dhulikhel (Kavre),4.1,low,3
+121,Sesame (Hetauda),Hetauda (Makwanpur),3.8,low,3
+122,Tulachan Thakali Bhanccha Ghar (Hetauda),Hetauda (Makwanpur),3.9,low,3
+123,Ka:Si Restaurant & Lounge Bar (Hetauda),Hetauda (Makwanpur),4,mid,3
+124,Center Point Restaurant & Bar (Hetauda),Hetauda (Makwanpur),4,low,3
+125,AMRIT Sekuwa Pasal (Hetauda),Hetauda (Makwanpur),4.1,low,3
+126,"Ataali Restaurant & Bar (Bharatpur, Chitwan)",Bharatpur (Chitwan),4,mid,3
+127,Lime & Lemon Lounge Cafe (Bharatpur),Bharatpur (Chitwan),4,low,3
+128,Balaz (Bharatpur / Sauraha area — popular local),Bharatpur / Chitwan,4.2,mid,3
+129,High Five Restaurant & Bar (Bharatpur),Bharatpur (Chitwan),4.1,low,3
+130,Blue Heaven Restaurant & Bar (Dhading),Dhading (Dhading),4,low,3
+131,Highway Chulo Restaurant (Dhading),Dhading (Dhading),4.1,mid,3
+132,Hill Top Restaurant (Dhading),Dhading (Dhading),4,mid,3
+133,"Pigeon Heart Cafe & Restaurant (Bidur, Nuwakot)",Bidur (Nuwakot),4,mid,3
+134,Bidur-4 Battar (local restaurant listing),Bidur (Nuwakot),4,low,3
+135,Raniban / Dhulikhel view cafés (various cafes around Kavre),Kavrepalanchok (Kavre),4,low,3
+136,Hetauda Tas House / Evergreen Fast Food (Hetauda),Hetauda (Makwanpur),4,low,3
+137,Hotel Horizon / Kaushalya Restaurant (Hetauda),Hetauda (Makwanpur),4.1,low,3
+138,Kathmandu Home / Mint Cafe (near Kathmandu Home listings),Kathmandu (Kathmandu),4,low,3
+139,Bon Appetit Cafe (Kathmandu listings),Kathmandu (Kathmandu),4,low,3
+140,Thakali Bhanchha Ghar (several branches in valley),Kathmandu Valley,4.4,mid,3
+141,Roadhouse Cafe (Jhamsikhel / Kathmandu area),Lalitpur (Lalitpur),4.1,low,3
+142,Raithaane / Newari cuisine (Patan specialties),Patan (Lalitpur),4,low,3
+143,Honacha / Kyampa (Patan cafés & hubs),Patan (Lalitpur),4.8,mid,3
+144,Mint & More / small cafés (Kathmandu Valley listings),Kathmandu Valley,4.4,mid,3
+145,Community cafes and Newari eateries around Durbar Square (Bhaktapur),Bhaktapur,4.2,mid,3
+146,Hotel Mount / local hotel-restaurants (Sindhupalchok / Chautara),Chautara (Sindhupalchok),4,low,3
+147,Syabrubesi guesthouse restaurants (Rasuwa),Syabrubesi (Rasuwa),4,low,3
+148,Maya's Kitchen / local family restaurants (various Kavre towns),Kavre (Kavrepalanchok),4,low,3
+149,Sekuwa houses / local sekuwa corners (various towns in Bagmati),Multiple towns (Bagmati),4.1,low,3
+150,Popular valley bakery-cafés offering full meals (Kathmandu/Lalitpur/Bhaktapur),Kathmandu Valley,4.2,mid,3
+151,Fresh Elements Restaurant & Bar,"Pokhara, Kaski",4.5,mid,4
+152,Roadhouse Cafe (Lakeside),"Pokhara, Kaski",4.3,mid,4
+153,Moondance Restaurant & Bar,"Pokhara, Kaski",4.2,mid,4
+154,360° Sky Lounge / 360 Sky Restaurant,"Pokhara, Kaski",4.3,high,4
+155,Rosemary Kitchen,"Pokhara, Kaski",4.3,high,4
+156,Caffe Concerto,"Pokhara, Kaski",4.4,mid,4
+157,Utopia Garden & Snacks Bar,"Pokhara, Kaski",4.4,mid,4
+158,OR2K (vegetarian / Middle Eastern),"Pokhara, Kaski",4.2,mid,4
+159,Pokhara Thakali Kitchen,"Pokhara, Kaski",4.3,mid,4
+160,Yarsa The Thakali Kitchen,"Pokhara, Kaski",4.2,mid,4
+161,Nepali Kitchen (local dal bhat),"Pokhara, Kaski",4.1,low,4
+162,Little Windows Cafe,"Pokhara, Kaski",4.4,mid,4
+163,Flying Spirit Organic Kitchen,"Pokhara, Kaski",4.5,mid,4
+164,Agave Mexican Restaurant & Tequila Bar,"Pokhara, Kaski",4.2,mid,4
+165,Sushi Aozora (AoZoRa),"Pokhara, Kaski",4.2,mid,4
+166,San Chon Korean Restaurant,"Pokhara, Kaski",4.1,mid,4
+167,The Juicery (juice bar / cafe),"Pokhara, Kaski",4.3,low,4
+168,Himalayan Java Café (Pokhara branch),"Pokhara, Kaski",4,low,4
+169,Emilio’s Pizza / Emilo’s Pizza,"Pokhara, Kaski",4.1,low,4
+170,Rest Point Cafe & Bar,"Pokhara, Kaski",4.1,low,4
+171,BB Fast Food (local fast food),"Pokhara, Kaski",3.8,low,4
+172,Potala / Little Tibet (Tibetan restaurant),"Pokhara, Kaski",3.9,low,4
+173,Himalayan Yak (grill / BBQ spots),"Pokhara, Kaski",4,mid,4
+174,Roadside momo & bakery shops (popular lakeside vendors),"Pokhara, Kaski",4,low,4
+175,Govinda’s International Vegetarian Restaurant (Baglung),Baglung,4.1,low,4
+176,Grill & Chill Restaurant,Baglung,4,mid,4
+177,Best One Restaurant,Baglung,4,low,4
+178,Namaste Thakali Kitchen,"Besisahar, Lamjung",4.2,mid,4
+179,Bob’s Bistro,"Besisahar, Lamjung",4.1,low,4
+180,Burger Station and Crispy Chicken,"Besisahar, Lamjung",4,low,4
+181,Baranda Restro & Events,Lamjung (Besisahar area),4.1,mid,4
+182,Roof-Top Restaurant (Kushma),"Kushma, Parbat",4,mid,4
+183,Royal Kushma Resort (hotel restaurant),"Kushma, Parbat",4,mid,4
+184,Vistaar Restaurant,"Damauli, Tanahun",4,low,4
+185,Aakriti Naan & Tandoori House,"Damauli, Tanahun",4,low,4
+186,Coffee Buzz (Damauli),"Damauli, Tanahun",4,low,4
+187,Friends Cafe,"Gorkha Bazaar, Gorkha",4.1,low,4
+188,Gorakhkali Restaurant & Guest House,Gorkha,4,low,4
+189,Matt-TeaLand (Gorkha listing),Gorkha,4,low,4
+190,Hotel Mustang Gateway — Yac Donald's Restaurant,"Jomsom, Mustang",4.4,mid,4
+191,Sinuwa Lodge & Restaurant,"Jomsom, Mustang",4.1,low,4
+192,Jomsom Restaurant (various guesthouse restaurants),"Jomsom, Mustang",4,low,4
+193,Alpine Home Restaurant (Manang),Manang,4.8,mid,4
+194,Four Seasons / Four Season Guest House Restaurant (Chame/Manang area),Manang/Chame,4.4,mid,4
+195,Himalayan Hotel / guesthouse restaurants (Pisang/Manang),Manang area,4.2,mid,4
+196,Jomsom / Marpha guesthouse restaurants (Marpha),Mustang (Marpha),4,low,4
+197,Beni Bazaar – Heritage Hotel / guesthouse restaurants,"Beni, Myagdi",4,low,4
+198,New Annapurna (Beni / Myagdi roadside restaurants),"Beni, Myagdi",4,low,4
+199,The Roadside Cafe (Putalibazar),"Putalibazar, Syangja",4.1,low,4
+200,Caffe Concerto (Syangja / Putalibazar listing),Putalibazar / Syangja,4.2,mid,4
+201,El Dorado Avenue,"Butwal, Rupandehi",4.9,high,5
+202,Refresh Cafe,"Butwal, Rupandehi",4.8,mid,5
+203,The Concept Club & Pub,"Butwal, Rupandehi",4.6,mid,5
+204,Notorious Restro & Wine Bar,"Butwal, Rupandehi",4.3,mid,5
+205,Diamond Restaurant & Hotel,"Butwal, Rupandehi",4.1,mid,5
+206,Hotel Peace Palace — Kudan Restaurant,"Butwal, Rupandehi",4,mid,5
+207,Lavish Lounge & Bar,"Butwal, Rupandehi",4.2,mid,5
+208,Arksh Rooftop Garden & Grill,"Lumbini / Siddharthanagar, Rupandehi",4.4,mid,5
+209,Sat Saheb Pure Vegetarian,"Lumbini (near Lumbini Temple), Rupandehi",4.5,low,5
+210,Lumbini Garden Lodge & Restaurant,"Lumbini / Siddharthanagar, Rupandehi",4.1,mid,5
+211,El Rancho / El Dorado (Butwal branch variants),"Butwal, Rupandehi",4.2,mid,5
+212,Matina Newari Restaurant,"Nepalgunj, Banke",4.5,low,5
+213,Sunrise Restaurant,"Nepalgunj, Banke",4.3,low,5
+214,P Cafe,"Nepalgunj, Banke",4.2,low,5
+215,Siddhartha Cottage (restaurant),"Nepalgunj, Banke",4,low,5
+216,Royal Crown Restaurant,"Nepalgunj, Banke",4.1,mid,5
+217,Hotel Doko — Restaurant,"Ghorahi, Dang",4.2,mid,5
+218,Vingreli Village Resort — Restaurant,Ghorahi / Dang outskirts,4.1,mid,5
+219,Vulture Restaurant (Bijauri area),"Bijauri, Dang",4,low,5
+220,Milan Fastfood & Restaurant,"Ghorahi, Dang",4,low,5
+221,Hotel Green Valley — Restaurant,"Ghorahi, Dang",4,mid,5
+222,Muna / Foodland Family Restaurant,"Taulihawa, Kapilvastu",4,low,5
+223,Big Chill Bakery Cafe & Cake Shop,"Jitpur / Taulihawa, Kapilvastu",4.1,low,5
+224,Makkhan Sweets & Cafe,Taulihawa / Kapilvastu,4,low,5
+225,Sarthak Palace & Restaurant,Kapilvastu (Taulihawa/Siddharthanagar area),4,low,5
+226,Hotel Palm — Restaurant (Bhairahawa area),"Siddharthanagar / Bhairahawa, Rupandehi",4,mid,5
+227,Hotel Shiva Shakti / local diner (Bhairahawa),"Siddharthanagar, Rupandehi",4,low,5
+228,Hotel Mustang Gateway — Restaurant,Jomsom area (NOTE: listed in Mustang but often visited from Lumbini region travellers),4.2,mid,5
+229,Jomsom Guesthouse Restaurants (cluster),Jomsom / Mustang,4,low,5
+230,VDC-area teahouse & guesthouse restaurants (Marpha),"Marpha, Mustang",4,low,5
+231,New Annapurna (Beni-style name reused) — local eatery (Beni-like entries appear in Myagdi but similar names appear in Lumbini towns),Various (local),4,low,5
+232,The Roadside Cafe (Putalibazar-style name shows up in district towns),"Tansen, Palpa",4.1,low,5
+233,Tansen Garden View Restaurant,"Tansen, Palpa",4.2,mid,5
+234,Hotel Himalaya Restaurant (Tansen),"Tansen, Palpa",4,mid,5
+235,Beni / Palpa local dining spots (cluster entry),Tansen / Palpa,4,low,5
+236,Kusma / Parbat area rooftop restaurants (Kusma linkages often served to travelers from Province 5),"Kusma, Parbat*",4,low,5
+237,VDC Restaurants / small diners (Arghakhanchi Bazaar listings),"Sandhikharka, Arghakhanchi",3.9,low,5
+238,Gulmi Hotel & Restaurant (Tamghas listings),"Tamghas, Gulmi",4,low,5
+239,Golden Gate / Hotel restaurants (Pyuthan listings),"Pyuthan Bazaar, Pyuthan",4,low,5
+240,Friends Cafe (Gorkha-style name reused across towns; local listing in Pyuthan),Pyuthan,4,low,5
+241,Rolpa Guesthouse & Restaurant (local),"Rolpa Bazaar, Rolpa",3.9,low,5
+242,Rupandehi — Sushi / Asian fusion restaurants (Bhairahawa listings),"Siddharthanagar / Bhairahawa, Rupandehi",4,mid,5
+243,Cafe 108 / local cafes in Butwal,"Butwal, Rupandehi",4,low,5
+244,Diamond Chinese (Butwal / Siddharthanagar chain),Butwal / Siddharthanagar,4,low,5
+245,Maitri Restaurant (Butwal area),"Butwal, Rupandehi",4,mid,5
+246,Luscious Lounge & Restro,Lumbini area (Siddharthanagar),4.2,mid,5
+247,Arksh Bar & Grill (Lumbini),Lumbini / Siddharthanagar,4.1,mid,5
+248,Hotel City Palace — Restaurant (Banke / Nepalgunj listings),"Nepalgunj, Banke",4,mid,5
+249,Local roadside & momo shops (popular across Rupandehi / Kapilvastu / Dang),Various towns across Province 5,4,low,5
+250,Zeyana Restaurant & Bar,"Birendranagar, Surkhet",4.9,mid,6
+251,Chef Choice Restaurant & Pizza Hut,"Birendranagar, Surkhet",4.8,mid,6
+252,Umbrella Restro & Bar,"Birendranagar, Surkhet",4.6,mid,6
+253,Goreto Family Restro & Live Music Bar,"Birendranagar, Surkhet",4.3,mid,6
+254,Hotel Namaste Nepal (Namaste Restaurant),"Birendranagar, Surkhet",4.1,mid,6
+255,Hotel Dautari & Restaurant,"Jumla Bazaar, Jumla",4,mid,6
+256,New Mansarowor Hotel & Restaurant,"Jumla Bazaar, Jumla",4.2,mid,6
+257,Hotel Pauwa (branch) — restaurant,Jumla (branch listing),4.4,mid,6
+258,Rara Eco Resort / Rara Eco Lodge Restaurant,"Rara / Talcha, Mugu",4.5,low,6
+259,Hotel Danphe (Talcha) — restaurant,"Talcha (Rara area), Mugu",4.1,mid,6
+260,Hotel Rara (Hotel Rara Pvt Ltd),"Murma / Rara area, Mugu",4.2,mid,6
+261,Simikot Inn / Sim Valley Hotel & Café,"Simikot, Humla",4.5,low,6
+262,Humla Resort & Spa (restaurant),Simikot / Humla,4.3,low,6
+263,Hotel Mustang Gateway — Yac Donald’s Restaurant,"Kagbeni / Jomsom, Mustang (Karnali)",4.2,low,6
+264,Old Namaste Guest House – Thakali Bhanchha Ghar,"Jomsom, Mustang",4.1,mid,6
+265,Khadka Hotel (Khadka Hotel / Khadka Restaurant),"Musikot, Western Rukum",4.2,mid,6
+266,Royal Cafe / Royal Cafe Musikot,"Musikot, Western Rukum",4.1,mid,6
+267,NK Hotel Dailekh (hotel restaurant),Narayan / Dailekh,4,low,6
+268,Hotel Murmur Garden / Hotel Mount Putha (Dolpa) — restaurant,Dunai / Dolpa district,4,low,6
+269,Hotel Himalayan / The King's Restro (Jajarkot/Khalanga),"Khalanga, Jajarkot",4,mid,6
+270,R.R. Bheri Green Hotel / Thakali Bhancha Ghar (examples in Jajarkot),"Khalanga, Jajarkot",4,low,6
+271,Karuwa Restro and Lodge,Shreenagar / Salyan,4.1,low,6
+272,Various teahouses & guesthouse restaurants (Dailekh / Kalikot local inns),Dailekh / Kalikot,4,low,6
+273,Local bazaar restaurants & hotel dining (cluster entries for Kalikot / Dailekh / Salyan),Kalikot / Dailekh / Salyan,4,low,6
+274,The Nanglo Cafe,"Dhangadhi, Kailali",4.4,mid,7
+275,NIKO Restaurant (Niko),"Dhangadhi, Kailali",4.2,mid,7
+276,Api Saipal Cafe,"Dhangadhi, Kailali",4.1,low,7
+277,Elite Restaurant & Cafe,"Dhangadhi, Kailali",4,low,7
+278,Galaxy Cafe,"Tikapur, Kailali",4.2,mid,7
+279,The Heart Cafe & Family Restaurant,"Tikapur, Kailali",4.3,low,7
+280,K.O.D Restaurant & Bar,"Tikapur, Kailali",4.1,low,7
+281,The Nature House (Fapla),"Dhangadhi, Kailali",4,low,7
+282,Hotel Hot Pot — Restaurant,"Dhangadhi, Kailali",4,mid,7
+283,Hotel Black Stone — Restaurant,"Dhangadhi, Kailali",4,mid,7
+284,The Burger House (Mahendranagar),"Mahendranagar / Bhimdatta, Kanchanpur",4.5,low,7
+285,GRV Restaurant,"Mahendranagar / Bhimdatta, Kanchanpur",4.1,mid,7
+286,Garden Cafe (Mahendranagar),"Mahendranagar, Kanchanpur",4.2,mid,7
+287,Lucky Restaurant,"Mahendranagar, Kanchanpur",4,low,7
+288,Hotel Opera / Hotel restaurant (Bhimdatta),"Mahendranagar, Kanchanpur",4.1,mid,7
+289,Deuba Restaurant & Lodge,"Dipayal-Silgadhi, Doti",4.1,low,7
+290,"Royal Café, Kulpate","Dipayal / Kulpate, Doti",4,low,7
+291,Hotel Barsha — Restaurant,"Dipayal-Silgadhi, Doti",4,mid,7
+292,Rochak Restaurant & Lodge,"Mangalsen, Achham",3.9,low,7
+293,Hotel Hill View — Dining,"Mangalsen, Achham",4,mid,7
+294,Kailash Resort / Resort restaurant (Achham area),Mangalsen / Achham,4,mid,7
+295,The Coffee Junction & Burger House,"Chainpur, Bajhang",4,low,7
+296,Satkar Restaurant & Bar,"Chainpur, Bajhang",4,low,7
+297,Hotel Barsha / Cafe Social (Dipayal area — listings),"Dipayal, Doti",4,low,7
+298,Cozy Paradise Hotel & Restaurant,Guddy / Jayaprith? (Bajura),4.1,mid,7
+299,Food Garden Restaurant,"Darchula Bazaar, Darchula",4.1,low,7
+300,Sagar Restaurant & Lodge,Amargadhi / Dadeldhura,4,low,7
+301,NK Hotel / Hotel restaurant (Dailekh/Dadeldhura region listing),Dadeldhura area,4,low,7
+302,Quality Restaurant & Lounge,"Dasharathchand, Baitadi",4,low,7
+303,SS Brothers Restaurant & Madira Pasal,"Dasharathchand, Baitadi",4,low,7
+304,Mahabir Bhojanalaya / local Bhojanalaya (Dhangadhi),"Dhangadhi, Kailali",3.9,low,7
+305,Gate Togedar / Gate Togedar Restaurant & Bar,"Dhangadhi, Kailali",4,mid,7
+306,Wow Foods & Cafe,"Dhangadhi, Kailali",4.1,low,7
+307,Elite / Galaxy variants (Dhangadhi/Tikapur cluster),Kailali towns,4,low,7
+308,Hotel GyanU Plaza — Restaurant,"Dhangadhi, Kailali",4,mid,7
+309,Hotel Raino — Restaurant,"Mahendranagar, Kanchanpur",3.9,mid,7
+310,Highway Green Hotel & Restaurant,Kanchanpur / Mahendranagar area,4,mid,7
+311,Tharu Homestay & Restaurant (Tharu cuisine),"Dhangadhi, Kailali",4.2,low,7
+312,Local Station Restaurant & Bar,"Tikapur, Kailali",4,low,7
+313,Royal Crown / Royal Cafe (Nepalgunj-style name appears in listings across terai towns),district towns (general),4,mid,7
+314,Hotel Murmur Garden / Hotel restaurant (Dolpa listings appear in neighboring pages),peripheral (listed),4,mid,7
+315,"Sinuwa Lodge & Restaurant (guesthouse-style, often listed for highlands)",mountain transit towns (listed),4,low,7
+316,Local momo & bakery shops cluster (popular in bazaars),various Sudurpashchim bazaars,4,low,7
+317,Hotel Sunlight / Hotel with restaurant (Dhangadhi / Mahendranagar area),Kailali / Kanchanpur,4,mid,7
+318,Diamond / Diamond Restaurant (Bagmati-style names in local listings),district bazaars,4,low,7
+319,Grill & Chill / local BBQ restaurants (Bajhang / Baitadi cluster),Bajhang / Baitadi,4,low,7
+320,Suda Farm Sanctum (hotel with restaurant outside Mahendranagar),Mahendranagar area,4.4,mid,7
+321,Suklaphanta Jungle Cottage — Dining,Mahendranagar (near Suklaphanta),4.5,mid,7
+322,Local guesthouse restaurants & teahouses (cluster entries across Kalikot/Darchula/Bajura),various districts,4,low,7
+323,,,,,
+324,,,,,
+325,,,,,
+326,,,,,
+327,,,,,
+328,,,,,
+329,,,,,
+330,,,,,
+331,,,,,
+332,,,,,
+333,,,,,
+334,,,,,
+335,,,,,
+336,,,,,
+337,,,,,
+338,,,,,
+339,,,,,
+340,,,,,
+341,,,,,
+342,,,,,
+343,,,,,
+344,,,,,
+345,,,,,
+346,,,,,
+347,,,,,
+348,,,,,
+349,,,,,
+350,,,,,
+351,,,,,
+352,,,,,
+353,,,,,
+354,,,,,
+355,,,,,
+356,,,,,
+357,,,,,
+358,,,,,
+359,,,,,
+360,,,,,
+361,,,,,
+362,,,,,
+363,,,,,
+364,,,,,
+365,,,,,
+366,,,,,
+367,,,,,
+368,,,,,
+369,,,,,
+370,,,,,
+371,,,,,
+372,,,,,
+373,,,,,
+374,,,,,
+375,,,,,
+376,,,,,
+377,,,,,
+378,,,,,
+379,,,,,
+380,,,,,
+381,,,,,
+382,,,,,
+383,,,,,
+384,,,,,
+385,,,,,
+386,,,,,
+387,,,,,
+388,,,,,
+389,,,,,
+390,,,,,
+391,,,,,
+392,,,,,
+393,,,,,
+394,,,,,
+395,,,,,
+396,,,,,
+397,,,,,
+398,,,,,
+399,,,,,
+400,,,,,
+401,,,,,
+402,,,,,
+403,,,,,
+404,,,,,
+405,,,,,
+406,,,,,
+407,,,,,
+408,,,,,
+409,,,,,
+410,,,,,
+411,,,,,
+412,,,,,
+413,,,,,
+414,,,,,
+415,,,,,
+416,,,,,
+417,,,,,
+418,,,,,
+419,,,,,
+420,,,,,
+421,,,,,
+422,,,,,
+423,,,,,
+424,,,,,
+425,,,,,
+426,,,,,
+427,,,,,
+428,,,,,
+429,,,,,
+430,,,,,
+431,,,,,
+432,,,,,
+433,,,,,
+434,,,,,
+435,,,,,
+436,,,,,
+437,,,,,
+438,,,,,
+439,,,,,
+440,,,,,
+441,,,,,
+442,,,,,
+443,,,,,
+444,,,,,
+445,,,,,
+446,,,,,
+447,,,,,
+448,,,,,
+449,,,,,
+450,,,,,
+451,,,,,
+452,,,,,
+453,,,,,
+454,,,,,
+455,,,,,
+456,,,,,
+457,,,,,
+458,,,,,
+459,,,,,
+460,,,,,
+461,,,,,
+462,,,,,
+463,,,,,
+464,,,,,
+465,,,,,
+466,,,,,
+467,,,,,
+468,,,,,
+469,,,,,
+470,,,,,
+471,,,,,
+472,,,,,
+473,,,,,
+474,,,,,
+475,,,,,
+476,,,,,
+477,,,,,
+478,,,,,
+479,,,,,
+480,,,,,
+481,,,,,
+482,,,,,
+483,,,,,
+484,,,,,
+485,,,,,
+486,,,,,
+487,,,,,
+488,,,,,
+489,,,,,
+490,,,,,
+491,,,,,
+492,,,,,
+493,,,,,
+494,,,,,
+495,,,,,
+496,,,,,
+497,,,,,

@@ -1,0 +1,1240 @@
+Destination ID,Destination Name,District,Best Season,Tags,Main Category,Activities,Difficulty Level,Accessibility,Latitude,Longitude,Province
+1,Mount Everest (Sagarmatha National Park),Solukhumbu,"Mar-May, Sep-Nov","Mountain, Trekking, Adventure, UNESCO",Trekking & Adventure,"Trek to Base Camp, Mountain Climbing, Sherpa Culture, Photography",Hard,Flight + Multi-day Trek,27.9881,86.925,1
+2,Dantakali Temple,Dhankuta,Oct–Mar,Temple; Pilgrimage; Viewpoint,Natural Attractions,Worship; Sunrise/Sunset Viewing; Photography; Cultural Tour,Easy,Road Accessible + Short Hike,26.983,87.2835,1
+3,Koshi Tappu Wildlife Reserve,Saptari,Oct–Mar,Wildlife; Birdwatching; Nature,Natural Attractions,Wildlife Safari; Birdwatching; Photography; Nature Walks,Easy,Road Accessible,26.6667,87,1
+4,Ilām Tea Gardens,Ilam,Oct–Mar,Tea Garden; Nature; Village,Natural Attractions,Photography; Tea Garden Tours; Walks; Local Experience,Easy,Road Accessible,26.92,88.01,1
+5,Bhedetar,Dhankuta,Oct–Mar,Hill Town; Nature; Viewpoint,Natural Attractions,Sightseeing; Photography; Picnic; Short Hike,Easy,Road Accessible,26.997,87.285,1
+6,Limbu Villages,Tehrathum,Mar–May; Sep–Nov,Cultural Village; Limbu,Cultural & Religious Sites,Cultural Tours; Trekking; Photography,Moderate,Road + Trekking,27.2,87.45,1
+7,Hile,Dhankuta,Oct–Mar,Hill Town; Local Market; Trekking Start,Natural Attractions,Market Tour; Local Experience; Photography; Short Treks,Easy,Road Accessible,26.987,87.29,1
+8,Rhododendron Bloom Spots,Tehrathum/Ilam,Mar–May,Trekking; Nature; Rhododendron,Natural Attractions,Trekking; Rhododendron Viewing; Photography; Camping,Moderate,Road + Trekking,27.21,87.45,1
+9,Didi-Baini Waterfall,Ilam,Mar–May,Waterfall; Nature; Picnic Spot,Natural Attractions,Sightseeing; Photography; Picnic,Easy,Road Accessible,26.9833,87.9833,1
+10,Barun Valley,Sankhuwasabha,Mar–May; Sep–Nov,Hidden Valley; Trekking; Nature,Natural Attractions,Trekking; Camping; Photography,Hard,Flight + Trekking,27.8667,87.2833,1
+11,Makalu Barun National Park,Sankhuwasabha,Mar–May; Sep–Nov,Remote Trekking; Wilderness; Biodiversity,Trekking & Adventure,Trekking; Wildlife Spotting; Camping; Photography,Hard,Flight + Trekking,27.8833,87.2333,1
+12,Triveni Dham,Nawalparasi,Oct–Mar,"Pilgrimage Site, Religious Tourism, River Confluence, Hindu Temple",Natural Attractions,"Holy Bathing, Temple Visit, Religious Fair, Boating, Sightseeing",Easy,Road Accessible,27.45,83.93,1
+13,Thamserku Viewpoint,Solukhumbu,"Mar–May, Sep–Nov","Mountain, Trekking, Viewpoint",Natural Attractions,"Trekking, Sunrise/Sunset Photography, Mountain Viewing",Hard,Trekking from Namche Bazaar,27.75,86.7,1
+14,Taplejung Micro Temple,Taplejung,Oct–Mar,Temple; Local; Offbeat,Cultural & Religious Sites,Worship; Photography; Short Walk,Easy,Road + Short Walk,27.3,87.6,1
+15,Hile Tiny Viewpoint,Dhankuta,Oct–Mar,Viewpoint; Nature; Offbeat,Natural Attractions,Photography; Short Walk; Nature Observation,Easy,Road + Short Walk,26.99,87.29,1
+16,Sankhuwasabha Micro Waterfall,Sankhuwasabha,Oct–Mar,Waterfall; Nature; Offbeat,Natural Attractions,Photography; Short Trek; Nature Walk,Moderate,Road + Short Trek,27.91,87.11,1
+17,Kanchenjunga Base Camp Viewpoint,Taplejung,Mar–May; Sep–Nov,Viewpoint; Mountain; Scenic,Natural Attractions,Photography; Trekking; Camping; Sunrise/Sunset,Hard,Trek Access,27.7,87.7,1
+18,Ilaka Bazaar Homestays,Ilam,Oct–Mar,Village; Cultural; Offbeat,Cultural & Religious Sites,Homestay; Photography; Tea Garden Visit,Easy,Road Accessible,26.92,88.02,1
+19,Thulung Dudhkoshi Trek,Sankhuwasabha,Mar–May; Sep–Nov,Trekking; Sherpa Village; Nature,Natural Attractions,Trekking; Village Exploration; Camping; Photography,Hard,Flight + Trekking,27.9,87.1,1
+20,Himalayan Hot Springs,Taplejung,Oct–Mar,Hot Springs; Nature; Relaxation,Natural Attractions,Relaxation; Photography; Nature Walks,Easy,Road Accessible,27.7,87.75,1
+21,Makalu Viewpoint,Sankhuwasabha,"Apr–May, Oct–Nov","Mountain, Trekking, Viewpoint",Trekking & Adventure,"Trekking, Photography, Camping",Hard,Flight + Trekking,27.9,87.15,1
+22,Sabhapokhari,Sankhuwasabha,Apr to Oct,Rural mountain municipality; natural pond (Pokhari); scenic views; religious / spiritual significance; local community culture; mountain landscapes.,Natural Attractions,Visiting ponds; sightseeing & nature walks; local culture & community interaction; observing mountain and valley landscapes; possibly pilgrimage to local religious sites,Moderate,"Road Accessible, possibly walking trails in remote wards",27.45,87.3,1
+23,"Rhododendron Trail (Tinjure, Milke, Jaljale)",Tehrathum,Mar–May,"Trekking, Rhododendron, Nature",Natural Attractions,"Trekking, Rhododendron Viewing, Photography",Moderate,Road + Trekking,27.2,87.45,1
+24,Local Mountain Viewpoints (Tehrathum/Panchthar),Tehrathum/Panchthar,Oct–Mar,Viewpoint; Mountain; Nature,Natural Attractions,Photography; Sightseeing; Short Hikes,Easy,Road + Short Hike,27.2,87.45,1
+25,Bantawa Village,Tehrathum,Mar–May; Sep–Nov,Cultural Village; Limbu,Cultural & Religious Sites,Cultural Tours; Local Experiences; Photography,Easy,Road Accessible,27.2,87.45,1
+26,Seasonal Waterfalls (Ilam/Taplejung),Ilam/Taplejung,Mar–May,Waterfall; Nature; Scenic,Natural Attractions,Sightseeing; Photography; Picnic,Easy,Road + Short Hike,26.95,87.95,1
+27,Himalayan Viewpoint,Taplejung,"Mar–May, Sep–Nov","Mountain, Trekking",Trekking & Adventure,"Trekking, Photography, Local Culture Exploration",Moderate,Road + Short Trek,27.7,87.75,1
+28,Phakumba,Taplejung,Apr to Oct,Rural community; Mountain hamlet; Indigenous culture (Rai ethnic majority); Moderate elevation; Scenic landscapes; Agriculture; Off-beat locale,Natural Attractions,Nature walks; Cultural immersion / visiting Rai community; Exploring rural/mountain scenery; Possibly trekking or routes to nearby hills; Bird and natural observation; Local agriculture life observation,Moderate,Road accessible,27.37738,87.54431,1
+29,Biratnagar,Morang,Oct–Feb,"City, Cultural",Cultural & Religious Sites,Sightseeing,Easy,Road accessible,26.4525,87.2718,1
+30,Taplejung,Taplejung,Oct–Nov,"Scenic, Trekking",Trekking & Adventure,"Sightseeing, Trekking",Moderate,Road + Trek,27.691,87.677,1
+31,Ilam,Ilam,Sep–Nov,"Tea Gardens, Scenic",Natural Attractions,"Tea Tours, Walking",Easy,Road accessible,26.908,87.925,1
+32,Dhankuta,Dhankuta,Oct–Feb,"Scenic, Culture",Natural Attractions,"Village Walks, Sightseeing",Easy,Road accessible,26.983,87.283,1
+33,Sankhuwasabha,Sankhuwasabha,Oct–Nov,"Mountains, Trekking",Trekking & Adventure,"Trekking, Photography",Hard,Trek route,27.616,87.25,1
+34,Ilaka Bazaar & Homestays (Bhojpur),Bhojpur,Mar–May,"Cultural, Rural, Scenic",Natural Attractions,"Cultural Tours, Homestays, Photography",Easy,Road accessible,27,87.5,1
+35,Khoping Pokhari,Tehrathum,"Mar–May, Sep–Nov","Rhododendron ridge, alpine pond, scenic viewpoint, pilgrimage/holy pond (local significance), nature tourism",Natural Attractions,"Hiking / ridge-trekking, photography (Himalaya views & reflections in ponds), rhododendron-watching, bird / nature watching, local cultural visits",Moderate,"Trek route, Seasonal roads/paths",27.22,87.71,1
+36,Himalayan Hot Springs (Taplejung/Sankhuwasabha),Taplejung/Sankhuwasabha,Mar–May,"Nature, Adventure, Wellness",Natural Attractions,"Hot Springs, Trekking, Photography",Moderate,Trek route,27,87.5,1
+37,Jhyau pokhari,Ilam,Mar–Nov,"Alpine pond, Scenic viewpoint, Rural mountain, Nature tourism",Natural Attractions,"Nature walks, photography, bird watching, local culture visits",Moderate,"Road accessible, trekking paths",27.03418,87.9036,1
+38,Nundhaki,Sankhuwasabha,Mar–Nov,"Mountain village, Rural community, Scenic landscapes, Nature tourism",Natural Attractions,"Hiking, Nature walks, Cultural visits, Photography",Moderate,"Trek route,Road accessible",27.45,87.65,1
+39,Mawadin,Sankhuwasabha,"March–May, Sept–Nov","Village, Trekking Base, Nature",Natural Attractions,"Hiking, Cultural Exploration",Moderate,Road accessible,27.286,87.423,1
+40,Dudh Koshi River (Solukhumbu),Solukhumbu,Mar–Jun,"River, Adventure, Nature",Natural Attractions,"Rafting, Fishing, Photography",Moderate,Road + Trek,27.874,86.591,1
+41,Namobuddha Monastery (Bhojpur/Khotang),Bhojpur/Khotang,Sep–Nov,"Spiritual, Culture, History",Cultural & Religious Sites,"Meditation, Cultural Tours, Photography",Easy,Road accessible,27.7071,85.3884,1
+42,Bantawa Village (Dhankuta),Dhankuta,Mar–May,"Cultural, Rural, Scenic",Natural Attractions,"Cultural Tours, Photography, Village Walks",Easy,Road accessible,26.9833,87.2,1
+43,Sherpa Villages (Solukhumbu),Solukhumbu,Mar–May,"Cultural, Trekking, Heritage",Trekking & Adventure,"Cultural Tours, Trekking, Photography",Moderate,Trek route,27.7,86.7,1
+44,Limbu Villages (Panchthar–Taplejung),Panchthar–Taplejung,Mar–May,"Cultural, Rural, Scenic",Natural Attractions,"Cultural Tours, Photography, Village Walks",Easy,Road accessible,27,87.5,1
+45,Tempu–Helambu Trek (Sindhupalchok/Solukhumbu border),Sindhupalchok/Solukhumbu border,Mar–May,"Trekking, Nature, Culture",Trekking & Adventure,"Trekking, Cultural Tours, Photography",Moderate,Trek route,27.5,86.5,1
+46,"Dantakali Temple (Sunsari, Dharan)",Sunsari,Sep–Nov,"Spiritual, Culture, History",Cultural & Religious Sites,"Temple Visits, Photography, Cultural Tours",Easy,Road accessible,26.8033,87.2767,1
+47,Hile (Dhankuta),Dhankuta,Mar–May,"Nature, Scenic, Village",Natural Attractions,"Photography, Village Walks, Nature Walks",Easy,Road accessible,26.9833,87.2,1
+48,Ethnic Villages (Sankhuwasabha/Bhojpur),Sankhuwasabha/Bhojpur,Oct–Mar,Village; Cultural; Homestay,Cultural & Religious Sites,Cultural Tour; Homestay Experience; Local Food,Easy,Road + Walking,27.2,87.2,1
+49,Gokyo Lakes,Solukhumbu,"Apr-May, Oct-Nov","Lakes, Trekking, High Altitude",Trekking & Adventure,"Trekking, Photography, High Altitude Exploration, Camping",Moderate,Long Trek (multi-day),27.9526,86.6966,1
+50,Namche Bazaar,Solukhumbu,"Mar-May, Sep-Nov","Sherpa Culture, Trekking Hub, Market",Trekking & Adventure,"Trekking Hub, Sherpa Culture Tour, Shopping, Photography",Moderate,Long Trek (multi-day),27.8053,86.712,1
+51,Kanyam Tea Garden,Ilam,"Spring, Autumn","Tea Garden, Hill Station",Natural Attractions,"Sightseeing, Photography",Easy,Road,26.8833,88.0833,1
+52,Sherpa Villages,Solukhumbu,Mar–May; Sep–Nov,Cultural Village; Sherpa,Cultural & Religious Sites,Trekking; Cultural Tours; Photography,Moderate,Flight to Lukla + Trekking,27.8,86.7,1
+53,Sangu,Taplejung,"March–May, Sept–Nov","Village, Nature, Trekking",Natural Attractions,"Hiking, Cultural Exploration",Moderate,Road Accessible,27.286,87.423,1
+54,Dudh Koshi River Rafting,Solukhumbu/Sankhuwasabha,Sep–Nov,"Adventure, River, Water Sports",Natural Attractions,"White-water Rafting, Adventure Sports",Moderate,Road to rafting start point,27.7,86.7,1
+55,Antu Danda,Ilam,"Oct-Dec, Mar-May","Sunrise Viewpoint, Hills, Tea Gardens",Natural Attractions,"Sunrise Viewing, Photography, Tea Garden Tour, Homestay",Easy,Road / Vehicle Accessible (<=1 km walk),26.9228,88.0078,1
+56,Maipokhari,Ilam,"Sep-Nov, Mar-May","Wetland, Pilgrimage, Nature",Natural Attractions,"Pilgrimage, Birdwatching, Nature Walks, Meditation",Easy-Moderate,Road + Short Hike (<=2 hrs),27.0016,87.9336,1
+57,Kanchenjunga Conservation Area,Taplejung,"Apr-May, Oct-Nov","Mountain, Trekking, Conservation, Adventure",Trekking & Adventure,"Trekking, Wildlife Viewing, Camping, Photography",Moderate,Long Trek (multi-day),27.7025,88.1475,1
+58,Sandakpur,Ilam,"Oct-Dec, Mar-May","Viewpoint, Trekking, Sunrise",Trekking & Adventure,"Trekking, Sunrise Viewing, Photography, Camping",Moderate,Long Trek (multi-day),27.1006,88.1112,1
+59,"TMJ Ridge (Tinjure, Milke, Jaljale)",Tehrathum,Mar-May (Rhododendron Bloom),"Trekking, Rhododendron, Hills",Trekking & Adventure,"Trekking, Rhododendron Viewing, Camping, Photography",Moderate,Long Trek (multi-day),27.2,87.45,1
+60,Halesi Mahadev Temple,Khotang,"All year, best Oct-Apr","Pilgrimage, Cave, Hindu, Buddhist",Natural Attractions,"Pilgrimage, Cave Exploration, Worship, Cultural Experience",Easy,Road / Vehicle Accessible (<=1 km walk),27.2,86.7167,1
+61,Dharan (Budhasubba & Pindeshwor),Sunsari,"All year, best Oct-Mar","City, Pilgrimage, Culture",Cultural & Religious Sites,"Pilgrimage, City Tour, Cultural Events, Food Exploration",Easy,Road / Vehicle Accessible (<=1 km walk),26.812,87.283,1
+62,Pathibhara Devi Temple,Taplejung,"Mar-May, Sep-Nov","Pilgrimage, Temple, Hiking",Cultural & Religious Sites,"Pilgrimage, Hiking, Worship, Cultural Experience",Easy-Moderate,Road / Vehicle Accessible (<=1 km walk),27.5023,87.7436,1
+63,Barahachhetra,Sunsari,"All year, esp. Jan","Pilgrimage, Temple, River Confluence",Natural Attractions,"Pilgrimage, Religious Rituals, River Bathing, Cultural Events",Easy,Road / Vehicle Accessible (<=1 km walk),26.8667,87.1667,1
+64,Ilaka Bazaar & Village Homestays,Ilam,Oct–Mar,Village; Cultural; Tea Garden,Cultural & Religious Sites,Cultural Tour; Homestay Experience; Tea Garden Visits; Photography,Easy,Road Accessible,26.92,88.02,1
+65,Gorja,Taplejung,"March–May, Sept–Nov","Village, Nature, Trekking",Natural Attractions,"Hiking, Cultural Exploration",Moderate,Road / Vehicle Accessible (<=1 km walk),27.35263,87.60211,1
+66,Chhankhola Waterfall,Sankhuwasabha,"March–May, Sept–Nov","Waterfall, Nature, Scenic Spot",Natural Attractions,"Hiking, Sightseeing",Moderate,"Road Accessible,Short hike from nearest roadhead",27.286,87.423,1
+67,Mehele,Taplejung,"March–May, Sept–Nov","Village, Nature, Trekking",Trekking & Adventure,"Hiking, Cultural Exploration",Moderate,Road accessible,27.286,87.423,1
+68,Okhre,Sankhuwasabha,"March–May, Sept–Nov","Village, Nature, Trekking",Trekking & Adventure,"Hiking, Sightseeing, Waterfalls",Moderate,"Road / Vehicle Accessible (<=1 km walk),short hike",27.57974,86.22138,1
+69,Gairi Pangma,Sankhuwasabha,"March–May, Sept–Nov","Village, Nature, Trekking",Trekking & Adventure,"Hiking, Cultural Exploration",Moderate,Accessible via road and short hike,27.286,87.423,1
+70,Bhedetar,Dhankuta,Oct–Mar,Hill Town; Nature; Viewpoint,Natural Attractions,Sightseeing; Photography; Picnic; Short Hike,Easy,Road Accessible,26.997,87.285,1
+71,Nesum,Sankhuwasabha,"March–May, Sept–Nov","Village, Nature, Trekking",Natural Attractions,"Hiking, Cultural Exploration",Moderate,"Road accessible,short hike from nearest roadhead",27.286,87.423,1
+72,Change Hiti,Sankhuwasabha,"March–May, Sept–Nov","Village, Nature, Trekking",Natural Attractions,"Hiking, Sightseeing, Cultural Exploration",Moderate,Road Accessible + Short Hike,26.983,87.2835,1
+73,Banjhogara,Taplejung,"March–May, Sep–Nov","Offbeat, Nature, Rural",Natural Attractions,"Village walks, Cultural immersion, Photography",Easy–Moderate,Road accessible,27.35658,87.68172,1
+74,Dhankuta,Dhankuta,Oct–Feb,"Scenic, Culture",Natural Attractions,"Village Walks, Sightseeing",Easy,Road accessible,26.983,87.283,1
+75,Panchami Danda,Taplejung,"March–May, Sep–Nov","Offbeat, Nature, Rural",Natural Attractions,"Hilltop walks, Photography, Cultural immersion",Easy–Moderate,Road / Vehicle Accessible (<=1 km walk),27.35658,87.68172,1
+76,Yakthung civilization,"Limbuwan region (East Nepal, Sikkim, Darjeeling)","March–May, Sep–Nov","Indigenous, Kirat, Limbu, Yakthung, Mundhum",Village & Rural Tourism,"Limbu language, Mundhum scriptures, Sirijunga script, Yuma Sammang worship, Thibong Yakthung, Kipat land system",Moderate,"Accessible via regional roads from Phungling, Ilam, and Sikkim",27.35658,87.68172,1
+77,Santhakra,Taplejung,"March–May, Sep–Nov","Rural, Nature, Limbu",Natural Attractions,"Village walks, Cultural immersion, Photography",Easy–Moderate,Road access,27.38335,87.61093,1
+78,Gurase Pokhari,Taplejung,"March–May, Sep–Nov","Offbeat, Nature, Limbu",Natural Attractions,"Trekking, Photography, Cultural immersion",Moderate,Road access,27.38335,87.61093,1
+79,Lingtep,Taplejung,"March–May, Sep–Nov","Limbu, Culture, Nature",Natural Attractions,"Trekking, Cultural immersion, Photography",Moderate,Road access,27.38335,87.61093,1
+80,Thukima,Taplejung,"March–May, Sep–Nov","Limbu, Culture, Nature",Natural Attractions,"Trekking, Cultural immersion, Photography",Moderate,Road access,27.4439,87.6114,1
+81,Halesi Mahadev Temple,Khotang,"All year, best Oct-Apr","Pilgrimage, Cave, Hindu, Buddhist",Natural Attractions,"Pilgrimage, Cave Exploration, Worship, Cultural Experience",Easy,Road / Vehicle Accessible (<=1 km walk),27.2,86.7167,1
+82,Kipa Chyoling Gumba,Taplejung,"March–May, Sep–Nov","Buddhist, Monastery, Cultural",Cultural & Religious Sites,"Pilgrimage, Photography, Cultural study",Easy–Moderate,Road Accessible,27.2735,87.9532,1
+83,Nalbu,Taplejung,"March–May, Sep–Nov","Rural, Limbu, Nature",Natural Attractions,"Village walks, Cultural immersion, Photography",Easy,Road accessible,27.4719,87.609,1
+84,Hile Tiny Viewpoint,Dhankuta,Oct–Mar,Viewpoint; Nature; Offbeat,Natural Attractions,Photography; Short Walk; Nature Observation,Easy,Road + Short Walk,26.99,87.29,1
+85,Tapethok,Taplejung,"March–May, Sep–Nov","Limbu, Culture, Nature",Natural Attractions,"Trekking, Cultural immersion, Photography",Moderate,Road Accessible,27.49235,87.8037,1
+86,Yamfudin,Taplejung,"March–May, Sep–Nov","Limbu, Sherpa, Rai, Trekking, Nature",Natural Attractions,"Kanchenjunga Circuit Trek, Cultural immersion, Photography",Moderate,Road Accessible,27.462,87.9454,1
+87,Lelep,Taplejung,"March–May, Sep–Nov","Limbu, Sherpa, Rai, Trekking, Nature",Natural Attractions,"Kanchenjunga Circuit Trek, Cultural immersion, Photography",Moderate,Road + Short Trek,27.52721,87.8012,1
+88,Kumbhakarna,Taplejung,"March–May, Sep–Nov","Mountain, Trekking, Nature",Natural Attractions,"Trekking, Mountaineering, Photography",Very Difficult,Trekking Trails,27.6825,87.9525,1
+89,Ekamba,Sunsari,Year-round,"Urban, Agriculture",Village & Rural Tourism,"Urban exploration, Agriculture, Local culture",Easy,Road accessible,26.65,87.2833,1
+90,Bhurkee,Sunsari,Year-round,"Urban, Agriculture",Village & Rural Tourism,"Urban exploration, Agriculture, Local culture",Easy,Road Accessible,26.65,87.2833,1
+91,Bahuni,Taplejung,"March–May, Sep–Nov","Mountain, Trekking, Nature",Natural Attractions,"Trekking, Mountaineering, Photography",Very Difficult,Trekking from Taplejung via Yamphudin and Ramche,27.682,87.9525,1
+92,Keroun,Morang,Year-round,"Rural, Agriculture",Village & Rural Tourism,"Rural exploration, Agriculture, Local culture",Easy,Road accessible,26.5917,87.4917,1
+93,Daulatpur,Taplejung,"March–May, Sep–Nov","Mountain, Trekking, Nature",Natural Attractions,"Trekking, Mountaineering, Photography",Very Difficult,Trekking from Taplejung via Yamphudin and Ramche,27.6825,87.9525,1
+94,Dalelee Bazaar,Morang,Year-round,"Rural, Agriculture",Village & Rural Tourism,"Rural exploration, Agriculture, Local culture",Easy,Road accessible,26.5917,87.4917,1
+95,Maharaaj Thaan,Morang,Year-round,"Rural, Agriculture",Village & Rural Tourism,"Rural exploration, Local culture, Agriculture",Easy,Road Accessible,26.625,87.3,1
+96,Kanchenjunga Base Camp Viewpoint,Taplejung,Mar–May; Sep–Nov,Viewpoint; Mountain; Scenic,Natural Attractions,Photography; Trekking; Camping; Sunrise/Sunset,Hard,Trek Access,27.7,87.7,1
+97,Dohamna Bazaar,Morang,Year-round,"Rural, Market, Agriculture",Village & Rural Tourism,"Local trade, Rural exploration, Agriculture",Easy,Road access,26.62,87.29,1
+98,Hoklabari,Morang,Year-round,"Rural, Agriculture",Village & Rural Tourism,"Rural exploration, Local culture, Agriculture",Easy,Road access,26.6205,87.2925,1
+99,Koshi Tappu Wetland (extension into Province 2),Sunsari,Oct–Mar,Wetland; Wildlife; Nature; Birdwatching,Natural Attractions,Birdwatching; Photography; Nature Walks; Safari,Easy,Road Accessible,26.6667,87,1
+100,Jholunge Pul Chisang,Morang,Year-round,"Suspension Bridge, Rural, Scenic",Natural Attractions,"Trekking, Sightseeing, Photography",Easy,"Road Accessible,walking",26.615,87.295,1
+101,Limbu Villages,Tehrathum,Mar–May; Sep–Nov,Cultural Village; Limbu,Cultural & Religious Sites,Cultural Tours; Trekking; Photography,Moderate,Road + Trekking,27.2,87.45,1
+102,Dipu chowk (Shiva Mandir),Morang,Year-round,"Religious, Temple, Cultural",Cultural & Religious Sites,"Pilgrimage, Worship, Photography",Easy,Road accessible,26.6155,87.298,1
+103,Borabandh,Morang,Year-round,"Rural, Agriculture",Village & Rural Tourism,"Rural exploration, Local culture, Agriculture",Easy,Road accessible,26.617,87.293,1
+104,Chulachuli,Ilam,"March–May, Sep–Nov","Tea gardens, Hills, Nature",Natural Attractions,"Trekking, Tea garden visits, Photography",Moderate,Road + Short Hike (<=2 hrs),26.915,87.923,1
+105,Mahamai,Ilam,Mar–May; Sep–Nov,"Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.92,87.93,1
+106,Danabari,Ilam,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Tea garden visits, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.925,87.935,1
+107,Laxmipura,Ilam,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.93,87.94,1
+108,Maghe,Ilam,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.935,87.945,1
+109,Bhawanitole,Ilam,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.94,87.95,1
+110,Panchkanya,Ilam,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Tea garden visits, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.945,87.955,1
+111,Premejung,Ilam,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Tea garden visits, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.95,87.96,1
+112,Shree Antu,Ilam,"Mar-May, Sep-Nov","Hills, Sunrise View, Tea Gardens",Natural Attractions,"Trekking, Sunrise Photography, Tea garden visits",Moderate,Road access via Ilam Bazaar and local trails,26.911,87.921,1
+113,Samalbung,Ilam,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Tea garden visits, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.955,87.965,1
+114,"Jhandi Danda, Rambhyang",Ilam,"March–May, Sep–Nov","Hills, Nature, Trekking, Scenic View",Natural Attractions,"Trekking, Hiking, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.96,87.97,1
+115,Dhunge dhara mandir,Ilam,Year-round,"Religious, Temple, Cultural",Cultural & Religious Sites,"Pilgrimage, Worship, Photography",Easy,Road access via Ilam Bazaar and local roads,26.965,87.975,1
+116,Thalthale Pokhari (Targaun),Ilam,"March–May, Sep–Nov","Hills, Nature, Pond, Scenic",Natural Attractions,"Trekking, Nature Walks, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.97,87.98,1
+117,Fajeegoun,Ilam,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.975,87.985,1
+118,Sankhuwasabha,Sankhuwasabha,Oct–Nov,"Mountains, Trekking",Trekking & Adventure,"Trekking, Photography",Hard,Trek route,27.616,87.25,1
+119,Pashupatinagar,Ilam,Year-round,"Religious, Temple, Rural",Cultural & Religious Sites,"Pilgrimage, Cultural Exploration, Local Trade",Easy,Road access via Ilam Bazaar and nearby roads,26.98,87.99,1
+120,Mankhim mandir,Ilam,Year-round,"Religious, Temple, Cultural",Cultural & Religious Sites,"Pilgrimage, Worship, Trekking, Photography",Moderate,Road + Short Hike,26.985,87.995,1
+121,Pothukatla,Ilam,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.99,88,1
+122,Sherpa Villages (Solukhumbu),Solukhumbu,Mar–May,"Cultural, Trekking, Heritage",Cultural & Religious Sites,"Cultural Tours, Trekking, Photography",Moderate,Trek route,27.7,86.7,1
+123,Rungsung,Ilam,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,26.995,88.005,1
+124,Taplejung,Taplejung,Oct–Nov,"Scenic, Trekking",Natural Attractions,"Sightseeing, Trekking",Moderate,Road + Trek,27.691,87.677,1
+125,Taplejung Micro Temple,Taplejung,Oct–Mar,Temple; Local; Offbeat,Cultural & Religious Sites,Worship; Photography; Short Walk,Easy,Road + Short Walk,27.3,87.6,1
+126,Tin talaay waterfall,Ilam,Jun–Sep,"Waterfall, Nature, Hills",Natural Attractions,"Trekking, Sightseeing, Photography",Moderate,Road and trekking trails from Ilam Bazaar,27,88.01,1
+127,Gorkhe,Ilam,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,27.005,88.015,1
+128,Thamserku Viewpoint,Solukhumbu,"Mar–May, Sep–Nov","Mountain, Trekking, Viewpoint",Trekking & Adventure,"Trekking, Sunrise/Sunset Photography, Mountain Viewing",Hard,Trekking from Namche Bazaar,27.75,86.7,1
+129,Jamuna,Ilam,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,27.01,88.02,1
+130,Jogmai,Ilam,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Ilam Bazaar and local trails,27.015,88.025,1
+131,Mabu,Morang,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Biratnagar and local trails,26.6000°,87.3000°,1
+132,Maimajhuwa,Morang,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Biratnagar and local trails,26.6050°,87.3050°,1
+133,Chhintapu,Morang,"March–May, Sep–Nov","Hills, Scenic, Nature",Natural Attractions,"Trekking, Sightseeing, Photography",Moderate,Road and local trails from Biratnagar,26.6100°,87.3100°,1
+134,Bantedara,Morang,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road via main Morang roads,26.6150°,87.3150°,1
+135,Sidin,Morang,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Biratnagar,26.6200°,87.3200°,1
+136,Lakhanpur,Morang,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via main roads,26.6250°,87.3250°,1
+137,Charchabari,Morang,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road via local trails,26.6300°,87.3300°,1
+138,Chaudhari Gaun,Morang,"March–May, Sep–Nov","Hills, Rural, Cultural",Natural Attractions,"Trekking, Rural exploration, Cultural visit, Photography",Moderate,Road via Biratnagar and local trails,26.6350°,87.3350°,1
+139,Tumden Chowk,Morang,"March–May, Sep–Nov","Hills, Rural, Market",Natural Attractions,"Trekking, Sightseeing, Photography, Local Market visit",Moderate,Road via main Morang roads,26.6400°,87.3400°,1
+140,Sanba,Terhathum,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road via Myanglung and local trails,27.1200°,87.6800°,1
+141,Tiljung,Terhathum,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road via Myanglung,27.1250°,87.6850°,1
+142,Papung,Terhathum,"March–May, Sep–Nov","Hills, Scenic, Rural",Natural Attractions,"Trekking, Sightseeing, Photography",Moderate,Road and trails from Myanglung,27.1300°,87.6900°,1
+143,Phungphunge Waterfall,Terhathum,Monsoon (Jun–Sep),"Waterfall, Nature",Natural Attractions,"Trekking, Sightseeing, Photography",Moderate,Road and short trekking trail,27.1350°,87.6950°,1
+144,Dalaicha,Terhathum,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Myanglung,27.1400°,87.7000°,1
+145,Dunge,Terhathum,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road and local trails,27.1450°,87.7050°,1
+146,Tartong,Terhathum,"March–May, Sep–Nov","Hills, Nature, Scenic",Natural Attractions,"Trekking, Sightseeing, Photography",Moderate,Road access via Myanglung,27.1500°,87.7100°,1
+147,Papung Gumba,Terhathum,Year-round,"Religious, Monastery, Cultural",Cultural & Religious Sites,"Pilgrimage, Cultural visit, Photography",Moderate,Road and local trails,27.1550°,87.7150°,1
+148,Tokpegola,Terhathum,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road via Myanglung,27.1600°,87.7200°,1
+149,Keemathnka,Terhathum,"March–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road and local trails,27.1650°,87.7250°,1
+150,Chepuwa,Terhathum,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Myanglung,27.1700°,87.7300°,1
+151,Guthigumba,Terhathum,Year-round,"Religious, Monastery, Cultural",Cultural & Religious Sites,"Pilgrimage, Cultural visit, Photography",Moderate,Road via Myanglung and short trails,27.1750°,87.7350°,1
+152,Yaphu,Terhathum,"March–May, Sep–Nov","Hills, Rural, Scenic",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road access via Myanglung,27.1800°,87.7400°,1
+153,Seduwa,Terhathum,"March–May, Sep–Nov","Hills, Nature, Rural",Natural Attractions,"Trekking, Rural exploration, Photography",Moderate,Road via Myanglung,27.1850°,87.7450°,1
+154,Siva Mandir Managaun,Terhathum,Year-round,"Religious, Temple, Cultural",Cultural & Religious Sites,"Pilgrimage, Worship, Photography",Easy,Road access via Myanglung,27.1900°,87.7500°,1
+155,Hans Pokhari ,Sankhuwasabha,"Mar–May, Sep–Nov","Pond, Nature, Religious",Natural Attractions,"Sightseeing, Photography, Meditation",Easy,Road from Chainpur,27.6350°,87.3650°,1
+156,Kholakharka,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Pastureland",Natural Attractions,"Trekking, Camping, Photography",Moderate,Trail from Chainpur,27.6400°,87.3700°,1
+157,Hatiya,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Rural, Cultural",Natural Attractions,"Trekking, Cultural exploration, Photography",Moderate,Road and trekking route,27.6450°,87.3750°,1
+158,Dangok,Sankhuwasabha,"Mar–May, Sep–Nov","Rural, Nature",Natural Attractions,"Trekking, Rural exploration",Moderate,Local trails,27.6500°,87.3800°,1
+159,Bhotkhola,Sankhuwasabha,"Mar–May, Sep–Nov","Highland, Rural, River valley",Natural Attractions,"Trekking, Rural exploration, Scenic viewing",Moderate,Road via Chainpur–Kimathanka route,27.6550°,87.3850°,1
+160,Guthigumba,Sankhuwasabha,Year-round,"Religious, Monastery, Cultural",Cultural & Religious Sites,"Pilgrimage, Cultural visit, Photography",Easy,Road via Chainpur,27.6600°,87.3900°,1
+161,Chyamtang,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Rural, Scenic",Natural Attractions,"Trekking, Cultural experience, Photography",Moderate,Road via Chainpur–Num route,27.6650°,87.3950°,1
+162,Chepuwa,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Rural, Nature",Natural Attractions,"Trekking, Rural exploration",Moderate,Trail from Num or Hatiya,27.6700°,87.4000°,1
+163,Thudam,Sankhuwasabha,"Mar–May, Sep–Nov","Remote, Highland, Nature",Natural Attractions,"Trekking, Exploration, Photography",Hard,Trekking route only,27.6750°,87.4050°,1
+164,Brihaspati Tal ,Sankhuwasabha,"Mar–May, Sep–Nov","Lake, Nature, Religious",Natural Attractions,"Sightseeing, Pilgrimage, Photography",Moderate,Trekking trail from Sabha Pokhari,27.6800°,87.4100°,1
+165,Rajarshi Tal ,Sankhuwasabha,"Mar–May, Sep–Nov","Lake, Religious, Nature",Natural Attractions,"Pilgrimage, Photography",Easy,Road access and short trek,27.6850°,87.4150°,1
+166,Rukma,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Rural",Natural Attractions,"Trekking, Rural exploration",Moderate,Road from Chainpur,27.6900°,87.4200°,1
+167,Sibrung,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Nature",Natural Attractions,"Trekking, Exploration",Moderate,Local trails,27.6950°,87.4250°,1
+168,Limkhim Fall,Sankhuwasabha,Jun–Sep (Monsoon),"Waterfall, Nature",Natural Attractions,"Sightseeing, Photography, Trekking",Moderate,Trail from Chainpur,27.7000°,87.4300°,1
+169,Baide,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Nature",Natural Attractions,"Trekking, Photography",Moderate,Local road and trail,27.7050°,87.4350°,1
+170,Num,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Gateway, Trekking hub",Trekking & Adventure,"Trekking, Photography, Tea gardens",Moderate,Road access from Khandbari,27.7100°,87.4400°,1
+171,Sabha Pokhari,Sankhuwasabha,"Apr–Jun, Sep–Nov","Lake, Religious, Scenic",Natural Attractions,"Pilgrimage, Trekking, Photography",Moderate,Trekking from Chainpur,27.7150°,87.4450°,1
+172,Nebare,Sankhuwasabha,"Mar–May, Sep–Nov","Rural, Hills",Natural Attractions,"Trekking, Rural experience",Moderate,Road from Chainpur,27.7200°,87.4500°,1
+173,Mangkhim,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Cultural, Religious",Natural Attractions,"Trekking, Cultural exploration, Photography",Moderate,Road and short trail,27.7250°,87.4550°,1
+174,Syaksila,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Nature",Natural Attractions,"Trekking, Photography",Moderate,Local trail,27.7300°,87.4600°,1
+175,Sempung,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Rural",Natural Attractions,"Trekking, Rural exploration",Moderate,Road via Chainpur,27.7350°,87.4650°,1
+176,Chainpur,Sankhuwasabha,Year-round,"Town, Administrative, Cultural",Cultural & Religious Sites,"Sightseeing, Market visit, Photography",Easy,Road accessible,27.7400°,87.4700°,1
+177,Siddhakali,Sankhuwasabha,Year-round,"Temple, Religious, Cultural",Cultural & Religious Sites,"Pilgrimage, Worship, Photography",Easy,Road access,27.7450°,87.4750°,1
+178,Mawadin,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Rural",Natural Attractions,"Trekking, Photography",Moderate,Road and trail,27.7500°,87.4800°,1
+179,Ambung,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, Rural, Scenic",Natural Attractions,"Trekking, Cultural visit, Photography",Moderate,Road via Chainpur,27.7550°,87.4850°,1
+180,Dhungesaghu,Sankhuwasabha,"Mar–May, Sep–Nov","Hills, River, Nature",Natural Attractions,"Trekking, Photography, Rural experience",Moderate,Road and trail,27.7600°,87.4900°,1
+181,Olangchung Gola,Taplejung,Spring–Autumn,"Mountain Village, Cultural Heritage",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Trail Access,27.7325,87.7514,1
+182,Yangma,Taplejung,Spring–Autumn,Remote Himalayan Village,Village & Rural Tourism,"Trekking, Scenic View",Hard,Trail Access,27.851,87.713,1
+183,Merak,Taplejung,Spring–Autumn,"Hilly Settlement, Cultural Site",Natural Attractions,"Trekking, Photography",Moderate,Trail Access,27.525,87.828,1
+184,Bajrangi Lake,Taplejung,Autumn–Spring,Sacred Lake,Natural Attractions,"Pilgrimage, Sightseeing",Moderate,Trail Access,27.79,87.68,1
+185,Hanuman Sagar,Taplejung,Autumn–Spring,Religious Pond,Cultural & Religious Sites,"Pilgrimage, Photography",Easy,Road Access,27.74,87.68,1
+186,Chhija,Taplejung,Spring–Autumn,Himalayan Settlement,Village & Rural Tourism,"Trekking, Local Culture",Moderate,Trail Access,27.72,87.74,1
+187,Nup,Taplejung,Spring–Autumn,Mountain Hamlet,Natural Attractions,"Trekking, Photography",Hard,Trail Access,27.76,87.72,1
+188,Tapethok,Taplejung,Spring–Autumn,Rural Settlement,Village & Rural Tourism,"Trekking, Nature Walks",Moderate,Trail Access,27.631,87.727,1
+189,Ghunsa,Taplejung,Spring–Autumn,Himalayan Village,Village & Rural Tourism,"Trekking, Mountain View",Hard,Trail Access,27.721,87.672,1
+190,Phungling,Taplejung,All Year,"Municipality, Hill Town",Natural Attractions,"City Tour, Culture",Easy,Road Access,27.356,87.675,1
+191,Dokhu,Taplejung,Spring–Autumn,Hilly Village,Natural Attractions,"Trekking, Local Experience",Moderate,Trail Access,27.42,87.68,1
+192,Sansari Danda,Taplejung,Spring–Autumn,"Hill, Religious Site",Natural Attractions,"Hiking, Sightseeing",Moderate,Trail Access,27.44,87.7,1
+193,Ghumaaune Dada,Taplejung,Spring–Autumn,Hill Point,Natural Attractions,"Hiking, Photography",Moderate,Trail Access,27.45,87.69,1
+194,Duhabi,Sunsari,All Year,Town,Urban & Modern Attractions,"Local Market, City Walk",Easy,Road Access,26.664,87.273,1
+195,Sisabanibadahara,Sunsari,All Year,Town Area,Urban & Modern Attractions,"Agriculture, Local Business",Easy,Road Access,26.616,87.273,1
+196,Dangraha,Sunsari,All Year,Village,Village & Rural Tourism,Cultural Tour,Easy,Road Access,26.65,87.3,1
+197,Banigama,Sunsari,All Year,Town Area,Urban & Modern Attractions,Local Market,Easy,Road Access,26.6,87.29,1
+198,Dulari,Sunsari,All Year,Village,Village & Rural Tourism,Local Tour,Easy,Road Access,26.63,87.35,1
+199,Binaya Tole Phimraha,Sunsari,All Year,Residential Area,Village & Rural Tourism,Local Visit,Easy,Road Access,26.61,87.27,1
+200,Khoksi,Sunsari,All Year,Village,Village & Rural Tourism,Local Tour,Easy,Road Access,26.62,87.26,1
+201,Lati Jhora,Sunsari,All Year,Water Stream Area,Village & Rural Tourism,"Picnic, Nature Visit",Easy,Road Access,26.64,87.29,1
+202,Sonapur,Sunsari,All Year,Town,Urban & Modern Attractions,"Local Market, Visit",Easy,Road Access,26.66,87.29,1
+203,Sai Man Basti,Sunsari,All Year,Settlement,Village & Rural Tourism,Local Tour,Easy,Road Access,26.64,87.28,1
+204,Khanar,Sunsari,All Year,Industrial Area,Village & Rural Tourism,City Tour,Easy,Road Access,26.66,87.28,1
+205,Gaisar,Sunsari,All Year,Town,Urban & Modern Attractions,Local Visit,Easy,Road Access,26.65,87.31,1
+206,Bhatti Toal,Sunsari,All Year,Residential Area,Village & Rural Tourism,Local Visit,Easy,Road Access,26.65,87.27,1
+207,Bajraha,Sunsari,All Year,Village,Village & Rural Tourism,Cultural Visit,Easy,Road Access,26.66,87.27,1
+208,Ubdhi,Sunsari,All Year,Village,Village & Rural Tourism,Cultural Visit,Easy,Road Access,26.63,87.26,1
+209,Lauhani,Sunsari,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.61,87.25,1
+210,Jhumka,Sunsari,All Year,Town,Urban & Modern Attractions,Local Market,Easy,Road Access,26.65,87.27,1
+211,Diktel,Khotang,Spring–Autumn,Municipality,Urban & Modern Attractions,"Cultural Visit, Trekking",Moderate,Road Access,27.207,86.805,1
+212,Nerpa,Khotang,Spring–Autumn,Village,Village & Rural Tourism,Cultural Tour,Moderate,Trail Access,27.23,86.79,1
+213,Dorpachiuridada,Khotang,Spring–Autumn,Hill,Natural Attractions,"Hiking, Scenic View",Moderate,Trail Access,27.22,86.8,1
+214,Lamidanda,Khotang,Spring–Autumn,"Village, Airport Area",Village & Rural Tourism,"Local Visit, Flight",Easy,Road Access,27.23,86.81,1
+215,Sapteshwor,Khotang,Autumn–Spring,Temple,Cultural & Religious Sites,Pilgrimage,Easy,Road Access,27.2,86.79,1
+216,Pipal Dada,Khotang,Spring–Autumn,Hill Point,Natural Attractions,Hiking,Moderate,Trail Access,27.21,86.79,1
+217,Rakha Dipsung,Khotang,Spring–Autumn,Village,Village & Rural Tourism,Cultural Tour,Moderate,Trail Access,27.19,86.81,1
+218,Sungdel,Khotang,Spring–Autumn,Village,Village & Rural Tourism,Trekking,Moderate,Trail Access,27.16,86.82,1
+219,Sitalpati,Khotang,All Year,Market Area,Urban & Modern Attractions,Local Visit,Easy,Road Access,27.19,86.8,1
+220,Chiyabari,Sunsari,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.61,87.26,1
+221,Bagapati,Sunsari,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.63,87.26,1
+222,Inaruwa,Sunsari,All Year,Municipality,Urban & Modern Attractions,City Tour,Easy,Road Access,26.61,87.15,1
+223,Halesi Tole,Khotang,Autumn–Spring,Religious Area,Cultural & Religious Sites,Pilgrimage,Easy,Road Access,27.2,86.81,1
+224,Badahara,Sunsari,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.63,87.29,1
+225,Barchhawa,Sunsari,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.61,87.25,1
+226,Madhesa,Sunsari,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.62,87.27,1
+227,Chandbela,Sunsari,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.6,87.26,1
+228,Gaighat,Udayapur,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.79387,86.69844,1
+229,Valaya Danda,Udayapur,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.79437,86.69984,1
+230,Jalpachilaune,Udayapur,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.79637,86.70364,1
+231,Beldovan Waterfalls,Udayapur,Spring/Autumn,"Natural, Cultural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.79837,86.70504,1
+232,Murkuchi Bazar,Udayapur,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.79887,86.70644,1
+233,Triyuga Bridge,Udayapur,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.80087,86.70784,1
+234,Rauta,Udayapur,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.80287,86.71164,1
+235,Pipra,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.53968,86.74796,2
+236,Saptakoshi,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54168,86.74936,2
+237,Odraha,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54368,86.75076,2
+238,Sakhubani,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54418,86.75216,2
+239,Laxminarayan Temple,Saptari,Spring/Autumn,"Natural, Cultural",Cultural & Religious Sites,"Sightseeing, Photography, Pilgrimage",Easy,Mostly accessible by local roads,26.54618,86.75596,2
+240,Fatepur,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54818,86.75736,2
+241,Sirwani,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54868,86.75876,2
+242,Sundarpur,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55068,86.74616,2
+243,Bakdhauwa,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.55318,86.75136,2
+244,Jandaul,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54018,86.75276,2
+245,Mohanpur,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54218,86.75416,2
+246,Mahuli Waterfall,Saptari,Spring/Autumn,"Natural, Cultural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.54268,86.75796,2
+247,Harna River,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54468,86.75936,2
+248,Krishnasavaran (Marauti) Temple,Saptari,Spring/Autumn,"Natural, Cultural",Cultural & Religious Sites,"Sightseeing, Photography, Pilgrimage",Easy,Mostly accessible by local roads,26.54718,86.74816,2
+249,Terahauta,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54918,86.75196,2
+250,Lohajara,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55118,86.75336,2
+251,Bengari,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55168,86.75476,2
+252,Theliya,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55368,86.75616,2
+253,Dhodhanpur,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54068,86.75996,2
+254,Kamalpur,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54118,86.74736,2
+255,Nargho,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54318,86.74876,2
+256,Fakira,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54518,86.75016,2
+257,Birpur Barahi,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54568,86.75396,2
+258,Inarwa,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54768,86.75536,2
+259,Gobargada,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54968,86.75676,2
+260,Barsain,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55018,86.75816,2
+261,Koiladi,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.55218,86.74796,2
+262,Deehibar Temple at Kusha,Saptari,Spring/Autumn,"Natural, Cultural",Cultural & Religious Sites,"Sightseeing, Photography, Pilgrimage",Easy,Accessible by road,26.55418,86.74936,2
+263,Dalwa Park,Saptari,Spring/Autumn,"Natural, Cultural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.53968,86.75076,2
+264,Sakarpura,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54168,86.75216,2
+265,Bishahariya,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.54368,86.75596,2
+266,Deurimaruwa,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54418,86.75736,2
+267,Farseth,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54618,86.75876,2
+268,Deurimaruwa,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54818,86.74616,2
+269,Rajbiraj,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.54868,86.74996,2
+270,Didhawa,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55068,86.75136,2
+271,Pakari,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55268,86.75276,2
+272,Maleth,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55318,86.75416,2
+273,Basbiti,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54018,86.75796,2
+274,Rayapur,Siraha,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.65511,86.2081,2
+275,Hariharpur,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54118,86.75876,2
+276,Prasabani,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54318,86.74616,2
+277,Bishahariya,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.54518,86.74996,2
+278,Deurimaruwa,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54568,86.75136,2
+279,Farseth,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54768,86.75276,2
+280,Lahan,Siraha,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.65661,86.2089,2
+281,Govindpur Taregana,Siraha,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.65711,86.2127,2
+282,Chure Mai Mandir,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Photography, Pilgrimage",Easy,Mostly accessible by local roads,26.54918,86.75536,2
+283,Hardiya,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55018,86.75736,2
+284,Kushaha,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55218,86.75876,2
+285,Pansera,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55418,86.74616,2
+286,Khojpur,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.53968,86.74996,2
+287,Banarjhula,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54168,86.75136,2
+288,Malhanama,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54368,86.75276,2
+289,Haripur,Siraha,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.65861,86.2129,2
+290,Tikuliya,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54468,86.75596,2
+291,Sakhuwanankarkatti,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54668,86.75736,2
+292,Itarhawa,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54718,86.75876,2
+293,Nahara Rigoul,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54918,86.74616,2
+294,Bhagwanpur,Siraha,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.66111,86.2167,2
+295,Geruwaha,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55018,86.74936,2
+296,Sothiyan,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55218,86.75076,2
+297,Mauwahi,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.55418,86.75216,2
+298,Kachanari,Siraha,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.66211,86.2181,2
+299,Navarajpur,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54218,86.75676,2
+300,Majhaura,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54268,86.75816,2
+301,Khoksi,Siraha,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.66561,86.2081,2
+302,Janakinagar,Siraha,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.66611,86.2095,2
+303,Bariyarpatti,Siraha,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Accessible by road,26.66811,86.2109,2
+304,Tenuwapatti,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54518,86.74796,2
+305,Gadha,Saptari,Spring/Autumn,"Cultural, Rural",Cultural & Religious Sites,"Sightseeing, Local Walks",Easy,Mostly accessible by local roads,26.54568,86.74936,2
+306,Aurahi,Aurahi,Oct–Feb,"Village, Culture",Village & Rural Tourism,"Village Walks, Homestay",Easy,Road accessible,26.75,86.95,2
+307,Aurahi Minor Shrine,Aurahi,Oct–Mar,Temple; Local; Offbeat,Cultural & Religious Sites,Worship; Photography; Short Walk,Easy,Road Accessible,26.72,85.92,2
+308,Baba Haridwar Dham,Saptari,Oct–Mar,Temple; Pilgrimage; Hindu; Cultural,Cultural & Religious Sites,Worship; Pilgrimage; Photography; Cultural Tour,Easy,Road Accessible,26.619,86.71,2
+309,Baba Taal,Saptari,Oct–Mar,Lake; Pilgrimage; Nature,Natural Attractions,Boating; Birdwatching; Photography,Easy,Road Accessible,26.6333,86.75,2
+310,Barhathwa Heritage Street,Sarlahi,Oct–Mar,Historical; Heritage; Local Culture,Cultural & Religious Sites,Sightseeing; Photography; Local Exploration; Cultural Tour,Easy,Road Accessible,26.923,85.536,2
+311,Bharat Lake,Sarlahi,All year,"Lake, Nature",Natural Attractions,"Boating, Picnicking",Easy,Road,27.0333,85.55,2
+312,Birgunj Heritage Sites,Parsa,Oct–Mar,Historical; Heritage; Architecture; Cultural,Cultural & Religious Sites,Cultural Tour; Photography; Historical Exploration,Easy,Road Accessible,27,84.8667,2
+313,Chhath Ghat (Sunsari),Sunsari,Oct–Nov,Religious; River; Festival; Cultural,Natural Attractions,Festival Celebration; Worship; Photography; Local Culture,Easy,Road Accessible,26.675,87.01,2
+314,Chhinnamasta Riverbank Areas,Saptari,Oct–Mar,River; Nature; Scenic,Natural Attractions,Sightseeing; Photography; Birdwatching; Picnic,Easy,Road Accessible,26.615,86.72,2
+315,Chhinnamasta Temple,Saptari,Oct–Apr,"Religious, Spiritual",Cultural & Religious Sites,"Pilgrimage, Festivals",Easy,Road Accessible,26.6098,86.7485,2
+316,Chhireshwor Temple,Saptari,Oct–Mar,Temple; Pilgrimage; Hindu,Cultural & Religious Sites,Worship; Pilgrimage; Photography; Local Festival,Easy,Road Accessible,26.612,86.725,2
+317,Chitwan–Parsa Elephant Corridor,Parsa,Nov–Feb,"Wildlife, Conservation",Wildlife & Conservation,"Eco-tourism, Wildlife Photography",Moderate,Road + Jungle Routes,27.36,84.69,2
+318,Chure Hills (Eastern Belt),Sarlahi / Rautahat,Oct–Mar,"Nature, Hiking",Natural Attractions,"Short Hikes, Photography",Moderate,Road + Trekking,27.1,85,2
+319,Dhanushadham (Dhanusha),Dhanusha,"Oct-Dec, Feb-Apr","Religious, Mythical",Cultural & Religious Sites,"Pilgrimage, Sightseeing",Easy,"Road, Easy",26.7383,85.9345,2
+320,Dhobi Tole (Janakpur),Dhanusha,Oct–Dec,"Cultural, Historic",Cultural & Religious Sites,"Photography, Cultural Walks",Easy,Road accessible,26.7167,86.7333,2
+321,Gadhi Mai Forest Area,Rautahat,Oct–Apr,"Nature, Eco-tourism",Natural Attractions,"Nature Walk, Bird Watching",Easy,Road Accessible,27.05,85.3167,2
+322,Gadhi Mai Temple (Bara),Bara,"Jan-Mar, Oct-Dec","Religious, Fair",Cultural & Religious Sites,"Pilgrimage, Cultural Fair",Easy,"Road, Easy",27,85.0667,2
+323,Gadhimai Mela Ground,Bara,Nov–Dec (every 5 yrs),"Cultural, Festival",Cultural & Religious Sites,"Festival Gathering, Cultural Tourism",Easy,Road Accessible,27.0836,85.0479,2
+324,Gamhariya Village,Bara,Oct–Mar,Cultural Village; Local Life,Cultural & Religious Sites,Cultural Tour; Photography; Local Interaction; Traditional Food,Easy,Road Accessible,26.975,85.16,2
+325,Gaur,Rautahat,Oct–Mar,"Historical, Cultural, City",Cultural & Religious Sites,"Sightseeing, Heritage Walks",Easy,Road Accessible,27,85.2,2
+326,Gaur (Rautahat) Heritage Sites,Rautahat,Oct-Mar,"Historical, Cultural",Cultural & Religious Sites,"Heritage Walk, Photography",Easy,"Road, Easy",26.9,85.1833,2
+327,Gaurighat Temple,Rautahat,Oct–Mar,Temple; Pilgrimage; Hindu,Cultural & Religious Sites,Worship; Pilgrimage; Cultural Experience; Photography,Easy,Road Accessible,26.8935,85.235,2
+328,Hariharpur Village,Mahottari,Oct–Mar,Cultural Village; Local Life,Cultural & Religious Sites,Cultural Tour; Local Experience; Photography; Homestay,Easy,Road Accessible,26.89,85.905,2
+329,Jagdamba Temple,Sarlahi,Oct–Apr,"Religious, Spiritual",Cultural & Religious Sites,"Pilgrimage, Local Rituals",Easy,Road Accessible,26.9,85.55,2
+330,Jaleshwar Dham,Mahottari,Oct–Apr,"Religious, Spiritual",Cultural & Religious Sites,"Pilgrimage, Local Festivals",Easy,Road Accessible,26.65,85.8,2
+331,Jaleshwor Mahadev Temple,Mahottari,Oct–Mar,Temple; Pilgrimage; Hindu,Cultural & Religious Sites,Worship; Pilgrimage; Photography; Cultural Experience,Easy,Road Accessible,26.874,85.912,2
+332,Janaki Temple Minor Complex,Dhanusha,Oct–Nov,"Spiritual, Temple",Cultural & Religious Sites,"Temple Visit, Photography",Easy,Road accessible,26.73,85.921,2
+333,Janakpur Dham,Dhanusha,Oct–Mar,"Religious,Cultural",Cultural & Religious Sites,"Pilgrimage, Sightseeing, Photography",Easy,Road + Train,26.7288,85.925,2
+334,Janakpur Ghats,Dhanusha,Oct–Mar,River; Pilgrimage; Cultural,Natural Attractions,Sightseeing; Pilgrimage; Cultural Tour; Photography,Easy,Road Accessible,26.718,85.925,2
+335,Kachorwa,Kachorwa,Oct–Feb,"Village, Culture",Village & Rural Tourism,"Village Walks, Homestay",Easy,Road accessible,26.733,86.917,2
+336,Kachorwa Tiny Ghat,Kachorwa,Oct–Mar,River; Offbeat; Scenic,Natural Attractions,Photography; Picnic; Nature Walk,Easy,Road Accessible,26.725,85.91,2
+337,Kachorwa Village,Dhanusha,Oct–Mar,Cultural Village; Local Life,Cultural & Religious Sites,Cultural Tour; Photography; Local Experience; Homestay,Easy,Road Accessible,26.72,85.91,2
+338,Kailashnath Mahadev Statue,Bara,Oct–Mar,Statue; Religious; Pilgrimage; Hindu,Cultural & Religious Sites,Sightseeing; Pilgrimage; Photography; Cultural Experience,Easy,Road Accessible,26.973,85.15,2
+339,Kalyanpur Ghat,Parsa,Oct–Mar,River; Nature; Photography,Natural Attractions,Sightseeing; River Walk; Photography; Birdwatching,Easy,Road Accessible,27.005,84.99,2
+340,Koshi Barrage,Saptari,Oct–Mar,Nature; Engineering; River; Viewpoint,Natural Attractions,Photography; Sightseeing; Birdwatching; Picnic,Easy,Road Accessible,26.666,86.716,2
+341,Koshi Barrage Viewpoint,Saptari,Oct–Mar,Viewpoint; Nature; Photography,Natural Attractions,Sightseeing; Birdwatching; Photography; Picnic,Easy,Road Accessible,26.667,86.716,2
+342,Lahan / Shambhunath Temple,Siraha,Oct–Mar,Temple; Pilgrimage; Cultural,Cultural & Religious Sites,Worship; Pilgrimage; Photography; Cultural Tour,Easy,Road Accessible,26.7175,86.5169,2
+343,Laukaha Border Market,Siraha,All year,Market; Trade; Local Culture,Village & Rural Tourism,Shopping; Food Exploration; Photography; Cultural Observation,Easy,Road Accessible,26.638,86.9,2
+344,Local Homestays & Village Experiences,Aurahi/Kachorwa/Hariharpur,Oct–Mar,Village; Cultural; Homestay,Cultural & Religious Sites,Cultural Tour; Homestay Experience; Local Food; Photography,Easy,Road Accessible,26.721,85.915,2
+345,Local Seasonal Festivals (Remote Villages),Mahottari/Sarlahi,Oct–Nov,Cultural; Festival; Local,Cultural & Religious Sites,Festival Participation; Photography; Local Experience,Easy,Road Accessible,26.9,85.93,2
+346,Madhesh Museum & Cultural Center,Janakpur,Oct–Mar,Museum; Cultural; Heritage,Cultural & Religious Sites,Museum Tour; Cultural Exploration; Photography; Local History,Easy,Road Accessible,26.716,85.917,2
+347,Minor Ghats & River Confluences,Saptari/Dhanusha,Oct–Mar,River; Pilgrimage; Festival,Natural Attractions,Festival Participation; Photography; Birdwatching; Sightseeing,Easy,Road Accessible,26.618,86.715,2
+348,Minor Heritage Sites,Sarlahi/Rautahat/Bara,Oct–Mar,Temple; Heritage; Historical,Cultural & Religious Sites,Sightseeing; Photography; Cultural Exploration; Worship,Easy,Road Accessible,26.925,85.54,2
+349,Minor Village Temples (Sarlahi/Bara/Rautahat),Sarlahi/Bara/Rautahat,Oct–Mar,Temple; Local; Pilgrimage,Cultural & Religious Sites,Worship; Photography; Cultural Tour,Easy,Road Accessible,26.92,85.55,2
+350,Mithila Art Sites,Dhanusha / Siraha,All Year,"Cultural, Art, Heritage",Cultural & Religious Sites,"Art Tours, Workshops, Cultural Exploration",Easy,Road Accessible,26.75,85.95,2
+351,Mithila Cultural Park,Dhanusha,Oct–Mar,Cultural; Heritage; Art,Cultural & Religious Sites,Cultural Tour; Photography; Workshops; Local Experience,Easy,Road Accessible,26.722,85.92,2
+352,Mithila Painting Workshop,Dhanusha,Oct–Mar,Cultural; Art; Workshop,Cultural & Religious Sites,Art Workshop; Photography; Cultural Tour; Local Experience,Easy,Road Accessible,26.723,85.922,2
+353,Parsa National Park,Parsa,Oct–Mar,National Park; Wildlife; Safari; Nature,Natural Attractions,Wildlife Safari; Birdwatching; Nature Walks; Photography,Easy,Road Accessible,27.0556,84.9792,2
+354,Pipara (Historical Site),Mahottari,Oct–Apr,"Historical, Archaeological",Village & Rural Tourism,"Sightseeing, Research, Photography",Easy,Road Accessible,26.7,85.85,2
+355,Rajdevi Temple,Rautahat,Oct–Mar,Temple; Pilgrimage; Hindu; Local Culture,Cultural & Religious Sites,Worship; Pilgrimage; Photography; Cultural Tour,Easy,Road Accessible,26.896,85.228,2
+356,Ram Janaki Temple,Mahottari,Oct–Mar,Temple; Pilgrimage; Hindu,Cultural & Religious Sites,Worship; Pilgrimage; Cultural Tour; Photography,Easy,Road Accessible,26.893,85.89,2
+357,Raxaul / Bhitthamore Border,Bara / India Border,All year,"Border, Trade",Urban & Modern Attractions,"Sightseeing, Trading",Easy,Road accessible,26.7667,85.1833,2
+358,Raxaul Border / Bhitthamore Market,Mahottari,All year,Market; Trade; Cultural; Border,Cultural & Religious Sites,Shopping; Local Food; Cultural Observation; Photography,Easy,Road Accessible,26.5811,85.09,2
+359,Sakhuwa Mahadev Temple,Saptari,Oct–Apr,"Religious, Spiritual",Cultural & Religious Sites,"Pilgrimage, Festivals",Easy,Road Accessible,26.6,86.75,2
+360,Salhesh Botanical Garden,Siraha,Oct-Mar,"Botanical, Nature",Natural Attractions,"Nature Walks, Photography",Easy,"Road, Easy",26.7167,86.2333,2
+361,Sarlahi,Sarlahi,Oct–Feb,"Cultural, Temple",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,26.916,85.55,2
+362,Sarlahi Minor Cultural Site,Sarlahi,Oct–Nov,"Culture, Heritage",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,26.931,85.537,2
+363,Shivala Temple,Siraha,Oct–Mar,Temple; Pilgrimage; Hindu,Cultural & Religious Sites,Worship; Pilgrimage; Photography; Cultural Experience,Easy,Road Accessible,26.71,86.518,2
+364,Shivala Temple (Dhanusha),Dhanusha,Sep–Nov,"Spiritual, Culture",Cultural & Religious Sites,"Temple Visits, Photography",Easy,Road accessible,26.7167,86.7333,2
+365,Simraungadh,Bara,Oct–Mar,"Historical, Archaeological",Village & Rural Tourism,"Sightseeing, Heritage Walk",Easy,Road Accessible,27.1833,85.0833,2
+366,Sirsia Bird Sanctuary,Rautahat,Nov–Feb,"Nature, Wildlife, Bird Sanctuary",Natural Attractions,"Birdwatching, Nature Walks, Photography",Easy,Road Accessible,27.0333,85.2333,2
+367,Small Wetlands & Ponds (Saptari/Dhanusha),Saptari/Dhanusha,Oct–Mar,Nature; Wetland; Birdwatching,Natural Attractions,Sightseeing; Birdwatching; Photography,Easy,Road Accessible,26.62,86.71,2
+368,Tharu Villages,Udayapur/Sunsari,Oct–Mar,Cultural Village; Tharu,Cultural & Religious Sites,Cultural Tours; Local Festivals; Photography,Easy,Road Accessible,26.7,86.9,2
+369,Tilathi Ghat,Saptari,Oct–Mar,River; Nature; Photography,Natural Attractions,Sightseeing; Photography; River Walk; Birdwatching,Easy,Road Accessible,26.612,86.715,2
+370,Tilathi–Koilabas Border Village,Saptari/Siraha,Oct–Mar,Border; River; Village,Natural Attractions,Sightseeing; Photography; Cultural Tour; Local Interaction,Easy,Road Accessible,26.635,86.91,2
+371,Tulsipur Cultural Center,Mahottari,Oct–Mar,Cultural; Local Art; Heritage,Cultural & Religious Sites,Cultural Tour; Workshops; Photography; Local Experience,Easy,Road Accessible,26.895,85.91,2
+372,Chhinnamasta Riverbank Areas,Saptari,Oct–Mar,River; Nature; Scenic,Natural Attractions,Sightseeing; Photography; Birdwatching; Picnic,Easy,Road Accessible,26.615,86.72,2
+373,Tulsipur Cultural Center,Mahottari,Oct–Mar,Cultural; Local Art; Heritage,Cultural & Religious Sites,Cultural Tour; Workshops; Photography; Local Experience,Easy,Road Accessible,26.895,85.91,2
+374,Small Wetlands & Ponds (Saptari/Dhanusha),Saptari/Dhanusha,Oct–Mar,Nature; Wetland; Birdwatching,Natural Attractions,Sightseeing; Birdwatching; Photography,Easy,Road Accessible,26.62,86.71,2
+375,Birgunj Heritage Sites,Parsa,Oct–Mar,Historical; Heritage; Architecture; Cultural,Cultural & Religious Sites,Cultural Tour; Photography; Historical Exploration,Easy,Road Accessible,27,84.8667,2
+376,Dhobi Tole / Cultural Street,Janakpur,Oct–Mar,Cultural; Local Market; Food; Heritage,Cultural & Religious Sites,Food Exploration; Photography; Local Experience; Shopping,Easy,Road Accessible,26.709,85.9225,2
+377,Madhesh Museum & Cultural Center,Janakpur,Oct–Mar,Museum; Cultural; Heritage,Cultural & Religious Sites,Museum Tour; Cultural Exploration; Photography; Local History,Easy,Road Accessible,26.716,85.917,2
+378,Tharu Villages,Udayapur/Sunsari,Oct–Mar,Cultural Village; Tharu,Cultural & Religious Sites,Cultural Tours; Local Festivals; Photography,Easy,Road Accessible,26.7,86.9,2
+379,Sakhuwa Mahadev Temple,Saptari,Oct–Apr,"Religious, Spiritual",Cultural & Religious Sites,"Pilgrimage, Festivals",Easy,Road Accessible,26.6,86.75,2
+380,Salhesh Fulbari,Siraha,Mar–May (Sal tree blossoms),"Nature, Cultural",Natural Attractions,"Nature Walk, Photography, Festivals",Easy,Road Accessible,26.66,86.2,2
+381,Bharat Lake,Sarlahi,All year,"Lake, Nature",Natural Attractions,"Boating, Picnicking",Easy,Road,27.0333,85.55,2
+382,Bariyarpur Historical Sites,Siraha,Oct–Mar,Historical; Heritage; Culture,Cultural & Religious Sites,Cultural Tour; Photography; Exploration,Easy,Road Accessible,26.711,86.517,2
+383,Laukaha Border Market,Siraha,All year,Market; Trade; Local Culture,Village & Rural Tourism,Shopping; Food Exploration; Photography; Cultural Observation,Easy,Road Accessible,26.638,86.9,2
+384,Kachorwa Tiny Ghat,Kachorwa,Oct–Mar,River; Offbeat; Scenic,Natural Attractions,Photography; Picnic; Nature Walk,Easy,Road Accessible,26.725,85.91,2
+385,Gamhariya Village,Bara,Oct–Mar,Cultural Village; Local Life,Cultural & Religious Sites,Cultural Tour; Photography; Local Interaction; Traditional Food,Easy,Road Accessible,26.975,85.16,2
+386,Kalyanpur Ghat,Parsa,Oct–Mar,River; Nature; Photography,Natural Attractions,Sightseeing; River Walk; Photography; Birdwatching,Easy,Road Accessible,27.005,84.99,2
+387,Rajdevi Temple,Rautahat,Oct–Mar,Temple; Pilgrimage; Hindu; Local Culture,Cultural & Religious Sites,Worship; Pilgrimage; Photography; Cultural Tour,Easy,Road Accessible,26.896,85.228,2
+388,Tilathi Ghat,Saptari,Oct–Mar,River; Nature; Photography,Natural Attractions,Sightseeing; Photography; River Walk; Birdwatching,Easy,Road Accessible,26.612,86.715,2
+389,Shivala Temple,Siraha,Oct–Mar,Temple; Pilgrimage; Hindu,Cultural & Religious Sites,Worship; Pilgrimage; Photography; Cultural Experience,Easy,Road Accessible,26.71,86.518,2
+390,Chure Hills (Eastern Belt),Sarlahi / Rautahat,Oct–Mar,"Nature, Hiking",Natural Attractions,"Short Hikes, Photography",Moderate,Road + Trekking,27.1,85,2
+391,Tilathi–Koilabas Border Village,Saptari/Siraha,Oct–Mar,Border; River; Village,Natural Attractions,Sightseeing; Photography; Cultural Tour; Local Interaction,Easy,Road Accessible,26.635,86.91,2
+392,Simraungadh,Bara,Oct–Mar,"Historical, Archaeological",Village & Rural Tourism,"Sightseeing, Heritage Walk",Easy,Road Accessible,27.1833,85.0833,2
+393,Sarlahi Minor Cultural Site,Sarlahi,Oct–Nov,"Culture, Heritage",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,26.931,85.537,2
+394,Dhanushadham (Dhanusha),Dhanusha,"Oct-Dec, Feb-Apr","Religious, Mythical",Cultural & Religious Sites,"Pilgrimage, Sightseeing",Easy,"Road, Easy",26.7383,85.9345,2
+395,Chinnamasta Bhagawati Temple,Saptari,Oct-Dec,"Religious, Pilgrimage",Cultural & Religious Sites,"Pilgrimage, Rituals",Easy,"Road, Easy",26.6667,86.75,2
+396,Sarlahi,Sarlahi,Oct–Feb,"Cultural, Temple",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,26.916,85.55,2
+397,Laukaha Border Market (Siraha),Siraha,All year,"Trade, Market",Urban & Modern Attractions,"Sightseeing, Shopping",Easy,Road accessible,26.6167,86.7333,2
+398,Tulsipur Cultural Center (Mahottari),Mahottari,Oct–Dec,"Cultural, Art",Cultural & Religious Sites,"Cultural Tours, Photography",Easy,Road accessible,26.6167,86.7333,2
+399,Sakhuwa Mahadev Temple (Sarlahi),Sarlahi,Sep–Nov,"Spiritual, Culture",Cultural & Religious Sites,"Temple Visits, Cultural Tours",Easy,Road accessible,26.9333,85.55,2
+400,Birgunj Heritage Sites (Parsa),Parsa,Oct–Dec,"Historical, Cultural",Cultural & Religious Sites,"Heritage Walks, Photography",Easy,Road accessible,27,84.8667,2
+401,Bardibas,Mahottari,All Year,Municipality,Urban & Modern Attractions,"Local Visit, Market",Easy,Road Access,26.9,85.9,2
+402,Laxminiya,Mahottari,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.88,85.88,2
+403,Belgachhi,Dhanusha,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.85,85.87,2
+404,Hathilet,Dhanusha,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.84,85.86,2
+405,Dhalkebar,Dhanusha,All Year,"Village, Temple",Cultural & Religious Sites,"Local Visit, Religious",Easy,Road Access,26.82,85.85,2
+406,Batauwa,Dhanusha,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.8,85.83,2
+407,Bharatpur,Parsa,All Year,Town,Urban & Modern Attractions,"Market, Cultural Visit",Easy,Road Access,27,84.99,2
+408,Fulakaha,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.98,84.97,2
+409,Birgunj,Parsa,All Year,"City, Trade Hub",Urban & Modern Attractions,"Market, Trade, Cultural",Easy,Road Access,27,84.87,2
+410,Motisar,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.95,84.9,2
+411,Bhatauda,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27,85,2
+412,Kalaiya,Bara,All Year,Municipality,Urban & Modern Attractions,"Town, Local Visit",Easy,Road Access,26.92,85.05,2
+413,Karaiya,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.9,85.02,2
+414,Maheshpur,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.88,85.03,2
+415,Dohari,Bara,All Year,Municipality,Urban & Modern Attractions,"Town, Local Visit",Easy,Road Access,26.9,85.08,2
+416,Bhodaha,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.87,85.04,2
+417,Haraiya,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.86,85.05,2
+418,Kolhabi,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.85,85.06,2
+419,Rangapur,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.84,85.07,2
+420,Chandrapur,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.83,85.08,2
+421,Paurai,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.7,85.2,2
+422,Pahritol,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.72,85.22,2
+423,Sakhuwa Dhamaura,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.71,85.21,2
+424,Pratappur Paltuwa,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.73,85.23,2
+425,Laxmipur Belbichawa,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.74,85.24,2
+426,Faparbadi,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.75,85.25,2
+427,Balchanpur,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.76,85.26,2
+428,Nijgadh,Bara,All Year,Municipality,Urban & Modern Attractions,"Town, Cultural",Easy,Road Access,27.05,84.97,2
+429,Dhiyal,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.03,84.96,2
+430,Kudawa,Bara,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.02,84.95,2
+431,Amarpatti,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.01,84.9,2
+432,Pathera,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.02,84.91,2
+433,Mahendra Adarsha,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.03,84.92,2
+434,Saunaraniya,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.04,84.93,2
+435,Paterwa,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.05,84.94,2
+436,Tedhakatti,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.06,84.95,2
+437,Tengraha,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.07,84.96,2
+438,Maryadpur,Parsa,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,27.08,84.97,2
+439,Katahariya,Rautahat,All Year,Municipality,Urban & Modern Attractions,"Town, Local Visit",Easy,Road Access,26.7,85.15,2
+440,Dudhouli,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.71,85.16,2
+441,Bagahi,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.72,85.17,2
+442,Garuda,Rautahat,All Year,Municipality,Urban & Modern Attractions,"Town, Local Visit",Easy,Road Access,26.73,85.18,2
+443,Dharampur,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.74,85.19,2
+444,Sangrampur,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.75,85.2,2
+445,Bahuwa Madanpur,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.76,85.21,2
+446,Umarjan,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.77,85.22,2
+447,Rampurwa,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.78,85.23,2
+448,Laxminiya,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.79,85.24,2
+449,Kanakpur,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.8,85.25,2
+450,Chandrapur,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.81,85.26,2
+451,Lokaha,Rautahat,All Year,Village,Village & Rural Tourism,Local Visit,Easy,Road Access,26.82,85.27,2
+452,Nuwakot Micro Lake,Nuwakot,Oct–Mar,Lake; Nature; Offbeat,Natural Attractions,Photography; Short Walk; Nature Observation,Easy,Road + Short Walk,27.95,85.17,3
+453,Kaleshwor Mahadev Temple,Dhading,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Cultural Visit; Photography,Easy,Road Accessible,27.715,85.555,3
+454,Bhimeshwor Temple,Dolakha,Oct–Mar,Temple; Hindu; Pilgrimage,Cultural & Religious Sites,Worship; Cultural Tour; Photography,Moderate,Road + Hike,27.9,86.1,3
+455,Rasuwagadhi Fort,Rasuwa,Oct–Mar,Fort; Historical; Scenic,Natural Attractions,Sightseeing; Photography; Trekking; History Exploration,Moderate,Road + Trekking,28.2333,85.4333,3
+456,Balthali Village,Kavrepalanchok,Oct–Mar,Village; Trekking; Nature,Trekking & Adventure,Trekking; Cultural Tour; Homestay; Photography,Easy,Road + Short Hike,27.63,85.533,3
+457,Bajrabarahi Temple,Lalitpur (Chapagaun),Oct–Mar,Temple; Hindu; Local; Pilgrimage,Cultural & Religious Sites,Worship; Cultural Visit; Photography,Easy,Road Accessible,27.652,85.3,3
+458,Langtang Valley,Rasuwa,"Mar-May, Sep-Nov","Trekking, Mountain",Natural Attractions,"Trekking, Nature",Moderate-High,Road + Trek,28.2067,85.5317,3
+459,Phulchoki Viewpoints,Lalitpur,Mar–May; Sep–Nov,Hill; Scenic; Nature,Natural Attractions,Photography; Hiking; Nature Walks,Moderate,Road + Trekking,27.61,85.36,3
+460,Lele Village,Lalitpur,Oct–Mar,Village; Cultural; Farming,Cultural & Religious Sites,Cultural Tour; Photography; Local Experience,Easy,Road Accessible,27.65,85.311,3
+461,Chisapani,Nuwakot,Oct–Mar,Hill; Trekking; Nature,Trekking & Adventure,Trekking; Camping; Photography,Moderate,Road + Trekking,27.95,85.183,3
+462,Gosaikunda Lesser Spots,Rasuwa,Aug–Oct,Lake; Trekking; Offbeat,Trekking & Adventure,Trekking; Photography; Camping,Hard,Road + Trekking,28.18,85.495,3
+463,Paldor Peak Base Camp,Rasuwa,Mar–May; Sep–Nov,Trekking; Scenic Views,Trekking & Adventure,Trekking; Camping,Challenging,Road + Trek,28,85.2,3
+464,Ganga Jamuna Waterfall,Dhading,Oct–Mar,Natural Attraction; Waterfall,Natural Attractions,Sightseeing; Photography,Moderate,Road Accessible,27.8,85.5,3
+465,Sailung,Dolakha,Oct–Mar,Trekking; Scenic Views,Natural Attractions,Trekking; Camping,Moderate,Road + Trek,27.7,85.8,3
+466,Kamalamai Temple,Sindhuli,Oct–Mar,Temple; Hindu,Cultural & Religious Sites,Worship; Cultural Tour,Easy,Road Accessible,27.56,85.98,3
+467,Ayurvedic Spas (Kathmandu),Kathmandu,Oct–Mar,Wellness; Spa; Ayurveda,Wellness & Relaxation,Relaxation; Treatments; Cultural Experience,Easy,Road Accessible,27.7172,85.324,3
+468,Yoga & Meditation Retreats (Nagarkot/Dhulikhel),Bhaktapur/Kavrepalanchok,Oct–Mar,Wellness; Yoga; Meditation; Nature,Natural Attractions,Yoga; Meditation; Relaxation; Photography,Easy,Road Accessible,27.63,85.416,3
+469,Garden of Dreams,Kathmandu,Oct–Mar,Garden; Heritage; Relaxation,Cultural & Religious Sites,Sightseeing; Photography; Relaxation; Walking,Easy,Road Accessible,27.7107,85.313,3
+470,Ruby Valley,Dhading,Oct–Mar,Cultural; Trekking,Cultural & Religious Sites,Trekking; Cultural Tour,Moderate,Road + Trek,27.5,85.3,3
+471,Nagarkot,Bhaktapur,Oct–Mar,Hill Station; Mountain View; Nature,Natural Attractions,Sightseeing; Photography; Hiking; Sunrise/Sunset Viewing,Easy,Road Accessible,27.7076,85.4166,3
+472,Changu Narayan Temple,Bhaktapur,Oct–Mar,Temple; Hindu; UNESCO,Cultural & Religious Sites,Worship; Cultural Tour,Easy,Road Accessible,27.701,85.432,3
+473,Bagh Bhairab Temple,Kathmandu,Oct–Mar,Temple; Cultural,Cultural & Religious Sites,Worship; Festival; Cultural Tour,Easy,Road Accessible,27.6667,85.28,3
+474,Patan Durbar Square,Lalitpur,Oct–Mar,Heritage; UNESCO,Cultural & Religious Sites,Sightseeing; Cultural Tour,Easy,Road Accessible,27.6726,85.3166,3
+475,Kathmandu Durbar Square,Kathmandu,Oct–Mar,Heritage; UNESCO,Cultural & Religious Sites,Sightseeing; Cultural Tour,Easy,Road Accessible,27.7045,85.3076,3
+476,Namo Buddha Monastery,Kavrepalanchok,Oct–Mar,Buddhist; Pilgrimage,Cultural & Religious Sites,Meditation; Cultural Tour,Moderate,Road Accessible,27.595,85.532,3
+477,Dakshinkali Temple,Kathmandu,Oct–Mar,Temple; Pilgrimage; Goddess Kali,Cultural & Religious Sites,Worship; Photography; Cultural Tour,Easy,Road Accessible,27.5982,85.4047,3
+478,Kulekhani Dam & Reservoir,Makwanpur,Oct–Mar,Dam; Reservoir; Scenic,Natural Attractions,Sightseeing; Photography; Boating,Easy,Road Accessible,27.55,85.25,3
+479,Local Hilltop Viewpoints (Chapagaun/Lalitpur),Lalitpur,Oct–Mar,Hill; Scenic; Nature,Natural Attractions,Photography; Short Trekking; Sunrise/Sunset Views,Easy,Road + Short Hike,27.655,85.305,3
+480,Dhulikhel Viewpoint,Kavrepalanchok,Oct-Mar,"Viewpoint, Cultural",Natural Attractions,"Sunrise View, Hiking, Cultural Tours",Easy,"Road, Easy",27.545,85.5397,3
+481,Shivapuri Nagarjun National Park,Kathmandu,Oct-Mar,"National Park, Hiking",Natural Attractions,"Hiking, Nature Walks",Easy-Moderate,"Road, Moderate",27.77,85.35,3
+482,Panauti,Kavrepalanchok,Oct–Mar,Town; Cultural; Heritage,Cultural & Religious Sites,Cultural Tour; Photography; Local Experience; Festival Participation,Easy,Road Accessible,27.6,85.5167,3
+483,Bhaktapur Durbar Square,Bhaktapur,Oct–Mar,Heritage; UNESCO,Cultural & Religious Sites,Sightseeing; Cultural Tour,Easy,Road Accessible,27.671,85.4278,3
+484,Kirtipur,Kathmandu,Oct–Mar,Hill Town; Cultural; Heritage,Natural Attractions,Sightseeing; Photography; Local Culture; Walking Tour,Easy,Road Accessible,27.666,85.288,3
+485,Sangachok Village,Kavrepalanchok,Oct–Mar,Village; Cultural; Nature,Natural Attractions,Homestay; Cultural Tour; Photography; Hiking,Easy,Road + Short Hike,27.583,85.55,3
+486,Nagadesh Temple,Lalitpur,Oct–Mar,Temple; Local; Cultural,Cultural & Religious Sites,Worship; Cultural Visit; Photography,Easy,Road Accessible,27.67,85.31,3
+487,Sankhu,Kathmandu,Oct–Mar,Village; Cultural; Heritage,Cultural & Religious Sites,Cultural Tour; Photography; Sightseeing; Festival Participation,Easy,Road Accessible,27.695,85.42,3
+488,Khokana,Lalitpur,Oct–Mar,Village; Cultural; Traditional Craft,Cultural & Religious Sites,Cultural Tour; Photography; Local Food; Pottery Workshops,Easy,Road Accessible,27.617,85.307,3
+489,Mahankal Temple,Kathmandu,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.712,85.32,3
+490,Chandeshwori Temple,Chitwan,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.55,84.45,3
+491,Balkumari Temple,Lalitpur,Oct–Mar,Temple; Local; Heritage,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.674,85.32,3
+492,Sindhuligadhi,Sindhuli,Oct–Mar,Fort; Historical; Scenic,Natural Attractions,Sightseeing; Photography; Trekking; History Exploration,Moderate,Road + Trekking,27.1333,85.9667,3
+493,Manakamana Temple,Gorkha,Oct–Mar,Temple; Pilgrimage; Cable Car,Cultural & Religious Sites,Worship; Cable Car Ride; Photography,Easy,Road + Cable Car,27.6789,84.5723,3
+494,Netra Lake,Dhading,Oct–Mar,Lake; Scenic,Natural Attractions,Sightseeing; Photography,Easy,Road Accessible,27.7,85.6,3
+495,Tau Daha,Kathmandu,Oct–Mar,Lake; Nature; Birdwatching,Natural Attractions,Sightseeing; Photography; Birdwatching; Picnic,Easy,Road Accessible,27.571,85.316,3
+496,Bungamati,Lalitpur,Oct–Mar,Village; Cultural; Newar,Cultural & Religious Sites,Cultural Tour; Photography; Traditional Craft Experience,Easy,Road Accessible,27.599,85.316,3
+497,Gosaikunda Lake,Rasuwa,Aug–Oct,Lake; Trekking; Pilgrimage,Trekking & Adventure,Trekking; Photography; Pilgrimage; Camping,Hard,Road + Trekking,28.1725,85.491,3
+498,Daman,Makwanpur,Oct–Mar,Hill Station; Scenic; Mountain View,Natural Attractions,Sightseeing; Photography,Easy,Road Accessible,27.5667,85.2833,3
+499,Phulchowki,Lalitpur,Mar–May; Sep–Nov,Hill; Nature; Trekking,Trekking & Adventure,Hiking; Photography; Birdwatching; Nature Walks,Moderate,Road + Trekking,27.6128,85.3553,3
+500,Dhulikhel,Kavrepalanchok,Oct–Mar,Town; Hill Station; Mountain View,Natural Attractions,Sightseeing; Photography; Hiking; Cultural Tour,Easy,Road Accessible,27.6233,85.55,3
+501,Chandragiri Hills,Kathmandu,Oct–Mar,Hill; Cable Car; Mountain View,Natural Attractions,Cable Car Ride; Sightseeing; Photography; Hiking,Easy,Road + Cable Car,27.6324,85.2335,3
+502,Chhahare Waterfall,Nuwakot,Oct–Mar,Waterfall; Nature; Offbeat,Natural Attractions,Sightseeing; Photography; Short Hike,Easy,Road + Short Hike,27.95,85.2,3
+503,Indrasarovar Lake,Nuwakot,Oct–Mar,Lake; Scenic; Picnic,Natural Attractions,Sightseeing; Photography; Picnic; Short Hike,Easy,Road + Short Hike,27.9833,85.1833,3
+504,Pashupatinath Temple,Kathmandu,Oct-Mar,"Religious, UNESCO",Cultural & Religious Sites,"Pilgrimage, Cultural",Easy,"Road, Easy",27.71,85.3486,3
+505,Chitwan National Park,Chitwan,Oct-Mar,"Wildlife, Safari",Wildlife & Conservation,"Jungle Safari, Bird Watching, Tharu Culture",Easy-Moderate,"Road, Moderate",27.5299,84.3542,3
+506,Dhading Hidden Village Trail,Dhading,Oct–Mar,Village; Trekking; Offbeat,Trekking & Adventure,Photography; Short Trek; Village Visit,Moderate,Road + Trek,27.92,85.05,3
+507,Boudhanath Stupa,Kathmandu,Oct-Mar,"Religious, Cultural, UNESCO",Cultural & Religious Sites,"Pilgrimage, Meditation, Sightseeing",Easy,"Road, Easy",27.7215,85.362,3
+508,Swayambhunath Stupa (Monkey Temple),Kathmandu,Oct–Mar,Stupa; Buddhist; Heritage,Cultural & Religious Sites,Sightseeing; Photography; Cultural Tour,Moderate,Road + Stairs,27.7149,85.29,3
+509,Pharping,Kathmandu,Oct–Mar,Spiritual; Monasteries; Heritage,Cultural & Religious Sites,Sightseeing; Cultural Tour; Meditation; Photography,Easy,Road Accessible,27.55,85.283,3
+510,Nuwakot Palace,Nuwakot,Oct–Mar,Palace; Heritage; History,Cultural & Religious Sites,Sightseeing; Photography; Cultural Tour,Easy,Road Accessible,27.9667,85.1667,3
+511,Siddhi Ganesh Temple,Kathmandu,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.7105,85.321,3
+512,Seto Machhendranath Temple,Kathmandu,Oct–Mar,Temple; Hindu; Buddhist,Cultural & Religious Sites,Worship; Cultural Tour; Festival Participation,Easy,Road Accessible,27.705,85.312,3
+513,Thimi,Bhaktapur,Oct–Mar,Village; Pottery; Cultural,Cultural & Religious Sites,Cultural Tour; Photography; Pottery Workshops; Local Food,Easy,Road Accessible,27.67,85.426,3
+514,Rolwaling Valley,Dolakha,"Spring, Autumn","Trekking, Mountains",Natural Attractions,"Trekking, Camping",Hard,Trek,27.8667,86.35,3
+515,Kalinchowk Bhagwati,Dolakha,"Winter (Snow), Autumn","Religious, Hill Station",Natural Attractions,"Pilgrimage, Cable Car, Snow Activities",Moderate,Road + Cable Car,27.75,86.0833,3
+516,Nagarkot Viewpoint,Bhaktapur,Oct-Mar,"Viewpoint, Hill Station",Natural Attractions,"Sunrise Views, Hiking",Easy,"Road, Easy",27.6934,85.425,3
+517,Langtang Valley Upper Trek,Rasuwa,Mar–May; Sep–Nov,Trekking; Scenic; Nature; Mountains,Trekking & Adventure,Trekking; Camping; Photography; Wildlife Observation,Hard,Road + Trek,28.22,85.5,3
+518,Lalitpur Tiny Temple,Lalitpur,Oct–Mar,Temple; Local; Cultural,Cultural & Religious Sites,Worship; Photography; Short Walk,Easy,Road Accessible,27.66,85.32,3
+519,Langtang Upper Trek,Rasuwa,Mar–May; Sep–Nov,Trekking; Nature; Scenic,Trekking & Adventure,Trekking; Camping; Photography; Wildlife Observation,Hard,Road + Trekking,28.22,85.5,3
+520,Rasuwa,Rasuwa,Oct–Nov,"Trekking, Nature",Trekking & Adventure,"Trekking, Photography",Hard,Trek route,28.216,85.433,3
+521,Kathmandu,Kathmandu,Oct–Feb,"City, Cultural",Cultural & Religious Sites,"Sightseeing, Shopping",Easy,Road accessible,27.7172,85.324,3
+522,Chitwan,Chitwan,Oct–Feb,"Wildlife, Nature",Natural Attractions,"Safari, Photography",Easy,Road accessible,27.5345,84.3542,3
+523,Lalitpur / Chapagaun,Lalitpur / Chapagaun,Oct–Feb,"Cultural, Temple",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.65,85.3,3
+524,Nuwakot,Nuwakot,Oct–Nov,"Historical, Scenic",Natural Attractions,"Sightseeing, Trekking",Moderate,Road + Trek,27.966,85.083,3
+525,Dhading,Dhading,Oct–Nov,"Nature, Trekking",Trekking & Adventure,"Trekking, Photography",Moderate,Road + Trek,27.95,84.9,3
+526,Patan,Lalitpur,Oct–Feb,"Cultural, Heritage",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.672,85.316,3
+527,Bhrikutimandap,Kathmandu,Oct–Feb,"Religious, Cultural",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.7,85.324,3
+528,Thamel,Kathmandu,Oct–Feb,"City, Shopping, Cultural",Cultural & Religious Sites,"Sightseeing, Shopping",Easy,Road accessible,27.71,85.32,3
+529,Bagh Bhairab Temple,Kathmandu,Oct–Mar,Temple; Cultural,Cultural & Religious Sites,Worship; Festival; Cultural Tour,Easy,Road Accessible,27.6667,85.28,3
+530,Balkumari Temple,Lalitpur,Oct–Mar,Temple; Local; Heritage,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.674,85.32,3
+531,Balthali Village,Kavrepalanchok,Oct–Mar,Village; Trekking; Nature,Trekking & Adventure,Trekking; Cultural Tour; Homestay; Photography,Easy,Road + Short Hike,27.63,85.533,3
+532,Bhimeshwor Temple,Dolakha,Oct–Mar,Temple; Hindu; Pilgrimage,Cultural & Religious Sites,Worship; Cultural Tour; Photography,Moderate,Road + Hike,27.9,86.1,3
+533,Chandeshwori Temple,Chitwan,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.55,84.45,3
+534,Changu Narayan Lesser Shrines,Bhaktapur,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.702,85.431,3
+535,Chhahare Waterfall,Nuwakot,Oct–Mar,Waterfall; Nature; Offbeat,Natural Attractions,Sightseeing; Photography; Short Hike,Easy,Road + Short Hike,27.95,85.2,3
+536,Chisapani,Nuwakot,Oct–Mar,Hill; Trekking; Nature,Natural Attractions,Trekking; Camping; Photography,Moderate,Road + Trekking,27.95,85.183,3
+537,Chitwan National Park,Chitwan,Oct-Mar,"Wildlife, Safari",Wildlife & Conservation,"Jungle Safari, Bird Watching, Tharu Culture",Easy-Moderate,"Road, Moderate",27.5299,84.3542,3
+538,Dakshinkali Temple,Kathmandu,Oct–Mar,Temple; Pilgrimage; Goddess Kali,Cultural & Religious Sites,Worship; Photography; Cultural Tour,Easy,Road Accessible,27.5982,85.4047,3
+539,Dhading Hidden Village Trail,Dhading,Oct–Mar,Village; Trekking; Offbeat,Trekking & Adventure,Photography; Short Trek; Village Visit,Moderate,Road + Trek,27.92,85.05,3
+540,Dhulikhel,Kavrepalanchok,Oct–Mar,Town; Hill Station; Mountain View,Natural Attractions,Sightseeing; Photography; Hiking; Cultural Tour,Easy,Road Accessible,27.6233,85.55,3
+541,Dhulikhel Viewpoint,Kavrepalanchok,Oct-Mar,"Viewpoint, Cultural",Natural Attractions,"Sunrise View, Hiking, Cultural Tours",Easy,"Road, Easy",27.545,85.5397,3
+542,Gosaikunda Lesser Spots,Rasuwa,Aug–Oct,Lake; Trekking; Offbeat,Natural Attractions,Trekking; Photography; Camping,Hard,Road + Trekking,28.18,85.495,3
+543,Kaleshwor Mahadev Temple,Dhading,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Cultural Visit; Photography,Easy,Road Accessible,27.715,85.555,3
+544,Kalinchowk Bhagwati,Dolakha,"Winter (Snow), Autumn","Religious, Hill Station",Natural Attractions,"Pilgrimage, Cable Car, Snow Activities",Moderate,Road + Cable Car,27.75,86.0833,3
+545,Kamalamai Temple,Sindhuli,Oct–Mar,Temple; Hindu,Cultural & Religious Sites,Worship; Cultural Tour,Easy,Road Accessible,27.56,85.98,3
+546,Kathmandu,Kathmandu,Oct–Feb,"City, Cultural",Cultural & Religious Sites,"Sightseeing, Shopping",Easy,Road accessible,27.7172,85.324,3
+547,Kulekhani Dam & Reservoir,Makwanpur,Oct–Mar,Dam; Reservoir; Scenic,Natural Attractions,Sightseeing; Photography; Boating,Easy,Road Accessible,27.55,85.25,3
+548,Langtang Upper Trek,Rasuwa,Mar–May; Sep–Nov,Trekking; Nature; Scenic,Trekking & Adventure,Trekking; Camping; Photography; Wildlife Observation,Hard,Road + Trekking,28.22,85.5,3
+549,Lele Village,Lalitpur,Oct–Mar,Village; Cultural; Farming,Cultural & Religious Sites,Cultural Tour; Photography; Local Experience,Easy,Road Accessible,27.65,85.311,3
+550,Local Hilltop Viewpoints (Chapagaun/Lalitpur),Lalitpur,Oct–Mar,Hill; Scenic; Nature,Natural Attractions,Photography; Short Trekking; Sunrise/Sunset Views,Easy,Road + Short Hike,27.655,85.305,3
+551,Mahankal Temple,Kathmandu,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.712,85.32,3
+552,Nagadesh Temple,Lalitpur,Oct–Mar,Temple; Local; Cultural,Cultural & Religious Sites,Worship; Cultural Visit; Photography,Easy,Road Accessible,27.67,85.31,3
+553,Nagarkot Viewpoint,Bhaktapur,Oct-Mar,"Viewpoint, Hill Station",Natural Attractions,"Sunrise Views, Hiking",Easy,"Road, Easy",27.6934,85.425,3
+554,Netra Lake,Dhading,Oct–Mar,Lake; Scenic,Natural Attractions,Sightseeing; Photography,Easy,Road Accessible,27.7,85.6,3
+555,Pharping,Kathmandu,Oct–Mar,Spiritual; Monasteries; Heritage,Cultural & Religious Sites,Sightseeing; Cultural Tour; Meditation; Photography,Easy,Road Accessible,27.55,85.283,3
+556,Rasuwa,Rasuwa,Oct–Nov,"Trekking, Nature",Trekking & Adventure,"Trekking, Photography",Hard,Trek route,28.216,85.433,3
+557,Rasuwagadhi Fort,Rasuwa,Oct–Mar,Fort; Historical; Scenic,Natural Attractions,Sightseeing; Photography; Trekking; History Exploration,Moderate,Road + Trekking,28.2333,85.4333,3
+558,Rolwaling Valley,Dolakha,"Spring, Autumn","Trekking, Mountains",Trekking & Adventure,"Trekking, Camping",Hard,Trek,27.8667,86.35,3
+559,Sangachok Village,Kavrepalanchok,Oct–Mar,Village; Cultural; Nature,Natural Attractions,Homestay; Cultural Tour; Photography; Hiking,Easy,Road + Short Hike,27.583,85.55,3
+560,Sankhu,Kathmandu,Oct–Mar,Village; Cultural; Heritage,Cultural & Religious Sites,Cultural Tour; Photography; Sightseeing; Festival Participation,Easy,Road Accessible,27.695,85.42,3
+561,Seto Machhendranath Temple,Kathmandu,Oct–Mar,Temple; Hindu; Buddhist,Cultural & Religious Sites,Worship; Cultural Tour; Festival Participation,Easy,Road Accessible,27.705,85.312,3
+562,Shivapuri Nagarjun National Park,Kathmandu,Oct-Mar,"National Park, Hiking",Natural Attractions,"Hiking, Nature Walks",Easy-Moderate,"Road, Moderate",27.77,85.35,3
+563,Siddhi Ganesh Temple,Kathmandu,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.7105,85.321,3
+564,Sindhuligadhi,Sindhuli,Oct–Mar,Fort; Historical; Scenic,Natural Attractions,Sightseeing; Photography; Trekking; History Exploration,Moderate,Road + Trekking,27.1333,85.9667,3
+565,Thimi,Bhaktapur,Oct–Mar,Village; Pottery; Cultural,Cultural & Religious Sites,Cultural Tour; Photography; Pottery Workshops; Local Food,Easy,Road Accessible,27.67,85.426,3
+566,Bharatpur,Chitwan,All Year,"City, Gateway to Chitwan",Urban & Modern Attractions,"Sightseeing, Jungle Safari, Market",Easy,Highway/Road,27.6833,84.4333,3
+567,Jayamangala (Ratnanagar area),Chitwan,All Year,Temple/Local area,Cultural & Religious Sites,"Pilgrimage, Local visit",Easy,Road,27.6725,84.5389,3
+568,Krishna Pranami Temple,Chitwan,Chisapani area,Religious,Cultural & Religious Sites,"Pilgrimage, Worship",Easy,Road,27.673,84.441,3
+569,Panchakanya Mandir,Chitwan,All Year,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6614,84.4494,3
+570,Chisapani Mandir,Chitwan,All Year,"Temple, Hill",Natural Attractions,"Hiking, Pilgrimage",Moderate,Road + short hike,27.69,84.47,3
+571,Ratnanagar,Chitwan,All Year,Municipality,Urban & Modern Attractions,"Local tour, Markets",Easy,Highway,27.67,84.53,3
+572,Khairahani,Chitwan,All Year,Town,Urban & Modern Attractions,"Local market, Services",Easy,Road,27.65,84.59,3
+573,Korak,Chitwan,Spring-Autumn,"Village, Trailhead",Trekking & Adventure,"Trekking, Rural tourism",Moderate,Road/Trail,27.61,84.6,3
+574,Bandipur,Tanahun,All Year,Historic Hill Town,Natural Attractions,"Viewpoints, Cultural tourism",Easy,Road,27.9333,84.41,3
+575,Nilkantha,Dhading,All Year,Municipality/Hill,Natural Attractions,"Hiking, Cultural visit",Easy,Road,27.86,84.9,3
+576,Dhuwakot,Dhading,Spring-Autumn,"Hill, Village",Natural Attractions,"Trekking, Views",Moderate,Road,27.88,84.92,3
+577,Deurali Danda,Dhading,Spring,Ridge/Hill,Natural Attractions,"Viewpoint, Hiking",Moderate,Road/Trail,27.9,84.94,3
+578,Vagerachuli,Dhading,Spring-Autumn,Hill,Natural Attractions,"Hiking, Nature",Moderate,Road/Trail,27.91,84.95,3
+579,Semjong,Dhading,Spring-Autumn,Village,Village & Rural Tourism,"Hiking, Nature",Moderate,Road,27.83,84.93,3
+580,Barsunchet,Nuwakot,Spring,Village,Village & Rural Tourism,Nature visit,Moderate,Road,27.92,85.08,3
+581,Bungtang,Nuwakot,Spring,Village,Village & Rural Tourism,Cultural visit,Easy,Road,27.9,85.01,3
+582,Deurali,Nuwakot,Spring,Pass/Deurali,Village & Rural Tourism,"Hiking, View",Moderate,Road/Trail,27.91,85,3
+583,Tupche,Nuwakot,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.94,85.04,3
+584,Chappthoke,Nuwakot,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.95,85.05,3
+585,Pokhari Gaun,Nuwakot,All Year,"Village, Pond",Village & Rural Tourism,"Local visit, Photography",Easy,Road/Trail,27.955,85.052,3
+586,Champani Gaun,Nuwakot,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.95,85.048,3
+587,Yarsa,Nuwakot,All Year,Village,Village & Rural Tourism,"Hiking, Local visit",Easy,Road,27.97,85.03,3
+588,Urleni (Helambu area),Sindhupalchok,Spring-Autumn,Helambu Village,Village & Rural Tourism,"Trekking, Culture",Moderate,Road/Trail,27.83,85.5,3
+589,Shikharbesi (Nuwakot),Nuwakot,All Year,Town/Market,Urban & Modern Attractions,Local visit,Easy,Road,27.92,85.16,3
+590,Ghyangphedi,Nuwakot,All Year,Village,Village & Rural Tourism,"Trekking, Culture",Moderate,Road/Trail,27.9,85.04,3
+591,Helambu,Sindhupalchok,Spring-Autumn,Trekking region,Trekking & Adventure,"Trekking, Monasteries",Moderate,Road/Trail,27.822,85.519,3
+592,Bhotang,Sindhupalchok,Spring-Autumn,Village,Village & Rural Tourism,Trekking,Moderate,Road/Trail,27.85,85.6,3
+593,Pachpokhari,Sindhupalchok,Spring-Autumn,Sacred Lake,Natural Attractions,"Pilgrimage, Trekking",Hard,Trail,27.87,85.68,3
+594,Phurbi Chyachu,Sindhupalchok,Spring,Peak/Mountain,Natural Attractions,"Expedition, Trekking",Hard,Trek,27.87,85.73,3
+595,Tatopani (Sindhupalchok),Sindhupalchok,All Year,Hot spring,Wellness & Relaxation,"Bathing, Relax",Easy,Road,27.97,85.9,3
+596,Kodari,Sindhupalchok,All Year,Border town,Urban & Modern Attractions,"Trade, Transit",Easy,Highway,27.99,85.94,3
+597,Phulpingkatti,Sindhupalchok,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.88,85.59,3
+598,Bigu,Dolakha,Spring-Autumn,Village,Village & Rural Tourism,"Hiking, Trekking",Moderate,Road/Trail,27.77,86.22,3
+599,Singati,Ramechhap,All Year,Municipality,Urban & Modern Attractions,Local visit,Easy,Road,27.742,86.386,3
+600,Suri,Ramechhap,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.73,86.38,3
+601,Jhyaku,Ramechhap,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.72,86.37,3
+602,Gorpang,Ramechhap,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.71,86.36,3
+603,Lamidada,Ramechhap,All Year,Hill village,Natural Attractions,Local visit,Moderate,Road,27.7,86.35,3
+604,Jiri,Dolakha,All Year,Hill town,Natural Attractions,Trekking start point,Moderate,Road,27.63,86.23,3
+605,Rasnalu,Ramechhap,All Year,Village,Village & Rural Tourism,"Trekking, Culture",Moderate,Road/Trail,27.56,86.3,3
+606,Gupteshwor (Ramechhap),Ramechhap,All Year,Temple,Cultural & Religious Sites,"Pilgrimage, Visit",Easy,Road,27.4,86.1,3
+607,Ramechhap (HQ),Ramechhap,All Year,District HQ,Village & Rural Tourism,"Services, Market",Easy,Highway,27.336,86.063,3
+608,Rampur (Ramechhap),Ramechhap,All Year,Town,Urban & Modern Attractions,Local visit,Easy,Road,27.3,86.05,3
+609,Himganga,Ramechhap,All Year,Mountain village,Natural Attractions,Trekking,Moderate,Trail,27.28,86.04,3
+610,Melamchi,Sindhupalchok,All Year,Town,Urban & Modern Attractions,"Water project site, Market",Easy,Road,27.835,85.602,3
+611,Sipalkavre,Sindhupalchok,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.82,85.61,3
+612,Chhiku,Sindhupalchok,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.8,85.6,3
+613,Sindurche,Sindhupalchok,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.79,85.59,3
+614,Gunsakot,Ramechhap,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.76,86.33,3
+615,Golche,Ramechhap,All Year,Village,Village & Rural Tourism,Trekking,Moderate,Trail,27.75,86.34,3
+616,Pangtang,Ramechhap,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.74,86.35,3
+617,Nampha,Ramechhap,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.73,86.36,3
+618,Budhanilkantha,Kathmandu,All Year,Temple & Area,Cultural & Religious Sites,"Pilgrimage, Visit",Easy,Road,27.778,85.363,3
+619,Gokarneshwor,Kathmandu,All Year,Municipality/Temples,Cultural & Religious Sites,"Pilgrimage, Visit",Easy,Road,27.7489,85.3696,3
+620,Bajrayogini Temple,Kathmandu,All Year,Temple,Cultural & Religious Sites,"Pilgrimage, Hike",Moderate,Road/Trail,27.733,85.452,3
+621,Sundarijal Waterfall,Kathmandu,All Year,Waterfall,Natural Attractions,"Hiking, Picnic",Easy,Road/Trail,27.7995,85.4449,3
+622,Salinadi Temple,Kathmandu,All Year,Temple,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.7,85.44,3
+623,Banepa,Kavrepalanchok,All Year,Town,Urban & Modern Attractions,"Heritage, Market",Easy,Road,27.628,85.522,3
+624,Dhulikhel,Kavrepalanchok,All Year,Hill town,Natural Attractions,"Viewpoints, Stay",Easy,Road,27.542,85.538,3
+625,Namobuddha,Kavrepalanchok,All Year,Monastery,Cultural & Religious Sites,"Meditation, Visit",Easy,Road,27.643,85.533,3
+626,Dapcha Chhatrebangh,Kavrepalanchok,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.6,85.52,3
+627,Panchkhal,Kavrepalanchok,All Year,Municipality,Urban & Modern Attractions,"Local visit, Market",Easy,Road,27.626,85.516,3
+628,Dolalghat,Kavrepalanchok,All Year,River crossing,Natural Attractions,"Rafting (nearby), Local visit",Easy,Highway,27.612,85.531,3
+629,Phalate (Bhumlu),Kavrepalanchok,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.61,85.55,3
+630,Bhumlutar,Kavrepalanchok,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.605,85.545,3
+631,Saping,Kavrepalanchok,All Year,Village,Village & Rural Tourism,Hiking,Moderate,Road/Trail,27.62,85.54,3
+632,Kalika (Kavre),Kavrepalanchok,All Year,Temple/Hill,Natural Attractions,"Pilgrimage, Hike",Moderate,Road/Trail,27.63,85.56,3
+633,Sunkhani,Kavrepalanchok,All Year,Valley,Natural Attractions,"Hiking, Local visit",Moderate,Road,27.64,85.57,3
+634,Timure,Nuwakot,All Year,Border/Checkpoint,Village & Rural Tourism,Trekking approach,Moderate,Road,27.96,85.33,3
+635,Chitlang,Makwanpur,All Year,Heritage village,Cultural & Religious Sites,"Hiking, Cultural visit",Moderate,Road,27.511,85.179,3
+636,Markhu,Makwanpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.56,85.16,3
+637,Fakhel,Makwanpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.57,85.15,3
+638,Dakshinkali,Kathmandu,All Year,Temple,Cultural & Religious Sites,Worship,Easy,Road,27.6209,85.2935,3
+639,Bungamati,Lalitpur,All Year,Heritage village,Cultural & Religious Sites,"Culture, Visit",Easy,Road,27.649,85.32,3
+640,Chhampi,Lalitpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.67,85.32,3
+641,Tahakhel,Lalitpur,All Year,Area/Locality,Village & Rural Tourism,Local visit,Easy,Road,27.65,85.31,3
+642,Maneshwor Mahadev Temple,Kathmandu,All Year,Temple,Cultural & Religious Sites,Worship,Easy,Road,27.7,85.333,3
+643,Dandagaun,Lalitpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.66,85.34,3
+644,Badikhel,Lalitpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.67,85.35,3
+645,Godawari,Lalitpur,All Year,"Botanical garden, Park",Natural Attractions,"Nature visit, Hiking",Easy,Road,27.673,85.333,3
+646,Chapakharka,Lalitpur,All Year,Hill area,Natural Attractions,"Hiking, Views",Moderate,Road/Trail,27.68,85.34,3
+647,Ryale,Lalitpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.69,85.35,3
+648,Mahendrajyoti,Lalitpur,All Year,Landmark,Village & Rural Tourism,Visit,Easy,Road,27.7,85.36,3
+649,Ugratara Janagal,Kathmandu,All Year,Temple/Locality,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.71,85.36,3
+650,Nala Ugrachandi,Kavrepalanchok,All Year,Temple,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.62,85.57,3
+651,Devitar,Bhaktapur,All Year,Religious area,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.683,85.416,3
+652,Nakhipot,Lalitpur,All Year,Residential area,Village & Rural Tourism,Local visit,Easy,Road,27.665,85.325,3
+653,Madhyapur Thimi,Bhaktapur,All Year,Municipality,Urban & Modern Attractions,"Heritage, Culture",Easy,Road,27.672,85.416,3
+654,Mulpani,Kathmandu,All Year,Local area,Village & Rural Tourism,Local visit,Easy,Road,27.7,85.35,3
+655,Nayapati,Kathmandu,All Year,Residential area,Village & Rural Tourism,Local visit,Easy,Road,27.69,85.35,3
+656,Aalapot,Kathmandu,All Year,Village/Locality,Village & Rural Tourism,Local visit,Easy,Road,27.68,85.34,3
+657,Mulkharka,Makwanpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.5,85.18,3
+658,Dhunche,Rasuwa,All Year,District HQ,Village & Rural Tourism,"Gateway to Langtang, Local services",Easy,Road,28.085,85.489,3
+659,Bharkhu,Rasuwa,All Year,Valley/area,Natural Attractions,"Trekking, Local visit",Moderate,Trail,28.21,85.45,3
+660,Chandanbari,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.86,84.92,3
+661,Mukharka,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.85,84.9,3
+662,Sherpagaon,Rasuwa,All Year,Village,Village & Rural Tourism,Trekking,Moderate,Trail,28.2,85.45,3
+663,Khangjim,Rasuwa,All Year,Village,Village & Rural Tourism,Trekking,Moderate,Trail,28.19,85.46,3
+664,Bhalche,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.87,84.93,3
+665,Fikuri,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.88,84.94,3
+666,Archale,Gorkha,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,28,84.9,3
+667,Laharepauwa,Nuwakot,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.95,85.12,3
+668,Kumpur,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.85,84.92,3
+669,Adamtar,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.84,84.91,3
+670,Belinitar,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.83,84.9,3
+671,Bhutiya,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.82,84.89,3
+672,Taruka,Nuwakot,All Year,Temple area,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.9,85.14,3
+673,Gorsyang,Nuwakot,All Year,Area,Village & Rural Tourism,Local visit,Easy,Road,27.91,85.13,3
+674,Charghare,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.86,84.92,3
+675,Gerkhu,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.87,84.93,3
+676,Haldekalika,Dhading,All Year,Temple area,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.88,84.94,3
+677,Hiramanitar,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.89,84.95,3
+678,Ramche,Rasuwa,All Year,High pasture,Village & Rural Tourism,"Trekking, Pasture",Hard,Trail,28.2,85.4,3
+679,Thuman,Rasuwa,All Year,Valley,Natural Attractions,"Trekking, Viewpoint",Moderate,Trail,28.21,85.42,3
+680,Rasuwa,Rasuwa,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,28.22,85.43,3
+681,Rasuwagadhi,Rasuwa,All Year,Border fort,Village & Rural Tourism,"History, Viewpoint",Easy,Road,28.18,85.35,3
+682,Tempu-Helambu Trek,Sindhupalchok,Mar–May; Sep–Nov,Trekking; Village; Nature; Mountain Views,Trekking & Adventure,Trekking; Camping; Photography; Cultural Experience,Moderate,Flight + Trekking,27.745,85.638,1
+683,Chilime,Rasuwa,All Year,Hydropower area,Village & Rural Tourism,Visit,Easy,Road,28.16,85.43,3
+684,Saramthali,Rasuwa,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,28.15,85.44,3
+685,Doglang,Rasuwa,All Year,Langtang area,Village & Rural Tourism,Trekking,Hard,Trail,28.19,85.48,3
+686,Old Langtang Village,Rasuwa,All Year,Trekking ruin site,Trekking & Adventure,"Trekking, Visit",Hard,Trail,28.21,85.52,3
+687,Tsangbu Ri,Rasuwa,All Year,Peak,Village & Rural Tourism,Mountaineering,Hard,Expedition,28.22,85.53,3
+688,Raksirang,Makwanpur,All Year,Rural municipality,Village & Rural Tourism,Local visit,Easy,Road,27.333,85.02,3
+689,Bharta Pundyadevi,Makwanpur,All Year,Village/Temple,Cultural & Religious Sites,Local visit,Easy,Road,27.32,85.03,3
+690,Gogane,Lalitpur,All Year,Hill hamlet,Natural Attractions,"Trekking, View",Moderate,Trail,27.6,85.35,3
+691,Agara,Lalitpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.61,85.36,3
+692,Tasarpu,Lalitpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.62,85.37,3
+693,Kewalpur,Makwanpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.34,85.04,3
+694,Jeewanpur,Makwanpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.35,85.05,3
+695,Chhatre Deurali,Makwanpur,All Year,Hill/Pass,Natural Attractions,Trekking,Moderate,Trail,27.36,85.06,3
+696,Mudkhu,Makwanpur,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.37,85.07,3
+697,Okharpauwa,Nuwakot,All Year,Municipality,Urban & Modern Attractions,Local services,Easy,Road,27.88,85.12,3
+698,Kakani,Nuwakot,All Year,Hill station,Natural Attractions,"Viewpoint, Hiking",Easy,Road,27.901,85.265,3
+699,Bhadratar,Nuwakot,All Year,Hill,Natural Attractions,Hiking,Moderate,Road,27.92,85.15,3
+700,Kharanitar,Nuwakot,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.93,85.14,3
+701,Likhu (generic),Bagmati,All Year,River/Valley,Natural Attractions,"Trekking, Local visit",Moderate,Road/Trail,27.8,85.3,3
+702,Talakhu,Kathmandu/Kavre,All Year,River/Area,Natural Attractions,Local visit,Easy,Road,27.7,85.4,3
+703,Gajuri,Dhading,All Year,Municipality,Urban & Modern Attractions,"Market, Local visit",Easy,Road,27.9,84.9,3
+704,Chuwabote Gaun,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.88,84.92,3
+705,Jyamrung,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.87,84.91,3
+706,Katunge,Dhading,All Year,Village,Village & Rural Tourism,Local visit,Easy,Road,27.86,84.9,3
+707,Gokarneshwor Temple,Kathmandu,Oct–Dec,"Religious, Cultural",Cultural & Religious Sites,Pilgrimage,Easy,Road,27.7107° N,85.3390° E,3
+708,Tripureswor,Kathmandu,Oct–Dec,"Religious, Cultural",Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6953° N,85.3130° E,3
+709,Salyankot,Dhading,Oct–Dec,"Scenic, Rural",Natural Attractions,"Hiking, Photography",Moderate,Trail,27.9494° N,84.9744° E,3
+710,Mahavir,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6880° N,85.3245° E,3
+711,Vharse Pokhari,Dhading,Oct–Dec,"Nature, Waterbody",Natural Attractions,Trekking,Moderate,Trail,27.9632° N,85.0167° E,3
+712,Gangajamuna,Dhading,Oct–Dec,Waterfall,Natural Attractions,Trekking,Moderate,Trail,27.9744° N,84.9761° E,3
+713,Gumdi,Dhading,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.9431° N,84.9689° E,3
+714,Khaniyanbas,Dhading,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.9511° N,84.9811° E,3
+715,Satyadevi Mandir,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6822° N,85.3194° E,3
+716,Kintang,Dhading,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.9578° N,84.9811° E,3
+717,Salme,Dhading,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.9656° N,84.9733° E,3
+718,Bhalche,Dhading,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.9611° N,84.9700° E,3
+719,Kaule,Dhading,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.9572° N,84.9689° E,3
+720,Fikuri,Dhading,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.9533° N,84.9667° E,3
+721,Jibjibe,Dhading,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.9500° N,84.9656° E,3
+722,Bhorle,Dhading,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.9467° N,84.9639° E,3
+723,Jharlang,Dhading,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.9433° N,84.9622° E,3
+724,Hetauda,Makwanpur,Oct–Dec,"Urban, Historic",Urban & Modern Attractions,Sightseeing,Easy,Road,27.4100° N,85.0294° E,3
+725,Sukaura,Makwanpur,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.4000° N,85.0200° E,3
+726,Lattaramveshwar Mahadev Temple,Makwanpur,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.4200° N,85.0400° E,3
+727,Ichankhu Narayan,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6878° N,85.3242° E,3
+728,Harnamadi,Dhading,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.9394° N,84.9600° E,3
+729,Shreepur Chhatiwan,Makwanpur,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.4300° N,85.0500° E,3
+730,Gundu,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6700° N,85.3300° E,3
+731,Manthali,Ramechhap,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.3333° N,86.0500° E,3
+732,Asrang,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3200° N,86.0400° E,3
+733,Chamere Cave,Ramechhap,Oct–Dec,Natural,Village & Rural Tourism,"Caving, Hiking",Challenging,Trail,27.3100° N,86.0300° E,3
+734,Gotikhel,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6600° N,85.3400° E,3
+735,Koteshwor,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Road,27.6500° N,85.3500° E,3
+736,Chyamrang Besi,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6400° N,85.3600° E,3
+737,Tin Tale Waterfall,Kathmandu,Oct–Dec,Nature,Natural Attractions,Trekking,Moderate,Trail,27.6300° N,85.3700° E,3
+738,Manikhel,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6200° N,85.3800° E,3
+739,Kalanti,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6100° N,85.3900° E,3
+740,Malpi,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6000° N,85.4000° E,3
+741,KapalKot,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5900° N,85.4100° E,3
+742,Mahendrajyoti,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5800° N,85.4200° E,3
+743,Baramchi,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5700° N,85.4300° E,3
+744,Mankha,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5600° N,85.4400° E,3
+745,Baneshwor,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.5500° N,85.4500° E,3
+746,Yalmu Waterfall,Ramechhap,Oct–Dec,Nature,Natural Attractions,Trekking,Moderate,Trail,27.3400° N,86.0600° E,3
+747,Gathi,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3300° N,86.0500° E,3
+748,Marming,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3200° N,86.0450° E,3
+749,Dhuskun,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3150° N,86.0420° E,3
+750,Chaukati,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3100° N,86.0380° E,3
+751,Ghorthali,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3050° N,86.0350° E,3
+752,Bigu,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3000° N,86.0300° E,3
+753,Deudhunga Dada,Ramechhap,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Trail,27.2950° N,86.0250° E,3
+754,Seti Mata,Ramechhap,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Trail,27.2900° N,86.0200° E,3
+755,Kalinchowk Bhagawati Temple,Dolakha,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Road,27.7290° N,86.1086° E,3
+756,Gairabari,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2850° N,86.0150° E,3
+757,Betechhap,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2800° N,86.0100° E,3
+758,Lisankhu,Sindhupalchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.8430° N,85.7560° E,3
+759,Attarpur,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2750° N,86.0050° E,3
+760,Baghkhor,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2700° N,86.0000° E,3
+761,Aahaldanda,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2650° N,85.9950° E,3
+762,Jiri,Dolakha,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.4050° N,86.1150° E,3
+763,Chuchure,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2600° N,85.9900° E,3
+764,Harisiddhi,Lalitpur,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6600° N,85.3500° E,3
+765,Siddhipur,Lalitpur,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6580° N,85.3470° E,3
+766,Lubhu,Lalitpur,Oct–Dec,Cultural,Cultural & Religious Sites,Sightseeing,Easy,Road,27.6570° N,85.3460° E,3
+767,Dadhikot,Bhaktapur,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6710° N,85.4210° E,3
+768,Gundu Chaur,Kathmandu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6550° N,85.3600° E,3
+769,Ranikot,Kathmandu,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Trail,27.6520° N,85.3580° E,3
+770,Sirandada,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Trail,27.2550° N,85.9850° E,3
+771,Ghyampe Danda,Ramechhap,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Trail,27.2500° N,85.9800° E,3
+772,Nangkhel,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Trail,27.2450° N,85.9750° E,3
+773,Bhainsepati,Lalitpur,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.6580° N,85.3400° E,3
+774,Dhunkharka,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Trail,27.2400° N,85.9700° E,3
+775,Tindhare Jharana,Ramechhap,Oct–Dec,Waterfall,Natural Attractions,Trekking,Moderate,Trail,27.2350° N,85.9650° E,3
+776,Patlekhet,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Trail,27.2300° N,85.9600° E,3
+777,TinPiple,Kavrepalanchok,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.6050° N,85.5260° E,3
+778,Dulalthok,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6000° N,85.5200° E,3
+779,Panchkhal,Kavrepalanchok,Oct–Dec,"Urban, Scenic",Natural Attractions,Sightseeing,Easy,Road,27.6170° N,85.5300° E,3
+780,Jyamdi Mandan,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6120° N,85.5280° E,3
+781,Phalante,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6150° N,85.5320° E,3
+782,Panichaur,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6180° N,85.5340° E,3
+783,Bethan,Dhading,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.9500° N,84.9750° E,3
+784,Madan Kundari,Kavrepalanchok,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Road,27.6200° N,85.5350° E,3
+785,Gunsi Bhadaure,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6220° N,85.5360° E,3
+786,Tokarpur,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6250° N,85.5380° E,3
+787,Katakuti,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3500° N,86.0500° E,3
+788,Bhusapheda,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6280° N,85.5400° E,3
+789,Marming,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3200° N,86.0450° E,3
+790,Tauthali,Sindhupalchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.8250° N,85.6500° E,3
+791,Piskar,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3150° N,86.0400° E,3
+792,Kharidhunga,Dolakha,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.7000° N,86.1600° E,3
+793,Nalang,Dhading,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.9700° N,84.9700° E,3
+794,Bungchung,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3100° N,86.0350° E,3
+795,Dovantar,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3050° N,86.0300° E,3
+796,Sasaha,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3000° N,86.0250° E,3
+797,Murali Bhanjyang,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Road,27.6300° N,85.5450° E,3
+798,Aansi Khola Motorable Bridge,Kavrepalanchok,Oct–Dec,Infrastructure,Village & Rural Tourism,Sightseeing,Easy,Road,27.6320° N,85.5480° E,3
+799,Sunkhani,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6350° N,85.5500° E,3
+800,Golabhanjyang,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Road,27.6380° N,85.5520° E,3
+801,Jyamrung,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6400° N,85.5550° E,3
+802,Katunge,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6430° N,85.5570° E,3
+803,Phulkharka,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Road,27.6460° N,85.5600° E,3
+804,Budhathum,Dhading,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.9500° N,84.9800° E,3
+805,Mulpani,Kathmandu,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.7200° N,85.3600° E,3
+806,Sangkosh,Dhading,Oct–Dec,Waterbody,Village & Rural Tourism,Trekking,Moderate,Trail,27.9600° N,84.9850° E,3
+807,Sertung,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.3000° N,86.0200° E,3
+808,Babil Waterfall,Ramechhap,Oct–Dec,Waterfall,Natural Attractions,Trekking,Moderate,Trail,27.2980° N,86.0180° E,3
+809,Borang,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2950° N,86.0150° E,3
+810,Kalo Daha Mhane,Ramechhap,Oct–Dec,"Scenic, Waterbody",Natural Attractions,Trekking,Moderate,Trail,27.2920° N,86.0120° E,3
+811,Pusu Wala Kharka,Ramechhap,Oct–Dec,"Pasture, Scenic",Natural Attractions,Trekking,Moderate,Trail,27.2900° N,86.0100° E,3
+812,Pabil,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2880° N,86.0080° E,3
+813,Dhunche,Rasuwa,Oct–Dec,"Urban, Scenic",Natural Attractions,Sightseeing,Easy,Road,28.1550° N,85.3980° E,3
+814,Chandanbari,Dolakha,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.7100° N,86.1200° E,3
+815,Lauri Binayak,Ramechhap,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Road,27.2850° N,86.0050° E,3
+816,Gaunkharka,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2820° N,86.0030° E,3
+817,Sursing Waterfall,Ramechhap,Oct–Dec,Waterfall,Natural Attractions,Trekking,Moderate,Trail,27.2800° N,86.0000° E,3
+818,MaginGoth,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2780° N,85.9980° E,3
+819,Thakani,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2750° N,85.9950° E,3
+820,Talramarang,Ramechhap,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Road,27.2720° N,85.9930° E,3
+821,Dubachaur,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2700° N,85.9900° E,3
+822,Tipeni,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2680° N,85.9880° E,3
+823,Sikharpur,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2650° N,85.9850° E,3
+824,Dolalghat,Kavrepalanchok,Oct–Dec,"Urban, Scenic",Natural Attractions,Sightseeing,Easy,Road,27.6200° N,85.5200° E,3
+825,Phalate Bhumlu,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6150° N,85.5250° E,3
+826,Chaubas,Dhading,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.9500° N,84.9700° E,3
+827,Sanowangthali,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6100° N,85.5300° E,3
+828,Bangthali,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2600° N,85.9800° E,3
+829,Dhumthang,Ramechhap,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.2550° N,85.9750° E,3
+830,Nitya Chandeshwor,Kavrepalanchok,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.5900° N,85.5400° E,3
+831,Mahendrajyoti,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5800° N,85.5300° E,3
+832,Gairi Gaun,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5750° N,85.5250° E,3
+833,Kursi Dada,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Trail,27.5700° N,85.5200° E,3
+834,Batase Dada,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Trail,27.5650° N,85.5150° E,3
+835,Rolling Batase Hills,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Trail,27.5600° N,85.5100° E,3
+836,Judlee,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5550° N,85.5050° E,3
+837,Satdobato,Lalitpur,Oct–Dec,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Road,27.6600° N,85.3400° E,3
+838,Fulchoki Mandir (Basnet Gau),Lalitpur,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Trail,27.5900° N,85.3500° E,3
+839,Sansari Devi Temple,Kavrepalanchok,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Road,27.6000° N,85.5400° E,3
+840,Dhaneshwor,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.7000° N,85.3200° E,3
+841,Nagai Dhunga,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Trail,27.6100° N,85.5450° E,3
+842,Dhaneshwor Mahadev Temple,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.7020° N,85.3230° E,3
+843,Bogati Gaun,Lalitpur,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6550° N,85.3600° E,3
+844,Shreekhandpur,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6150° N,85.5500° E,3
+845,Devisthan (Laa Than Pata),Kavrepalanchok,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Trail,27.6180° N,85.5520° E,3
+846,Shrikhandapur Bindhabasini Temple,Kavrepalanchok,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Road,27.6200° N,85.5550° E,3
+847,Salle Panuati,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6250° N,85.5580° E,3
+848,Talu Dadha,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Trail,27.6300° N,85.5600° E,3
+849,Chature Village,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6320° N,85.5620° E,3
+850,Lukeko Dada,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Trail,27.6350° N,85.5650° E,3
+851,Ashapuri Mahadev,Kavrepalanchok,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Road,27.6380° N,85.5670° E,3
+852,Dhad Gaun,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6400° N,85.5700° E,3
+853,Seti Devi,Kavrepalanchok,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Moderate,Trail,27.6420° N,85.5720° E,3
+854,Kotthumka,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6450° N,85.5750° E,3
+855,Raut Gaun,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6480° N,85.5780° E,3
+856,Chittapol,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6500° N,85.5800° E,3
+857,Soche,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6520° N,85.5820° E,3
+858,Kakhbari,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6550° N,85.5850° E,3
+859,Bairikhel,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6580° N,85.5880° E,3
+860,Ghyampe Danda Mountain Bike Trails,Kavrepalanchok,Oct–Dec,Scenic,Natural Attractions,MTB,Moderate,Trail,27.6600° N,85.5900° E,3
+861,Pilot Baba Ashram,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6900° N,85.3200° E,3
+862,Field of Green,Kavrepalanchok,Oct–Dec,"Scenic, Rural",Natural Attractions,Hiking,Moderate,Road,27.6650° N,85.5950° E,3
+863,Tarakeshwor Mahadev Temple,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.7000° N,85.3200° E,3
+864,Samakhusi,Kathmandu,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.7100° N,85.3100° E,3
+865,Boharatar,Kathmandu,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.7150° N,85.3050° E,3
+866,Jamacho Gumba,Lalitpur,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6650° N,85.3400° E,3
+867,Ichangunarayan,Bhaktapur,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.6720° N,85.4230° E,3
+868,Mudkhu,Kavrepalanchok,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.6700° N,85.6000° E,3
+869,Bhubaneshwori Temple,Kathmandu,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,27.7000° N,85.3150° E,3
+870,Okharpauwa,Nuwakot,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.8300° N,85.1000° E,3
+871,Kakani,Nuwakot,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Road,27.9500° N,85.1600° E,3
+872,Lauke Waterfall,Nuwakot,Oct–Dec,Waterfall,Natural Attractions,Trekking,Moderate,Trail,27.9400° N,85.1500° E,3
+873,Nuwakot,Nuwakot,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.9500° N,85.1500° E,3
+874,Bidur,Nuwakot,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.9833° N,85.0667° E,3
+875,Duipipal,Nuwakot,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.9800° N,85.0700° E,3
+876,Chepang Gaun,Nuwakot,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Trail,27.9750° N,85.0650° E,3
+877,Baglung Bazaar,Baglung,Oct–Nov,Urbanic,Urban & Modern Attractions,"Bazaar stroll, local shopping, temples",Easy,Road,28.2667,83.6,4
+878,Panchakot,Baglung,Oct–Dec,"Religious, Hills",Natural Attractions,"Temple visit, short hike, photography",Easy–Medium,Road + short walk,28.25,83.58,4
+879,Bihun,Baglung,Oct–Dec,Rural,Village & Rural Tourism,"Village stay, hiking, farming life",Medium,Road + short hike,28.2833,83.5833,4
+880,Nishi,Baglung,Sep–Nov,Rural,Village & Rural Tourism,"Fishing, river walks",Medium,Jeep road,28.253,83.602,4
+881,Bhakunde,Baglung,Sep–Nov,Rural,Village & Rural Tourism,"Village visit, hiking, local cuisine",Easy,Road,28.2833,83.6,4
+882,Arthar Dandakharka,Parbat,Oct–Nov,Hills,Natural Attractions,"Local temples, hiking",Medium,Road + walk,28.229,83.655,4
+883,Lekhphant,Parbat,Sep–Dec,Hills,Natural Attractions,"Short hikes, photography",Medium,Road,28.2,83.7,4
+884,Kusma,Parbat,Oct–Nov,"Urbanic, Scenic",Natural Attractions,"Sightseeing, bungee, bridge crossing",Easy,Road,28.2193,83.6797,4
+885,Pokhara,Kaski,Oct–Nov,"Urbanic, Scenic",Natural Attractions,"Boating, cafés, lakeside walks",Very Easy,"Road, air",28.2096,83.9856,4
+886,Sarangkot,Kaski,Sep–Dec,"Scenic, Hills",Natural Attractions,"Sunrise view, paragliding",Easy–Medium,Road,28.2355,83.9636,4
+887,Ghandruk,Kaski,Oct–Nov,"Village, Hills",Natural Attractions,"Trekking, photography",Medium,Jeep road / short trek,28.3667,83.8167,4
+888,Dhampus,Kaski,Oct–Nov,"Village, Hills",Natural Attractions,"Short trek, sunrise",Easy–Medium,Road + short hike,28.305,83.87,4
+889,Lwang Ghalel,Kaski,Sep–Nov,"Rural, Scenic",Natural Attractions,"Homestay, canyoning, tea farm",Medium,Jeep road,28.2881,83.8932,4
+890,Ghale Gaun,Lamjung,Sep–Dec,"Village, Hills",Natural Attractions,"Homestay, cultural walks",Medium,Road + short trek,28.2,84.28,4
+891,Bhujung,Lamjung,Oct–Nov,"Village, Hills",Natural Attractions,"Trekking, local homestay",Medium–Hard,Road + trek,28.3,84.2833,4
+892,Rainaskot,Lamjung,Sep–Nov,Hills,Natural Attractions,"Sunrise view, stone houses",Medium,Road + hike,28.2,84.4167,4
+893,Lamjung Himal Viewpoint,Lamjung,Sep–Dec,"Mountains, Scenic",Natural Attractions,"Trekking, nature photography",Medium–Hard,Road + trek,28.25,84.45,4
+894,Gorkha Bazaar,Gorkha,Oct–Nov,Urbanic,Urban & Modern Attractions,"Palace visit, museum, views",Easy–Medium,Road,28.16,84.65,4
+895,Manakamana,Gorkha,Sep–Dec,"Religious, Hills",Natural Attractions,"Temple visit, cable-car ride",Very Easy,Cable car,27.9664,85.114,4
+896,Barpak,Gorkha,Sep–Nov,"Village, Hills",Natural Attractions,"Homestay, hiking",Medium–Hard,Road / jeep,28.225,84.705,4
+897,Laprak,Gorkha,Oct–Nov,"Village, Mountains",Natural Attractions,"Homestay, hiking",Hard,Trek / Jeep,28.246,84.74,4
+898,Manang Bazaar,Manang,"Mar–May, Sep–Nov","Mountains, Urbanic",Natural Attractions,"Trekking, culture",Hard,Jeep + trek,28.7,84.0667,4
+899,Braga,Manang,Sep–Nov,"Village, Mountains",Natural Attractions,"Hiking, photography",Hard,Trekking,28.65,84.0333,4
+900,Khangsar,Manang,Sep–Nov,"Village, Mountains",Natural Attractions,"Trekking, adventure",Hard,Trek,28.633,84.083,4
+901,Jomsom,Mustang,"Mar–May, Sep–Nov","Urbanic, Mountains",Natural Attractions,"Trekking, jeep ride",Medium,Flight / road,28.7892,83.7216,4
+902,Lo Manthang,Mustang,"Apr–Jun, Sep–Nov","Village, Mountains",Natural Attractions,"Cultural tour, trekking",Hard,Road + permit,29,83.848,4
+903,Muktinath,Mustang,Sep–Nov,"Religious, Mountains",Natural Attractions,Temple visit,Medium–Hard,Jeep / trek,28.7057,83.9621,4
+904,Kagbeni,Mustang,Oct–Nov,"Village, Mountains",Natural Attractions,"Photography, monastery",Medium,Road / jeep,28.8275,83.7585,4
+905,Marpha,Mustang,Oct–Nov,"Village, Mountains",Natural Attractions,"Homestay, apple wine tasting",Easy–Medium,Road,28.7058,83.7375,4
+906,Beni Bazaar,Myagdi,Sep–Nov,Urbanic,Urban & Modern Attractions,"River views, shopping",Easy,Road,28.3833,83.6167,4
+907,Tatopani,Myagdi,Oct–Mar,"Rural, Hills",Natural Attractions,"Bathing, local stay",Easy,Road,28.494,83.597,4
+908,Babiyachaur,Myagdi,Sep–Nov,Rural,Village & Rural Tourism,"Village walk, local markets",Easy,Road,28.414,83.567,4
+909,Dhorpatan,Baglung/Myagdi,Oct–Dec,"Mountains, Scenic",Natural Attractions,"Trekking, wildlife",Hard,Road + trek,28,83.5,4
+910,Devghat,Nawalpur,Sep–Nov,Religious,Cultural & Religious Sites,"Pilgrimage, religious festivals",Very Easy,Road,27.6167,84.5167,4
+911,Kawasoti,Nawalpur,Sep–Nov,"Urbanic, Rural",Village & Rural Tourism,"Jungle safari, boating",Easy,Highway,27.648,84.125,4
+912,Hupsekot,Nawalpur,Oct–Nov,"Rural, Hills",Natural Attractions,"Village walks, local food",Easy,Road,27.75,84.15,4
+913,Bandipur,Tanahun,Sep–Dec,"Hills, Scenic",Natural Attractions,"Heritage walk, cafés, view",Easy–Medium,Road,27.8667,84.25,4
+914,Bhimad,Tanahun,Sep–Nov,Urbanic,Urban & Modern Attractions,Local exploration,Easy,Highway,27.93,84.16,4
+915,Ghalechowk,Tanahun,Sep–Nov,"Village, Hills",Natural Attractions,"Village life, short treks",Medium,Road,27.96,84.18,4
+916,Damauli,Tanahun,Oct–Nov,Urbanic,Urban & Modern Attractions,"Market, local trips",Easy,Road,27.95,84.15,4
+917,Arjunchaupari,Syangja,Oct–Nov,"Rural, Hills",Natural Attractions,"Hikes, cultural visit",Easy,Road,28.08,83.87,4
+918,Pelkachaur,Syangja,Oct–Nov,"Rural, Hills",Natural Attractions,"Hiking, culture",Easy,Road,28.12,83.8,4
+919,Putalibazar,Syangja,Sep–Nov,Urbanic,Urban & Modern Attractions,"Village walk, temples",Easy,Road,28.0667,83.8833,4
+920,Amppipal,Gorkha,Sep–Nov,Rural,Village & Rural Tourism,"Village stay, local culture",Medium,Road,28.067,84.533,4
+921,Makaikhola,Kaski,Sep–Nov,Rural,Village & Rural Tourism,"Village walks, stream-side visits",Easy–Medium,Road,28.2634,83.6791,4
+922,Chongur (Chhyokhar),Mustang (Muktinath area),Sep–Nov,"Village, Mountains",Natural Attractions,"High-valley village walks, cultural visits",Hard,Trek / jeep to valley,(approx) 28.99–29.02,~83.88–83.90,4
+923,Tangbe,Mustang,Sep–Nov,"Village, Mountains",Natural Attractions,"Culture, trekking stops",Hard,Trek route (Annapurna/Upper Mustang),~29.02,~83.90,4
+924,Majibari,Lamjung,Sep–Nov,Village,Village & Rural Tourism,"Rural life, local walks",Easy,Road (gravel),(Lamjung area),(see source),4
+925,Dhakmar,Mustang,Sep–Nov,"Village, Mountains",Natural Attractions,"Trekking, high-valley views",Hard,Trek,29.0825,83.8778,4
+926,Tsarang / Charang,Mustang,Sep–Nov,"Village, Religious",Cultural & Religious Sites,"Monastery, culture",Hard (permit),Road/trek in Upper Mustang,29.0926,83.9323,4
+927,Yara (Yara Ghara area),Mustang (Upper Mustang),Sep–Nov,"Village, Mountains",Natural Attractions,"Trekking, remote village visits",Hard,Trek,(Upper Mustang),(approx),4
+928,Luri Gompa,Mustang,Sep–Nov,"Religious, Mountains",Natural Attractions,"Monastery visits, short hikes",Hard,Trek,(approx),(approx),4
+929,Chhusang,Mustang,Sep–Nov,"Village, Mountains",Natural Attractions,"Photography, village walks",Hard,Road/trek (Annapurna/upper Kali Gandaki),(approx),(approx),4
+930,Lumbini Village Lesser Temples,Rupandehi,Oct–Mar,Temple; Local; Cultural,Cultural & Religious Sites,Worship; Photography; Cultural Tour,Easy,Road Accessible,27.48,83.27,5
+931,Tansen,Palpa,Oct–Mar,Town; Heritage; Hill,Natural Attractions,Sightseeing; Photography; Cultural Tour,Easy,Road Accessible,27.88,83.545,5
+932,Khaireni Hill Viewpoint,Dang,Oct–Mar,Hill; Viewpoint; Scenic,Natural Attractions,Photography; Short Trek; Nature Walks,Easy,Road + Short Hike,28.05,82.6,5
+933,Dang Valley Minor Viewpoints,Dang,Oct–Mar,Hill; Scenic; Nature,Natural Attractions,Photography; Nature Walks; Short Trek,Easy,Road + Short Hike,28.05,82.61,5
+934,Buddha Statue Viewpoint,Rupandehi,Oct–Mar,Viewpoint; Scenic; Cultural,Natural Attractions,Photography; Short Walk; Sightseeing,Easy,Road + Short Hike,27.485,83.28,5
+935,Majhgaon Hill Lesser Viewpoints,Dang,Oct–Mar,Hill; Scenic; Nature,Natural Attractions,Photography; Short Trek; Nature Walks,Easy,Road + Short Hike,28.065,82.625,5
+936,Dang Offbeat Hilltop,Dang,Oct–Mar,Hill; Scenic; Nature,Natural Attractions,Photography; Short Trek; Nature Walks,Easy,Road + Short Hike,28.055,82.615,5
+937,Jagatnagar Village,Arghakhanchi,Oct–Mar,Village; Cultural; Nature,Natural Attractions,Homestay; Photography; Cultural Tour; Short Trek,Moderate,Road + Trek,27.83,83.31,5
+938,Rupandehi Traditional Villages,Rupandehi,Oct–Mar,Village; Cultural; Local,Cultural & Religious Sites,Homestay; Cultural Tour; Photography; Local Food,Easy,Road Accessible,27.48,83.25,5
+939,Ghodaghodi Lesser Villages,Kailali/Rupandehi,Oct–Mar,Village; Cultural; Nature,Natural Attractions,Homestay; Cultural Tour; Photography; Nature Walks,Easy,Road + Short Trek,27.695,82.925,5
+940,Syangja Waterfall,Palpa,Oct–Mar,Waterfall; Nature; Offbeat,Natural Attractions,Sightseeing; Photography; Short Hike,Easy,Road + Short Hike,27.88,83.55,5
+941,Mahendra Cave,Rupandehi,Oct–Mar,Cave; Natural; Scenic,Natural Attractions,Sightseeing; Photography; Adventure,Easy,Road Accessible,27.682,83.443,5
+942,Siddha Cave,Rupandehi,Oct–Mar,Cave; Nature; Adventure,Natural Attractions,Sightseeing; Photography; Adventure,Easy,Road Accessible,27.68,83.44,5
+943,Pyuthan Micro Viewpoint,Pyuthan,Oct–Mar,Viewpoint; Nature; Offbeat,Natural Attractions,Photography; Short Trek; Nature Observation,Moderate,Road + Short Trek,28.25,82.75,5
+944,Pyuthan,Pyuthan,Oct–Nov,"Hills, Scenic",Natural Attractions,"Photography, Walking",Moderate,Road + Trek,28.106,82.823,5
+945,Bardiya,Bardiya,Oct–Feb,"Wildlife, Nature",Natural Attractions,"Safari, Photography",Easy,Road accessible,28.296,81.532,5
+946,Dang,Dang,Oct–Feb,"Valley, Scenic",Natural Attractions,"Hiking, Photography",Easy,Road accessible,28.017,82.493,5
+947,Kothi River,Arghakhanchi,Oct–Mar,River; Nature; Scenic,Natural Attractions,Sightseeing; Photography; Picnic,Easy,Road Accessible,27.82,83.3,5
+948,Gaidahawa Lake,Rupandehi,Oct–Mar,Lake; Nature; Scenic,Natural Attractions,Photography; Sightseeing; Picnic,Easy,Road Accessible,27.43,83.24,5
+949,Kothi Minor Temples,Arghakhanchi,Oct–Mar,Temple; Local; Cultural,Cultural & Religious Sites,Worship; Photography; Short Walk,Easy,Road Accessible,27.825,83.305,5
+950,Ghodaghodi Lake,Kailali/Rupandehi,Oct–Mar,Lake; Wetland; Nature; Birdwatching,Natural Attractions,Sightseeing; Photography; Birdwatching; Boating,Easy,Road Accessible,27.69,82.92,5
+951,Devdaha Ancient Monuments Minor Sites,Rupandehi,Oct–Mar,Heritage; Cultural; Historical,Cultural & Religious Sites,Sightseeing; Photography; Cultural Tour,Easy,Road Accessible,27.528,83.35,5
+952,Tansen Lesser Waterfalls,Palpa,Oct–Mar,Waterfall; Nature; Offbeat,Natural Attractions,Sightseeing; Photography; Short Hike,Easy,Road + Short Hike,27.885,83.548,5
+953,Arghakhanchi,Arghakhanchi,Oct–Feb,"Hills, Culture",Natural Attractions,"Village Walks, Photography",Easy,Road accessible,28.133,83.205,5
+954,Kapilvastu,Kapilvastu,Oct–Feb,"Cultural, Religious",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.5,83,5
+955,Rupandehi,Rupandehi,Oct–Feb,"Cultural, Religious",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.52,83.45,5
+956,Palpa,Palpa,Oct–Feb,"Hills, Scenic",Natural Attractions,"Sightseeing, Trekking",Moderate,Road + Trek,27.883,83.537,5
+957,Bardiya Tiny Shrine,Bardiya,Oct–Nov,"Spiritual, Shrine",Cultural & Religious Sites,"Temple Visit, Photography",Easy,Road accessible,28.296,81.532,5
+958,Dang Minor Temple,Dang,Oct–Nov,"Spiritual, Temple",Cultural & Religious Sites,"Temple Visit, Photography",Easy,Road accessible,28.017,82.493,5
+959,Siddha Baba Temple (Butwal area),Rupandehi,Oct-Mar,"Religious, Cultural",Cultural & Religious Sites,"Pilgrimage, Local Festivals",Easy,"Road, Easy",27.7,83.45,5
+960,Tila Village (Rupandehi rural tourism example),Rupandehi,Oct-Mar,"Rural, Cultural",Cultural & Religious Sites,"Homestay, Cultural Tours",Easy,"Road, Easy",27.6,83.3,5
+961,Rupandehi Cultural Sites (Siddharthanagar),Rupandehi,Oct-Mar,"Cultural, Religious",Cultural & Religious Sites,"Pilgrimage, Museum Visits",Easy,"Road, Easy",27.7,83.45,5
+962,Kapilvastu (Tilaurakot),Kapilvastu,Oct-Mar,"Historical, Religious",Cultural & Religious Sites,"Heritage Tourism, Pilgrimage",Easy,"Road, Easy",27.5078,83.0111,5
+963,Bardiya National Park,Bardiya,Oct-Mar,"Wildlife, Safari",Wildlife & Conservation,"Wildlife Safari, Birdwatching",Easy-Moderate,"Road, Moderate",28.2956,81.667,5
+964,Tansen (Palpa),Palpa,Oct-Mar,"Hill Station, Heritage",Natural Attractions,"Heritage Walk, Sightseeing",Easy-Moderate,"Road, Moderate",27.8761,83.5414,5
+965,Lumbini (Mayadevi Temple),Rupandehi,Oct-Mar,"Religious, UNESCO",Cultural & Religious Sites,"Pilgrimage, Historical Tourism",Easy,"Road, Easy",27.6792,83.507,5
+966,Lumbini Sacred Garden,Rupandehi,Oct–Mar,Temple; Buddhist; Pilgrimage; Heritage,Cultural & Religious Sites,Sightseeing; Photography; Cultural Tour; Worship,Easy,Road Accessible,27.4845,83.276,5
+967,Ramgram Stupa,Nawalparasi,Oct–Mar,Temple; Buddhist; Pilgrimage,Cultural & Religious Sites,Worship; Photography; Cultural Tour,Easy,Road Accessible,27.563,83.548,5
+968,Devdaha Minor Monuments,Rupandehi,Oct–Feb,"Cultural, Heritage",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.518,83.453,5
+969,Lumbini,Rupandehi,Oct–Feb,"Spiritual, UNESCO",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.6792,83.507,5
+970,Majhgaon Waterfall,Dang,Oct–Mar,Waterfall; Nature; Offbeat,Natural Attractions,Sightseeing; Photography; Short Hike,Easy,Road + Short Hike,28.06,82.62,5
+971,Tilaurakot Palace Ruins,Kapilvastu,Oct–Mar,Heritage; Archaeology; Historical,Cultural & Religious Sites,Sightseeing; Photography; Cultural Tour,Easy,Road Accessible,27.555,82.748,5
+972,Chitwan Riverbank Minor Spots,Nawalparasi,Oct–Mar,River; Nature; Offbeat,Natural Attractions,Photography; Birdwatching; Short Walk,Easy,Road Accessible,27.73,83.52,5
+973,Barahi Temple,Palpa,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.883,83.542,5
+974,Tinau River,Palpa/Rupandehi,Oct–Mar,River; Nature; Scenic,Natural Attractions,Sightseeing; Photography; Fishing,Easy,Road Accessible,27.91,83.54,5
+975,Butwal Cultural Area,Rupandehi,Oct–Mar,Village; Cultural; Heritage,Cultural & Religious Sites,Cultural Tour; Photography; Local Experience,Easy,Road Accessible,27.7,83.45,5
+976,Maya Devi Temple,Rupandehi,Oct–Mar,Temple; Buddhist; Pilgrimage,Cultural & Religious Sites,Sightseeing; Photography; Worship,Easy,Road Accessible,27.4849,83.278,5
+977,Puskharni Pond,Rupandehi,Oct–Mar,Lake; Sacred; Pilgrimage,Natural Attractions,Sightseeing; Photography; Worship,Easy,Road Accessible,27.484,83.2765,5
+978,Arghakhanchi,Arghakhanchi,Oct–Feb,"Hills, Culture",Natural Attractions,"Village Walks, Photography",Easy,Road accessible,28.133,83.205,5
+979,Barahi Temple,Palpa,Oct–Mar,Temple; Hindu; Local,Cultural & Religious Sites,Worship; Photography; Cultural Visit,Easy,Road Accessible,27.883,83.542,5
+980,Bardiya,Bardiya,Oct–Feb,"Wildlife, Nature",Natural Attractions,"Safari, Photography",Easy,Road accessible,28.296,81.532,5
+981,Bardiya National Park,Bardiya,Oct-Mar,"Wildlife, Safari",Wildlife & Conservation,"Wildlife Safari, Birdwatching",Easy-Moderate,"Road, Moderate",28.2956,81.667,5
+982,Bardiya Tiny Shrine,Bardiya,Oct–Nov,"Spiritual, Shrine",Cultural & Religious Sites,"Temple Visit, Photography",Easy,Road accessible,28.296,81.532,5
+983,Buddha Statue Viewpoint,Rupandehi,Oct–Mar,Viewpoint; Scenic; Cultural,Natural Attractions,Photography; Short Walk; Sightseeing,Easy,Road + Short Hike,27.485,83.28,5
+984,Butwal Cultural Area,Rupandehi,Oct–Mar,Village; Cultural; Heritage,Cultural & Religious Sites,Cultural Tour; Photography; Local Experience,Easy,Road Accessible,27.7,83.45,5
+985,Chitwan Riverbank Minor Spots,Nawalparasi,Oct–Mar,River; Nature; Offbeat,Natural Attractions,Photography; Birdwatching; Short Walk,Easy,Road Accessible,27.73,83.52,5
+986,Dang,Dang,Oct–Feb,"Valley, Scenic",Natural Attractions,"Hiking, Photography",Easy,Road accessible,28.017,82.493,5
+987,Dang Minor Temple,Dang,Oct–Nov,"Spiritual, Temple",Cultural & Religious Sites,"Temple Visit, Photography",Easy,Road accessible,28.017,82.493,5
+988,Dang Offbeat Hilltop,Dang,Oct–Mar,Hill; Scenic; Nature,Natural Attractions,Photography; Short Trek; Nature Walks,Easy,Road + Short Hike,28.055,82.615,5
+989,Dang Valley Minor Viewpoints,Dang,Oct–Mar,Hill; Scenic; Nature,Natural Attractions,Photography; Nature Walks; Short Trek,Easy,Road + Short Hike,28.05,82.61,5
+990,Devdaha Ancient Monuments Minor Sites,Rupandehi,Oct–Mar,Heritage; Cultural; Historical,Cultural & Religious Sites,Sightseeing; Photography; Cultural Tour,Easy,Road Accessible,27.528,83.35,5
+991,Devdaha Minor Monuments,Rupandehi,Oct–Feb,"Cultural, Heritage",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.518,83.453,5
+992,Gaidahawa Lake,Rupandehi,Oct–Mar,Lake; Nature; Scenic,Natural Attractions,Photography; Sightseeing; Picnic,Easy,Road Accessible,27.43,83.24,5
+993,Ghodaghodi Lake,Kailali/Rupandehi,Oct–Mar,Lake; Wetland; Nature; Birdwatching,Natural Attractions,Sightseeing; Photography; Birdwatching; Boating,Easy,Road Accessible,27.69,82.92,5
+994,Ghodaghodi Lesser Villages,Kailali/Rupandehi,Oct–Mar,Village; Cultural; Nature,Natural Attractions,Homestay; Cultural Tour; Photography; Nature Walks,Easy,Road + Short Trek,27.695,82.925,5
+995,Jagatnagar Village,Arghakhanchi,Oct–Mar,Village; Cultural; Nature,Natural Attractions,Homestay; Photography; Cultural Tour; Short Trek,Moderate,Road + Trek,27.83,83.31,5
+996,Kapilvastu,Kapilvastu,Oct–Feb,"Cultural, Religious",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.5,83,5
+997,Kapilvastu (Tilaurakot),Kapilvastu,Oct-Mar,"Historical, Religious",Cultural & Religious Sites,"Heritage Tourism, Pilgrimage",Easy,"Road, Easy",27.5078,83.0111,5
+998,Khaireni Hill Viewpoint,Dang,Oct–Mar,Hill; Viewpoint; Scenic,Natural Attractions,Photography; Short Trek; Nature Walks,Easy,Road + Short Hike,28.05,82.6,5
+999,Kothi Minor Temples,Arghakhanchi,Oct–Mar,Temple; Local; Cultural,Cultural & Religious Sites,Worship; Photography; Short Walk,Easy,Road Accessible,27.825,83.305,5
+1000,Kothi River,Arghakhanchi,Oct–Mar,River; Nature; Scenic,Natural Attractions,Sightseeing; Photography; Picnic,Easy,Road Accessible,27.82,83.3,5
+1001,Lumbini,Rupandehi,Oct–Feb,"Spiritual, UNESCO",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.6792,83.507,5
+1002,Lumbini Sacred Garden,Rupandehi,Oct–Mar,Temple; Buddhist; Pilgrimage; Heritage,Cultural & Religious Sites,Sightseeing; Photography; Cultural Tour; Worship,Easy,Road Accessible,27.4845,83.276,5
+1003,Lumbini Village Lesser Temples,Rupandehi,Oct–Mar,Temple; Local; Cultural,Cultural & Religious Sites,Worship; Photography; Cultural Tour,Easy,Road Accessible,27.48,83.27,5
+1004,Mahendra Cave,Rupandehi,Oct–Mar,Cave; Natural; Scenic,Natural Attractions,Sightseeing; Photography; Adventure,Easy,Road Accessible,27.682,83.443,5
+1005,Majhgaon Hill Lesser Viewpoints,Dang,Oct–Mar,Hill; Scenic; Nature,Natural Attractions,Photography; Short Trek; Nature Walks,Easy,Road + Short Hike,28.065,82.625,5
+1006,Majhgaon Waterfall,Dang,Oct–Mar,Waterfall; Nature; Offbeat,Natural Attractions,Sightseeing; Photography; Short Hike,Easy,Road + Short Hike,28.06,82.62,5
+1007,Maya Devi Temple,Rupandehi,Oct–Mar,Temple; Buddhist; Pilgrimage,Cultural & Religious Sites,Sightseeing; Photography; Worship,Easy,Road Accessible,27.4849,83.278,5
+1008,Palpa,Palpa,Oct–Feb,"Hills, Scenic",Natural Attractions,"Sightseeing, Trekking",Moderate,Road + Trek,27.883,83.537,5
+1009,Puskharni Pond,Rupandehi,Oct–Mar,Lake; Sacred; Pilgrimage,Natural Attractions,Sightseeing; Photography; Worship,Easy,Road Accessible,27.484,83.2765,5
+1010,Ramgram Stupa,Nawalparasi,Oct–Mar,Temple; Buddhist; Pilgrimage,Cultural & Religious Sites,Worship; Photography; Cultural Tour,Easy,Road Accessible,27.563,83.548,5
+1011,Rupa Lake (near Pokhara / boundary),Kaski,"Sep-Nov, Mar-May","Lake, Leisure",Natural Attractions,"Boating, Birdwatching",Easy,"Road, Easy",28.2333,84.0167,5
+1012,Rupandehi,Rupandehi,Oct–Feb,"Cultural, Religious",Cultural & Religious Sites,"Sightseeing, Photography",Easy,Road accessible,27.52,83.45,5
+1013,Rupandehi Cultural Sites (Siddharthanagar),Rupandehi,Oct-Mar,"Cultural, Religious",Cultural & Religious Sites,"Pilgrimage, Museum Visits",Easy,"Road, Easy",27.7,83.45,5
+1014,Rupandehi Traditional Villages,Rupandehi,Oct–Mar,Village; Cultural; Local,Cultural & Religious Sites,Homestay; Cultural Tour; Photography; Local Food,Easy,Road Accessible,27.48,83.25,5
+1015,Siddha Baba Temple (Butwal area),Rupandehi,Oct-Mar,"Religious, Cultural",Cultural & Religious Sites,"Pilgrimage, Local Festivals",Easy,"Road, Easy",27.7,83.45,5
+1016,Siddha Cave,Rupandehi,Oct–Mar,Cave; Nature; Adventure,Natural Attractions,Sightseeing; Photography; Adventure,Easy,Road Accessible,27.68,83.44,5
+1017,Syangja Waterfall,Palpa,Oct–Mar,Waterfall; Nature; Offbeat,Natural Attractions,Sightseeing; Photography; Short Hike,Easy,Road + Short Hike,27.88,83.55,5
+1018,Tansen,Palpa,Oct–Mar,Town; Heritage; Hill,Natural Attractions,Sightseeing; Photography; Cultural Tour,Easy,Road Accessible,27.88,83.545,5
+1019,Tansen Lesser Waterfalls,Palpa,Oct–Mar,Waterfall; Nature; Offbeat,Natural Attractions,Sightseeing; Photography; Short Hike,Easy,Road + Short Hike,27.885,83.548,5
+1020,Tila Village (Rupandehi rural tourism example),Rupandehi,Oct-Mar,"Rural, Cultural",Cultural & Religious Sites,"Homestay, Cultural Tours",Easy,"Road, Easy",27.6,83.3,5
+1021,Tilaurakot Palace Ruins,Kapilvastu,Oct–Mar,Heritage; Archaeology; Historical,Cultural & Religious Sites,Sightseeing; Photography; Cultural Tour,Easy,Road Accessible,27.555,82.748,5
+1022,Tinau River,Palpa/Rupandehi,Oct–Mar,River; Nature; Scenic,Natural Attractions,Sightseeing; Photography; Fishing,Easy,Road Accessible,27.91,83.54,5
+1023,Kamal Pokhari,Rukum East,Oct–Dec,"Scenic, Waterbody",Natural Attractions,Sightseeing,Easy,Road,28.5800° N,82.8700° E,5
+1024,Kamal Dah,Rukum East,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Road,28.5820° N,82.8720° E,5
+1025,Deurali Cave,Rukum East,Oct–Dec,"Religious, Cave",Natural Attractions,Trekking,Moderate,Trail,28.5850° N,82.8750° E,5
+1026,Jogidanda,Rukum East,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.5900° N,82.8800° E,5
+1027,Rangsi,Rukum East,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.5950° N,82.8850° E,5
+1028,Jang,Rukum East,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.6000° N,82.8900° E,5
+1029,Hukam,Rukum East,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.6050° N,82.8950° E,5
+1030,Sundah,Dang,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0000° N,82.0000° E,5
+1031,Sisne,Dang,Oct–Dec,"Scenic, Rural",Natural Attractions,Hiking,Moderate,Road,28.0100° N,82.0100° E,5
+1032,Thawang,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2000° N,82.3000° E,5
+1033,Rujikhola,Pyuthan,Oct–Dec,Waterbody,Village & Rural Tourism,Trekking,Moderate,Trail,28.1000° N,82.2000° E,5
+1034,Naribang,Pyuthan,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1050° N,82.2050° E,5
+1035,Tulsipur,Dang,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,28.0500° N,82.1000° E,5
+1036,Beljhundi,Dang,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0550° N,82.1050° E,5
+1037,Dudhras,Dang,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0600° N,82.1100° E,5
+1038,Khaira,Dang,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0650° N,82.1150° E,5
+1039,Bangaun,Dang,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0700° N,82.1200° E,5
+1040,Narayanpur,Dang,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0750° N,82.1250° E,5
+1041,Nayagaun,Dang,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0800° N,82.1300° E,5
+1042,Okharkot,Pyuthan,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Road,28.1100° N,82.2100° E,5
+1043,Bandikot,Pyuthan,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1150° N,82.2150° E,5
+1044,Mayalpokhari,Rolpa,Oct–Dec,Waterbody,Village & Rural Tourism,Trekking,Moderate,Trail,28.2200° N,82.3200° E,5
+1045,Sirseni,Dang,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0250° N,82.1050° E,5
+1046,Dhamir,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2250° N,82.3250° E,5
+1047,Arje,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2300° N,82.3300° E,5
+1048,Chhapahile,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2350° N,82.3350° E,5
+1049,Neta,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2400° N,82.3400° E,5
+1050,Gwalichaur,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2450° N,82.3450° E,5
+1051,Malagiri,Rolpa,Oct–Dec,Scenic,Natural Attractions,Hiking,Moderate,Road,28.2500° N,82.3500° E,5
+1052,Narikot,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2550° N,82.3550° E,5
+1053,Majhakot,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2600° N,82.3600° E,5
+1054,Loharpani,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2650° N,82.3650° E,5
+1055,Syuja,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2700° N,82.3700° E,5
+1056,Tripur,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2750° N,82.3750° E,5
+1057,Manpur,Rolpa,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2800° N,82.3800° E,5
+1058,Phulbari,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0800° N,81.6200° E,5
+1059,Goltakuri,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0850° N,81.6250° E,5
+1060,Bejapur,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0900° N,81.6300° E,5
+1061,Narainapur,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.0950° N,81.6350° E,5
+1062,Matahiya,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1000° N,81.6400° E,5
+1063,Gangapur,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1050° N,81.6450° E,5
+1064,Holiya,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1100° N,81.6500° E,5
+1065,Betahani,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1150° N,81.6550° E,5
+1066,Puraina,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1200° N,81.6600° E,5
+1067,Nepalgunj,Banke,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,28.0500° N,81.6167° E,5
+1068,Kalika,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1250° N,81.6650° E,5
+1069,Munalbasti,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1300° N,81.6700° E,5
+1070,Ganeshpur,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1350° N,81.6750° E,5
+1071,Mahamadpur,Banke,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1400° N,81.6800° E,5
+1072,Gulariya,Bardiya,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,28.2167° N,81.6167° E,5
+1073,Aashapur Pakadia,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1450° N,81.6850° E,5
+1074,Bansagadhi,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1500° N,81.6900° E,5
+1075,Baniyabhar,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1550° N,81.6950° E,5
+1076,Padanaha,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1600° N,81.7000° E,5
+1077,Bela,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1650° N,81.7050° E,5
+1078,Dhodhari,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1700° N,81.7100° E,5
+1079,Suryapatawa,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1750° N,81.7150° E,5
+1080,Khairi Chandanpur,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1800° N,81.7200° E,5
+1081,Manau,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1850° N,81.7250° E,5
+1082,Kohalpur,Banke,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,28.1833° N,81.6167° E,5
+1083,Babai,Bardiya,Oct–Dec,"River, Scenic",Natural Attractions,"Sightseeing, Fishing",Easy,Road,28.1900° N,81.7300° E,5
+1084,Kabhrechaur,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.1950° N,81.7350° E,5
+1085,Sahare,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2000° N,81.7400° E,5
+1086,Dasarathpur,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2050° N,81.7450° E,5
+1087,Ramghat,Bardiya,Oct–Dec,Scenic,Natural Attractions,Sightseeing,Easy,Road,28.2100° N,81.7500° E,5
+1088,Satakhani,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2150° N,81.7550° E,5
+1089,Uttarganga,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2200° N,81.7600° E,5
+1090,Hariharpur,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2250° N,81.7650° E,5
+1091,Ranighat,Bardiya,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,28.2300° N,81.7700° E,5
+1092,Sunwal,Nawalparasi,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.9500° N,83.5500° E,5
+1093,Siddharthanagar,Kapilvastu,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,27.5231° N,83.4167° E,5
+1094,Bisunpura,Kapilvastu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5250° N,83.4200° E,5
+1095,Rudrapur,Kapilvastu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5300° N,83.4250° E,5
+1096,Balarampur,Kapilvastu,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,27.5350° N,83.4300° E,5
+1097,Limi,Humla,Jun–Sep,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Hard,"Foot, Helicopter",30.0921,81.4234,6
+1098,Hepka,Humla,Jun–Sep,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Hard,Foot,30.0456,81.5123,6
+1099,Muchu,Humla,Jun–Sep,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Foot,29.9765,81.5945,6
+1100,Simikot,Humla,Mar–Oct,"Urbanic, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,"Road, Air",29.9444,81.7861,6
+1101,Raha,Dolpa,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,"Road, Foot",29.4381,82.8145,6
+1102,Bhandarlek,Jajarkot,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,"Road, Foot",28.1333,81.7333,6
+1103,Kharpunath,Humla,Jun–Sep,"Religious, Scenic",Natural Attractions,"Pilgrimage, Trekking",Hard,Foot,30.075,81.5678,6
+1104,Mangri,Mugu,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,"Road, Foot",29.4542,81.6303,6
+1105,Mugu,Mugu,Mar–Nov,"Urbanic, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,"Road, Foot",29.3328,81.6348,6
+1106,Shreenagar,Surkhet,Sep–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,28.5992,81.6223,6
+1107,Maila,Surkhet,Sep–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,28.55,81.65,6
+1108,Birat,Dailekh,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.05,81.5,6
+1109,Kalai,Dailekh,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.1,81.55,6
+1110,Rara,Mugu,Mar–Nov,"Scenic, Lakes",Natural Attractions,"Boating, Trekking",Moderate,Road,29.3775,81.5333,6
+1111,Chandannath,Dailekh,Mar–Nov,"Religious, Scenic",Natural Attractions,"Pilgrimage, Cultural Exploration",Moderate,Road,29.1,81.45,6
+1112,Shey Phoksundo NP,Dolpa,Mar–Nov,"Scenic, Nature",Natural Attractions,"Trekking, Wildlife Viewing",Hard,"Road, Foot",28,82.8,6
+1113,Kanjeralwa,Dailekh,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.2,81.6,6
+1114,Phoksundo,Dolpa,Mar–Nov,"Scenic, Nature",Natural Attractions,"Trekking, Wildlife Viewing",Hard,"Road, Foot",28,82.8,6
+1115,Dho,Dolpa,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,"Road, Foot",28,82.8,6
+1116,Lawan,Humla,Jun–Sep,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Hard,Foot,30,81.5,6
+1117,Jufai,Humla,Jun–Sep,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Hard,Foot,30.05,81.55,6
+1118,Dunai,Dolpa,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,28,82.8,6
+1119,Hiunchuli,Humla,Jun–Sep,"Scenic, Mountains",Natural Attractions,"Trekking, Mountaineering",Hard,Foot,30.1,81.6,6
+1120,Sakala,Humla,Jun–Sep,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Hard,Foot,30.15,81.65,6
+1121,Guthichaur,Dailekh,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.2,81.7,6
+1122,Manma,Kalikot,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.3,81.8,6
+1123,Saldang,Dolpa,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,28,82.8,6
+1124,Tinje,Dolpa,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,28,82.8,6
+1125,Bhalu Lek,Dailekh,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.25,81.75,6
+1126,Dullu,Dailekh,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.3,81.8,6
+1127,Narayan Municipality,Dailekh,Mar–Nov,"Urbanic, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.35,81.85,6
+1128,Daha,Dailekh,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.4,81.9,6
+1129,Hiunchuli Patan,Humla,Jun–Sep,"Scenic, Mountains",Natural Attractions,"Trekking, Mountaineering",Hard,Foot,30.2,81.7,6
+1130,Khalanga,Kalikot,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.5,81.95,6
+1131,Jhula,Kalikot,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.55,81.95,6
+1132,Sima,Kalikot,Mar–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,29.6,81.95,6
+1133,Birendranagar,Surkhet,Sep–Nov,"Urbanic, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,28.6,81.6167,6
+1134,Babiyachaur,Surkhet,Sep–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,28.65,81.6167,6
+1135,Sharada,Surkhet,Sep–Nov,"Rural, Scenic",Natural Attractions,"Trekking, Cultural Exploration",Moderate,Road,28.67,81.62,6
+1136,Bulbule Lake,Surkhet,Mar–Nov,"Scenic, Nature",Natural Attractions,"Boating, Photography",Moderate,Road,28.6,81.6,6
+1137,Sinja Valley,Jumla,Apr–Oct,"Historical, Trekking",Trekking & Adventure,"Cultural Exploration, Trekking",Moderate,"Road, Foot",29.3,82.1,6
+1138,Panchakoshi Area,Surkhet,Mar–Nov,"Religious, Scenic",Natural Attractions,"Pilgrimage, Nature Walks",Moderate,Road,28.7,81.7,6
+1139,Kakrebihar,Surkhet,Mar–Nov,"Religious, Scenic",Natural Attractions,"Pilgrimage, Photography",Moderate,Road,28.65,81.75,6
+1140,Bheri River,Dailekh,Mar–Nov,"Adventure, Scenic",Natural Attractions,"Rafting, Fishing",Moderate,Road,29.4,81.6,6
+1141,Chhayanath Rara,Jajarkot,Mar–Nov,"Scenic, Nature",Natural Attractions,"Boating, Trekking",Moderate,Road,29.25,81.5,6
+1142,Mount Kanjiroba,Dolpa,Apr–Oct,"Mountains, Scenic",Natural Attractions,"Trekking, Mountaineering",Hard,Foot,28.3,82.1,6
+1143,Putha Hiunchuli,Dolpa,Apr–Oct,"Mountains, Scenic",Natural Attractions,"Trekking, Mountaineering",Hard,Foot,28.4,82.15,6
+1144,Kande Hiun Chuli,Dolpa,Apr–Oct,"Mountains, Scenic",Natural Attractions,"Trekking, Mountaineering",Hard,Foot,28.1,82.2,6
+1145,Chankheli Peak,Humla,Apr–Oct,"Mountains, Scenic",Natural Attractions,"Trekking, Mountaineering",Hard,Foot,30.05,81.55,6
+1146,Changdi (Lalung),Dolpa,Apr–Oct,"Mountains, Scenic",Natural Attractions,"Trekking, Mountaineering",Hard,Foot,28.2,82.25,6
+1147,Kubi Gangri (Kanti Himal),Dolpa,Apr–Oct,"Mountains, Scenic",Natural Attractions,"Trekking, Mountaineering",Hard,Foot,28.35,82.3,6
+1148,Fimkof,Dolpa,Apr–Oct,"Mountains, Scenic",Natural Attractions,"Trekking, Mountaineering",Hard,Foot,28.25,82.18,6
+1149,Phoksundo,Dolpa,May–Oct,Lake,Natural Attractions,"Hiking, Photography",Moderate,Trail,29.1833° N,82.9333° E,6
+1150,Kanjiroba,Dolpa,May–Oct,Mountain,Natural Attractions,"Trekking, Climbing",Challenging,Trail,29.3000° N,82.6000° E,6
+1151,Patmara,Jumla,May–Oct,Rural,Village & Rural Tourism,Hiking,Moderate,Trail,29.2833° N,82.1833° E,6
+1152,Mugu,Mugu,May–Oct,"Rural, Scenic",Natural Attractions,Hiking,Moderate,Air/Road,29.5500° N,82.2700° E,6
+1153,Rara,Mugu,May–Oct,"Lake, Scenic",Natural Attractions,"Boating, Trekking",Moderate,Trail/Road,29.5333° N,82.0833° E,6
+1154,Chhoti Hill Viewpoint,Kailali,Autumn/Winter,Hill View,Natural Attractions,Hiking/Sunset View,Easy,Roadside Trails,28.78,80.95,7
+1155,Bajhang Offbeat Villages,Bajhang,All Year,Cultural/Offbeat,Cultural & Religious Sites,Village Walk/Homestay,Easy,Limited Road,29.6,81.2,7
+1156,Malika Historical Sites,Bajhang,Autumn/Spring,Historical/Heritage,Cultural & Religious Sites,Sightseeing/Study,Moderate,Trail & Road Access,29.55,81.1,7
+1157,Jhulaghat Small Temples,Baitadi / Darchula,All Year,Cultural/Temple,Cultural & Religious Sites,Pilgrimage/Photography,Easy,Nearby Road,29.7,80.4,7
+1158,Chhoti Shivalaya Temple,Kailali,All Year,Religious/Temple,Cultural & Religious Sites,Pilgrimage/Worship,Easy,Road Accessible,28.7,80.95,7
+1159,Gauriganga Waterfall,Bajhang,Monsoon/Autumn,Waterfall,Natural Attractions,Hiking/Photography,Moderate,Trail Access,29.583,81.05,7
+1160,Doti Hidden Trails,Doti,Autumn/Spring,Trekking/Offbeat,Trekking & Adventure,Trekking/Hiking,Moderate,Trekking Trails,29.28,80.9,7
+1161,Rauteli Lake,Darchula,Oct–Mar,Lake; Scenic; Nature; Trekking,Trekking & Adventure,Sightseeing; Photography; Trekking; Camping,Moderate,Road + Trek,29.85,80.5,7
+1162,Kailali / Rupandehi,Kailali / Rupandehi,Oct–Feb,"City, Nature",Natural Attractions,"Sightseeing, Photography",Easy,Road accessible,28.5,81.9,7
+1163,Doti,Doti,Oct–Nov,"Hills, Scenic",Natural Attractions,"Hiking, Photography",Moderate,Road + Trek,29.2,80.87,7
+1164,Bajhang,Bajhang,Oct–Nov,"Hills, Nature",Natural Attractions,"Trekking, Photography",Hard,Trek route,29.11,81.2,7
+1165,Baitadi,Baitadi,Oct–Nov,"Hills, Culture",Natural Attractions,"Temple Visit, Photography",Moderate,Road + Walk,29.542,80.525,7
+1166,Khaptad Baba Ashram,Doti,Oct–Mar,Ashram; Hindu; Spiritual,Cultural & Religious Sites,Worship; Photography; Nature Walks,Moderate,Road + Short Trek,29.1,80.8,7
+1167,Jhulaghat (Mechinagar border area),Baitadi/Kailali border,All Year,"Border, Scenic",Natural Attractions,"Sightseeing, Local Markets",Easy,"Road, Easy",29.6,80.5,7
+1168,Ghodaghodi Tal,Kailali,Oct-Mar,"Wetland, Birdwatching",Natural Attractions,"Birdwatching, Boating",Easy,"Road, Easy",28.8,80.6,7
+1169,Ninglashaini Temple,Baitadi,Oct-Mar,"Religious, Cultural",Cultural & Religious Sites,"Pilgrimage, Festivals",Easy-Moderate,"Road, Moderate",29.428,80.395,7
+1170,Badimalika Temple,Achham,Apr-Oct,"Religious, Pilgrimage",Cultural & Religious Sites,"Pilgrimage, Trekking",Moderate-High,"Road + Trek, Moderate",29,80.5,7
+1171,Khaptad Top View,Doti,Oct–Mar,Viewpoint; Scenic; Nature; Trekking,Trekking & Adventure,Photography; Trekking; Camping; Nature Walks,Moderate,Road + Trek,29.15,80.8,7
+1172,Jhulaghat River Viewpoint,Baitadi,Oct–Mar,River; Scenic; Nature,Natural Attractions,Sightseeing; Photography; Picnic; Short Trek,Easy,Road Accessible,29.45,80.55,7
+1173,Mahakali River Minor Spots,Darchula/Baitadi,Oct–Mar,River; Nature; Scenic,Natural Attractions,Photography; Sightseeing; Picnic,Easy,Road Accessible,29.6,80.55,7
+1174,Doti Tiny Hilltop Viewpoint,Doti,Oct–Mar,Viewpoint; Nature; Offbeat,Natural Attractions,Photography; Short Trek; Nature Observation,Moderate,Road + Short Trek,29.1,80.8,7
+1175,Gauriganga River Upper Trek Sites,Bajhang,Oct–Mar,River; Scenic; Nature; Trekking,Trekking & Adventure,Photography; Trekking; Camping; Nature Walks,Moderate,Road + Trek,29.15,81.05,7
+1176,Bajhang Hidden Stream,Bajhang,Oct–Mar,River; Nature; Offbeat,Natural Attractions,Photography; Short Walk; Nature Observation,Moderate,Road + Short Trek,29.15,81.05,7
+1177,Far Western Cultural Circuit (Doti/Accham sites),Doti/Achham,Oct-Mar,"Cultural, Heritage",Cultural & Religious Sites,"Heritage Tours, Festivals",Easy-Moderate,"Road, Moderate",29.2,80.3,7
+1178,Api Nampa Conservation Area,Darchula/Bajhang,May-Oct,"Conservation, Mountain",Natural Attractions,"Trekking, Cultural",High,"Remote Trek, Challenging",30,80,7
+1179,Shuklaphanta National Park,Kanchanpur,Oct-Mar,"Wildlife, Grassland",Wildlife & Conservation,"Wildlife Safari, Birdwatching",Easy-Moderate,"Road, Moderate",28.9167,80.5167,7
+1180,Khaptad National Park (western edge),Doti/Kailali area,Oct-Mar,"National Park, Hiking",Natural Attractions,"Hiking, Nature",Moderate,"Road + Trek, Moderate",29.02,80.36,7
+1181,Api Himal Base Camp,Darchula,"Spring, Autumn","Trekking, Mountains",Trekking & Adventure,"Trekking, Camping",Hard,Remote Trek,30.0667,81.25,7
+1182,Baitadi Micro Temple,Baitadi,Oct–Mar,Temple; Local; Offbeat,Cultural & Religious Sites,Worship; Photography; Short Walk,Easy,Road Accessible,29.45,80.55,7
+1183,Lesser Tributaries & Streams,Kailali / Doti / Bajhang,Monsoon/Autumn,Nature/Water,Natural Attractions,Exploration/Hiking,Moderate,Local Trails,29.15,80.85,7
+1184,Tripura Sundari Temple,Baitadi,"Spring, Autumn","Religious, Cultural",Cultural & Religious Sites,"Pilgrimage, Sightseeing",Easy,Road,29.5167,80.55,7
+1185,Ramaroshan,Achham,"Spring, Summer","Nature, Lakes, Meadows",Natural Attractions,"Hiking, Sightseeing",Moderate,Road + Trek,29.25,81.25,7
+1186,Khaptad Waterfalls,Doti,Oct–Mar,Waterfall; Nature; Scenic,Natural Attractions,Photography; Trekking; Nature Walks; Camping,Moderate,Road + Trek,29.1,80.8,7
+1187,Dhangadhi,Kailali,Oct–Feb,"City, Cultural",Cultural & Religious Sites,Sightseeing,Easy,Road accessible,28.707,80.594,7
+1188,Api Himal Base Camp,Darchula,"Spring, Autumn","Trekking, Mountains",Trekking & Adventure,"Trekking, Camping",Hard,Remote Trek,30.0667,81.25,7
+1189,Api Nampa Conservation Area,Darchula/Bajhang,May-Oct,"Conservation, Mountain",Natural Attractions,"Trekking, Cultural",High,"Remote Trek, Challenging",30,80,7
+1190,Badimalika Temple,Achham,Apr-Oct,"Religious, Pilgrimage",Cultural & Religious Sites,"Pilgrimage, Trekking",Moderate-High,"Road + Trek, Moderate",29,80.5,7
+1191,Baitadi,Baitadi,Oct–Nov,"Hills, Culture",Natural Attractions,"Temple Visit, Photography",Moderate,Road + Walk,29.542,80.525,7
+1192,Baitadi Minor Temples,Baitadi,All Year,Religious/Local,Cultural & Religious Sites,Pilgrimage/Photography,Easy,Road & Footpath,29.52,80.65,7
+1193,Bajhang,Bajhang,Oct–Nov,"Hills, Nature",Natural Attractions,"Trekking, Photography",Hard,Trek route,29.11,81.2,7
+1194,Chhoti Hill Viewpoint,Kailali,Autumn/Winter,Hill View,Natural Attractions,Hiking/Sunset View,Easy,Roadside Trails,28.78,80.95,7
+1195,Chhoti Shivalaya Temple,Kailali,All Year,Religious/Temple,Cultural & Religious Sites,Pilgrimage/Worship,Easy,Road Accessible,28.7,80.95,7
+1196,Dhangadhi,Kailali,Oct–Feb,"City, Cultural",Cultural & Religious Sites,Sightseeing,Easy,Road accessible,28.707,80.594,7
+1197,Doti Tiny Hilltop Viewpoint,Doti,Oct–Mar,Viewpoint; Nature; Offbeat,Natural Attractions,Photography; Short Trek; Nature Observation,Moderate,Road + Short Trek,29.1,80.8,7
+1198,Far Western Cultural Circuit (Doti/Accham sites),Doti/Achham,Oct-Mar,"Cultural, Heritage",Cultural & Religious Sites,"Heritage Tours, Festivals",Easy-Moderate,"Road, Moderate",29.2,80.3,7
+1199,Gauriganga River Upper Trek Sites,Bajhang,Oct–Mar,River; Scenic; Nature; Trekking,Trekking & Adventure,Photography; Trekking; Camping; Nature Walks,Moderate,Road + Trek,29.15,81.05,7
+1200,Gauriganga Waterfall,Bajhang,Monsoon/Autumn,Waterfall,Natural Attractions,Hiking/Photography,Moderate,Trail Access,29.583,81.05,7
+1201,Ghodaghodi Tal,Kailali,Oct-Mar,"Wetland, Birdwatching",Natural Attractions,"Birdwatching, Boating",Easy,"Road, Easy",28.8,80.6,7
+1202,Jhulaghat (Mechinagar border area),Baitadi/Kailali border,All Year,"Border, Scenic",Natural Attractions,"Sightseeing, Local Markets",Easy,"Road, Easy",29.6,80.5,7
+1203,Jhulaghat River Viewpoint,Baitadi,Oct–Mar,River; Scenic; Nature,Natural Attractions,Sightseeing; Photography; Picnic; Short Trek,Easy,Road Accessible,29.45,80.55,7
+1204,Jhulaghat Small Temples,Baitadi / Darchula,All Year,Cultural/Temple,Cultural & Religious Sites,Pilgrimage/Photography,Easy,Nearby Road,29.7,80.4,7
+1205,Kailali / Rupandehi,Kailali / Rupandehi,Oct–Feb,"City, Nature",Natural Attractions,"Sightseeing, Photography",Easy,Road accessible,28.5,81.9,7
+1206,Khaptad Baba Ashram,Doti,Oct–Mar,Ashram; Hindu; Spiritual,Cultural & Religious Sites,Worship; Photography; Nature Walks,Moderate,Road + Short Trek,29.1,80.8,7
+1207,Khaptad National Park (western edge),Doti/Kailali area,Oct-Mar,"National Park, Hiking",Natural Attractions,"Hiking, Nature",Moderate,"Road + Trek, Moderate",29.02,80.36,7
+1208,Khaptad Top View,Doti,Oct–Mar,Viewpoint; Scenic; Nature; Trekking,Trekking & Adventure,Photography; Trekking; Camping; Nature Walks,Moderate,Road + Trek,29.15,80.8,7
+1209,Khaptad Waterfalls,Doti,Oct–Mar,Waterfall; Nature; Scenic,Natural Attractions,Photography; Trekking; Nature Walks; Camping,Moderate,Road + Trek,29.1,80.8,7
+1210,Lesser Tributaries & Streams,Kailali / Doti / Bajhang,Monsoon/Autumn,Nature/Water,Natural Attractions,Exploration/Hiking,Moderate,Local Trails,29.15,80.85,7
+1211,Mahakali River Minor Spots,Darchula/Baitadi,Oct–Mar,River; Nature; Scenic,Natural Attractions,Photography; Sightseeing; Picnic,Easy,Road Accessible,29.6,80.55,7
+1212,Malika Historical Sites,Bajhang,Autumn/Spring,Historical/Heritage,Cultural & Religious Sites,Sightseeing/Study,Moderate,Trail & Road Access,29.55,81.1,7
+1213,Ninglashaini Temple,Baitadi,Oct-Mar,"Religious, Cultural",Cultural & Religious Sites,"Pilgrimage, Festivals",Easy-Moderate,"Road, Moderate",29.428,80.395,7
+1214,Ramaroshan,Achham,"Spring, Summer","Nature, Lakes, Meadows",Natural Attractions,"Hiking, Sightseeing",Moderate,Road + Trek,29.25,81.25,7
+1215,Rauteli Lake,Darchula,Oct–Mar,Lake; Scenic; Nature; Trekking,Trekking & Adventure,Sightseeing; Photography; Trekking; Camping,Moderate,Road + Trek,29.85,80.5,7
+1216,Shuklaphanta National Park,Kanchanpur,Oct-Mar,"Wildlife, Grassland",Wildlife & Conservation,"Wildlife Safari, Birdwatching",Easy-Moderate,"Road, Moderate",28.9167,80.5167,7
+1217,Tripura Sundari Temple,Baitadi,"Spring, Autumn","Religious, Cultural",Cultural & Religious Sites,"Pilgrimage, Sightseeing",Easy,Road,29.5167,80.55,7
+1218,Dipayal Silgadhi,Doti,Oct–Dec,"Urban, Scenic",Natural Attractions,"Sightseeing, Hiking",Moderate,Road,29.2600° N,80.9400° E,7
+1219,Gobghat Bazzar,Doti,Oct–Dec,"Market, Cultural",Cultural & Religious Sites,"Local Trade, Walk",Easy,Road,29.2650° N,80.9450° E,7
+1220,Mathbora,Doti,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,29.2700° N,80.9500° E,7
+1221,Latamandau,Doti,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,29.2750° N,80.9550° E,7
+1222,Banedugri Sain,Doti,Oct–Dec,Hills,Natural Attractions,Trekking,Challenging,Trail,29.2800° N,80.9600° E,7
+1223,Moi,Doti,Oct–Dec,Village,Village & Rural Tourism,Cultural Visit,Easy,Road,29.2850° N,80.9650° E,7
+1224,Kailpalmandu,Doti,Oct–Dec,Village,Village & Rural Tourism,Sightseeing,Easy,Road,29.2900° N,80.9700° E,7
+1225,Ganeshpur,Doti,Oct–Dec,Village,Village & Rural Tourism,Cultural Visit,Easy,Road,29.2950° N,80.9750° E,7
+1226,Malma,Doti,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,29.3000° N,80.9800° E,7
+1227,Amargadhi,Dadeldhura,Oct–Dec,Urban,Urban & Modern Attractions,Sightseeing,Easy,Road,29.3000° N,80.5800° E,7
+1228,Bhadrapur,Dadeldhura,Oct–Dec,Village,Village & Rural Tourism,Cultural Visit,Easy,Road,29.3100° N,80.5900° E,7
+1229,Chipur,Dadeldhura,Oct–Dec,Rural,Village & Rural Tourism,Hiking,Moderate,Road,29.3200° N,80.6000° E,7
+1230,Mahakali,Darchula,Oct–Dec,"River, Religious",Natural Attractions,Sightseeing,Easy,Road,29.8400° N,80.5500° E,7
+1231,Pancheshwar,Darchula,Oct–Dec,Religious,Cultural & Religious Sites,Pilgrimage,Easy,Road,29.9000° N,80.5500° E,7
+1232,Kailpal Temple,Doti,Oct–Dec,Temple,Cultural & Religious Sites,Religious Visit,Easy,Road,29.2800° N,80.9700° E,7
+1233,Shibanath,Baitadi,Oct–Dec,Temple,Cultural & Religious Sites,Pilgrimage,Easy,Road,29.5400° N,80.7200° E,7
+1234,Saipal,Bajhang,May–Oct,"Mountain, Trekking",Trekking & Adventure,Expedition,Challenging,Trail,30.0500° N,81.2200° E,7
+1235,Khunka Daha,Bajura,May–Oct,Lake,Natural Attractions,Hiking,Moderate,Trail,29.5000° N,81.6000° E,7
+1236,Badimalika,Bajura,May–Oct,"Temple, Hill",Natural Attractions,"Pilgrimage, Hiking",Moderate,Trail,29.5500° N,81.6500° E,7
+1237,Kalapani,Darchula,May–Oct,Mountain Viewpoint,Natural Attractions,"Sightseeing, Trekking",Challenging,Trail,30.2000° N,80.9000° E,7
+1238,Om Parvat Viewpoint,Darchula,May–Oct,Mountain,Natural Attractions,Sightseeing,Moderate,Trail,30.2100° N,80.9100° E,7
+1239,Vyas Cave,Darchula,May–Oct,"Cave, Religious",Natural Attractions,Pilgrimage,Moderate,Trail,30.2200° N,80.9200° E,7
