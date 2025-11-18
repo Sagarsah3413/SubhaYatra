@@ -1,11 +1,11 @@
 import React from "react";
-import SearchResult from "./SearchResult";
+import SearchSuggestionItem from "./SearchSuggestionItem";
 
 export default function SearchResultList({ results, onSelect }) {
   return (
-    <ul className="absolute top-full left-0 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto z-20">
+    <ul className="absolute bg-white w-full shadow-lg rounded-lg mt-2 max-h-60 overflow-y-auto z-20">
       {results.map((item, index) => (
-        <SearchResult key={index} item={item} onSelect={onSelect} />
+        <SearchSuggestionItem key={index} item={item} onSelect={onSelect} />
       ))}
     </ul>
   );

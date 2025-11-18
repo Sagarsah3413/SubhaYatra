@@ -13,6 +13,7 @@ import AllSpotsDetails from "./pages/AllSpotsDetail";
 import AllNatureDetail from "./pages/AllNatureDetail";
 import SearchBar from "./pages/SearchBar";
 import InspireIcon from "./assets/try-icon.jpg"; // make sure this path is correct
+import SearchResultPage from "./pages/SearchResultPage";
 
 // ✅ import Footer from your correct folder
 import Footer from "../components/footer/Footer";
@@ -185,6 +186,8 @@ function App() {
         <Route path="/all-nature-places" element={<AllNatureDetail />} />
         <Route path="/recommendation" element={<div>Recommendation Page</div>} />
         <Route path="/map" element={<div>Nepal Map Page</div>} />
+        <Route path="/searchresult" element={<SearchResultPage />} />
+
         
       </Routes>
     </Router>

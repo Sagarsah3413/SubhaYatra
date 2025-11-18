@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import SearchResultList from "./SearchResultList";
 
 export default function SearchBar({ placeholder }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  // Determine category from placeholder
-  const getCategory = () => {
-    if (!placeholder) return "all";
-    if (placeholder.toLowerCase().includes("hotel")) return "hotel";
-    if (placeholder.toLowerCase().includes("restaurant")) return "restaurant";
-    if (placeholder.toLowerCase().includes("things to do")) return "attraction";
-    return "all";
-  };
-
-  const category = getCategory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (query.trim().length < 2) {
@@ -23,74 +14,62 @@ export default function SearchBar({ placeholder }) {
       return;
     }
 
-    const delayDebounce = setTimeout(async () => {
+    const fetchData = async () => {
       try {
-        setLoading(true);
-        const response = await fetch(
-          `http://127.0.0.1:8000/search/?q=${encodeURIComponent(query)}`
+        const res = await fetch(
+          `http://127.0.0.1:8000/api/search/?q=${query}`
         );
-        const data = await response.json();
-        setLoading(false);
+        const data = await res.json();
 
-        const filteredResults = [];
-        if (category === "all" || category === "hotel") {
-          filteredResults.push(...data.hotels.map(h => ({ type: "Hotel", name: h })));
-        }
-        if (category === "all" || category === "restaurant") {
-          filteredResults.push(...data.restaurants.map(r => ({ type: "Restaurant", name: r })));
-        }
-        if (category === "all" || category === "attraction") {
-          filteredResults.push(...data.attractions.map(a => ({ type: "Attraction", name: a })));
-        }
+        // Take first 5 matches for suggestions (can be random too)
+        const suggestions = data.results
+          .filter(item =>
+            item.name.toLowerCase().startsWith(query.toLowerCase())
+          )
+          .slice(0, 5);
 
-        setResults(filteredResults);
-      } catch (error) {
-        console.error("Error fetching:", error);
-        setLoading(false);
+        setResults(suggestions);
+      } catch (err) {
+        console.error(err);
         setResults([]);
       }
-    }, 300);
+    };
 
-    return () => clearTimeout(delayDebounce);
-  }, [query, category]);
-
-  const handleSelect = (item) => {
-    setQuery(item.name);
-    setResults([]);
-  };
+    const delay = setTimeout(fetchData, 200); // debounce
+    return () => clearTimeout(delay);
+  }, [query]);
 
   const handleSearch = () => {
     if (!query.trim()) return;
-    alert(`You searched for: "${query}"`);
+    navigate(`/searchresult?query=${encodeURIComponent(query)}`);
+    setResults([]);
+  };
+
+  const handleSelect = (item) => {
+    setQuery(item.name);
+    navigate(`/searchresult?query=${encodeURIComponent(item.name)}`);
     setResults([]);
   };
 
   return (
     <div className="relative w-[600px] mt-6 mx-auto">
-      {/* Search bar */}
-      <div className="flex border border-gray-400 rounded-full shadow-md bg-white w-full overflow-hidden">
-        <div className="flex items-center px-4">
-          <FaSearch className="text-gray-500 text-lg" />
-        </div>
-
+      <div className="flex border border-gray-400 rounded-full shadow bg-white w-full">
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder={placeholder || "Search everything..."}
-          className="flex-grow px-4 py-3 outline-none text-gray-700 text-lg"
+          placeholder={placeholder || "Search places..."}
+          className="flex-grow px-4 py-3 outline-none text-gray-700 text-lg rounded-full"
         />
 
         <button
           onClick={handleSearch}
-          className="px-6 bg-black text-white hover:bg-gray-900 transition-all text-lg font-medium"
-          style={{ borderTopRightRadius: "9999px", borderBottomRightRadius: "9999px" }}
+          className="px-6 bg-black text-white rounded-full text-lg ml-2"
         >
-          Search
+          <FaSearch />
         </button>
       </div>
 
-      {/* Dropdown suggestions */}
       {results.length > 0 && (
         <ul className="absolute top-full left-0 w-full bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto z-20">
           {results.map((item, index) => (
@@ -103,11 +82,6 @@ export default function SearchBar({ placeholder }) {
             </li>
           ))}
         </ul>
-      )}
-
-      {/* Loading */}
-      {loading && (
-        <p className="text-gray-500 mt-2 text-center">Loading...</p>
       )}
     </div>
   );
