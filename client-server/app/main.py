@@ -1,10 +1,9 @@
 # app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles  # <-- add this
 from . import models, database
-from app.routes import search
 from .routes import search  # import your search router
-# import your other routers if any: from .routes import users, rooms
 
 # create tables
 models.Base.metadata.create_all(bind=database.engine)
@@ -25,6 +24,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# serve static images from datasets folder
+app.mount("/datasets", StaticFiles(directory="datasets"), name="datasets")
 
 @app.get("/")
 def read_root():

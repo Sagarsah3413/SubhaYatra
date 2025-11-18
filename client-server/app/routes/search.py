@@ -1,70 +1,67 @@
+# app/routes/search.py
 from fastapi import APIRouter, Query
-from sqlalchemy.orm import Session
 from app import models, database
 import os
 
-router = APIRouter(
-    prefix="/search",
-    tags=["search"]
-)
+router = APIRouter(prefix="/api", tags=["search"])
 
-@router.get("/")
+# base folder where images are stored
+BASE_IMAGE_DIR = "datasets/project_imgfold/project_images"
+
+def get_images_for_place(place_name: str):
+    """Return all image paths for a place as a list."""
+    folder_path = os.path.join(BASE_IMAGE_DIR, place_name)
+    images = []
+    if os.path.exists(folder_path):
+        for file in os.listdir(folder_path):
+            if file.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
+                # Make relative path for FastAPI static serving
+                images.append(os.path.join("datasets/project_imgfold/project_images", place_name, file).replace("\\", "/"))
+    return images
+
+@router.get("/search/")
 def search_items(q: str = Query(..., min_length=1)):
-    db: Session = database.SessionLocal()
+    db = database.SessionLocal()
     query = f"%{q}%"
-
     results = []
 
-    # Combine all places
-    places = db.query(models.Hotel).filter(
-        models.Hotel.name.ilike(query) |
-        models.Hotel.tags.ilike(query) |
-        models.Hotel.description.ilike(query)
-    ).all() + db.query(models.Restaurant).filter(
-        models.Restaurant.name.ilike(query) |
-        models.Restaurant.tags.ilike(query) |
-        models.Restaurant.description.ilike(query)
-    ).all() + db.query(models.Attraction).filter(
-        models.Attraction.name.ilike(query) |
-        models.Attraction.tags.ilike(query) |
-        models.Attraction.description.ilike(query)
-    ).all()
-
-    for p in places:
-        folder_path = os.path.join("datasets", "project_imgfold", "project_images", p.name)
-        images = []
-        if os.path.exists(folder_path):
-            for f in os.listdir(folder_path):
-                if f.lower().endswith((".jpg", ".png", ".jpeg")):
-                    images.append(f"datasets/project_imgfold/project_images/{p.name}/{f}")
-
+    # Helper to append results
+    def add_result(obj, obj_type):
         results.append({
-            "name": p.name,
-            "description": p.description,
-            "location": getattr(p, "location", ""),
-            "tags": getattr(p, "tags", ""),
-            "images": images
+            "name": obj.name,
+            "type": obj_type,
+            "description": obj.description or "",
+            "location": obj.location or "",
+            "tags": obj.tags or "",
+            "images": get_images_for_place(obj.name)
         })
 
-    # Fallback: first-letter suggestions
-    if not results:
-        first_letter = q[0].lower()
-        all_places = db.query(models.Hotel).all() + db.query(models.Restaurant).all() + db.query(models.Attraction).all()
-        for p in all_places:
-            if p.name.lower().startswith(first_letter):
-                folder_path = os.path.join("datasets", "project_imgfold", "project_images", p.name)
-                images = []
-                if os.path.exists(folder_path):
-                    for f in os.listdir(folder_path):
-                        if f.lower().endswith((".jpg", ".png", ".jpeg")):
-                            images.append(f"datasets/project_imgfold/project_images/{p.name}/{f}")
-                results.append({
-                    "name": p.name,
-                    "description": p.description,
-                    "location": getattr(p, "location", ""),
-                    "tags": getattr(p, "tags", ""),
-                    "images": images
-                })
+    # Hotels
+    hotels = db.query(models.Hotel).filter(
+        (models.Hotel.name.ilike(query)) |
+        (models.Hotel.tags.ilike(query)) |
+        (models.Hotel.description.ilike(query))
+    ).all()
+    for h in hotels:
+        add_result(h, "Hotel")
+
+    # Restaurants
+    restaurants = db.query(models.Restaurant).filter(
+        (models.Restaurant.name.ilike(query)) |
+        (models.Restaurant.tags.ilike(query)) |
+        (models.Restaurant.description.ilike(query))
+    ).all()
+    for r in restaurants:
+        add_result(r, "Restaurant")
+
+    # Attractions
+    attractions = db.query(models.Attraction).filter(
+        (models.Attraction.name.ilike(query)) |
+        (models.Attraction.tags.ilike(query)) |
+        (models.Attraction.description.ilike(query))
+    ).all()
+    for a in attractions:
+        add_result(a, "Attraction")
 
     db.close()
     return {"results": results}
