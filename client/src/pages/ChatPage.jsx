@@ -3,7 +3,6 @@ import { SignedIn, SignedOut, SignInButton, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 import Footer from "../../components/footer/Footer";
 
-
 // Custom Header
 function ChatHeader() {
   const { user } = useUser(); // only user info
@@ -74,6 +73,8 @@ export default function ChatPage() {
   const loadChat = async (chatId) => {
     setCurrentChatId(chatId);
     setShowHistory(false);
+    setSearchResults([]);
+    setSearchQuery("");
     try {
       const res = await axios.get(`/api/chat/messages?chat_id=${chatId}`);
       setMessages(res.data);
@@ -152,7 +153,10 @@ export default function ChatPage() {
       <div className="flex flex-1">
         {/* Sidebar */}
         <div className="w-60 bg-gray-100 h-screen p-4 flex flex-col gap-4">
+          {/* New Chat Button */}
           <SidebarButton icon="📝" label="New Chat" onClick={handleNewChat} />
+
+          {/* Search */}
           <div className="flex flex-col gap-2">
             <input
               type="text"
@@ -168,6 +172,8 @@ export default function ChatPage() {
               Search
             </button>
           </div>
+
+          {/* Toggle History */}
           <button
             onClick={() => setShowHistory(!showHistory)}
             className="flex items-center gap-2 p-2 hover:bg-gray-200 rounded"
@@ -175,18 +181,32 @@ export default function ChatPage() {
             🕘 History
           </button>
 
-          {/* History list */}
-          {showHistory && (
-            <div className="overflow-y-auto mt-2 max-h-80">
-              {chats.map((chat) => (
-                <button
-                  key={chat.id}
-                  className="flex items-center justify-between w-full p-2 hover:bg-gray-300 rounded"
-                  onClick={() => loadChat(chat.id)}
-                >
-                  {chat.title || `Chat ${chat.id}`}
-                </button>
-              ))}
+          {/* Chat list: show search results if searching, otherwise history */}
+          {(showHistory || searchResults.length > 0) && (
+            <div className="overflow-y-auto mt-2 max-h-80 flex flex-col gap-1">
+              {searchResults.length > 0
+                ? searchResults.map((chat) => (
+                    <button
+                      key={chat.id}
+                      className="flex items-center justify-between w-full p-2 hover:bg-gray-300 rounded"
+                      onClick={() => {
+                        loadChat(chat.id);
+                        setSearchResults([]);
+                        setSearchQuery("");
+                      }}
+                    >
+                      {chat.title || `Chat ${chat.id}`}
+                    </button>
+                  ))
+                : chats.map((chat) => (
+                    <button
+                      key={chat.id}
+                      className="flex items-center justify-between w-full p-2 hover:bg-gray-300 rounded"
+                      onClick={() => loadChat(chat.id)}
+                    >
+                      {chat.title || `Chat ${chat.id}`}
+                    </button>
+                  ))}
             </div>
           )}
         </div>
@@ -239,3 +259,4 @@ export default function ChatPage() {
     </div>
   );
 }
+3
