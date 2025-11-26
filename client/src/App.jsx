@@ -16,6 +16,7 @@ import InspireIcon from "./assets/try-icon.jpg"; // check your path
 import SearchResultPage from "./pages/SearchResultPage";
 import ChatPage from "./pages/ChatPage";
 import Footer from "../components/footer/Footer";
+import RecommendationPage from "./pages/RecommendationPage";
 
 function HeaderWithNav() {
   const navigate = useNavigate();
@@ -236,17 +237,18 @@ function MainApp() {
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<MainApp />} />
-        <Route path="/all-places-detail" element={<AllPlacesDetail />} />
-        <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
-        <Route path="/all-nature-places" element={<AllNatureDetail />} />
-        <Route path="/recommendation" element={<div>Recommendation Page</div>} />
-        <Route path="/map" element={<div>Nepal Map Page</div>} />
-        <Route path="/searchresult" element={<SearchResultPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-      </Routes>
-    </Router>
+  <Routes>
+    <Route path="/" element={<MainApp />} />
+    <Route path="/all-places-detail" element={<AllPlacesDetail />} />
+    <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
+    <Route path="/all-nature-places" element={<AllNatureDetail />} />
+    <Route path="/map" element={<div>Nepal Map Page</div>} />
+    <Route path="/searchresult" element={<SearchResultPage />} />
+    <Route path="/chat" element={<ChatPage />} />
+    <Route path="/recommendation" element={<RecommendationPage />} />
+  </Routes>
+</Router>
+
   );
 }
 
