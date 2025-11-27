@@ -9,7 +9,7 @@ class Hotel(Base):
     location = Column(String, nullable=True)
     description = Column(Text, nullable=True)
     tags = Column(String, nullable=True)
-    image_url = Column(String, nullable=True)  # add this
+    image_url = Column(String, nullable=True)
 
 class Restaurant(Base):
     __tablename__ = "restaurants"
@@ -18,7 +18,7 @@ class Restaurant(Base):
     location = Column(String, nullable=True)
     description = Column(Text, nullable=True)
     tags = Column(String, nullable=True)
-    image_url = Column(String, nullable=True)  # add this
+    image_url = Column(String, nullable=True)
 
 class Attraction(Base):
     __tablename__ = "attractions"
@@ -27,4 +27,4 @@ class Attraction(Base):
     location = Column(String, nullable=True)
     description = Column(Text, nullable=True)
     tags = Column(String, nullable=True)
-    image_url = Column(String, nullable=True)  # add this
+    image_url = Column(String, nullable=True)

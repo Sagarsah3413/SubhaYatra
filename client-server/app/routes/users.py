@@ -1,24 +1,33 @@
 # app/routes/users.py
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from .. import schemas, crud, database
+from flask import Blueprint, request, jsonify
+from ..database import SessionLocal
+from .. import crud
 
-router = APIRouter(prefix="/users", tags=["Users"])
+users_blueprint = Blueprint('users', __name__)
 
-def get_db():
-    db = database.SessionLocal()
-    try:
-        yield db
-    finally:
+@users_blueprint.route("/", methods=["POST"])
+def create_user_route():
+    db = SessionLocal()
+    data = request.json
+    existing = crud.get_user_by_email(db, data['email'])
+    if existing:
         db.close()
+        return jsonify({"error": "Email already registered"}), 400
+    user = crud.create_user(db, data)
+    db.close()
+    return jsonify({
+        "id": user.id,
+        "username": user.username,
+        "email": user.email,
+        "mobile": user.mobile
+    })
 
-@router.post("/", response_model=schemas.UserResponse)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_email(db, user.email)
-    if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    return crud.create_user(db, user)
-
-@router.get("/", response_model=list[schemas.UserResponse])
-def read_users(db: Session = Depends(get_db)):
-    return crud.get_users(db)
+@users_blueprint.route("/", methods=["GET"])
+def get_users_route():
+    db = SessionLocal()
+    users = crud.get_users(db)
+    db.close()
+    return jsonify([
+        {"id": u.id, "username": u.username, "email": u.email, "mobile": u.mobile}
+        for u in users
+    ])

@@ -1,21 +1,30 @@
 # app/routes/rooms.py
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-from .. import schemas, crud, database
+from flask import Blueprint, request, jsonify
+from ..database import SessionLocal
+from .. import crud
 
-router = APIRouter(prefix="/rooms", tags=["Rooms"])
+rooms_blueprint = Blueprint('rooms', __name__)
 
-def get_db():
-    db = database.SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+@rooms_blueprint.route("/", methods=["POST"])
+def create_room_route():
+    db = SessionLocal()
+    data = request.json
+    room = crud.create_room(db, data)
+    db.close()
+    return jsonify({
+        "id": room.id,
+        "name": room.name,
+        "description": room.description,
+        "price": room.price,
+        "image": room.image
+    })
 
-@router.post("/", response_model=schemas.RoomResponse)
-def create_room(room: schemas.RoomCreate, db: Session = Depends(get_db)):
-    return crud.create_room(db, room)
-
-@router.get("/", response_model=list[schemas.RoomResponse])
-def read_rooms(db: Session = Depends(get_db)):
-    return crud.get_rooms(db)
+@rooms_blueprint.route("/", methods=["GET"])
+def get_rooms_route():
+    db = SessionLocal()
+    rooms = crud.get_rooms(db)
+    db.close()
+    return jsonify([
+        {"id": r.id, "name": r.name, "description": r.description, "price": r.price, "image": r.image}
+        for r in rooms
+    ])

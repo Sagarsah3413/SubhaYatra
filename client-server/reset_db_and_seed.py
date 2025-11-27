@@ -1,18 +1,17 @@
-# reset_db_and_seed.py
-from app import models, database
+from database import engine, SessionLocal, Base
+import models
 
-# 1️⃣ Connect to DB
-db = database.SessionLocal()
-
-# 2️⃣ Drop all old tables (careful, this deletes existing data)
-models.Base.metadata.drop_all(bind=database.engine)
+# Drop all tables
+Base.metadata.drop_all(bind=engine)
 print("Dropped all tables.")
 
-# 3️⃣ Recreate tables with updated schema (includes image_url)
-models.Base.metadata.create_all(bind=database.engine)
+# Recreate tables
+Base.metadata.create_all(bind=engine)
 print("Created tables with updated schema.")
 
-# 4️⃣ Sample data
+# Insert sample data
+db = SessionLocal()
+
 sample_data = [
     # Hotels
     models.Hotel(
@@ -91,7 +90,6 @@ sample_data = [
     ),
 ]
 
-# 5️⃣ Add data and commit
 db.add_all(sample_data)
 db.commit()
 db.close()

@@ -25,11 +25,11 @@ export default function RecommendationPage() {
   const [errors, setErrors] = useState({});
 
   const tripOptions = [
-    "⛰️Natural Attractions",
-    "🧗Trekking & Adventures",
-    "🛕Cultural and Religious Sites",
-    "🏡Village & Rural Tourism",
-    "🏙️Urban & Modern Attractions",
+    "⛰️ Natural Attractions",
+    "🧗 Trekking & Adventures",
+    "🛕 Cultural & Religious Sites",
+    "🏡 Village & Rural Tourism",
+    "🏙️ Urban & Modern Attractions",
   ];
 
   const validateForm = () => {
@@ -38,8 +38,9 @@ export default function RecommendationPage() {
     if (!formData.name.trim()) newErrors.name = "Name is required.";
     if (!formData.age) newErrors.age = "Select a valid age.";
 
-    if (!formData.phone || formData.phone.length < 8)
-      newErrors.phone = "Phone number is invalid.";
+    // Phone validation — minimum 10 digits after country code
+    if (!formData.phone || formData.phone.replace(/\D/g, "").length < 10)
+      newErrors.phone = "Phone number must be at least 10 digits.";
 
     if (!formData.travellers)
       newErrors.travellers = "Select number of travellers.";
@@ -124,7 +125,11 @@ export default function RecommendationPage() {
                 country={"np"}
                 value={formData.phone}
                 onChange={(phone) => setFormData({ ...formData, phone })}
-                inputStyle={{ width: "100%" }}
+                inputStyle={{
+                  width: "100%",
+                  height: "48px",
+                  borderRadius: "8px",
+                }}
                 buttonStyle={{ borderRadius: "8px" }}
                 dropdownStyle={{ borderRadius: "8px" }}
               />
@@ -157,13 +162,13 @@ export default function RecommendationPage() {
               )}
             </div>
 
-            {/* Trip Types */}
+            {/* Trip Types – 2-column Square Buttons */}
             <div>
               <label className="block text-gray-700 font-medium mb-2">
                 Preferred Trip Type
               </label>
 
-              <div className="grid grid-cols-1 gap-3">
+              <div className="grid grid-cols-2 gap-4">
                 {tripOptions.map((type) => {
                   const isSelected = formData.tripTypes[0] === type;
 
@@ -174,11 +179,15 @@ export default function RecommendationPage() {
                       onClick={() =>
                         setFormData({ ...formData, tripTypes: [type] })
                       }
-                      className={`w-full p-3 rounded-lg border text-center transition 
+                      className={`
+                        h-28 rounded-xl border flex items-center justify-center 
+                        text-center px-2 font-medium transition-all duration-200
                         ${
                           isSelected
-                            ? "bg-red-600 text-white border-red-700"
-                            : "bg-gray-200 text-gray-800 border-gray-300"
+  ? "bg-stone-700 text-white border-stone-600 shadow-md"
+  : "bg-stone-100 text-stone-700 border-stone-300 hover:bg-stone-200"
+
+                         
                         }
                       `}
                     >
@@ -208,10 +217,10 @@ export default function RecommendationPage() {
               ></textarea>
             </div>
 
-            {/* Submit */}
+            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-red-600 hover:bg-red-700 text-white p-3 rounded-lg font-medium"
+              className="w-full bg-black hover:bg-gray-800 text-white p-3 rounded-lg font-medium transition"
             >
               Show My Recommendations
             </button>
