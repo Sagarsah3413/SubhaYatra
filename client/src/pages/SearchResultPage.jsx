@@ -3,22 +3,37 @@ import { useLocation } from "react-router-dom";
 
 export default function SearchResultPage() {
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
   const query = new URLSearchParams(useLocation().search).get("query");
 
   useEffect(() => {
-    const fetchResult = async () => {
-      const res = await fetch(`http://127.0.0.1:8000/api/search/?q=${query}`);
-      const data = await res.json();
+    if (!query) {
+      setError("No query provided");
+      return;
+    }
 
-      if (data.results && data.results.length > 0) {
-        setResult(data.results[0]);
-      } else {
-        setResult("not-found");
+    const fetchResult = async () => {
+      try {
+        const res = await fetch(`http://127.0.0.1:8000/api/search/?q=${encodeURIComponent(query)}`);
+        if (!res.ok) throw new Error("Failed to fetch search results");
+        const data = await res.json();
+
+        if (Array.isArray(data.results) && data.results.length > 0) {
+          setResult(data.results[0]); // Take the first matching result
+        } else {
+          setResult("not-found");
+        }
+      } catch (err) {
+        setError(err.message);
       }
     };
 
     fetchResult();
   }, [query]);
+
+  if (error) {
+    return <p className="text-center mt-10 text-red-500">{error}</p>;
+  }
 
   if (result === null) {
     return <p className="text-center mt-10 text-xl">Loading...</p>;
@@ -37,9 +52,9 @@ export default function SearchResultPage() {
       <h1 className="text-3xl font-bold mb-4">{result.name}</h1>
 
       {/* Image Gallery */}
-      <div className="flex gap-3 overflow-x-auto mb-4">
-        {result.images &&
-          result.images.map((img, idx) => (
+      {result.images && result.images.length > 0 && (
+        <div className="flex gap-3 overflow-x-auto mb-4">
+          {result.images.map((img, idx) => (
             <img
               key={idx}
               src={`http://127.0.0.1:8000/${img.replace(/\\/g, "/")}`}
@@ -47,10 +62,22 @@ export default function SearchResultPage() {
               alt={result.name}
             />
           ))}
-      </div>
+        </div>
+      )}
 
-      <p className="text-lg text-gray-700 mb-2">{result.description}</p>
-      <p className="text-gray-500">Location: {result.location}</p>
+      <p className="text-lg text-gray-700 mb-2">{result.description || "No description available."}</p>
+      <p className="text-gray-500 mb-4">Location: {result.location || "Unknown"}</p>
+
+      {result.wikipedia_url && (
+        <a
+          href={result.wikipedia_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 underline"
+        >
+          Read more on Wikipedia
+        </a>
+      )}
     </div>
   );
 }

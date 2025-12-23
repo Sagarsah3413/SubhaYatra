@@ -1,6 +1,9 @@
 # app/models.py
 from sqlalchemy import Column, Integer, String, Text
 from .database import Base
+from datetime import datetime
+from .database import db
+
 
 class Hotel(Base):
     __tablename__ = "hotels"
@@ -28,3 +31,19 @@ class Attraction(Base):
     description = Column(Text, nullable=True)
     tags = Column(String, nullable=True)
     image_url = Column(String, nullable=True)
+
+
+class Chat(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String, nullable=False)
+    title = db.Column(db.String, default="New Chat")
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'), nullable=False)
+    sender = db.Column(db.String, nullable=False)   # "user" or "bot"
+    content = db.Column(db.Text, nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    chat = db.relationship("Chat", backref="messages")

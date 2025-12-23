@@ -16,12 +16,10 @@ export default function SearchBar({ placeholder }) {
 
     const fetchData = async () => {
       try {
-        const res = await fetch(
-          `http://127.0.0.1:8000/api/search/?q=${query}`
-        );
+        const res = await fetch(`http://127.0.0.1:8000/api/search/?q=${query}`);
         const data = await res.json();
 
-        // Take first 5 matches for suggestions (can be random too)
+        // Take first 5 matches for suggestions
         const suggestions = data.results
           .filter(item =>
             item.name.toLowerCase().startsWith(query.toLowerCase())
@@ -47,7 +45,9 @@ export default function SearchBar({ placeholder }) {
 
   const handleSelect = (item) => {
     setQuery(item.name);
-    navigate(`/searchresult?query=${encodeURIComponent(item.name)}`);
+    // If navigating to details page
+     navigate(`/details?type=${item.type}&name=${encodeURIComponent(item.name)}`);
+
     setResults([]);
   };
 
@@ -61,7 +61,6 @@ export default function SearchBar({ placeholder }) {
           placeholder={placeholder || "Search places..."}
           className="flex-grow px-4 py-3 outline-none text-gray-700 text-lg rounded-full"
         />
-
         <button
           onClick={handleSearch}
           className="px-6 bg-black text-white rounded-full text-lg ml-2"

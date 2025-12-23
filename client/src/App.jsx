@@ -17,6 +17,7 @@ import SearchResultPage from "./pages/SearchResultPage";
 import ChatPage from "./pages/ChatPage";
 import Footer from "../components/footer/Footer";
 import RecommendationPage from "./pages/RecommendationPage";
+import DetailPage from "./pages/DetailPage";
 
 function HeaderWithNav() {
   const navigate = useNavigate();
@@ -246,6 +247,9 @@ function App() {
     <Route path="/searchresult" element={<SearchResultPage />} />
     <Route path="/chat" element={<ChatPage />} />
     <Route path="/recommendation" element={<RecommendationPage />} />
+    <Route path="/details" element={<DetailPage />} />
+
+
   </Routes>
 </Router>
 
