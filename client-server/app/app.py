@@ -1,23 +1,23 @@
-# app/app.py
 from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
 import os
 
-# Your existing imports
-from .database import init_db
+from .database import init_db, db
 from .routes.search import search_blueprint
 from .routes.users import users_blueprint
 from .routes.rooms import rooms_blueprint
-
-# Chatbot (NEW IMPORTS)
-from .database import db
-from .routes.chat_routes import chat_bp   # <-- Chatbot API routes
+from .routes.chat_routes import chat_bp
+from .routes.admin import admin_bp   # ⭐ ADMIN IMPORT
 
 
 def create_app():
     app = Flask(__name__, static_folder=None)
 
-    # Allowed origins for React frontend
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./tourism.db"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    db.init_app(app)
+
     CORS(app, origins=[
         "http://localhost:5173",
         "http://localhost:3000",
@@ -25,29 +25,25 @@ def create_app():
         "http://127.0.0.1:3000"
     ], supports_credentials=True)
 
-    # Initialize SQLite DB
+    # ❌ No table creation
     init_db()
 
-    # -----------------------------
-    # Register ALL blueprints here
-    # -----------------------------
+    # Register existing routes
     app.register_blueprint(search_blueprint, url_prefix="/api")
     app.register_blueprint(users_blueprint, url_prefix="/users")
     app.register_blueprint(rooms_blueprint, url_prefix="/rooms")
+    app.register_blueprint(chat_bp, url_prefix="/api/chat")
 
-    # Places API
     from .routes.places import places_bp
     app.register_blueprint(places_bp, url_prefix="/api")
 
-    # ⭐ NEW — Chatbot API
-    app.register_blueprint(chat_bp, url_prefix="/api/chat")
+    # ⭐ ADMIN ROUTE
+    app.register_blueprint(admin_bp)
 
-    # Root route
     @app.route("/")
     def index():
         return jsonify({"message": "Backend is running successfully!"})
 
-    # Serve datasets folder
     @app.route("/datasets/<path:filename>")
     def datasets_files(filename):
         datasets_dir = os.path.join(os.getcwd(), "datasets")
