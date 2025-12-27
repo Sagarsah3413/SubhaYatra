@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.53.3",
+    "@nakarmi23/bikram-sambat": "^1.4.8",
     "@tailwindcss/vite": "^4.1.16",
     "axios": "^1.13.2",
     "classnames": "^2.5.1",

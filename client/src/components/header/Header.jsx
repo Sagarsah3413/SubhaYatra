@@ -1,6 +1,7 @@
-import { useRef } from "react";
+   import React, { useState, useRef, useEffect } from 'react';
 import { UserButton, SignUpButton, SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import NepaliCalendar from "../../pages/NepaliCalendar";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -16,70 +17,181 @@ export const Header = () => {
     clerkAvailable = false;
   }
 
-  // 3D tilt refs & handlers
-  const logoRef = useRef(null);
-  const titleRef = useRef(null);
-  const containerRef = useRef(null);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [mobileAnimating, setMobileAnimating] = useState(false);
+  const calendarRef = useRef(null);
+  const triggerRef = useRef(null); // store the button that opened the modal
+  const previousActive = useRef(null);
 
-  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Live clock state
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      // Check if click is outside both desktop and mobile modal containers
+      const modalContainer = e.target.closest('[role="dialog"]');
+      if (!modalContainer && showCalendar) {
+        // If mobile sheet is open, animate it out first
+        if (mobileAnimating) {
+          setMobileAnimating(false);
+          setTimeout(() => setShowCalendar(false), 300);
+        } else {
+          setShowCalendar(false);
+        }
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [mobileAnimating, showCalendar]);
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Escape key closes modal (already existed) + focus trap/tab handling
+  useEffect(() => {
+    function handleKey(e) {
+      if (!showCalendar) return;
+      if (e.key === 'Escape') {
+        // animate mobile sheet out if open
+        if (mobileAnimating) {
+          setMobileAnimating(false);
+          setTimeout(() => setShowCalendar(false), 300);
+        } else {
+          setShowCalendar(false);
+        }
+      }
+      if (e.key === 'Tab' && calendarRef.current) {
+        // focus trap inside calendar
+        const focusable = calendarRef.current.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    }
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [showCalendar, mobileAnimating]);
+
+  // When modal opens, store previous active element and move focus into dialog
+  useEffect(() => {
+    if (showCalendar && calendarRef.current) {
+      previousActive.current = document.activeElement;
+      // find first focusable element inside calendar
+      const focusable = calendarRef.current.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])');
+      const first = focusable.length ? focusable[0] : calendarRef.current;
+      // on mobile we want the sheet to slide in
+      if (window.innerWidth < 768) {
+        setMobileAnimating(true);
+      }
+      setTimeout(() => first.focus(), 50);
+    } else {
+      // when closing restore focus to trigger
+      if (previousActive.current && previousActive.current.focus) previousActive.current.focus();
+    }
+  }, [showCalendar]);
 
   const handleLogoClick = () => {
     navigate("/");
-  };
-
-  const handleTilt = (e) => {
-    if (prefersReducedMotion) return;
-    const el = containerRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    const ry = (x / rect.width) * 8; // rotateY up to 8deg
-    const rx = (-y / rect.height) * 8; // rotateX up to 8deg
-
-    if (logoRef.current) {
-      logoRef.current.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(12px) scale(1.03)`;
-    }
-    if (titleRef.current) {
-      titleRef.current.style.transform = `translateZ(6px) rotateX(${rx / 3}deg) rotateY(${ry / 3}deg)`;
-    }
-  };
-
-  const resetTilt = () => {
-    if (logoRef.current) logoRef.current.style.transform = "";
-    if (titleRef.current) titleRef.current.style.transform = "";
-  };
+  }; 
 
   return (
     <header className="sticky top-0 z-50 w-full px-6 py-4 bg-slate-900 border-b shadow-sm flex justify-between items-center">
       {/* Logo + App Name */}
-      <div ref={containerRef} onMouseMove={handleTilt} onMouseLeave={resetTilt} className="flex items-center cursor-pointer logo-container" onClick={handleLogoClick} aria-label="Roamio Wanderly home">
-        <span ref={logoRef} className="logo-emoji text-2xl md:text-2xl font-bold" role="img" aria-label="mountain">🌄</span>
-        <span ref={titleRef} className="ml-2 text-2xl md:text-2xl font-serif app-title">
+      <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
+        <span className="text-2xl md:text-2xl font-bold">🌄</span>
+        <span className="ml-2 text-2xl md:text-2xl font-serif text-amber-400 hidden md:inline">
           Roamio Wanderly
         </span>
+      </div>
 
-      </div> 
+
 
       {/* Navigation / Sign Up / UserButton */}
       <div className="flex items-center gap-4">
+        {/* Calendar button (moved to right-side) */}
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            ref={triggerRef}
+            onClick={(e) => {
+              triggerRef.current = e.currentTarget;
+              if (window.innerWidth < 768) {
+                setShowCalendar(true);
+                setMobileAnimating(false);
+                setTimeout(() => setMobileAnimating(true), 20);
+              } else {
+                setShowCalendar(v => !v);
+              }
+            }}
+            className="px-2 py-1 text-teal-100 hover:text-amber-400 font-semibold transition"
+            aria-expanded={showCalendar}
+            aria-haspopup="dialog"
+            aria-label="Open Nepali Calendar"
+            title="Nepali Calendar"
+          >
+            📅 <span className="ml-2">Calendar</span>
+          </button>
+
+          {/* Desktop modal */}
+          {showCalendar && (
+            <div className="hidden md:flex fixed inset-0 z-50 items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="nepali-calendar-title">
+              <div className="absolute inset-0 bg-black/40" onClick={(e) => {
+                e.stopPropagation();
+                setShowCalendar(false);
+              }} />
+              <div ref={calendarRef} tabIndex={-1} className="relative z-10 w-full max-w-xl mx-4 transform transition-all duration-150" onClick={(e) => e.stopPropagation()}>
+                <NepaliCalendar full onClose={() => setShowCalendar(false)} />
+              </div>
+            </div>
+          )}
+
+          {/* Mobile modal */}
+          {showCalendar && (
+            <div className="md:hidden fixed inset-0 z-50 flex items-end justify-center" role="dialog" aria-modal="true" aria-labelledby="nepali-calendar-title">
+            <div className="absolute inset-0 bg-black/40" onClick={() => {
+              // animate out the sheet then close
+              setMobileAnimating(false);
+              setTimeout(() => setShowCalendar(false), 300);
+            }} />
+            <div ref={calendarRef} tabIndex={-1} className={`relative z-10 w-full transform transition-transform duration-300 ${mobileAnimating ? 'translate-y-0' : 'translate-y-full'}`} onClick={(e) => e.stopPropagation()}>
+              <NepaliCalendar full mobile onClose={() => {
+                setMobileAnimating(false);
+                setTimeout(() => setShowCalendar(false), 300);
+              }} />
+            </div>
+          </div>
+          )}
+        </div>
         <button
           onClick={() => navigate("/")}
-          className="px-2 py-1 text-gray-100 hover:text-amber-400 font-semibold transition"
+          className="px-2 py-1 text-teal-100 hover:text-amber-400 font-semibold transition"
         >
           Home
         </button>
         <button
           type="button"
           onClick={() => navigate("/about")}
-          className="px-2 py-1 text-gray-100 hover:text-amber-400 font-semibold transition"
+          className="px-2 py-1 text-teal-100 hover:text-amber-400 font-semibold transition"
         >
           About Us
         </button>
         <button
           type="button"
           onClick={() => navigate("/contact")}
-          className="px-2 py-1 text-gray-100 hover:text-amber-400 font-semibold transition"
+          className="px-2 py-1 text-teal-100 hover:text-amber-400 font-semibold transition"
         >
           Contact Us
         </button>
@@ -105,32 +217,6 @@ export const Header = () => {
           </>
         )}
       </div>
-
-      <style>{`
-        /* 3D polished logo and title */
-        .logo-emoji { display:inline-block; transform-style: preserve-3d; will-change: transform; transition: transform 300ms cubic-bezier(.2,.8,.2,1); filter: drop-shadow(0 6px 12px rgba(0,0,0,0.12)); }
-        .logo-emoji:active { transform: translateZ(6px) scale(.98); }
-
-        .app-title { display:inline-block; transform-style: preserve-3d; transition: transform 350ms cubic-bezier(.2,.8,.2,1), filter 200ms ease; background: linear-gradient(90deg,#f59e0b,#f97316,#f59e0b); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 300% 100%; text-shadow: 0 2px 8px rgba(0,0,0,0.18); }
-
-        /* subtle sheen animation across text for a high-quality look */
-        @keyframes sheen { 0% { background-position: 0% 0; } 50% { background-position: 50% 0; } 100% { background-position: 100% 0; } }
-        .app-title { animation: sheen 6s linear infinite; }
-
-        /* small hover depth */
-        .logo-emoji:hover { transform: translateZ(12px) rotateZ(4deg) scale(1.04); }
-        .app-title:hover { filter: drop-shadow(0 6px 20px rgba(245,158,11,0.15)); transform: translateZ(8px); }
-
-        /* small floating animation so effect is visible even without mousemove */
-        .logo-container { perspective: 900px; }
-        .logo-emoji { animation: floaty 4s ease-in-out infinite; }
-        @keyframes floaty { 0% { transform: translateY(0) rotateZ(0); } 50% { transform: translateY(-6px) rotateZ(-1deg); } 100% { transform: translateY(0) rotateZ(0); } }
-
-        /* Respect reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-          .logo-emoji, .app-title { animation: none !important; transition: none !important; }
-        }
-      `}</style>
     </header>
   );
 };

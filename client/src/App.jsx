@@ -144,17 +144,54 @@ function MainApp() {
 
       {/* Inspire Button */}
       <div className="fixed left-4 top-40 z-50 flex flex-col items-center">
-        <button onClick={handleInspireClick} className="w-20 h-20 rounded-full overflow-hidden shadow-lg relative flex items-center justify-center hover:scale-105 transform transition duration-300" style={{ backgroundImage: `url(${InspireIcon})`, backgroundSize: "cover", backgroundPosition: "center" }}>
-          <span className="text-black font-semibold text-center text-sm">Inspire My Trip!</span>
+        <button
+          onClick={handleInspireClick}
+          className="group relative w-20 h-20 rounded-full bg-gradient-to-br from-teal-500 via-cyan-600 to-teal-700 shadow-2xl hover:shadow-3xl transform transition-all duration-500 hover:scale-110 hover:-translate-y-2 border-2 border-white/40 overflow-hidden animate-fade-in-out"
+        >
+          {/* Clean Background */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-t from-black/20 via-transparent to-white/10" />
+          
+          {/* Logo Container */}
+          <div className="absolute top-3 left-3 right-3 bottom-9 rounded-full flex items-center justify-center">
+            <div 
+              className="w-10 h-10 rounded-full overflow-hidden border-3 border-white shadow-2xl"
+              style={{
+                backgroundImage: `url(${InspireIcon})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+          </div>
+          
+          {/* Clean Text Container */}
+          <div className="absolute bottom-2 left-1 right-1 text-center">
+            <div className="bg-white rounded-lg px-2 py-1 shadow-xl border border-white/80">
+              <div className="text-teal-800 font-bold text-[10px] leading-tight">INSPIRE</div>
+              <div className="text-cyan-700 font-bold text-[10px] leading-tight">MY TRIP</div>
+            </div>
+          </div>
+          
+          {/* Simple Hover Effect */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          
+          {/* Shine Effect */}
+          <div className="absolute top-2 left-2 w-8 h-8 bg-white/40 rounded-full blur-xl opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
         </button>
       </div>
 
       {/* Chatbot */}
       <div className="fixed right-4 bottom-20 z-50 flex flex-col items-center">
-        <button type="button" onClick={() => { isSignedIn ? navigate("/chat") : setShowGuestChat(!showGuestChat); }} className="w-16 h-16 rounded-full bg-teal-500 shadow-lg flex items-center justify-center hover:scale-105 transform transition duration-300">
-          <FaRobot className="text-amber-600 text-2xl" />
+        <button
+          type="button"
+          onClick={() => {
+            if (isSignedIn) navigate("/chat");
+            else setShowGuestChat(!showGuestChat);
+          }}
+          className="w-16 h-16 rounded-full bg-teal-500 shadow-lg flex items-center justify-center hover:scale-105 transform transition duration-300"
+        >
+          <FaRobot className="text-black-600 text-2xl animate-bounce" />
         </button>
-        <span className="text-black text-xs mt-1">Ask with Chatbot</span>
+        <span className="text-yellow text-xs mt-1 animate-pulse text-3d">Ask with Chatbot</span>
       </div>
 
       {showGuestChat && !isSignedIn && (

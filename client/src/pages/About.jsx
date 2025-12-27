@@ -1,3 +1,5 @@
+import Footer from '../components/footer/Footer';
+
 export default function About() {
   return (
     <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
@@ -79,6 +81,9 @@ export default function About() {
           </div>
         </section>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
