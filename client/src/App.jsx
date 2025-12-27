@@ -24,7 +24,6 @@ import WriteReview from "./pages/WriteReview";
 import AddPlace from "./pages/AddPlace";
 
 
-
 function HeaderWithNav() {
   const navigate = useNavigate();
   const location = useLocation();

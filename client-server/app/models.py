@@ -32,6 +32,17 @@ class Attraction(Base):
     tags = Column(String, nullable=True)
     image_url = Column(String, nullable=True)
 
+class Place(Base):
+    __tablename__ = "places"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False, index=True)
+    location = Column(String, nullable=True)
+    type = Column(String, nullable=True)
+    description = Column(Text, nullable=True)
+    tags = Column(String, nullable=True)
+    image_url = Column(String, nullable=True)
+    created_at = Column(String, default=str(datetime.utcnow()))
+
 
 class Chat(db.Model):
     id = db.Column(db.Integer, primary_key=True)

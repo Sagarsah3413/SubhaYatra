@@ -35,6 +35,10 @@ def create_app():
     app.register_blueprint(users_blueprint, url_prefix="/users")
     app.register_blueprint(rooms_blueprint, url_prefix="/rooms")
 
+    # Places API
+    from .routes.places import places_bp
+    app.register_blueprint(places_bp, url_prefix="/api")
+
     # ⭐ NEW — Chatbot API
     app.register_blueprint(chat_bp, url_prefix="/api/chat")
 
