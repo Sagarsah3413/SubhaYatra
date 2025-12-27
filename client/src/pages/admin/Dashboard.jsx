@@ -5,8 +5,9 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("isAdmin");
-    navigate("/");
+    // Remove the correct admin key
+    localStorage.removeItem("admin");
+    navigate("/admin/login"); // Redirect to login after logout
   };
 
   return (
@@ -18,7 +19,12 @@ export default function Dashboard() {
             Sign Out
           </button>
         </div>
-        <p className="text-gray-700">This is a placeholder admin dashboard. Add admin features here.</p>
+        <p className="text-gray-700">
+          Welcome, {JSON.parse(localStorage.getItem("admin"))?.username || "Admin"}!
+        </p>
+        <p className="text-gray-700 mt-4">
+          This is your admin dashboard. You can add CRUD operations for Hotels, Places, Attractions here.
+        </p>
       </div>
     </div>
   );

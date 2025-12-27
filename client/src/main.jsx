@@ -23,3 +23,4 @@ if (PUBLISHABLE_KEY) {
     </StrictMode>
   );
 }
+
