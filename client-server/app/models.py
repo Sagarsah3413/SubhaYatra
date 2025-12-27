@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Text
 from datetime import datetime
 from .database import Base, db
+from sqlalchemy import ForeignKey, DateTime
 
 # ------------------ SQLAlchemy MODELS ------------------
 
@@ -81,3 +82,13 @@ class Message(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
     chat = db.relationship("Chat", backref="messages")
+
+
+class Booking(Base):
+    __tablename__ = "bookings"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(String, nullable=False)
+    hotel_name = Column(String, nullable=False)
+    city = Column(String, nullable=False)
+    created_at = Column(String, default=str(datetime.utcnow()))
