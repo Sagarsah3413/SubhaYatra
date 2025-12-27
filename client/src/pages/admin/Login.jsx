@@ -13,13 +13,26 @@ export default function AdminLogin() {
     setError("");
 
     try {
+      // Call backend login API
       const res = await axios.post(
         "http://localhost:8000/admin/login",
         { username, password },
         { withCredentials: true }
       );
 
-      localStorage.setItem("admin", JSON.stringify(res.data));
+      // Save admin info and login time
+      const adminData = {
+        ...res.data,
+        login_time: res.data.login_time || new Date().toISOString(),
+        last_logout: null,
+      };
+      localStorage.setItem("admin", JSON.stringify(adminData));
+
+      // Optional: save backend-provided activity_id
+      if (res.data.activity_id) {
+        localStorage.setItem("adminActivityId", res.data.activity_id);
+      }
+
       navigate("/admin/dashboard");
     } catch (err) {
       if (err.response && err.response.data.error) {
@@ -81,7 +94,7 @@ export default function AdminLogin() {
         </div>
       </div>
 
-      {/* Professional Gray Footer */}
+      {/* Footer */}
       <footer className="bg-gray-200 text-gray-700 py-4 mt-8 shadow-inner">
         <div className="max-w-6xl mx-auto px-4 text-center text-sm space-y-1">
           <p>Tourism Management System &mdash; Admin Portal</p>
