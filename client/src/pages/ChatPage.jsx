@@ -1,25 +1,39 @@
 import React, { useState, useEffect, useRef } from "react";
 import { SignedIn, SignedOut, SignInButton, useUser } from "@clerk/clerk-react";
 import axios from "axios";
-import Footer from "../../components/footer/Footer";
+import Footer from "../components/footer/Footer";
 
 // ---------------- HEADER ----------------
 function ChatHeader() {
-  const { user } = useUser();
+  // Safe useUser access — avoids throwing when no ClerkProvider is present
+  let clerkAvailable = true;
+  let user = null;
+  try {
+    const uh = useUser();
+    user = uh?.user ?? null;
+  } catch (e) {
+    clerkAvailable = false;
+  }
 
   return (
     <div className="w-full bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
       <h1 className="text-xl font-bold">Chatbot</h1>
 
       <div>
-        <SignedIn>
-          <span className="mr-4">Hello, {user?.firstName || "User"}!</span>
-        </SignedIn>
+        {!clerkAvailable ? (
+          <button onClick={() => alert('Sign in not available in this environment')} className="mr-4 px-3 py-1 bg-teal-600 text-white rounded">Sign In</button>
+        ) : (
+          <>
+            <SignedIn>
+              <span className="mr-4">Hello, {user?.firstName || "User"}!</span>
+            </SignedIn>
 
-        <SignedOut>
-          <SignInButton>Sign In</SignInButton>
-        </SignedOut>
-      </div>
+            <SignedOut>
+              <SignInButton>Sign In</SignInButton>
+            </SignedOut>
+          </>
+        )}
+      </div> 
     </div>
   );
 }
@@ -39,7 +53,13 @@ function SidebarButton({ icon, label, onClick }) {
 
 // ---------------- MAIN CHAT PAGE ----------------
 export default function ChatPage() {
-  const { user } = useUser();
+  let user = null;
+  try {
+    const uh = useUser();
+    user = uh?.user ?? null;
+  } catch (e) {
+    user = null;
+  }
   const userId = user?.id || null;
 
   const [chats, setChats] = useState([]);

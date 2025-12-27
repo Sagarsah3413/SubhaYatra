@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { Header } from "../components/header/Header";
+import { Header } from "./components/header/Header";
 import "./App.css";
 import { SignedIn, useUser } from "@clerk/clerk-react";
 import SplashScreen from "./pages/SplashScreen";
@@ -15,9 +15,15 @@ import SearchBar from "./pages/SearchBar";
 import InspireIcon from "./assets/try-icon.jpg"; // check your path
 import SearchResultPage from "./pages/SearchResultPage";
 import ChatPage from "./pages/ChatPage";
-import Footer from "../components/footer/Footer";
+import Footer from "./components/footer/Footer";
 import RecommendationPage from "./pages/RecommendationPage";
 import DetailPage from "./pages/DetailPage";
+import About from "./pages/About";  
+import Contact from "./pages/Contact";
+import WriteReview from "./pages/WriteReview";
+import AddPlace from "./pages/AddPlace";
+
+
 
 function HeaderWithNav() {
   const navigate = useNavigate();
@@ -28,12 +34,42 @@ function HeaderWithNav() {
   return <Header onHomeClick={handleHomeClick} />;
 }
 
-function MainApp() {
+export function MainApp() {
+  const [theme, setTheme] = useState(() => {
+    return (
+      localStorage.getItem("theme") ??
+      (window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light")
+    );
+  });
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const bgClass = theme === "light" ? "bg-gray-100" : "bg-slate-900";
+
   const navigate = useNavigate();
-  const { isSignedIn } = useUser();
+  // Safely attempt to read Clerk user state; if unavailable (no ClerkProvider) fall back to false
+  let isSignedIn = false;
+  try {
+    const userHook = useUser();
+    isSignedIn = userHook?.isSignedIn ?? false;
+  } catch (e) {
+    isSignedIn = false;
+  }
   const [showSplash, setShowSplash] = useState(false);
   const [message, setMessage] = useState("WHERE SHALL OUR ADVENTURE BEGIN? ✨");
+  const [messageColor, setMessageColor] = useState("text-amber-600");
   const [searchPlaceholder, setSearchPlaceholder] = useState("Search everything...");
+
   const [showGuestChat, setShowGuestChat] = useState(false);
 
   useEffect(() => {
@@ -78,9 +114,21 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col relative">
+    <div
+      className={`min-h-screen ${bgClass} ${theme === "dark" ? "text-white" : "text-black"} flex flex-col relative`}
+    >
       {/* Header */}
       <HeaderWithNav />
+
+      <div className="absolute right-4 top-20 z-50">
+        <button
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+          className="px-3 py-1 rounded-md bg-teal-500 text-white shadow"
+          aria-label="Toggle theme"
+        >
+          {theme === "light" ? "Dark Mode" : "Light Mode"}
+        </button>
+      </div>
 
       {/* Top Message */}
       <p className="font-bold text-black uppercase text-center text-xl mt-4">{message}</p>
@@ -88,8 +136,8 @@ function MainApp() {
       {/* Category Buttons */}
       <div className="flex justify-center gap-12 mt-6">
         <button
-          className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "WHERE SHALL OUR ADVENTURE BEGIN? ✨" ? "border-pink-600" : "border-transparent"
+          className={`flex items-center gap-2 px-2 py-1 font-semibold text-teal-600 transition border-b-2 ${
+            message === "WHERE SHALL OUR ADVENTURE BEGIN? ✨" ? "border-amber-600" : "border-transparent"
           }`}
           onClick={() => {
             setMessage("WHERE SHALL OUR ADVENTURE BEGIN? ✨");
@@ -100,8 +148,8 @@ function MainApp() {
         </button>
 
         <button
-          className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "A COZY STAY AWAITS… 🏨" ? "border-pink-600" : "border-transparent"
+          className={`flex items-center gap-2 px-2 py-1 font-semibold text-teal-600 transition border-b-2 ${
+            message === "A COZY STAY AWAITS… 🏨" ? "border-amber-600" : "border-transparent"
           }`}
           onClick={() => {
             setMessage("A COZY STAY AWAITS… 🏨");
@@ -112,8 +160,8 @@ function MainApp() {
         </button>
 
         <button
-          className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "EXCITING EXPERIENCES AHEAD! 🎢" ? "border-pink-600" : "border-transparent"
+          className={`flex items-center gap-2 px-2 py-1 font-semibold text-teal-600 transition border-b-2 ${
+            message === "EXCITING EXPERIENCES AHEAD! 🎢" ? "border-amber-600" : "border-transparent"
           }`}
           onClick={() => {
             setMessage("EXCITING EXPERIENCES AHEAD! 🎢");
@@ -124,8 +172,8 @@ function MainApp() {
         </button>
 
         <button
-          className={`flex items-center gap-2 px-2 py-1 font-semibold text-pink-600 transition border-b-2 ${
-            message === "TIME TO TANTALIZE YOUR TASTE BUDS 🍴" ? "border-pink-600" : "border-transparent"
+          className={`flex items-center gap-2 px-2 py-1 font-semibold text-teal-600 transition border-b-2 ${
+            message === "TIME TO TANTALIZE YOUR TASTE BUDS 🍴" ? "border-amber-600" : "border-transparent"
           }`}
           onClick={() => {
             setMessage("TIME TO TANTALIZE YOUR TASTE BUDS 🍴");
@@ -141,15 +189,15 @@ function MainApp() {
         <SearchBar placeholder={searchPlaceholder} />
       </div>
 
-      {/* Signed-in Welcome Section */}
+      {/* Welcome Box for Signed In Users */}
       <SignedIn>
-        <div className="mx-auto mt-6 p-6 bg-white rounded-lg shadow-md flex flex-col items-center">
-          <h2 className="text-2xl font-semibold text-gray-800">Welcome!</h2>
-          <p className="text-gray-600 mt-2">Here you go and enjoy!</p>
+        <div className="mx-auto mt-6 p-6 bg-teal-50 rounded-lg shadow-md flex flex-col items-center border-2 border-teal-600 transition-transform transform hover:scale-105 duration-300 ease-in-out">
+          <h2 className="text-2xl font-semibold text-teal-700">Welcome!</h2>
+          <p className="text-teal-600 mt-2">Here you go and enjoy!</p>
         </div>
       </SignedIn>
 
-      {/* Sections */}
+      {/* Explore Section */}
       <ExploreSection />
       <FamousSpots />
       <NaturePlaces />
@@ -179,11 +227,11 @@ function MainApp() {
             if (isSignedIn) navigate("/chat");
             else setShowGuestChat(!showGuestChat);
           }}
-          className="w-16 h-16 rounded-full bg-blue-500 shadow-lg flex items-center justify-center hover:scale-105 transform transition duration-300"
+          className="w-16 h-16 rounded-full bg-teal-500 shadow-lg flex items-center justify-center hover:scale-105 transform transition duration-300"
         >
-          <FaRobot className="text-white text-2xl" />
+          <FaRobot className="text-amber-600 text-2xl" />
         </button>
-        <span className="text-white text-xs mt-1">Ask with Chatbot</span>
+        <span className="text-black text-xs mt-1">Ask with Chatbot</span>
       </div>
 
       {/* Guest Chatbox Overlay */}
@@ -248,7 +296,13 @@ function App() {
     <Route path="/chat" element={<ChatPage />} />
     <Route path="/recommendation" element={<RecommendationPage />} />
     <Route path="/details" element={<DetailPage />} />
-
+    <Route path="/about" element={<About />} />
+    <Route path="/contact" element={<Contact />} />
+    <Route path="/write-review" element={<WriteReview />} />
+    <Route path="/add-place" element={<AddPlace />} />
+    
+    
+    
 
   </Routes>
 </Router>

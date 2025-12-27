@@ -6,7 +6,7 @@ import ChanguNarayan from "../assets/Changu-Narayan-Temple.jpeg";
 import Dakshinkali from "../assets/Dakshinkali-Temple.jpeg";
 import KathmanduDurbar from "../assets/Kathmandu-Durbar-Square.jpeg";
 import Kathmandu from "../assets/Kathmandu.jpeg";
-import { Header } from "../../components/header/Header";
+import { Header } from "../components/header/Header";
 import React from "react";
 const spots = [
   {

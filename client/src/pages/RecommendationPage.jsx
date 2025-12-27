@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { Header } from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
+
+// Components
+import { Header } from "../components/header/Header";
+import Footer from "../components/footer/Footer";
+
+// Router
 import { useNavigate, useLocation } from "react-router-dom";
+
 
 export default function RecommendationPage() {
   const navigate = useNavigate();

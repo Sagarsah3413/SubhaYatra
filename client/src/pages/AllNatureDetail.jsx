@@ -6,7 +6,8 @@ import Khaptad from "../assets/Nature/Khaptad.jpeg";
 import Gosaikunda from "../assets/Nature/Gosaikunda.jpeg";
 import Shuklaphanta from "../assets/Nature/Shuklaphanta.jpeg";
 import Ghandruk from "../assets/Nature/Ghandruk.jpeg";
-import { Header } from "../../components/header/Header";
+import { Header } from "../components/header/Header";
+import Footer from "../components/footer/Footer";
 
 
 const places = [

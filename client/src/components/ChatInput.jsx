@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function ChatInput({ messages, setMessages, user }) {
   const [inputText, setInputText] = useState("");
@@ -40,20 +40,20 @@ export default function ChatInput({ messages, setMessages, user }) {
   };
 
   return (
-    <div className="flex p-2 border-t border-gray-700">
+    <div className="flex p-4 border-t border-amber-200 bg-white">
       <input
         type="text"
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
-        placeholder="Type your message..."
-        className="flex-1 p-2 rounded-md text-black"
+        placeholder="Ask about destinations..."
+        className="flex-1 p-3 rounded-lg text-gray-800 border border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
       <button
         onClick={sendMessage}
         disabled={loading}
-        className={`ml-2 px-4 rounded-md text-white ${
-          loading ? "bg-gray-500 cursor-not-allowed" : "bg-red-500"
+        className={`ml-3 px-6 rounded-lg font-semibold transition-colors ${
+          loading ? "bg-gray-400 cursor-not-allowed text-white" : "bg-amber-600 hover:bg-amber-700 text-white"
         }`}
       >
         {loading ? "..." : "Send"}
