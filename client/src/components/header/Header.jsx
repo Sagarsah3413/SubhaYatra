@@ -142,7 +142,7 @@ export const Header = () => {
             aria-label="Open Nepali Calendar"
             title="Nepali Calendar"
           >
-            📅 <span className="ml-2">Calendar</span>
+             <span className="ml-2">Calendar</span>
           </button>
 
           {/* Desktop modal */}
