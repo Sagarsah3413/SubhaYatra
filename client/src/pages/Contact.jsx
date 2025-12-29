@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import Footer from "../components/footer/Footer";
+import { Header } from '../components/header/Header';
+import { useTheme } from '../contexts/ThemeContext';
 import 'leaflet/dist/leaflet.css';
 
 import L from 'leaflet';
@@ -12,6 +14,7 @@ L.Icon.Default.mergeOptions({
 });
 
 export default function Contact() {
+  const { bgClass, textClass } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -40,8 +43,8 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100">
-      {/* Hero Section */}
+    <div className={`min-h-screen ${bgClass} ${textClass} flex flex-col`}>
+      <Header />
       <div className="relative h-72 overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1488646953014-85cb44e25828)'}}></div>
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 opacity-75"></div>

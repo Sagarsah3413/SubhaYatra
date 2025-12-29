@@ -1,10 +1,13 @@
-   import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { UserButton, SignUpButton, SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import NepaliCalendar from "../../pages/NepaliCalendar";
+import { useTheme } from "../../contexts/ThemeContext";
+import { FaSun, FaMoon } from "react-icons/fa";
 
-export const Header = () => {
+export const Header = ({ onHomeClick }) => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   // Detect whether Clerk context/hooks are available to avoid runtime errors in dev without a key
   let clerkAvailable = true;
@@ -108,11 +111,11 @@ export const Header = () => {
   }; 
 
   return (
-    <header className="sticky top-0 z-50 w-full px-6 py-4 bg-slate-900 border-b shadow-sm flex justify-between items-center">
+    <header className={`sticky top-0 z-50 w-full px-6 py-4 ${theme === "dark" ? "bg-slate-900" : "bg-white"} border-b shadow-sm flex justify-between items-center`}>
       {/* Logo + App Name */}
       <div className="flex items-center cursor-pointer" onClick={handleLogoClick}>
         <span className="text-2xl md:text-2xl font-bold">🌄</span>
-        <span className="ml-2 text-2xl md:text-2xl font-serif text-amber-400 hidden md:inline">
+        <span className={`ml-2 text-2xl md:text-2xl font-serif hidden md:inline ${theme === "dark" ? "text-amber-400" : "text-amber-600"}`}>
           Roamio Wanderly
         </span>
       </div>
@@ -136,7 +139,7 @@ export const Header = () => {
                 setShowCalendar(v => !v);
               }
             }}
-            className="px-2 py-1 text-teal-100 hover:text-amber-400 font-semibold transition"
+            className={`px-2 py-1 ${theme === "dark" ? "text-teal-100 hover:text-amber-400" : "text-teal-600 hover:text-amber-700"} font-semibold transition`}
             aria-expanded={showCalendar}
             aria-haspopup="dialog"
             aria-label="Open Nepali Calendar"
@@ -177,23 +180,33 @@ export const Header = () => {
         </div>
         <button
           onClick={() => navigate("/")}
-          className="px-2 py-1 text-teal-100 hover:text-amber-400 font-semibold transition"
+          className={`px-2 py-1 ${theme === "dark" ? "text-teal-100 hover:text-amber-400" : "text-teal-600 hover:text-amber-700"} font-semibold transition`}
         >
           Home
         </button>
         <button
           type="button"
           onClick={() => navigate("/about")}
-          className="px-2 py-1 text-teal-100 hover:text-amber-400 font-semibold transition"
+          className={`px-2 py-1 ${theme === "dark" ? "text-teal-100 hover:text-amber-400" : "text-teal-600 hover:text-amber-700"} font-semibold transition`}
         >
           About Us
         </button>
         <button
           type="button"
           onClick={() => navigate("/contact")}
-          className="px-2 py-1 text-teal-100 hover:text-amber-400 font-semibold transition"
+          className={`px-2 py-1 ${theme === "dark" ? "text-teal-100 hover:text-amber-400" : "text-teal-600 hover:text-amber-700"} font-semibold transition`}
         >
           Contact Us
+        </button>
+
+        {/* Theme Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          className={`p-2 rounded-full ${theme === "dark" ? "text-teal-100 hover:text-amber-400" : "text-teal-600 hover:text-amber-700"} transition`}
+          aria-label="Toggle theme"
+          title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+        >
+          {theme === "light" ? <FaMoon /> : <FaSun />}
         </button>
 
         {/* Sign Up / UserButton (fallback when Clerk is not available) */}

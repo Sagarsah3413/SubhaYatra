@@ -1,8 +1,11 @@
 import Footer from '../components/footer/Footer';
+import { Header } from '../components/header/Header';
+import { useTheme } from '../contexts/ThemeContext';
 
 export default function About() {
+  const { bgClass, textClass } = useTheme();
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div className={`min-h-screen ${bgClass} ${textClass} flex flex-col`}>
       <style>{`
         @keyframes fadeInUp {
           from {
@@ -36,7 +39,7 @@ export default function About() {
         .stagger-4 { animation-delay: 0.4s; }
       `}</style>
 
-      {/* Hero Section */}
+      <Header />
       <div className="bg-cover bg-center h-80 flex items-center justify-center relative overflow-hidden" style={{backgroundImage: 'url(https://images.unsplash.com/photo-1488646953014-85cb44e25828)'}}>
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
         <div className="relative z-10 text-center animate-fade-in-up">

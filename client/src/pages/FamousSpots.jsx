@@ -48,7 +48,7 @@ export default function FamousSpots() {
 
   return (
     <div className="p-6 flex flex-col w-full max-w-6xl mx-auto">
-      <h2 className="text-black font-bold text-2xl mb-6">
+      <h2 className="text-teal-500 font-bold text-2xl mb-6">
         Famous Tourist Spots in Nepal
       </h2>
 

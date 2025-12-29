@@ -22,6 +22,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import WriteReview from "./pages/WriteReview";
 import AddPlace from "./pages/AddPlace";
+import { ThemeProvider, useTheme } from "./contexts/ThemeContext";
 
 // Admin Pages
 import Login from "./pages/admin/Login";
@@ -38,18 +39,7 @@ function HeaderWithNav() {
 }
 
 function MainApp() {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") ??
-      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-  });
-
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    if (theme === "dark") document.documentElement.classList.add("dark");
-    else document.documentElement.classList.remove("dark");
-  }, [theme]);
-
-  const bgClass = theme === "light" ? "bg-gray-100" : "bg-slate-900";
+  const { bgClass, textClass } = useTheme();
   const navigate = useNavigate();
 
   // Check Clerk user
@@ -97,114 +87,10 @@ function MainApp() {
   };
 
   return (
-    <div className={`min-h-screen ${bgClass} ${theme === "dark" ? "text-white" : "text-black"} flex flex-col relative`}>
+    <div className={`min-h-screen ${bgClass} ${textClass} flex flex-col relative`}>
       <HeaderWithNav />
-      <div className="absolute right-4 top-20 z-50">
-        <button
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-          className="group relative w-12 h-12 rounded-xl transform transition-all duration-400 hover:scale-105"
-          style={{
-            background: 'linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%)',
-            boxShadow: '0 8px 16px rgba(0,0,0,0.25), 0 4px 8px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.1), inset 0 -1px 2px rgba(0,0,0,0.2)'
-          }}
-          aria-label="Toggle theme"
-        >
-          {/* 3D Inner Container */}
-          <div 
-            className="absolute inset-0.5 rounded-lg flex items-center justify-center"
-            style={{
-              background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)',
-              boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.6)'
-            }}
-          >
-            
-            {/* Sun Logo for Light Mode */}
-            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${theme === "light" ? "opacity-100 scale-100" : "opacity-0 scale-40"}`}>
-              <div className="relative">
-                {/* 3D Sun */}
-                <div 
-                  className="w-7 h-7 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle at 30% 30%, #fef3c7 0%, #f59e0b 40%, #d97706 100%)',
-                    boxShadow: '0 4px 8px rgba(245,158,11,0.3), inset -1px -1px 2px rgba(251,191,36,0.6), inset 1px 1px 2px rgba(254,243,199,0.7)'
-                  }}
-                />
-                {/* Inner Glow */}
-                <div 
-                  className="absolute top-0.5 left-0.5 w-6 h-6 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle at 40% 40%, rgba(255,255,255,0.8) 0%, rgba(254,243,199,0.3) 40%, transparent 70%)',
-                  }}
-                />
-                {/* Highlight */}
-                <div 
-                  className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
-                  }}
-                />
-              </div>
-            </div>
-            
-            {/* Moon Logo for Dark Mode */}
-            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 ${theme === "dark" ? "opacity-100 scale-100" : "opacity-0 scale-40"}`}>
-              <div className="relative">
-                {/* 3D Moon */}
-                <div 
-                  className="w-7 h-7 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle at 30% 30%, #e0e7ff 0%, #a5b4fc 40%, #6366f1 100%)',
-                    boxShadow: '0 4px 8px rgba(99,102,241,0.3), inset -1px -1px 2px rgba(165,180,252,0.6), inset 1px 1px 2px rgba(224,231,255,0.7)'
-                  }}
-                />
-                {/* Crescent Shadow */}
-                <div 
-                  className="absolute top-0.5 left-0.5 w-6 h-6 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle at 60% 40%, #1e293b 0%, #334155 60%, #475569 100%)',
-                    boxShadow: 'inset 1px 1px 4px rgba(0,0,0,0.4)'
-                  }}
-                />
-                {/* Surface Detail */}
-                <div className="absolute top-2 left-2 w-1.5 h-1.5 bg-slate-700/25 rounded-full" />
-                {/* Glow */}
-                <div 
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(147,197,253,0.15) 0%, rgba(99,102,241,0.08) 50%, transparent 100%)',
-                  }}
-                />
-                {/* Highlight */}
-                <div 
-                  className="absolute top-1.5 left-1.5 w-1.5 h-1.5 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.2) 50%, transparent 100%)',
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-          
-          {/* 3D Top Bevel */}
-          <div 
-            className="absolute inset-0 rounded-xl pointer-events-none"
-            style={{
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 30%, rgba(0,0,0,0.08) 100%)',
-            }}
-          />
-          
-          {/* Hover Effect */}
-          <div 
-            className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
-            style={{
-              background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%)',
-              boxShadow: '0 0 12px rgba(255,255,255,0.2)'
-            }}
-          />
-        </button>
-      </div>
 
-      <p className="font-bold text-black uppercase text-center text-xl mt-4">{message}</p>
+      <p className="font-bold text-teal-600 uppercase text-center text-xl mt-4">{message}</p>
 
       {/* Category Buttons */}
       <div className="flex justify-center gap-12 mt-6">
@@ -314,28 +200,30 @@ function MainApp() {
 // App with Routes including Admin
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Public */}
-        <Route path="/" element={<MainApp />} />
-        <Route path="/all-places-detail" element={<AllPlacesDetail />} />
-        <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
-        <Route path="/all-nature-places" element={<AllNatureDetail />} />
-        <Route path="/map" element={<div>Nepal Map Page</div>} />
-        <Route path="/searchresult" element={<SearchResultPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/recommendation" element={<RecommendationPage />} />
-        <Route path="/details" element={<DetailPage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/write-review" element={<WriteReview />} />
-        <Route path="/add-place" element={<AddPlace />} />
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          {/* Public */}
+          <Route path="/" element={<MainApp />} />
+          <Route path="/all-places-detail" element={<AllPlacesDetail />} />
+          <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
+          <Route path="/all-nature-places" element={<AllNatureDetail />} />
+          <Route path="/map" element={<div>Nepal Map Page</div>} />
+          <Route path="/searchresult" element={<SearchResultPage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/recommendation" element={<RecommendationPage />} />
+          <Route path="/details" element={<DetailPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/write-review" element={<WriteReview />} />
+          <Route path="/add-place" element={<AddPlace />} />
 
-        {/* Admin */}
-        <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
-      </Routes>
-    </Router>
+          {/* Admin */}
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 

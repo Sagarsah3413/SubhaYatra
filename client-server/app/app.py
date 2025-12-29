@@ -1,15 +1,19 @@
 from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
 import os
+import sys
 from dotenv import load_dotenv  # ✅ Load .env
 
-from .database import init_db, db
-from .routes.search import search_blueprint
-from .routes.users import users_blueprint
-from .routes.rooms import rooms_blueprint
-from .routes.chat_routes import chat_bp
-from .routes.admin import admin_bp   # ⭐ Admin routes (login + dashboard)
-from .routes.places import places_bp
+# Add the app directory to Python path for imports
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from database import init_db, db
+from routes.search import search_blueprint
+from routes.users import users_blueprint
+from routes.rooms import rooms_blueprint
+from routes.chat_routes import chat_bp
+from routes.admin import admin_bp   # ⭐ Admin routes (login + dashboard)
+from routes.places import places_bp
 
 # -----------------------------
 # Load .env from backend folder
@@ -58,6 +62,8 @@ def create_app():
     app.register_blueprint(chat_bp, url_prefix="/api/chat")
     app.register_blueprint(places_bp, url_prefix="/api")
     app.register_blueprint(admin_bp)  # Admin login/dashboard routes
+    app.register_blueprint(email_bp)  # 📧 Email routes (with password)
+    app.register_blueprint(email_free_bp)  # 📧 Email routes (no password)
 
     # -----------------------------
     # Root route

@@ -50,7 +50,7 @@ export default function ExploreSection() {
 
   return (
     <div className="p-6 flex flex-col w-full max-w-6xl mx-auto mt-10">
-      <h2 className="text-black font-bold text-2xl mb-6">
+      <h2 className="text-teal-500 font-bold text-2xl mb-6">
         Explore Experiences Near Capital
       </h2>
 

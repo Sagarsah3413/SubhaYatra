@@ -1,6 +1,7 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
+import axios from "axios";
 
 export default function Footer() {
   const location = useLocation();
@@ -39,11 +40,17 @@ export default function Footer() {
     return () => obs.disconnect();
   }, []);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault();
     if (email) {
-      alert(`Subscribed with: ${email}`);
-      setEmail("");
+      try {
+        const response = await axios.post('http://localhost:8000/users/subscribe', { email });
+        alert(response.data.message || 'Subscription successful!');
+        setEmail("");
+      } catch (error) {
+        alert('Subscription failed. Please try again.');
+        console.error('Subscription error:', error);
+      }
     }
   };
 
