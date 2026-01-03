@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
@@ -11,26 +11,25 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") ||
-      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-  });
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    localStorage.setItem("theme", theme);
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
     }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
+    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
   };
 
-  const bgClass = theme === "light" ? "bg-gray-100" : "bg-slate-900";
-  const textClass = theme === "dark" ? "text-white" : "text-black";
+  const bgClass = theme === 'light' ? 'bg-white' : 'bg-gray-900';
+  const textClass = theme === 'light' ? 'text-black' : 'text-white';
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, bgClass, textClass }}>
@@ -38,5 +37,3 @@ export const ThemeProvider = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
-
-export default ThemeContext;

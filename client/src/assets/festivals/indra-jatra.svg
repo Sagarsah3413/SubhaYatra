@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DC2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B91C1C;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="chariot" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D97706;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#92400E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#bg)" rx="20"/>
+  
+  <!-- Chariot Base -->
+  <rect x="60" y="120" width="80" height="30" fill="url(#chariot)" rx="5"/>
+  
+  <!-- Chariot Wheels -->
+  <circle cx="75" cy="145" r="12" fill="#451A03"/>
+  <circle cx="75" cy="145" r="8" fill="#D97706"/>
+  <circle cx="75" cy="145" r="4" fill="#451A03"/>
+  
+  <circle cx="125" cy="145" r="12" fill="#451A03"/>
+  <circle cx="125" cy="145" r="8" fill="#D97706"/>
+  <circle cx="125" cy="145" r="4" fill="#451A03"/>
+  
+  <!-- Chariot Structure -->
+  <rect x="70" y="90" width="60" height="30" fill="#92400E" rx="3"/>
+  <rect x="75" y="95" width="50" height="20" fill="#D97706" rx="2"/>
+  
+  <!-- Flags -->
+  <rect x="85" y="60" width="2" height="35" fill="#451A03"/>
+  <polygon points="87,60 87,75 105,70 105,65" fill="#EF4444"/>
+  
+  <rect x="113" y="60" width="2" height="35" fill="#451A03"/>
+  <polygon points="115,60 115,75 133,70 133,65" fill="#EF4444"/>
+  
+  <!-- Indra's Crown -->
+  <polygon points="100,40 95,55 105,55" fill="#FCD34D"/>
+  <circle cx="100" cy="50" r="3" fill="#F59E0B"/>
+  
+  <!-- Lightning Bolts (Indra's symbol) -->
+  <polygon points="50,30 55,45 50,40 60,55 50,50 55,35" fill="#FCD34D"/>
+  <polygon points="140,35 145,50 140,45 150,60 140,55 145,40" fill="#FCD34D"/>
+  
+  <!-- Decorative Elements -->
+  <circle cx="40" cy="80" r="4" fill="#FCD34D"/>
+  <circle cx="160" cy="85" r="4" fill="#FCD34D"/>
+  <circle cx="30" cy="110" r="3" fill="#F59E0B"/>
+  <circle cx="170" cy="105" r="3" fill="#F59E0B"/>
+  
+  <!-- Text -->
+  <text x="100" y="175" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Indra</text>
+  <text x="100" y="190" text-anchor="middle" fill="#FEE2E2" font-family="Arial, sans-serif" font-size="10">Jatra</text>
+</svg>

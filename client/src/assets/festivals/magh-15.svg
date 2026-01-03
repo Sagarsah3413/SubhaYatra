@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- This is a copy of saraswati-puja.svg since magh-15 is Saraswati Puja -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="lotus" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F472B6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#bg)" rx="20"/>
+  
+  <!-- Lotus Base -->
+  <ellipse cx="100" cy="150" rx="30" ry="12" fill="url(#lotus)"/>
+  
+  <!-- Veena (Musical Instrument) -->
+  <ellipse cx="100" cy="100" rx="35" ry="15" fill="#D97706"/>
+  <ellipse cx="100" cy="98" rx="30" ry="12" fill="#F59E0B"/>
+  
+  <!-- Veena Strings -->
+  <line x1="75" y1="100" x2="125" y2="100" stroke="#92400E" stroke-width="1"/>
+  <line x1="75" y1="103" x2="125" y2="103" stroke="#92400E" stroke-width="1"/>
+  <line x1="75" y1="106" x2="125" y2="106" stroke="#92400E" stroke-width="1"/>
+  <line x1="75" y1="109" x2="125" y2="109" stroke="#92400E" stroke-width="1"/>
+  
+  <!-- Swan -->
+  <ellipse cx="100" cy="60" rx="20" ry="8" fill="white"/>
+  <ellipse cx="110" cy="55" rx="8" ry="6" fill="white"/>
+  
+  <!-- Text -->
+  <text x="100" y="180" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Saraswati</text>
+  <text x="100" y="195" text-anchor="middle" fill="#DBEAFE" font-family="Arial, sans-serif" font-size="10">Puja</text>
+</svg>

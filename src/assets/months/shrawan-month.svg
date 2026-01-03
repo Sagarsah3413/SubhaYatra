@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80">
+    <!-- Shrawan - Peak monsoon -->
+    <rect width="120" height="80" fill="#2F4F4F"/>
+    <ellipse cx="40" cy="15" rx="20" ry="8" fill="#696969"/>
+    <ellipse cx="80" cy="20" rx="25" ry="10" fill="#696969"/>
+    <!-- Heavy rain -->
+    <g stroke="#4169E1" stroke-width="2">
+      <line x1="20" y1="23" x2="15" y2="40"/>
+      <line x1="30" y1="25" x2="25" y2="42"/>
+      <line x1="40" y1="23" x2="35" y2="40"/>
+      <line x1="60" y1="28" x2="55" y2="45"/>
+      <line x1="70" y1="30" x2="65" y2="47"/>
+      <line x1="80" y1="28" x2="75" y2="45"/>
+      <line x1="90" y1="30" x2="85" y2="47"/>
+      <line x1="100" y1="28" x2="95" y2="45"/>
+    </g>
+    <polygon points="0,55 30,40 60,50 90,35 120,45 120,80 0,80" fill="#006400"/>
+    <text x="60" y="75" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#F0F8FF">SHRAWAN</text>
+  </svg>

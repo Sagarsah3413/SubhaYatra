@@ -1,83 +1,107 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext";
+import SearchResultsList from "../components/SearchResultsList";
 
 export default function SearchResultPage() {
-  const [result, setResult] = useState(null);
+  const { theme } = useTheme();
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // State management
+  const [results, setResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const query = new URLSearchParams(useLocation().search).get("query");
+  
+  // Get query from URL
+  const query = new URLSearchParams(location.search).get("query");
 
-  useEffect(() => {
-    if (!query) {
-      setError("No query provided");
+  console.log('SearchResultPage rendered with query:', query);
+
+  // Search function
+  const performSearch = async (searchQuery) => {
+    if (!searchQuery) {
+      setError("No search query provided");
+      setIsLoading(false);
       return;
     }
 
-    const fetchResult = async () => {
-      try {
-        const res = await fetch(`http://127.0.0.1:8000/api/search/?q=${encodeURIComponent(query)}`);
-        if (!res.ok) throw new Error("Failed to fetch search results");
-        const data = await res.json();
-
-        if (Array.isArray(data.results) && data.results.length > 0) {
-          setResult(data.results[0]); // Take the first matching result
-        } else {
-          setResult("not-found");
-        }
-      } catch (err) {
-        setError(err.message);
+    console.log('Performing search for:', searchQuery);
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/search/?q=${encodeURIComponent(searchQuery)}`
+      );
+      
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: Failed to fetch search results`);
       }
-    };
+      
+      const data = await res.json();
+      console.log('Search API response:', data);
+      
+      if (data.results && Array.isArray(data.results)) {
+        setResults(data.results);
+        console.log('Set results:', data.results);
+      } else {
+        setResults([]);
+        console.log('No results in API response');
+      }
+      
+    } catch (err) {
+      console.error('Search error:', err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchResult();
+  // Initial search effect
+  useEffect(() => {
+    console.log('useEffect triggered with query:', query);
+    performSearch(query);
   }, [query]);
 
-  if (error) {
-    return <p className="text-center mt-10 text-red-500">{error}</p>;
-  }
-
-  if (result === null) {
-    return <p className="text-center mt-10 text-xl">Loading...</p>;
-  }
-
-  if (result === "not-found") {
-    return (
-      <p className="text-center mt-10 text-xl text-red-500">
-        No results found for "{query}"
-      </p>
-    );
-  }
+  // Handle result selection
+  const handleResultSelect = (item) => {
+    console.log('Result selected:', item);
+    navigate(`/details?type=${item.type}&name=${encodeURIComponent(item.name)}`);
+  };
 
   return (
-    <div className="w-[700px] mx-auto mt-10 bg-white p-5 rounded-xl shadow-lg">
-      <h1 className="text-3xl font-bold mb-4">{result.name}</h1>
-
-      {/* Image Gallery */}
-      {result.images && result.images.length > 0 && (
-        <div className="flex gap-3 overflow-x-auto mb-4">
-          {result.images.map((img, idx) => (
-            <img
-              key={idx}
-              src={`http://127.0.0.1:8000/${img.replace(/\\/g, "/")}`}
-              className="w-40 h-32 object-cover rounded-lg"
-              alt={result.name}
-            />
-          ))}
+    <div className={`min-h-screen p-4 ${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'}`}>
+      {/* Simple Header */}
+      <div className={`p-6 rounded-lg mb-6 ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-md`}>
+        <div className="flex items-center gap-4 mb-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+          >
+            ← Back
+          </button>
+          <h1 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+            Search Results Page
+          </h1>
         </div>
-      )}
+        
+        <div className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+          <p>Query: {query || 'None'}</p>
+          <p>Results: {results.length}</p>
+          <p>Loading: {isLoading ? 'Yes' : 'No'}</p>
+          <p>Error: {error || 'None'}</p>
+        </div>
+      </div>
 
-      <p className="text-lg text-gray-700 mb-2">{result.description || "No description available."}</p>
-      <p className="text-gray-500 mb-4">Location: {result.location || "Unknown"}</p>
-
-      {result.wikipedia_url && (
-        <a
-          href={result.wikipedia_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 underline"
-        >
-          Read more on Wikipedia
-        </a>
-      )}
+      {/* Search Results */}
+      <SearchResultsList
+        results={results}
+        isLoading={isLoading}
+        error={error}
+        query={query}
+        onResultSelect={handleResultSelect}
+      />
     </div>
   );
 }

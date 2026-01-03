@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Maha Shivaratri - Lord Shiva worship -->
+  <defs>
+    <radialGradient id="shivaGrad" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#E6E6FA;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4169E1;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Night background -->
+  <circle cx="50" cy="50" r="45" fill="url(#shivaGrad)" stroke="#191970" stroke-width="2"/>
+  
+  <!-- Shiva Linga -->
+  <ellipse cx="50" cy="65" rx="8" ry="4" fill="#696969"/>
+  <ellipse cx="50" cy="50" rx="6" ry="15" fill="#A9A9A9" stroke="#696969" stroke-width="1"/>
+  
+  <!-- Sacred water pouring -->
+  <path d="M35 30 Q40 35 45 40 Q48 45 50 50" stroke="#87CEEB" stroke-width="3" fill="none"/>
+  <path d="M65 30 Q60 35 55 40 Q52 45 50 50" stroke="#87CEEB" stroke-width="3" fill="none"/>
+  
+  <!-- Bilva leaves -->
+  <ellipse cx="40" cy="45" rx="3" ry="6" fill="#228B22" transform="rotate(-30 40 45)"/>
+  <ellipse cx="60" cy="45" rx="3" ry="6" fill="#228B22" transform="rotate(30 60 45)"/>
+  <ellipse cx="50" cy="40" rx="3" ry="6" fill="#228B22"/>
+  
+  <!-- Crescent moon -->
+  <path d="M45 25 Q50 20 55 25 Q50 30 45 25" fill="#F5F5DC" stroke="#E6E6FA" stroke-width="1"/>
+  
+  <!-- Third eye -->
+  <ellipse cx="50" cy="35" rx="2" ry="1" fill="#FF6347"/>
+  
+  <!-- Trident -->
+  <line x1="25" y1="20" x2="25" y2="40" stroke="#C0C0C0" stroke-width="2"/>
+  <polygon points="23,18 25,15 27,18" fill="#C0C0C0"/>
+  <line x1="23" y1="20" x2="27" y2="20" stroke="#C0C0C0" stroke-width="1"/>
+  
+  <!-- Damaru (drum) -->
+  <ellipse cx="75" cy="30" rx="4" ry="6" fill="#8B4513"/>
+  <ellipse cx="75" cy="27" rx="3" ry="2" fill="#DEB887"/>
+  <ellipse cx="75" cy="33" rx="3" ry="2" fill="#DEB887"/>
+  
+  <!-- Sacred fire -->
+  <ellipse cx="50" cy="75" rx="6" ry="3" fill="#FF6347"/>
+  <path d="M47 75 Q50 70 53 75" fill="#FFA500"/>
+  
+  <!-- Stars in night sky -->
+  <circle cx="20" cy="20" r="1" fill="#FFD700"/>
+  <circle cx="80" cy="15" r="1" fill="#FFD700"/>
+  <circle cx="15" cy="40" r="0.8" fill="#FFD700"/>
+  <circle cx="85" cy="35" r="0.8" fill="#FFD700"/>
+</svg>

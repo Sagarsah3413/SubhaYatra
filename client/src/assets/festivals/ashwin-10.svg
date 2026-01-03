@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Maha Navami - Ninth day of Dashain with goddess worship -->
+  <defs>
+    <radialGradient id="navamiGrad" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF4500;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="50" cy="50" r="45" fill="url(#navamiGrad)" stroke="#DC143C" stroke-width="2"/>
+  
+  <!-- Goddess figure -->
+  <circle cx="50" cy="35" r="8" fill="#FFE4B5" stroke="#DEB887" stroke-width="1"/>
+  
+  <!-- Crown -->
+  <polygon points="42,27 50,22 58,27 55,32 45,32" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+  
+  <!-- Body/dress -->
+  <path d="M42 43 Q50 40 58 43 L58 65 Q50 70 42 65 Z" fill="#DC143C" stroke="#8B0000" stroke-width="1"/>
+  
+  <!-- Arms with weapons -->
+  <ellipse cx="38" cy="50" rx="3" ry="10" fill="#FFE4B5"/>
+  <ellipse cx="62" cy="50" rx="3" ry="10" fill="#FFE4B5"/>
+  
+  <!-- Trident -->
+  <line x1="35" y1="40" x2="35" y2="55" stroke="#C0C0C0" stroke-width="2"/>
+  <polygon points="33,38 35,35 37,38" fill="#C0C0C0"/>
+  
+  <!-- Sword -->
+  <line x1="65" y1="40" x2="65" y2="55" stroke="#C0C0C0" stroke-width="2"/>
+  <rect x="63" y="38" width="4" height="3" fill="#FFD700"/>
+  
+  <!-- Sacred fire -->
+  <ellipse cx="50" cy="75" rx="8" ry="4" fill="#FF6347"/>
+  <path d="M45 75 Q50 70 55 75" fill="#FFA500"/>
+  <path d="M47 75 Q50 68 53 75" fill="#FFD700"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="25" cy="25" r="2" fill="#FFD700"/>
+  <circle cx="75" cy="25" r="2" fill="#FFD700"/>
+  <circle cx="25" cy="75" r="2" fill="#FF6347"/>
+  <circle cx="75" cy="75" r="2" fill="#FF6347"/>
+</svg>

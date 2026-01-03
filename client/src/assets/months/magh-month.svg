@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80">
+    <!-- Magh - Coldest month -->
+    <rect width="120" height="80" fill="#2F4F4F"/>
+    <circle cx="75" cy="30" r="5" fill="#E6E6FA" opacity="0.8"/>
+    <polygon points="0,65 20,50 50,65 80,45 120,60 120,80 0,80" fill="#556B2F"/>
+    <!-- Heavy frost -->
+    <polygon points="15,50 25,40 35,50" fill="#FFFFFF"/>
+    <polygon points="45,65 55,55 65,65" fill="#FFFFFF"/>
+    <polygon points="75,45 85,35 95,45" fill="#FFFFFF"/>
+    <!-- Fog -->
+    <ellipse cx="60" cy="55" rx="20" ry="5" fill="#F5F5F5" opacity="0.6"/>
+    <text x="60" y="75" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#F0F8FF">MAGH</text>
+  </svg>

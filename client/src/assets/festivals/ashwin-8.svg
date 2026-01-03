@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Fulpati - Dashain ritual with flowers and leaves -->
+  <defs>
+    <linearGradient id="fulpatiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#32CD32;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#228B22;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="50" cy="50" r="45" fill="url(#fulpatiGrad)" stroke="#006400" stroke-width="2"/>
+  
+  <!-- Banana plant leaves -->
+  <ellipse cx="30" cy="50" rx="8" ry="25" fill="#90EE90" stroke="#228B22" stroke-width="1" transform="rotate(-15 30 50)"/>
+  <ellipse cx="70" cy="50" rx="8" ry="25" fill="#90EE90" stroke="#228B22" stroke-width="1" transform="rotate(15 70 50)"/>
+  
+  <!-- Central sugarcane -->
+  <rect x="48" y="25" width="4" height="40" fill="#DEB887" stroke="#8B7355" stroke-width="1"/>
+  
+  <!-- Flowers -->
+  <circle cx="40" cy="35" r="4" fill="#FF69B4" stroke="#FF1493" stroke-width="1"/>
+  <circle cx="60" cy="35" r="4" fill="#FF69B4" stroke="#FF1493" stroke-width="1"/>
+  <circle cx="35" cy="45" r="3" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+  <circle cx="65" cy="45" r="3" fill="#FFD700" stroke="#FFA500" stroke-width="1"/>
+  
+  <!-- Marigold garland -->
+  <circle cx="45" cy="25" r="2" fill="#FFA500"/>
+  <circle cx="50" cy="23" r="2" fill="#FFA500"/>
+  <circle cx="55" cy="25" r="2" fill="#FFA500"/>
+  
+  <!-- Sacred grass -->
+  <path d="M25 65 Q30 55 25 45" stroke="#228B22" stroke-width="2" fill="none"/>
+  <path d="M75 65 Q70 55 75 45" stroke="#228B22" stroke-width="2" fill="none"/>
+  
+  <!-- Decorative border -->
+  <circle cx="20" cy="20" r="2" fill="#FF6347"/>
+  <circle cx="80" cy="20" r="2" fill="#FF6347"/>
+  <circle cx="20" cy="80" r="2" fill="#FF6347"/>
+  <circle cx="80" cy="80" r="2" fill="#FF6347"/>
+</svg>

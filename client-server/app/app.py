@@ -7,13 +7,14 @@ from dotenv import load_dotenv  # ✅ Load .env
 # Add the app directory to Python path for imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from database import init_db, db
-from routes.search import search_blueprint
-from routes.users import users_blueprint
-from routes.rooms import rooms_blueprint
-from routes.chat_routes import chat_bp
-from routes.admin import admin_bp   # ⭐ Admin routes (login + dashboard)
-from routes.places import places_bp
+from .database import init_db, db
+from .routes.search import search_blueprint
+from .routes.users import users_blueprint
+from .routes.rooms import rooms_blueprint
+from .routes.chat_routes import chat_bp
+from .routes.admin import admin_bp   # ⭐ Admin routes (login + dashboard)
+from .routes.places import places_bp
+from .routes.wishlist import wishlist_bp
 
 # -----------------------------
 # Load .env from backend folder
@@ -43,8 +44,12 @@ def create_app():
     # -----------------------------
     CORS(app, origins=[
         "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
         "http://localhost:3000",
         "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:5175",
         "http://127.0.0.1:3000"
     ], supports_credentials=True)
 
@@ -61,9 +66,8 @@ def create_app():
     app.register_blueprint(rooms_blueprint, url_prefix="/rooms")
     app.register_blueprint(chat_bp, url_prefix="/api/chat")
     app.register_blueprint(places_bp, url_prefix="/api")
+    app.register_blueprint(wishlist_bp, url_prefix="/api")
     app.register_blueprint(admin_bp)  # Admin login/dashboard routes
-    app.register_blueprint(email_bp)  # 📧 Email routes (with password)
-    app.register_blueprint(email_free_bp)  # 📧 Email routes (no password)
 
     # -----------------------------
     # Root route
@@ -87,4 +91,10 @@ def create_app():
 # -----------------------------
 if __name__ == "__main__":
     app = create_app()
+    print("🚀 Starting Tourism Recommendation System Backend Server...")
+    print("📍 Server running at: http://localhost:8000")
+    print("🌐 CORS enabled for frontend at: http://localhost:5173")
+    print("📊 Database: SQLite (tourism.db)")
+    print("=" * 50)
+    
     app.run(debug=True, host="0.0.0.0", port=8000)

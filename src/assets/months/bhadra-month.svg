@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80">
+    <!-- Bhadra - Late monsoon -->
+    <defs>
+      <linearGradient id="lateMonsoon" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#4682B4;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <rect width="120" height="80" fill="url(#lateMonsoon)"/>
+    <ellipse cx="60" cy="20" rx="15" ry="6" fill="#B0C4DE"/>
+    <!-- Light rain -->
+    <g stroke="#6495ED" stroke-width="1">
+      <line x1="50" y1="26" x2="48" y2="35"/>
+      <line x1="60" y1="26" x2="58" y2="35"/>
+      <line x1="70" y1="26" x2="68" y2="35"/>
+    </g>
+    <polygon points="0,60 25,45 55,55 85,40 120,50 120,80 0,80" fill="#32CD32"/>
+    <circle cx="90" cy="25" r="6" fill="#FFD700" opacity="0.7"/>
+    <text x="60" y="75" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#2F4F4F">BHADRA</text>
+  </svg>

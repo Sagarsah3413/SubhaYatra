@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Ghatasthapana - Beginning of Dashain with sacred pot -->
+  <defs>
+    <radialGradient id="dashainGrad" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="50" cy="50" r="45" fill="url(#dashainGrad)" stroke="#FF6347" stroke-width="2"/>
+  
+  <!-- Sacred pot (Ghata) -->
+  <ellipse cx="50" cy="65" rx="15" ry="8" fill="#8B4513" stroke="#654321" stroke-width="1"/>
+  <rect x="35" y="45" width="30" height="20" fill="#CD853F" stroke="#8B4513" stroke-width="1"/>
+  <ellipse cx="50" cy="45" rx="15" ry="5" fill="#DEB887" stroke="#8B4513" stroke-width="1"/>
+  
+  <!-- Barley sprouts -->
+  <path d="M40 45 Q42 35 40 25" stroke="#228B22" stroke-width="2" fill="none"/>
+  <path d="M45 45 Q47 30 45 20" stroke="#228B22" stroke-width="2" fill="none"/>
+  <path d="M50 45 Q52 28 50 18" stroke="#228B22" stroke-width="2" fill="none"/>
+  <path d="M55 45 Q57 30 55 20" stroke="#228B22" stroke-width="2" fill="none"/>
+  <path d="M60 45 Q62 35 60 25" stroke="#228B22" stroke-width="2" fill="none"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="30" cy="30" r="2" fill="#FF0000"/>
+  <circle cx="70" cy="30" r="2" fill="#FF0000"/>
+  <circle cx="25" cy="70" r="2" fill="#FFD700"/>
+  <circle cx="75" cy="70" r="2" fill="#FFD700"/>
+  
+  <!-- Sacred symbols -->
+  <circle cx="50" cy="80" r="3" fill="#FF6347" stroke="#DC143C" stroke-width="1"/>
+</svg>

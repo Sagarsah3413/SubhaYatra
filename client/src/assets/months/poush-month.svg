@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80">
+    <!-- Poush - Cold winter -->
+    <rect width="120" height="80" fill="#4682B4"/>
+    <circle cx="80" cy="25" r="6" fill="#F0F8FF"/>
+    <polygon points="0,65 25,45 55,60 85,40 120,55 120,80 0,80" fill="#696969"/>
+    <!-- Frost/snow on peaks -->
+    <polygon points="20,45 30,35 40,45" fill="#FFFFFF"/>
+    <polygon points="80,40 90,30 100,40" fill="#FFFFFF"/>
+    <!-- Cold indicators -->
+    <circle cx="30" cy="20" r="1" fill="#E6E6FA"/>
+    <circle cx="50" cy="15" r="1" fill="#E6E6FA"/>
+    <circle cx="70" cy="18" r="1" fill="#E6E6FA"/>
+    <text x="60" y="75" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#F0F8FF">POUSH</text>
+  </svg>

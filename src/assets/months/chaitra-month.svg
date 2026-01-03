@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80">
+    <!-- Chaitra - Full spring -->
+    <defs>
+      <linearGradient id="fullSpring" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#90EE90;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <rect width="120" height="80" fill="url(#fullSpring)"/>
+    <circle cx="95" cy="18" r="8" fill="#FFD700"/>
+    <polygon points="0,58 30,35 60,50 90,30 120,45 120,80 0,80" fill="#228B22"/>
+    <!-- Full bloom -->
+    <circle cx="25" cy="48" r="6" fill="#32CD32"/>
+    <circle cx="55" cy="43" r="8" fill="#32CD32"/>
+    <circle cx="85" cy="45" r="7" fill="#32CD32"/>
+    <!-- Flowers everywhere -->
+    <circle cx="23" cy="45" r="2" fill="#FF69B4"/>
+    <circle cx="27" cy="43" r="2" fill="#FFB6C1"/>
+    <circle cx="53" cy="40" r="2" fill="#FF1493"/>
+    <circle cx="57" cy="38" r="2" fill="#FF69B4"/>
+    <circle cx="83" cy="42" r="2" fill="#FFB6C1"/>
+    <circle cx="87" cy="40" r="2" fill="#FF69B4"/>
+    <text x="60" y="75" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#2F4F4F">CHAITRA</text>
+  </svg>

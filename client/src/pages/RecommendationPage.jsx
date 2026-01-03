@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useUser } from "@clerk/clerk-react";
 
 // Components
 import { Header } from "../components/header/Header";
@@ -13,6 +15,31 @@ import { useNavigate, useLocation } from "react-router-dom";
 export default function RecommendationPage() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isSignedIn, isLoaded } = useUser();
+
+  // Redirect to sign-in if not authenticated
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      navigate("/sign-in");
+    }
+  }, [isSignedIn, isLoaded, navigate]);
+
+  // Show loading while checking authentication
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render the page if not signed in (will redirect)
+  if (!isSignedIn) {
+    return null;
+  }
 
   const handleHomeClick = () => {
     if (location.pathname !== "/") navigate(-1);
@@ -70,6 +97,14 @@ export default function RecommendationPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Header */}
       <Header onHomeClick={handleHomeClick} />
+
+      {/* Welcome Message for Authenticated Users */}
+      <div className="bg-gradient-to-r from-teal-500 to-cyan-600 text-white py-4 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-lg font-semibold">🎉 Welcome! You're signed in</h2>
+          <p className="text-sm opacity-90">Get personalized travel recommendations tailored just for you</p>
+        </div>
+      </div>
 
       <div className="flex justify-center py-10 px-4 flex-1">
         <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-md">

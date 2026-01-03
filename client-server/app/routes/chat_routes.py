@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from ..database import db
 from ..models import Chat, Message
-from app.ai import get_ai_reply
+from ..ai import get_ai_reply
 
 
 chat_bp = Blueprint("chat", __name__)

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/200 200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DC2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#991B1B;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="chariot" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D97706;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#92400E;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#bg)" rx="20"/>
+  
+  <!-- Chariot Base -->
+  <rect x="50" y="130" width="100" height="25" fill="url(#chariot)" rx="5"/>
+  
+  <!-- Chariot Wheels -->
+  <circle cx="70" cy="150" r="15" fill="#451A03"/>
+  <circle cx="70" cy="150" r="10" fill="#D97706"/>
+  <circle cx="70" cy="150" r="5" fill="#451A03"/>
+  
+  <circle cx="130" cy="150" r="15" fill="#451A03"/>
+  <circle cx="130" cy="150" r="10" fill="#D97706"/>
+  <circle cx="130" cy="150" r="5" fill="#451A03"/>
+  
+  <!-- Chariot Structure -->
+  <rect x="60" y="100" width="80" height="30" fill="#92400E" rx="5"/>
+  <rect x="65" y="105" width="70" height="20" fill="#D97706" rx="3"/>
+  
+  <!-- Tall Pole (Lingo) -->
+  <rect x="98" y="30" width="4" height="75" fill="#451A03"/>
+  <rect x="96" y="28" width="8" height="6" fill="#92400E" rx="2"/>
+  
+  <!-- Flags on Pole -->
+  <polygon points="102,35 102,50 120,45 120,40" fill="#EF4444"/>
+  <polygon points="102,55 102,70 120,65 120,60" fill="#FCD34D"/>
+  <polygon points="102,75 102,90 120,85 120,80" fill="#10B981"/>
+  
+  <!-- Rope Pullers -->
+  <circle cx="30" cy="120" r="6" fill="#FBBF24"/>
+  <ellipse cx="30" cy="135" rx="4" ry="8" fill="#DC2626"/>
+  <ellipse cx="25" cy="128" rx="2" ry="6" fill="#FBBF24" transform="rotate(-30 25 128)"/>
+  
+  <circle cx="170" cy="125" r="6" fill="#F59E0B"/>
+  <ellipse cx="170" cy="140" rx="4" ry="8" fill="#059669"/>
+  <ellipse cx="175" cy="133" rx="2" ry="6" fill="#F59E0B" transform="rotate(30 175 133)"/>
+  
+  <!-- Ropes -->
+  <path d="M 35 125 Q 45 120 55 125" stroke="#92400E" stroke-width="3" fill="none"/>
+  <path d="M 165 130 Q 155 125 145 130" stroke="#92400E" stroke-width="3" fill="none"/>
+  
+  <!-- Deity Figure -->
+  <circle cx="100" cy="90" r="8" fill="#FCD34D"/>
+  <ellipse cx="100" cy="105" rx="6" ry="10" fill="#DC2626"/>
+  <ellipse cx="94" cy="98" rx="2" ry="5" fill="#FCD34D" transform="rotate(-20 94 98)"/>
+  <ellipse cx="106" cy="98" rx="2" ry="5" fill="#FCD34D" transform="rotate(20 106 98)"/>
+  
+  <!-- Crown -->
+  <polygon points="95,82 100,75 105,82" fill="#FCD34D"/>
+  <circle cx="100" cy="78" r="2" fill="#F59E0B"/>
+  
+  <!-- Bhaktapur Architecture -->
+  <rect x="20" y="60" width="15" height="25" fill="#92400E"/>
+  <polygon points="20,60 27.5,50 35,60" fill="#451A03"/>
+  <rect x="23" y="65" width="3" height="5" fill="#451A03"/>
+  <rect x="29" y="65" width="3" height="5" fill="#451A03"/>
+  
+  <rect x="165" y="65" width="15" height="20" fill="#92400E"/>
+  <polygon points="165,65 172.5,55 180,65" fill="#451A03"/>
+  <rect x="168" y="70" width="3" height="4" fill="#451A03"/>
+  <rect x="174" y="70" width="3" height="4" fill="#451A03"/>
+  
+  <!-- Celebration Elements -->
+  <circle cx="50" cy="40" r="3" fill="#FCD34D"/>
+  <circle cx="150" cy="35" r="3" fill="#FCD34D"/>
+  <circle cx="40" cy="90" r="2.5" fill="#F59E0B"/>
+  <circle cx="160" cy="95" r="2.5" fill="#F59E0B"/>
+  
+  <!-- New Year Symbols -->
+  <text x="60" y="50" fill="#FCD34D" font-family="Arial, sans-serif" font-size="12">🎊</text>
+  <text x="140" y="45" fill="#FCD34D" font-family="Arial, sans-serif" font-size="12">🎉</text>
+  
+  <!-- Text -->
+  <text x="100" y="180" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12" font-weight="bold">Bisket</text>
+  <text x="100" y="195" text-anchor="middle" fill="#FEE2E2" font-family="Arial, sans-serif" font-size="10">Jatra</text>
+</svg>

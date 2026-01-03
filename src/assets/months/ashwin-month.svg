@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 80">
+    <!-- Ashwin - Clear autumn -->
+    <defs>
+      <linearGradient id="autumn" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#E0F6FF;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <rect width="120" height="80" fill="url(#autumn)"/>
+    <circle cx="100" cy="15" r="8" fill="#FFD700"/>
+    <polygon points="0,65 20,25 50,40 80,20 120,35 120,80 0,80" fill="#228B22"/>
+    <!-- Clear mountain peaks -->
+    <polygon points="15,25 25,15 35,25" fill="#FFFFFF"/>
+    <polygon points="75,20 85,10 95,20" fill="#FFFFFF"/>
+    <!-- Festival elements -->
+    <circle cx="30" cy="55" r="2" fill="#FF6347"/>
+    <circle cx="70" cy="50" r="2" fill="#FFD700"/>
+    <text x="60" y="75" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#2F4F4F">ASHWIN</text>
+  </svg>
