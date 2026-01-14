@@ -95,3 +95,50 @@ def is_in_wishlist(db: Session, user_id: str, place_id: int):
         models.Wishlist.user_id == user_id,
         models.Wishlist.place_id == place_id
     ).first() is not None
+
+
+# ------------------ NEWSLETTER CRUD ------------------
+
+def subscribe_to_newsletter(db: Session, email: str, preferences: str = "general"):
+    """Subscribe email to newsletter"""
+    # Check if already subscribed
+    existing = db.query(models.Newsletter).filter(models.Newsletter.email == email).first()
+    
+    if existing:
+        if existing.is_active == 0:
+            # Reactivate subscription
+            existing.is_active = 1
+            existing.preferences = preferences
+            db.commit()
+            db.refresh(existing)
+            return existing
+        else:
+            return existing  # Already subscribed
+    
+    # Create new subscription
+    newsletter_sub = models.Newsletter(email=email, preferences=preferences)
+    db.add(newsletter_sub)
+    db.commit()
+    db.refresh(newsletter_sub)
+    return newsletter_sub
+
+def unsubscribe_from_newsletter(db: Session, email: str):
+    """Unsubscribe email from newsletter"""
+    subscriber = db.query(models.Newsletter).filter(models.Newsletter.email == email).first()
+    
+    if subscriber:
+        subscriber.is_active = 0
+        db.commit()
+        return True
+    return False
+
+def get_newsletter_subscribers(db: Session, active_only: bool = True):
+    """Get all newsletter subscribers"""
+    query = db.query(models.Newsletter)
+    if active_only:
+        query = query.filter(models.Newsletter.is_active == 1)
+    return query.all()
+
+def get_subscriber_by_email(db: Session, email: str):
+    """Get newsletter subscriber by email"""
+    return db.query(models.Newsletter).filter(models.Newsletter.email == email).first()

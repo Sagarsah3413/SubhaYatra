@@ -92,6 +92,18 @@ class Wishlist(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+# ------------------ NEWSLETTER MODEL ------------------
+
+class Newsletter(Base):
+    __tablename__ = "newsletter_subscribers"
+
+    id = Column(Integer, primary_key=True)
+    email = Column(String, unique=True, nullable=False)
+    subscribed_at = Column(DateTime, default=datetime.utcnow)
+    is_active = Column(Integer, default=1)  # 1 for active, 0 for unsubscribed
+    preferences = Column(String, default="general")  # travel tips, deals, news, etc.
+
+
 # ------------------ FLASK-SQLALCHEMY MODELS ------------------
 
 class Chat(db.Model):

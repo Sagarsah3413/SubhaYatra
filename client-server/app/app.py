@@ -15,6 +15,7 @@ from .routes.chat_routes import chat_bp
 from .routes.admin import admin_bp   # ⭐ Admin routes (login + dashboard)
 from .routes.places import places_bp
 from .routes.wishlist import wishlist_bp
+from .routes.hotels import hotels_bp
 
 # -----------------------------
 # Load .env from backend folder
@@ -67,6 +68,7 @@ def create_app():
     app.register_blueprint(chat_bp, url_prefix="/api/chat")
     app.register_blueprint(places_bp, url_prefix="/api")
     app.register_blueprint(wishlist_bp, url_prefix="/api")
+    app.register_blueprint(hotels_bp, url_prefix="/api")
     app.register_blueprint(admin_bp)  # Admin login/dashboard routes
 
     # -----------------------------
