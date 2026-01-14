@@ -4,24 +4,54 @@ import "./index.css";
 import App from "./App.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import "./i18n/index.js"; // Initialize i18n
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-const root = createRoot(document.getElementById("root"));
 
-if (PUBLISHABLE_KEY) {
-  root.render(
+// Optimized theme initialization - apply immediately to prevent flash
+const initializeTheme = () => {
+  const savedTheme = localStorage.getItem('theme');
+  const theme = savedTheme || 'dark';
+  
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+  
+  if (!savedTheme) {
+    localStorage.setItem('theme', 'dark');
+  }
+};
+
+// Initialize theme immediately
+initializeTheme();
+
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+// Optimized root creation with error boundary
+const renderApp = () => {
+  const root = createRoot(document.getElementById("root"));
+  
+  const AppWithProviders = PUBLISHABLE_KEY ? (
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <StrictMode>
         <App />
       </StrictMode>
     </ClerkProvider>
-  );
-} else {
-  // If publishable key is missing (e.g., in local dev), render without Clerk to avoid runtime errors
-  console.warn("VITE_CLERK_PUBLISHABLE_KEY not set — rendering without ClerkProvider");
-  root.render(
+  ) : (
     <StrictMode>
       <App />
     </StrictMode>
   );
+
+  root.render(AppWithProviders);
+};
+
+// Handle potential errors during initialization
+try {
+  renderApp();
+} catch (error) {
+  console.error("Failed to initialize app:", error);
+  // Fallback rendering without StrictMode if needed
+  const root = createRoot(document.getElementById("root"));
+  root.render(<App />);
 }
 

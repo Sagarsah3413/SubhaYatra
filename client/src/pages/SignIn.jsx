@@ -144,7 +144,7 @@ export default function SignInPage() {
                   onClick={() => navigate('/guide')}
                   className="group flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-300"
                 >
-                  <span>Travel Guide</span>
+                  <span>Itinerary</span>
                   <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
                 </button>
               </div>

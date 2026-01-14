@@ -5,13 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import NepaliCalendar from "../../pages/NepaliCalendar";
 import { useTheme } from "../../contexts/ThemeContext";
-import { FaSun, FaMoon, FaBars, FaTimes, FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaHeart, FaUser, FaCog, FaQuestionCircle } from "react-icons/fa";
+import { FaSun, FaMoon, FaBars, FaTimes, FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaUser, FaCog, FaQuestionCircle, FaHome, FaSearch, FaInfoCircle, FaPhone } from "react-icons/fa";
 
 /**
- * Header Component
+ * Premium Header Component
  * 
- * A responsive navigation header with mobile menu toggle, theme switching,
- * calendar integration, and user authentication features.
+ * An ultra-modern, responsive navigation header featuring:
+ * - Advanced location detection with GPS accuracy
+ * - Premium visual effects and animations
+ * - Multi-language support with smooth transitions
+ * - Integrated Nepali calendar with portal rendering
+ * - Theme switching with sophisticated animations
+ * - Mobile-first responsive design
+ * - Authentication integration with Clerk
+ * - Debug panels for development
  * 
  * @param {Object} props - Component props
  * @param {Function} props.onHomeClick - Callback function for home navigation
@@ -769,7 +776,26 @@ export const Header = ({ onHomeClick }) => {
   }, []);
 
   return (
-    <header className={getHeaderClasses(theme)}>
+    <header className={`
+      fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out transform-gpu will-change-transform
+      ${theme === 'dark' 
+        ? 'bg-gradient-to-r from-slate-900/98 via-slate-800/96 to-slate-900/98 border-slate-700/60 shadow-xl shadow-slate-900/30' 
+        : 'bg-gradient-to-r from-white/98 via-gray-50/96 to-white/98 border-gray-200/60 shadow-xl shadow-gray-900/10'
+      }
+      backdrop-blur-xl border-b h-20 px-4 sm:px-6 lg:px-8
+      flex items-center justify-between
+    `}>
+      {/* Premium Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05] pointer-events-none">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.2) 0%, transparent 50%)
+          `,
+          backgroundSize: '800px 800px, 600px 600px, 1000px 1000px'
+        }}></div>
+      </div>
       {/* Left side: Mobile Menu Button + Logo + App Name */}
       <div className="flex items-center gap-3">
         <MobileMenuToggle 
@@ -1040,46 +1066,42 @@ const useClerkSafely = () => {
 };
 
 /**
- * Returns super ultra-professional header CSS classes based on theme
+ * Returns ultra-professional header CSS classes based on theme
  */
 const getHeaderClasses = (theme) => {
-  return `sticky top-0 z-50 w-full px-6 py-4 ${
+  return `sticky top-0 z-50 w-full px-4 py-3 ${
     theme === "dark" 
-      ? "bg-gradient-to-r from-slate-950/98 via-slate-900/95 to-slate-950/98 backdrop-blur-3xl border-slate-700/30 shadow-2xl shadow-slate-900/40" 
-      : "bg-gradient-to-r from-white/99 via-slate-50/98 to-white/99 backdrop-blur-3xl border-slate-200/30 shadow-2xl shadow-slate-200/20"
-  } border-b flex justify-between items-center relative transition-all duration-500 will-change-transform transform-gpu min-h-[80px] max-h-[80px] before:absolute before:inset-0 before:bg-gradient-to-r ${
+      ? "bg-gradient-to-r from-slate-950/95 via-slate-900/90 to-slate-950/95 backdrop-blur-2xl border-slate-700/40 shadow-2xl shadow-slate-900/50" 
+      : "bg-gradient-to-r from-white/98 via-slate-50/95 to-white/98 backdrop-blur-2xl border-slate-200/40 shadow-2xl shadow-slate-200/30"
+  } border-b flex justify-between items-center relative transition-all duration-300 will-change-transform transform-gpu min-h-[72px] max-h-[72px] before:absolute before:inset-0 before:bg-gradient-to-r ${
     theme === "dark"
-      ? "before:from-teal-600/8 before:via-cyan-600/5 before:to-blue-600/8"
-      : "before:from-teal-500/5 before:via-cyan-500/3 before:to-blue-500/5"
-  } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-700 after:absolute after:inset-0 after:bg-gradient-to-b ${
-    theme === "dark"
-      ? "after:from-transparent after:via-slate-900/10 after:to-slate-950/20"
-      : "after:from-transparent after:via-white/10 after:to-slate-50/20"
-  } after:pointer-events-none group`;
+      ? "before:from-teal-600/5 before:via-transparent before:to-cyan-600/5"
+      : "before:from-teal-500/3 before:via-transparent before:to-cyan-500/3"
+  } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500`;
 };
 
 /**
- * Returns super ultra-professional theme-based button classes
+ * Returns ultra-professional theme-based button classes
  */
 const getThemeClasses = (theme) => {
   return theme === "dark" 
-    ? "text-teal-100 hover:text-white hover:bg-gradient-to-r hover:from-teal-800/70 hover:to-cyan-800/70 hover:shadow-xl hover:shadow-teal-900/30 transition-all duration-500 transform hover:scale-105" 
-    : "text-teal-700 hover:text-teal-900 hover:bg-gradient-to-r hover:from-teal-50/70 hover:to-cyan-50/70 hover:shadow-xl hover:shadow-teal-200/30 transition-all duration-500 transform hover:scale-105";
+    ? "text-teal-100 hover:text-white hover:bg-gradient-to-r hover:from-teal-800/60 hover:to-cyan-800/60" 
+    : "text-teal-700 hover:text-teal-900 hover:bg-gradient-to-r hover:from-teal-50/60 hover:to-cyan-50/60";
 };
 
 /**
- * Returns super ultra-professional navigation button classes
+ * Returns ultra-professional navigation button classes
  */
 const getNavButtonClasses = (theme) => {
-  return `px-6 py-3 rounded-2xl font-semibold transition-all duration-500 border-2 backdrop-blur-2xl transform-gpu will-change-transform relative overflow-hidden group ${
+  return `px-4 py-2 rounded-xl font-medium transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${
     theme === "dark" 
-      ? "border-teal-700/50 hover:border-teal-600/80 hover:bg-gradient-to-r hover:from-teal-900/60 hover:to-cyan-900/60 hover:shadow-2xl hover:shadow-teal-900/40 hover:scale-110" 
-      : "border-teal-200/50 hover:border-teal-300/80 hover:bg-gradient-to-r hover:from-teal-50/60 hover:to-cyan-50/60 hover:shadow-2xl hover:shadow-teal-200/40 hover:scale-110"
+      ? "border-teal-700/40 hover:border-teal-600/70 hover:bg-gradient-to-r hover:from-teal-900/50 hover:to-cyan-900/50 hover:shadow-xl hover:shadow-teal-900/30 hover:scale-105" 
+      : "border-teal-200/40 hover:border-teal-300/70 hover:bg-gradient-to-r hover:from-teal-50/50 hover:to-cyan-50/50 hover:shadow-xl hover:shadow-teal-200/30 hover:scale-105"
   } before:absolute before:inset-0 before:bg-gradient-to-r ${
     theme === "dark"
-      ? "before:from-teal-600/15 before:via-cyan-600/10 before:to-blue-600/15"
-      : "before:from-teal-500/8 before:via-cyan-500/5 before:to-blue-500/8"
-  } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500 after:absolute after:inset-0 after:bg-gradient-to-r after:from-transparent after:via-white/20 after:to-transparent after:transform after:-skew-x-12 after:-translate-x-full group-hover:after:translate-x-full after:transition-transform after:duration-1000`;
+      ? "before:from-teal-600/10 before:to-cyan-600/10"
+      : "before:from-teal-500/5 before:to-cyan-500/5"
+  } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300`;
 };
 
 // ==================== CUSTOM HOOKS ====================
@@ -1556,116 +1578,53 @@ const CustomLanguageDropdownMobile = ({ selectedLanguage, onLanguageChange, them
 };
 
 /**
- * Super Ultra-Professional mobile menu toggle button component with premium effects
+ * Sidebar menu toggle button
  */
 const MobileMenuToggle = ({ isOpen, onToggle, theme }) => (
   <button
     onClick={onToggle}
-    className={`p-5 rounded-3xl mobile-toggle transition-all duration-500 border-2 backdrop-blur-2xl relative overflow-hidden group ${
-      theme === "dark" 
-        ? "border-teal-700/50 hover:border-teal-600/80 bg-gradient-to-br from-teal-900/60 via-slate-800/50 to-cyan-900/60 hover:bg-gradient-to-br hover:from-teal-800/80 hover:via-slate-700/70 hover:to-cyan-800/80 text-teal-100 hover:text-white shadow-2xl hover:shadow-teal-900/50 hover:scale-110" 
-        : "border-teal-200/50 hover:border-teal-300/80 bg-gradient-to-br from-teal-50/60 via-white/50 to-cyan-50/60 hover:bg-gradient-to-br hover:from-teal-100/80 hover:via-white/70 hover:to-cyan-100/80 text-teal-700 hover:text-teal-900 shadow-2xl hover:shadow-teal-200/50 hover:scale-110"
-    } min-w-[60px] max-w-[60px] min-h-[60px] max-h-[60px] flex items-center justify-center transform-gpu will-change-transform`}
+    className={`
+      p-3 rounded-xl mobile-toggle transition-all duration-200 transform-gpu will-change-transform
+      ${theme === "dark" 
+        ? "bg-slate-800/80 hover:bg-slate-700/90 border-slate-700/50 text-slate-200" 
+        : "bg-white/90 hover:bg-white border-slate-200/50 text-slate-700"
+      } 
+      border shadow-lg hover:shadow-xl hover:scale-105 active:scale-95
+      w-12 h-12 flex items-center justify-center
+    `}
     aria-expanded={isOpen}
-    aria-label="Toggle navigation menu"
-    style={{ position: 'relative', zIndex: 60 }}
+    aria-label="Toggle sidebar menu"
+    title={isOpen ? "Close sidebar" : "Open sidebar"}
   >
-    {/* Ultra Premium Background Effects */}
-    <div className="absolute -inset-2 opacity-0 group-hover:opacity-100 transition-all duration-700">
-      <div className={`absolute inset-0 rounded-full ${
-        theme === "dark" 
-          ? "bg-gradient-to-r from-teal-600/30 via-cyan-600/20 to-blue-600/30" 
-          : "bg-gradient-to-r from-teal-500/20 via-cyan-500/15 to-blue-500/20"
-      } blur-2xl animate-pulse`} />
+    <div className="w-5 h-5 flex items-center justify-center">
+      {isOpen ? (
+        <FaTimes className="w-4 h-4 transition-transform duration-200" />
+      ) : (
+        <FaBars className="w-4 h-4 transition-transform duration-200" />
+      )}
     </div>
-    
-    {/* Premium Active State Background */}
-    <div className={`absolute inset-0 transition-all duration-500 ${
-      isOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-    } ${theme === "dark" ? "bg-gradient-to-br from-teal-700/40 via-cyan-700/30 to-blue-700/40" : "bg-gradient-to-br from-teal-200/40 via-cyan-200/30 to-blue-200/40"} rounded-3xl shadow-inner`} />
-    
-    {/* Enhanced Icon Container */}
-    <div className="relative w-8 h-8 flex items-center justify-center">
-      <div className="relative transform-gpu">
-        {isOpen ? (
-          <FaTimes size={20} className="transform transition-all duration-500 group-hover:rotate-180 group-hover:scale-125 drop-shadow-lg" />
-        ) : (
-          <FaBars size={20} className="transform transition-all duration-500 group-hover:scale-125 group-hover:rotate-3 drop-shadow-lg" />
-        )}
-      </div>
-      
-      {/* Floating Animation Dots */}
-      <div className="absolute -top-1 -right-1 w-2 h-2 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 animate-bounce"></div>
-      <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 delay-200 animate-bounce"></div>
-    </div>
-    
-    {/* Ultra Premium Glow Effect */}
-    <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${
-      theme === "dark" 
-        ? "bg-gradient-to-r from-teal-600/25 via-cyan-600/20 to-blue-600/25" 
-        : "bg-gradient-to-r from-teal-500/15 via-cyan-500/10 to-blue-500/15"
-    } blur-xl -z-10 animate-pulse`} />
-    
-    {/* Shimmer Effect */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-3xl"></div>
   </button>
 );
 
 /**
- * Super Ultra-Professional logo component with premium animations and effects
+ * Ultra-professional logo component with enhanced animations
  */
 const Logo = ({ onClick, theme }) => (
-  <div className="flex items-center cursor-pointer group transform-gpu will-change-transform relative" onClick={onClick}>
-    {/* Ultra Premium Background Glow */}
-    <div className="absolute -inset-6 opacity-0 group-hover:opacity-100 transition-all duration-1000">
-      <div className={`absolute inset-0 rounded-full ${
+  <div className="flex items-center cursor-pointer group transform-gpu will-change-transform" onClick={onClick}>
+    <div className="relative mr-5">
+      <div className={`absolute -inset-3 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-700 ${
         theme === "dark" 
-          ? "bg-gradient-to-r from-teal-600/40 via-cyan-600/30 to-emerald-600/40" 
-          : "bg-gradient-to-r from-teal-500/30 via-cyan-500/20 to-emerald-500/30"
-      } blur-3xl animate-pulse`} />
-      <div className={`absolute inset-0 rounded-full ${
-        theme === "dark" 
-          ? "bg-gradient-to-r from-blue-600/20 via-purple-600/15 to-pink-600/20" 
-          : "bg-gradient-to-r from-blue-500/15 via-purple-500/10 to-pink-500/15"
-      } blur-2xl animate-pulse delay-500`} />
+          ? "bg-gradient-to-r from-teal-600/30 via-cyan-600/20 to-emerald-600/30" 
+          : "bg-gradient-to-r from-teal-500/20 via-cyan-500/15 to-emerald-500/20"
+      } blur-2xl animate-pulse`} />
+      <span className="relative text-5xl font-bold transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-700 filter drop-shadow-2xl min-w-[56px] flex items-center justify-center">
+        🌄
+      </span>
     </div>
     
-    {/* Enhanced Logo Icon */}
-    <div className="relative mr-6">
-      <div className={`absolute -inset-4 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-700 ${
-        theme === "dark" 
-          ? "bg-gradient-to-br from-teal-600/30 via-cyan-600/20 to-emerald-600/30" 
-          : "bg-gradient-to-br from-teal-500/20 via-cyan-500/15 to-emerald-500/20"
-      } blur-2xl animate-pulse shadow-2xl`} />
-      
-      {/* Premium Icon Container */}
-      <div className={`relative w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-700 ${
-        theme === "dark"
-          ? "bg-gradient-to-br from-slate-800/80 via-slate-700/60 to-slate-800/80 border-2 border-slate-600/50"
-          : "bg-gradient-to-br from-white/90 via-slate-50/70 to-white/90 border-2 border-slate-200/50"
-      } group-hover:scale-110 group-hover:rotate-3 shadow-2xl backdrop-blur-xl`}>
-        <span className="text-4xl font-bold transform transition-all duration-700 filter drop-shadow-2xl">
-          🌄
-        </span>
-        
-        {/* Shimmer Effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-2xl"></div>
-      </div>
-    </div>
-    
-    {/* Enhanced Brand Text */}
-    <div className="hidden md:flex flex-col min-w-0 relative">
-      {/* Premium Background Pattern */}
-      <div className="absolute -inset-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-        <div className={`absolute inset-0 rounded-xl ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/20 via-slate-700/10 to-slate-800/20" 
-            : "bg-gradient-to-r from-white/30 via-slate-50/20 to-white/30"
-        } backdrop-blur-sm`} />
-      </div>
-      
-      <div className="flex items-baseline relative z-10">
-        <span className={`text-4xl font-black tracking-tight bg-gradient-to-r ${
+    <div className="hidden md:flex flex-col min-w-0">
+      <div className="flex items-baseline">
+        <span className={`text-3xl font-black tracking-tight bg-gradient-to-r ${
           theme === "dark" 
             ? "from-teal-300 via-emerald-300 to-cyan-300" 
             : "from-teal-600 via-emerald-600 to-cyan-600"
@@ -1673,41 +1632,21 @@ const Logo = ({ onClick, theme }) => (
           theme === "dark"
             ? "group-hover:from-teal-200 group-hover:via-emerald-200 group-hover:to-cyan-200"
             : "group-hover:from-teal-700 group-hover:via-emerald-700 group-hover:to-cyan-700"
-        } transition-all duration-700 drop-shadow-lg`}>
+        } transition-all duration-500`}>
           Roamio
         </span>
-        <span className={`text-2xl font-light ml-4 tracking-wider ${
+        <span className={`text-xl font-light ml-3 tracking-wider ${
           theme === "dark" ? "text-slate-300 group-hover:text-slate-100" : "text-slate-500 group-hover:text-slate-700"
-        } transition-all duration-700 whitespace-nowrap drop-shadow-md`}>
+        } transition-all duration-500 whitespace-nowrap`}>
           Wanderly
         </span>
       </div>
-      
-      {/* Enhanced Underline Animation */}
-      <div className="relative mt-1">
-        <div className={`h-1.5 w-0 group-hover:w-full transition-all duration-1000 ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400" 
-            : "bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600"
-        } rounded-full shadow-xl`} />
-        <div className={`absolute top-0 h-1.5 w-0 group-hover:w-full transition-all duration-1000 delay-200 ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400" 
-            : "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
-        } rounded-full shadow-lg opacity-60`} />
-      </div>
-      
-      {/* Premium Tagline */}
-      <div className={`text-xs font-medium mt-1 tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-all duration-700 delay-300 ${
-        theme === "dark" ? "text-slate-400" : "text-slate-500"
-      }`}>
-        Discover • Explore • Wander
-      </div>
+      <div className={`h-1 w-0 group-hover:w-full transition-all duration-700 ${
+        theme === "dark" 
+          ? "bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400" 
+          : "bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600"
+      } rounded-full shadow-lg`} />
     </div>
-    
-    {/* Ultra Premium Floating Elements */}
-    <div className="absolute -top-2 -right-2 w-3 h-3 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 animate-bounce"></div>
-    <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 delay-300 animate-bounce"></div>
   </div>
 );
 
@@ -1769,7 +1708,7 @@ const DesktopNavigation = ({
 );
 
 /**
- * Mobile navigation menu component
+ * Mobile navigation menu component - Sidebar style
  */
 const MobileNavigationMenu = ({ 
   isOpen, 
@@ -1791,66 +1730,128 @@ const MobileNavigationMenu = ({
   
   return (
     <>
+      {/* Backdrop Overlay - Only on larger screens */}
       {isOpen && (
-        <div className={`absolute top-full left-0 right-0 mobile-menu transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-slate-950/95 backdrop-blur-xl border-slate-800/50" 
-            : "bg-white/95 backdrop-blur-xl border-slate-200/50"
-        } border-t shadow-2xl z-[60] animate-in slide-in-from-top-4 duration-300 max-h-[80vh] overflow-y-auto`}>
-          <div className="max-w-7xl mx-auto">
-            <nav className="flex flex-col p-8 space-y-1 scrollbar-thin scrollbar-thumb-teal-500 scrollbar-track-transparent hover:scrollbar-thumb-teal-400">
-              
-              {/* Location Indicator - Mobile (Moved to Top) */}
-              <div 
-                className="flex items-center justify-center space-x-2 px-4 py-3 mb-4 bg-slate-100/60 dark:bg-slate-800/60 rounded-xl border border-slate-200/50 dark:border-slate-700/50 cursor-pointer hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition-colors duration-200"
-                onClick={onLocationRefresh}
-                title={isLocationLoading ? "Detecting location..." : "Tap to refresh location"}
-              >
-                <FaMapMarkerAlt className={`text-teal-500 ${isLocationLoading ? 'animate-pulse' : ''}`} />
-                <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Currently exploring: {isLocationLoading 
-                    ? (locationRetryCount > 0 ? `Retrying... (${locationRetryCount}/2)` : 'Detecting location...') 
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[55] transition-opacity duration-300 hidden sm:block"
+          onClick={onClose}
+        />
+      )}
+      
+      {/* Sidebar Menu */}
+      <div className={`
+        fixed top-0 left-0 h-full z-[60] transform-gpu will-change-transform
+        w-full sm:w-80 max-w-sm
+        ${theme === "dark" 
+          ? "bg-slate-900/98 border-slate-700/50" 
+          : "bg-white/98 border-slate-200/50"
+        } 
+        sm:border-r shadow-2xl backdrop-blur-xl
+        transition-transform duration-300 ease-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}>
+        
+        {/* Sidebar Header */}
+        <div className={`
+          flex items-center justify-between p-4 sm:p-4 border-b 
+          ${theme === "dark" ? "border-slate-700/50" : "border-slate-200/50"}
+        `}>
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 sm:w-8 sm:h-8 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-sm">
+              <span className="text-white text-xl sm:text-lg font-bold">🌄</span>
+            </div>
+            <div>
+              <h2 className="text-xl sm:text-lg font-bold text-slate-800 dark:text-slate-200">
+                Nepal Tourism
+              </h2>
+              <p className="text-sm sm:text-xs text-slate-500 dark:text-slate-400">
+                Discover & Explore
+              </p>
+            </div>
+          </div>
+          
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className={`
+              p-3 sm:p-2 rounded-lg transition-colors duration-200
+              ${theme === "dark" 
+                ? "hover:bg-slate-800 text-slate-400 hover:text-slate-200" 
+                : "hover:bg-slate-100 text-slate-500 hover:text-slate-700"
+              }
+            `}
+          >
+            <FaTimes className="w-5 h-5 sm:w-4 sm:h-4" />
+          </button>
+        </div>
+        
+        {/* Sidebar Content */}
+        <div className="flex flex-col h-full overflow-y-auto">
+          
+          {/* Location Indicator */}
+          <div className="p-4 sm:p-4 border-b border-slate-200/30 dark:border-slate-700/30">
+            <div 
+              className={`
+                flex items-center space-x-3 px-4 py-3 sm:px-3 sm:py-2 rounded-lg 
+                ${theme === "dark" 
+                  ? "bg-slate-800/50 hover:bg-slate-700/50" 
+                  : "bg-slate-50 hover:bg-slate-100"
+                } 
+                cursor-pointer transition-colors duration-200
+              `}
+              onClick={onLocationRefresh}
+              title={isLocationLoading ? "Detecting location..." : "Tap to refresh location"}
+            >
+              <div className="flex items-center justify-center w-10 h-10 sm:w-8 sm:h-8 rounded-lg bg-teal-500 shadow-sm">
+                <FaMapMarkerAlt className="w-5 h-5 sm:w-4 sm:h-4 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-base sm:text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Current Location
+                </div>
+                <div className="text-sm sm:text-xs text-slate-500 dark:text-slate-400 truncate">
+                  {isLocationLoading 
+                    ? (locationRetryCount > 0 ? `Retrying... (${locationRetryCount}/2)` : 'Detecting...') 
                     : currentLocation}
-                </span>
-                {!isLocationLoading && (
-                  <svg className="w-3 h-3 text-slate-400 ml-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-                  </svg>
-                )}
-                {locationError && (
-                  <span className="text-xs text-amber-500 ml-1" title={locationError}>⚠</span>
-                )}
+                </div>
               </div>
-              
-              {/* Language Selector - Mobile (Second) */}
-              <div className="mb-4">
-                <CustomLanguageDropdownMobile 
-                  selectedLanguage={selectedLanguage}
-                  onLanguageChange={onLanguageChange}
-                  theme={theme}
-                />
-              </div>
+              {locationError && (
+                <span className="text-sm sm:text-xs text-amber-500" title={locationError}>⚠</span>
+              )}
+            </div>
+          </div>
+          
+          {/* Language Selector */}
+          <div className="p-4 sm:p-4 border-b border-slate-200/30 dark:border-slate-700/30">
+            <CustomLanguageDropdownMobile 
+              selectedLanguage={selectedLanguage}
+              onLanguageChange={onLanguageChange}
+              theme={theme}
+            />
+          </div>
 
-              <MobileNavigationItems 
-                theme={theme}
-                onCalendarOpen={onCalendarOpen}
-                onNavigation={onNavigation}
-                onThemeToggle={onThemeToggle}
-                onClose={onClose}
-              />
-              
-              <div className="pt-6 border-t border-teal-200/50 dark:border-teal-700/50 mt-6">
-                <MobileAuthenticationButtons 
-                  clerkAvailable={clerkAvailable} 
-                  onNavigation={onNavigation}
-                  onClose={onClose}
-                  theme={theme}
-                />
-              </div>
-            </nav>
+          {/* Navigation Items */}
+          <div className="flex-1 p-4 sm:p-4">
+            <MobileNavigationItems 
+              theme={theme}
+              onCalendarOpen={onCalendarOpen}
+              onNavigation={onNavigation}
+              onThemeToggle={onThemeToggle}
+              onClose={onClose}
+            />
+          </div>
+          
+          {/* Authentication Section */}
+          <div className="border-t border-slate-200/30 dark:border-slate-700/30 p-4 mt-auto">
+            <MobileAuthenticationButtons 
+              clerkAvailable={clerkAvailable} 
+              onNavigation={onNavigation}
+              onClose={onClose}
+              theme={theme}
+            />
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 };
@@ -1952,7 +1953,7 @@ const NavigationItems = ({
 };
 
 /**
- * Mobile navigation items component
+ * Mobile navigation items component - Extended content
  */
 const MobileNavigationItems = ({ 
   theme, 
@@ -1963,301 +1964,282 @@ const MobileNavigationItems = ({
 }) => {
   const { t } = useTranslation();
   
+  const mainMenuItems = [
+    {
+      icon: FaHome,
+      label: "Home",
+      path: "/",
+      description: "Return to homepage",
+      color: "bg-blue-500"
+    },
+    {
+      icon: FaSearch,
+      label: "Search",
+      path: "/searchresult",
+      description: "Find destinations",
+      color: "bg-emerald-500"
+    },
+    {
+      icon: FaCompass,
+      label: "Explore Nepal",
+      path: "/explore-nepal",
+      description: "Discover amazing places",
+      color: "bg-purple-500"
+    },
+    {
+      icon: FaCamera,
+      label: "Gallery",
+      path: "/gallery",
+      description: "View photos & videos",
+      color: "bg-pink-500"
+    }
+  ];
+
+  const servicesItems = [
+    {
+      icon: FaMapMarkerAlt,
+      label: "Trip Planner",
+      path: "/trip-planner",
+      description: "Plan your journey",
+      color: "bg-indigo-500"
+    },
+    {
+      icon: FaBookOpen,
+      label: "Itinerary",
+      path: "/guide",
+      description: "Plan your journey",
+      color: "bg-amber-500"
+    },
+    {
+      icon: FaGlobe,
+      label: "Weather",
+      path: "/weather",
+      description: "Current conditions",
+      color: "bg-cyan-500"
+    },
+    {
+      icon: FaEnvelope,
+      label: "Newsletter",
+      path: "/newsletter",
+      description: "Stay updated",
+      color: "bg-green-500"
+    }
+  ];
+
+  const supportItems = [
+    {
+      icon: FaInfoCircle,
+      label: "About Us",
+      path: "/about",
+      description: "Learn about our mission",
+      color: "bg-orange-500"
+    },
+    {
+      icon: FaPhone,
+      label: "Contact",
+      path: "/contact",
+      description: "Get in touch",
+      color: "bg-violet-500"
+    },
+    {
+      icon: FaQuestionCircle,
+      label: "Help & FAQ",
+      path: "/help",
+      description: "Find answers",
+      color: "bg-red-500"
+    },
+    {
+      icon: FaCog,
+      label: "Settings",
+      path: "/settings",
+      description: "Manage preferences",
+      color: "bg-gray-500"
+    }
+  ];
+  
+  const renderMenuSection = (items, title) => (
+    <div className="mb-6">
+      <h4 className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-3 px-2">
+        {title}
+      </h4>
+      <div className="space-y-1">
+        {items.map((item) => {
+          const IconComponent = item.icon;
+          return (
+            <button
+              key={item.path}
+              onClick={() => {
+                onNavigation(item.path);
+                onClose();
+              }}
+              className={`
+                w-full p-4 sm:p-3 text-left rounded-lg transition-all duration-200 
+                ${theme === "dark" 
+                  ? "hover:bg-slate-800/70 text-slate-200 hover:text-white" 
+                  : "hover:bg-slate-100 text-slate-700 hover:text-slate-900"
+                } 
+                transform-gpu will-change-transform hover:scale-[1.02] active:scale-[0.98]
+                flex items-center space-x-4 sm:space-x-3 group
+              `}
+            >
+              {/* Icon Container */}
+              <div className={`
+                flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-lg ${item.color} shadow-sm
+                group-hover:scale-110 transition-transform duration-200
+              `}>
+                <IconComponent className="w-6 h-6 sm:w-5 sm:h-5 text-white" />
+              </div>
+              
+              {/* Text Content */}
+              <div className="flex-1 min-w-0">
+                <div className="font-medium text-lg sm:text-base">
+                  {item.label}
+                </div>
+                <div className="text-base sm:text-sm opacity-70 truncate">
+                  {item.description}
+                </div>
+              </div>
+              
+              {/* Arrow */}
+              <svg 
+                className="w-5 h-5 sm:w-4 sm:h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="space-y-3">
-      {/* Calendar Button */}
-      <button
-        type="button"
-        onClick={onCalendarOpen}
-        className={`w-full p-4 text-left rounded-2xl transition-all duration-300 backdrop-blur-sm transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border border-slate-600/30 hover:border-teal-500/50 hover:bg-gradient-to-r hover:from-teal-900/40 hover:via-teal-800/30 hover:to-teal-900/40 text-slate-100 hover:text-white" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border border-slate-200/40 hover:border-teal-300/60 hover:bg-gradient-to-r hover:from-teal-50/60 hover:via-teal-25/40 hover:to-teal-50/60 text-slate-700 hover:text-teal-900"
-        } flex items-center space-x-4 group shadow-sm hover:shadow-lg`}
-        aria-haspopup="dialog"
-        aria-label="Open Nepali Calendar"
-      >
-        <div className={`p-2 rounded-xl ${
-          theme === "dark" ? "bg-teal-500/20 group-hover:bg-teal-500/30" : "bg-teal-100/80 group-hover:bg-teal-200/80"
-        } transition-colors duration-300`}>
-          <svg className="w-5 h-5 text-teal-500 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-          </svg>
-        </div>
-        <div className="flex-1">
-          <span className="font-semibold text-base">{t('header.calendar')}</span>
-          <p className={`text-xs mt-0.5 ${
-            theme === "dark" ? "text-slate-400" : "text-slate-500"
-          }`}>View Nepali dates & festivals</p>
-        </div>
-        <div className={`p-1 rounded-lg ${
-          theme === "dark" ? "bg-slate-700/50" : "bg-slate-100/50"
-        } group-hover:translate-x-1 transition-transform duration-300`}>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Home Button */}
-      <button
-        onClick={() => onNavigation("/")}
-        className={`w-full p-4 text-left rounded-2xl transition-all duration-300 backdrop-blur-sm transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border border-slate-600/30 hover:border-emerald-500/50 hover:bg-gradient-to-r hover:from-emerald-900/40 hover:via-emerald-800/30 hover:to-emerald-900/40 text-slate-100 hover:text-white" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border border-slate-200/40 hover:border-emerald-300/60 hover:bg-gradient-to-r hover:from-emerald-50/60 hover:via-emerald-25/40 hover:to-emerald-50/60 text-slate-700 hover:text-emerald-900"
-        } flex items-center space-x-4 group shadow-sm hover:shadow-lg`}
-      >
-        <div className={`p-2 rounded-xl ${
-          theme === "dark" ? "bg-emerald-500/20 group-hover:bg-emerald-500/30" : "bg-emerald-100/80 group-hover:bg-emerald-200/80"
-        } transition-colors duration-300`}>
-          <svg className="w-5 h-5 text-emerald-500 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-          </svg>
-        </div>
-        <div className="flex-1">
-          <span className="font-semibold text-base">{t('header.home')}</span>
-          <p className={`text-xs mt-0.5 ${
-            theme === "dark" ? "text-slate-400" : "text-slate-500"
-          }`}>Return to main page</p>
-        </div>
-        <div className={`p-1 rounded-lg ${
-          theme === "dark" ? "bg-slate-700/50" : "bg-slate-100/50"
-        } group-hover:translate-x-1 transition-transform duration-300`}>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Experiences Button */}
-      <button
-        onClick={() => onNavigation("/experiences")}
-        className={`w-full p-4 text-left rounded-2xl transition-all duration-300 backdrop-blur-sm transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border border-slate-600/30 hover:border-pink-500/50 hover:bg-gradient-to-r hover:from-pink-900/40 hover:via-pink-800/30 hover:to-pink-900/40 text-slate-100 hover:text-white" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border border-slate-200/40 hover:border-pink-300/60 hover:bg-gradient-to-r hover:from-pink-50/60 hover:via-pink-25/40 hover:to-pink-50/60 text-slate-700 hover:text-pink-900"
-        } flex items-center space-x-4 group shadow-sm hover:shadow-lg`}
-      >
-        <div className={`p-2 rounded-xl ${
-          theme === "dark" ? "bg-pink-500/20 group-hover:bg-pink-500/30" : "bg-pink-100/80 group-hover:bg-pink-200/80"
-        } transition-colors duration-300`}>
-          <FaCamera className="w-5 h-5 text-pink-500 group-hover:scale-110 transition-transform duration-300" />
-        </div>
-        <div className="flex-1">
-          <span className="font-semibold text-base">Experiences</span>
-          <p className={`text-xs mt-0.5 ${
-            theme === "dark" ? "text-slate-400" : "text-slate-500"
-          }`}>Unique travel experiences</p>
-        </div>
-        <div className={`p-1 rounded-lg ${
-          theme === "dark" ? "bg-slate-700/50" : "bg-slate-100/50"
-        } group-hover:translate-x-1 transition-transform duration-300`}>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Travel Guide Button */}
-      <button
-        onClick={() => onNavigation("/guide")}
-        className={`w-full p-4 text-left rounded-2xl transition-all duration-300 backdrop-blur-sm transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border border-slate-600/30 hover:border-orange-500/50 hover:bg-gradient-to-r hover:from-orange-900/40 hover:via-orange-800/30 hover:to-orange-900/40 text-slate-100 hover:text-white" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border border-slate-200/40 hover:border-orange-300/60 hover:bg-gradient-to-r hover:from-orange-50/60 hover:via-orange-25/40 hover:to-orange-50/60 text-slate-700 hover:text-orange-900"
-        } flex items-center space-x-4 group shadow-sm hover:shadow-lg`}
-      >
-        <div className={`p-2 rounded-xl ${
-          theme === "dark" ? "bg-orange-500/20 group-hover:bg-orange-500/30" : "bg-orange-100/80 group-hover:bg-orange-200/80"
-        } transition-colors duration-300`}>
-          <FaBookOpen className="w-5 h-5 text-orange-500 group-hover:scale-110 transition-transform duration-300" />
-        </div>
-        <div className="flex-1">
-          <span className="font-semibold text-base">Travel Guide</span>
-          <p className={`text-xs mt-0.5 ${
-            theme === "dark" ? "text-slate-400" : "text-slate-500"
-          }`}>Essential travel information</p>
-        </div>
-        <div className={`p-1 rounded-lg ${
-          theme === "dark" ? "bg-slate-700/50" : "bg-slate-100/50"
-        } group-hover:translate-x-1 transition-transform duration-300`}>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Wishlist Button */}
-      <button
-        onClick={() => onNavigation("/wishlist")}
-        className={`w-full p-4 text-left rounded-2xl transition-all duration-300 backdrop-blur-sm transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border border-slate-600/30 hover:border-red-500/50 hover:bg-gradient-to-r hover:from-red-900/40 hover:via-red-800/30 hover:to-red-900/40 text-slate-100 hover:text-white" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border border-slate-200/40 hover:border-red-300/60 hover:bg-gradient-to-r hover:from-red-50/60 hover:via-red-25/40 hover:to-red-50/60 text-slate-700 hover:text-red-900"
-        } flex items-center space-x-4 group shadow-sm hover:shadow-lg`}
-      >
-        <div className={`p-2 rounded-xl ${
-          theme === "dark" ? "bg-red-500/20 group-hover:bg-red-500/30" : "bg-red-100/80 group-hover:bg-red-200/80"
-        } transition-colors duration-300`}>
-          <FaHeart className="w-5 h-5 text-red-500 group-hover:scale-110 transition-transform duration-300" />
-        </div>
-        <div className="flex-1">
-          <span className="font-semibold text-base">Wishlist</span>
-          <p className={`text-xs mt-0.5 ${
-            theme === "dark" ? "text-slate-400" : "text-slate-500"
-          }`}>Your saved places</p>
-        </div>
-        <div className={`p-1 rounded-lg ${
-          theme === "dark" ? "bg-slate-700/50" : "bg-slate-100/50"
-        } group-hover:translate-x-1 transition-transform duration-300`}>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </button>
+    <div className="space-y-2">
+      {/* Main Navigation */}
+      {renderMenuSection(mainMenuItems, "Main Navigation")}
       
-      {/* About Button */}
-      <button
-        type="button"
-        onClick={() => onNavigation("/about")}
-        className={`w-full p-4 text-left rounded-2xl transition-all duration-300 backdrop-blur-sm transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border border-slate-600/30 hover:border-blue-500/50 hover:bg-gradient-to-r hover:from-blue-900/40 hover:via-blue-800/30 hover:to-blue-900/40 text-slate-100 hover:text-white" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border border-slate-200/40 hover:border-blue-300/60 hover:bg-gradient-to-r hover:from-blue-50/60 hover:via-blue-25/40 hover:to-blue-50/60 text-slate-700 hover:text-blue-900"
-        } flex items-center space-x-4 group shadow-sm hover:shadow-lg`}
-      >
-        <div className={`p-2 rounded-xl ${
-          theme === "dark" ? "bg-blue-500/20 group-hover:bg-blue-500/30" : "bg-blue-100/80 group-hover:bg-blue-200/80"
-        } transition-colors duration-300`}>
-          <svg className="w-5 h-5 text-blue-500 group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-          </svg>
+      {/* Services Section */}
+      {renderMenuSection(servicesItems, "Services & Tools")}
+      
+      {/* Quick Actions */}
+      <div className="mb-6">
+        <h4 className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-3 px-2">
+          Quick Actions
+        </h4>
+        <div className="space-y-1">
+          {/* Calendar Button */}
+          <button
+            onClick={() => {
+              onCalendarOpen();
+              onClose();
+            }}
+            className={`
+              w-full p-4 sm:p-3 text-left rounded-lg transition-all duration-200 
+              ${theme === "dark" 
+                ? "hover:bg-slate-800/70 text-slate-200 hover:text-white" 
+                : "hover:bg-slate-100 text-slate-700 hover:text-slate-900"
+              } 
+              transform-gpu will-change-transform hover:scale-[1.02] active:scale-[0.98]
+              flex items-center space-x-4 sm:space-x-3 group
+            `}
+          >
+            <div className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-lg bg-teal-500 shadow-sm group-hover:scale-110 transition-transform duration-200">
+              <svg className="w-6 h-6 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-medium text-lg sm:text-base">Nepali Calendar</div>
+              <div className="text-base sm:text-sm opacity-70">View dates & events</div>
+            </div>
+            <svg className="w-5 h-5 sm:w-4 sm:h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
-        <div className="flex-1">
-          <span className="font-semibold text-base">{t('header.about')}</span>
-          <p className={`text-xs mt-0.5 ${
-            theme === "dark" ? "text-slate-400" : "text-slate-500"
-          }`}>Learn about our mission</p>
-        </div>
-        <div className={`p-1 rounded-lg ${
-          theme === "dark" ? "bg-slate-700/50" : "bg-slate-100/50"
-        } group-hover:translate-x-1 transition-transform duration-300`}>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Contact Button */}
-      <button
-        onClick={() => onNavigation("/contact")}
-        className={`w-full p-4 text-left rounded-2xl transition-all duration-300 backdrop-blur-sm transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border border-slate-600/30 hover:border-cyan-500/50 hover:bg-gradient-to-r hover:from-cyan-900/40 hover:via-cyan-800/30 hover:to-cyan-900/40 text-slate-100 hover:text-white" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border border-slate-200/40 hover:border-cyan-300/60 hover:bg-gradient-to-r hover:from-cyan-50/60 hover:via-cyan-25/40 hover:to-cyan-50/60 text-slate-700 hover:text-cyan-900"
-        } flex items-center space-x-4 group shadow-sm hover:shadow-lg`}
-      >
-        <div className={`p-2 rounded-xl ${
-          theme === "dark" ? "bg-cyan-500/20 group-hover:bg-cyan-500/30" : "bg-cyan-100/80 group-hover:bg-cyan-200/80"
-        } transition-colors duration-300`}>
-          <FaEnvelope className="w-5 h-5 text-cyan-500 group-hover:scale-110 transition-transform duration-300" />
-        </div>
-        <div className="flex-1">
-          <span className="font-semibold text-base">Contact</span>
-          <p className={`text-xs mt-0.5 ${
-            theme === "dark" ? "text-slate-400" : "text-slate-500"
-          }`}>Get in touch with us</p>
-        </div>
-        <div className={`p-1 rounded-lg ${
-          theme === "dark" ? "bg-slate-700/50" : "bg-slate-100/50"
-        } group-hover:translate-x-1 transition-transform duration-300`}>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Help Button */}
-      <button
-        onClick={() => onNavigation("/help")}
-        className={`w-full p-4 text-left rounded-2xl transition-all duration-300 backdrop-blur-sm transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border border-slate-600/30 hover:border-green-500/50 hover:bg-gradient-to-r hover:from-green-900/40 hover:via-green-800/30 hover:to-green-900/40 text-slate-100 hover:text-white" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border border-slate-200/40 hover:border-green-300/60 hover:bg-gradient-to-r hover:from-green-50/60 hover:via-green-25/40 hover:to-green-50/60 text-slate-700 hover:text-green-900"
-        } flex items-center space-x-4 group shadow-sm hover:shadow-lg`}
-      >
-        <div className={`p-2 rounded-xl ${
-          theme === "dark" ? "bg-green-500/20 group-hover:bg-green-500/30" : "bg-green-100/80 group-hover:bg-green-200/80"
-        } transition-colors duration-300`}>
-          <FaQuestionCircle className="w-5 h-5 text-green-500 group-hover:scale-110 transition-transform duration-300" />
-        </div>
-        <div className="flex-1">
-          <span className="font-semibold text-base">Help & FAQ</span>
-          <p className={`text-xs mt-0.5 ${
-            theme === "dark" ? "text-slate-400" : "text-slate-500"
-          }`}>Get help and support</p>
-        </div>
-        <div className={`p-1 rounded-lg ${
-          theme === "dark" ? "bg-slate-700/50" : "bg-slate-100/50"
-        } group-hover:translate-x-1 transition-transform duration-300`}>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Elegant Divider */}
-      <div className="py-3">
-        <div className={`h-px bg-gradient-to-r ${
-          theme === "dark" 
-            ? "from-transparent via-slate-600/50 to-transparent" 
-            : "from-transparent via-slate-300/50 to-transparent"
-        }`} />
       </div>
 
-      {/* Theme Toggle Button */}
-      <button
-        onClick={() => {
-          onThemeToggle();
-          onClose();
-        }}
-        className={`w-full p-4 text-left rounded-2xl transition-all duration-300 backdrop-blur-sm transform-gpu will-change-transform ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border border-slate-600/30 hover:border-amber-500/50 hover:bg-gradient-to-r hover:from-amber-900/40 hover:via-amber-800/30 hover:to-amber-900/40 text-slate-100 hover:text-white" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border border-slate-200/40 hover:border-indigo-300/60 hover:bg-gradient-to-r hover:from-indigo-50/60 hover:via-indigo-25/40 hover:to-indigo-50/60 text-slate-700 hover:text-indigo-900"
-        } flex items-center space-x-4 group shadow-sm hover:shadow-lg`}
-        aria-label="Toggle theme"
-      >
-        <div className={`p-2 rounded-xl ${
-          theme === "dark" 
-            ? "bg-amber-500/20 group-hover:bg-amber-500/30" 
-            : "bg-indigo-100/80 group-hover:bg-indigo-200/80"
-        } transition-colors duration-300`}>
-          {theme === "light" ? (
-            <FaMoon size={20} className="text-indigo-500 group-hover:scale-110 transition-transform duration-300" />
-          ) : (
-            <FaSun size={20} className="text-amber-500 group-hover:scale-110 transition-transform duration-300" />
-          )}
-        </div>
-        <div className="flex-1">
-          <span className="font-semibold text-base">
-            {theme === "light" ? t('header.darkMode') : t('header.lightMode')}
-          </span>
-          <p className={`text-xs mt-0.5 ${
-            theme === "dark" ? "text-slate-400" : "text-slate-500"
-          }`}>
-            {theme === "light" ? "Switch to dark theme" : "Switch to light theme"}
+      {/* Support & Help */}
+      {renderMenuSection(supportItems, "Support & Help")}
+
+      {/* Theme Toggle */}
+      <div className="mb-6">
+        <h4 className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-3 px-2">
+          Preferences
+        </h4>
+        <button
+          onClick={() => {
+            onThemeToggle();
+            onClose();
+          }}
+          className={`
+            w-full p-4 sm:p-3 text-left rounded-lg transition-all duration-200 
+            ${theme === "dark" 
+              ? "hover:bg-slate-800/70 text-slate-200 hover:text-white" 
+              : "hover:bg-slate-100 text-slate-700 hover:text-slate-900"
+            } 
+            transform-gpu will-change-transform hover:scale-[1.02] active:scale-[0.98]
+            flex items-center space-x-4 sm:space-x-3 group
+          `}
+        >
+          {/* Theme Icon Container */}
+          <div className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-lg bg-slate-600 shadow-sm group-hover:scale-110 transition-transform duration-200">
+            {theme === 'dark' ? (
+              <FaSun className="w-6 h-6 sm:w-5 sm:h-5 text-yellow-300" />
+            ) : (
+              <FaMoon className="w-6 h-6 sm:w-5 sm:h-5 text-slate-300" />
+            )}
+          </div>
+          
+          {/* Text Content */}
+          <div className="flex-1 min-w-0">
+            <div className="font-medium text-lg sm:text-base">
+              {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+            </div>
+            <div className="text-base sm:text-sm opacity-70">
+              Switch to {theme === 'dark' ? 'light' : 'dark'} theme
+            </div>
+          </div>
+          
+          {/* Toggle Switch */}
+          <div className={`
+            w-12 h-7 sm:w-10 sm:h-6 rounded-full transition-colors duration-200
+            ${theme === 'dark' ? 'bg-blue-500' : 'bg-slate-300'}
+            relative flex-shrink-0
+          `}>
+            <div className={`
+              absolute top-0.5 w-6 h-6 sm:w-5 sm:h-5 bg-white rounded-full shadow-sm
+              transition-transform duration-200 transform
+              ${theme === 'dark' ? 'translate-x-5 sm:translate-x-4' : 'translate-x-0.5'}
+            `} />
+          </div>
+        </button>
+      </div>
+
+      {/* App Info */}
+      <div className="mb-4 pt-4 border-t border-slate-200/50 dark:border-slate-700/50">
+        <div className="text-center space-y-2">
+          <div className="flex items-center justify-center space-x-2">
+            <div className="w-6 h-6 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
+              <span className="text-white text-sm font-bold">🌄</span>
+            </div>
+            <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+              Nepal Tourism v2.0
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Discover the beauty of Nepal
           </p>
+          <div className="flex items-center justify-center space-x-4 text-xs text-slate-400 dark:text-slate-500">
+            <span>Privacy Policy</span>
+            <span>•</span>
+            <span>Terms of Service</span>
+          </div>
         </div>
-        <div className={`p-1 rounded-lg ${
-          theme === "dark" ? "bg-slate-700/50" : "bg-slate-100/50"
-        } group-hover:translate-x-1 transition-transform duration-300`}>
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </button>
+      </div>
     </div>
   );
 };

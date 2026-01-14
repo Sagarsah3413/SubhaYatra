@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 
 const ThemeContext = createContext();
 
@@ -10,30 +10,41 @@ export const useTheme = () => {
   return context;
 };
 
-export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light');
-
-  useEffect(() => {
+export const ThemeProvider = React.memo(({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    // Initialize from localStorage or default to dark
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
+    return savedTheme || 'dark';
+  });
+
+  // Memoized toggle function
+  const toggleTheme = useCallback(() => {
+    setTheme(prevTheme => {
+      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('theme', newTheme);
+      return newTheme;
+    });
   }, []);
 
+  // Apply theme to document on change
   useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
-
-  const bgClass = theme === 'light' ? 'bg-white' : 'bg-gray-900';
-  const textClass = theme === 'light' ? 'text-black' : 'text-white';
+  // Memoized context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    theme,
+    toggleTheme,
+    bgClass: theme === 'light' ? 'bg-white' : 'bg-gray-900',
+    textClass: theme === 'light' ? 'text-black' : 'text-white'
+  }), [theme, toggleTheme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, bgClass, textClass }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
-};
+});
+
+ThemeProvider.displayName = 'ThemeProvider';
