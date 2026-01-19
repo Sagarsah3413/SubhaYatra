@@ -606,8 +606,6 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
             visibility: 'visible'
           }}
         >
-      >>
-          
           {/* Premium Background Pattern */}
           <div className="absolute inset-0 opacity-5 dark:opacity-10">
             <div className="absolute inset-0" style={{
