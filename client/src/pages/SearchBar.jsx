@@ -34,9 +34,7 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
     "Everest Base Camp Trek",
     "Chitwan National Park",
     "Annapurna Circuit",
-    "Kathmandu Durbar Square",
-    "Pokhara Lakeside",
-    "Langtang Valley Trek"
+    "Kathmandu Durbar Square"
   ]);
 
   // Load search history from localStorage
@@ -68,10 +66,10 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
       
-      console.log('Making API call to:', `http://localhost:8000/api/search/?q=${encodeURIComponent(searchQuery)}`);
+      console.log('Making API call to:', `http://localhost:8000/api/search?q=${encodeURIComponent(searchQuery)}`);
       
       const res = await fetch(
-        `http://localhost:8000/api/search/?q=${encodeURIComponent(searchQuery)}`,
+        `http://localhost:8000/api/search?q=${encodeURIComponent(searchQuery)}`,
         { signal: controller.signal }
       );
       
@@ -101,7 +99,9 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
         .slice(0, 10);
 
       console.log('Processed suggestions:', suggestions);
+      console.log('Setting results and showSuggestions to true');
       setResults(suggestions);
+      setShowSuggestions(true);
     } catch (err) {
       if (err.name !== 'AbortError') {
         console.error('Search error:', err);
@@ -389,7 +389,7 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
   };
 
   return (
-    <div className={`relative w-full max-w-4xl mx-auto ${className}`}>
+    <div className={`relative w-full max-w-4xl mx-auto ${className} z-[100]`}>
       {/* Ultra Premium Search Container */}
       <div className={`
         relative flex items-center rounded-xl shadow-md border overflow-hidden
@@ -448,10 +448,12 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => {
+              console.log('Input focused, setting showSuggestions to true');
               setIsFocused(true);
               setShowSuggestions(true);
             }}
             onBlur={() => {
+              console.log('Input blurred, hiding suggestions after delay');
               // Delay hiding suggestions to allow clicks
               setTimeout(() => {
                 setIsFocused(false);
@@ -584,19 +586,27 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
 
       {/* Ultra Premium Suggestions Dropdown */}
       {showSuggestions && (
-        <div className={`
-          absolute top-full left-0 right-0 z-50
-          ${theme === 'dark' 
-            ? 'bg-gradient-to-br from-slate-800/98 to-slate-700/98' 
-            : 'bg-gradient-to-br from-white/98 to-gray-50/98'
-          }
-          backdrop-blur-xl border-2 border-t-0 rounded-b-2xl shadow-xl
-          ${isFocused 
-            ? 'border-teal-500 shadow-teal-500/10' 
-            : theme === 'dark' ? 'border-slate-600' : 'border-gray-200'
-          }
-          max-h-36 overflow-hidden
-        `}>
+        <div 
+          className={`
+            absolute top-full left-0 right-0 z-[9999]
+            ${theme === 'dark' 
+              ? 'bg-gradient-to-br from-slate-800/98 to-slate-700/98' 
+              : 'bg-gradient-to-br from-white/98 to-gray-50/98'
+            }
+            backdrop-blur-xl border-2 border-t-0 rounded-b-2xl shadow-xl
+            ${isFocused 
+              ? 'border-teal-500 shadow-teal-500/10' 
+              : theme === 'dark' ? 'border-slate-600' : 'border-gray-200'
+            }
+            max-h-80 overflow-hidden
+          `}
+          style={{ 
+            maxHeight: '320px',
+            display: 'block',
+            visibility: 'visible'
+          }}
+        >
+      >>
           
           {/* Premium Background Pattern */}
           <div className="absolute inset-0 opacity-5 dark:opacity-10">
@@ -689,7 +699,7 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
                   </div>
                   Popular Destinations
                 </div>
-                <div className="max-h-64 overflow-y-auto">
+                <div className="max-h-48 overflow-y-auto">
                   {popularSearches.map((search, index) => (
                     <button
                       key={index}
@@ -752,14 +762,14 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
                   </div>
                   Recent Searches
                 </div>
-                <div className="max-h-32 overflow-y-auto">
+                <div className="max-h-40 overflow-y-auto">
                   {searchHistory.slice(0, 5).map((search, index) => (
                     <button
                       key={index}
                       onClick={() => handlePopularSearch(search)}
                       className={`
-                        w-full px-8 py-4 text-left transition-all duration-300
-                        flex items-center gap-4 hover:scale-[1.01]
+                        w-full px-4 py-3 text-left transition-all duration-300
+                        flex items-center gap-3 hover:scale-[1.01]
                         ${theme === 'dark' 
                           ? 'hover:bg-gradient-to-r hover:from-slate-700/60 hover:to-slate-600/60 text-slate-300' 
                           : 'hover:bg-gradient-to-r hover:from-gray-50/60 hover:to-white/60 text-gray-700'
@@ -769,7 +779,7 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
                       <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
                         <FaHistory className="text-white text-xs" />
                       </div>
-                      <span className="truncate font-medium">{search}</span>
+                      <span className="truncate font-medium text-sm">{search}</span>
                     </button>
                   ))}
                 </div>

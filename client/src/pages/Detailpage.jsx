@@ -12,7 +12,7 @@ export default function DetailPage() {
     const fetchDetails = async () => {
       try {
         const res = await fetch(
-          `http://127.0.0.1:8000/api/details/${type}/${encodeURIComponent(name)}/`
+          `http://localhost:8000/api/details/${type}/${encodeURIComponent(name)}`
         );
         if (!res.ok) throw new Error("Failed to fetch details");
         const json = await res.json();
@@ -35,14 +35,25 @@ export default function DetailPage() {
       <div className="flex flex-col md:flex-row gap-6">
         {/* Left: Images */}
         <div className="md:w-1/2 flex flex-col gap-3">
-          {data.images?.map((img, idx) => (
-            <img
-              key={idx}
-              src={`http://127.0.0.1:8000/${img.replace(/\\/g, "/")}`}
-              alt={data.name}
-              className="w-full h-48 md:h-60 object-cover rounded-lg"
-            />
-          ))}
+          {data.images?.map((img, idx) => {
+            // Check if it's an external URL (starts with http)
+            const imageUrl = img.startsWith('http') 
+              ? img 
+              : `http://localhost:8000/${img.replace(/\\/g, "/")}`;
+            
+            return (
+              <img
+                key={idx}
+                src={imageUrl}
+                alt={data.name}
+                className="w-full h-48 md:h-60 object-cover rounded-lg"
+                onError={(e) => {
+                  console.error('Image failed to load:', imageUrl);
+                  e.target.style.display = 'none';
+                }}
+              />
+            );
+          })}
         </div>
 
         {/* Right: Description */}

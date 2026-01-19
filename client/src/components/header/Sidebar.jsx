@@ -110,90 +110,162 @@ const Sidebar = ({ isOpen, onClose, onOpenCalendar }) => {
         />
       )}
 
-      {/* Professional Compact Sidebar */}
+      {/* Ultra Modern Full Desktop Sidebar */}
       <div
-        className={`fixed left-0 top-0 h-screen w-36 ${
+        className={`fixed left-0 top-0 h-screen w-80 ${
           theme === 'dark' 
-            ? 'bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white border-r border-slate-700/50' 
-            : 'bg-gradient-to-b from-white via-gray-50 to-white text-gray-900 border-r border-gray-200/50'
+            ? 'bg-gradient-to-br from-slate-900/98 via-slate-800/95 to-slate-900/98 text-white border-r border-slate-700/30' 
+            : 'bg-gradient-to-br from-white/98 via-gray-50/95 to-white/98 text-gray-900 border-r border-gray-200/30'
         } shadow-2xl z-50 transform transition-all duration-500 ease-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } flex flex-col backdrop-blur-xl`}>
-        {/* Professional Header */}
-        <div className={`flex items-center justify-between p-3 ${
+        } flex flex-col backdrop-blur-2xl`}>
+        
+        {/* Ultra Professional Header */}
+        <div className={`flex items-center justify-between p-6 ${
           theme === 'dark' 
-            ? 'bg-gradient-to-r from-slate-800/80 to-slate-700/60 border-b border-slate-600/30' 
-            : 'bg-gradient-to-r from-white/90 to-gray-50/80 border-b border-gray-200/30'
-        } backdrop-blur-xl shadow-sm`}>
-          <div className="flex items-center space-x-2">
-            <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${
-              theme === 'dark' ? 'bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 shadow-lg shadow-amber-500/25' : 'bg-gradient-to-br from-blue-500 via-teal-600 to-cyan-600 shadow-lg shadow-blue-500/25'
-            } transform hover:scale-110 transition-transform duration-300`}>
-              <span className="text-white text-xs font-bold">R</span>
+            ? 'bg-gradient-to-r from-slate-800/90 to-slate-700/80 border-b border-slate-600/20' 
+            : 'bg-gradient-to-r from-white/95 to-gray-50/90 border-b border-gray-200/20'
+        } backdrop-blur-xl shadow-lg relative overflow-hidden`}>
+          
+          {/* Premium Background Pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `
+                radial-gradient(circle at 25% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 75% 50%, rgba(16, 185, 129, 0.3) 0%, transparent 50%)
+              `,
+              backgroundSize: '200px 200px'
+            }}></div>
+          </div>
+          
+          <div className="flex items-center space-x-4 relative z-10">
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
+              theme === 'dark' 
+                ? 'bg-gradient-to-br from-teal-500 via-emerald-500 to-cyan-500 shadow-xl shadow-teal-500/30' 
+                : 'bg-gradient-to-br from-blue-500 via-teal-600 to-cyan-600 shadow-xl shadow-blue-500/30'
+            } transform hover:scale-110 transition-all duration-300 border-2 border-white/20`}>
+              <span className="text-white text-xl font-black">R</span>
             </div>
             <div>
-              <span className={`text-xs font-bold tracking-wide ${
+              <h1 className={`text-xl font-black tracking-tight ${
                 theme === 'dark' ? 'text-white' : 'text-gray-800'
               }`}>
-                Roamio
-              </span>
+                Roamio <span className="text-teal-500">Wanderly</span>
+              </h1>
+              <p className={`text-sm font-medium ${
+                theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
+              }`}>
+                Your Travel Companion
+              </p>
             </div>
           </div>
+          
           <button
             onClick={onClose}
-            className={`p-1.5 rounded-lg transition-all duration-300 ${
+            className={`p-3 rounded-xl transition-all duration-300 relative z-10 ${
               theme === 'dark' 
-                ? 'hover:bg-slate-700/50 text-slate-400 hover:text-white hover:scale-110' 
-                : 'hover:bg-gray-100 text-gray-500 hover:text-gray-700 hover:scale-110'
-            }`}>
-            <FaTimes className="text-xs" />
+                ? 'hover:bg-slate-700/60 text-slate-400 hover:text-white hover:scale-110 hover:rotate-90' 
+                : 'hover:bg-gray-100/80 text-gray-500 hover:text-gray-700 hover:scale-110 hover:rotate-90'
+            } shadow-lg backdrop-blur-sm border border-white/10`}>
+            <FaTimes className="text-lg" />
           </button>
         </div>
 
-        {/* Professional Menu */}
-        <div className={`flex-1 overflow-y-auto py-2 sidebar-scroll ${theme === 'dark' ? 'dark' : ''}`}>
+        {/* Ultra Modern Menu */}
+        <div className={`flex-1 overflow-y-auto py-6 px-4 sidebar-scroll ${theme === 'dark' ? 'dark' : ''}`}>
           {menuItems.map((section, sectionIndex) => (
-            <div key={sectionIndex} className="mb-6">
-              <div className={`px-3 py-2 ${
-                theme === 'dark' ? 'bg-slate-800/40 border border-slate-600/30' : 'bg-gray-50/60 border border-gray-200/40'
-              } mx-2 rounded-lg mb-2 backdrop-blur-sm shadow-sm`}>
-                <h3 className={`text-[10px] font-bold uppercase tracking-wider ${
-                  theme === 'dark' ? 'text-slate-300' : 'text-gray-600'
-                }`}>
-                  {section.title}
-                </h3>
+            <div key={sectionIndex} className="mb-8">
+              
+              {/* Premium Section Header */}
+              <div className={`px-4 py-3 ${
+                theme === 'dark' 
+                  ? 'bg-gradient-to-r from-slate-800/60 to-slate-700/40 border border-slate-600/20' 
+                  : 'bg-gradient-to-r from-gray-50/80 to-white/60 border border-gray-200/30'
+              } rounded-xl mb-4 backdrop-blur-sm shadow-lg relative overflow-hidden`}>
+                
+                {/* Section Header Background Pattern */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute inset-0" style={{
+                    backgroundImage: `
+                      radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.4) 0%, transparent 70%),
+                      radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 70%)
+                    `,
+                    backgroundSize: '100px 100px'
+                  }}></div>
+                </div>
+                
+                <div className="flex items-center space-x-3 relative z-10">
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                    theme === 'dark' 
+                      ? 'bg-gradient-to-br from-teal-500/20 to-emerald-500/20 border border-teal-400/30' 
+                      : 'bg-gradient-to-br from-blue-500/20 to-teal-500/20 border border-blue-400/30'
+                  } shadow-lg`}>
+                    <span className={`text-sm font-bold ${
+                      theme === 'dark' ? 'text-teal-400' : 'text-blue-600'
+                    }`}>
+                      {section.title.charAt(0)}
+                    </span>
+                  </div>
+                  <h3 className={`text-sm font-bold tracking-wide ${
+                    theme === 'dark' ? 'text-white' : 'text-gray-800'
+                  }`}>
+                    {section.title}
+                  </h3>
+                  <div className={`flex-1 h-px ${
+                    theme === 'dark' 
+                      ? 'bg-gradient-to-r from-slate-600/50 to-transparent' 
+                      : 'bg-gradient-to-r from-gray-300/50 to-transparent'
+                  }`}></div>
+                </div>
               </div>
-              <div className="space-y-1 px-2">
+              
+              {/* Premium Menu Items */}
+              <div className="space-y-2">
                 {section.items.map((item, itemIndex) => (
                   <button
                     key={itemIndex}
                     onClick={() => item.path ? handleNavigation(item.path) : item.action && item.action()}
-                    className={`w-full flex items-center px-2 py-2 text-left rounded-lg transition-all duration-300 group relative overflow-hidden ${
+                    className={`w-full flex items-center px-4 py-3 text-left rounded-xl transition-all duration-300 group relative overflow-hidden ${
                       theme === 'dark' 
-                        ? 'hover:bg-slate-700/40 hover:shadow-lg hover:shadow-slate-900/30 hover:border hover:border-slate-600/30' 
-                        : 'hover:bg-white hover:shadow-md hover:shadow-gray-200/60 hover:border hover:border-gray-300/50'
-                    } transform hover:scale-[1.02] hover:-translate-y-0.5`}>
-                    {/* Hover effect background */}
-                    <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                      theme === 'dark' ? 'bg-gradient-to-r from-slate-700/20 to-slate-600/20' : 'bg-gradient-to-r from-blue-50/50 to-teal-50/50'
-                    }`}></div>
-                    <div className={`p-1.5 rounded-md mr-2 transition-all duration-300 relative z-10 ${
+                        ? 'hover:bg-gradient-to-r hover:from-slate-700/60 hover:to-slate-600/40 hover:shadow-xl hover:shadow-slate-900/30 hover:border hover:border-slate-600/30' 
+                        : 'hover:bg-gradient-to-r hover:from-white hover:to-gray-50/80 hover:shadow-xl hover:shadow-gray-200/60 hover:border hover:border-gray-300/40'
+                    } transform hover:scale-[1.02] hover:-translate-y-1`}>
+                    
+                    {/* Premium Hover Background */}
+                    <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ${
                       theme === 'dark' 
-                        ? 'text-slate-400 group-hover:text-amber-400 group-hover:bg-amber-400/10 group-hover:shadow-lg group-hover:shadow-amber-400/20' 
-                        : 'text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50 group-hover:shadow-lg group-hover:shadow-blue-500/20'
-                    }`}>
-                      <item.icon className="text-xs" />
+                        ? 'bg-gradient-to-r from-teal-500/10 via-emerald-500/5 to-cyan-500/10' 
+                        : 'bg-gradient-to-r from-blue-50/80 via-teal-50/60 to-cyan-50/80'
+                    } rounded-xl`}></div>
+                    
+                    {/* Premium Icon Container */}
+                    <div className={`p-3 rounded-xl mr-4 transition-all duration-300 relative z-10 ${
+                      theme === 'dark' 
+                        ? 'text-slate-400 group-hover:text-teal-400 group-hover:bg-teal-400/15 group-hover:shadow-xl group-hover:shadow-teal-400/20 group-hover:scale-110' 
+                        : 'text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50/80 group-hover:shadow-xl group-hover:shadow-blue-500/20 group-hover:scale-110'
+                    } border border-transparent group-hover:border-current/20`}>
+                      <item.icon className="text-lg" />
                     </div>
-                    <span className={`text-[10px] font-semibold relative z-10 truncate ${
-                      theme === 'dark' ? 'text-slate-200 group-hover:text-white' : 'text-gray-700 group-hover:text-gray-900'
+                    
+                    {/* Premium Text Content */}
+                    <div className="flex-1 relative z-10">
+                      <span className={`text-base font-semibold block ${
+                        theme === 'dark' ? 'text-slate-200 group-hover:text-white' : 'text-gray-700 group-hover:text-gray-900'
+                      }`}>
+                        {item.label}
+                      </span>
+                      <span className={`text-xs font-medium ${
+                        theme === 'dark' ? 'text-slate-500 group-hover:text-slate-400' : 'text-gray-500 group-hover:text-gray-600'
+                      }`}>
+                        {item.path ? `Navigate to ${item.label.toLowerCase()}` : 'Execute action'}
+                      </span>
+                    </div>
+                    
+                    {/* Premium Arrow Indicator */}
+                    <div className={`opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 relative z-10 ${
+                      theme === 'dark' ? 'text-teal-400' : 'text-blue-600'
                     }`}>
-                      {item.label}
-                    </span>
-                    {/* Arrow indicator */}
-                    <div className={`ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 group-hover:translate-x-0 ${
-                      theme === 'dark' ? 'text-slate-500' : 'text-gray-400'
-                    }`}>
-                      <svg className="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
@@ -203,47 +275,90 @@ const Sidebar = ({ isOpen, onClose, onOpenCalendar }) => {
             </div>
           ))}
 
-          {/* Professional Settings Section */}
-          <div className="mb-6">
-            <div className={`px-3 py-2 ${
-              theme === 'dark' ? 'bg-slate-800/40 border border-slate-600/30' : 'bg-gray-50/60 border border-gray-200/40'
-            } mx-2 rounded-lg mb-2 backdrop-blur-sm shadow-sm`}>
-              <h3 className={`text-[10px] font-bold uppercase tracking-wider ${
-                theme === 'dark' ? 'text-slate-300' : 'text-gray-600'
-              }`}>
-                Settings
-              </h3>
+          {/* Ultra Modern Settings Section */}
+          <div className="mb-8">
+            <div className={`px-4 py-3 ${
+              theme === 'dark' 
+                ? 'bg-gradient-to-r from-slate-800/60 to-slate-700/40 border border-slate-600/20' 
+                : 'bg-gradient-to-r from-gray-50/80 to-white/60 border border-gray-200/30'
+            } rounded-xl mb-4 backdrop-blur-sm shadow-lg relative overflow-hidden`}>
+              
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: `
+                    radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.4) 0%, transparent 70%),
+                    radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 70%)
+                  `,
+                  backgroundSize: '100px 100px'
+                }}></div>
+              </div>
+              
+              <div className="flex items-center space-x-3 relative z-10">
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                  theme === 'dark' 
+                    ? 'bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/30' 
+                    : 'bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/30'
+                } shadow-lg`}>
+                  <FaCog className={`text-sm ${
+                    theme === 'dark' ? 'text-purple-400' : 'text-purple-600'
+                  }`} />
+                </div>
+                <h3 className={`text-sm font-bold tracking-wide ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-800'
+                }`}>
+                  Settings
+                </h3>
+                <div className={`flex-1 h-px ${
+                  theme === 'dark' 
+                    ? 'bg-gradient-to-r from-slate-600/50 to-transparent' 
+                    : 'bg-gradient-to-r from-gray-300/50 to-transparent'
+                }`}></div>
+              </div>
             </div>
-            <div className="space-y-1 px-2">
+            
+            <div className="space-y-2">
               <button
                 onClick={() => {
                   toggleTheme();
                   onClose();
                 }}
-                className={`w-full flex items-center px-2 py-2 text-left rounded-lg transition-all duration-300 group relative overflow-hidden ${
+                className={`w-full flex items-center px-4 py-3 text-left rounded-xl transition-all duration-300 group relative overflow-hidden ${
                   theme === 'dark' 
-                    ? 'hover:bg-slate-700/40 hover:shadow-lg hover:shadow-slate-900/30 hover:border hover:border-slate-600/30' 
-                    : 'hover:bg-white hover:shadow-md hover:shadow-gray-200/60 hover:border hover:border-gray-300/50'
-                } transform hover:scale-[1.02] hover:-translate-y-0.5`}>
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                  theme === 'dark' ? 'bg-gradient-to-r from-slate-700/20 to-slate-600/20' : 'bg-gradient-to-r from-blue-50/50 to-teal-50/50'
-                }`}></div>
-                <div className={`p-1.5 rounded-md mr-2 transition-all duration-300 relative z-10 ${
+                    ? 'hover:bg-gradient-to-r hover:from-slate-700/60 hover:to-slate-600/40 hover:shadow-xl hover:shadow-slate-900/30 hover:border hover:border-slate-600/30' 
+                    : 'hover:bg-gradient-to-r hover:from-white hover:to-gray-50/80 hover:shadow-xl hover:shadow-gray-200/60 hover:border hover:border-gray-300/40'
+                } transform hover:scale-[1.02] hover:-translate-y-1`}>
+                
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ${
                   theme === 'dark' 
-                    ? 'text-slate-400 group-hover:text-amber-400 group-hover:bg-amber-400/10 group-hover:shadow-lg group-hover:shadow-amber-400/20' 
-                    : 'text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50 group-hover:shadow-lg group-hover:shadow-blue-500/20'
-                }`}>
-                  {theme === 'light' ? <FaMoon className="text-xs" /> : <FaSun className="text-xs" />}
+                    ? 'bg-gradient-to-r from-amber-500/10 via-orange-500/5 to-yellow-500/10' 
+                    : 'bg-gradient-to-r from-blue-50/80 via-indigo-50/60 to-purple-50/80'
+                } rounded-xl`}></div>
+                
+                <div className={`p-3 rounded-xl mr-4 transition-all duration-300 relative z-10 ${
+                  theme === 'dark' 
+                    ? 'text-slate-400 group-hover:text-amber-400 group-hover:bg-amber-400/15 group-hover:shadow-xl group-hover:shadow-amber-400/20 group-hover:scale-110' 
+                    : 'text-gray-500 group-hover:text-indigo-600 group-hover:bg-indigo-50/80 group-hover:shadow-xl group-hover:shadow-indigo-500/20 group-hover:scale-110'
+                } border border-transparent group-hover:border-current/20`}>
+                  {theme === 'light' ? <FaMoon className="text-lg" /> : <FaSun className="text-lg" />}
                 </div>
-                <span className={`text-[10px] font-semibold relative z-10 truncate ${
-                  theme === 'dark' ? 'text-slate-200 group-hover:text-white' : 'text-gray-700 group-hover:text-gray-900'
+                
+                <div className="flex-1 relative z-10">
+                  <span className={`text-base font-semibold block ${
+                    theme === 'dark' ? 'text-slate-200 group-hover:text-white' : 'text-gray-700 group-hover:text-gray-900'
+                  }`}>
+                    {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+                  </span>
+                  <span className={`text-xs font-medium ${
+                    theme === 'dark' ? 'text-slate-500 group-hover:text-slate-400' : 'text-gray-500 group-hover:text-gray-600'
+                  }`}>
+                    Switch to {theme === 'light' ? 'dark' : 'light'} theme
+                  </span>
+                </div>
+                
+                <div className={`opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 relative z-10 ${
+                  theme === 'dark' ? 'text-amber-400' : 'text-indigo-600'
                 }`}>
-                  {theme === 'light' ? 'Dark' : 'Light'}
-                </span>
-                <div className={`ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 group-hover:translate-x-0 ${
-                  theme === 'dark' ? 'text-slate-500' : 'text-gray-400'
-                }`}>
-                  <svg className="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -251,30 +366,43 @@ const Sidebar = ({ isOpen, onClose, onOpenCalendar }) => {
               
               <button
                 onClick={() => handleNavigation('/notifications')}
-                className={`w-full flex items-center px-2 py-2 text-left rounded-lg transition-all duration-300 group relative overflow-hidden ${
+                className={`w-full flex items-center px-4 py-3 text-left rounded-xl transition-all duration-300 group relative overflow-hidden ${
                   theme === 'dark' 
-                    ? 'hover:bg-slate-700/40 hover:shadow-lg hover:shadow-slate-900/30 hover:border hover:border-slate-600/30' 
-                    : 'hover:bg-white hover:shadow-md hover:shadow-gray-200/60 hover:border hover:border-gray-300/50'
-                } transform hover:scale-[1.02] hover:-translate-y-0.5`}>
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                  theme === 'dark' ? 'bg-gradient-to-r from-slate-700/20 to-slate-600/20' : 'bg-gradient-to-r from-blue-50/50 to-teal-50/50'
-                }`}></div>
-                <div className={`p-1.5 rounded-md mr-2 transition-all duration-300 relative z-10 ${
+                    ? 'hover:bg-gradient-to-r hover:from-slate-700/60 hover:to-slate-600/40 hover:shadow-xl hover:shadow-slate-900/30 hover:border hover:border-slate-600/30' 
+                    : 'hover:bg-gradient-to-r hover:from-white hover:to-gray-50/80 hover:shadow-xl hover:shadow-gray-200/60 hover:border hover:border-gray-300/40'
+                } transform hover:scale-[1.02] hover:-translate-y-1`}>
+                
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ${
                   theme === 'dark' 
-                    ? 'text-slate-400 group-hover:text-amber-400 group-hover:bg-amber-400/10 group-hover:shadow-lg group-hover:shadow-amber-400/20' 
-                    : 'text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50 group-hover:shadow-lg group-hover:shadow-blue-500/20'
-                }`}>
-                  <FaBell className="text-xs" />
+                    ? 'bg-gradient-to-r from-red-500/10 via-pink-500/5 to-rose-500/10' 
+                    : 'bg-gradient-to-r from-red-50/80 via-pink-50/60 to-rose-50/80'
+                } rounded-xl`}></div>
+                
+                <div className={`p-3 rounded-xl mr-4 transition-all duration-300 relative z-10 ${
+                  theme === 'dark' 
+                    ? 'text-slate-400 group-hover:text-red-400 group-hover:bg-red-400/15 group-hover:shadow-xl group-hover:shadow-red-400/20 group-hover:scale-110' 
+                    : 'text-gray-500 group-hover:text-red-600 group-hover:bg-red-50/80 group-hover:shadow-xl group-hover:shadow-red-500/20 group-hover:scale-110'
+                } border border-transparent group-hover:border-current/20`}>
+                  <FaBell className="text-lg" />
                 </div>
-                <span className={`text-[10px] font-semibold relative z-10 truncate ${
-                  theme === 'dark' ? 'text-slate-200 group-hover:text-white' : 'text-gray-700 group-hover:text-gray-900'
+                
+                <div className="flex-1 relative z-10">
+                  <span className={`text-base font-semibold block ${
+                    theme === 'dark' ? 'text-slate-200 group-hover:text-white' : 'text-gray-700 group-hover:text-gray-900'
+                  }`}>
+                    Notifications
+                  </span>
+                  <span className={`text-xs font-medium ${
+                    theme === 'dark' ? 'text-slate-500 group-hover:text-slate-400' : 'text-gray-500 group-hover:text-gray-600'
+                  }`}>
+                    Manage your alerts
+                  </span>
+                </div>
+                
+                <div className={`opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 relative z-10 ${
+                  theme === 'dark' ? 'text-red-400' : 'text-red-600'
                 }`}>
-                  Alerts
-                </span>
-                <div className={`ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 group-hover:translate-x-0 ${
-                  theme === 'dark' ? 'text-slate-500' : 'text-gray-400'
-                }`}>
-                  <svg className="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -282,30 +410,43 @@ const Sidebar = ({ isOpen, onClose, onOpenCalendar }) => {
               
               <button
                 onClick={() => handleNavigation('/language')}
-                className={`w-full flex items-center px-2 py-2 text-left rounded-lg transition-all duration-300 group relative overflow-hidden ${
+                className={`w-full flex items-center px-4 py-3 text-left rounded-xl transition-all duration-300 group relative overflow-hidden ${
                   theme === 'dark' 
-                    ? 'hover:bg-slate-700/40 hover:shadow-lg hover:shadow-slate-900/30 hover:border hover:border-slate-600/30' 
-                    : 'hover:bg-white hover:shadow-md hover:shadow-gray-200/60 hover:border hover:border-gray-300/50'
-                } transform hover:scale-[1.02] hover:-translate-y-0.5`}>
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                  theme === 'dark' ? 'bg-gradient-to-r from-slate-700/20 to-slate-600/20' : 'bg-gradient-to-r from-blue-50/50 to-teal-50/50'
-                }`}></div>
-                <div className={`p-1.5 rounded-md mr-2 transition-all duration-300 relative z-10 ${
+                    ? 'hover:bg-gradient-to-r hover:from-slate-700/60 hover:to-slate-600/40 hover:shadow-xl hover:shadow-slate-900/30 hover:border hover:border-slate-600/30' 
+                    : 'hover:bg-gradient-to-r hover:from-white hover:to-gray-50/80 hover:shadow-xl hover:shadow-gray-200/60 hover:border hover:border-gray-300/40'
+                } transform hover:scale-[1.02] hover:-translate-y-1`}>
+                
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ${
                   theme === 'dark' 
-                    ? 'text-slate-400 group-hover:text-amber-400 group-hover:bg-amber-400/10 group-hover:shadow-lg group-hover:shadow-amber-400/20' 
-                    : 'text-gray-500 group-hover:text-blue-600 group-hover:bg-blue-50 group-hover:shadow-lg group-hover:shadow-blue-500/20'
-                }`}>
-                  <FaCog className="text-xs" />
+                    ? 'bg-gradient-to-r from-green-500/10 via-emerald-500/5 to-teal-500/10' 
+                    : 'bg-gradient-to-r from-green-50/80 via-emerald-50/60 to-teal-50/80'
+                } rounded-xl`}></div>
+                
+                <div className={`p-3 rounded-xl mr-4 transition-all duration-300 relative z-10 ${
+                  theme === 'dark' 
+                    ? 'text-slate-400 group-hover:text-emerald-400 group-hover:bg-emerald-400/15 group-hover:shadow-xl group-hover:shadow-emerald-400/20 group-hover:scale-110' 
+                    : 'text-gray-500 group-hover:text-emerald-600 group-hover:bg-emerald-50/80 group-hover:shadow-xl group-hover:shadow-emerald-500/20 group-hover:scale-110'
+                } border border-transparent group-hover:border-current/20`}>
+                  <FaLanguage className="text-lg" />
                 </div>
-                <span className={`text-[10px] font-semibold relative z-10 truncate ${
-                  theme === 'dark' ? 'text-slate-200 group-hover:text-white' : 'text-gray-700 group-hover:text-gray-900'
+                
+                <div className="flex-1 relative z-10">
+                  <span className={`text-base font-semibold block ${
+                    theme === 'dark' ? 'text-slate-200 group-hover:text-white' : 'text-gray-700 group-hover:text-gray-900'
+                  }`}>
+                    Language
+                  </span>
+                  <span className={`text-xs font-medium ${
+                    theme === 'dark' ? 'text-slate-500 group-hover:text-slate-400' : 'text-gray-500 group-hover:text-gray-600'
+                  }`}>
+                    Change app language
+                  </span>
+                </div>
+                
+                <div className={`opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0 relative z-10 ${
+                  theme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'
                 }`}>
-                  Settings
-                </span>
-                <div className={`ml-auto opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 group-hover:translate-x-0 ${
-                  theme === 'dark' ? 'text-slate-500' : 'text-gray-400'
-                }`}>
-                  <svg className="w-2 h-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
@@ -313,77 +454,166 @@ const Sidebar = ({ isOpen, onClose, onOpenCalendar }) => {
             </div>
           </div>
 
-          {/* Professional Account Section */}
-          <div className="mb-6">
-            <div className={`px-3 py-2 ${
-              theme === 'dark' ? 'bg-slate-800/40 border border-slate-600/30' : 'bg-gray-50/60 border border-gray-200/40'
-            } mx-2 rounded-lg mb-2 backdrop-blur-sm shadow-sm`}>
-              <h3 className={`text-[10px] font-bold uppercase tracking-wider ${
-                theme === 'dark' ? 'text-slate-300' : 'text-gray-600'
-              }`}>
-                Account
-              </h3>
+          {/* Ultra Modern Account Section */}
+          <div className="mb-8">
+            <div className={`px-4 py-3 ${
+              theme === 'dark' 
+                ? 'bg-gradient-to-r from-slate-800/60 to-slate-700/40 border border-slate-600/20' 
+                : 'bg-gradient-to-r from-gray-50/80 to-white/60 border border-gray-200/30'
+            } rounded-xl mb-4 backdrop-blur-sm shadow-lg relative overflow-hidden`}>
+              
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: `
+                    radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.4) 0%, transparent 70%),
+                    radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 70%)
+                  `,
+                  backgroundSize: '100px 100px'
+                }}></div>
+              </div>
+              
+              <div className="flex items-center space-x-3 relative z-10">
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                  theme === 'dark' 
+                    ? 'bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-400/30' 
+                    : 'bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-400/30'
+                } shadow-lg`}>
+                  <FaUser className={`text-sm ${
+                    theme === 'dark' ? 'text-blue-400' : 'text-blue-600'
+                  }`} />
+                </div>
+                <h3 className={`text-sm font-bold tracking-wide ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-800'
+                }`}>
+                  Account
+                </h3>
+                <div className={`flex-1 h-px ${
+                  theme === 'dark' 
+                    ? 'bg-gradient-to-r from-slate-600/50 to-transparent' 
+                    : 'bg-gradient-to-r from-gray-300/50 to-transparent'
+                }`}></div>
+              </div>
             </div>
+            
             <div className="px-2">
               <SignedOut>
                 <SignUpButton>
-                  <button className={`w-full py-2 px-3 rounded-lg text-[10px] font-semibold transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5 relative overflow-hidden group ${
+                  <button className={`w-full py-4 px-6 rounded-xl text-base font-bold transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 relative overflow-hidden group ${
                     theme === 'dark'
-                      ? 'bg-gradient-to-r from-amber-500 via-orange-600 to-red-600 hover:from-amber-400 hover:via-orange-500 hover:to-red-500 text-white shadow-lg hover:shadow-xl hover:shadow-amber-500/25'
-                      : 'bg-gradient-to-r from-blue-600 via-teal-600 to-cyan-600 hover:from-blue-500 hover:via-teal-500 hover:to-cyan-500 text-white shadow-lg hover:shadow-xl hover:shadow-blue-500/25'
-                  }`}>
+                      ? 'bg-gradient-to-r from-teal-500 via-emerald-600 to-cyan-600 hover:from-teal-400 hover:via-emerald-500 hover:to-cyan-500 text-white shadow-xl hover:shadow-2xl hover:shadow-teal-500/30'
+                      : 'bg-gradient-to-r from-blue-600 via-teal-600 to-cyan-600 hover:from-blue-500 hover:via-teal-500 hover:to-cyan-500 text-white shadow-xl hover:shadow-2xl hover:shadow-blue-500/30'
+                  } border border-white/20`}>
+                    
                     <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <span className="relative z-10">Login</span>
+                    
+                    <div className="flex items-center justify-center space-x-3 relative z-10">
+                      <FaUser className="text-lg" />
+                      <span className="tracking-wide">Sign In / Register</span>
+                    </div>
                   </button>
                 </SignUpButton>
               </SignedOut>
+              
               <SignedIn>
-                <div className="flex justify-center p-2">
-                  <div className={`p-2 rounded-lg transition-all duration-300 hover:scale-105 ${
-                    theme === 'dark' ? 'bg-slate-700/50 shadow-lg shadow-slate-900/30' : 'bg-white shadow-lg shadow-gray-200/50'
-                  }`}>
+                <div className={`flex justify-center p-4 rounded-xl ${
+                  theme === 'dark' 
+                    ? 'bg-gradient-to-r from-slate-700/60 to-slate-600/40 border border-slate-600/30' 
+                    : 'bg-gradient-to-r from-white to-gray-50/80 border border-gray-200/30'
+                } shadow-xl backdrop-blur-sm`}>
+                  <div className={`p-3 rounded-xl transition-all duration-300 hover:scale-110 ${
+                    theme === 'dark' ? 'bg-slate-600/50 shadow-xl shadow-slate-900/30' : 'bg-white shadow-xl shadow-gray-200/50'
+                  } border border-white/20`}>
                     <UserButton />
                   </div>
                 </div>
               </SignedIn>
             </div>
           </div>
+        </div>
 
-          {/* Professional Footer */}
-          <div className={`p-3 ${
-            theme === 'dark' 
-              ? 'bg-gradient-to-r from-slate-800/80 to-slate-700/60 border-t border-slate-600/30' 
-              : 'bg-gradient-to-r from-white/90 to-gray-50/80 border-t border-gray-200/30'
-          } backdrop-blur-xl shadow-sm`}>
-            <div className="flex justify-between items-center mb-2">
-              <div className="flex items-center space-x-1">
-                <div className={`w-2 h-2 rounded-full animate-pulse ${
+        {/* Ultra Modern Footer */}
+        <div className={`p-6 ${
+          theme === 'dark' 
+            ? 'bg-gradient-to-r from-slate-800/90 to-slate-700/80 border-t border-slate-600/20' 
+            : 'bg-gradient-to-r from-white/95 to-gray-50/90 border-t border-gray-200/20'
+        } backdrop-blur-xl shadow-lg relative overflow-hidden`}>
+          
+          {/* Footer Background Pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `
+                radial-gradient(circle at 25% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 75% 50%, rgba(16, 185, 129, 0.3) 0%, transparent 50%)
+              `,
+              backgroundSize: '150px 150px'
+            }}></div>
+          </div>
+          
+          <div className="relative z-10">
+            {/* Status and Version */}
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center space-x-3">
+                <div className={`w-3 h-3 rounded-full animate-pulse ${
                   theme === 'dark' ? 'bg-emerald-400 shadow-lg shadow-emerald-400/50' : 'bg-green-500 shadow-lg shadow-green-500/50'
                 }`}></div>
-                <span className={`text-[10px] font-semibold ${
+                <span className={`text-sm font-semibold ${
                   theme === 'dark' ? 'text-slate-300' : 'text-gray-600'
                 }`}>
-                  Online
+                  System Online
                 </span>
               </div>
-              <div className={`px-1.5 py-0.5 rounded-md ${
-                theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'
-              }`}>
-                <span className={`text-[9px] font-mono font-semibold ${
-                  theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
+              
+              <div className={`px-3 py-1.5 rounded-lg ${
+                theme === 'dark' ? 'bg-slate-700/60 border border-slate-600/30' : 'bg-gray-100 border border-gray-200/30'
+              } shadow-lg`}>
+                <span className={`text-sm font-mono font-bold ${
+                  theme === 'dark' ? 'text-teal-400' : 'text-blue-600'
                 }`}>
-                  v2.1
+                  v3.0
                 </span>
               </div>
             </div>
-            <div className={`text-center py-1.5 px-2 rounded-lg ${
-              theme === 'dark' ? 'bg-slate-700/30 border border-slate-600/20' : 'bg-gray-50 border border-gray-200/30'
-            }`}>
-              <p className={`text-[9px] font-semibold ${
+            
+            {/* Company Info */}
+            <div className={`text-center py-4 px-4 rounded-xl ${
+              theme === 'dark' 
+                ? 'bg-gradient-to-r from-slate-700/40 to-slate-600/30 border border-slate-600/20' 
+                : 'bg-gradient-to-r from-gray-50/80 to-white/60 border border-gray-200/30'
+            } shadow-lg backdrop-blur-sm`}>
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${
+                  theme === 'dark' 
+                    ? 'bg-gradient-to-br from-teal-500 to-cyan-500 shadow-lg shadow-teal-500/30' 
+                    : 'bg-gradient-to-br from-blue-500 to-cyan-600 shadow-lg shadow-blue-500/30'
+                } border border-white/20`}>
+                  <span className="text-white text-xs font-black">R</span>
+                </div>
+                <span className={`text-sm font-bold ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-800'
+                }`}>
+                  Roamio Wanderly
+                </span>
+              </div>
+              
+              <p className={`text-xs font-medium ${
                 theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
               }`}>
-                2024 Roamio
+                © 2024 • Premium Travel Experience
               </p>
+              
+              <div className="flex items-center justify-center space-x-2 mt-2">
+                <div className={`w-1 h-1 rounded-full ${
+                  theme === 'dark' ? 'bg-teal-500/60' : 'bg-blue-500/60'
+                }`}></div>
+                <span className={`text-xs font-medium ${
+                  theme === 'dark' ? 'text-slate-500' : 'text-gray-400'
+                }`}>
+                  Made with ❤️ for travelers
+                </span>
+                <div className={`w-1 h-1 rounded-full ${
+                  theme === 'dark' ? 'bg-teal-500/60' : 'bg-blue-500/60'
+                }`}></div>
+              </div>
             </div>
           </div>
         </div>

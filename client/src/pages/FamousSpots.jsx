@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaMapMarkerAlt, FaStar, FaArrowRight, FaMountain, FaHeart } from "react-icons/fa";
 
-// Import the video
-import backgroundVideo from "../assets/IMG_8851.MP4";
+// Video is served from public folder
 
 // Importing famous tourist spot images
 import Pokhara from "../assets/Fspots/Pokhara.jpg";
@@ -100,8 +99,67 @@ const spots = [
 
 export default function FamousSpots() {
   const scrollRef = useRef(null);
+  const videoRef = useRef(null);
   const [paused, setPaused] = useState(false);
 
+  // Simplified video playback effect
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      console.log('FamousSpots: Video element found, attempting to play...');
+      
+      const attemptPlay = async () => {
+        try {
+          // Ensure video is muted for autoplay
+          video.muted = true;
+          video.volume = 0;
+          
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            await playPromise;
+            console.log('✅ FamousSpots video is now playing!');
+          }
+        } catch (error) {
+          console.error('❌ FamousSpots video play failed:', error);
+          
+          // Try alternative approach
+          setTimeout(() => {
+            video.muted = true;
+            video.play().catch(e => console.error('FamousSpots second play attempt failed:', e));
+          }, 1000);
+        }
+      };
+
+      // Try to play immediately if video is ready
+      if (video.readyState >= 3) {
+        attemptPlay();
+      }
+
+      // Also try when video is ready
+      const onCanPlay = () => {
+        console.log('FamousSpots: Video can play, attempting play...');
+        attemptPlay();
+      };
+      
+      const onLoadedData = () => {
+        console.log('FamousSpots: Video data loaded, attempting play...');
+        attemptPlay();
+      };
+
+      video.addEventListener('canplay', onCanPlay);
+      video.addEventListener('loadeddata', onLoadedData);
+      
+      // Cleanup
+      return () => {
+        video.removeEventListener('canplay', onCanPlay);
+        video.removeEventListener('loadeddata', onLoadedData);
+      };
+    } else {
+      console.error('❌ FamousSpots: Video element not found!');
+    }
+  }, []);
+
+  // Scrolling effect
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     let scrollAmount = 0;
@@ -124,19 +182,38 @@ export default function FamousSpots() {
 
   return (
     <section className="py-20 relative overflow-hidden">
-      {/* Video Background */}
+      {/* Video Background - Simplified for better compatibility */}
       <div className="absolute inset-0 w-full h-full z-0">
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: "brightness(0.6)" }}
+          style={{ 
+            filter: "brightness(0.6)",
+            width: "100%",
+            height: "100%"
+          }}
+          onError={(e) => {
+            console.error('❌ FamousSpots video error:', e);
+            console.log('Video src that failed:', e.target.currentSrc);
+          }}
+          onLoadStart={() => console.log('📥 FamousSpots video load started')}
+          onLoadedData={() => console.log('📊 FamousSpots video data loaded')}
+          onCanPlay={() => console.log('▶️ FamousSpots video can play')}
+          onPlay={() => console.log('🎬 FamousSpots video is playing')}
         >
-          <source src={backgroundVideo} type="video/mp4" />
-          Your browser does not support the video tag.
+          <source src="/IMG_8851.MP4" type="video/mp4" />
+          <p>Your browser does not support the video tag.</p>
         </video>
+        
+        {/* Fallback background if video fails */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+          style={{ zIndex: -1 }}
+        ></div>
         
         {/* Video Overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/70"></div>

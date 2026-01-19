@@ -1,227 +1,246 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import React, { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { 
-  FaMapMarkerAlt, 
-  FaPlane, 
-  FaHotel, 
-  FaUtensils, 
-  FaCamera, 
-  FaCalendarAlt,
-  FaClock,
-  FaRoute,
-  FaCompass,
-  FaHeart,
-  FaStar,
-  FaUsers,
-  FaLeaf,
-  FaMountain,
-  FaPlus,
-  FaEdit,
-  FaTrash,
-  FaSave,
-  FaDownload,
-  FaShare,
-  FaEye,
-  FaCheckCircle,
-  FaMapPin,
-  FaWalking,
-  FaCar,
-  FaBus,
-  FaMotorcycle
+  FaRoute, FaPlus, FaSave, FaInfoCircle, 
+  FaCalendarAlt, FaMapMarkerAlt, FaClock,
+  FaHotel, FaUtensils, FaMoneyBillWave, FaDownload,
+  FaShare, FaSpinner
 } from 'react-icons/fa';
+
+// Real Nepal destinations data
+const nepalDestinations = {
+  kathmandu: {
+    name: 'Kathmandu',
+    days: 3,
+    attractions: ['Kathmandu Durbar Square', 'Swayambhunath Temple', 'Boudhanath Stupa', 'Pashupatinath Temple'],
+    activities: ['Temple visits', 'Cultural tours', 'Shopping', 'Food tours'],
+    accommodation: 'Heritage Hotel',
+    dailyCost: 60
+  },
+  pokhara: {
+    name: 'Pokhara',
+    days: 4,
+    attractions: ['Phewa Lake', 'Sarangkot Sunrise', 'World Peace Pagoda', 'Devi\'s Fall'],
+    activities: ['Paragliding', 'Boating', 'Sunrise viewing', 'Cave exploration'],
+    accommodation: 'Lakeside Resort',
+    dailyCost: 70
+  },
+  chitwan: {
+    name: 'Chitwan National Park',
+    days: 3,
+    attractions: ['Jungle Safari', 'Elephant Breeding Center', 'Tharu Cultural Program', 'Rapti River'],
+    activities: ['Wildlife safari', 'Elephant rides', 'Bird watching', 'Cultural shows'],
+    accommodation: 'Jungle Lodge',
+    dailyCost: 80
+  },
+  everest: {
+    name: 'Everest Region',
+    days: 14,
+    attractions: ['Everest Base Camp', 'Kala Patthar', 'Namche Bazaar', 'Tengboche Monastery'],
+    activities: ['Trekking', 'Mountain viewing', 'Cultural immersion', 'Photography'],
+    accommodation: 'Tea House',
+    dailyCost: 50
+  },
+  annapurna: {
+    name: 'Annapurna Region',
+    days: 12,
+    attractions: ['Annapurna Base Camp', 'Poon Hill', 'Thorong La Pass', 'Muktinath Temple'],
+    activities: ['Trekking', 'Sunrise viewing', 'Cultural visits', 'Hot springs'],
+    accommodation: 'Mountain Lodge',
+    dailyCost: 45
+  }
+};
+
+// Enhanced itinerary generator with better error handling
+const generateItinerary = (formData) => {
+  try {
+    const { duration, destinations, activities, budget } = formData;
+    const selectedDests = destinations.map(id => nepalDestinations[id]).filter(Boolean);
+    
+    if (selectedDests.length === 0) {
+      console.error('No valid destinations selected');
+      return null;
+    }
+
+    // Calculate days per destination
+    const totalRecommendedDays = selectedDests.reduce((sum, dest) => sum + dest.days, 0);
+    const scaleFactor = Math.max(0.5, duration / totalRecommendedDays); // Minimum 0.5 to ensure at least half day per destination
+
+    let currentDay = 1;
+    const dailyPlan = [];
+
+    selectedDests.forEach(dest => {
+      const daysInDest = Math.max(1, Math.round(dest.days * scaleFactor));
+      
+      for (let i = 0; i < daysInDest && currentDay <= duration; i++) {
+        const dayActivities = [];
+        const dayAttractions = dest.attractions.slice(i * 2, (i + 1) * 2);
+        
+        // Morning activity
+        if (dayAttractions[0]) {
+          dayActivities.push({
+            time: '09:00 - 12:00',
+            activity: `Visit ${dayAttractions[0]}`,
+            type: 'sightseeing'
+          });
+        }
+
+        // Afternoon activity
+        if (dayAttractions[1]) {
+          dayActivities.push({
+            time: '14:00 - 17:00',
+            activity: `Explore ${dayAttractions[1]}`,
+            type: 'activity'
+          });
+        } else if (dest.activities[i % dest.activities.length]) {
+          dayActivities.push({
+            time: '14:00 - 17:00',
+            activity: dest.activities[i % dest.activities.length],
+            type: 'activity'
+          });
+        }
+
+        // Evening activity
+        dayActivities.push({
+          time: '18:00 - 20:00',
+          activity: 'Local dining and relaxation',
+          type: 'leisure'
+        });
+
+        dailyPlan.push({
+          day: currentDay,
+          destination: dest.name,
+          title: `Day ${currentDay}: ${dest.name}`,
+          activities: dayActivities,
+          accommodation: dest.accommodation,
+          meals: [
+            { meal: 'Breakfast', cost: 8 },
+            { meal: 'Lunch', cost: 12 },
+            { meal: 'Dinner', cost: 15 }
+          ],
+          dailyCost: dest.dailyCost
+        });
+
+        currentDay++;
+      }
+    });
+
+    const totalCost = dailyPlan.reduce((sum, day) => sum + day.dailyCost + 35, 0); // 35 for meals
+
+    const result = {
+      title: `${duration}-Day Nepal Adventure`,
+      duration: `${duration} Days`,
+      destinations: selectedDests.map(d => d.name),
+      dailyPlan,
+      totalCost,
+      createdAt: new Date().toLocaleDateString()
+    };
+
+    console.log('Generated itinerary:', result);
+    return result;
+  } catch (error) {
+    console.error('Error in generateItinerary:', error);
+    return null;
+  }
+};
 
 const Itinerary = () => {
   const { theme } = useTheme();
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  
   const [activeTab, setActiveTab] = useState('create');
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentItinerary, setCurrentItinerary] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedItinerary, setGeneratedItinerary] = useState(null);
+  
+  // Form state with default selections for easier testing
+  const [formData, setFormData] = useState({
+    duration: 7,
+    destinations: ['kathmandu'], // Default selection for easier testing
+    activities: [],
+    budget: 'mid'
+  });
 
-  // Simulate loading
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
+  // Debug log on component mount
+  React.useEffect(() => {
+    console.log('Itinerary component mounted');
+    console.log('Initial form data:', formData);
+    console.log('Nepal destinations available:', Object.keys(nepalDestinations));
   }, []);
 
-  // Sample itinerary templates
-  const itineraryTemplates = [
-    {
-      id: 'everest-trek',
-      title: 'Everest Base Camp Trek',
-      duration: '14 Days',
-      difficulty: 'Challenging',
-      type: 'Adventure',
-      image: '🏔️',
-      description: 'Classic trek to the base of the world\'s highest mountain',
-      highlights: ['Everest Base Camp', 'Kala Patthar', 'Namche Bazaar', 'Tengboche Monastery'],
-      days: [
-        { day: 1, title: 'Fly to Lukla, Trek to Phakding', activities: ['Flight', 'Trekking'], duration: '3-4 hours', accommodation: 'Tea House' },
-        { day: 2, title: 'Trek to Namche Bazaar', activities: ['Trekking', 'Acclimatization'], duration: '6-8 hours', accommodation: 'Tea House' },
-        { day: 3, title: 'Acclimatization Day in Namche', activities: ['Rest', 'Exploration', 'Shopping'], duration: 'Full day', accommodation: 'Tea House' }
-      ]
-    },
-    {
-      id: 'annapurna-circuit',
-      title: 'Annapurna Circuit Trek',
-      duration: '12 Days',
-      difficulty: 'Moderate',
-      type: 'Adventure',
-      image: '🌄',
-      description: 'Diverse landscapes from subtropical to alpine zones',
-      highlights: ['Thorong La Pass', 'Muktinath Temple', 'Poon Hill', 'Hot Springs'],
-      days: [
-        { day: 1, title: 'Drive to Besisahar, Trek to Bhulbhule', activities: ['Drive', 'Trekking'], duration: '4-5 hours', accommodation: 'Tea House' },
-        { day: 2, title: 'Trek to Jagat', activities: ['Trekking', 'Village visits'], duration: '6-7 hours', accommodation: 'Tea House' }
-      ]
-    },
-    {
-      id: 'kathmandu-cultural',
-      title: 'Kathmandu Cultural Tour',
-      duration: '5 Days',
-      difficulty: 'Easy',
-      type: 'Cultural',
-      image: '🏛️',
-      description: 'Explore the cultural heart of Nepal with ancient temples and palaces',
-      highlights: ['Durbar Squares', 'Swayambhunath', 'Boudhanath', 'Pashupatinath'],
-      days: [
-        { day: 1, title: 'Arrival and Kathmandu Durbar Square', activities: ['Sightseeing', 'Photography'], duration: 'Half day', accommodation: 'Hotel' },
-        { day: 2, title: 'Swayambhunath and Patan', activities: ['Temple visits', 'Cultural exploration'], duration: 'Full day', accommodation: 'Hotel' }
-      ]
-    },
-    {
-      id: 'pokhara-adventure',
-      title: 'Pokhara Adventure Package',
-      duration: '7 Days',
-      difficulty: 'Moderate',
-      type: 'Adventure',
-      image: '🪂',
-      description: 'Adventure capital with lakes, mountains, and extreme sports',
-      highlights: ['Paragliding', 'Bungee Jump', 'Phewa Lake', 'Sarangkot Sunrise'],
-      days: [
-        { day: 1, title: 'Arrival and Phewa Lake', activities: ['Boating', 'Relaxation'], duration: 'Half day', accommodation: 'Resort' },
-        { day: 2, title: 'Paragliding and Adventure Sports', activities: ['Paragliding', 'Zip-lining'], duration: 'Full day', accommodation: 'Resort' }
-      ]
-    }
-  ];
+  const handleInputChange = (field, value) => {
+    console.log(`Updating ${field} to:`, value);
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
-  // Sample saved itineraries
-  const savedItineraries = [
-    {
-      id: 'my-nepal-trip',
-      title: 'My Nepal Adventure 2024',
-      duration: '10 Days',
-      status: 'In Progress',
-      lastModified: '2 days ago',
-      destinations: ['Kathmandu', 'Pokhara', 'Chitwan'],
-      progress: 75
-    },
-    {
-      id: 'family-trip',
-      title: 'Family Trip to Nepal',
-      duration: '8 Days',
-      status: 'Completed',
-      lastModified: '1 week ago',
-      destinations: ['Kathmandu', 'Nagarkot', 'Bhaktapur'],
-      progress: 100
-    }
-  ];
+  const toggleDestination = (destId) => {
+    console.log(`Toggling destination: ${destId}`);
+    setFormData(prev => {
+      const newDestinations = prev.destinations.includes(destId)
+        ? prev.destinations.filter(id => id !== destId)
+        : [...prev.destinations, destId];
+      console.log('New destinations:', newDestinations);
+      return { ...prev, destinations: newDestinations };
+    });
+  };
 
-  if (isLoading) {
-    return (
-      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'}`}>
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className={`text-lg font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-            Loading Itinerary Planner...
-          </p>
-        </div>
-      </div>
-    );
-  }
+  const handleGenerateItinerary = async () => {
+    if (formData.destinations.length === 0) {
+      alert('Please select at least one destination');
+      return;
+    }
+
+    setIsGenerating(true);
+    
+    try {
+      // Simulate processing time for better UX
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const itinerary = generateItinerary(formData);
+      
+      if (itinerary) {
+        setGeneratedItinerary(itinerary);
+        setActiveTab('generated');
+      } else {
+        alert('Failed to generate itinerary. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error generating itinerary:', error);
+      alert('An error occurred while generating your itinerary. Please try again.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0">
-          <div className={`absolute inset-0 ${
-            theme === 'dark' 
-              ? 'bg-gradient-to-br from-slate-900 via-teal-900 to-cyan-900' 
-              : 'bg-gradient-to-br from-teal-900 via-cyan-900 to-blue-900'
-          }`}></div>
-          <div className="absolute inset-0 bg-black/20"></div>
-          
-          {/* Animated Elements */}
-          <div className="absolute inset-0">
-            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white/20 rounded-full animate-pulse"></div>
-            <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-cyan-300/30 rounded-full animate-ping"></div>
-            <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-teal-300/25 rounded-full animate-pulse delay-1000"></div>
-          </div>
-        </div>
-
+      <section className="relative py-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-teal-900 via-cyan-900 to-blue-900"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center text-white">
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6 border border-white/20">
-              <FaRoute className="text-teal-400" />
-              <span className="font-semibold">Smart Trip Planning</span>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-white via-cyan-200 to-emerald-300 bg-clip-text text-transparent">
-                Nepal Itinerary
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-300 bg-clip-text text-transparent">
-                Planner
-              </span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-cyan-100 mb-8 max-w-4xl mx-auto leading-relaxed">
-              Create, customize, and manage your perfect Nepal adventure with our intelligent itinerary planner
-            </p>
-
-            {/* Quick Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button 
-                onClick={() => setActiveTab('create')}
-                className="group relative px-8 py-4 bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 hover:from-teal-700 hover:via-cyan-700 hover:to-blue-700 text-white rounded-2xl font-bold text-base transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-2xl flex items-center gap-3 overflow-hidden"
-              >
-                <FaPlus className="text-lg" />
-                <span>Create New Itinerary</span>
-              </button>
-              
-              <button 
-                onClick={() => setActiveTab('templates')}
-                className="group relative px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-2xl font-semibold text-base transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-3 border border-white/20 hover:border-white/40 backdrop-blur-sm"
-              >
-                <FaCompass className="text-lg" />
-                <span>Browse Templates</span>
-              </button>
-            </div>
+          <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 mb-6">
+            <FaRoute className="text-teal-400" />
+            <span className="font-semibold">Real Itinerary Generator</span>
           </div>
+          <h1 className="text-5xl md:text-6xl font-black mb-6">
+            Nepal Itinerary Planner
+          </h1>
+          <p className="text-xl mb-8 max-w-3xl mx-auto">
+            Generate real, detailed travel plans for your Nepal adventure with day-by-day activities and costs
+          </p>
         </div>
       </section>
 
       {/* Navigation Tabs */}
-      <section className={`sticky top-20 z-40 ${theme === 'dark' ? 'bg-slate-900/95' : 'bg-white/95'} backdrop-blur-xl border-b ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'}`}>
+      <section className={`sticky top-20 z-40 ${theme === 'dark' ? 'bg-slate-900/95' : 'bg-white/95'} backdrop-blur-xl border-b`}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex justify-center overflow-x-auto py-4 space-x-1 min-h-[80px] items-center">
+          <div className="flex justify-center py-4 space-x-4">
             {[
-              { id: 'create', label: 'Create New', icon: FaPlus },
-              { id: 'templates', label: 'Templates', icon: FaCompass },
-              { id: 'saved', label: 'My Itineraries', icon: FaSave },
-              { id: 'tips', label: 'Planning Tips', icon: FaRoute }
-            ].map((tab) => (
+              { id: 'create', label: 'Create Plan', icon: FaPlus },
+              { id: 'generated', label: 'Your Itinerary', icon: FaRoute, show: generatedItinerary },
+              { id: 'tips', label: 'Travel Tips', icon: FaInfoCircle }
+            ].filter(tab => tab.show !== false).map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm whitespace-nowrap transition-colors duration-300 ${
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold ${
                   activeTab === tab.id
                     ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg'
                     : theme === 'dark'
@@ -229,388 +248,293 @@ const Itinerary = () => {
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
               >
-                <tab.icon className="text-lg" />
+                <tab.icon />
                 <span>{tab.label}</span>
+                {tab.id === 'generated' && generatedItinerary && (
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                )}
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Content Sections */}
+      {/* Content */}
       <main className="pb-20">
         <div className="max-w-7xl mx-auto px-6 py-12">
-          {activeTab === 'create' && <CreateItinerarySection theme={theme} />}
-          {activeTab === 'templates' && <TemplatesSection templates={itineraryTemplates} theme={theme} />}
-          {activeTab === 'saved' && <SavedItinerariesSection itineraries={savedItineraries} theme={theme} />}
-          {activeTab === 'tips' && <PlanningTipsSection theme={theme} />}
-        </div>
-      </main>
-    </div>
-  );
-};
-
-// Create Itinerary Section
-const CreateItinerarySection = ({ theme }) => (
-  <div className="space-y-8">
-    <div className="text-center mb-12">
-      <h2 className="text-4xl font-black mb-4">
-        <span className={`bg-gradient-to-r ${
-          theme === 'dark' ? 'from-teal-400 to-cyan-400' : 'from-teal-600 to-cyan-600'
-        } bg-clip-text text-transparent`}>
-          Create Your Perfect Itinerary
-        </span>
-      </h2>
-      <p className={`text-lg ${theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}`}>
-        Build a customized travel plan step by step
-      </p>
-    </div>
-
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {/* Step 1: Basic Info */}
-      <div className={`p-8 rounded-3xl border ${
-        theme === 'dark' ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-gray-200'
-      } shadow-lg hover:shadow-xl transition-all duration-300`}>
-        <div className="text-center mb-6">
-          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-            theme === 'dark' ? 'bg-gradient-to-br from-teal-600 to-cyan-600' : 'bg-gradient-to-br from-teal-500 to-cyan-500'
-          } shadow-xl`}>
-            <FaCalendarAlt className="text-2xl text-white" />
-          </div>
-          <h3 className="text-xl font-bold mb-2">Step 1: Basic Information</h3>
-          <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-            Set your trip duration and preferences
-          </p>
-        </div>
-        
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">Trip Duration</label>
-            <select className={`w-full p-3 rounded-lg border ${
-              theme === 'dark' ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300 text-gray-900'
-            } focus:ring-2 focus:ring-teal-500 focus:border-transparent`}>
-              <option>3-5 Days</option>
-              <option>1 Week</option>
-              <option>2 Weeks</option>
-              <option>3+ Weeks</option>
-            </select>
-          </div>
           
-          <div>
-            <label className="block text-sm font-medium mb-2">Travel Style</label>
-            <select className={`w-full p-3 rounded-lg border ${
-              theme === 'dark' ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300 text-gray-900'
-            } focus:ring-2 focus:ring-teal-500 focus:border-transparent`}>
-              <option>Adventure</option>
-              <option>Cultural</option>
-              <option>Relaxation</option>
-              <option>Mixed</option>
-            </select>
-          </div>
-        </div>
-      </div>
+          {/* Create Itinerary Tab */}
+          {activeTab === 'create' && (
+            <div className="space-y-8">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold mb-4">Create Your Nepal Itinerary</h2>
+                <p className="text-lg text-gray-600">Build a real travel plan with detailed activities and costs</p>
+              </div>
 
-      {/* Step 2: Destinations */}
-      <div className={`p-8 rounded-3xl border ${
-        theme === 'dark' ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-gray-200'
-      } shadow-lg hover:shadow-xl transition-all duration-300`}>
-        <div className="text-center mb-6">
-          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-            theme === 'dark' ? 'bg-gradient-to-br from-purple-600 to-pink-600' : 'bg-gradient-to-br from-purple-500 to-pink-500'
-          } shadow-xl`}>
-            <FaMapMarkerAlt className="text-2xl text-white" />
-          </div>
-          <h3 className="text-xl font-bold mb-2">Step 2: Choose Destinations</h3>
-          <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-            Select places you want to visit
-          </p>
-        </div>
-        
-        <div className="space-y-3">
-          {['Kathmandu', 'Pokhara', 'Chitwan', 'Everest Region', 'Annapurna Region'].map((destination) => (
-            <label key={destination} className="flex items-center space-x-3 cursor-pointer">
-              <input type="checkbox" className="w-4 h-4 text-teal-600 rounded focus:ring-teal-500" />
-              <span className="text-sm font-medium">{destination}</span>
-            </label>
-          ))}
-        </div>
-      </div>
+              <div className="grid md:grid-cols-3 gap-8">
+                {/* Duration Selection */}
+                <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <FaCalendarAlt className="text-2xl text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Trip Duration</h3>
+                  </div>
+                  <select 
+                    value={formData.duration}
+                    onChange={(e) => handleInputChange('duration', parseInt(e.target.value))}
+                    className={`w-full p-3 rounded-lg border ${theme === 'dark' ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300'}`}
+                  >
+                    <option value={3}>3 Days</option>
+                    <option value={5}>5 Days</option>
+                    <option value={7}>1 Week</option>
+                    <option value={10}>10 Days</option>
+                    <option value={14}>2 Weeks</option>
+                  </select>
+                </div>
 
-      {/* Step 3: Activities */}
-      <div className={`p-8 rounded-3xl border ${
-        theme === 'dark' ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-gray-200'
-      } shadow-lg hover:shadow-xl transition-all duration-300`}>
-        <div className="text-center mb-6">
-          <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-            theme === 'dark' ? 'bg-gradient-to-br from-orange-600 to-red-600' : 'bg-gradient-to-br from-orange-500 to-red-500'
-          } shadow-xl`}>
-            <FaCamera className="text-2xl text-white" />
-          </div>
-          <h3 className="text-xl font-bold mb-2">Step 3: Select Activities</h3>
-          <p className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
-            Pick your preferred activities
-          </p>
-        </div>
-        
-        <div className="space-y-3">
-          {['Trekking', 'Cultural Tours', 'Wildlife Safari', 'Adventure Sports', 'Photography'].map((activity) => (
-            <label key={activity} className="flex items-center space-x-3 cursor-pointer">
-              <input type="checkbox" className="w-4 h-4 text-teal-600 rounded focus:ring-teal-500" />
-              <span className="text-sm font-medium">{activity}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-    </div>
+                {/* Destination Selection */}
+                <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <FaMapMarkerAlt className="text-2xl text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Destinations</h3>
+                  </div>
+                  <div className="space-y-3">
+                    {Object.entries(nepalDestinations).map(([id, dest]) => (
+                      <label key={id} className="flex items-center space-x-3 cursor-pointer">
+                        <input 
+                          type="checkbox" 
+                          checked={formData.destinations.includes(id)}
+                          onChange={() => toggleDestination(id)}
+                          className="w-4 h-4 text-teal-600 rounded" 
+                        />
+                        <div>
+                          <span className="font-medium">{dest.name}</span>
+                          <div className="text-sm text-gray-500">{dest.days} days recommended</div>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                </div>
 
-    {/* Generate Button */}
-    <div className="text-center mt-12">
-      <button className={`px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl ${
-        theme === 'dark'
-          ? 'bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white'
-          : 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white'
-      }`}>
-        Generate My Itinerary
-      </button>
-    </div>
-  </div>
-);
+                {/* Budget Selection */}
+                <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <FaMoneyBillWave className="text-2xl text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-2">Budget Level</h3>
+                  </div>
+                  <select 
+                    value={formData.budget}
+                    onChange={(e) => handleInputChange('budget', e.target.value)}
+                    className={`w-full p-3 rounded-lg border ${theme === 'dark' ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300'}`}
+                  >
+                    <option value="low">Budget ($30-50/day)</option>
+                    <option value="mid">Mid-range ($60-90/day)</option>
+                    <option value="high">Luxury ($100-150/day)</option>
+                  </select>
+                </div>
+              </div>
 
-// Templates Section
-const TemplatesSection = ({ templates, theme }) => (
-  <div className="space-y-8">
-    <div className="text-center mb-12">
-      <h2 className="text-4xl font-black mb-4">
-        <span className={`bg-gradient-to-r ${
-          theme === 'dark' ? 'from-teal-400 to-cyan-400' : 'from-teal-600 to-cyan-600'
-        } bg-clip-text text-transparent`}>
-          Ready-Made Itineraries
-        </span>
-      </h2>
-      <p className={`text-lg ${theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}`}>
-        Choose from our expertly crafted travel plans
-      </p>
-    </div>
-
-    <div className="grid md:grid-cols-2 gap-8">
-      {templates.map((template) => (
-        <div key={template.id} className={`p-8 rounded-3xl border ${
-          theme === 'dark' ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-gray-200'
-        } shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-1`}>
-          
-          <div className="flex items-start justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <div className="text-4xl">{template.image}</div>
-              <div>
-                <h3 className="text-xl font-bold mb-1">{template.title}</h3>
-                <div className="flex items-center gap-4 text-sm">
-                  <span className="flex items-center gap-1">
-                    <FaClock className="text-teal-500" />
-                    {template.duration}
-                  </span>
-                  <span className={`px-2 py-1 rounded-lg text-xs ${
-                    template.difficulty === 'Easy' 
-                      ? 'bg-green-100 text-green-800' 
-                      : template.difficulty === 'Moderate'
-                        ? 'bg-yellow-100 text-yellow-800'
-                        : 'bg-red-100 text-red-800'
-                  }`}>
-                    {template.difficulty}
-                  </span>
+              {/* Generate Button */}
+              <div className="text-center mt-12">
+                <button 
+                  onClick={handleGenerateItinerary}
+                  disabled={isGenerating || formData.destinations.length === 0}
+                  className={`px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 flex items-center gap-3 mx-auto ${
+                    isGenerating || formData.destinations.length === 0
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white transform hover:scale-105 shadow-xl'
+                  }`}
+                >
+                  {isGenerating ? (
+                    <>
+                      <FaSpinner className="animate-spin" />
+                      Generating Your Itinerary...
+                    </>
+                  ) : (
+                    <>
+                      <FaRoute />
+                      Generate Real Itinerary
+                    </>
+                  )}
+                </button>
+                
+                {formData.destinations.length === 0 && (
+                  <p className="text-red-500 text-sm mt-2">Please select at least one destination</p>
+                )}
+                
+                {/* Debug Info */}
+                <div className="mt-4 text-xs text-gray-500">
+                  <p>Selected destinations: {formData.destinations.join(', ') || 'None'}</p>
+                  <p>Duration: {formData.duration} days</p>
+                  <p>Budget: {formData.budget}</p>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
-          <p className={`mb-6 ${theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}`}>
-            {template.description}
-          </p>
+          {/* Generated Itinerary Tab */}
+          {activeTab === 'generated' && (
+            <div className="space-y-8">
+              {generatedItinerary ? (
+                <>
+                  {/* Header */}
+                  <div className="text-center mb-12">
+                    <h2 className="text-4xl font-bold mb-4">{generatedItinerary.title}</h2>
+                    <p className="text-lg text-gray-600 mb-6">
+                      Created on {generatedItinerary.createdAt} • Total Cost: ${generatedItinerary.totalCost}
+                    </p>
+                    
+                    <div className="flex justify-center gap-4">
+                      <button className="px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl font-semibold flex items-center gap-2">
+                        <FaSave />
+                        Save Itinerary
+                      </button>
+                      <button className="px-6 py-3 border border-gray-300 rounded-xl font-semibold flex items-center gap-2">
+                        <FaDownload />
+                        Download PDF
+                      </button>
+                      <button className="px-6 py-3 border border-gray-300 rounded-xl font-semibold flex items-center gap-2">
+                        <FaShare />
+                        Share
+                      </button>
+                    </div>
+                  </div>
 
-          <div className="mb-6">
-            <h4 className="font-semibold mb-3">Highlights:</h4>
-            <div className="flex flex-wrap gap-2">
-              {template.highlights.map((highlight, idx) => (
-                <span key={idx} className={`px-3 py-1 rounded-lg text-sm ${
-                  theme === 'dark' ? 'bg-slate-700 text-slate-300' : 'bg-gray-100 text-gray-700'
-                }`}>
-                  {highlight}
-                </span>
-              ))}
+                  {/* Daily Itinerary */}
+                  <div className="space-y-6">
+                    <h3 className="text-2xl font-bold mb-6">Daily Itinerary</h3>
+                    
+                    {generatedItinerary.dailyPlan.map((day) => (
+                      <div key={day.day} className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
+                        
+                        {/* Day Header */}
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-gradient-to-br from-teal-600 to-cyan-600 rounded-2xl flex items-center justify-center text-white font-bold text-lg">
+                              {day.day}
+                            </div>
+                            <div>
+                              <h4 className="text-xl font-bold">{day.title}</h4>
+                              <p className="text-gray-600">Daily Cost: ${day.dailyCost + 35}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Activities */}
+                        <div className="space-y-4 mb-6">
+                          {day.activities.map((activity, index) => (
+                            <div key={index} className="flex items-start gap-4">
+                              <div className="w-20 text-sm font-medium text-gray-600 flex-shrink-0">
+                                {activity.time}
+                              </div>
+                              <div className="flex-1">
+                                <h5 className="font-semibold">{activity.activity}</h5>
+                                <span className={`inline-block px-2 py-1 rounded text-xs mt-1 ${
+                                  activity.type === 'sightseeing' ? 'bg-green-100 text-green-800' :
+                                  activity.type === 'activity' ? 'bg-blue-100 text-blue-800' :
+                                  'bg-purple-100 text-purple-800'
+                                }`}>
+                                  {activity.type}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Accommodation & Meals */}
+                        <div className="grid md:grid-cols-2 gap-6">
+                          <div>
+                            <h5 className="font-semibold mb-3 flex items-center gap-2">
+                              <FaHotel className="text-blue-500" />
+                              Accommodation
+                            </h5>
+                            <p>{day.accommodation} - ${day.dailyCost}</p>
+                          </div>
+                          
+                          <div>
+                            <h5 className="font-semibold mb-3 flex items-center gap-2">
+                              <FaUtensils className="text-orange-500" />
+                              Meals
+                            </h5>
+                            <div className="space-y-1">
+                              {day.meals.map((meal, index) => (
+                                <div key={index} className="flex justify-between">
+                                  <span>{meal.meal}</span>
+                                  <span>${meal.cost}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Cost Summary */}
+                  <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
+                    <h3 className="text-2xl font-bold mb-6">Cost Summary</h3>
+                    <div className="flex justify-between items-center text-2xl font-bold">
+                      <span>Total Trip Cost</span>
+                      <span className="text-teal-600">${generatedItinerary.totalCost}</span>
+                    </div>
+                    <p className="text-gray-600 mt-2">
+                      Includes accommodation, meals, activities, and local transport for {generatedItinerary.duration.toLowerCase()}
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center py-12">
+                  <div className="w-24 h-24 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <FaRoute className="text-3xl text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">No Itinerary Generated Yet</h3>
+                  <p className="text-gray-600 mb-6">Create your first itinerary using the form in the "Create Plan" tab.</p>
+                  <button 
+                    onClick={() => setActiveTab('create')}
+                    className="px-8 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl font-semibold hover:from-teal-700 hover:to-cyan-700 transition-all duration-300"
+                  >
+                    Create Itinerary
+                  </button>
+                </div>
+              )}
             </div>
-          </div>
+          )}
 
-          <div className="flex gap-3">
-            <button className={`flex-1 py-3 rounded-xl font-semibold transition-all duration-300 ${
-              theme === 'dark'
-                ? 'bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white'
-                : 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white'
-            } shadow-lg hover:shadow-xl transform hover:scale-105`}>
-              Use This Template
-            </button>
-            <button className={`px-4 py-3 rounded-xl border transition-all duration-300 ${
-              theme === 'dark'
-                ? 'border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white'
-                : 'border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-900'
-            }`}>
-              <FaEye />
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
+          {/* Travel Tips Tab */}
+          {activeTab === 'tips' && (
+            <div className="space-y-8">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold mb-4">Nepal Travel Tips</h2>
+                <p className="text-lg text-gray-600">Essential advice for your Nepal adventure</p>
+              </div>
 
-// Saved Itineraries Section
-const SavedItinerariesSection = ({ itineraries, theme }) => (
-  <div className="space-y-8">
-    <div className="text-center mb-12">
-      <h2 className="text-4xl font-black mb-4">
-        <span className={`bg-gradient-to-r ${
-          theme === 'dark' ? 'from-teal-400 to-cyan-400' : 'from-teal-600 to-cyan-600'
-        } bg-clip-text text-transparent`}>
-          My Itineraries
-        </span>
-      </h2>
-      <p className={`text-lg ${theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}`}>
-        Manage your saved travel plans
-      </p>
-    </div>
-
-    <div className="grid md:grid-cols-2 gap-8">
-      {itineraries.map((itinerary) => (
-        <div key={itinerary.id} className={`p-8 rounded-3xl border ${
-          theme === 'dark' ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-gray-200'
-        } shadow-lg hover:shadow-xl transition-all duration-300`}>
-          
-          <div className="flex items-start justify-between mb-6">
-            <div>
-              <h3 className="text-xl font-bold mb-2">{itinerary.title}</h3>
-              <div className="flex items-center gap-4 text-sm">
-                <span className="flex items-center gap-1">
-                  <FaClock className="text-teal-500" />
-                  {itinerary.duration}
-                </span>
-                <span className={`px-2 py-1 rounded-lg text-xs ${
-                  itinerary.status === 'Completed' 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-blue-100 text-blue-800'
-                }`}>
-                  {itinerary.status}
-                </span>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
+                  <h3 className="text-xl font-bold mb-4">🗓️ Best Time to Visit</h3>
+                  <p>October to December and March to May offer the best weather conditions for most activities.</p>
+                </div>
+                <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
+                  <h3 className="text-xl font-bold mb-4">🏔️ Altitude Considerations</h3>
+                  <p>Plan acclimatization days for high-altitude destinations to avoid altitude sickness.</p>
+                </div>
+                <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
+                  <h3 className="text-xl font-bold mb-4">🎒 Packing Essentials</h3>
+                  <p>Bring layers, comfortable hiking boots, sunscreen, and a good camera for stunning landscapes.</p>
+                </div>
+                <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
+                  <h3 className="text-xl font-bold mb-4">💰 Budget Planning</h3>
+                  <p>Budget $30-150 per day depending on accommodation level and activities chosen.</p>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="mb-6">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium">Progress</span>
-              <span className="text-sm text-teal-500">{itinerary.progress}%</span>
-            </div>
-            <div className={`w-full bg-gray-200 rounded-full h-2 ${theme === 'dark' ? 'bg-slate-700' : 'bg-gray-200'}`}>
-              <div 
-                className="bg-gradient-to-r from-teal-500 to-cyan-500 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${itinerary.progress}%` }}
-              ></div>
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <h4 className="font-semibold mb-3">Destinations:</h4>
-            <div className="flex flex-wrap gap-2">
-              {itinerary.destinations.map((destination, idx) => (
-                <span key={idx} className={`px-3 py-1 rounded-lg text-sm ${
-                  theme === 'dark' ? 'bg-slate-700 text-slate-300' : 'bg-gray-100 text-gray-700'
-                }`}>
-                  {destination}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <button className={`flex-1 py-3 rounded-xl font-semibold transition-all duration-300 ${
-              theme === 'dark'
-                ? 'bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white'
-                : 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white'
-            } shadow-lg hover:shadow-xl transform hover:scale-105`}>
-              Continue Planning
-            </button>
-            <button className={`px-4 py-3 rounded-xl border transition-all duration-300 ${
-              theme === 'dark'
-                ? 'border-slate-600 hover:border-slate-500 text-slate-300 hover:text-white'
-                : 'border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-900'
-            }`}>
-              <FaShare />
-            </button>
-          </div>
+          )}
         </div>
-      ))}
-    </div>
-  </div>
-);
-
-// Planning Tips Section
-const PlanningTipsSection = ({ theme }) => {
-  const tips = [
-    {
-      icon: FaCalendarAlt,
-      title: 'Best Time to Visit',
-      description: 'October to December and March to May offer the best weather conditions for most activities.',
-      color: 'from-blue-500 to-cyan-500'
-    },
-    {
-      icon: FaMountain,
-      title: 'Altitude Considerations',
-      description: 'Plan acclimatization days for high-altitude destinations to avoid altitude sickness.',
-      color: 'from-green-500 to-emerald-500'
-    },
-    {
-      icon: FaRoute,
-      title: 'Transportation Planning',
-      description: 'Book domestic flights early and have backup plans due to weather-dependent schedules.',
-      color: 'from-purple-500 to-pink-500'
-    },
-    {
-      icon: FaHotel,
-      title: 'Accommodation Booking',
-      description: 'Reserve accommodations in advance, especially during peak trekking seasons.',
-      color: 'from-orange-500 to-red-500'
-    }
-  ];
-
-  return (
-    <div className="space-y-8">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-black mb-4">
-          <span className={`bg-gradient-to-r ${
-            theme === 'dark' ? 'from-teal-400 to-cyan-400' : 'from-teal-600 to-cyan-600'
-          } bg-clip-text text-transparent`}>
-            Planning Tips
-          </span>
-        </h2>
-        <p className={`text-lg ${theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}`}>
-          Expert advice for planning your Nepal adventure
-        </p>
-      </div>
-
-      <div className="grid md:grid-cols-2 gap-8">
-        {tips.map((tip, index) => (
-          <div key={index} className={`p-8 rounded-3xl border ${
-            theme === 'dark' ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-gray-200'
-          } shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:-translate-y-1`}>
-            
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 bg-gradient-to-br ${tip.color} shadow-xl`}>
-              <tip.icon className="text-2xl text-white" />
-            </div>
-            
-            <h3 className="text-xl font-bold mb-4">{tip.title}</h3>
-            <p className={`leading-relaxed ${theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}`}>
-              {tip.description}
-            </p>
-          </div>
-        ))}
-      </div>
+      </main>
     </div>
   );
 };

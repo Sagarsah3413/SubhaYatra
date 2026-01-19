@@ -23,7 +23,7 @@ export default function SearchDropdownList({ results, onSelect, selectedIndex = 
   };
 
   return (
-    <div className="max-h-32 overflow-y-auto">
+    <div className="max-h-48 overflow-y-auto">
       {results.map((item, index) => {
         const TypeIcon = getTypeIcon(item.type);
         const isSelected = selectedIndex === index;
@@ -33,8 +33,8 @@ export default function SearchDropdownList({ results, onSelect, selectedIndex = 
             key={`${item.name}-${index}`}
             onClick={() => onSelect(item)}
             className={`
-              w-full px-4 py-1 text-left transition-all duration-150
-              flex items-center gap-2 hover:scale-[1.005]
+              w-full px-4 py-2 text-left transition-all duration-150
+              flex items-center gap-3 hover:scale-[1.005]
               ${isSelected 
                 ? theme === 'dark' 
                   ? 'bg-teal-900/30 border-l-2 border-teal-500' 
@@ -46,7 +46,7 @@ export default function SearchDropdownList({ results, onSelect, selectedIndex = 
             `}
           >
             <div className={`
-              w-5 h-5 rounded-sm flex items-center justify-center flex-shrink-0
+              w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0
               ${theme === 'dark' 
                 ? 'bg-slate-600 text-slate-300' 
                 : 'bg-gray-100 text-gray-600'
@@ -57,7 +57,7 @@ export default function SearchDropdownList({ results, onSelect, selectedIndex = 
             
             <div className="flex-1 min-w-0">
               <div className={`
-                font-medium text-xs truncate
+                font-medium text-sm truncate
                 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}
               `}>
                 {item.name}

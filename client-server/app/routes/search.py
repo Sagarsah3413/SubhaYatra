@@ -27,7 +27,7 @@ def get_images_for_place(place_name):
 
 
 # ---------------------- SEARCH ROUTE ----------------------
-@search_blueprint.route("/search/", methods=["GET"])
+@search_blueprint.route("/search", methods=["GET"])
 def search_items():
     q = request.args.get("q", "")
     db = SessionLocal()
@@ -92,7 +92,7 @@ def search_items():
 
 
 # ---------------------- DETAILS ROUTE ----------------------
-@search_blueprint.route("/details/<string:type>/<string:name>/", methods=["GET"])
+@search_blueprint.route("/details/<string:type>/<string:name>", methods=["GET"])
 def get_details(type, name):
     db = SessionLocal()
     obj = None

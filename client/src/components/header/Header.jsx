@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import NepaliCalendar from "../../pages/NepaliCalendar";
 import { useTheme } from "../../contexts/ThemeContext";
-import { FaSun, FaMoon, FaBars, FaTimes, FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaUser, FaCog, FaQuestionCircle, FaHome, FaSearch, FaInfoCircle, FaPhone } from "react-icons/fa";
+import { FaBars, FaTimes, FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaUser, FaCog, FaQuestionCircle, FaHome, FaSearch, FaInfoCircle, FaPhone } from "react-icons/fa";
 
 /**
  * Premium Header Component
@@ -25,7 +25,7 @@ import { FaSun, FaMoon, FaBars, FaTimes, FaMapMarkerAlt, FaGlobe, FaCompass, FaC
  */
 export const Header = ({ onHomeClick }) => {
   const navigate = useNavigate();
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const { t, i18n } = useTranslation();
 
   // Authentication state with error handling
@@ -812,7 +812,6 @@ export const Header = ({ onHomeClick }) => {
         clerkAvailable={clerkAvailable}
         onCalendarOpen={handleCalendarOpen}
         onNavigation={handleNavigation}
-        onThemeToggle={toggleTheme}
         showCalendar={showCalendar}
         triggerRef={triggerRef}
         currentLocation={currentLocation}
@@ -831,7 +830,6 @@ export const Header = ({ onHomeClick }) => {
         clerkAvailable={clerkAvailable}
         onCalendarOpen={handleCalendarOpen}
         onNavigation={handleNavigation}
-        onThemeToggle={toggleTheme}
         onClose={closeMobileMenu}
         currentLocation={currentLocation}
         isLocationLoading={isLocationLoading}
@@ -1658,7 +1656,6 @@ const DesktopNavigation = ({
   clerkAvailable, 
   onCalendarOpen, 
   onNavigation, 
-  onThemeToggle, 
   showCalendar, 
   triggerRef,
   currentLocation,
@@ -1696,7 +1693,6 @@ const DesktopNavigation = ({
       theme={theme}
       onCalendarOpen={onCalendarOpen}
       onNavigation={onNavigation}
-      onThemeToggle={onThemeToggle}
       showCalendar={showCalendar}
       triggerRef={triggerRef}
       selectedLanguage={selectedLanguage}
@@ -1716,7 +1712,6 @@ const MobileNavigationMenu = ({
   clerkAvailable, 
   onCalendarOpen, 
   onNavigation, 
-  onThemeToggle, 
   onClose,
   currentLocation,
   isLocationLoading,
@@ -1738,91 +1733,82 @@ const MobileNavigationMenu = ({
         />
       )}
       
-      {/* Sidebar Menu */}
+      {/* Modern Sidebar Menu */}
       <div className={`
         fixed top-0 left-0 h-full z-[60] transform-gpu will-change-transform
-        w-full sm:w-80 max-w-sm
+        w-full sm:w-72 max-w-sm
         ${theme === "dark" 
-          ? "bg-slate-900/98 border-slate-700/50" 
-          : "bg-white/98 border-slate-200/50"
+          ? "bg-slate-900/95" 
+          : "bg-white/95"
         } 
-        sm:border-r shadow-2xl backdrop-blur-xl
-        transition-transform duration-300 ease-out
+        backdrop-blur-xl border-r border-slate-200/20 dark:border-slate-700/20
+        transition-all duration-300 ease-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
         
-        {/* Sidebar Header */}
+        {/* Clean Header */}
         <div className={`
-          flex items-center justify-between p-4 sm:p-4 border-b 
-          ${theme === "dark" ? "border-slate-700/50" : "border-slate-200/50"}
+          flex items-center justify-between p-6 border-b 
+          ${theme === "dark" ? "border-slate-700/30" : "border-slate-200/30"}
         `}>
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 sm:w-8 sm:h-8 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-sm">
-              <span className="text-white text-xl sm:text-lg font-bold">🌄</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center">
+              <span className="text-white text-lg font-bold">🏔️</span>
             </div>
             <div>
-              <h2 className="text-xl sm:text-lg font-bold text-slate-800 dark:text-slate-200">
+              <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
                 Nepal Tourism
               </h2>
-              <p className="text-sm sm:text-xs text-slate-500 dark:text-slate-400">
-                Discover & Explore
-              </p>
             </div>
           </div>
           
-          {/* Close Button */}
+          {/* Minimal Close Button */}
           <button
             onClick={onClose}
             className={`
-              p-3 sm:p-2 rounded-lg transition-colors duration-200
+              p-2 rounded-full transition-all duration-200 hover:scale-110
               ${theme === "dark" 
                 ? "hover:bg-slate-800 text-slate-400 hover:text-slate-200" 
                 : "hover:bg-slate-100 text-slate-500 hover:text-slate-700"
               }
             `}
           >
-            <FaTimes className="w-5 h-5 sm:w-4 sm:h-4" />
+            <FaTimes className="w-4 h-4" />
           </button>
         </div>
         
         {/* Sidebar Content */}
         <div className="flex flex-col h-full overflow-y-auto">
           
-          {/* Location Indicator */}
-          <div className="p-4 sm:p-4 border-b border-slate-200/30 dark:border-slate-700/30">
+          {/* Compact Location */}
+          <div className="p-4">
             <div 
               className={`
-                flex items-center space-x-3 px-4 py-3 sm:px-3 sm:py-2 rounded-lg 
+                flex items-center space-x-3 px-3 py-2 rounded-xl 
                 ${theme === "dark" 
-                  ? "bg-slate-800/50 hover:bg-slate-700/50" 
-                  : "bg-slate-50 hover:bg-slate-100"
+                  ? "bg-slate-800/40 hover:bg-slate-800/60" 
+                  : "bg-slate-50/80 hover:bg-slate-100/80"
                 } 
-                cursor-pointer transition-colors duration-200
+                cursor-pointer transition-all duration-200 hover:scale-[1.02]
               `}
               onClick={onLocationRefresh}
-              title={isLocationLoading ? "Detecting location..." : "Tap to refresh location"}
             >
-              <div className="flex items-center justify-center w-10 h-10 sm:w-8 sm:h-8 rounded-lg bg-teal-500 shadow-sm">
-                <FaMapMarkerAlt className="w-5 h-5 sm:w-4 sm:h-4 text-white" />
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/20">
+                <FaMapMarkerAlt className="w-3 h-3 text-teal-500" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-base sm:text-sm font-medium text-slate-700 dark:text-slate-300">
-                  Current Location
+                <div className="text-xs font-medium text-slate-600 dark:text-slate-400">
+                  Location
                 </div>
-                <div className="text-sm sm:text-xs text-slate-500 dark:text-slate-400 truncate">
-                  {isLocationLoading 
-                    ? (locationRetryCount > 0 ? `Retrying... (${locationRetryCount}/2)` : 'Detecting...') 
-                    : currentLocation}
+                <div className="text-sm text-slate-800 dark:text-slate-200 truncate">
+                  {isLocationLoading ? 'Detecting...' : currentLocation}
                 </div>
               </div>
-              {locationError && (
-                <span className="text-sm sm:text-xs text-amber-500" title={locationError}>⚠</span>
-              )}
             </div>
           </div>
           
-          {/* Language Selector */}
-          <div className="p-4 sm:p-4 border-b border-slate-200/30 dark:border-slate-700/30">
+          {/* Compact Language Selector */}
+          <div className="px-4 pb-4">
             <CustomLanguageDropdownMobile 
               selectedLanguage={selectedLanguage}
               onLanguageChange={onLanguageChange}
@@ -1830,19 +1816,18 @@ const MobileNavigationMenu = ({
             />
           </div>
 
-          {/* Navigation Items */}
-          <div className="flex-1 p-4 sm:p-4">
+          {/* Clean Navigation Items */}
+          <div className="flex-1 px-4">
             <MobileNavigationItems 
               theme={theme}
               onCalendarOpen={onCalendarOpen}
               onNavigation={onNavigation}
-              onThemeToggle={onThemeToggle}
               onClose={onClose}
             />
           </div>
           
-          {/* Authentication Section */}
-          <div className="border-t border-slate-200/30 dark:border-slate-700/30 p-4 mt-auto">
+          {/* Minimal Authentication Section */}
+          <div className="border-t border-slate-200/20 dark:border-slate-700/20 p-4 mt-auto">
             <MobileAuthenticationButtons 
               clerkAvailable={clerkAvailable} 
               onNavigation={onNavigation}
@@ -1863,7 +1848,6 @@ const NavigationItems = ({
   theme, 
   onCalendarOpen, 
   onNavigation, 
-  onThemeToggle, 
   showCalendar, 
   triggerRef,
   selectedLanguage,
@@ -1929,25 +1913,6 @@ const NavigationItems = ({
           <span>{t('header.about')}</span>
         </span>
       </button>
-
-      <div className="h-6 w-px bg-teal-300 dark:bg-teal-600 mx-2" />
-
-      {/* Theme Toggle Button */}
-      <button
-        onClick={onThemeToggle}
-        className={`${getNavButtonClasses(theme)} ${getThemeClasses(theme)}`}
-        aria-label="Toggle theme"
-        title={theme === "light" ? t('header.darkMode') : t('header.lightMode')}
-      >
-        <span className="flex items-center space-x-2">
-          {theme === "light" ? (
-            <FaMoon className="w-4 h-4" />
-          ) : (
-            <FaSun className="w-4 h-4" />
-          )}
-          <span>{theme === "light" ? t('header.darkMode') : t('header.lightMode')}</span>
-        </span>
-      </button>
     </div>
   );
 };
@@ -1959,7 +1924,6 @@ const MobileNavigationItems = ({
   theme, 
   onCalendarOpen, 
   onNavigation, 
-  onThemeToggle, 
   onClose 
 }) => {
   const { t } = useTranslation();
@@ -2058,8 +2022,8 @@ const MobileNavigationItems = ({
   ];
   
   const renderMenuSection = (items, title) => (
-    <div className="mb-6">
-      <h4 className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-3 px-2">
+    <div className="mb-4">
+      <h4 className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 px-1">
         {title}
       </h4>
       <div className="space-y-1">
@@ -2073,42 +2037,28 @@ const MobileNavigationItems = ({
                 onClose();
               }}
               className={`
-                w-full p-4 sm:p-3 text-left rounded-lg transition-all duration-200 
+                w-full p-3 text-left rounded-xl transition-all duration-200 
                 ${theme === "dark" 
-                  ? "hover:bg-slate-800/70 text-slate-200 hover:text-white" 
-                  : "hover:bg-slate-100 text-slate-700 hover:text-slate-900"
+                  ? "hover:bg-slate-800/50 text-slate-300 hover:text-white" 
+                  : "hover:bg-slate-100/70 text-slate-600 hover:text-slate-900"
                 } 
-                transform-gpu will-change-transform hover:scale-[1.02] active:scale-[0.98]
-                flex items-center space-x-4 sm:space-x-3 group
+                flex items-center space-x-3 group hover:scale-[1.01]
               `}
             >
-              {/* Icon Container */}
+              {/* Minimal Icon */}
               <div className={`
-                flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-lg ${item.color} shadow-sm
-                group-hover:scale-110 transition-transform duration-200
+                flex items-center justify-center w-8 h-8 rounded-lg ${item.color}/20
+                group-hover:scale-105 transition-transform duration-200
               `}>
-                <IconComponent className="w-6 h-6 sm:w-5 sm:h-5 text-white" />
+                <IconComponent className={`w-4 h-4 ${item.color.replace('bg-', 'text-')}`} />
               </div>
               
-              {/* Text Content */}
+              {/* Clean Text */}
               <div className="flex-1 min-w-0">
-                <div className="font-medium text-lg sm:text-base">
+                <div className="font-medium text-sm">
                   {item.label}
                 </div>
-                <div className="text-base sm:text-sm opacity-70 truncate">
-                  {item.description}
-                </div>
               </div>
-              
-              {/* Arrow */}
-              <svg 
-                className="w-5 h-5 sm:w-4 sm:h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
             </button>
           );
         })}
@@ -2117,16 +2067,16 @@ const MobileNavigationItems = ({
   );
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-1">
       {/* Main Navigation */}
-      {renderMenuSection(mainMenuItems, "Main Navigation")}
+      {renderMenuSection(mainMenuItems, "Navigation")}
       
       {/* Services Section */}
-      {renderMenuSection(servicesItems, "Services & Tools")}
+      {renderMenuSection(servicesItems, "Services")}
       
       {/* Quick Actions */}
-      <div className="mb-6">
-        <h4 className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-3 px-2">
+      <div className="mb-4">
+        <h4 className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2 px-1">
           Quick Actions
         </h4>
         <div className="space-y-1">
@@ -2137,109 +2087,30 @@ const MobileNavigationItems = ({
               onClose();
             }}
             className={`
-              w-full p-4 sm:p-3 text-left rounded-lg transition-all duration-200 
+              w-full p-3 text-left rounded-xl transition-all duration-200 
               ${theme === "dark" 
-                ? "hover:bg-slate-800/70 text-slate-200 hover:text-white" 
-                : "hover:bg-slate-100 text-slate-700 hover:text-slate-900"
+                ? "hover:bg-slate-800/50 text-slate-300 hover:text-white" 
+                : "hover:bg-slate-100/70 text-slate-600 hover:text-slate-900"
               } 
-              transform-gpu will-change-transform hover:scale-[1.02] active:scale-[0.98]
-              flex items-center space-x-4 sm:space-x-3 group
+              flex items-center space-x-3 group hover:scale-[1.01]
             `}
           >
-            <div className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-lg bg-teal-500 shadow-sm group-hover:scale-110 transition-transform duration-200">
-              <svg className="w-6 h-6 sm:w-5 sm:h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/20 group-hover:scale-105 transition-transform duration-200">
+              <svg className="w-4 h-4 text-teal-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
               </svg>
             </div>
             <div className="flex-1 min-w-0">
-              <div className="font-medium text-lg sm:text-base">Nepali Calendar</div>
-              <div className="text-base sm:text-sm opacity-70">View dates & events</div>
+              <div className="font-medium text-sm">Nepali Calendar</div>
             </div>
-            <svg className="w-5 h-5 sm:w-4 sm:h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
           </button>
+
+
         </div>
       </div>
-
-      {/* Support & Help */}
-      {renderMenuSection(supportItems, "Support & Help")}
-
-      {/* Theme Toggle */}
-      <div className="mb-6">
-        <h4 className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide mb-3 px-2">
-          Preferences
-        </h4>
-        <button
-          onClick={() => {
-            onThemeToggle();
-            onClose();
-          }}
-          className={`
-            w-full p-4 sm:p-3 text-left rounded-lg transition-all duration-200 
-            ${theme === "dark" 
-              ? "hover:bg-slate-800/70 text-slate-200 hover:text-white" 
-              : "hover:bg-slate-100 text-slate-700 hover:text-slate-900"
-            } 
-            transform-gpu will-change-transform hover:scale-[1.02] active:scale-[0.98]
-            flex items-center space-x-4 sm:space-x-3 group
-          `}
-        >
-          {/* Theme Icon Container */}
-          <div className="flex items-center justify-center w-12 h-12 sm:w-10 sm:h-10 rounded-lg bg-slate-600 shadow-sm group-hover:scale-110 transition-transform duration-200">
-            {theme === 'dark' ? (
-              <FaSun className="w-6 h-6 sm:w-5 sm:h-5 text-yellow-300" />
-            ) : (
-              <FaMoon className="w-6 h-6 sm:w-5 sm:h-5 text-slate-300" />
-            )}
-          </div>
-          
-          {/* Text Content */}
-          <div className="flex-1 min-w-0">
-            <div className="font-medium text-lg sm:text-base">
-              {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-            </div>
-            <div className="text-base sm:text-sm opacity-70">
-              Switch to {theme === 'dark' ? 'light' : 'dark'} theme
-            </div>
-          </div>
-          
-          {/* Toggle Switch */}
-          <div className={`
-            w-12 h-7 sm:w-10 sm:h-6 rounded-full transition-colors duration-200
-            ${theme === 'dark' ? 'bg-blue-500' : 'bg-slate-300'}
-            relative flex-shrink-0
-          `}>
-            <div className={`
-              absolute top-0.5 w-6 h-6 sm:w-5 sm:h-5 bg-white rounded-full shadow-sm
-              transition-transform duration-200 transform
-              ${theme === 'dark' ? 'translate-x-5 sm:translate-x-4' : 'translate-x-0.5'}
-            `} />
-          </div>
-        </button>
-      </div>
-
-      {/* App Info */}
-      <div className="mb-4 pt-4 border-t border-slate-200/50 dark:border-slate-700/50">
-        <div className="text-center space-y-2">
-          <div className="flex items-center justify-center space-x-2">
-            <div className="w-6 h-6 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
-              <span className="text-white text-sm font-bold">🌄</span>
-            </div>
-            <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-              Nepal Tourism v2.0
-            </span>
-          </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            Discover the beauty of Nepal
-          </p>
-          <div className="flex items-center justify-center space-x-4 text-xs text-slate-400 dark:text-slate-500">
-            <span>Privacy Policy</span>
-            <span>•</span>
-            <span>Terms of Service</span>
-          </div>
-        </div>
-      </div>
+      
+      {/* Support Section */}
+      {renderMenuSection(supportItems, "Support")}
     </div>
   );
 };

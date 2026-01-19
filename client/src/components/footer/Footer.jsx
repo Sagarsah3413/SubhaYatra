@@ -92,74 +92,88 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-b from-slate-900 to-slate-800 text-white mt-20">
-      {/* Live Information Bar */}
-      <div className="bg-slate-800/80 border-b border-slate-700/50">
+    <footer className="bg-gradient-to-b from-slate-900/95 via-slate-800/95 to-slate-900/95 text-white mt-20 relative backdrop-blur-sm">
+      {/* Smart Professional Background */}
+      <div className="absolute inset-0 opacity-4">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 25% 50%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+            radial-gradient(circle at 75% 50%, rgba(16, 185, 129, 0.06) 0%, transparent 50%)
+          `,
+          backgroundSize: '600px 600px'
+        }}></div>
+      </div>
+
+      {/* Smart Professional Live Information Bar */}
+      <div className="relative bg-slate-800/85 border-b border-slate-600/25 backdrop-blur-md">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-400/15 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex flex-col lg:flex-row justify-center items-center gap-6">
             
-            {/* Weather Widget Container */}
-            <div className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 rounded-xl px-4 py-3 backdrop-blur-sm">
-              <div className="flex items-center space-x-4">
+            {/* Smart Weather Widget */}
+            <div className="group bg-gradient-to-r from-amber-500/8 to-orange-500/8 border border-amber-400/20 rounded-xl px-4 py-3 backdrop-blur-sm hover:border-amber-400/30 transition-all duration-300 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/3 to-transparent rounded-xl pointer-events-none"></div>
+              <div className="relative flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <div className="p-2 bg-amber-500/20 rounded-lg">
+                  <div className="p-2 bg-amber-500/20 rounded-lg border border-amber-400/25">
                     <FaCloudSun className="text-amber-400 text-lg" />
                   </div>
-                  <span className="text-sm font-semibold text-amber-400">{t('footer.liveWeather')}</span>
+                  <span className="text-sm font-semibold text-amber-400 tracking-wide">{t('footer.liveWeather')}</span>
                 </div>
                 {weatherLoading ? (
                   <div className="flex items-center space-x-2">
                     <div className="animate-spin rounded-full h-4 w-4 border-2 border-amber-400 border-t-transparent"></div>
-                    <span className="text-xs text-gray-300">{t('footer.loading')}</span>
+                    <span className="text-xs text-gray-300 font-medium">{t('footer.loading')}</span>
                   </div>
                 ) : weather ? (
                   <div className="flex flex-wrap items-center gap-3">
-                    <div className="flex items-center space-x-1 bg-slate-700/50 px-2 py-1 rounded-md">
+                    <div className="flex items-center space-x-1 bg-slate-700/60 px-2 py-1 rounded-md border border-slate-600/30">
                       <FaMapMarkerAlt className="text-teal-400 text-xs" />
-                      <span className="text-xs text-gray-200 font-medium">{weather.location}</span>
+                      <span className="text-xs text-gray-200 font-medium tracking-wide">{weather.location}</span>
                     </div>
-                    <div className="flex items-center space-x-1 bg-slate-700/50 px-2 py-1 rounded-md">
+                    <div className="flex items-center space-x-1 bg-slate-700/60 px-2 py-1 rounded-md border border-slate-600/30">
                       <FaThermometerHalf className="text-red-400 text-xs" />
-                      <span className="text-sm font-bold text-white">{weather.temperature}°C</span>
+                      <span className="text-sm font-bold text-white tracking-wide">{weather.temperature}°C</span>
                     </div>
-                    <div className="flex items-center space-x-2 bg-slate-700/50 px-2 py-1 rounded-md">
-                      <span className="text-xs text-gray-200">{weather.condition}</span>
+                    <div className="flex items-center space-x-2 bg-slate-700/60 px-2 py-1 rounded-md border border-slate-600/30">
+                      <span className="text-xs text-gray-200 font-medium">{weather.condition}</span>
                       <span className="text-lg">{weather.icon}</span>
                     </div>
                   </div>
                 ) : (
-                  <span className="text-xs text-gray-400">{t('footer.weatherUnavailable')}</span>
+                  <span className="text-xs text-gray-400 font-medium">{t('footer.weatherUnavailable')}</span>
                 )}
               </div>
             </div>
 
-            {/* Currency Widget Container */}
-            <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl px-4 py-3 backdrop-blur-sm">
-              <div className="flex items-center space-x-4">
+            {/* Smart Currency Widget */}
+            <div className="group bg-gradient-to-r from-emerald-500/8 to-teal-500/8 border border-emerald-400/20 rounded-xl px-4 py-3 backdrop-blur-sm hover:border-emerald-400/30 transition-all duration-300 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/3 to-transparent rounded-xl pointer-events-none"></div>
+              <div className="relative flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <div className="p-2 bg-green-500/20 rounded-lg">
-                    <FaDollarSign className="text-green-400 text-lg" />
+                  <div className="p-2 bg-emerald-500/20 rounded-lg border border-emerald-400/25">
+                    <FaDollarSign className="text-emerald-400 text-lg" />
                   </div>
-                  <span className="text-sm font-semibold text-green-400">{t('footer.exchangeRates')}</span>
+                  <span className="text-sm font-semibold text-emerald-400 tracking-wide">{t('footer.exchangeRates')}</span>
                 </div>
                 {currencyLoading ? (
                   <div className="flex items-center space-x-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-green-400 border-t-transparent"></div>
-                    <span className="text-xs text-gray-300">{t('footer.loadingRates')}</span>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-emerald-400 border-t-transparent"></div>
+                    <span className="text-xs text-gray-300 font-medium">{t('footer.loadingRates')}</span>
                   </div>
                 ) : currency ? (
                   <div className="flex flex-col lg:flex-row items-center gap-3">
                     <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <span className="text-gray-300 font-medium">1 NPR =</span>
-                      <span className="bg-slate-700/50 px-2 py-1 rounded text-white font-bold">{getCurrencySymbol('USD')}{currency.rates.USD}</span>
-                      <span className="bg-slate-700/50 px-2 py-1 rounded text-white font-bold">{getCurrencySymbol('EUR')}{currency.rates.EUR}</span>
-                      <span className="bg-slate-700/50 px-2 py-1 rounded text-white font-bold">{getCurrencySymbol('GBP')}{currency.rates.GBP}</span>
-                      <span className="bg-slate-700/50 px-2 py-1 rounded text-white font-bold">{getCurrencySymbol('INR')}{currency.rates.INR}</span>
+                      <span className="text-gray-300 font-medium tracking-wide">1 NPR =</span>
+                      <span className="bg-slate-700/60 px-2 py-1 rounded text-white font-bold border border-slate-600/30">{getCurrencySymbol('USD')}{currency.rates.USD}</span>
+                      <span className="bg-slate-700/60 px-2 py-1 rounded text-white font-bold border border-slate-600/30">{getCurrencySymbol('EUR')}{currency.rates.EUR}</span>
+                      <span className="bg-slate-700/60 px-2 py-1 rounded text-white font-bold border border-slate-600/30">{getCurrencySymbol('GBP')}{currency.rates.GBP}</span>
+                      <span className="bg-slate-700/60 px-2 py-1 rounded text-white font-bold border border-slate-600/30">{getCurrencySymbol('INR')}{currency.rates.INR}</span>
                     </div>
-                    <span className="text-xs text-gray-400 bg-slate-700/30 px-2 py-1 rounded">{t('footer.updated')}: {currency.lastUpdated}</span>
+                    <span className="text-xs text-gray-400 bg-slate-700/40 px-2 py-1 rounded border border-slate-600/25 font-medium">{t('footer.updated')}: {currency.lastUpdated}</span>
                   </div>
                 ) : (
-                  <span className="text-xs text-gray-400">{t('footer.ratesUnavailable')}</span>
+                  <span className="text-xs text-gray-400 font-medium">{t('footer.ratesUnavailable')}</span>
                 )}
               </div>
             </div>
@@ -167,133 +181,159 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Main Footer Content - Separated Containers */}
-      <div className="max-w-7xl mx-auto py-8 px-6">
+      {/* Smart Professional Main Footer Content */}
+      <div className="relative max-w-7xl mx-auto py-8 px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           
-          {/* Company Info Container */}
-          <div className="lg:col-span-2 bg-slate-800/30 rounded-xl p-6 border border-slate-700/30">
-            <div className="flex items-center mb-4">
-              <span className="text-3xl mr-3">🌄</span>
-              <div>
-                <h2 className="text-lg font-bold text-amber-400">Roamio Wanderly</h2>
-                <p className="text-xs text-gray-400">Your Nepal Travel Companion</p>
+          {/* Smart Company Info Container */}
+          <div className="lg:col-span-2 group bg-slate-800/40 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-slate-800/50 transition-all duration-300 relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/3 to-transparent rounded-xl pointer-events-none"></div>
+            <div className="relative">
+              <div className="flex items-center mb-4 group-hover:scale-[1.02] transition-transform duration-300">
+                <div className="p-2 bg-gradient-to-br from-teal-500/15 to-amber-500/15 rounded-xl mr-3 border border-teal-500/20">
+                  <span className="text-3xl">🌄</span>
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-white tracking-wide">
+                    <span className="text-amber-400">Roamio</span> <span className="text-teal-400">Wanderly</span>
+                  </h2>
+                  <p className="text-xs text-gray-400 font-medium tracking-wider">Your Premium Nepal Travel Companion</p>
+                </div>
+              </div>
+              <p ref={aboutRef} className={`text-sm text-gray-300 leading-relaxed mb-4 font-light tracking-wide transition-all duration-700 ${aboutVisible ? 'opacity-100' : 'opacity-0'}`}>
+                {showFullAbout ? aboutText : `${aboutText.substring(0, 120)}...`}
+              </p>
+              <button
+                className="group/btn inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 text-xs font-medium transition-all duration-300 mb-4 hover:translate-x-1"
+                onClick={() => setShowFullAbout(!showFullAbout)}
+              >
+                <span className="tracking-wide">{showFullAbout ? t('footer.showLess') : t('footer.readMore')}</span>
+                <svg className={`w-3 h-3 transition-transform duration-300 ${showFullAbout ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {/* Smart Social Links */}
+              <div className="flex items-center space-x-4">
+                <a
+                  href={import.meta.env.VITE_FACEBOOK_URL || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/social p-2 bg-blue-600/20 rounded-lg text-blue-400 hover:text-blue-300 hover:bg-blue-600/30 transition-all duration-300 hover:scale-110 border border-blue-600/25"
+                >
+                  <FaFacebook className="text-xl" />
+                </a>
+                <a
+                  href={import.meta.env.VITE_INSTAGRAM_URL || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/social p-2 bg-pink-600/20 rounded-lg text-pink-400 hover:text-pink-300 hover:bg-pink-600/30 transition-all duration-300 hover:scale-110 border border-pink-600/25"
+                >
+                  <FaInstagram className="text-xl" />
+                </a>
               </div>
             </div>
-            <p ref={aboutRef} className={`text-sm text-gray-300 leading-relaxed mb-4 transition-opacity duration-700 ${aboutVisible ? 'opacity-100' : 'opacity-0'}`}>
-              {showFullAbout ? aboutText : `${aboutText.substring(0, 120)}...`}
-            </p>
-            <button
-              className="text-amber-400 text-xs hover:underline mb-4 transition-colors duration-200"
-              onClick={() => setShowFullAbout(!showFullAbout)}
-            >
-              {showFullAbout ? t('footer.showLess') : t('footer.readMore')}
-            </button>
-            
-            {/* Social Links */}
-            <div className="flex items-center space-x-4">
-              <a
-                href={import.meta.env.VITE_FACEBOOK_URL || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-blue-600/20 rounded-lg text-blue-400 hover:text-blue-300 hover:bg-blue-600/30 transition-all duration-200"
-              >
-                <FaFacebook className="text-xl" />
-              </a>
-              <a
-                href={import.meta.env.VITE_INSTAGRAM_URL || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-pink-600/20 rounded-lg text-pink-400 hover:text-pink-300 hover:bg-pink-600/30 transition-all duration-200"
-              >
-                <FaInstagram className="text-xl" />
-              </a>
+          </div>
+
+          {/* Smart Company Links Container */}
+          <div className="group bg-slate-800/30 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-slate-800/40 transition-all duration-300 relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/2 to-transparent rounded-xl pointer-events-none"></div>
+            <div className="relative">
+              <h3 className="text-sm font-semibold mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+                <span className="w-2 h-2 bg-gradient-to-r from-teal-400 to-amber-400 rounded-full mr-2"></span>
+                <span className="tracking-wide">{t('footer.company')}</span>
+              </h3>
+              <div className="space-y-3">
+                <Link to="/about" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/about" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-light tracking-wide">{t('footer.aboutUs')}</span>
+                </Link>
+                <Link to="/contact" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/contact" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-light tracking-wide">{t('footer.contact')}</span>
+                </Link>
+              </div>
+              
+              <h3 className="text-sm font-semibold mb-4 mt-6 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+                <span className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mr-2"></span>
+                <span className="tracking-wide">{t('footer.support')}</span>
+              </h3>
+              <div className="space-y-3">
+                <Link to="/help" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/help" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-light tracking-wide">{t('footer.helpCenter')}</span>
+                </Link>
+                <Link to="/faq" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/faq" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-light tracking-wide">{t('footer.faq')}</span>
+                </Link>
+              </div>
             </div>
           </div>
 
-          {/* Company Links Container */}
-          <div className="bg-slate-800/30 rounded-xl p-6 border border-slate-700/30">
-            <h3 className="text-sm font-semibold mb-4 text-amber-400 flex items-center">
-              <span className="w-2 h-2 bg-amber-400 rounded-full mr-2"></span>
-              {t('footer.company')}
-            </h3>
-            <div className="space-y-3">
-              <Link to="/about" className={`block text-sm hover:text-teal-400 transition-colors duration-200 hover:translate-x-1 transform ${location.pathname === "/about" ? "text-teal-400" : "text-gray-300"}`}>
-                {t('footer.aboutUs')}
-              </Link>
-              <Link to="/contact" className={`block text-sm hover:text-teal-400 transition-colors duration-200 hover:translate-x-1 transform ${location.pathname === "/contact" ? "text-teal-400" : "text-gray-300"}`}>
-                {t('footer.contact')}
-              </Link>
-            </div>
-            
-            <h3 className="text-sm font-semibold mb-4 mt-6 text-amber-400 flex items-center">
-              <span className="w-2 h-2 bg-amber-400 rounded-full mr-2"></span>
-              {t('footer.support')}
-            </h3>
-            <div className="space-y-3">
-              <Link to="/help" className={`block text-sm hover:text-teal-400 transition-colors duration-200 hover:translate-x-1 transform ${location.pathname === "/help" ? "text-teal-400" : "text-gray-300"}`}>
-                {t('footer.helpCenter')}
-              </Link>
-              <Link to="/faq" className={`block text-sm hover:text-teal-400 transition-colors duration-200 hover:translate-x-1 transform ${location.pathname === "/faq" ? "text-teal-400" : "text-gray-300"}`}>
-                {t('footer.faq')}
-              </Link>
-            </div>
-          </div>
-
-          {/* Community & Resources Container */}
-          <div className="bg-slate-800/30 rounded-xl p-6 border border-slate-700/30">
-            <h3 className="text-sm font-semibold mb-4 text-amber-400 flex items-center">
-              <span className="w-2 h-2 bg-amber-400 rounded-full mr-2"></span>
-              {t('footer.community')}
-            </h3>
-            <div className="space-y-3">
-              <NavLink to="/write-review" className={({ isActive }) => `block text-sm transition-colors duration-200 hover:translate-x-1 transform hover:text-teal-400 ${isActive ? "text-teal-400" : "text-gray-300"}`}>
-                {t('footer.writeReview')}
-              </NavLink>
-              <Link to="/add-place" className="block text-sm text-gray-300 hover:text-teal-400 transition-colors duration-200 hover:translate-x-1 transform">
-                {t('footer.addPlace')}
-              </Link>
-            </div>
-            
-            <h3 className="text-sm font-semibold mb-4 mt-6 text-amber-400 flex items-center">
-              <span className="w-2 h-2 bg-amber-400 rounded-full mr-2"></span>
-              {t('footer.resources')}
-            </h3>
-            <div className="space-y-3">
-              <Link to="/newsletter-archive" className={`block text-sm hover:text-teal-400 transition-colors duration-200 hover:translate-x-1 transform ${location.pathname === "/newsletter-archive" ? "text-teal-400" : "text-gray-300"}`}>
-                {t('footer.newsletter')}
-              </Link>
-              <a href="https://www.google.com/maps/place/Nepal?hl=en" target="_blank" rel="noopener noreferrer" className="block text-sm text-gray-300 hover:text-teal-400 transition-colors duration-200 hover:translate-x-1 transform">
-                {t('footer.siteMap')}
-              </a>
+          {/* Smart Community & Resources Container */}
+          <div className="group bg-slate-800/30 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-slate-800/40 transition-all duration-300 relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/2 to-transparent rounded-xl pointer-events-none"></div>
+            <div className="relative">
+              <h3 className="text-sm font-semibold mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+                <span className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mr-2"></span>
+                <span className="tracking-wide">{t('footer.community')}</span>
+              </h3>
+              <div className="space-y-3">
+                <NavLink to="/write-review" className={({ isActive }) => `group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${isActive ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-light tracking-wide">{t('footer.writeReview')}</span>
+                </NavLink>
+                <Link to="/add-place" className="group/link flex items-center text-sm text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1">
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-light tracking-wide">{t('footer.addPlace')}</span>
+                </Link>
+              </div>
+              
+              <h3 className="text-sm font-semibold mb-4 mt-6 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+                <span className="w-2 h-2 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full mr-2"></span>
+                <span className="tracking-wide">{t('footer.resources')}</span>
+              </h3>
+              <div className="space-y-3">
+                <Link to="/newsletter-archive" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/newsletter-archive" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-light tracking-wide">{t('footer.newsletter')}</span>
+                </Link>
+                <a href="https://www.google.com/maps/place/Nepal?hl=en" target="_blank" rel="noopener noreferrer" className="group/link flex items-center text-sm text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1">
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-light tracking-wide">{t('footer.siteMap')}</span>
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Newsletter & Legal Container - Enhanced Compact Design */}
-          <div className="bg-gradient-to-br from-slate-800/40 via-slate-700/30 to-slate-800/40 rounded-2xl p-6 border border-slate-600/30 backdrop-blur-sm relative overflow-hidden">
-            {/* Subtle background pattern */}
-            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-transparent to-amber-500/5 pointer-events-none"></div>
+          {/* Smart Newsletter & Legal Container */}
+          <div className="group bg-gradient-to-br from-slate-800/45 via-slate-700/35 to-slate-800/45 rounded-2xl p-6 border border-slate-600/30 backdrop-blur-sm hover:bg-gradient-to-br hover:from-slate-800/55 hover:via-slate-700/45 hover:to-slate-800/55 transition-all duration-300 relative overflow-hidden">
+            {/* Smart Glass Effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/4 via-transparent to-white/2 rounded-2xl pointer-events-none"></div>
             
-            {/* Stay Updated Section */}
+            {/* Smart Background Pattern */}
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/4 via-transparent to-amber-500/4 pointer-events-none"></div>
+            
+            {/* Clean Professional Newsletter Section */}
             <div className="relative">
               <div className="flex items-center mb-4">
-                <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-teal-500/20 to-amber-500/20 rounded-xl mr-3 border border-teal-500/30">
+                <div className="flex items-center justify-center w-8 h-8 bg-teal-500/15 rounded-lg mr-3 border border-teal-500/25">
                   <svg className="w-4 h-4 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-white leading-none">{t('footer.stayUpdated')}</h3>
+                  <h3 className="text-sm font-semibold text-white tracking-wide">{t('footer.stayUpdated')}</h3>
                   <p className="text-xs text-gray-400 mt-0.5">Get travel insights & updates</p>
                 </div>
               </div>
               
-              {/* Compact Newsletter Form */}
+              {/* Clean Newsletter Form */}
               <form onSubmit={handleSubscribe} className="mb-6">
-                <div className="relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-amber-500/20 rounded-xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative flex bg-slate-700/60 rounded-xl border border-slate-600/50 overflow-hidden backdrop-blur-sm">
+                <div className="relative">
+                  <div className="flex bg-slate-700/60 rounded-lg border border-slate-600/50 overflow-hidden">
                     <input
                       type="email"
                       value={email}
@@ -304,17 +344,17 @@ export default function Footer() {
                     />
                     <button
                       type="submit"
-                      className="px-4 py-3 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-500 hover:to-teal-600 text-white text-sm font-semibold transition-all duration-200 transform hover:scale-105 active:scale-95 flex items-center space-x-2"
+                      className="px-4 py-3 bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors duration-200 flex items-center space-x-2"
                     >
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
                       </svg>
-                      <span className="hidden sm:inline">Go</span>
+                      <span className="hidden sm:inline">Subscribe</span>
                     </button>
                   </div>
                 </div>
                 
-                {/* Trust indicators */}
+                {/* Clean Trust Indicators */}
                 <div className="flex items-center justify-center mt-3 space-x-4 text-xs text-gray-500">
                   <div className="flex items-center space-x-1">
                     <svg className="w-3 h-3 text-green-400" fill="currentColor" viewBox="0 0 20 20">
@@ -340,40 +380,40 @@ export default function Footer() {
               </form>
             </div>
             
-            {/* Compact Legal Section */}
+            {/* Smart Legal Section */}
             <div className="relative border-t border-slate-600/30 pt-4">
-              <h4 className="text-xs font-semibold mb-3 text-gray-300 flex items-center">
+              <h4 className="text-xs font-semibold mb-3 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <svg className="w-3 h-3 text-amber-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 2L3 7v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-7-5zM10 4.5L15 8v9H5V8l5-3.5z" clipRule="evenodd" />
                 </svg>
-                {t('footer.legal')}
+                <span className="tracking-wide">{t('footer.legal')}</span>
               </h4>
               <div className="flex flex-wrap gap-2">
                 <Link 
                   to="/privacy-policy" 
-                  className={`inline-flex items-center px-3 py-1.5 text-xs rounded-lg border transition-all duration-200 hover:scale-105 ${
+                  className={`inline-flex items-center px-3 py-1.5 text-xs rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
                     location.pathname === "/privacy-policy" 
                       ? "bg-teal-500/20 border-teal-500/40 text-teal-300" 
-                      : "bg-slate-700/50 border-slate-600/50 text-gray-300 hover:bg-slate-600/50 hover:border-slate-500/50 hover:text-white"
+                      : "bg-slate-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
                   }`}
                 >
                   <svg className="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                   </svg>
-                  Privacy
+                  <span className="font-medium tracking-wide">Privacy</span>
                 </Link>
                 <Link 
                   to="/terms-of-service" 
-                  className={`inline-flex items-center px-3 py-1.5 text-xs rounded-lg border transition-all duration-200 hover:scale-105 ${
+                  className={`inline-flex items-center px-3 py-1.5 text-xs rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
                     location.pathname === "/terms-of-service" 
                       ? "bg-teal-500/20 border-teal-500/40 text-teal-300" 
-                      : "bg-slate-700/50 border-slate-600/50 text-gray-300 hover:bg-slate-600/50 hover:border-slate-500/50 hover:text-white"
+                      : "bg-slate-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
                   }`}
                 >
                   <svg className="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd" />
                   </svg>
-                  Terms
+                  <span className="font-medium tracking-wide">Terms</span>
                 </Link>
               </div>
             </div>
@@ -381,17 +421,36 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-slate-700/50 bg-slate-800/50">
+      {/* Smart Professional Bottom Bar */}
+      <div className="relative border-t border-slate-600/30 bg-slate-800/60 backdrop-blur-md">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-400/15 to-transparent"></div>
+        
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-2">
-            <p className="text-xs text-gray-400">
-              © {new Date().getFullYear()} Roamio Wanderly. {t('footer.allRightsReserved')}.
-            </p>
-            <div className="flex items-center space-x-4 text-xs text-gray-400">
-              <span>{t('footer.madeWithLove')}</span>
-              <span>•</span>
-              <span>{t('footer.servingTravelers')}</span>
+            <div className="flex items-center space-x-3">
+              <p className="text-xs text-gray-400 font-light tracking-wide">
+                © {new Date().getFullYear()} <span className="font-medium text-gray-300">Roamio Wanderly</span>. {t('footer.allRightsReserved')}.
+              </p>
+              <div className="hidden md:flex items-center space-x-1">
+                <div className="w-1 h-1 bg-teal-500/60 rounded-full"></div>
+                <div className="w-0.5 h-0.5 bg-emerald-500/60 rounded-full animate-pulse"></div>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4 text-xs text-gray-400 font-light">
+              <div className="flex items-center space-x-1">
+                <svg className="w-3 h-3 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                </svg>
+                <span className="tracking-wide">{t('footer.madeWithLove')}</span>
+              </div>
+              <span className="text-gray-600">•</span>
+              <div className="flex items-center space-x-1">
+                <svg className="w-3 h-3 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <span className="tracking-wide">{t('footer.servingTravelers')}</span>
+              </div>
             </div>
           </div>
         </div>
