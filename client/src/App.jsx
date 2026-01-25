@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 // Lazy load components for better performance
 import { lazy, Suspense } from "react";
 import SearchBar from "./pages/SearchBar";
+import RecommendationResults from "./pages/RecommendationResults";
 
 const ExploreSection = lazy(() => import("./pages/ExploreSection"));
 const FamousSpots = lazy(() => import("./pages/FamousSpots"));
@@ -658,6 +659,7 @@ const App = memo(() => (
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/write-review" element={<WriteReview />} />
           <Route path="/add-place" element={<AddPlace />} />
+          <Route path="/recommendation-results"element={<RecommendationResults />}/>
           
           {/* Authentication */}
           <Route path="/sign-up" element={<SignUpPage />} />
@@ -675,3 +677,4 @@ const App = memo(() => (
 App.displayName = 'App';
 
 export default App;
+
