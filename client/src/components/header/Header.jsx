@@ -46,6 +46,7 @@ export const Header = () => {
   const [locationError, setLocationError] = useState(null);
   const [showLocationDebug, setShowLocationDebug] = useState(false); // Debug panel toggle
   const [locationDebugInfo, setLocationDebugInfo] = useState([]); // Debug information
+  const [locationAnimating, setLocationAnimating] = useState(false); // Location update animation
 
   // Debug logging
   console.log('Header render - showCalendar:', showCalendar);
@@ -86,6 +87,7 @@ export const Header = () => {
   const detectUserLocation = async (language = selectedLanguage, retryCount = 0) => {
     setIsLocationLoading(true);
     setLocationError(null);
+    setLocationAnimating(true); // Trigger animation
     
     addDebugLog(`Starting high-accuracy location detection (attempt ${retryCount + 1})`);
     
@@ -111,12 +113,18 @@ export const Header = () => {
         
         addDebugLog('HIGH-ACCURACY GPS SUCCESS', locationInfo);
         
-        // Show precise coordinates first
+        // Show precise coordinates first with animation
         setCurrentLocation(`📍 ${latitude.toFixed(6)}, ${longitude.toFixed(6)} (±${Math.round(accuracy)}m)`);
         
         // Get the most accurate location name possible
         const locationName = await reverseGeocodeWithMaxAccuracy(latitude, longitude, language, accuracy);
-        setCurrentLocation(`🌍 ${locationName}`);
+        
+        // Trigger slide animation for location update
+        setTimeout(() => {
+          setCurrentLocation(`🌍 ${locationName}`);
+          setLocationAnimating(false);
+        }, 300);
+        
         setLocationRetryCount(0);
         
         addDebugLog(`FINAL ACCURATE LOCATION: ${locationName}`);
@@ -168,6 +176,7 @@ export const Header = () => {
     }
     
     setIsLocationLoading(false);
+    setLocationAnimating(false);
   };
 
   // Fallback location detection with lower accuracy requirements
@@ -818,8 +827,13 @@ export const Header = () => {
         }}></div>
       </div>
 
-      {/* Left Section: Ultra-Premium Logo + Location */}
-      <div className="flex items-center gap-8 relative z-10">
+      {/* Left Section: Ultra-Premium Logo + Menu + Location */}
+      <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 relative z-10">
+        {/* Navigation Menu Bar - Always Visible */}
+        <div className="relative">
+          <MenuBar theme={theme} onNavigation={handleNavigation} />
+        </div>
+
         {/* Enterprise-Grade Logo */}
         <div 
           onClick={handleLogoClick}
@@ -875,90 +889,184 @@ export const Header = () => {
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-teal-500/5 via-cyan-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
         </div>
 
-        {/* Ultra-Premium Location Indicator */}
+        {/* Modern Location Indicator with New Design */}
         <div 
           className={`
-            hidden lg:flex items-center gap-4 px-6 py-4 rounded-2xl border backdrop-blur-2xl
+            hidden lg:flex items-center gap-3 px-4 py-2.5 rounded-full border backdrop-blur-xl
             cursor-pointer transition-all duration-500 group relative overflow-hidden
             ${theme === 'dark' 
-              ? 'bg-slate-800/70 border-slate-700/40 hover:bg-slate-700/80 hover:border-slate-600/60' 
-              : 'bg-white/70 border-slate-200/40 hover:bg-white/90 hover:border-slate-300/60'
+              ? 'bg-gradient-to-r from-slate-800/80 to-slate-700/60 border-slate-600/40 hover:from-slate-700/90 hover:to-slate-600/70 hover:border-slate-500/60' 
+              : 'bg-gradient-to-r from-white/90 to-slate-50/70 border-slate-300/40 hover:from-white/95 hover:to-slate-100/80 hover:border-slate-400/60'
             }
-            hover:shadow-2xl hover:scale-105 transform-gpu
-            before:absolute before:inset-0 before:bg-gradient-to-r
+            hover:shadow-lg hover:shadow-teal-500/20 hover:scale-[1.02] transform-gpu
+            before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r
             ${theme === 'dark' 
-              ? 'before:from-teal-600/15 before:via-cyan-600/10 before:to-emerald-600/15' 
-              : 'before:from-teal-500/8 before:via-cyan-500/5 before:to-emerald-500/8'
+              ? 'before:from-teal-500/10 before:via-cyan-500/5 before:to-emerald-500/10' 
+              : 'before:from-teal-400/8 before:via-cyan-400/4 before:to-emerald-400/8'
             }
             before:opacity-0 hover:before:opacity-100 before:transition-all before:duration-500
+            animate-slide-in-left
           `}
           onClick={forceRefreshLocation}
-          title={isLocationLoading ? "Detecting location..." : "Click to refresh location"}
+          title="" // Remove default title since we're using custom tooltip
         >
-          {/* Location Icon with Premium Effects */}
-          <div className="relative">
+          {/* Custom Tooltip */}
+          <div className={`
+            absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 rounded-lg
+            text-sm font-medium whitespace-nowrap pointer-events-none z-50
+            opacity-0 group-hover:opacity-100 transition-all duration-300 delay-500
+            ${theme === 'dark' 
+              ? 'bg-slate-900/95 text-slate-100 border border-slate-700/50' 
+              : 'bg-white/95 text-slate-800 border border-slate-200/50'
+            }
+            backdrop-blur-xl shadow-xl
+            before:absolute before:top-full before:left-1/2 before:transform before:-translate-x-1/2
+            before:border-4 before:border-transparent
+            ${theme === 'dark' 
+              ? 'before:border-t-slate-900/95' 
+              : 'before:border-t-white/95'
+            }
+          `}>
+            {isLocationLoading 
+              ? (locationRetryCount > 0 ? `Retrying location detection (${locationRetryCount}/2)` : 'Detecting your location...') 
+              : currentLocation}
+            {locationError && (
+              <div className="text-red-400 text-xs mt-1">
+                Error: {locationError}
+              </div>
+            )}
+          </div>
+
+          {/* Modern Location Icon with Pulse Effect */}
+          <div className="relative flex-shrink-0">
             <div className={`
-              p-3 rounded-xl transition-all duration-500
+              w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500 relative
               ${theme === 'dark' 
-                ? 'bg-teal-800/40 group-hover:bg-teal-700/60' 
-                : 'bg-teal-100/60 group-hover:bg-teal-200/80'
+                ? 'bg-gradient-to-br from-teal-600/30 to-cyan-600/20 group-hover:from-teal-500/40 group-hover:to-cyan-500/30' 
+                : 'bg-gradient-to-br from-teal-500/20 to-cyan-500/15 group-hover:from-teal-500/30 group-hover:to-cyan-500/25'
               }
+              ${isLocationLoading ? 'animate-pulse' : ''}
             `}>
               <FaMapMarkerAlt className={`
-                text-xl transition-all duration-500
+                text-sm transition-all duration-500
                 ${isLocationLoading 
-                  ? 'text-amber-500 animate-pulse' 
-                  : 'text-teal-500 group-hover:text-teal-400'
+                  ? 'text-amber-500 animate-bounce' 
+                  : 'text-teal-600 group-hover:text-teal-500'
                 }
               `} />
+              
+              {/* Animated ring around icon */}
+              <div className={`
+                absolute inset-0 rounded-full border-2 transition-all duration-500
+                ${isLocationLoading 
+                  ? 'border-amber-400/50 animate-ping' 
+                  : 'border-teal-500/0 group-hover:border-teal-500/30'
+                }
+              `}></div>
             </div>
             
-            {/* Status indicator */}
+            {/* Status dot indicator */}
             {!isLocationLoading && (
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75">
-                <div className="absolute inset-0 w-3 h-3 bg-emerald-400 rounded-full"></div>
+              <div className="absolute -top-1 -right-1 flex items-center justify-center">
+                <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse">
+                  <div className="absolute inset-0 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+                </div>
               </div>
             )}
           </div>
           
-          {/* Location Text */}
-          <div className="flex flex-col min-w-0">
-            <span className={`
-              text-sm font-bold leading-tight truncate
-              ${theme === 'dark' ? 'text-slate-200' : 'text-slate-700'}
-              group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-500
-            `}>
-              {isLocationLoading 
-                ? (locationRetryCount > 0 ? `Retrying... (${locationRetryCount}/2)` : 'Detecting location...') 
-                : currentLocation}
-            </span>
-            <span className={`
-              text-xs font-semibold uppercase tracking-wide
-              ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}
-              opacity-0 group-hover:opacity-100 transition-all duration-500
-            `}>
-              Live Location
-            </span>
+          {/* Location Text with Modern Typography */}
+          <div className="flex flex-col min-w-0 max-w-36 relative">
+            <div className="relative overflow-hidden">
+              <span className={`
+                text-sm font-semibold leading-tight truncate block
+                ${theme === 'dark' ? 'text-slate-100' : 'text-slate-800'}
+                group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-500
+                ${isLocationLoading ? 'animate-pulse' : locationAnimating ? 'animate-slide-text' : ''}
+              `}>
+                {isLocationLoading 
+                  ? (locationRetryCount > 0 ? `Retry ${locationRetryCount}/2` : 'Locating...') 
+                  : currentLocation}
+              </span>
+              
+              {/* Modern sliding highlight effect */}
+              <div className={`
+                absolute inset-0 bg-gradient-to-r from-transparent via-teal-400/15 to-transparent
+                transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out
+                ${theme === 'dark' ? 'via-teal-300/15' : 'via-teal-500/15'}
+              `}></div>
+            </div>
+            
+            <div className="flex items-center gap-1 mt-0.5">
+              <div className={`
+                w-1 h-1 rounded-full transition-all duration-500
+                ${isLocationLoading 
+                  ? 'bg-amber-400 animate-pulse' 
+                  : 'bg-emerald-400 group-hover:bg-teal-400'
+                }
+              `}></div>
+              <span className={`
+                text-xs font-medium uppercase tracking-wider
+                ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}
+                opacity-70 group-hover:opacity-100 group-hover:text-teal-500 transition-all duration-500
+              `}>
+                Live
+              </span>
+            </div>
           </div>
 
-          {/* Refresh Icon */}
-          {!isLocationLoading && (
-            <div className="ml-2">
-              <svg className="w-5 h-5 text-slate-400 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-              </svg>
-            </div>
-          )}
+          {/* Modern Action Indicator */}
+          <div className="flex-shrink-0 ml-1">
+            {!isLocationLoading ? (
+              <div className={`
+                w-6 h-6 rounded-full flex items-center justify-center transition-all duration-500
+                ${theme === 'dark' 
+                  ? 'bg-slate-700/50 group-hover:bg-teal-600/30' 
+                  : 'bg-slate-200/50 group-hover:bg-teal-500/20'
+                }
+                opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100
+              `}>
+                <svg className="w-3 h-3 text-slate-400 group-hover:text-teal-500 transition-all duration-500 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                </svg>
+              </div>
+            ) : (
+              <div className="w-6 h-6 flex items-center justify-center">
+                <div className="w-3 h-3 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            )}
+          </div>
           
-          {/* Error indicator */}
+          {/* Error indicator with modern design */}
           {locationError && (
-            <div className="flex items-center gap-2 ml-2">
-              <span className="text-amber-500 text-base animate-pulse" title={locationError}>⚠</span>
+            <div className="flex items-center ml-2">
+              <div className={`
+                w-6 h-6 rounded-full flex items-center justify-center
+                ${theme === 'dark' ? 'bg-red-900/30' : 'bg-red-100/50'}
+                animate-pulse
+              `}>
+                <span className="text-red-500 text-xs">!</span>
+              </div>
             </div>
           )}
           
-          {/* Shimmer effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+          {/* Modern border glow effect */}
+          <div className={`
+            absolute inset-0 rounded-full border transition-all duration-500 pointer-events-none
+            ${theme === 'dark' 
+              ? 'border-teal-500/0 group-hover:border-teal-500/30' 
+              : 'border-teal-400/0 group-hover:border-teal-400/40'
+            }
+          `}></div>
+          
+          {/* Subtle background animation */}
+          <div className={`
+            absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700
+            bg-gradient-to-r ${theme === 'dark' 
+              ? 'from-teal-600/5 via-cyan-600/3 to-emerald-600/5' 
+              : 'from-teal-500/5 via-cyan-500/3 to-emerald-500/5'
+            }
+          `}></div>
         </div>
       </div>
 
@@ -2381,6 +2489,134 @@ const CalendarModals = ({
   
   // Render the modal using a portal to ensure it's at the top level
   return createPortal(modalContent, document.body);
+};
+
+/**
+ * MenuBar Component - Navigation Menu with Dropdown
+ */
+const MenuBar = ({ theme, onNavigation }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const { t } = useTranslation();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleMenuClick = (path) => {
+    onNavigation(path);
+    setIsOpen(false);
+  };
+
+  // Navigation menu items - Only Plans
+  const menuItems = [
+    {
+      category: "Plan",
+      items: [
+        { name: "Recommendations", path: "/recommendation", icon: "💡", description: "Get suggestions" },
+        { name: "Itinerary", path: "/itinerary", icon: "📋", description: "Plan your trip" },
+        { name: "Search Places", path: "/searchresult", icon: "🔍", description: "Find destinations" },
+        { name: "Add Place", path: "/add-place", icon: "➕", description: "Contribute places" }
+      ]
+    }
+  ];
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      {/* Menu Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${
+          theme === "dark" 
+            ? "border-slate-700/40 hover:border-slate-600/70 hover:bg-gradient-to-r hover:from-slate-800/50 hover:to-slate-700/50 hover:shadow-xl hover:shadow-slate-900/30 hover:scale-105 text-slate-200 hover:text-white" 
+            : "border-slate-200/40 hover:border-slate-300/70 hover:bg-gradient-to-r hover:from-slate-50/50 hover:to-slate-100/50 hover:shadow-xl hover:shadow-slate-200/30 hover:scale-105 text-slate-700 hover:text-slate-900"
+        } before:absolute before:inset-0 before:bg-gradient-to-r ${
+          theme === "dark"
+            ? "before:from-slate-600/10 before:to-slate-500/10"
+            : "before:from-slate-400/5 before:to-slate-300/5"
+        } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300`}
+        title="Navigation Menu"
+      >
+        <FaBars className="text-base" />
+        <span>Menu</span>
+        <svg 
+          className={`w-4 h-4 transition-all duration-300 ${
+            isOpen ? 'rotate-180 text-teal-500' : 'text-slate-500 hover:text-teal-500'
+          }`} 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {/* Dropdown Menu */}
+      {isOpen && (
+        <div className={`absolute top-full left-0 mt-2 w-64 rounded-2xl backdrop-blur-2xl border shadow-2xl z-50 overflow-hidden ${
+          theme === "dark" 
+            ? "bg-slate-900/95 border-slate-700/50 shadow-slate-900/50" 
+            : "bg-white/95 border-slate-200/50 shadow-slate-900/20"
+        }`}>
+          <div className="p-4">
+            {menuItems.map((category, categoryIndex) => (
+              <div key={category.category}>
+                {/* Category Header */}
+                <div className={`text-xs font-bold uppercase tracking-wider mb-3 px-2 ${
+                  theme === "dark" ? "text-slate-400" : "text-slate-500"
+                }`}>
+                  {category.category}
+                </div>
+                
+                {/* Category Items */}
+                <div className="space-y-1">
+                  {category.items.map((item) => (
+                    <button
+                      key={item.path}
+                      onClick={() => handleMenuClick(item.path)}
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left group ${
+                        theme === "dark" 
+                          ? "hover:bg-slate-800/60 text-slate-200 hover:text-white" 
+                          : "hover:bg-slate-50/60 text-slate-700 hover:text-slate-900"
+                      }`}
+                    >
+                      <span className="text-lg flex-shrink-0">{item.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium text-sm">{item.name}</div>
+                        <div className={`text-xs ${
+                          theme === "dark" ? "text-slate-400" : "text-slate-500"
+                        }`}>
+                          {item.description}
+                        </div>
+                      </div>
+                      <svg 
+                        className={`w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${
+                          theme === "dark" ? "text-slate-400" : "text-slate-500"
+                        }`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 /**
