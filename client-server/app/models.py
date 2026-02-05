@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text
+from sqlalchemy import Column, Integer, String, Text, Float
 from datetime import datetime
 from .database import Base, db
 from sqlalchemy import ForeignKey, DateTime
@@ -14,6 +14,10 @@ class Hotel(Base):
     description = Column(Text)
     tags = Column(String)
     image_url = Column(String)
+    rating = Column(Float)
+    price_range = Column(String)  # budget, mid-range, luxury
+    place_id = Column(Integer, ForeignKey('places.id'))
+    all_images = Column(Text)  # JSON string of all image paths
 
 
 class Restaurant(Base):
@@ -25,6 +29,10 @@ class Restaurant(Base):
     description = Column(Text)
     tags = Column(String)
     image_url = Column(String)
+    rating = Column(Float)
+    price_range = Column(String)  # budget, mid-range, luxury
+    place_id = Column(Integer, ForeignKey('places.id'))
+    all_images = Column(Text)  # JSON string of all image paths
 
 
 class Attraction(Base):
@@ -36,6 +44,9 @@ class Attraction(Base):
     description = Column(Text)
     tags = Column(String)
     image_url = Column(String)
+    rating = Column(Float)
+    place_id = Column(Integer, ForeignKey('places.id'))
+    all_images = Column(Text)  # JSON string of all image paths
 
 
 class Place(Base):
@@ -48,6 +59,15 @@ class Place(Base):
     description = Column(Text)
     tags = Column(String)
     image_url = Column(String)
+    latitude = Column(Float)
+    longitude = Column(Float)
+    best_season = Column(String)
+    activities = Column(Text)
+    difficulty_level = Column(String)
+    accessibility = Column(Text)
+    transportation = Column(Text)
+    province = Column(String)
+    all_images = Column(Text)  # JSON string of all image paths
     created_at = Column(String, default=str(datetime.utcnow()))
 
 

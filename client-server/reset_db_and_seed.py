@@ -1,5 +1,9 @@
-from database import engine, SessionLocal, Base
-import models
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from app.database import engine, SessionLocal, Base
+from app import models
 
 # Drop all tables
 Base.metadata.drop_all(bind=engine)
