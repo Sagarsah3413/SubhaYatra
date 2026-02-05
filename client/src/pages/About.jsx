@@ -18,8 +18,6 @@ import {
   FaEye,
   FaChartLine,
   FaQuoteLeft,
-  FaPlay,
-  FaArrowRight,
   FaCheck,
   FaClock,
   FaUserFriends,
@@ -296,9 +294,9 @@ export default function About() {
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
           {/* Text Background Overlay */}
-          <div className="bg-black/50 dark:bg-black/70 backdrop-blur-sm rounded-3xl p-8 md:p-12 mb-8">
+          <div className="bg-black/50 dark:bg-black/70 backdrop-blur-sm rounded-3xl p-6 md:p-8 mb-8 max-w-5xl mx-auto">
             {/* Main Heading */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
               <span className="bg-gradient-to-r from-white via-teal-200 to-cyan-200 dark:from-teal-200 dark:via-cyan-200 dark:to-white bg-clip-text text-transparent">
                 About
               </span>
@@ -309,35 +307,16 @@ export default function About() {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xl md:text-3xl text-white mb-6 max-w-4xl mx-auto leading-relaxed font-semibold">
+            <p className="text-lg md:text-xl text-white mb-4 max-w-3xl mx-auto leading-relaxed font-semibold">
               Your trusted travel companion, dedicated to
               <span className="font-bold text-sky-300"> transforming dreams into extraordinary adventures</span>
             </p>
 
-            <p className="text-lg md:text-xl text-white mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
+            <p className="text-base md:text-lg text-white mb-8 max-w-3xl mx-auto leading-relaxed font-medium">
               For over a decade, we've been dedicated to showcasing Nepal's incredible diversity through authentic local connections, 
               deep cultural expertise, and an unwavering commitment to creating meaningful experiences that connect 
               travelers with Nepal's most extraordinary destinations and vibrant local communities.
             </p>
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-            <button className="group relative px-10 py-5 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-xl overflow-hidden">
-              <span className="relative z-10 flex items-center gap-3">
-                <FaRocket />
-                Discover Our Story
-                <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-            </button>
-
-            <button className="group flex items-center gap-4 px-8 py-5 bg-white/10 dark:bg-slate-800/30 backdrop-blur-xl border border-white/20 dark:border-slate-700/50 text-white rounded-2xl font-semibold text-lg hover:bg-white/20 dark:hover:bg-slate-700/50 transition-all duration-300">
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <FaPlay className="text-sm ml-1" />
-              </div>
-              Watch Our Journey
-            </button>
           </div>
 
           {/* Trust Indicators */}

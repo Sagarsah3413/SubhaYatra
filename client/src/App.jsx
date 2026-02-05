@@ -171,11 +171,7 @@ const HeaderWithNav = memo(() => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  const handleHomeClick = useCallback(() => {
-    if (location.pathname !== "/") navigate(-1);
-  }, [location.pathname, navigate]);
-  
-  return <Header onHomeClick={handleHomeClick} />;
+  return <Header />;
 });
 
 HeaderWithNav.displayName = 'HeaderWithNav';
@@ -185,7 +181,6 @@ const MainApp = memo(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { isSignedIn } = useUser() || { isSignedIn: false };
-  const videoRef = useRef(null);
 
   // Optimized theme state
   const [theme] = useState(() => localStorage.getItem("theme") ?? "dark");
@@ -199,37 +194,6 @@ const MainApp = memo(() => {
 
   // Hotel count state
   const [hotelCount, setHotelCount] = useState(0);
-
-  // Simplified video playback effect
-  useEffect(() => {
-    const video = videoRef.current;
-    if (video && !showSplash) {
-      console.log('Setting up homepage video...');
-      
-      const attemptPlay = async () => {
-        try {
-          video.muted = true;
-          video.volume = 0;
-          await video.play();
-          console.log('✅ Homepage video playing successfully');
-        } catch (error) {
-          console.error('❌ Homepage video autoplay failed:', error);
-          // Try again after a delay
-          setTimeout(() => {
-            video.muted = true;
-            video.play().catch(e => console.error('Homepage video second attempt failed:', e));
-          }, 1000);
-        }
-      };
-
-      // Try to play when video is ready
-      if (video.readyState >= 3) {
-        attemptPlay();
-      } else {
-        video.addEventListener('canplay', attemptPlay, { once: true });
-      }
-    }
-  }, [showSplash]);
 
   // Memoized handlers
   const handleStart = useCallback(() => {
@@ -301,41 +265,16 @@ const MainApp = memo(() => {
 
   return (
     <div className="min-h-screen text-white flex flex-col relative overflow-hidden">
-      {/* Video Background */}
+      {/* Static Gradient Background */}
       <div className="fixed inset-0 w-full h-full z-0">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: "brightness(0.7)" }}
-          onError={(e) => {
-            console.error('Homepage video failed to load:', e);
-            console.log('Video error details:', e.target.error);
-            // Hide video on error and show fallback background
-            e.target.style.display = 'none';
-          }}
-          onLoadStart={() => console.log('Homepage video loading started')}
-          onCanPlay={() => console.log('Homepage video can play')}
-          onPlay={() => console.log('Homepage video started playing')}
-        >
-          <source src="/IMG_8851.MP4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {/* Beautiful gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
         
-        {/* Fallback gradient background */}
-        <div 
-          className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
-          style={{ zIndex: -1 }}
-        ></div>
-        
-        {/* Video Overlay for better text readability */}
+        {/* Overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900/30 to-slate-900/50"></div>
       </div>
 
-      {/* Content Container - Above Video */}
+      {/* Content Container - Above Background */}
       <div className="relative z-10 flex flex-col min-h-screen">
       {/* Inspire My Trip Logo - Top Right */}
       <InspireButton 
@@ -355,20 +294,20 @@ const MainApp = memo(() => {
             {/* Premium Glass Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-white/20 dark:from-slate-800/40 dark:via-transparent dark:to-slate-800/20 pointer-events-none"></div>
             
-            {/* Nepal Background Image - Ultra Subtle */}
+            {/* Nepal Background Image - Balanced Visibility */}
             <div 
-              className="absolute inset-0 opacity-30 dark:opacity-20 transition-opacity duration-700 group-hover:opacity-40 dark:group-hover:opacity-30"
+              className="absolute inset-0 opacity-45 dark:opacity-35 transition-opacity duration-700 group-hover:opacity-55 dark:group-hover:opacity-45"
               style={{
                 backgroundImage: `url(${nepalImage})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
-                filter: 'brightness(1.3) contrast(0.8) saturate(0.7) blur(0.5px)'
+                filter: 'brightness(0.9) contrast(0.9) saturate(0.8) blur(0.3px)'
               }}
             />
             
-            {/* Professional Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/95 dark:from-slate-900/95 dark:via-slate-900/90 dark:to-slate-900/95"></div>
+            {/* Professional Gradient Overlay - Balanced */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/85 via-white/75 to-white/85 dark:from-slate-900/85 dark:via-slate-900/75 dark:to-slate-900/85"></div>
             
             {/* Premium Top Border */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-500/40 to-transparent"></div>
@@ -386,11 +325,9 @@ const MainApp = memo(() => {
                 </div>
                 
                 {/* Executive Welcome Message */}
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-slate-900 dark:text-white mb-6 leading-tight tracking-tight">
-                  <span className="font-extralight">Welcome Back,</span>
-                  <br />
-                  <span className="bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 bg-clip-text text-transparent font-medium">
-                    Explorer
+                <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
+                  <span className="bg-gradient-to-r from-slate-900 via-teal-700 to-emerald-800 dark:from-white dark:via-teal-200 dark:to-emerald-200 bg-clip-text text-transparent">
+                    Welcome Back, Explorer
                   </span>
                 </h2>
                 
@@ -403,18 +340,18 @@ const MainApp = memo(() => {
               {/* Executive Stats Section */}
               <div className="grid grid-cols-3 gap-8 mb-12 max-w-2xl mx-auto">
                 <div className="text-center group">
-                  <div className="text-3xl md:text-4xl font-light text-teal-600 dark:text-teal-400 mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Destinations</div>
+                  <div className="text-3xl md:text-4xl font-black text-teal-600 dark:text-teal-400 mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400 font-black uppercase tracking-wider">Destinations</div>
                   <div className="w-12 h-px bg-gradient-to-r from-transparent via-teal-500/30 to-transparent mx-auto mt-2"></div>
                 </div>
                 <div className="text-center group border-x border-slate-200/40 dark:border-slate-700/40">
-                  <div className="text-3xl md:text-4xl font-light text-emerald-600 dark:text-emerald-400 mb-2 group-hover:scale-105 transition-transform duration-300">500<span className="text-2xl md:text-3xl">+</span></div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Accommodations</div>
+                  <div className="text-3xl md:text-4xl font-black text-emerald-600 dark:text-emerald-400 mb-2 group-hover:scale-105 transition-transform duration-300">500<span className="text-2xl md:text-3xl">+</span></div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400 font-black uppercase tracking-wider">Accommodations</div>
                   <div className="w-12 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent mx-auto mt-2"></div>
                 </div>
                 <div className="text-center group">
-                  <div className="text-3xl md:text-4xl font-light text-cyan-600 dark:text-cyan-400 mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Experiences</div>
+                  <div className="text-3xl md:text-4xl font-black text-cyan-600 dark:text-cyan-400 mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400 font-black uppercase tracking-wider">Experiences</div>
                   <div className="w-12 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent mx-auto mt-2"></div>
                 </div>
               </div>

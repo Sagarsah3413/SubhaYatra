@@ -2,9 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaMapMarkerAlt, FaStar, FaArrowRight } from "react-icons/fa";
 
-// Import the video
-import backgroundVideo from "../assets/IMG_8851.MP4";
-
 // ✅ Import all images
 import Basantapur from "../assets/Basantapur.jpeg";
 import Bhainsepati from "../assets/Bhainsepati.jpeg";
@@ -110,21 +107,12 @@ export default function ExploreSection() {
 
   return (
     <section className="py-20 relative overflow-hidden">
-      {/* Video Background */}
+      {/* Static Gradient Background */}
       <div className="absolute inset-0 w-full h-full z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: "brightness(0.6)" }}
-        >
-          <source src={backgroundVideo} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        {/* Beautiful gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
         
-        {/* Video Overlay for better text readability */}
+        {/* Overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/50 to-slate-900/70"></div>
       </div>
 

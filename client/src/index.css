@@ -1,154 +1,6 @@
 @import "tailwindcss";
 @import 'leaflet/dist/leaflet.css';
 
-/* Enhanced Scrollbar Styles for Sidebar */
-.sidebar-scroll {
-  overflow-y: auto !important;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
-}
-
-.sidebar-scroll::-webkit-scrollbar {
-  width: 4px;
-}
-
-.sidebar-scroll::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 10px;
-}
-
-.sidebar-scroll::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.3);
-  border-radius: 10px;
-  transition: all 0.2s ease;
-}
-
-.sidebar-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(156, 163, 175, 0.5);
-}
-
-.sidebar-scroll.dark::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.5);
-}
-
-.sidebar-scroll.dark::-webkit-scrollbar-thumb:hover {
-  background: rgba(100, 116, 139, 0.8);
-}
-
-/* Force scrolling container */
-.sidebar-scroll {
-  max-height: 100%;
-  min-height: 0;
-  flex: 1 1 0%;
-}
-
-/* Hide scrollbar when not scrolling */
-.sidebar-scroll:not(:hover)::-webkit-scrollbar-thumb {
-  background: transparent;
-}
-
-/* Show scrollbar on hover */
-.sidebar-scroll:hover::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.6);
-}
-
-.sidebar-scroll.dark:hover::-webkit-scrollbar-thumb {
-  background: rgba(100, 116, 139, 0.6);
-}
-
-/* Scroll indicator animations */
-.scroll-indicator {
-  animation: fadeInOut 0.3s ease-in-out;
-}
-
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Pulse animation for scroll indicators */
-.scroll-pulse {
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
-}
-/* Compact Sidebar Enhancements */
-.sidebar-compact {
-  max-width: 256px; /* w-64 - Ultra compact */
-}
-
-.sidebar-compact .menu-item {
-  padding: 6px 8px;
-  font-size: 12px;
-}
-
-.sidebar-compact .menu-icon {
-  width: 12px;
-  height: 12px;
-  margin-right: 8px;
-}
-
-.sidebar-compact .section-header {
-  padding: 4px 8px;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Ultra Compact Section Navigation Pills */
-.section-nav-pill {
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.section-nav-pill:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Ultra Compact Quick Actions */
-.quick-action-compact {
-  padding: 6px;
-  border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.quick-action-compact:hover {
-  transform: translateY(-1px);
-}
-
-/* Smooth section scrolling */
-.section-scroll {
-  scroll-margin-top: 40px;
-}
-
-/* Enhanced scrollbar for ultra compact view */
-.sidebar-scroll.ultra-compact::-webkit-scrollbar {
-  width: 3px;
-}
-
-.sidebar-scroll.ultra-compact::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.3);
-  border-radius: 4px;
-}
-
-.sidebar-scroll.ultra-compact:hover::-webkit-scrollbar-thumb {
-  background: rgba(156, 163, 175, 0.6);
-}
-
-/* Text truncation for ultra compact */
-.ultra-compact .truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
 /* Backdrop blur for section navigation */
 .section-nav-backdrop {
   backdrop-filter: blur(6px);
@@ -410,6 +262,53 @@
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+/* Additional animations for SignUp page */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+/* Rounded corners utility */
+.rounded-4xl {
+  border-radius: 2rem;
+}
+
 /* Responsive animations */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in,
@@ -448,4 +347,171 @@ html {
 .dark .loading-skeleton {
   background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
   background-size: 200px 100%;
+}
+
+/* Footer Text Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px rgba(20, 184, 166, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(20, 184, 166, 0.6), 0 0 30px rgba(20, 184, 166, 0.4);
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.animation-delay-600 {
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+.text-glow-hover:hover {
+  animation: textGlow 2s ease-in-out infinite;
+}
+
+/* Typing animation for text */
+.typewriter {
+  overflow: hidden;
+  border-right: 2px solid rgba(20, 184, 166, 0.7);
+  white-space: nowrap;
+  animation: typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: rgba(20, 184, 166, 0.7);
+  }
+}
+
+/* Professional Header Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-15px) rotate(-1deg);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* Professional Header Utilities */
+.header-glass {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.header-shadow {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.dark .header-shadow {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced button hover effects */
+.btn-professional {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-professional::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.btn-professional:hover::before {
+  left: 100%;
+}
+
+/* Professional gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #0891b2, #10b981, #06b6d4);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }

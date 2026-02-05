@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import NepaliCalendar from "../../pages/NepaliCalendar";
 import { useTheme } from "../../contexts/ThemeContext";
-import { FaBars, FaTimes, FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaUser, FaCog, FaQuestionCircle, FaHome, FaSearch, FaInfoCircle, FaPhone } from "react-icons/fa";
+import { FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaUser, FaCog, FaQuestionCircle, FaSearch, FaInfoCircle, FaPhone } from "react-icons/fa";
 
 /**
  * Premium Header Component
@@ -21,9 +21,8 @@ import { FaBars, FaTimes, FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOp
  * - Debug panels for development
  * 
  * @param {Object} props - Component props
- * @param {Function} props.onHomeClick - Callback function for home navigation
  */
-export const Header = ({ onHomeClick }) => {
+export const Header = () => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const { t, i18n } = useTranslation();
@@ -40,7 +39,6 @@ export const Header = ({ onHomeClick }) => {
   // Component state
   const [showCalendar, setShowCalendar] = useState(false);
   const [mobileAnimating, setMobileAnimating] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || 'en');
   const [currentLocation, setCurrentLocation] = useState('Detecting location...');
   const [isLocationLoading, setIsLocationLoading] = useState(true);
@@ -58,13 +56,10 @@ export const Header = ({ onHomeClick }) => {
   const previousActive = useRef(null);
 
   // Event handlers
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  const closeMobileMenu = () => setIsMobileMenuOpen(false);
   const handleLogoClick = () => navigate("/");
 
   const handleNavigation = (path) => {
     navigate(path);
-    closeMobileMenu();
   };
 
   const handleLanguageChange = (language) => {
@@ -703,9 +698,6 @@ export const Header = ({ onHomeClick }) => {
     console.log('Opening calendar...');
     setShowCalendar(true);
     setMobileAnimating(false); // Start hidden
-    
-    // Close mobile menu if open
-    closeMobileMenu();
   };
 
   // Handle calendar animation
@@ -725,13 +717,9 @@ export const Header = ({ onHomeClick }) => {
     showCalendar, 
     mobileAnimating, 
     setShowCalendar, 
-    setMobileAnimating, 
-    isMobileMenuOpen, 
-    setIsMobileMenuOpen 
+    setMobileAnimating
   });
 
-  useResponsiveMenuHandler(isMobileMenuOpen, setIsMobileMenuOpen);
-  
   useKeyboardHandler({ 
     showCalendar, 
     mobileAnimating, 
@@ -777,36 +765,204 @@ export const Header = ({ onHomeClick }) => {
 
   return (
     <header className={`
-      fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out transform-gpu will-change-transform
+      fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out transform-gpu will-change-transform
       ${theme === 'dark' 
-        ? 'bg-gradient-to-r from-slate-900/98 via-slate-800/96 to-slate-900/98 border-slate-700/60 shadow-xl shadow-slate-900/30' 
-        : 'bg-gradient-to-r from-white/98 via-gray-50/96 to-white/98 border-gray-200/60 shadow-xl shadow-gray-900/10'
+        ? 'bg-gradient-to-r from-slate-950/99 via-slate-900/97 to-slate-950/99 border-slate-700/30' 
+        : 'bg-gradient-to-r from-white/99 via-slate-50/97 to-white/99 border-slate-200/30'
       }
-      backdrop-blur-xl border-b h-20 px-4 sm:px-6 lg:px-8
+      backdrop-blur-3xl border-b shadow-2xl
+      ${theme === 'dark' ? 'shadow-slate-900/60' : 'shadow-slate-900/15'}
+      h-28 px-8 sm:px-12 lg:px-16
       flex items-center justify-between
+      before:absolute before:inset-0 before:bg-gradient-to-r
+      ${theme === 'dark' 
+        ? 'before:from-teal-600/4 before:via-cyan-500/2 before:to-emerald-600/4' 
+        : 'before:from-teal-500/3 before:via-cyan-400/1 before:to-emerald-500/3'
+      }
+      before:opacity-0 hover:before:opacity-100 before:transition-all before:duration-1000
+      after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px
+      after:bg-gradient-to-r after:from-transparent after:via-teal-500/30 after:to-transparent
+      after:opacity-0 hover:after:opacity-100 after:transition-all after:duration-700
     `}>
-      {/* Premium Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05] pointer-events-none">
+      
+      {/* Ultra-Premium Enterprise Background */}
+      <div className="absolute inset-0 opacity-[0.008] dark:opacity-[0.015] pointer-events-none overflow-hidden">
+        {/* Primary gradient layer */}
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
-            radial-gradient(circle at 80% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-            radial-gradient(circle at 50% 20%, rgba(16, 185, 129, 0.2) 0%, transparent 50%)
+            radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.6) 0%, transparent 70%),
+            radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.4) 0%, transparent 70%),
+            radial-gradient(circle at 50% 5%, rgba(16, 185, 129, 0.35) 0%, transparent 80%),
+            radial-gradient(circle at 20% 90%, rgba(139, 92, 246, 0.3) 0%, transparent 60%),
+            radial-gradient(circle at 80% 10%, rgba(236, 72, 153, 0.25) 0%, transparent 65%)
           `,
-          backgroundSize: '800px 800px, 600px 600px, 1000px 1000px'
+          backgroundSize: '1600px 1600px, 1200px 1200px, 1800px 1800px, 800px 800px, 1000px 1000px',
+          animation: 'float 25s ease-in-out infinite'
+        }}></div>
+        
+        {/* Secondary geometric pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(45deg, transparent 47%, rgba(6, 182, 212, 0.03) 48%, rgba(6, 182, 212, 0.03) 52%, transparent 53%),
+            linear-gradient(-45deg, transparent 47%, rgba(16, 185, 129, 0.02) 48%, rgba(16, 185, 129, 0.02) 52%, transparent 53%),
+            linear-gradient(90deg, transparent 47%, rgba(59, 130, 246, 0.015) 48%, rgba(59, 130, 246, 0.015) 52%, transparent 53%)
+          `,
+          backgroundSize: '120px 120px, 80px 80px, 200px 200px'
+        }}></div>
+        
+        {/* Tertiary dot pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 1px, transparent 1px)`,
+          backgroundSize: '40px 40px',
+          opacity: 0.3
         }}></div>
       </div>
-      {/* Left side: Mobile Menu Button + Logo + App Name */}
-      <div className="flex items-center gap-3">
-        <MobileMenuToggle 
-          isOpen={isMobileMenuOpen}
-          onToggle={toggleMobileMenu}
-          theme={theme}
-        />
-        <Logo onClick={handleLogoClick} theme={theme} />
+
+      {/* Left Section: Ultra-Premium Logo + Location */}
+      <div className="flex items-center gap-8 relative z-10">
+        {/* Enterprise-Grade Logo */}
+        <div 
+          onClick={handleLogoClick}
+          className="group cursor-pointer flex items-center gap-4 p-3 rounded-3xl transition-all duration-500 hover:bg-white/8 dark:hover:bg-white/6 relative overflow-hidden"
+        >
+          {/* Logo Icon with Premium Effects */}
+          <div className="relative">
+            <div className={`
+              w-16 h-16 rounded-3xl flex items-center justify-center font-black text-2xl
+              bg-gradient-to-br from-teal-500 via-cyan-500 to-emerald-500 text-white
+              shadow-2xl shadow-teal-500/30 group-hover:shadow-3xl group-hover:shadow-teal-500/50
+              transition-all duration-500 group-hover:scale-110 transform-gpu
+              relative overflow-hidden border border-white/20
+            `}>
+              <span className="relative z-10 font-black tracking-tight">R</span>
+              
+              {/* Inner glow effect */}
+              <div className="absolute inset-2 rounded-2xl bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+              
+              {/* Rotating border effect */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-400 opacity-0 group-hover:opacity-20 animate-spin-slow"></div>
+            </div>
+            
+            {/* Outer glow effect */}
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-teal-500 via-cyan-500 to-emerald-500 opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-700 -z-10 scale-150"></div>
+            
+            {/* Pulsing ring */}
+            <div className="absolute inset-0 rounded-3xl border-2 border-teal-400/0 group-hover:border-teal-400/40 transition-all duration-500 animate-pulse-ring"></div>
+          </div>
+          
+          {/* Enhanced Brand Text */}
+          <div className="hidden sm:block">
+            <h1 className={`
+              font-black text-3xl leading-none mb-1
+              bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-600 bg-clip-text text-transparent
+              group-hover:from-teal-500 group-hover:via-cyan-500 group-hover:to-emerald-500 
+              transition-all duration-500 gradient-text
+            `}>
+              Roamio
+            </h1>
+            <p className={`
+              text-base font-bold tracking-widest uppercase
+              ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}
+              group-hover:text-teal-500 transition-all duration-500
+              relative
+            `}>
+              Wanderly
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-cyan-500 group-hover:w-full transition-all duration-700"></span>
+            </p>
+          </div>
+          
+          {/* Hover background effect */}
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-teal-500/5 via-cyan-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+        </div>
+
+        {/* Ultra-Premium Location Indicator */}
+        <div 
+          className={`
+            hidden lg:flex items-center gap-4 px-6 py-4 rounded-2xl border backdrop-blur-2xl
+            cursor-pointer transition-all duration-500 group relative overflow-hidden
+            ${theme === 'dark' 
+              ? 'bg-slate-800/70 border-slate-700/40 hover:bg-slate-700/80 hover:border-slate-600/60' 
+              : 'bg-white/70 border-slate-200/40 hover:bg-white/90 hover:border-slate-300/60'
+            }
+            hover:shadow-2xl hover:scale-105 transform-gpu
+            before:absolute before:inset-0 before:bg-gradient-to-r
+            ${theme === 'dark' 
+              ? 'before:from-teal-600/15 before:via-cyan-600/10 before:to-emerald-600/15' 
+              : 'before:from-teal-500/8 before:via-cyan-500/5 before:to-emerald-500/8'
+            }
+            before:opacity-0 hover:before:opacity-100 before:transition-all before:duration-500
+          `}
+          onClick={forceRefreshLocation}
+          title={isLocationLoading ? "Detecting location..." : "Click to refresh location"}
+        >
+          {/* Location Icon with Premium Effects */}
+          <div className="relative">
+            <div className={`
+              p-3 rounded-xl transition-all duration-500
+              ${theme === 'dark' 
+                ? 'bg-teal-800/40 group-hover:bg-teal-700/60' 
+                : 'bg-teal-100/60 group-hover:bg-teal-200/80'
+              }
+            `}>
+              <FaMapMarkerAlt className={`
+                text-xl transition-all duration-500
+                ${isLocationLoading 
+                  ? 'text-amber-500 animate-pulse' 
+                  : 'text-teal-500 group-hover:text-teal-400'
+                }
+              `} />
+            </div>
+            
+            {/* Status indicator */}
+            {!isLocationLoading && (
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75">
+                <div className="absolute inset-0 w-3 h-3 bg-emerald-400 rounded-full"></div>
+              </div>
+            )}
+          </div>
+          
+          {/* Location Text */}
+          <div className="flex flex-col min-w-0">
+            <span className={`
+              text-sm font-bold leading-tight truncate
+              ${theme === 'dark' ? 'text-slate-200' : 'text-slate-700'}
+              group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-500
+            `}>
+              {isLocationLoading 
+                ? (locationRetryCount > 0 ? `Retrying... (${locationRetryCount}/2)` : 'Detecting location...') 
+                : currentLocation}
+            </span>
+            <span className={`
+              text-xs font-semibold uppercase tracking-wide
+              ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}
+              opacity-0 group-hover:opacity-100 transition-all duration-500
+            `}>
+              Live Location
+            </span>
+          </div>
+
+          {/* Refresh Icon */}
+          {!isLocationLoading && (
+            <div className="ml-2">
+              <svg className="w-5 h-5 text-slate-400 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+              </svg>
+            </div>
+          )}
+          
+          {/* Error indicator */}
+          {locationError && (
+            <div className="flex items-center gap-2 ml-2">
+              <span className="text-amber-500 text-base animate-pulse" title={locationError}>⚠</span>
+            </div>
+          )}
+          
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+        </div>
       </div>
 
-      {/* Desktop Navigation */}
+      {/* Ultra-Professional Desktop Navigation */}
       <DesktopNavigation 
         theme={theme}
         clerkAvailable={clerkAvailable}
@@ -814,23 +970,6 @@ export const Header = ({ onHomeClick }) => {
         onNavigation={handleNavigation}
         showCalendar={showCalendar}
         triggerRef={triggerRef}
-        currentLocation={currentLocation}
-        isLocationLoading={isLocationLoading}
-        onLocationRefresh={forceRefreshLocation}
-        selectedLanguage={selectedLanguage}
-        onLanguageChange={handleLanguageChange}
-        locationRetryCount={locationRetryCount}
-        locationError={locationError}
-      />
-
-      {/* Mobile Navigation Menu */}
-      <MobileNavigationMenu 
-        isOpen={isMobileMenuOpen}
-        theme={theme}
-        clerkAvailable={clerkAvailable}
-        onCalendarOpen={handleCalendarOpen}
-        onNavigation={handleNavigation}
-        onClose={closeMobileMenu}
         currentLocation={currentLocation}
         isLocationLoading={isLocationLoading}
         onLocationRefresh={forceRefreshLocation}
@@ -1105,15 +1244,13 @@ const getNavButtonClasses = (theme) => {
 // ==================== CUSTOM HOOKS ====================
 
 /**
- * Handles click outside events for calendar and mobile menu
+ * Handles click outside events for calendar
  */
 const useClickOutsideHandler = ({ 
   showCalendar, 
   mobileAnimating, 
   setShowCalendar, 
-  setMobileAnimating, 
-  isMobileMenuOpen, 
-  setIsMobileMenuOpen 
+  setMobileAnimating
 }) => {
   useEffect(() => {
     function handleClickOutside(e) {
@@ -1133,17 +1270,6 @@ const useClickOutsideHandler = ({
           }
         }
       }
-      
-      // Handle mobile menu clicks
-      if (isMobileMenuOpen) {
-        const mobileMenu = e.target.closest('.mobile-menu');
-        const mobileToggle = e.target.closest('.mobile-toggle');
-        
-        // Don't close if clicking inside menu or on toggle button
-        if (!mobileMenu && !mobileToggle) {
-          setIsMobileMenuOpen(false);
-        }
-      }
     }
     
     // Add a small delay before attaching the click handler to prevent immediate closing
@@ -1155,23 +1281,7 @@ const useClickOutsideHandler = ({
       clearTimeout(timer);
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [mobileAnimating, showCalendar, isMobileMenuOpen, setShowCalendar, setMobileAnimating, setIsMobileMenuOpen]);
-};
-
-/**
- * Handles responsive behavior for mobile menu
- */
-const useResponsiveMenuHandler = (isMobileMenuOpen, setIsMobileMenuOpen) => {
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768 && isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isMobileMenuOpen, setIsMobileMenuOpen]);
+  }, [mobileAnimating, showCalendar, setShowCalendar, setMobileAnimating]);
 };
 
 /**
@@ -1414,197 +1524,6 @@ const CustomLanguageDropdown = ({ selectedLanguage, onLanguageChange, theme }) =
 };
 
 /**
- * Ultra-Professional Custom Language Dropdown Component - Mobile Version
- */
-const CustomLanguageDropdownMobile = ({ selectedLanguage, onLanguageChange, theme }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  const languages = [
-    { code: 'en', flag: '🇺🇸', name: 'English', nativeName: 'English' },
-    { code: 'ne', flag: '🇳🇵', name: 'Nepali', nativeName: 'नेपाली' },
-    { code: 'hi', flag: '🇮🇳', name: 'Hindi', nativeName: 'हिंदी' },
-    { code: 'zh', flag: '🇨🇳', name: 'Chinese', nativeName: '中文' },
-    { code: 'ja', flag: '🇯🇵', name: 'Japanese', nativeName: '日本語' },
-    { code: 'ko', flag: '🇰🇷', name: 'Korean', nativeName: '한국어' }
-  ];
-
-  const selectedLang = languages.find(lang => lang.code === selectedLanguage) || languages[0];
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleLanguageSelect = (langCode) => {
-    onLanguageChange(langCode);
-    setIsOpen(false);
-  };
-
-  return (
-    <div className="relative" ref={dropdownRef}>
-      {/* Mobile Trigger Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`w-full p-5 rounded-3xl backdrop-blur-xl border transition-all duration-300 flex items-center justify-between ${
-          theme === "dark"
-            ? "bg-gradient-to-r from-slate-900/80 via-slate-800/60 to-slate-900/80 border-slate-700/40 hover:border-slate-600/60 text-slate-100 hover:text-white"
-            : "bg-gradient-to-r from-white/95 via-slate-50/80 to-white/95 border-slate-200/40 hover:border-slate-300/60 text-slate-700 hover:text-slate-900"
-        } shadow-2xl hover:shadow-3xl`}
-      >
-        <div className="flex items-center space-x-4">
-          <span className="text-2xl">{selectedLang.flag}</span>
-          <div className="text-left">
-            <div className="font-bold text-lg">{selectedLang.name}</div>
-            <div className={`text-sm ${theme === "dark" ? "text-slate-400" : "text-slate-500"}`}>
-              {selectedLang.nativeName}
-            </div>
-          </div>
-        </div>
-        <div className={`flex items-center justify-center w-10 h-10 rounded-2xl transition-all duration-300 ${
-          theme === "dark" 
-            ? "bg-slate-700/60 hover:bg-slate-600/70" 
-            : "bg-slate-100/80 hover:bg-slate-200/90"
-        }`}>
-          <svg 
-            className={`w-5 h-5 text-slate-500 hover:text-teal-500 transition-all duration-300 ${
-              isOpen ? 'rotate-180 text-teal-500' : ''
-            }`} 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Professional Mobile Dropdown Menu */}
-      {isOpen && (
-        <div className={`absolute top-full left-0 right-0 mt-3 rounded-3xl backdrop-blur-2xl border shadow-2xl z-50 overflow-hidden ${
-          theme === "dark"
-            ? "bg-slate-900/95 border-slate-700/50 shadow-slate-900/50"
-            : "bg-white/95 border-slate-200/50 shadow-slate-200/50"
-        }`}>
-          {/* Premium Mobile Header */}
-          <div className={`px-6 py-4 border-b ${
-            theme === "dark" 
-              ? "bg-gradient-to-r from-slate-800/60 to-slate-700/60 border-slate-700/50" 
-              : "bg-gradient-to-r from-slate-50/80 to-gray-50/80 border-slate-200/50"
-          }`}>
-            <div className="flex items-center justify-center space-x-3">
-              <FaGlobe className="text-teal-500 text-lg" />
-              <span className={`text-lg font-bold ${
-                theme === "dark" ? "text-slate-200" : "text-slate-700"
-              }`}>
-                Select Your Language
-              </span>
-            </div>
-          </div>
-
-          {/* Mobile Language Options */}
-          <div className="py-3">
-            {languages.map((language) => (
-              <button
-                key={language.code}
-                onClick={() => handleLanguageSelect(language.code)}
-                className={`w-full px-6 py-4 text-left transition-all duration-200 flex items-center space-x-4 ${
-                  selectedLanguage === language.code
-                    ? theme === "dark"
-                      ? "bg-gradient-to-r from-teal-900/60 to-cyan-900/60 text-white border-l-4 border-teal-400"
-                      : "bg-gradient-to-r from-teal-50/90 to-cyan-50/90 text-teal-900 border-l-4 border-teal-500"
-                    : theme === "dark"
-                      ? "text-slate-300 hover:bg-slate-800/60 hover:text-white"
-                      : "text-slate-700 hover:bg-slate-50/80 hover:text-slate-900"
-                }`}
-              >
-                {/* Flag */}
-                <span className="text-2xl">{language.flag}</span>
-                
-                {/* Language Info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="font-bold text-base">{language.name}</span>
-                    <span className="text-sm font-semibold opacity-75 bg-slate-500/20 px-2 py-1 rounded-lg">
-                      {language.code.toUpperCase()}
-                    </span>
-                  </div>
-                  <div className={`text-sm ${
-                    selectedLanguage === language.code
-                      ? theme === "dark" ? "text-teal-200" : "text-teal-700"
-                      : theme === "dark" ? "text-slate-400" : "text-slate-500"
-                  }`}>
-                    {language.nativeName}
-                  </div>
-                </div>
-
-                {/* Selection Indicator */}
-                {selectedLanguage === language.code && (
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-teal-500 text-white">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Premium Mobile Footer */}
-          <div className={`px-6 py-3 border-t text-center ${
-            theme === "dark" 
-              ? "bg-slate-800/40 border-slate-700/50" 
-              : "bg-slate-50/60 border-slate-200/50"
-          }`}>
-            <span className={`text-sm ${
-              theme === "dark" ? "text-slate-400" : "text-slate-500"
-            }`}>
-              🌍 More languages coming soon
-            </span>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-/**
- * Sidebar menu toggle button
- */
-const MobileMenuToggle = ({ isOpen, onToggle, theme }) => (
-  <button
-    onClick={onToggle}
-    className={`
-      p-3 rounded-xl mobile-toggle transition-all duration-200 transform-gpu will-change-transform
-      ${theme === "dark" 
-        ? "bg-slate-800/80 hover:bg-slate-700/90 border-slate-700/50 text-slate-200" 
-        : "bg-white/90 hover:bg-white border-slate-200/50 text-slate-700"
-      } 
-      border shadow-lg hover:shadow-xl hover:scale-105 active:scale-95
-      w-12 h-12 flex items-center justify-center
-    `}
-    aria-expanded={isOpen}
-    aria-label="Toggle sidebar menu"
-    title={isOpen ? "Close sidebar" : "Open sidebar"}
-  >
-    <div className="w-5 h-5 flex items-center justify-center">
-      {isOpen ? (
-        <FaTimes className="w-4 h-4 transition-transform duration-200" />
-      ) : (
-        <FaBars className="w-4 h-4 transition-transform duration-200" />
-      )}
-    </div>
-  </button>
-);
-
-/**
  * Ultra-professional logo component with enhanced animations
  */
 const Logo = ({ onClick, theme }) => (
@@ -1649,7 +1568,7 @@ const Logo = ({ onClick, theme }) => (
 );
 
 /**
- * Desktop navigation component
+ * Desktop navigation component - Ultra Professional
  */
 const DesktopNavigation = ({ 
   theme, 
@@ -1666,183 +1585,43 @@ const DesktopNavigation = ({
   locationRetryCount = 0,
   locationError = null
 }) => (
-  <div className="hidden md:flex items-center gap-3">
-    {/* Location Indicator */}
-    <div 
-      className="hidden lg:flex items-center space-x-2 px-3 py-2 bg-slate-100/60 dark:bg-slate-800/60 rounded-xl border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-sm cursor-pointer hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition-colors duration-200 group"
-      onClick={onLocationRefresh}
-      title={isLocationLoading ? "Detecting location..." : "Click to refresh location"}
-    >
-      <FaMapMarkerAlt className={`text-teal-500 text-sm ${isLocationLoading ? 'animate-pulse' : ''}`} />
-      <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
-        {isLocationLoading 
-          ? (locationRetryCount > 0 ? `Retrying... (${locationRetryCount}/2)` : 'Detecting location...') 
-          : currentLocation}
-      </span>
-      {!isLocationLoading && (
-        <svg className="w-3 h-3 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-        </svg>
-      )}
-      {locationError && (
-        <span className="text-xs text-amber-500 ml-1" title={locationError}>⚠</span>
-      )}
+  <div className="hidden md:flex items-center gap-4 relative z-10">
+    {/* Navigation Items with Enhanced Styling */}
+    <div className={`
+      flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-xl
+      ${theme === 'dark' 
+        ? 'bg-slate-800/40 border-slate-700/40 hover:bg-slate-700/50' 
+        : 'bg-white/40 border-slate-200/40 hover:bg-white/60'
+      }
+      transition-all duration-300 hover:shadow-lg hover:scale-[1.02] transform-gpu
+    `}>
+      <NavigationItems 
+        theme={theme}
+        onCalendarOpen={onCalendarOpen}
+        onNavigation={onNavigation}
+        showCalendar={showCalendar}
+        triggerRef={triggerRef}
+        selectedLanguage={selectedLanguage}
+        onLanguageChange={onLanguageChange}
+      />
     </div>
-
-    <NavigationItems 
-      theme={theme}
-      onCalendarOpen={onCalendarOpen}
-      onNavigation={onNavigation}
-      showCalendar={showCalendar}
-      triggerRef={triggerRef}
-      selectedLanguage={selectedLanguage}
-      onLanguageChange={onLanguageChange}
-    />
     
-    <AuthenticationButtons clerkAvailable={clerkAvailable} onNavigation={onNavigation} />
+    {/* Authentication Section */}
+    <div className={`
+      flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-xl
+      ${theme === 'dark' 
+        ? 'bg-slate-800/40 border-slate-700/40' 
+        : 'bg-white/40 border-slate-200/40'
+      }
+      transition-all duration-300 hover:shadow-lg hover:scale-[1.02] transform-gpu
+    `}>
+      <AuthenticationButtons clerkAvailable={clerkAvailable} onNavigation={onNavigation} theme={theme} />
+    </div>
   </div>
 );
 
 /**
- * Mobile navigation menu component - Sidebar style
- */
-const MobileNavigationMenu = ({ 
-  isOpen, 
-  theme, 
-  clerkAvailable, 
-  onCalendarOpen, 
-  onNavigation, 
-  onClose,
-  currentLocation,
-  isLocationLoading,
-  onLocationRefresh,
-  selectedLanguage,
-  onLanguageChange,
-  locationRetryCount = 0,
-  locationError = null
-}) => {
-  const { t } = useTranslation();
-  
-  return (
-    <>
-      {/* Backdrop Overlay - Only on larger screens */}
-      {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[55] transition-opacity duration-300 hidden sm:block"
-          onClick={onClose}
-        />
-      )}
-      
-      {/* Modern Sidebar Menu */}
-      <div className={`
-        fixed top-0 left-0 h-full z-[60] transform-gpu will-change-transform
-        w-full sm:w-72 max-w-sm
-        ${theme === "dark" 
-          ? "bg-slate-900/95" 
-          : "bg-white/95"
-        } 
-        backdrop-blur-xl border-r border-slate-200/20 dark:border-slate-700/20
-        transition-all duration-300 ease-out
-        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-      `}>
-        
-        {/* Clean Header */}
-        <div className={`
-          flex items-center justify-between p-6 border-b 
-          ${theme === "dark" ? "border-slate-700/30" : "border-slate-200/30"}
-        `}>
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center">
-              <span className="text-white text-lg font-bold">🏔️</span>
-            </div>
-            <div>
-              <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
-                Nepal Tourism
-              </h2>
-            </div>
-          </div>
-          
-          {/* Minimal Close Button */}
-          <button
-            onClick={onClose}
-            className={`
-              p-2 rounded-full transition-all duration-200 hover:scale-110
-              ${theme === "dark" 
-                ? "hover:bg-slate-800 text-slate-400 hover:text-slate-200" 
-                : "hover:bg-slate-100 text-slate-500 hover:text-slate-700"
-              }
-            `}
-          >
-            <FaTimes className="w-4 h-4" />
-          </button>
-        </div>
-        
-        {/* Sidebar Content */}
-        <div className="flex flex-col h-full overflow-y-auto">
-          
-          {/* Compact Location */}
-          <div className="p-4">
-            <div 
-              className={`
-                flex items-center space-x-3 px-3 py-2 rounded-xl 
-                ${theme === "dark" 
-                  ? "bg-slate-800/40 hover:bg-slate-800/60" 
-                  : "bg-slate-50/80 hover:bg-slate-100/80"
-                } 
-                cursor-pointer transition-all duration-200 hover:scale-[1.02]
-              `}
-              onClick={onLocationRefresh}
-            >
-              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-teal-500/20">
-                <FaMapMarkerAlt className="w-3 h-3 text-teal-500" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-xs font-medium text-slate-600 dark:text-slate-400">
-                  Location
-                </div>
-                <div className="text-sm text-slate-800 dark:text-slate-200 truncate">
-                  {isLocationLoading ? 'Detecting...' : currentLocation}
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Compact Language Selector */}
-          <div className="px-4 pb-4">
-            <CustomLanguageDropdownMobile 
-              selectedLanguage={selectedLanguage}
-              onLanguageChange={onLanguageChange}
-              theme={theme}
-            />
-          </div>
-
-          {/* Clean Navigation Items */}
-          <div className="flex-1 px-4">
-            <MobileNavigationItems 
-              theme={theme}
-              onCalendarOpen={onCalendarOpen}
-              onNavigation={onNavigation}
-              onClose={onClose}
-            />
-          </div>
-          
-          {/* Minimal Authentication Section */}
-          <div className="border-t border-slate-200/20 dark:border-slate-700/20 p-4 mt-auto">
-            <MobileAuthenticationButtons 
-              clerkAvailable={clerkAvailable} 
-              onNavigation={onNavigation}
-              onClose={onClose}
-              theme={theme}
-            />
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
-/**
- * Navigation items component (shared between desktop and mobile)
+ * Navigation items component - Ultra Professional Styling
  */
 const NavigationItems = ({ 
   theme, 
@@ -1856,62 +1635,119 @@ const NavigationItems = ({
   const { t } = useTranslation();
   
   return (
-    <div className="flex items-center space-x-2">
-      {/* Language Selector - First in Desktop */}
-      <CustomLanguageDropdown 
-        selectedLanguage={selectedLanguage}
-        onLanguageChange={onLanguageChange}
-        theme={theme}
-      />
+    <div className="flex items-center gap-3">
+      {/* Enhanced Language Selector */}
+      <div className="relative">
+        <CustomLanguageDropdown 
+          selectedLanguage={selectedLanguage}
+          onLanguageChange={onLanguageChange}
+          theme={theme}
+        />
+      </div>
       
-      <div className="h-6 w-px bg-teal-300 dark:bg-teal-600 mx-2" />
+      {/* Elegant Separator */}
+      <div className={`
+        w-px h-6 
+        ${theme === 'dark' ? 'bg-slate-600/50' : 'bg-slate-300/50'}
+        relative
+      `}>
+        <div className={`
+          absolute inset-0 w-px
+          ${theme === 'dark' 
+            ? 'bg-gradient-to-b from-transparent via-teal-400/30 to-transparent' 
+            : 'bg-gradient-to-b from-transparent via-teal-500/30 to-transparent'
+          }
+        `}></div>
+      </div>
       
-      {/* Calendar Button */}
+      {/* Enhanced Features Button */}
+      <div className="relative">
+        <FeaturesBox theme={theme} onNavigation={onNavigation} />
+      </div>
+      
+      {/* Enhanced Calendar Button */}
       <button
         type="button"
         ref={triggerRef}
         onClick={onCalendarOpen}
-        className={`${getNavButtonClasses(theme)} ${getThemeClasses(theme)}`}
+        className={`
+          group relative px-4 py-2.5 rounded-xl font-medium transition-all duration-300 
+          border backdrop-blur-xl transform-gpu will-change-transform overflow-hidden
+          ${theme === 'dark' 
+            ? 'border-teal-700/40 hover:border-teal-600/70 text-teal-100 hover:text-white hover:bg-gradient-to-r hover:from-teal-900/50 hover:to-cyan-900/50' 
+            : 'border-teal-200/40 hover:border-teal-300/70 text-teal-700 hover:text-teal-900 hover:bg-gradient-to-r hover:from-teal-50/50 hover:to-cyan-50/50'
+          }
+          hover:shadow-xl hover:scale-105 btn-professional
+          ${showCalendar ? 'ring-2 ring-teal-500/50 bg-teal-500/10' : ''}
+        `}
         aria-expanded={showCalendar}
         aria-haspopup="dialog"
         aria-label="Open Nepali Calendar"
         title="Nepali Calendar"
       >
-        <span className="flex items-center space-x-2">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-          </svg>
-          <span>{t('header.calendar')}</span>
+        <span className="flex items-center gap-2.5 relative z-10">
+          <div className={`
+            p-1.5 rounded-lg transition-all duration-300
+            ${theme === 'dark' 
+              ? 'bg-teal-800/30 group-hover:bg-teal-700/50' 
+              : 'bg-teal-100/50 group-hover:bg-teal-200/70'
+            }
+          `}>
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <span className="font-semibold">{t('header.calendar')}</span>
         </span>
+        
+        {/* Hover effect overlay */}
+        <div className={`
+          absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+          bg-gradient-to-r ${theme === 'dark' 
+            ? 'from-teal-600/10 to-cyan-600/10' 
+            : 'from-teal-500/5 to-cyan-500/5'
+          }
+        `}></div>
       </button>
       
-      {/* Home Button */}
-      <button
-        onClick={() => onNavigation("/")}
-        className={`${getNavButtonClasses(theme)} ${getThemeClasses(theme)}`}
-        title="Home"
-      >
-        <span className="flex items-center space-x-2">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-          </svg>
-          <span>{t('header.home')}</span>
-        </span>
-      </button>
-      
-      {/* About Button */}
+      {/* Enhanced About Button */}
       <button
         type="button"
         onClick={() => onNavigation("/about")}
-        className={`${getNavButtonClasses(theme)} ${getThemeClasses(theme)}`}
+        className={`
+          group relative px-4 py-2.5 rounded-xl font-medium transition-all duration-300 
+          border backdrop-blur-xl transform-gpu will-change-transform overflow-hidden
+          ${theme === 'dark' 
+            ? 'border-slate-700/40 hover:border-slate-600/70 text-slate-200 hover:text-white hover:bg-gradient-to-r hover:from-slate-800/50 hover:to-slate-700/50' 
+            : 'border-slate-200/40 hover:border-slate-300/70 text-slate-700 hover:text-slate-900 hover:bg-gradient-to-r hover:from-slate-50/50 hover:to-slate-100/50'
+          }
+          hover:shadow-xl hover:scale-105 btn-professional
+        `}
         title="About Us"
       >
-        <span className="flex items-center space-x-2">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-          </svg>
-          <span>{t('header.about')}</span>
+        <span className="flex items-center gap-2.5 relative z-10">
+          <div className={`
+            p-1.5 rounded-lg transition-all duration-300
+            ${theme === 'dark' 
+              ? 'bg-slate-700/30 group-hover:bg-slate-600/50' 
+              : 'bg-slate-100/50 group-hover:bg-slate-200/70'
+            }
+          `}>
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+            </svg>
+          </div>
+          <span className="font-semibold">{t('header.about')}</span>
         </span>
+        
+        {/* Hover effect overlay */}
+        <div className={`
+          absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+          bg-gradient-to-r ${theme === 'dark' 
+            ? 'from-slate-600/10 to-slate-500/10' 
+            : 'from-slate-400/5 to-slate-300/5'
+          }
+        `}></div>
       </button>
     </div>
   );
@@ -1929,13 +1765,6 @@ const MobileNavigationItems = ({
   const { t } = useTranslation();
   
   const mainMenuItems = [
-    {
-      icon: FaHome,
-      label: "Home",
-      path: "/",
-      description: "Return to homepage",
-      color: "bg-blue-500"
-    },
     {
       icon: FaSearch,
       label: "Search",
@@ -2116,76 +1945,75 @@ const MobileNavigationItems = ({
 };
 
 /**
- * Authentication buttons for desktop
+ * Authentication buttons - Ultra Professional Design
  */
-const AuthenticationButtons = ({ clerkAvailable, onNavigation }) => {
+const AuthenticationButtons = ({ clerkAvailable, onNavigation, theme }) => {
   const { t } = useTranslation();
   
   return (
-    <div className="flex items-center space-x-3">
+    <div className="flex items-center gap-3">
       <SignedOut>
+        {/* Enhanced Sign Up Button */}
         <button 
           onClick={() => onNavigation('/sign-up')}
-          className={`px-8 py-3 bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 hover:from-teal-700 hover:via-emerald-700 hover:to-cyan-700 text-white font-semibold rounded-xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border border-teal-500/50 backdrop-blur-sm relative overflow-hidden group`}
+          className={`
+            group relative px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 
+            transform-gpu will-change-transform overflow-hidden btn-professional
+            bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 
+            hover:from-teal-700 hover:via-emerald-700 hover:to-cyan-700
+            text-white shadow-lg hover:shadow-xl hover:scale-105
+            border border-teal-500/30 backdrop-blur-sm
+          `}
         >
-          <span className="relative z-10 flex items-center space-x-2">
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
-            </svg>
-            <span>{t('header.signUp')}</span>
-          </span>
-          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-        </button>
-      </SignedOut>
-      <SignedIn>
-        <div className="flex items-center p-1 rounded-xl border border-teal-200/50 dark:border-teal-700/50 bg-teal-50/40 dark:bg-teal-900/40 backdrop-blur-sm">
-          <UserButton />
-        </div>
-      </SignedIn>
-    </div>
-  );
-};
-
-/**
- * Authentication buttons for mobile
- */
-const MobileAuthenticationButtons = ({ clerkAvailable, onNavigation, onClose, theme }) => {
-  const { t } = useTranslation();
-  
-  return (
-    <>
-      <SignedOut>
-        <button 
-          onClick={() => {
-            onNavigation('/sign-up');
-            onClose();
-          }}
-          className={`w-full p-4 bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 hover:from-teal-700 hover:via-emerald-700 hover:to-cyan-700 text-white font-semibold rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 border border-teal-500/50 backdrop-blur-sm relative overflow-hidden group`}
-        >
-          <span className="relative z-10 flex items-center justify-center space-x-3">
-            <div className="p-1.5 bg-white/20 rounded-lg">
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <span className="relative z-10 flex items-center gap-2.5">
+            <div className="p-1 rounded-md bg-white/20 group-hover:bg-white/30 transition-colors duration-300">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
               </svg>
             </div>
-            <div className="text-left">
-              <span className="block text-base font-bold">{t('header.signUp')}</span>
-              <span className="block text-xs opacity-90">Join our travel community</span>
-            </div>
+            <span className="font-bold">{t('header.signUp')}</span>
           </span>
-          <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          
+          {/* Enhanced shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          
+          {/* Glow effect */}
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-teal-600 to-cyan-600 opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500 -z-10"></div>
         </button>
       </SignedOut>
+      
       <SignedIn>
-        <div className={`flex justify-center p-4 rounded-2xl border backdrop-blur-sm ${
-          theme === "dark" 
-            ? "bg-gradient-to-r from-slate-800/60 via-slate-700/40 to-slate-800/60 border-slate-600/30" 
-            : "bg-gradient-to-r from-white/80 via-slate-50/60 to-white/80 border-slate-200/40"
-        } shadow-lg`}>
-          <UserButton />
+        {/* Enhanced User Button Container */}
+        <div className={`
+          flex items-center p-2 rounded-xl border backdrop-blur-xl transition-all duration-300
+          hover:shadow-lg hover:scale-105 transform-gpu
+          ${theme === 'dark' 
+            ? 'border-teal-700/50 bg-teal-900/30 hover:bg-teal-800/40' 
+            : 'border-teal-200/50 bg-teal-50/30 hover:bg-teal-100/40'
+          }
+          relative overflow-hidden group
+        `}>
+          <UserButton 
+            appearance={{
+              elements: {
+                avatarBox: "w-8 h-8 rounded-lg",
+                userButtonPopoverCard: "shadow-2xl border-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl",
+                userButtonPopoverActionButton: "hover:bg-teal-50 dark:hover:bg-teal-900/50"
+              }
+            }}
+          />
+          
+          {/* Subtle glow effect */}
+          <div className={`
+            absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+            bg-gradient-to-r ${theme === 'dark' 
+              ? 'from-teal-600/10 to-cyan-600/10' 
+              : 'from-teal-500/5 to-cyan-500/5'
+            }
+          `}></div>
         </div>
       </SignedIn>
-    </>
+    </div>
   );
 };
 
@@ -2553,4 +2381,203 @@ const CalendarModals = ({
   
   // Render the modal using a portal to ensure it's at the top level
   return createPortal(modalContent, document.body);
+};
+
+/**
+ * Ultra-Professional Features Box Component
+ * Comprehensive dropdown showcasing all Roamio Wanderly features
+ */
+const FeaturesBox = ({ theme, onNavigation }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const { t } = useTranslation();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleFeatureClick = (path) => {
+    onNavigation(path);
+    setIsOpen(false);
+  };
+
+  // Core essential features only - minimal set
+  const featureCategories = [
+    {
+      title: "Core Features",
+      icon: "🎯",
+      color: "from-teal-500 to-cyan-500",
+      features: [
+        { name: "Newsletter Archive", path: "/newsletter-archive", icon: "📧", description: "Travel updates" },
+        { name: "Search Places", path: "/searchresult", icon: "🔍", description: "Find places" },
+        { name: "My Wishlist", path: "/wishlist", icon: "❤️", description: "Saved places" }
+      ]
+    }
+  ];
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      {/* Trigger Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${
+          theme === "dark" 
+            ? "border-teal-700/40 hover:border-teal-600/70 hover:bg-gradient-to-r hover:from-teal-900/50 hover:to-cyan-900/50 hover:shadow-xl hover:shadow-teal-900/30 hover:scale-105 text-teal-100 hover:text-white" 
+            : "border-teal-200/40 hover:border-teal-300/70 hover:bg-gradient-to-r hover:from-teal-50/50 hover:to-cyan-50/50 hover:shadow-xl hover:shadow-teal-200/30 hover:scale-105 text-teal-700 hover:text-teal-900"
+        } before:absolute before:inset-0 before:bg-gradient-to-r ${
+          theme === "dark"
+            ? "before:from-teal-600/10 before:to-cyan-600/10"
+            : "before:from-teal-500/5 before:to-cyan-500/5"
+        } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300`}
+        title="Explore All Features"
+      >
+        <span className="text-lg">🌟</span>
+        <span>Features</span>
+        <svg 
+          className={`w-4 h-4 transition-all duration-300 ${
+            isOpen ? 'rotate-180 text-teal-500' : 'text-slate-500 hover:text-teal-500'
+          }`} 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {/* Ultra-Professional Features Dropdown */}
+      {isOpen && (
+        <div className={`absolute top-full right-0 mt-2 w-[400px] max-w-[90vw] rounded-2xl backdrop-blur-2xl border shadow-2xl z-50 overflow-hidden ${
+          theme === "dark"
+            ? "bg-slate-900/95 border-slate-700/50 shadow-slate-900/50"
+            : "bg-white/95 border-slate-200/50 shadow-slate-200/50"
+        }`}>
+          {/* Premium Header */}
+          <div className={`px-6 py-4 border-b ${
+            theme === "dark" 
+              ? "bg-gradient-to-r from-slate-800/60 to-slate-700/60 border-slate-700/50" 
+              : "bg-gradient-to-r from-slate-50/80 to-gray-50/80 border-slate-200/50"
+          }`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-gradient-to-br from-teal-500/20 to-cyan-500/20 rounded-xl">
+                  <span className="text-2xl">🌟</span>
+                </div>
+                <div>
+                  <h3 className={`text-lg font-bold ${
+                    theme === "dark" ? "text-slate-200" : "text-slate-700"
+                  }`}>
+                    Core Features
+                  </h3>
+                  <p className={`text-sm ${
+                    theme === "dark" ? "text-slate-400" : "text-slate-500"
+                  }`}>
+                    Essential Nepal travel tools
+                  </p>
+                </div>
+              </div>
+              <div className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                theme === "dark" 
+                  ? "bg-teal-900/50 text-teal-300 border border-teal-700/50" 
+                  : "bg-teal-50/80 text-teal-700 border border-teal-200/50"
+              }`}>
+                {featureCategories.reduce((total, category) => total + category.features.length, 0)} Features
+              </div>
+            </div>
+          </div>
+
+          {/* Features Grid - Single Column for Core Features */}
+          <div className="p-6 max-h-[70vh] overflow-y-auto">
+            {featureCategories.map((category, categoryIndex) => (
+              <div key={categoryIndex} className="space-y-3">
+                {/* Category Header */}
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className={`p-2 rounded-lg bg-gradient-to-r ${category.color}/20`}>
+                    <span className="text-lg">{category.icon}</span>
+                  </div>
+                  <div>
+                    <h4 className={`font-bold text-sm ${
+                      theme === "dark" ? "text-slate-200" : "text-slate-700"
+                    }`}>
+                      {category.title}
+                    </h4>
+                  </div>
+                </div>
+
+                {/* Category Features */}
+                <div className="space-y-2">
+                  {category.features.map((feature, featureIndex) => (
+                    <button
+                      key={featureIndex}
+                      onClick={() => handleFeatureClick(feature.path)}
+                      className={`w-full p-4 text-left rounded-xl transition-all duration-200 flex items-center space-x-4 group hover:scale-[1.02] ${
+                        theme === "dark" 
+                          ? "hover:bg-slate-800/50 text-slate-300 hover:text-white border border-slate-700/30 hover:border-slate-600/50" 
+                          : "hover:bg-slate-50/70 text-slate-600 hover:text-slate-900 border border-slate-200/30 hover:border-slate-300/50"
+                      }`}
+                    >
+                      {/* Feature Icon */}
+                      <div className={`flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-r ${category.color}/20 group-hover:scale-105 transition-transform duration-200`}>
+                        <span className="text-xl">{feature.icon}</span>
+                      </div>
+                      
+                      {/* Feature Info */}
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-base mb-1">
+                          {feature.name}
+                        </div>
+                        <div className={`text-sm ${
+                          theme === "dark" ? "text-slate-400" : "text-slate-500"
+                        }`}>
+                          {feature.description}
+                        </div>
+                      </div>
+
+                      {/* Arrow Icon */}
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Premium Footer */}
+          <div className={`px-6 py-4 border-t text-center ${
+            theme === "dark" 
+              ? "bg-slate-800/40 border-slate-700/50" 
+              : "bg-slate-50/60 border-slate-200/50"
+          }`}>
+            <div className="flex items-center justify-center space-x-4 text-sm">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span className={theme === "dark" ? "text-slate-400" : "text-slate-500"}>
+                  Core features active
+                </span>
+              </div>
+              <div className="w-px h-4 bg-slate-300 dark:bg-slate-600"></div>
+              <div className="flex items-center space-x-2">
+                <span className="text-lg">🎯</span>
+                <span className={theme === "dark" ? "text-slate-400" : "text-slate-500"}>
+                  Essential tools only
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };

@@ -313,33 +313,12 @@ export default function ExploreNepal() {
     <div className={theme === 'dark' ? 'bg-slate-900 text-white min-h-screen' : 'bg-gray-50 text-gray-900 min-h-screen'}>
       <Header />
       
-      {/* Hero Section with Video Background */}
+      {/* Hero Section with Static Background */}
       <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Video Background */}
+        {/* Static Gradient Background */}
         <div className="absolute inset-0 w-full h-full">
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="w-full h-full object-cover"
-            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23059669;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%230891b2;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)' /%3E%3C/svg%3E"
-            onError={(e) => {
-              // Fallback if video fails to load
-              e.target.style.display = 'none';
-              e.target.nextElementSibling.style.display = 'block';
-            }}
-          >
-            {/* High-quality Nepal tourism videos */}
-            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
-            <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_5mb.mp4" type="video/mp4" />
-            
-            {/* Your browser does not support the video tag */}
-          </video>
-          
-          {/* Fallback background if video fails */}
-          <div 
-            className="w-full h-full bg-gradient-to-br from-teal-500 via-cyan-600 to-blue-700 hidden"
+          {/* Beautiful gradient background */}
+          <div className="w-full h-full bg-gradient-to-br from-teal-500 via-cyan-600 to-blue-700"
             style={{
               backgroundImage: `
                 linear-gradient(135deg, rgba(6, 182, 212, 0.8) 0%, rgba(59, 130, 246, 0.8) 50%, rgba(147, 51, 234, 0.8) 100%),
@@ -351,33 +330,11 @@ export default function ExploreNepal() {
             }}
           ></div>
           
-          {/* Video Overlay for better text readability */}
+          {/* Overlay for better text readability */}
           <div className="absolute inset-0 bg-black/40"></div>
           
           {/* Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
-          
-          {/* Video Controls (Optional) */}
-          <div className="absolute bottom-4 right-4 z-20">
-            <button 
-              onClick={(e) => {
-                const video = e.target.closest('.relative').querySelector('video');
-                if (video) {
-                  if (video.muted) {
-                    video.muted = false;
-                    e.target.innerHTML = '🔊';
-                  } else {
-                    video.muted = true;
-                    e.target.innerHTML = '🔇';
-                  }
-                }
-              }}
-              className="w-10 h-10 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm border border-white/20"
-              title="Toggle sound"
-            >
-              🔇
-            </button>
-          </div>
         </div>
 
         {/* Hero Content */}

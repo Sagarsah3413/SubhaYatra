@@ -118,7 +118,7 @@ export default function Footer() {
                   <div className="p-2 bg-amber-500/20 rounded-lg border border-amber-400/25">
                     <FaCloudSun className="text-amber-400 text-lg" />
                   </div>
-                  <span className="text-sm font-semibold text-amber-400 tracking-wide">{t('footer.liveWeather')}</span>
+                  <span className="text-sm font-black text-amber-300 tracking-wide">{t('footer.liveWeather')}</span>
                 </div>
                 {weatherLoading ? (
                   <div className="flex items-center space-x-2">
@@ -154,7 +154,7 @@ export default function Footer() {
                   <div className="p-2 bg-emerald-500/20 rounded-lg border border-emerald-400/25">
                     <FaDollarSign className="text-emerald-400 text-lg" />
                   </div>
-                  <span className="text-sm font-semibold text-emerald-400 tracking-wide">{t('footer.exchangeRates')}</span>
+                  <span className="text-sm font-black text-emerald-300 tracking-wide">{t('footer.exchangeRates')}</span>
                 </div>
                 {currencyLoading ? (
                   <div className="flex items-center space-x-2">
@@ -185,41 +185,49 @@ export default function Footer() {
       <div className="relative max-w-7xl mx-auto py-8 px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           
-          {/* Smart Company Info Container */}
-          <div className="lg:col-span-2 group bg-slate-800/40 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-slate-800/50 transition-all duration-300 relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-white/3 to-transparent rounded-xl pointer-events-none"></div>
+          {/* Professional Company Info Container */}
+          <div className="lg:col-span-2 group bg-slate-800/50 rounded-xl p-6 border border-slate-600/30 backdrop-blur-sm hover:bg-slate-800/60 transition-all duration-300 relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/4 to-transparent rounded-xl pointer-events-none"></div>
             <div className="relative">
               <div className="flex items-center mb-4 group-hover:scale-[1.02] transition-transform duration-300">
-                <div className="p-2 bg-gradient-to-br from-teal-500/15 to-amber-500/15 rounded-xl mr-3 border border-teal-500/20">
+                <div className="p-3 bg-gradient-to-br from-teal-500/20 to-amber-500/20 rounded-xl mr-3 border border-teal-500/25">
                   <span className="text-3xl">🌄</span>
                 </div>
-                <div>
-                  <h2 className="text-lg font-semibold text-white tracking-wide">
-                    <span className="text-amber-400">Roamio</span> <span className="text-teal-400">Wanderly</span>
+                <div className="flex-1">
+                  <h2 className="text-lg font-black text-white tracking-wide mb-1 animate-fade-in-up text-glow-hover">
+                    <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Roamio</span> 
+                    <span className="text-teal-400 hover:text-teal-300 transition-all duration-500 hover:scale-105 inline-block">Wanderly</span>
                   </h2>
-                  <p className="text-xs text-gray-400 font-medium tracking-wider">Your Premium Nepal Travel Companion</p>
+                  <p className="text-xs text-gray-300 font-black tracking-wider animate-fade-in-up animation-delay-200 hover:text-gray-100 transition-colors duration-300 uppercase">Your Premium Nepal Travel Companion</p>
                 </div>
               </div>
-              <p ref={aboutRef} className={`text-sm text-gray-300 leading-relaxed mb-4 font-light tracking-wide transition-all duration-700 ${aboutVisible ? 'opacity-100' : 'opacity-0'}`}>
-                {showFullAbout ? aboutText : `${aboutText.substring(0, 120)}...`}
-              </p>
-              <button
-                className="group/btn inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 text-xs font-medium transition-all duration-300 mb-4 hover:translate-x-1"
-                onClick={() => setShowFullAbout(!showFullAbout)}
-              >
-                <span className="tracking-wide">{showFullAbout ? t('footer.showLess') : t('footer.readMore')}</span>
-                <svg className={`w-3 h-3 transition-transform duration-300 ${showFullAbout ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
+              <div className="mb-4">
+                <p className="text-sm text-gray-200 leading-relaxed font-semibold tracking-wide animate-fade-in-up animation-delay-400 hover:text-gray-100 transition-all duration-500 hover:translate-x-1">
+                  {showFullAbout 
+                    ? (aboutText || "Roamio Wanderly is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.")
+                    : `${(aboutText || "Roamio Wanderly is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.").substring(0, 120)}...`
+                  }
+                </p>
+              </div>
+              <div className="mb-4">
+                <button
+                  className="group/btn inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 text-xs font-black transition-all duration-300 hover:translate-x-1 animate-fade-in-up animation-delay-600 hover:scale-105 tracking-wider uppercase"
+                  onClick={() => setShowFullAbout(!showFullAbout)}
+                >
+                  <span className="tracking-wide">{showFullAbout ? t('footer.showLess') : t('footer.readMore')}</span>
+                  <svg className={`w-3 h-3 transition-transform duration-300 ${showFullAbout ? 'rotate-180' : ''} group-hover/btn:scale-110`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
               
-              {/* Smart Social Links */}
+              {/* Professional Social Links */}
               <div className="flex items-center space-x-4">
                 <a
                   href={import.meta.env.VITE_FACEBOOK_URL || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/social p-2 bg-blue-600/20 rounded-lg text-blue-400 hover:text-blue-300 hover:bg-blue-600/30 transition-all duration-300 hover:scale-110 border border-blue-600/25"
+                  className="group/social p-2 bg-blue-600/20 rounded-lg text-blue-400 hover:text-blue-300 hover:bg-blue-600/30 transition-all duration-300 hover:scale-110 border border-blue-600/30"
                 >
                   <FaFacebook className="text-xl" />
                 </a>
@@ -227,7 +235,7 @@ export default function Footer() {
                   href={import.meta.env.VITE_INSTAGRAM_URL || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/social p-2 bg-pink-600/20 rounded-lg text-pink-400 hover:text-pink-300 hover:bg-pink-600/30 transition-all duration-300 hover:scale-110 border border-pink-600/25"
+                  className="group/social p-2 bg-pink-600/20 rounded-lg text-pink-400 hover:text-pink-300 hover:bg-pink-600/30 transition-all duration-300 hover:scale-110 border border-pink-600/30"
                 >
                   <FaInstagram className="text-xl" />
                 </a>
@@ -239,33 +247,33 @@ export default function Footer() {
           <div className="group bg-slate-800/30 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-slate-800/40 transition-all duration-300 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-white/2 to-transparent rounded-xl pointer-events-none"></div>
             <div className="relative">
-              <h3 className="text-sm font-semibold mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+              <h3 className="text-sm font-black mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-teal-400 to-amber-400 rounded-full mr-2"></span>
                 <span className="tracking-wide">{t('footer.company')}</span>
               </h3>
               <div className="space-y-3">
                 <Link to="/about" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/about" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
-                  <span className="font-light tracking-wide">{t('footer.aboutUs')}</span>
+                  <span className="font-semibold tracking-wide">{t('footer.aboutUs')}</span>
                 </Link>
                 <Link to="/contact" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/contact" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
-                  <span className="font-light tracking-wide">{t('footer.contact')}</span>
+                  <span className="font-semibold tracking-wide">{t('footer.contact')}</span>
                 </Link>
               </div>
               
-              <h3 className="text-sm font-semibold mb-4 mt-6 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+              <h3 className="text-sm font-black mb-4 mt-6 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mr-2"></span>
                 <span className="tracking-wide">{t('footer.support')}</span>
               </h3>
               <div className="space-y-3">
                 <Link to="/help" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/help" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
-                  <span className="font-light tracking-wide">{t('footer.helpCenter')}</span>
+                  <span className="font-semibold tracking-wide">{t('footer.helpCenter')}</span>
                 </Link>
                 <Link to="/faq" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/faq" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
-                  <span className="font-light tracking-wide">{t('footer.faq')}</span>
+                  <span className="font-semibold tracking-wide">{t('footer.faq')}</span>
                 </Link>
               </div>
             </div>
@@ -275,33 +283,45 @@ export default function Footer() {
           <div className="group bg-slate-800/30 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-slate-800/40 transition-all duration-300 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-white/2 to-transparent rounded-xl pointer-events-none"></div>
             <div className="relative">
-              <h3 className="text-sm font-semibold mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+              <h3 className="text-sm font-black mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mr-2"></span>
                 <span className="tracking-wide">{t('footer.community')}</span>
               </h3>
               <div className="space-y-3">
                 <NavLink to="/write-review" className={({ isActive }) => `group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${isActive ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
-                  <span className="font-light tracking-wide">{t('footer.writeReview')}</span>
+                  <span className="font-semibold tracking-wide">{t('footer.writeReview')}</span>
                 </NavLink>
                 <Link to="/add-place" className="group/link flex items-center text-sm text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1">
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
-                  <span className="font-light tracking-wide">{t('footer.addPlace')}</span>
+                  <span className="font-semibold tracking-wide">{t('footer.addPlace')}</span>
+                </Link>
+                <Link to="/wishlist" className="group/link flex items-center text-sm text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1">
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-semibold tracking-wide">Wishlist</span>
                 </Link>
               </div>
               
-              <h3 className="text-sm font-semibold mb-4 mt-6 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+              <h3 className="text-sm font-black mb-4 mt-6 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full mr-2"></span>
                 <span className="tracking-wide">{t('footer.resources')}</span>
               </h3>
               <div className="space-y-3">
                 <Link to="/newsletter-archive" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/newsletter-archive" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
-                  <span className="font-light tracking-wide">{t('footer.newsletter')}</span>
+                  <span className="font-semibold tracking-wide">{t('footer.newsletter')}</span>
+                </Link>
+                <Link to="/itinerary" className="group/link flex items-center text-sm text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1">
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-semibold tracking-wide">Itinerary Planner</span>
+                </Link>
+                <Link to="/explore-nepal" className="group/link flex items-center text-sm text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1">
+                  <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
+                  <span className="font-semibold tracking-wide">Explore Nepal</span>
                 </Link>
                 <a href="https://www.google.com/maps/place/Nepal?hl=en" target="_blank" rel="noopener noreferrer" className="group/link flex items-center text-sm text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1">
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
-                  <span className="font-light tracking-wide">{t('footer.siteMap')}</span>
+                  <span className="font-semibold tracking-wide">{t('footer.siteMap')}</span>
                 </a>
               </div>
             </div>
@@ -325,8 +345,8 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-white tracking-wide">{t('footer.stayUpdated')}</h3>
-                  <p className="text-xs text-gray-400 mt-0.5">Get travel insights & updates</p>
+                  <h3 className="text-sm font-black text-white tracking-wide">{t('footer.stayUpdated')}</h3>
+                  <p className="text-xs text-gray-400 mt-0.5 font-semibold">Get travel insights & updates</p>
                 </div>
               </div>
               
@@ -339,17 +359,14 @@ export default function Footer() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={t('footer.yourEmail')}
-                      className="flex-1 px-4 py-3 text-sm bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                      className="flex-1 px-3 py-2 text-sm bg-transparent text-white placeholder-gray-400 focus:outline-none"
                       required
                     />
                     <button
                       type="submit"
-                      className="px-4 py-3 bg-teal-600 hover:bg-teal-500 text-white text-sm font-medium transition-colors duration-200 flex items-center space-x-2"
+                      className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-sm font-bold transition-colors duration-200 flex items-center justify-center min-w-[80px]"
                     >
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                      <span className="hidden sm:inline">Subscribe</span>
+                      <span>Subscribe</span>
                     </button>
                   </div>
                 </div>
@@ -360,21 +377,21 @@ export default function Footer() {
                     <svg className="w-3 h-3 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span>No spam</span>
+                    <span className="font-semibold">No spam</span>
                   </div>
                   <div className="w-px h-3 bg-gray-600"></div>
                   <div className="flex items-center space-x-1">
                     <svg className="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                     </svg>
-                    <span>Secure</span>
+                    <span className="font-semibold">Secure</span>
                   </div>
                   <div className="w-px h-3 bg-gray-600"></div>
                   <div className="flex items-center space-x-1">
                     <svg className="w-3 h-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>Weekly</span>
+                    <span className="font-semibold">Weekly</span>
                   </div>
                 </div>
               </form>
@@ -386,7 +403,7 @@ export default function Footer() {
                 <svg className="w-3 h-3 text-amber-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 2L3 7v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-7-5zM10 4.5L15 8v9H5V8l5-3.5z" clipRule="evenodd" />
                 </svg>
-                <span className="tracking-wide">{t('footer.legal')}</span>
+                <span className="font-black tracking-wide">{t('footer.legal')}</span>
               </h4>
               <div className="flex flex-wrap gap-2">
                 <Link 

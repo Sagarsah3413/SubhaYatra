@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { SignIn } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
@@ -131,7 +132,7 @@ export default function SignInPage() {
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <button 
-                  onClick={() => navigate('/about')}
+                  onClick={() => navigate('/explore-nepal')}
                   className="group relative px-8 py-4 bg-white/10 dark:bg-slate-800/30 backdrop-blur-xl border border-white/20 dark:border-slate-700/50 text-white rounded-2xl font-semibold hover:bg-white/20 dark:hover:bg-slate-700/50 transition-all duration-300 flex items-center gap-3"
                 >
                   <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
