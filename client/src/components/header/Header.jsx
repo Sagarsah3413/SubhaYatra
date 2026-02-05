@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import NepaliCalendar from "../../pages/NepaliCalendar";
 import { useTheme } from "../../contexts/ThemeContext";
-import { FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaUser, FaCog, FaQuestionCircle, FaSearch, FaInfoCircle, FaPhone } from "react-icons/fa";
+import { FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaUser, FaCog, FaQuestionCircle, FaSearch, FaInfoCircle, FaPhone, FaBars } from "react-icons/fa";
 
 /**
  * Premium Header Component

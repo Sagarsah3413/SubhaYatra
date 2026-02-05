@@ -52,7 +52,7 @@ import { hotelService } from "./services/hotelService";
 
 // Ultra Professional InspireButton component
 const InspireButton = memo(({ isSignedIn, onClick, theme }) => (
-  <div className="fixed top-20 right-4 md:top-24 md:right-6 z-50">
+  <div className="fixed top-28 right-4 md:top-32 md:right-6 z-50">
     <div className="relative group">
       {/* Premium Background Glow */}
       <div className={`absolute -inset-4 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 ${

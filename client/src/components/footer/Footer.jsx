@@ -11,6 +11,7 @@ export default function Footer() {
   const { t } = useTranslation();
   const [showFullAbout, setShowFullAbout] = useState(false);
   const [email, setEmail] = useState("");
+  const [notification, setNotification] = useState(null);
   const [weather, setWeather] = useState(null);
   const [currency, setCurrency] = useState(null);
   const [weatherLoading, setWeatherLoading] = useState(true);
@@ -82,17 +83,217 @@ export default function Footer() {
     if (email) {
       try {
         const response = await axios.post('http://localhost:8000/users/subscribe', { email });
-        alert(response.data.message || 'Subscription successful!');
+        
+        // Show professional success notification
+        setNotification({
+          type: 'success',
+          title: 'Welcome to Roamio Wanderly!',
+          message: 'Successfully subscribed! Welcome email sent to your inbox.',
+          details: `Thank you for joining our travel community. You'll receive the latest Nepal travel insights, exclusive destination guides, and personalized recommendations.`,
+          timestamp: new Date().toLocaleTimeString()
+        });
+        
         setEmail("");
+        
+        // Auto-hide notification after 8 seconds
+        setTimeout(() => {
+          setNotification(null);
+        }, 8000);
+        
       } catch (error) {
-        alert('Subscription failed. Please try again.');
+        // Show professional error notification
+        setNotification({
+          type: 'error',
+          title: 'Subscription Failed',
+          message: 'Unable to complete subscription. Please try again.',
+          details: error.response?.data?.message || 'Please check your email address and try again. If the problem persists, contact our support team.',
+          timestamp: new Date().toLocaleTimeString()
+        });
+        
         console.error('Subscription error:', error);
+        
+        // Auto-hide error notification after 6 seconds
+        setTimeout(() => {
+          setNotification(null);
+        }, 6000);
       }
+    } else {
+      // Show validation notification
+      setNotification({
+        type: 'warning',
+        title: 'Email Required',
+        message: 'Please enter your email address to subscribe.',
+        details: 'A valid email address is required to receive our newsletter and travel updates.',
+        timestamp: new Date().toLocaleTimeString()
+      });
+      
+      // Auto-hide validation notification after 4 seconds
+      setTimeout(() => {
+        setNotification(null);
+      }, 4000);
     }
   };
 
   return (
     <footer className="bg-gradient-to-b from-slate-900/95 via-slate-800/95 to-slate-900/95 text-white mt-20 relative backdrop-blur-sm">
+      
+      {/* Ultra-Professional Notification System */}
+      {notification && (
+        <div className="fixed top-6 right-6 z-[9999] max-w-md w-full">
+          <div className={`
+            relative overflow-hidden rounded-2xl backdrop-blur-2xl border shadow-2xl transform transition-all duration-700 ease-out
+            ${notification.type === 'success' 
+              ? 'bg-gradient-to-br from-emerald-50/95 via-teal-50/95 to-cyan-50/95 border-emerald-200/50 shadow-emerald-500/20' 
+              : notification.type === 'error'
+              ? 'bg-gradient-to-br from-red-50/95 via-rose-50/95 to-pink-50/95 border-red-200/50 shadow-red-500/20'
+              : 'bg-gradient-to-br from-amber-50/95 via-yellow-50/95 to-orange-50/95 border-amber-200/50 shadow-amber-500/20'
+            }
+            animate-in slide-in-from-right-full fade-in duration-700
+          `}>
+            
+            {/* Premium Background Effects */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-white/20 to-transparent pointer-events-none"></div>
+            <div className={`
+              absolute top-0 left-0 right-0 h-1 
+              ${notification.type === 'success' 
+                ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500' 
+                : notification.type === 'error'
+                ? 'bg-gradient-to-r from-red-500 via-rose-500 to-pink-500'
+                : 'bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500'
+              }
+            `}></div>
+            
+            {/* Content Container */}
+            <div className="relative p-6">
+              
+              {/* Header Section */}
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  {/* Status Icon */}
+                  <div className={`
+                    flex items-center justify-center w-10 h-10 rounded-xl shadow-lg
+                    ${notification.type === 'success' 
+                      ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white' 
+                      : notification.type === 'error'
+                      ? 'bg-gradient-to-br from-red-500 to-rose-600 text-white'
+                      : 'bg-gradient-to-br from-amber-500 to-orange-600 text-white'
+                    }
+                  `}>
+                    {notification.type === 'success' && (
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                    {notification.type === 'error' && (
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                    {notification.type === 'warning' && (
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                  </div>
+                  
+                  {/* Title and Timestamp */}
+                  <div>
+                    <h3 className={`
+                      font-bold text-lg leading-tight
+                      ${notification.type === 'success' 
+                        ? 'text-emerald-900' 
+                        : notification.type === 'error'
+                        ? 'text-red-900'
+                        : 'text-amber-900'
+                      }
+                    `}>
+                      {notification.title}
+                    </h3>
+                    <p className="text-xs font-medium text-slate-600 mt-0.5">
+                      {notification.timestamp}
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Close Button */}
+                <button
+                  onClick={() => setNotification(null)}
+                  className={`
+                    group flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200 hover:scale-110 active:scale-95
+                    ${notification.type === 'success' 
+                      ? 'hover:bg-emerald-100 text-emerald-600 hover:text-emerald-800' 
+                      : notification.type === 'error'
+                      ? 'hover:bg-red-100 text-red-600 hover:text-red-800'
+                      : 'hover:bg-amber-100 text-amber-600 hover:text-amber-800'
+                    }
+                  `}
+                  aria-label="Close notification"
+                >
+                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Message Section */}
+              <div className="space-y-3">
+                <p className={`
+                  font-semibold text-base leading-relaxed
+                  ${notification.type === 'success' 
+                    ? 'text-emerald-800' 
+                    : notification.type === 'error'
+                    ? 'text-red-800'
+                    : 'text-amber-800'
+                  }
+                `}>
+                  {notification.message}
+                </p>
+                
+                <p className="text-sm leading-relaxed text-slate-700">
+                  {notification.details}
+                </p>
+              </div>
+              
+              {/* Action Section for Success */}
+              {notification.type === 'success' && (
+                <div className="mt-4 pt-4 border-t border-emerald-200/50">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                      <span className="text-xs font-medium text-emerald-700">
+                        Subscription Active
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setNotification(null)}
+                      className="px-3 py-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xs font-semibold rounded-lg hover:from-emerald-600 hover:to-teal-700 transition-all duration-200 shadow-sm hover:shadow-md"
+                    >
+                      Got it!
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              {/* Progress Bar */}
+              <div className={`
+                absolute bottom-0 left-0 h-1 rounded-b-2xl transition-all duration-100 ease-linear
+                ${notification.type === 'success' 
+                  ? 'bg-gradient-to-r from-emerald-400 to-teal-500' 
+                  : notification.type === 'error'
+                  ? 'bg-gradient-to-r from-red-400 to-rose-500'
+                  : 'bg-gradient-to-r from-amber-400 to-orange-500'
+                }
+              `}
+                style={{
+                  width: notification.type === 'success' ? '100%' : notification.type === 'error' ? '100%' : '100%',
+                  animation: `shrink ${notification.type === 'success' ? '8s' : notification.type === 'error' ? '6s' : '4s'} linear forwards`
+                }}
+              ></div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Smart Professional Background */}
       <div className="absolute inset-0 opacity-4">
         <div className="absolute inset-0" style={{
