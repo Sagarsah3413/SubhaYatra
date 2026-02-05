@@ -85,13 +85,13 @@ def subscribe_newsletter():
         
         if welcome_sent:
             return jsonify({
-                "message": "Successfully subscribed! Welcome email sent.",
+                "message": "Welcome to Roamio Wanderly! Your subscription is now active and a welcome email has been sent to your inbox.",
                 "email": email,
                 "subscribed_at": subscription.subscribed_at.isoformat() if hasattr(subscription.subscribed_at, 'isoformat') else str(subscription.subscribed_at)
             }), 200
         else:
             return jsonify({
-                "message": "Successfully subscribed! (Welcome email failed to send)",
+                "message": "Welcome to Roamio Wanderly! Your subscription is now active. (Welcome email delivery is temporarily unavailable)",
                 "email": email,
                 "subscribed_at": subscription.subscribed_at.isoformat() if hasattr(subscription.subscribed_at, 'isoformat') else str(subscription.subscribed_at)
             }), 200

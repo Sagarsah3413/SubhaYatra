@@ -113,6 +113,8 @@ class Chat(db.Model):
     user_id = db.Column(db.String, nullable=False)
     title = db.Column(db.String, default="New Chat")
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    is_active = db.Column(db.Boolean, default=True)
 
 
 class Message(db.Model):
@@ -120,6 +122,19 @@ class Message(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     chat_id = db.Column(db.Integer, db.ForeignKey("chat.id"), nullable=False)
-    sender = db.Column(db.String, nullable=False)
+    sender = db.Column(db.String, nullable=False)  # 'user' or 'bot'
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class SearchHistory(db.Model):
+    __tablename__ = "search_history"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.String, nullable=False)
+    chat_id = db.Column(db.Integer, db.ForeignKey("chat.id"), nullable=True)
+    query = db.Column(db.String, nullable=False)
+    query_type = db.Column(db.String, default="general")  # general, place, hotel, restaurant, etc.
+    response_summary = db.Column(db.Text)  # Brief summary of the AI response
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    is_favorite = db.Column(db.Boolean, default=False)
