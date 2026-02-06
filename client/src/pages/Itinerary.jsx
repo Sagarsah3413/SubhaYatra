@@ -1,60 +1,153 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
+import { useToast } from '../contexts/ToastContext';
 import { 
   FaRoute, FaPlus, FaSave, FaInfoCircle, 
   FaCalendarAlt, FaMapMarkerAlt, FaClock,
   FaHotel, FaUtensils, FaMoneyBillWave, FaDownload,
-  FaShare, FaSpinner
+  FaShare, FaSpinner, FaCheckCircle
 } from 'react-icons/fa';
 
-// Real Nepal destinations data
+// Enhanced Nepal destinations data with more comprehensive information
 const nepalDestinations = {
   kathmandu: {
     name: 'Kathmandu',
     days: 3,
-    attractions: ['Kathmandu Durbar Square', 'Swayambhunath Temple', 'Boudhanath Stupa', 'Pashupatinath Temple'],
-    activities: ['Temple visits', 'Cultural tours', 'Shopping', 'Food tours'],
-    accommodation: 'Heritage Hotel',
-    dailyCost: 60
+    attractions: [
+      'Kathmandu Durbar Square', 'Swayambhunath Temple (Monkey Temple)', 
+      'Boudhanath Stupa', 'Pashupatinath Temple', 'Thamel District',
+      'Garden of Dreams', 'Patan Durbar Square', 'Bhaktapur Durbar Square'
+    ],
+    activities: [
+      'Heritage site exploration', 'Cultural tours', 'Traditional shopping', 
+      'Local food tours', 'Photography walks', 'Rickshaw rides',
+      'Pottery workshops', 'Temple ceremonies'
+    ],
+    accommodation: {
+      budget: 'Guesthouse in Thamel',
+      mid: 'Heritage Boutique Hotel',
+      luxury: '5-Star Heritage Resort'
+    },
+    dailyCost: { budget: 35, mid: 65, luxury: 120 },
+    transportation: 'Walking, taxi, rickshaw',
+    highlights: 'UNESCO World Heritage Sites, vibrant culture, ancient architecture'
   },
   pokhara: {
     name: 'Pokhara',
     days: 4,
-    attractions: ['Phewa Lake', 'Sarangkot Sunrise', 'World Peace Pagoda', 'Devi\'s Fall'],
-    activities: ['Paragliding', 'Boating', 'Sunrise viewing', 'Cave exploration'],
-    accommodation: 'Lakeside Resort',
-    dailyCost: 70
+    attractions: [
+      'Phewa Lake', 'Sarangkot Sunrise Point', 'World Peace Pagoda', 
+      'Devi\'s Fall', 'Gupteshwor Cave', 'International Mountain Museum',
+      'Begnas Lake', 'Mahendra Cave', 'Bindabasini Temple'
+    ],
+    activities: [
+      'Paragliding', 'Boating on Phewa Lake', 'Sunrise viewing', 
+      'Cave exploration', 'Mountain biking', 'Zip-lining',
+      'Ultralight flights', 'Yoga sessions', 'Lakeside walks'
+    ],
+    accommodation: {
+      budget: 'Lakeside Guesthouse',
+      mid: 'Lake View Resort',
+      luxury: 'Luxury Mountain Resort'
+    },
+    dailyCost: { budget: 40, mid: 75, luxury: 140 },
+    transportation: 'Walking, boat, taxi',
+    highlights: 'Adventure sports, stunning lake views, Himalayan panorama'
   },
   chitwan: {
     name: 'Chitwan National Park',
     days: 3,
-    attractions: ['Jungle Safari', 'Elephant Breeding Center', 'Tharu Cultural Program', 'Rapti River'],
-    activities: ['Wildlife safari', 'Elephant rides', 'Bird watching', 'Cultural shows'],
-    accommodation: 'Jungle Lodge',
-    dailyCost: 80
+    attractions: [
+      'Jungle Safari', 'Elephant Breeding Center', 'Tharu Cultural Program', 
+      'Rapti River', 'Bis Hazari Tal', 'Crocodile Breeding Center',
+      'Tharu Village', 'Sunset Point'
+    ],
+    activities: [
+      'Jeep safari', 'Elephant safari', 'Bird watching', 
+      'Cultural shows', 'Canoe rides', 'Nature walks',
+      'Village tours', 'Wildlife photography'
+    ],
+    accommodation: {
+      budget: 'Jungle Lodge',
+      mid: 'Safari Resort',
+      luxury: 'Luxury Jungle Resort'
+    },
+    dailyCost: { budget: 50, mid: 85, luxury: 160 },
+    transportation: 'Jeep, elephant, canoe',
+    highlights: 'Wildlife encounters, cultural immersion, pristine nature'
   },
   everest: {
     name: 'Everest Region',
     days: 14,
-    attractions: ['Everest Base Camp', 'Kala Patthar', 'Namche Bazaar', 'Tengboche Monastery'],
-    activities: ['Trekking', 'Mountain viewing', 'Cultural immersion', 'Photography'],
-    accommodation: 'Tea House',
-    dailyCost: 50
+    attractions: [
+      'Everest Base Camp', 'Kala Patthar', 'Namche Bazaar', 
+      'Tengboche Monastery', 'Sagarmatha National Park', 'Sherpa Museum',
+      'Everest View Hotel', 'Gokyo Lakes', 'Cho La Pass'
+    ],
+    activities: [
+      'High-altitude trekking', 'Mountain photography', 'Cultural immersion', 
+      'Monastery visits', 'Acclimatization hikes', 'Sherpa interactions',
+      'Sunrise viewing', 'Alpine lake visits'
+    ],
+    accommodation: {
+      budget: 'Tea House Lodge',
+      mid: 'Mountain Lodge',
+      luxury: 'Premium Mountain Resort'
+    },
+    dailyCost: { budget: 45, mid: 70, luxury: 120 },
+    transportation: 'Trekking, domestic flights',
+    highlights: 'World\'s highest peak, Sherpa culture, breathtaking landscapes'
   },
   annapurna: {
     name: 'Annapurna Region',
     days: 12,
-    attractions: ['Annapurna Base Camp', 'Poon Hill', 'Thorong La Pass', 'Muktinath Temple'],
-    activities: ['Trekking', 'Sunrise viewing', 'Cultural visits', 'Hot springs'],
-    accommodation: 'Mountain Lodge',
-    dailyCost: 45
+    attractions: [
+      'Annapurna Base Camp', 'Poon Hill', 'Thorong La Pass', 
+      'Muktinath Temple', 'Ghandruk Village', 'Tatopani Hot Springs',
+      'Jomsom', 'Kagbeni', 'Marpha Village'
+    ],
+    activities: [
+      'Circuit trekking', 'Sunrise viewing', 'Cultural visits', 
+      'Hot spring relaxation', 'Apple brandy tasting', 'Monastery visits',
+      'Village homestays', 'Photography expeditions'
+    ],
+    accommodation: {
+      budget: 'Tea House',
+      mid: 'Mountain Lodge',
+      luxury: 'Premium Trek Lodge'
+    },
+    dailyCost: { budget: 40, mid: 65, luxury: 110 },
+    transportation: 'Trekking, jeep, domestic flights',
+    highlights: 'Diverse landscapes, cultural diversity, mountain panoramas'
+  },
+  lumbini: {
+    name: 'Lumbini',
+    days: 2,
+    attractions: [
+      'Maya Devi Temple', 'Ashoka Pillar', 'World Peace Pagoda',
+      'Lumbini Museum', 'Sacred Garden', 'Monasteries Zone',
+      'Kapilvastu', 'Tilaurakot'
+    ],
+    activities: [
+      'Pilgrimage tours', 'Meditation sessions', 'Cultural exploration',
+      'Archaeological site visits', 'Peaceful walks', 'Spiritual ceremonies'
+    ],
+    accommodation: {
+      budget: 'Pilgrim Guesthouse',
+      mid: 'Heritage Hotel',
+      luxury: 'Luxury Pilgrimage Resort'
+    },
+    dailyCost: { budget: 30, mid: 55, luxury: 100 },
+    transportation: 'Walking, bicycle, rickshaw',
+    highlights: 'Birthplace of Buddha, spiritual significance, peaceful atmosphere'
   }
 };
 
-// Enhanced itinerary generator with better error handling
+// Enhanced itinerary generator with comprehensive planning
 const generateItinerary = (formData) => {
   try {
-    const { duration, destinations, activities, budget } = formData;
+    const { duration, destinations, budget = 'mid' } = formData;
     const selectedDests = destinations.map(id => nepalDestinations[id]).filter(Boolean);
     
     if (selectedDests.length === 0) {
@@ -62,81 +155,158 @@ const generateItinerary = (formData) => {
       return null;
     }
 
-    // Calculate days per destination
+    // Calculate optimal days per destination
     const totalRecommendedDays = selectedDests.reduce((sum, dest) => sum + dest.days, 0);
-    const scaleFactor = Math.max(0.5, duration / totalRecommendedDays); // Minimum 0.5 to ensure at least half day per destination
+    let remainingDays = duration;
+    const destinationDays = [];
+
+    // Distribute days more intelligently
+    selectedDests.forEach((dest, index) => {
+      if (index === selectedDests.length - 1) {
+        // Last destination gets remaining days
+        destinationDays.push(Math.max(1, remainingDays));
+      } else {
+        // Calculate proportional days, minimum 1 day
+        const proportionalDays = Math.max(1, Math.round((dest.days / totalRecommendedDays) * duration));
+        const assignedDays = Math.min(proportionalDays, remainingDays - (selectedDests.length - index - 1));
+        destinationDays.push(assignedDays);
+        remainingDays -= assignedDays;
+      }
+    });
 
     let currentDay = 1;
     const dailyPlan = [];
 
-    selectedDests.forEach(dest => {
-      const daysInDest = Math.max(1, Math.round(dest.days * scaleFactor));
+    selectedDests.forEach((dest, destIndex) => {
+      const daysInDest = destinationDays[destIndex];
       
-      for (let i = 0; i < daysInDest && currentDay <= duration; i++) {
+      for (let dayInDest = 0; dayInDest < daysInDest && currentDay <= duration; dayInDest++) {
         const dayActivities = [];
-        const dayAttractions = dest.attractions.slice(i * 2, (i + 1) * 2);
         
-        // Morning activity
-        if (dayAttractions[0]) {
+        // Create varied daily schedules
+        if (dayInDest === 0) {
+          // Arrival day - lighter schedule
           dayActivities.push({
-            time: '09:00 - 12:00',
-            activity: `Visit ${dayAttractions[0]}`,
-            type: 'sightseeing'
+            time: '10:00 - 12:00',
+            activity: `Arrive in ${dest.name} and check-in`,
+            type: 'logistics',
+            description: `Settle into your ${dest.accommodation[budget]} and get oriented`
+          });
+          
+          dayActivities.push({
+            time: '14:00 - 17:00',
+            activity: dest.attractions[0] ? `Explore ${dest.attractions[0]}` : 'City orientation walk',
+            type: 'sightseeing',
+            description: 'Get your first taste of the local culture and atmosphere'
+          });
+          
+          dayActivities.push({
+            time: '18:00 - 20:00',
+            activity: 'Welcome dinner and local cuisine',
+            type: 'dining',
+            description: 'Try authentic local dishes and plan upcoming days'
+          });
+        } else if (dayInDest === daysInDest - 1 && daysInDest > 1) {
+          // Departure day - morning activities only
+          dayActivities.push({
+            time: '08:00 - 11:00',
+            activity: dest.activities[dayInDest % dest.activities.length] || 'Final exploration',
+            type: 'activity',
+            description: 'Last chance to experience the highlights'
+          });
+          
+          dayActivities.push({
+            time: '11:30 - 13:00',
+            activity: 'Check-out and departure preparations',
+            type: 'logistics',
+            description: 'Pack up and prepare for next destination or departure'
+          });
+        } else {
+          // Full day schedule
+          dayActivities.push({
+            time: '08:00 - 11:30',
+            activity: dest.attractions[dayInDest % dest.attractions.length] || `${dest.name} morning exploration`,
+            type: 'sightseeing',
+            description: 'Start the day with the most popular attractions'
+          });
+          
+          dayActivities.push({
+            time: '13:00 - 17:00',
+            activity: dest.activities[dayInDest % dest.activities.length] || 'Cultural activities',
+            type: 'activity',
+            description: 'Immerse yourself in local experiences and adventures'
+          });
+          
+          dayActivities.push({
+            time: '17:30 - 19:00',
+            activity: dest.attractions[(dayInDest + 1) % dest.attractions.length] || 'Evening exploration',
+            type: 'sightseeing',
+            description: 'Discover more attractions in the golden hour'
+          });
+          
+          dayActivities.push({
+            time: '19:30 - 21:00',
+            activity: 'Dinner and cultural experience',
+            type: 'dining',
+            description: 'Enjoy local cuisine and evening entertainment'
           });
         }
 
-        // Afternoon activity
-        if (dayAttractions[1]) {
-          dayActivities.push({
-            time: '14:00 - 17:00',
-            activity: `Explore ${dayAttractions[1]}`,
-            type: 'activity'
-          });
-        } else if (dest.activities[i % dest.activities.length]) {
-          dayActivities.push({
-            time: '14:00 - 17:00',
-            activity: dest.activities[i % dest.activities.length],
-            type: 'activity'
-          });
-        }
-
-        // Evening activity
-        dayActivities.push({
-          time: '18:00 - 20:00',
-          activity: 'Local dining and relaxation',
-          type: 'leisure'
-        });
+        // Calculate daily costs based on budget
+        const baseCost = dest.dailyCost[budget] || dest.dailyCost.mid;
+        const mealCosts = budget === 'budget' ? [6, 10, 12] : 
+                         budget === 'luxury' ? [15, 25, 35] : [8, 15, 20];
 
         dailyPlan.push({
           day: currentDay,
           destination: dest.name,
-          title: `Day ${currentDay}: ${dest.name}`,
+          title: `Day ${currentDay}: ${dest.name}${dayInDest === 0 ? ' (Arrival)' : dayInDest === daysInDest - 1 && daysInDest > 1 ? ' (Departure)' : ''}`,
           activities: dayActivities,
-          accommodation: dest.accommodation,
+          accommodation: dest.accommodation[budget],
           meals: [
-            { meal: 'Breakfast', cost: 8 },
-            { meal: 'Lunch', cost: 12 },
-            { meal: 'Dinner', cost: 15 }
+            { meal: 'Breakfast', cost: mealCosts[0], included: dayInDest > 0 },
+            { meal: 'Lunch', cost: mealCosts[1], included: true },
+            { meal: 'Dinner', cost: mealCosts[2], included: true }
           ],
-          dailyCost: dest.dailyCost
+          dailyCost: baseCost,
+          transportation: dest.transportation,
+          highlights: dest.highlights,
+          tips: generateDayTips(dest, dayInDest, budget)
         });
 
         currentDay++;
       }
     });
 
-    const totalCost = dailyPlan.reduce((sum, day) => sum + day.dailyCost + 35, 0); // 35 for meals
+    // Calculate comprehensive costs
+    const accommodationCost = dailyPlan.reduce((sum, day) => sum + day.dailyCost, 0);
+    const mealCost = dailyPlan.reduce((sum, day) => 
+      sum + day.meals.reduce((mealSum, meal) => mealSum + (meal.included ? meal.cost : 0), 0), 0
+    );
+    const transportationCost = Math.round(duration * (budget === 'budget' ? 15 : budget === 'luxury' ? 40 : 25));
+    const activitiesCost = Math.round(duration * (budget === 'budget' ? 20 : budget === 'luxury' ? 60 : 35));
+    
+    const totalCost = accommodationCost + mealCost + transportationCost + activitiesCost;
 
     const result = {
-      title: `${duration}-Day Nepal Adventure`,
+      title: `${duration}-Day ${selectedDests.map(d => d.name).join(' & ')} Adventure`,
       duration: `${duration} Days`,
       destinations: selectedDests.map(d => d.name),
+      budgetLevel: budget,
       dailyPlan,
+      costBreakdown: {
+        accommodation: accommodationCost,
+        meals: mealCost,
+        transportation: transportationCost,
+        activities: activitiesCost,
+        total: totalCost
+      },
       totalCost,
-      createdAt: new Date().toLocaleDateString()
+      createdAt: new Date().toLocaleDateString(),
+      summary: generateItinerarySummary(selectedDests, duration, budget)
     };
 
-    console.log('Generated itinerary:', result);
+    console.log('Generated comprehensive itinerary:', result);
     return result;
   } catch (error) {
     console.error('Error in generateItinerary:', error);
@@ -144,11 +314,44 @@ const generateItinerary = (formData) => {
   }
 };
 
+// Helper function to generate day-specific tips
+const generateDayTips = (destination, dayIndex, budget) => {
+  const tips = [
+    `Best time to visit ${destination.name} attractions is early morning to avoid crowds`,
+    `Don't forget to try the local specialties and traditional cuisine`,
+    `Carry cash as many local vendors don't accept cards`,
+    `Respect local customs and dress modestly when visiting religious sites`,
+    `Stay hydrated and use sunscreen, especially at higher altitudes`
+  ];
+  
+  if (budget === 'budget') {
+    tips.push('Look for local eateries and guesthouses for authentic experiences at lower costs');
+  } else if (budget === 'luxury') {
+    tips.push('Consider hiring a private guide for personalized experiences');
+  }
+  
+  return tips[dayIndex % tips.length];
+};
+
+// Helper function to generate itinerary summary
+const generateItinerarySummary = (destinations, duration, budget) => {
+  const destNames = destinations.map(d => d.name).join(', ');
+  const budgetDesc = budget === 'budget' ? 'budget-friendly' : 
+                    budget === 'luxury' ? 'luxury' : 'mid-range';
+  
+  return `A ${duration}-day ${budgetDesc} adventure through ${destNames}, featuring cultural immersion, natural beauty, and authentic Nepalese experiences. This itinerary balances must-see attractions with local experiences, ensuring a comprehensive exploration of Nepal's diverse offerings.`;
+};
+
 const Itinerary = () => {
   const { theme } = useTheme();
+  const { showSuccess } = useToast();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('create');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedItinerary, setGeneratedItinerary] = useState(null);
+  
+  // Get preselected destination from navigation state
+  const preselectedDestination = location.state?.preselectedDestination;
   
   // Form state with default selections for easier testing
   const [formData, setFormData] = useState({
@@ -158,12 +361,46 @@ const Itinerary = () => {
     budget: 'mid'
   });
 
-  // Debug log on component mount
+  // Debug log on component mount and handle preselected destination
   React.useEffect(() => {
     console.log('Itinerary component mounted');
     console.log('Initial form data:', formData);
     console.log('Nepal destinations available:', Object.keys(nepalDestinations));
-  }, []);
+    console.log('Preselected destination:', preselectedDestination);
+    
+    // Show notification if destination was preselected
+    if (preselectedDestination) {
+      showSuccess(
+        "Destination Added",
+        `${preselectedDestination.name} has been added to your itinerary planner. Customize your trip below!`
+      );
+      
+      // Try to match the destination to existing Nepal destinations
+      const matchedDestination = findMatchingDestination(preselectedDestination.name);
+      if (matchedDestination) {
+        setFormData(prev => ({
+          ...prev,
+          destinations: [matchedDestination]
+        }));
+      }
+    }
+  }, [preselectedDestination, showSuccess]);
+
+  // Function to find matching destination
+  const findMatchingDestination = (destinationName) => {
+    const name = destinationName.toLowerCase();
+    
+    // Direct matches
+    if (name.includes('kathmandu') || name.includes('durbar') || name.includes('swayambhu') || name.includes('boudha')) return 'kathmandu';
+    if (name.includes('pokhara') || name.includes('phewa') || name.includes('sarangkot')) return 'pokhara';
+    if (name.includes('chitwan') || name.includes('safari') || name.includes('jungle')) return 'chitwan';
+    if (name.includes('everest') || name.includes('kala patthar') || name.includes('namche')) return 'everest';
+    if (name.includes('annapurna') || name.includes('poon hill') || name.includes('ghandruk')) return 'annapurna';
+    if (name.includes('lumbini') || name.includes('buddha') || name.includes('maya devi')) return 'lumbini';
+    
+    // Default to kathmandu for other destinations
+    return 'kathmandu';
+  };
 
   const handleInputChange = (field, value) => {
     console.log(`Updating ${field} to:`, value);
@@ -271,6 +508,70 @@ const Itinerary = () => {
                 <p className="text-lg text-gray-600">Build a real travel plan with detailed activities and costs</p>
               </div>
 
+              {/* Preselected Destination Info */}
+              {preselectedDestination && (
+                <div className={`p-6 rounded-2xl mb-8 border-2 border-dashed ${
+                  theme === 'dark' 
+                    ? 'bg-gradient-to-r from-purple-900/20 to-pink-900/20 border-purple-500/30' 
+                    : 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-300/50'
+                }`}>
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center">
+                      <FaCheckCircle className="text-white text-xl" />
+                    </div>
+                    <div>
+                      <h3 className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                        Destination Added to Your Plan
+                      </h3>
+                      <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                        We've pre-selected this destination based on your interest
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className={`p-4 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white/70'}`}>
+                    <div className="flex items-start gap-3">
+                      <FaMapMarkerAlt className="text-purple-500 mt-1" />
+                      <div>
+                        <h4 className={`font-semibold text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                          {preselectedDestination.name}
+                        </h4>
+                        <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} mb-2`}>
+                          {preselectedDestination.location}
+                        </p>
+                        <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                          {preselectedDestination.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className={`mt-4 p-3 rounded-lg ${theme === 'dark' ? 'bg-blue-900/20' : 'bg-blue-50'}`}>
+                    <div className="flex items-center justify-between">
+                      <p className={`text-sm ${theme === 'dark' ? 'text-blue-300' : 'text-blue-700'}`}>
+                        💡 <strong>Tip:</strong> Select additional destinations below to create a comprehensive Nepal itinerary, 
+                        or adjust the trip duration to focus more time on this area.
+                      </p>
+                      <button
+                        onClick={() => {
+                          // Quick generate itinerary for this destination
+                          const matchedDest = findMatchingDestination(preselectedDestination.name);
+                          setFormData(prev => ({
+                            ...prev,
+                            destinations: [matchedDest],
+                            duration: nepalDestinations[matchedDest]?.days || 7
+                          }));
+                          handleGenerateItinerary();
+                        }}
+                        className="ml-4 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm font-medium transition-colors whitespace-nowrap"
+                      >
+                        Quick Plan
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <div className="grid md:grid-cols-3 gap-8">
                 {/* Duration Selection */}
                 <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
@@ -332,9 +633,9 @@ const Itinerary = () => {
                     onChange={(e) => handleInputChange('budget', e.target.value)}
                     className={`w-full p-3 rounded-lg border ${theme === 'dark' ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300'}`}
                   >
-                    <option value="low">Budget ($30-50/day)</option>
-                    <option value="mid">Mid-range ($60-90/day)</option>
-                    <option value="high">Luxury ($100-150/day)</option>
+                    <option value="budget">Budget ($30-60/day) - Guesthouses, local transport, street food</option>
+                    <option value="mid">Mid-range ($70-120/day) - Hotels, private transport, restaurant meals</option>
+                    <option value="luxury">Luxury ($130-250/day) - Resorts, private guides, premium experiences</option>
                   </select>
                 </div>
               </div>
@@ -385,20 +686,23 @@ const Itinerary = () => {
                   {/* Header */}
                   <div className="text-center mb-12">
                     <h2 className="text-4xl font-bold mb-4">{generatedItinerary.title}</h2>
-                    <p className="text-lg text-gray-600 mb-6">
-                      Created on {generatedItinerary.createdAt} • Total Cost: ${generatedItinerary.totalCost}
+                    <p className="text-lg text-gray-600 mb-2">
+                      {generatedItinerary.summary}
+                    </p>
+                    <p className="text-md text-gray-500 mb-6">
+                      Created on {generatedItinerary.createdAt} • Budget Level: {generatedItinerary.budgetLevel.charAt(0).toUpperCase() + generatedItinerary.budgetLevel.slice(1)} • Total Cost: ${generatedItinerary.totalCost}
                     </p>
                     
                     <div className="flex justify-center gap-4">
-                      <button className="px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl font-semibold flex items-center gap-2">
+                      <button className="px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl font-semibold flex items-center gap-2 hover:from-teal-700 hover:to-cyan-700 transition-all">
                         <FaSave />
                         Save Itinerary
                       </button>
-                      <button className="px-6 py-3 border border-gray-300 rounded-xl font-semibold flex items-center gap-2">
+                      <button className="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-xl font-semibold flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
                         <FaDownload />
                         Download PDF
                       </button>
-                      <button className="px-6 py-3 border border-gray-300 rounded-xl font-semibold flex items-center gap-2">
+                      <button className="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-xl font-semibold flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all">
                         <FaShare />
                         Share
                       </button>
@@ -420,7 +724,14 @@ const Itinerary = () => {
                             </div>
                             <div>
                               <h4 className="text-xl font-bold">{day.title}</h4>
-                              <p className="text-gray-600">Daily Cost: ${day.dailyCost + 35}</p>
+                              <p className="text-gray-600">
+                                Daily Cost: ${day.dailyCost + day.meals.reduce((sum, meal) => sum + (meal.included ? meal.cost : 0), 0)}
+                              </p>
+                              {day.highlights && (
+                                <p className="text-sm text-blue-600 dark:text-blue-400 mt-1">
+                                  🌟 {day.highlights}
+                                </p>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -428,16 +739,21 @@ const Itinerary = () => {
                         {/* Activities */}
                         <div className="space-y-4 mb-6">
                           {day.activities.map((activity, index) => (
-                            <div key={index} className="flex items-start gap-4">
-                              <div className="w-20 text-sm font-medium text-gray-600 flex-shrink-0">
+                            <div key={index} className="flex items-start gap-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50">
+                              <div className="w-24 text-sm font-medium text-gray-600 dark:text-gray-400 flex-shrink-0">
                                 {activity.time}
                               </div>
                               <div className="flex-1">
-                                <h5 className="font-semibold">{activity.activity}</h5>
-                                <span className={`inline-block px-2 py-1 rounded text-xs mt-1 ${
-                                  activity.type === 'sightseeing' ? 'bg-green-100 text-green-800' :
-                                  activity.type === 'activity' ? 'bg-blue-100 text-blue-800' :
-                                  'bg-purple-100 text-purple-800'
+                                <h5 className="font-semibold text-gray-900 dark:text-white">{activity.activity}</h5>
+                                {activity.description && (
+                                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{activity.description}</p>
+                                )}
+                                <span className={`inline-block px-2 py-1 rounded text-xs mt-2 ${
+                                  activity.type === 'sightseeing' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
+                                  activity.type === 'activity' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
+                                  activity.type === 'logistics' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
+                                  activity.type === 'dining' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' :
+                                  'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'
                                 }`}>
                                   {activity.type}
                                 </span>
@@ -446,14 +762,26 @@ const Itinerary = () => {
                           ))}
                         </div>
 
-                        {/* Accommodation & Meals */}
-                        <div className="grid md:grid-cols-2 gap-6">
+                        {/* Tips */}
+                        {day.tips && (
+                          <div className="mb-6 p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500">
+                            <h5 className="font-semibold text-blue-900 dark:text-blue-300 mb-2 flex items-center gap-2">
+                              <FaInfoCircle />
+                              Daily Tip
+                            </h5>
+                            <p className="text-blue-800 dark:text-blue-200 text-sm">{day.tips}</p>
+                          </div>
+                        )}
+
+                        {/* Accommodation, Meals & Transportation */}
+                        <div className="grid md:grid-cols-3 gap-6">
                           <div>
                             <h5 className="font-semibold mb-3 flex items-center gap-2">
                               <FaHotel className="text-blue-500" />
                               Accommodation
                             </h5>
-                            <p>{day.accommodation} - ${day.dailyCost}</p>
+                            <p className="text-gray-700 dark:text-gray-300">{day.accommodation}</p>
+                            <p className="text-sm text-gray-500">${day.dailyCost}/night</p>
                           </div>
                           
                           <div>
@@ -463,13 +791,27 @@ const Itinerary = () => {
                             </h5>
                             <div className="space-y-1">
                               {day.meals.map((meal, index) => (
-                                <div key={index} className="flex justify-between">
-                                  <span>{meal.meal}</span>
-                                  <span>${meal.cost}</span>
+                                <div key={index} className="flex justify-between text-sm">
+                                  <span className={meal.included ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 line-through'}>
+                                    {meal.meal}
+                                  </span>
+                                  <span className={meal.included ? 'text-gray-700 dark:text-gray-300' : 'text-gray-400 line-through'}>
+                                    ${meal.cost}
+                                  </span>
                                 </div>
                               ))}
                             </div>
                           </div>
+
+                          {day.transportation && (
+                            <div>
+                              <h5 className="font-semibold mb-3 flex items-center gap-2">
+                                <FaRoute className="text-green-500" />
+                                Transportation
+                              </h5>
+                              <p className="text-gray-700 dark:text-gray-300 text-sm">{day.transportation}</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -477,14 +819,46 @@ const Itinerary = () => {
 
                   {/* Cost Summary */}
                   <div className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
-                    <h3 className="text-2xl font-bold mb-6">Cost Summary</h3>
-                    <div className="flex justify-between items-center text-2xl font-bold">
-                      <span>Total Trip Cost</span>
-                      <span className="text-teal-600">${generatedItinerary.totalCost}</span>
+                    <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                      <FaMoneyBillWave className="text-green-500" />
+                      Cost Breakdown
+                    </h3>
+                    
+                    {generatedItinerary.costBreakdown && (
+                      <div className="grid md:grid-cols-2 gap-6 mb-6">
+                        <div className="space-y-3">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600 dark:text-gray-400">Accommodation</span>
+                            <span className="font-semibold">${generatedItinerary.costBreakdown.accommodation}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600 dark:text-gray-400">Meals</span>
+                            <span className="font-semibold">${generatedItinerary.costBreakdown.meals}</span>
+                          </div>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600 dark:text-gray-400">Transportation</span>
+                            <span className="font-semibold">${generatedItinerary.costBreakdown.transportation}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600 dark:text-gray-400">Activities & Tours</span>
+                            <span className="font-semibold">${generatedItinerary.costBreakdown.activities}</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
+                      <div className="flex justify-between items-center text-2xl font-bold">
+                        <span>Total Trip Cost</span>
+                        <span className="text-teal-600">${generatedItinerary.totalCost}</span>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-400 mt-2">
+                        Complete {generatedItinerary.budgetLevel} package for {generatedItinerary.duration.toLowerCase()} • 
+                        Average ${Math.round(generatedItinerary.totalCost / parseInt(generatedItinerary.duration))}/day per person
+                      </p>
                     </div>
-                    <p className="text-gray-600 mt-2">
-                      Includes accommodation, meals, activities, and local transport for {generatedItinerary.duration.toLowerCase()}
-                    </p>
                   </div>
                 </>
               ) : (

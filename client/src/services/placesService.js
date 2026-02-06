@@ -6,6 +6,42 @@ const API_BASE_URL = 'http://localhost:8000';
 
 class PlacesService {
   /**
+   * Normalize image data for consistent usage across components
+   */
+  normalizeImageData(item, defaultType = 'Place') {
+    // Ensure the item has a type
+    if (!item.type) {
+      item.type = defaultType;
+    }
+
+    // Convert all_images from JSON string to array if needed
+    if (item.all_images && typeof item.all_images === 'string') {
+      try {
+        item.all_images = JSON.parse(item.all_images);
+      } catch (error) {
+        console.warn('Failed to parse all_images JSON:', error);
+        item.all_images = [];
+      }
+    }
+
+    // Ensure all_images is an array
+    if (!Array.isArray(item.all_images)) {
+      item.all_images = [];
+    }
+
+    // If no all_images but has image_url, use image_url
+    if (item.all_images.length === 0 && item.image_url) {
+      item.all_images = [item.image_url];
+    }
+
+    // Legacy support: if item has 'images' array, merge it
+    if (item.images && Array.isArray(item.images)) {
+      item.all_images = [...new Set([...item.all_images, ...item.images])];
+    }
+
+    return item;
+  }
+  /**
    * Get all places with optional filtering and pagination
    */
   async getPlaces(params = {}) {
@@ -28,7 +64,14 @@ class PlacesService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      return await response.json();
+      const data = await response.json();
+      
+      // Normalize image data for each place
+      if (data.places) {
+        data.places = data.places.map(place => this.normalizeImageData(place));
+      }
+      
+      return data;
     } catch (error) {
       console.error('Error fetching places:', error);
       throw error;
@@ -152,7 +195,14 @@ class PlacesService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      return await response.json();
+      const data = await response.json();
+      
+      // Normalize image data for each hotel
+      if (data.hotels) {
+        data.hotels = data.hotels.map(hotel => this.normalizeImageData(hotel, 'Hotel'));
+      }
+      
+      return data;
     } catch (error) {
       console.error('Error fetching hotels:', error);
       throw error;
@@ -179,7 +229,14 @@ class PlacesService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       
-      return await response.json();
+      const data = await response.json();
+      
+      // Normalize image data for each restaurant
+      if (data.restaurants) {
+        data.restaurants = data.restaurants.map(restaurant => this.normalizeImageData(restaurant, 'Restaurant'));
+      }
+      
+      return data;
     } catch (error) {
       console.error('Error fetching restaurants:', error);
       throw error;

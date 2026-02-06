@@ -17,6 +17,7 @@ from .routes.places import places_bp
 from .routes.wishlist import wishlist_bp
 from .routes.hotels import hotels_bp
 from .routes.restaurants import restaurants_bp
+from .routes.images import images_bp
 
 # -----------------------------
 # Load .env from backend folder
@@ -71,6 +72,7 @@ def create_app():
     app.register_blueprint(wishlist_bp, url_prefix="/api")
     app.register_blueprint(hotels_bp, url_prefix="/api")
     app.register_blueprint(restaurants_bp, url_prefix="/api")
+    app.register_blueprint(images_bp, url_prefix="/api")
     app.register_blueprint(admin_bp)  # Admin login/dashboard routes
 
     # -----------------------------

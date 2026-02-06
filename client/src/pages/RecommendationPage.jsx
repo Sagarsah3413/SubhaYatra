@@ -3,6 +3,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext";
 
 // Components
 import { Header } from "../components/header/Header";
@@ -12,19 +13,21 @@ export default function RecommendationPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { isSignedIn, isLoaded } = useUser();
+  const { theme } = useTheme();
 
-  // ✅ State (notes removed)
+  // State
   const [formData, setFormData] = useState({
     name: "",
     age: "",
     phone: "",
     travellers: "",
+    tripDuration: "",
     tripTypes: [],
   });
 
   const [errors, setErrors] = useState({});
 
-  // 🔐 Auth check
+  // Auth check
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
       navigate("/sign-in");
@@ -36,14 +39,14 @@ export default function RecommendationPage() {
   };
 
   const tripOptions = [
-    "⛰️ Natural Attractions",
-    "🧗 Trekking & Adventures",
-    "🛕 Cultural & Religious Sites",
-    "🏡 Village & Rural Tourism",
-    "🏙️ Urban & Modern Attractions",
+    { icon: "⛰️", title: "Natural Attractions", desc: "Mountains & landscapes" },
+    { icon: "🧗", title: "Trekking & Adventures", desc: "Hiking & outdoor" },
+    { icon: "🛕", title: "Cultural & Religious", desc: "Temples & heritage" },
+    { icon: "🏡", title: "Village & Rural", desc: "Local experiences" },
+    { icon: "🏙️", title: "Urban & Modern", desc: "Cities & attractions" },
   ];
 
-  // ✅ Validation
+  // Validation
   const validateForm = () => {
     const newErrors = {};
 
@@ -53,6 +56,8 @@ export default function RecommendationPage() {
       newErrors.phone = "Enter a valid phone number";
     if (!formData.travellers)
       newErrors.travellers = "Select number of travellers";
+    if (!formData.tripDuration)
+      newErrors.tripDuration = "Select trip duration";
     if (formData.tripTypes.length === 0)
       newErrors.tripTypes = "Select a trip type";
 
@@ -60,7 +65,7 @@ export default function RecommendationPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // 🚀 Submit
+  // Submit
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -70,17 +75,22 @@ export default function RecommendationPage() {
       state: {
         preferences: {
           ...formData,
-          tripType: formData.tripTypes[0], // backend friendly
+          tripType: formData.tripTypes[0],
         },
       },
     });
   };
 
-  // ⏳ Loading
+  // Loading
   if (!isLoaded) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin h-12 w-12 rounded-full border-b-2 border-teal-600" />
+      <div className={`min-h-screen flex items-center justify-center ${
+        theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+      }`}>
+        <div className="text-center">
+          <div className="animate-spin h-12 w-12 rounded-full border-4 border-teal-500 border-t-transparent mx-auto mb-4" />
+          <p className={theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}>Loading...</p>
+        </div>
       </div>
     );
   }
@@ -88,148 +98,347 @@ export default function RecommendationPage() {
   if (!isSignedIn) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className={`min-h-screen flex flex-col ${
+      theme === 'dark' ? 'bg-slate-900' : 'bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100'
+    }`}>
       <Header onHomeClick={handleHomeClick} />
 
-      {/* Welcome */}
-      <div className="bg-gradient-to-r from-teal-500 to-cyan-600 text-white py-4">
-        <div className="text-center">
-          <h2 className="text-lg font-semibold">🎉 Welcome!</h2>
-          <p className="text-sm opacity-90">
-            Let us personalize your Nepal trip
-          </p>
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
+                             radial-gradient(circle at 80% 50%, rgba(16, 185, 129, 0.3) 0%, transparent 50%)`,
+            backgroundSize: '800px 800px'
+          }}></div>
+        </div>
+
+        <div className={`relative py-12 px-4 text-center ${
+          theme === 'dark' 
+            ? 'bg-gradient-to-r from-slate-800/50 via-slate-900/50 to-slate-800/50' 
+            : 'bg-gradient-to-r from-teal-500/10 via-cyan-500/10 to-emerald-500/10'
+        }`}>
+          <div className="max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 mb-4">
+              <span className="text-2xl">✨</span>
+              <span className={`text-sm font-semibold ${
+                theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
+              }`}>
+                Personalized Recommendations
+              </span>
+            </div>
+            
+            <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${
+              theme === 'dark' ? 'text-white' : 'text-gray-900'
+            }`}>
+              Plan Your Perfect
+              <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-600 bg-clip-text text-transparent"> Nepal Journey</span>
+            </h1>
+            
+            <p className={`text-lg ${
+              theme === 'dark' ? 'text-slate-300' : 'text-gray-600'
+            }`}>
+              Tell us your preferences and we'll craft the perfect itinerary just for you
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="flex justify-center py-10 px-4 flex-1">
-        <div className="w-full max-w-xl bg-white p-8 rounded-2xl shadow-md">
-          <h1 className="text-2xl font-bold text-center mb-1">
-            Travel Preferences
-          </h1>
-          <p className="text-gray-600 text-center mb-6">
-            Tell us what you love, we’ll do the rest ✨
-          </p>
-
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Name */}
-            <div>
-              <label className="font-medium">Name</label>
-              <input
-                type="text"
-                className="w-full mt-1 p-3 border rounded-lg"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-              />
-              {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name}</p>
-              )}
+      {/* Form Section */}
+      <div className="flex-1 py-12 px-4">
+        <div className="max-w-2xl mx-auto">
+          <div className={`rounded-3xl shadow-2xl overflow-hidden ${
+            theme === 'dark' 
+              ? 'bg-slate-800/50 border border-slate-700/50' 
+              : 'bg-white/80 border border-white/50'
+          } backdrop-blur-xl`}>
+            
+            {/* Form Header */}
+            <div className={`px-8 py-6 border-b ${
+              theme === 'dark' ? 'border-slate-700/50' : 'border-gray-200/50'
+            }`}>
+              <h2 className={`text-2xl font-bold ${
+                theme === 'dark' ? 'text-white' : 'text-gray-900'
+              }`}>
+                Your Travel Preferences
+              </h2>
+              <p className={`text-sm mt-1 ${
+                theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
+              }`}>
+                Help us understand what makes your perfect trip
+              </p>
             </div>
 
-            {/* Age */}
-            <div>
-              <label className="font-medium">Age</label>
-              <select
-                className="w-full mt-1 p-3 border rounded-lg"
-                value={formData.age}
-                onChange={(e) =>
-                  setFormData({ ...formData, age: e.target.value })
-                }
-              >
-                <option value="">Select age</option>
-                {[...Array(100)].map((_, i) => (
-                  <option key={i + 1} value={i + 1}>
-                    {i + 1}
-                  </option>
-                ))}
-              </select>
-              {errors.age && (
-                <p className="text-red-500 text-sm">{errors.age}</p>
-              )}
-            </div>
-
-            {/* Phone */}
-            <div>
-              <label className="font-medium">Phone</label>
-              <PhoneInput
-                country="np"
-                value={formData.phone}
-                onChange={(phone) =>
-                  setFormData({ ...formData, phone })
-                }
-                inputStyle={{ width: "100%", height: "48px" }}
-              />
-              {errors.phone && (
-                <p className="text-red-500 text-sm">{errors.phone}</p>
-              )}
-            </div>
-
-            {/* Travellers */}
-            <div>
-              <label className="font-medium">Travellers</label>
-              <select
-                className="w-full mt-1 p-3 border rounded-lg"
-                value={formData.travellers}
-                onChange={(e) =>
-                  setFormData({ ...formData, travellers: e.target.value })
-                }
-              >
-                <option value="">Select</option>
-                {[...Array(20)].map((_, i) => (
-                  <option key={i + 1} value={i + 1}>
-                    {i + 1}
-                  </option>
-                ))}
-              </select>
-              {errors.travellers && (
-                <p className="text-red-500 text-sm">
-                  {errors.travellers}
-                </p>
-              )}
-            </div>
-
-            {/* Trip Types */}
-            <div>
-              <label className="font-medium mb-2 block">
-                Preferred Trip Type
-              </label>
-              <div className="grid grid-cols-2 gap-4">
-                {tripOptions.map((type) => {
-                  const selected = formData.tripTypes[0] === type;
-                  return (
-                    <button
-                      key={type}
-                      type="button"
-                      onClick={() =>
-                        setFormData({ ...formData, tripTypes: [type] })
-                      }
-                      className={`h-24 rounded-xl border font-medium transition
-                        ${
-                          selected
-                            ? "bg-stone-700 text-white"
-                            : "bg-stone-100 hover:bg-stone-200"
-                        }`}
-                    >
-                      {type}
-                    </button>
-                  );
-                })}
+            {/* Form Body */}
+            <form onSubmit={handleSubmit} className="p-8 space-y-6">
+              {/* Name */}
+              <div>
+                <label className={`block text-sm font-semibold mb-2 ${
+                  theme === 'dark' ? 'text-slate-200' : 'text-gray-700'
+                }`}>
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 ${
+                    theme === 'dark'
+                      ? 'bg-slate-900/50 border-slate-600 text-white placeholder-slate-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                  } outline-none`}
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                />
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                    <span>⚠️</span> {errors.name}
+                  </p>
+                )}
               </div>
-              {errors.tripTypes && (
-                <p className="text-red-500 text-sm mt-2">
-                  {errors.tripTypes}
-                </p>
-              )}
-            </div>
 
-            <button
-              type="submit"
-              className="w-full bg-black text-white p-3 rounded-lg hover:bg-gray-800"
-            >
-              Show My Recommendations
-            </button>
-          </form>
+              {/* Age & Travellers Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Age */}
+                <div>
+                  <label className={`block text-sm font-semibold mb-2 ${
+                    theme === 'dark' ? 'text-slate-200' : 'text-gray-700'
+                  }`}>
+                    Age
+                  </label>
+                  <select
+                    className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 ${
+                      theme === 'dark'
+                        ? 'bg-slate-900/50 border-slate-600 text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                        : 'bg-white border-gray-300 text-gray-900 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                    } outline-none`}
+                    value={formData.age}
+                    onChange={(e) =>
+                      setFormData({ ...formData, age: e.target.value })
+                    }
+                  >
+                    <option value="">Select age</option>
+                    {[...Array(100)].map((_, i) => (
+                      <option key={i + 1} value={i + 1}>
+                        {i + 1} years
+                      </option>
+                    ))}
+                  </select>
+                  {errors.age && (
+                    <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                      <span>⚠️</span> {errors.age}
+                    </p>
+                  )}
+                </div>
+
+                {/* Travellers */}
+                <div>
+                  <label className={`block text-sm font-semibold mb-2 ${
+                    theme === 'dark' ? 'text-slate-200' : 'text-gray-700'
+                  }`}>
+                    Number of Travellers
+                  </label>
+                  <select
+                    className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 ${
+                      theme === 'dark'
+                        ? 'bg-slate-900/50 border-slate-600 text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                        : 'bg-white border-gray-300 text-gray-900 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                    } outline-none`}
+                    value={formData.travellers}
+                    onChange={(e) =>
+                      setFormData({ ...formData, travellers: e.target.value })
+                    }
+                  >
+                    <option value="">Select</option>
+                    {[...Array(20)].map((_, i) => (
+                      <option key={i + 1} value={i + 1}>
+                        {i + 1} {i === 0 ? 'person' : 'people'}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.travellers && (
+                    <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                      <span>⚠️</span> {errors.travellers}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Trip Duration */}
+              <div>
+                <label className={`block text-sm font-semibold mb-2 ${
+                  theme === 'dark' ? 'text-slate-200' : 'text-gray-700'
+                }`}>
+                  <span className="flex items-center gap-2">
+                    <span>📅</span>
+                    <span>Trip Duration</span>
+                  </span>
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {[
+                    { value: "1-3", label: "1-3 Days", icon: "🌅" },
+                    { value: "4-7", label: "4-7 Days", icon: "🗓️" },
+                    { value: "8-14", label: "8-14 Days", icon: "📆" },
+                    { value: "15+", label: "15+ Days", icon: "🌍" },
+                  ].map((duration) => {
+                    const selected = formData.tripDuration === duration.value;
+                    return (
+                      <button
+                        key={duration.value}
+                        type="button"
+                        onClick={() =>
+                          setFormData({ ...formData, tripDuration: duration.value })
+                        }
+                        className={`p-4 rounded-xl border-2 transition-all duration-200 text-center ${
+                          selected
+                            ? 'border-teal-500 bg-teal-500/10 shadow-lg shadow-teal-500/20'
+                            : theme === 'dark'
+                              ? 'border-slate-600 bg-slate-900/30 hover:border-slate-500 hover:bg-slate-900/50'
+                              : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100'
+                        }`}
+                      >
+                        <div className="text-2xl mb-1">{duration.icon}</div>
+                        <div className={`text-sm font-semibold ${
+                          selected
+                            ? 'text-teal-600 dark:text-teal-400'
+                            : theme === 'dark'
+                              ? 'text-slate-200'
+                              : 'text-gray-900'
+                        }`}>
+                          {duration.label}
+                        </div>
+                        {selected && (
+                          <div className="mt-2 flex justify-center">
+                            <div className="w-4 h-4 rounded-full bg-teal-500 flex items-center justify-center">
+                              <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+                {errors.tripDuration && (
+                  <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
+                    <span>⚠️</span> {errors.tripDuration}
+                  </p>
+                )}
+              </div>
+
+              {/* Phone */}
+              <div>
+                <label className={`block text-sm font-semibold mb-2 ${
+                  theme === 'dark' ? 'text-slate-200' : 'text-gray-700'
+                }`}>
+                  Phone Number
+                </label>
+                <PhoneInput
+                  country="np"
+                  value={formData.phone}
+                  onChange={(phone) =>
+                    setFormData({ ...formData, phone })
+                  }
+                  inputStyle={{
+                    width: "100%",
+                    height: "48px",
+                    borderRadius: "12px",
+                    backgroundColor: theme === 'dark' ? 'rgba(15, 23, 42, 0.5)' : 'white',
+                    borderColor: theme === 'dark' ? 'rgb(71, 85, 105)' : 'rgb(209, 213, 219)',
+                    color: theme === 'dark' ? 'white' : 'rgb(17, 24, 39)',
+                  }}
+                  buttonStyle={{
+                    borderRadius: "12px 0 0 12px",
+                    backgroundColor: theme === 'dark' ? 'rgba(15, 23, 42, 0.5)' : 'white',
+                    borderColor: theme === 'dark' ? 'rgb(71, 85, 105)' : 'rgb(209, 213, 219)',
+                  }}
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                    <span>⚠️</span> {errors.phone}
+                  </p>
+                )}
+              </div>
+
+              {/* Trip Types */}
+              <div>
+                <label className={`block text-sm font-semibold mb-3 ${
+                  theme === 'dark' ? 'text-slate-200' : 'text-gray-700'
+                }`}>
+                  Preferred Trip Type
+                </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {tripOptions.map((option) => {
+                    const selected = formData.tripTypes[0] === `${option.icon} ${option.title}`;
+                    return (
+                      <button
+                        key={option.title}
+                        type="button"
+                        onClick={() =>
+                          setFormData({ ...formData, tripTypes: [`${option.icon} ${option.title}`] })
+                        }
+                        className={`p-4 rounded-xl border-2 transition-all duration-200 text-left group ${
+                          selected
+                            ? 'border-teal-500 bg-teal-500/10 shadow-lg shadow-teal-500/20'
+                            : theme === 'dark'
+                              ? 'border-slate-600 bg-slate-900/30 hover:border-slate-500 hover:bg-slate-900/50'
+                              : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100'
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="text-3xl">{option.icon}</span>
+                          <div className="flex-1">
+                            <div className={`font-semibold text-sm mb-0.5 ${
+                              selected
+                                ? 'text-teal-600 dark:text-teal-400'
+                                : theme === 'dark'
+                                  ? 'text-slate-200'
+                                  : 'text-gray-900'
+                            }`}>
+                              {option.title}
+                            </div>
+                            <div className={`text-xs ${
+                              theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
+                            }`}>
+                              {option.desc}
+                            </div>
+                          </div>
+                          {selected && (
+                            <div className="flex-shrink-0">
+                              <div className="w-5 h-5 rounded-full bg-teal-500 flex items-center justify-center">
+                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+                {errors.tripTypes && (
+                  <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
+                    <span>⚠️</span> {errors.tripTypes}
+                  </p>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-600 hover:from-teal-700 hover:via-cyan-700 hover:to-emerald-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 hover:scale-[1.02] flex items-center justify-center gap-2"
+              >
+                <span>Get My Recommendations</span>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
 

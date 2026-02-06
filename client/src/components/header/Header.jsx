@@ -831,7 +831,13 @@ export const Header = () => {
       <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 relative z-10">
         {/* Navigation Menu Bar - Always Visible */}
         <div className="relative">
-          <MenuBar theme={theme} onNavigation={handleNavigation} />
+          <MenuBar 
+            theme={theme} 
+            onNavigation={handleNavigation}
+            forceRefreshLocation={forceRefreshLocation}
+            selectedLanguage={selectedLanguage}
+            handleLanguageChange={handleLanguageChange}
+          />
         </div>
 
         {/* Enterprise-Grade Logo */}
@@ -2494,7 +2500,7 @@ const CalendarModals = ({
 /**
  * MenuBar Component - Navigation Menu with Dropdown
  */
-const MenuBar = ({ theme, onNavigation }) => {
+const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, handleLanguageChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
@@ -2516,25 +2522,45 @@ const MenuBar = ({ theme, onNavigation }) => {
     setIsOpen(false);
   };
 
-  // Navigation menu items - Only Plans
+  // Navigation menu items - Comprehensive Core Functions
   const menuItems = [
+    {
+      category: "Explore",
+      items: [
+        { name: "Home", path: "/", icon: "🏠", description: "Back to home" },
+        { name: "Search", path: "/searchresult", icon: "🔍", description: "Find destinations" },
+        { name: "Explore Nepal", path: "/explore-nepal", icon: "🗺️", description: "Discover Nepal" },
+        { name: "All Places", path: "/all-places-detail", icon: "📍", description: "View all places" },
+        { name: "Famous Spots", path: "/all-famous-spots", icon: "⭐", description: "Popular locations" },
+        { name: "Nature Places", path: "/all-nature-places", icon: "🌲", description: "Natural beauty" }
+      ]
+    },
     {
       category: "Plan",
       items: [
+        { name: "AI Chat", path: "/chat", icon: "💬", description: "AI travel assistant" },
         { name: "Recommendations", path: "/recommendation", icon: "💡", description: "Get suggestions" },
-        { name: "Itinerary", path: "/itinerary", icon: "📋", description: "Plan your trip" },
-        { name: "Search Places", path: "/searchresult", icon: "🔍", description: "Find destinations" },
-        { name: "Add Place", path: "/add-place", icon: "➕", description: "Contribute places" }
+        { name: "Itinerary", path: "/guide", icon: "📋", description: "Plan your trip" },
+        { name: "Wishlist", path: "/wishlist", icon: "❤️", description: "Saved places" }
+      ]
+    },
+    {
+      category: "More",
+      items: [
+        { name: "About", path: "/about", icon: "ℹ️", description: "About us" },
+        { name: "Contact", path: "/contact", icon: "📧", description: "Get in touch" },
+        { name: "Help", path: "/help", icon: "❓", description: "Need help" },
+        { name: "FAQ", path: "/faq", icon: "💭", description: "Common questions" }
       ]
     }
   ];
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Menu Button */}
+      {/* Menu Button - Icon Only */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${
+        className={`flex items-center justify-center p-3 rounded-xl font-semibold text-sm transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${
           theme === "dark" 
             ? "border-slate-700/40 hover:border-slate-600/70 hover:bg-gradient-to-r hover:from-slate-800/50 hover:to-slate-700/50 hover:shadow-xl hover:shadow-slate-900/30 hover:scale-105 text-slate-200 hover:text-white" 
             : "border-slate-200/40 hover:border-slate-300/70 hover:bg-gradient-to-r hover:from-slate-50/50 hover:to-slate-100/50 hover:shadow-xl hover:shadow-slate-200/30 hover:scale-105 text-slate-700 hover:text-slate-900"
@@ -2545,30 +2571,239 @@ const MenuBar = ({ theme, onNavigation }) => {
         } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300`}
         title="Navigation Menu"
       >
-        <FaBars className="text-base" />
-        <span>Menu</span>
-        <svg 
-          className={`w-4 h-4 transition-all duration-300 ${
-            isOpen ? 'rotate-180 text-teal-500' : 'text-slate-500 hover:text-teal-500'
-          }`} 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <FaBars className={`text-lg transition-all duration-300 ${isOpen ? 'text-teal-500' : ''}`} />
       </button>
 
-      {/* Dropdown Menu */}
+      {/* Dropdown Menu - Scrollable with Location & Language */}
       {isOpen && (
-        <div className={`absolute top-full left-0 mt-2 w-64 rounded-2xl backdrop-blur-2xl border shadow-2xl z-50 overflow-hidden ${
+        <div className={`absolute top-full left-0 mt-2 w-72 rounded-2xl backdrop-blur-2xl border shadow-2xl z-50 overflow-hidden max-h-[70vh] ${
           theme === "dark" 
             ? "bg-slate-900/95 border-slate-700/50 shadow-slate-900/50" 
             : "bg-white/95 border-slate-200/50 shadow-slate-900/20"
         }`}>
-          <div className="p-4">
+          {/* Top Section: Location & Language */}
+          <div className={`p-4 border-b ${
+            theme === "dark" ? "border-slate-700/50" : "border-slate-200/50"
+          }`}>
+            {/* Location Indicator */}
+            <div 
+              className={`
+                flex items-center gap-2.5 px-3 py-2.5 rounded-xl border mb-3
+                cursor-pointer transition-all duration-300 group
+                ${theme === 'dark' 
+                  ? 'bg-slate-800/40 border-slate-700/40 hover:bg-slate-800/60 hover:border-slate-600/50' 
+                  : 'bg-white/40 border-slate-200/40 hover:bg-white/60 hover:border-slate-300/50'
+                }
+                hover:shadow-md
+              `}
+              onClick={() => {
+                if (typeof forceRefreshLocation === 'function') {
+                  forceRefreshLocation();
+                }
+              }}
+              title="Click to refresh location"
+            >
+              {/* Icon */}
+              <div className={`
+                w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
+                ${theme === 'dark' ? 'bg-teal-500/20' : 'bg-teal-500/15'}
+              `}>
+                <FaMapMarkerAlt className="text-sm text-teal-600 dark:text-teal-400" />
+              </div>
+              
+              {/* Text */}
+              <div className="flex-1 min-w-0">
+                <div className={`text-xs font-semibold mb-0.5 ${
+                  theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                }`}>
+                  Your Location
+                </div>
+                <div className={`text-xs truncate ${
+                  theme === 'dark' ? 'text-slate-400' : 'text-slate-500'
+                }`}>
+                  Kathmandu, Nepal
+                </div>
+              </div>
+
+              {/* Refresh Icon */}
+              <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <svg className="w-4 h-4 text-slate-400 group-hover:text-teal-500 transition-all duration-300 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Language Selector */}
+            <div className={`
+              rounded-xl border
+              ${theme === 'dark' 
+                ? 'bg-slate-800/40 border-slate-700/40' 
+                : 'bg-white/40 border-slate-200/40'
+              }
+            `}>
+              {/* Header */}
+              <div className="flex items-center gap-2.5 px-3 py-2.5 border-b border-slate-700/40 dark:border-slate-600/40">
+                <div className={`
+                  w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
+                  ${theme === 'dark' ? 'bg-cyan-500/20' : 'bg-cyan-500/15'}
+                `}>
+                  <FaGlobe className="text-sm text-cyan-600 dark:text-cyan-400" />
+                </div>
+                <div className="flex-1">
+                  <div className={`text-xs font-semibold ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
+                  }`}>
+                    Language
+                  </div>
+                  <div className={`text-[10px] ${
+                    theme === 'dark' ? 'text-slate-400' : 'text-slate-500'
+                  }`}>
+                    Choose your language
+                  </div>
+                </div>
+              </div>
+              
+              {/* Language Grid */}
+              <div className="p-3 grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => {
+                    if (typeof handleLanguageChange === 'function') {
+                      handleLanguageChange('en');
+                    }
+                  }}
+                  className={`
+                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
+                    ${selectedLanguage === 'en'
+                      ? theme === 'dark'
+                        ? 'bg-teal-600 text-white shadow-md'
+                        : 'bg-teal-500 text-white shadow-md'
+                      : theme === 'dark'
+                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
+                    }
+                  `}
+                >
+                  <span className="text-base">🇬🇧</span>
+                  <span>English</span>
+                </button>
+                
+                <button
+                  onClick={() => {
+                    if (typeof handleLanguageChange === 'function') {
+                      handleLanguageChange('ne');
+                    }
+                  }}
+                  className={`
+                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
+                    ${selectedLanguage === 'ne'
+                      ? theme === 'dark'
+                        ? 'bg-teal-600 text-white shadow-md'
+                        : 'bg-teal-500 text-white shadow-md'
+                      : theme === 'dark'
+                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
+                    }
+                  `}
+                >
+                  <span className="text-base">🇳🇵</span>
+                  <span>नेपाली</span>
+                </button>
+                
+                <button
+                  onClick={() => {
+                    if (typeof handleLanguageChange === 'function') {
+                      handleLanguageChange('hi');
+                    }
+                  }}
+                  className={`
+                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
+                    ${selectedLanguage === 'hi'
+                      ? theme === 'dark'
+                        ? 'bg-teal-600 text-white shadow-md'
+                        : 'bg-teal-500 text-white shadow-md'
+                      : theme === 'dark'
+                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
+                    }
+                  `}
+                >
+                  <span className="text-base">🇮🇳</span>
+                  <span>हिन्दी</span>
+                </button>
+                
+                <button
+                  onClick={() => {
+                    if (typeof handleLanguageChange === 'function') {
+                      handleLanguageChange('zh');
+                    }
+                  }}
+                  className={`
+                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
+                    ${selectedLanguage === 'zh'
+                      ? theme === 'dark'
+                        ? 'bg-teal-600 text-white shadow-md'
+                        : 'bg-teal-500 text-white shadow-md'
+                      : theme === 'dark'
+                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
+                    }
+                  `}
+                >
+                  <span className="text-base">🇨🇳</span>
+                  <span>中文</span>
+                </button>
+                
+                <button
+                  onClick={() => {
+                    if (typeof handleLanguageChange === 'function') {
+                      handleLanguageChange('ja');
+                    }
+                  }}
+                  className={`
+                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
+                    ${selectedLanguage === 'ja'
+                      ? theme === 'dark'
+                        ? 'bg-teal-600 text-white shadow-md'
+                        : 'bg-teal-500 text-white shadow-md'
+                      : theme === 'dark'
+                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
+                    }
+                  `}
+                >
+                  <span className="text-base">🇯🇵</span>
+                  <span>日本語</span>
+                </button>
+                
+                <button
+                  onClick={() => {
+                    if (typeof handleLanguageChange === 'function') {
+                      handleLanguageChange('ko');
+                    }
+                  }}
+                  className={`
+                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
+                    ${selectedLanguage === 'ko'
+                      ? theme === 'dark'
+                        ? 'bg-teal-600 text-white shadow-md'
+                        : 'bg-teal-500 text-white shadow-md'
+                      : theme === 'dark'
+                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
+                    }
+                  `}
+                >
+                  <span className="text-base">🇰🇷</span>
+                  <span>한국어</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Menu Items - Scrollable */}
+          <div className="p-4 overflow-y-auto max-h-[calc(70vh-12rem)] scrollbar-thin scrollbar-thumb-slate-600 dark:scrollbar-thumb-slate-400 scrollbar-track-transparent">
             {menuItems.map((category, categoryIndex) => (
-              <div key={category.category}>
+              <div key={category.category} className={categoryIndex > 0 ? 'mt-4' : ''}>
                 {/* Category Header */}
                 <div className={`text-xs font-bold uppercase tracking-wider mb-3 px-2 ${
                   theme === "dark" ? "text-slate-400" : "text-slate-500"

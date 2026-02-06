@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
+import SmartImage from "../components/SmartImage";
 import { 
   FaMapMarkerAlt, 
   FaStar, 
@@ -202,54 +203,19 @@ export default function SearchResultCard({ item, className = "", onSelect = null
 
       {/* Enhanced Image Section */}
       <div className="relative h-56 overflow-hidden rounded-t-3xl">
-        {item.images && item.images.length > 0 ? (
-          <>
-            <img
-              src={item.images[0].startsWith('http') ? item.images[0] : `http://localhost:8000/${item.images[0]}`}
-              alt={item.name}
-              className={`
-                w-full h-full object-cover transition-all duration-1000
-                ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-110'}
-                group-hover:scale-110 group-hover:brightness-110
-              `}
-              onLoad={() => setImageLoaded(true)}
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-            
-            {/* Loading Skeleton */}
-            {!imageLoaded && (
-              <div className={`
-                absolute inset-0 animate-pulse
-                ${theme === 'dark' ? 'bg-slate-700' : 'bg-gray-200'}
-              `}>
-                <div className="flex items-center justify-center h-full">
-                  <FaCamera className="text-4xl text-gray-400 animate-bounce" />
-                </div>
-              </div>
-            )}
-          </>
-        ) : null}
-        
-        {/* Enhanced Fallback Icon Display */}
-        <div 
+        <SmartImage
+          item={item}
+          imageIndex={0}
+          size="medium"
           className={`
-            w-full h-full flex items-center justify-center relative overflow-hidden
-            bg-gradient-to-br ${typeConfig.gradient}
-            ${item.images && item.images.length > 0 ? 'hidden' : 'flex'}
+            w-full h-full object-cover transition-all duration-1000
+            ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-110'}
+            group-hover:scale-110 group-hover:brightness-110
           `}
-        >
-          <TypeIcon className="text-8xl text-white/80 relative z-10" />
-          
-          {/* Animated background patterns */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent"></div>
-            <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl animate-pulse"></div>
-            <div className="absolute -bottom-5 -left-5 w-20 h-20 bg-white/10 rounded-full blur-xl animate-pulse delay-700"></div>
-          </div>
-        </div>
+          onLoad={() => setImageLoaded(true)}
+          showLoader={true}
+          showFallbackIcon={true}
+        />
 
         {/* Enhanced Overlay Gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>

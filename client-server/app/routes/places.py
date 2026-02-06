@@ -160,7 +160,7 @@ def list_places():
         session.close()
 
 @places_bp.route('/places/<int:place_id>', methods=['GET'])
-def get_place_details():
+def get_place_details(place_id):
     """Get detailed information about a specific place including hotels and restaurants"""
     session = SessionLocal()
     try:
@@ -221,7 +221,7 @@ def get_provinces():
 
 @places_bp.route('/places/search', methods=['GET'])
 def search_places():
-    """Advanced search for places"""
+    """Advanced search for places with improved relevance scoring - NO LIMITS"""
     session = SessionLocal()
     try:
         query_text = request.args.get('q', '')
@@ -232,24 +232,66 @@ def search_places():
         if not query_text:
             return jsonify({'error': 'Search query is required'}), 400
         
-        # Build search query
-        query = session.query(Place).filter(
+        # Build search query with relevance scoring
+        # Use CASE WHEN for relevance scoring in SQLite
+        from sqlalchemy import case, func
+        
+        # Create relevance score based on where the match occurs
+        relevance_score = case(
+            # Exact name match gets highest score
+            (Place.name.ilike(query_text), 100),
+            # Name starts with query gets high score
+            (Place.name.ilike(f'{query_text}%'), 90),
+            # Name contains query gets good score
+            (Place.name.ilike(f'%{query_text}%'), 80),
+            # Location exact match
+            (Place.location.ilike(query_text), 75),
+            # Location contains query
+            (Place.location.ilike(f'%{query_text}%'), 70),
+            # Tags contain query
+            (Place.tags.ilike(f'%{query_text}%'), 60),
+            # Activities contain query
+            (Place.activities.ilike(f'%{query_text}%'), 50),
+            # Description contains query
+            (Place.description.ilike(f'%{query_text}%'), 40),
+            # Default score
+            else_=0
+        ).label('relevance')
+        
+        # Build the main query
+        query = session.query(Place, relevance_score).filter(
             Place.name.ilike(f'%{query_text}%') |
             Place.description.ilike(f'%{query_text}%') |
             Place.tags.ilike(f'%{query_text}%') |
-            Place.activities.ilike(f'%{query_text}%')
+            Place.activities.ilike(f'%{query_text}%') |
+            Place.location.ilike(f'%{query_text}%')
         )
         
+        # Apply additional filters
         if category:
             query = query.filter(Place.type.ilike(f'%{category}%'))
         
-        places = query.order_by(Place.id.desc()).limit(20).all()
+        # Order by relevance score (highest first), then by ID
+        query = query.order_by(relevance_score.desc(), Place.id.desc())
+        
+        # NO LIMIT - Get ALL results
+        results_with_scores = query.all()
+        
+        # Extract places and serialize them
+        places = [result[0] for result in results_with_scores]
         results = [serialize_place(place) for place in places]
+        
+        # Add relevance scores to results for debugging
+        for i, (place, score) in enumerate(results_with_scores):
+            if i < len(results):
+                results[i]['relevance_score'] = score
         
         return jsonify({
             'query': query_text,
             'results': results,
-            'count': len(results)
+            'count': len(results),
+            'total_available': len(results),  # Same as count since we show all
+            'unlimited': True
         })
     finally:
         session.close()

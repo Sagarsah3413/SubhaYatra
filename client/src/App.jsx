@@ -6,6 +6,7 @@ import { SignedIn, useUser } from "@clerk/clerk-react";
 import SplashScreen from "./pages/SplashScreen";
 import { FaSearch, FaHotel, FaUtensils, FaMapMarkedAlt, FaCamera, FaRobot } from "react-icons/fa";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { ToastProvider } from "./contexts/ToastContext";
 import { useTranslation } from 'react-i18next';
 
 // Lazy load components for better performance
@@ -22,7 +23,7 @@ const Footer = lazy(() => import("./components/footer/Footer"));
 const AllPlacesDetail = lazy(() => import("./pages/AllPlacesDetail"));
 const AllSpotsDetails = lazy(() => import("./pages/AllSpotsDetail"));
 const AllNatureDetail = lazy(() => import("./pages/AllNatureDetail"));
-const SearchResultPage = lazy(() => import("./pages/SearchResultPage"));
+const SearchResultPage = lazy(() => import("./pages/SearchResultPageNew"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
 const RecommendationPage = lazy(() => import("./pages/RecommendationPage"));
 const DetailPage = lazy(() => import("./pages/Detailpage"));
@@ -45,6 +46,8 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const Login = lazy(() => import("./pages/admin/Login"));
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
 const AdminRoute = lazy(() => import("./pages/admin/AdminRoute"));
+
+// Test Pages - Removed (cleanup completed)
 
 // Import the Nepal image and hotel service
 import nepalImage from "./assets/nepal.jpg";
@@ -134,7 +137,7 @@ InspireButton.displayName = 'InspireButton';
 // Clean CategoryButton component without background
 const CategoryButton = memo(({ isActive, onClick, icon: Icon, title, description, gradient, bgGradient, borderColor }) => (
   <button 
-    className={`group relative backdrop-blur-xl rounded-2xl p-6 transition-all duration-500 hover:scale-105 transform-gpu border overflow-hidden ${
+    className={`group relative backdrop-blur-xl rounded-xl p-4 transition-all duration-500 hover:scale-105 transform-gpu border overflow-hidden ${
       isActive 
         ? `border-${borderColor}-400/50 scale-105` 
         : `border-slate-200/40 dark:border-slate-700/40 hover:border-${borderColor}-300/60 dark:hover:border-${borderColor}-600/60`
@@ -142,24 +145,24 @@ const CategoryButton = memo(({ isActive, onClick, icon: Icon, title, description
     onClick={onClick}
   >
     <div className="relative z-10 text-center">
-      {/* Executive Icon Container */}
-      <div className={`w-14 h-14 bg-gradient-to-br ${gradient} rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl group-hover:scale-110 group-hover:rotate-1 transition-all duration-500 backdrop-blur-sm`}>
-        <Icon className="text-xl text-white drop-shadow-sm" />
+      {/* Icon Container */}
+      <div className={`w-10 h-10 bg-gradient-to-br ${gradient} rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg group-hover:scale-110 group-hover:rotate-1 transition-all duration-500`}>
+        <Icon className="text-base text-white drop-shadow-sm" />
       </div>
       
-      <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-2 tracking-wide">{title}</h3>
-      <p className="text-slate-600 dark:text-slate-400 text-sm font-medium leading-relaxed tracking-wide">{description}</p>
+      <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1 tracking-wide">{title}</h3>
+      <p className="text-slate-600 dark:text-slate-400 text-xs font-medium leading-relaxed">{description}</p>
       
-      {/* Premium Active Indicator */}
+      {/* Active Indicator */}
       {isActive && (
-        <div className="absolute top-3 right-3 flex items-center gap-1">
-          <div className={`w-2 h-2 bg-gradient-to-r from-${borderColor}-500 to-${borderColor === 'teal' ? 'emerald' : borderColor === 'amber' ? 'orange' : borderColor === 'purple' ? 'pink' : 'green'}-500 rounded-full shadow-sm`}></div>
-          <div className={`w-1.5 h-1.5 bg-gradient-to-r from-${borderColor === 'teal' ? 'emerald' : borderColor === 'amber' ? 'orange' : borderColor === 'purple' ? 'pink' : 'green'}-500 to-${borderColor}-500 rounded-full shadow-sm animate-pulse`}></div>
+        <div className="absolute top-2 right-2 flex items-center gap-1">
+          <div className={`w-1.5 h-1.5 bg-gradient-to-r from-${borderColor}-500 to-${borderColor === 'teal' ? 'emerald' : borderColor === 'amber' ? 'orange' : borderColor === 'purple' ? 'pink' : 'green'}-500 rounded-full shadow-sm`}></div>
+          <div className={`w-1 h-1 bg-gradient-to-r from-${borderColor === 'teal' ? 'emerald' : borderColor === 'amber' ? 'orange' : borderColor === 'purple' ? 'pink' : 'green'}-500 to-${borderColor}-500 rounded-full shadow-sm animate-pulse`}></div>
         </div>
       )}
       
-      {/* Premium Bottom Accent */}
-      <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-${borderColor}-400/30 to-transparent transition-all duration-300 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}></div>
+      {/* Bottom Accent */}
+      <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-px bg-gradient-to-r from-transparent via-${borderColor}-400/30 to-transparent transition-all duration-300 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}></div>
     </div>
   </button>
 ));
@@ -494,7 +497,7 @@ const MainApp = memo(() => {
       </div>
 
       {/* Ultra Premium Search Bar Container */}
-      <div className="relative mb-12 overflow-visible">
+      <div className="relative mb-16 overflow-visible">
         {/* Premium Background Pattern */}
         <div className="absolute inset-0 opacity-5 dark:opacity-10">
           <div className="absolute inset-0" style={{
@@ -564,50 +567,52 @@ ChatButton.displayName = 'ChatButton';
 // Optimized App with Routes including Admin
 const App = memo(() => (
   <ThemeProvider>
-    <Router>
-      <Suspense fallback={
-        <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
-            <p className="text-white text-lg">Loading...</p>
+    <ToastProvider>
+      <Router>
+        <Suspense fallback={
+          <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
+              <p className="text-white text-lg">Loading...</p>
+            </div>
           </div>
-        </div>
-      }>
-        <Routes>
-          {/* Public */}
-          <Route path="/" element={<MainApp />} />
-          <Route path="/all-places-detail" element={<AllPlacesDetail />} />
-          <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
-          <Route path="/all-nature-places" element={<AllNatureDetail />} />
-          <Route path="/map" element={<div>Nepal Map Page</div>} />
-          <Route path="/searchresult" element={<SearchResultPage />} />
-          <Route path="/chat" element={<ChatPage />} />
-          <Route path="/recommendation" element={<RecommendationPage />} />
-          <Route path="/details" element={<DetailPage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/guide" element={<Itinerary />} />
-          <Route path="/explore-nepal" element={<ExploreNepal />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/newsletter-archive" element={<NewsletterArchive />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/write-review" element={<WriteReview />} />
-          <Route path="/add-place" element={<AddPlace />} />
-          <Route path="/recommendation-results"element={<RecommendationResults />}/>
-          
-          {/* Authentication */}
-          <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="/sign-in" element={<SignInPage />} />
+        }>
+          <Routes>
+            {/* Public */}
+            <Route path="/" element={<MainApp />} />
+            <Route path="/all-places-detail" element={<AllPlacesDetail />} />
+            <Route path="/all-famous-spots" element={<AllSpotsDetails />} />
+            <Route path="/all-nature-places" element={<AllNatureDetail />} />
+            <Route path="/map" element={<div>Nepal Map Page</div>} />
+            <Route path="/searchresult" element={<SearchResultPage />} />
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/recommendation" element={<RecommendationPage />} />
+            <Route path="/details" element={<DetailPage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/guide" element={<Itinerary />} />
+            <Route path="/explore-nepal" element={<ExploreNepal />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/help" element={<Help />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/newsletter-archive" element={<NewsletterArchive />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/write-review" element={<WriteReview />} />
+            <Route path="/add-place" element={<AddPlace />} />
+            <Route path="/recommendation-results"element={<RecommendationResults />} />
+            
+            {/* Authentication */}
+            <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/sign-in" element={<SignInPage />} />
 
-          {/* Admin */}
-          <Route path="/admin/login" element={<Login />} />
-          <Route path="/admin/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
-        </Routes>
-      </Suspense>
-    </Router>
+            {/* Admin */}
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
+          </Routes>
+        </Suspense>
+      </Router>
+    </ToastProvider>
   </ThemeProvider>
 ));
 

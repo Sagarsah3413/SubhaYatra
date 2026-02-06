@@ -93,7 +93,7 @@ export default function HomePage() {
     e.preventDefault();
     if (searchQuery.trim()) {
       // Navigate to search results page with query
-      window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
+      window.location.href = `/searchresult?q=${encodeURIComponent(searchQuery.trim())}`;
     }
   };
 
