@@ -194,6 +194,9 @@ const MainApp = memo(() => {
   // Optimized message state
   const [message, setMessage] = useState(() => t('homepage.welcome'));
   const [searchPlaceholder, setSearchPlaceholder] = useState(() => t('homepage.searchPlaceholder'));
+  
+  // Category filter state for search
+  const [activeCategory, setActiveCategory] = useState("all");
 
   // Hotel count state
   const [hotelCount, setHotelCount] = useState(0);
@@ -238,21 +241,25 @@ const MainApp = memo(() => {
     searchAll: useCallback(() => {
       setMessage(t('homepage.welcome'));
       setSearchPlaceholder(t('homepage.searchPlaceholder'));
+      setActiveCategory("all");
     }, [t]),
     
     hotels: useCallback(() => {
       setMessage(t('homepage.welcomeMessage'));
       setSearchPlaceholder(t('homepage.searchHotels'));
+      setActiveCategory("hotel");
     }, [t]),
     
     activities: useCallback(() => {
       setMessage(t('homepage.experienceMessage'));
       setSearchPlaceholder(t('homepage.searchActivities'));
+      setActiveCategory("place");
     }, [t]),
     
     restaurants: useCallback(() => {
       setMessage(t('homepage.foodMessage'));
       setSearchPlaceholder(t('homepage.searchRestaurants'));
+      setActiveCategory("restaurant");
     }, [t])
   };
 
@@ -510,7 +517,7 @@ const MainApp = memo(() => {
 
         <div className="relative z-10 flex justify-center max-w-4xl mx-auto px-4">
           <div className="w-full bg-gradient-to-r from-white/95 to-gray-50/95 dark:from-slate-800/95 dark:to-slate-700/95 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border-2 border-gray-200 dark:border-slate-600 overflow-visible">
-            <SearchBar placeholder={searchPlaceholder} />
+            <SearchBar placeholder={searchPlaceholder} category={activeCategory} />
           </div>
         </div>
       </div>

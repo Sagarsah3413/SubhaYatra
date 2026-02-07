@@ -161,11 +161,10 @@ def send_welcome_email(email):
                 
                 <!-- Header -->
                 <div class="header" style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 30%, #10b981 70%, #059669 100%); padding: 40px 20px; text-align: center; position: relative; overflow: hidden;">
-                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"mountains\" x=\"0\" y=\"0\" width=\"20\" height=\"20\" patternUnits=\"userSpaceOnUse\"><polygon points=\"10,5 15,15 5,15\" fill=\"%23ffffff\" opacity=\"0.1\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23mountains)\"/></svg>') repeat;"></div>
                     <div style="position: relative; z-index: 1;">
                         <h1 style="color: white; margin: 0; font-size: 32px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">🏔️ Welcome to Roamio Wanderly!</h1>
                         <p style="color: #e0f2fe; margin: 15px 0 0 0; font-size: 18px; font-weight: 300;">Your Gateway to Nepal's Hidden Treasures</p>
-                        <div style="margin-top: 20px; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 25px; display: inline-block; backdrop-filter: blur(10px);">
+                        <div style="margin-top: 20px; padding: 10px 20px; background: rgba(255,255,255,0.2); border-radius: 25px; display: inline-block;">
                             <span style="color: white; font-size: 14px; font-weight: 500;">✨ Adventure Awaits ✨</span>
                         </div>
                     </div>

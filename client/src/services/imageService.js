@@ -9,13 +9,15 @@ class ImageService {
    * Get the correct image path based on item type and image name
    */
   getImageUrl(item, imageIndex = 0) {
-    console.log(`imageService.getImageUrl called for: ${item?.name}`, {
-      item,
-      imageIndex
+    console.log(`🔍 imageService.getImageUrl called for: ${item?.name}`, {
+      type: item?.type,
+      imageIndex,
+      image_url: item?.image_url,
+      all_images: item?.all_images
     });
 
     if (!item) {
-      console.log('imageService: No item provided');
+      console.log('❌ imageService: No item provided');
       return null;
     }
 
@@ -25,34 +27,34 @@ class ImageService {
     // Check if item has all_images array
     if (item.all_images && Array.isArray(item.all_images) && item.all_images.length > 0) {
       imagePath = item.all_images[imageIndex] || item.all_images[0];
-      console.log(`imageService: Found image in all_images[${imageIndex}]:`, imagePath);
+      console.log(`✅ imageService: Found image in all_images[${imageIndex}]:`, imagePath);
     }
     // Fallback to image_url
     else if (item.image_url) {
       imagePath = item.image_url;
-      console.log(`imageService: Found image in image_url:`, imagePath);
+      console.log(`✅ imageService: Found image in image_url:`, imagePath);
     }
     // Fallback to images array (legacy support)
     else if (item.images && Array.isArray(item.images) && item.images.length > 0) {
       imagePath = item.images[imageIndex] || item.images[0];
-      console.log(`imageService: Found image in images[${imageIndex}]:`, imagePath);
+      console.log(`✅ imageService: Found image in images[${imageIndex}]:`, imagePath);
     }
 
-    if (!imagePath) {
-      console.log(`imageService: No image path found for ${item.name}`);
+    if (!imagePath || imagePath === 'null' || imagePath.trim() === '') {
+      console.log(`❌ imageService: No valid image path found for ${item.name}`);
       return null;
     }
 
     // If it's already a full URL, return as is
     if (imagePath.startsWith('http')) {
-      console.log(`imageService: Returning full URL:`, imagePath);
+      console.log(`🌐 imageService: Returning full URL:`, imagePath);
       return imagePath;
     }
 
     // If it starts with /datasets, use as is
     if (imagePath.startsWith('/datasets')) {
       const fullUrl = `${API_BASE_URL}${imagePath}`;
-      console.log(`imageService: Returning datasets URL:`, fullUrl);
+      console.log(`📁 imageService: Returning datasets URL:`, fullUrl);
       return fullUrl;
     }
 
@@ -61,17 +63,19 @@ class ImageService {
 
     // Determine the correct folder based on item type
     const imageFolder = this.getImageFolder(item.type);
+    console.log(`📂 imageService: Image folder for type "${item.type}":`, imageFolder);
     
     // Handle different path formats
     if (imagePath.startsWith(imageFolder)) {
+      // Path already includes folder (e.g., "hotel_images/...")
       const fullUrl = `${API_BASE_URL}/datasets/${imagePath}`;
-      console.log(`imageService: Returning folder-prefixed URL:`, fullUrl);
+      console.log(`✅ imageService: Path includes folder, returning:`, fullUrl);
       return fullUrl;
     }
 
     // If path doesn't start with folder name, prepend it
     const fullUrl = `${API_BASE_URL}/datasets/${imageFolder}/${imagePath}`;
-    console.log(`imageService: Returning constructed URL:`, fullUrl);
+    console.log(`🔧 imageService: Prepending folder, returning:`, fullUrl);
     return fullUrl;
   }
 

@@ -87,9 +87,9 @@ export default function Footer() {
         // Show professional success notification
         setNotification({
           type: 'success',
-          title: 'Welcome to Roamio Wanderly!',
-          message: 'Successfully subscribed! Welcome email sent to your inbox.',
-          details: `Thank you for joining our travel community. You'll receive the latest Nepal travel insights, exclusive destination guides, and personalized recommendations.`,
+          title: 'Subscription Confirmed',
+          message: 'Welcome to Roamio Wanderly! Your subscription is now active.',
+          details: `Thank you for joining our community of travelers. You'll receive curated Nepal travel insights, exclusive destination guides, and expert recommendations delivered to your inbox.`,
           timestamp: new Date().toLocaleTimeString()
         });
         
@@ -104,9 +104,9 @@ export default function Footer() {
         // Show professional error notification
         setNotification({
           type: 'error',
-          title: 'Subscription Failed',
-          message: 'Unable to complete subscription. Please try again.',
-          details: error.response?.data?.message || 'Please check your email address and try again. If the problem persists, contact our support team.',
+          title: 'Subscription Unsuccessful',
+          message: 'We encountered an issue processing your subscription.',
+          details: error.response?.data?.message || 'Please verify your email address and try again. If the issue persists, our support team is here to assist you.',
           timestamp: new Date().toLocaleTimeString()
         });
         
@@ -121,9 +121,9 @@ export default function Footer() {
       // Show validation notification
       setNotification({
         type: 'warning',
-        title: 'Email Required',
-        message: 'Please enter your email address to subscribe.',
-        details: 'A valid email address is required to receive our newsletter and travel updates.',
+        title: 'Email Address Required',
+        message: 'Please provide your email address to continue.',
+        details: 'Enter a valid email address to subscribe to our newsletter and receive exclusive travel content and updates.',
         timestamp: new Date().toLocaleTimeString()
       });
       
@@ -547,7 +547,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <h3 className="text-sm font-black text-white tracking-wide">{t('footer.stayUpdated')}</h3>
-                  <p className="text-xs text-gray-400 mt-0.5 font-semibold">Get travel insights & updates</p>
+                  <p className="text-xs text-gray-400 mt-0.5 font-semibold">Curated travel insights delivered weekly</p>
                 </div>
               </div>
               

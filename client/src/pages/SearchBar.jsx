@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import SearchDropdownList from "../components/SearchDropdownList";
 
-export default function SearchBar({ placeholder, className = "", onSearch = null }) {
+export default function SearchBar({ placeholder, className = "", onSearch = null, category = "all" }) {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,6 +22,12 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
   const [isListening, setIsListening] = useState(false);
   const [speechSupported, setSpeechSupported] = useState(false);
   const [isHomePage, setIsHomePage] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("all"); // Internal category state
+
+  // Update internal category when prop changes
+  useEffect(() => {
+    setActiveCategory(category);
+  }, [category]);
 
   // Check if we're on homepage
   useEffect(() => {
@@ -75,7 +81,7 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
     
     try {
       const res = await fetch(
-        `http://localhost:8000/api/search?q=${encodeURIComponent(searchQuery)}`
+        `http://localhost:8000/api/search?q=${encodeURIComponent(searchQuery)}&category=${activeCategory}`
       );
       
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -99,7 +105,7 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [activeCategory]);
 
   // Calculate relevance score
   const calculateRelevance = (item, query) => {
@@ -138,7 +144,7 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
         clearTimeout(searchTimeoutRef.current);
       }
     };
-  }, [query, performSearch]);
+  }, [query, activeCategory, performSearch]); // Added activeCategory dependency
 
   // Keyboard navigation
   const handleKeyDown = (e) => {
@@ -173,7 +179,8 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
   const handleSearch = () => {
     if (!query.trim()) return;
     
-    navigate(`/searchresult?q=${encodeURIComponent(query)}`);
+    // Include category in the search URL
+    navigate(`/searchresult?q=${encodeURIComponent(query)}&category=${activeCategory}`);
     setShowSuggestions(false);
     setResults([]);
     
@@ -255,6 +262,38 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
 
   return (
     <div className={`relative w-full max-w-4xl mx-auto ${className}`}>
+      {/* Active Category Indicator */}
+      {activeCategory !== "all" && (
+        <div className={`
+          mb-2 flex items-center gap-2 px-3 py-1.5 rounded-lg w-fit
+          ${theme === 'dark' 
+            ? 'bg-slate-700/80 text-slate-300' 
+            : 'bg-gray-100 text-gray-700'
+          }
+        `}>
+          <span className="text-xs font-medium">
+            Searching in: {
+              activeCategory === 'hotel' ? '🏨 Hotels' :
+              activeCategory === 'place' ? '🗺️ Places' :
+              activeCategory === 'restaurant' ? '🍴 Restaurants' :
+              '🌍 All'
+            }
+          </span>
+          <button
+            onClick={() => setActiveCategory("all")}
+            className={`
+              text-xs px-2 py-0.5 rounded transition-colors
+              ${theme === 'dark' 
+                ? 'hover:bg-slate-600 text-slate-400 hover:text-white' 
+                : 'hover:bg-gray-200 text-gray-500 hover:text-gray-700'
+              }
+            `}
+          >
+            Clear
+          </button>
+        </div>
+      )}
+      
       {/* Search Container */}
       <div className={`
         relative flex items-center rounded-xl shadow-lg border overflow-hidden

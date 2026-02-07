@@ -13,11 +13,28 @@ if not os.path.exists(UPLOAD_DIR):
 
 def serialize_place(place):
     """Serialize a place object with all fields"""
+    # Parse all_images and normalize paths
+    all_images = []
+    if place.all_images:
+        try:
+            images = json.loads(place.all_images)
+            # Normalize each image path
+            for img in images:
+                if img:
+                    # Convert backslashes to forward slashes
+                    img = img.replace('\\', '/')
+                    # Add folder prefix if missing
+                    if not img.startswith('destination_images/'):
+                        img = f"destination_images/{img}"
+                    all_images.append(img)
+        except:
+            all_images = []
+    
     return {
         'id': place.id,
         'name': place.name,
         'location': place.location,
-        'type': place.type,
+        'type': place.type or 'Place',  # Ensure type is always set
         'description': place.description,
         'tags': place.tags,
         'image_url': place.image_url,
@@ -29,7 +46,7 @@ def serialize_place(place):
         'accessibility': place.accessibility,
         'transportation': place.transportation,
         'province': place.province,
-        'all_images': json.loads(place.all_images) if place.all_images else [],
+        'all_images': all_images,
         'created_at': place.created_at
     }
 

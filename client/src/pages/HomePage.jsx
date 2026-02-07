@@ -28,6 +28,12 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
+// Import new section components
+import HotelSection from "../components/HotelSection";
+import RestaurantSection from "../components/RestaurantSection";
+import ThingsToDoSection from "../components/ThingsToDoSection";
+import CategoryFilter from "../components/CategoryFilter";
+
 export default function HomePage() {
   const { bgClass, textClass, theme } = useTheme();
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
@@ -36,6 +42,7 @@ export default function HomePage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('all'); // New: category filter state
   const [stats, setStats] = useState([
     { number: "0", label: "Amazing Places", icon: FaMapMarkerAlt },
     { number: "0", label: "Luxury Hotels", icon: FaHotel },
@@ -608,6 +615,48 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Category Filter */}
+      <CategoryFilter 
+        activeCategory={activeCategory}
+        onCategoryChange={setActiveCategory}
+      />
+
+      {/* Conditional Sections Based on Active Category */}
+      <div id="category-sections">
+        {/* Filter Status Banner */}
+        {activeCategory !== "all" && (
+          <div className={`max-w-7xl mx-auto px-4 py-6 mb-8`}>
+            <div className={`
+              text-center p-6 rounded-2xl border-2
+              ${theme === 'dark'
+                ? 'bg-slate-800 border-teal-500'
+                : 'bg-teal-50 border-teal-500'
+              }
+            `}>
+              <p className={`text-lg font-bold ${
+                theme === 'dark' ? 'text-white' : 'text-gray-900'
+              }`}>
+                Showing: {
+                  activeCategory === 'hotel' ? '🏨 Hotels Only' :
+                  activeCategory === 'restaurant' ? '🍴 Restaurants Only' :
+                  activeCategory === 'place' ? '🗺️ Things To Do Only' :
+                  'All Categories'
+                }
+              </p>
+              <p className={`text-sm mt-2 ${
+                theme === 'dark' ? 'text-slate-300' : 'text-gray-600'
+              }`}>
+                Click "Search All" above to see all categories
+              </p>
+            </div>
+          </div>
+        )}
+
+        {(activeCategory === "all" || activeCategory === "hotel") && <HotelSection />}
+        {(activeCategory === "all" || activeCategory === "restaurant") && <RestaurantSection />}
+        {(activeCategory === "all" || activeCategory === "place") && <ThingsToDoSection />}
+      </div>
 
       {/* Ultra-Premium CTA Section */}
       <section className="py-24 bg-gradient-to-br from-gray-900 via-slate-800 to-gray-900 text-white relative overflow-hidden">

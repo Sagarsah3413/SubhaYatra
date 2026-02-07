@@ -7,9 +7,27 @@ hotels_bp = Blueprint('hotels', __name__)
 
 def serialize_hotel(hotel):
     """Serialize a hotel object with all fields"""
+    # Parse all_images and normalize paths
+    all_images = []
+    if hotel.all_images:
+        try:
+            images = json.loads(hotel.all_images)
+            # Normalize each image path
+            for img in images:
+                if img:
+                    # Convert backslashes to forward slashes
+                    img = img.replace('\\', '/')
+                    # Add folder prefix if missing
+                    if not img.startswith('hotel_images/'):
+                        img = f"hotel_images/{img}"
+                    all_images.append(img)
+        except:
+            all_images = []
+    
     return {
         'id': hotel.id,
         'name': hotel.name,
+        'type': 'Hotel',  # Add type field for frontend
         'location': hotel.location,
         'description': hotel.description,
         'tags': hotel.tags,
@@ -17,7 +35,7 @@ def serialize_hotel(hotel):
         'rating': hotel.rating,
         'price_range': hotel.price_range,
         'place_id': hotel.place_id,
-        'all_images': json.loads(hotel.all_images) if hotel.all_images else []
+        'all_images': all_images
     }
 
 @hotels_bp.route('/hotels', methods=['GET'])

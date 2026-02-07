@@ -7,9 +7,27 @@ restaurants_bp = Blueprint('restaurants', __name__)
 
 def serialize_restaurant(restaurant):
     """Serialize a restaurant object with all fields"""
+    # Parse all_images and normalize paths
+    all_images = []
+    if restaurant.all_images:
+        try:
+            images = json.loads(restaurant.all_images)
+            # Normalize each image path
+            for img in images:
+                if img:
+                    # Convert backslashes to forward slashes
+                    img = img.replace('\\', '/')
+                    # Add folder prefix if missing
+                    if not img.startswith('restaurant_images/'):
+                        img = f"restaurant_images/{img}"
+                    all_images.append(img)
+        except:
+            all_images = []
+    
     return {
         'id': restaurant.id,
         'name': restaurant.name,
+        'type': 'Restaurant',  # Add type field for frontend
         'location': restaurant.location,
         'description': restaurant.description,
         'tags': restaurant.tags,
@@ -17,7 +35,7 @@ def serialize_restaurant(restaurant):
         'rating': restaurant.rating,
         'price_range': restaurant.price_range,
         'place_id': restaurant.place_id,
-        'all_images': json.loads(restaurant.all_images) if restaurant.all_images else []
+        'all_images': all_images
     }
 
 @restaurants_bp.route('/restaurants', methods=['GET'])

@@ -14,13 +14,16 @@ export default function SearchResultPage() {
   const [error, setError] = useState(null);
   const [searchStats, setSearchStats] = useState(null);
   
-  // Get query from URL
-  const query = new URLSearchParams(location.search).get("q") || "";
+  // Get query and category from URL
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get("q") || "";
+  const category = searchParams.get("category") || "all";
   
   console.log('SearchResultPage loaded');
   console.log('Query:', query);
+  console.log('Category:', category);
 
-  const performSearch = async (searchQuery) => {
+  const performSearch = async (searchQuery, searchCategory) => {
     if (!searchQuery) {
       setError("No search query provided");
       return;
@@ -30,10 +33,12 @@ export default function SearchResultPage() {
     setError(null);
 
     try {
-      console.log('Calling API for:', searchQuery, '(unlimited results)');
+      console.log('Calling API for:', searchQuery, 'Category:', searchCategory, '(unlimited results)');
       
-      // Call API without any limit
-      const response = await fetch(`http://localhost:8000/api/places/search?q=${encodeURIComponent(searchQuery)}`);
+      // Call the unified search API with category filter
+      const response = await fetch(
+        `http://localhost:8000/api/search?q=${encodeURIComponent(searchQuery)}&category=${searchCategory}`
+      );
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -61,6 +66,7 @@ export default function SearchResultPage() {
         setResults(normalizedResults);
         setSearchStats({
           query: searchQuery,
+          category: searchCategory,
           count: data.count,
           unlimited: data.unlimited || false
         });
@@ -95,11 +101,11 @@ export default function SearchResultPage() {
   };
 
   useEffect(() => {
-    console.log('useEffect triggered, query:', query);
+    console.log('useEffect triggered, query:', query, 'category:', category);
     if (query) {
-      performSearch(query);
+      performSearch(query, category);
     }
-  }, [query]);
+  }, [query, category]);
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
@@ -119,6 +125,14 @@ export default function SearchResultPage() {
               <FaSearch className="text-blue-500 text-xl" />
               <h1 className="text-2xl font-bold">Search Results</h1>
               {query && <span className="text-lg text-gray-500">for "{query}"</span>}
+              {category !== "all" && (
+                <span className="px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-sm rounded-full font-medium">
+                  {category === 'hotel' ? '🏨 Hotels' :
+                   category === 'place' ? '🗺️ Places' :
+                   category === 'restaurant' ? '🍴 Restaurants' :
+                   '🌍 All'}
+                </span>
+              )}
             </div>
             
             <div className="text-right">
@@ -133,6 +147,16 @@ export default function SearchResultPage() {
               <div className="flex items-center gap-4">
                 <span>
                   Found <span className="font-bold text-blue-600 text-lg">{searchStats.count}</span> results
+                  {searchStats.category !== 'all' && (
+                    <span className="ml-2 text-xs">
+                      in {
+                        searchStats.category === 'hotel' ? 'Hotels' :
+                        searchStats.category === 'place' ? 'Places' :
+                        searchStats.category === 'restaurant' ? 'Restaurants' :
+                        'All Categories'
+                      }
+                    </span>
+                  )}
                 </span>
                 {searchStats.unlimited && (
                   <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full font-medium">
@@ -162,7 +186,7 @@ export default function SearchResultPage() {
           <div className="text-center py-20">
             <p className="text-red-500 text-xl mb-4">Error: {error}</p>
             <button
-              onClick={() => performSearch(query)}
+              onClick={() => performSearch(query, category)}
               className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
               Try Again
@@ -211,7 +235,7 @@ const ResultCard = ({ item, index, theme, navigate }) => {
       className={`group p-6 rounded-xl border ${
         theme === 'dark' ? 'bg-gray-800 border-gray-700 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'
       } hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 relative`}
-      onClick={() => navigate(`/details?type=Place&name=${encodeURIComponent(item.name)}`)}
+      onClick={() => navigate(`/details?type=${item.type}&name=${encodeURIComponent(item.name)}`)}
     >
       {/* Relevance Score Badge */}
       {item.relevance_score && (
@@ -226,7 +250,6 @@ const ResultCard = ({ item, index, theme, navigate }) => {
           item={item}
           className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
           style={{ width: '100%', height: '100%' }}
-          enableAI={true}
           showLoader={true}
           eager={true}
         />

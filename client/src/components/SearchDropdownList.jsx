@@ -59,7 +59,6 @@ export default function SearchDropdownList({ results, onSelect, selectedIndex = 
                   item={item}
                   className="w-full h-full object-cover"
                   style={{ width: '100%', height: '100%' }}
-                  enableAI={true}
                   showLoader={false}
                   showFallbackIcon={true}
                 />
