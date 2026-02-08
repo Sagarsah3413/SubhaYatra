@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { UserButton, SignUpButton, SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
+import { UserButton, SignUpButton, SignedIn, SignedOut, useUser, useClerk } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import NepaliCalendar from "../../pages/NepaliCalendar";
@@ -26,6 +26,7 @@ export const Header = () => {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const { t, i18n } = useTranslation();
+  const { signOut } = useClerk();
 
   // Authentication state with error handling
   let clerkAvailable = false;
@@ -2097,7 +2098,7 @@ const AuthenticationButtons = ({ clerkAvailable, onNavigation, theme }) => {
       </SignedOut>
       
       <SignedIn>
-        {/* Enhanced User Button Container */}
+        {/* Enhanced User Button Container - Fixed for Dropdown */}
         <div className={`
           flex items-center p-2 rounded-xl border backdrop-blur-xl transition-all duration-300
           hover:shadow-lg hover:scale-105 transform-gpu
@@ -2105,26 +2106,35 @@ const AuthenticationButtons = ({ clerkAvailable, onNavigation, theme }) => {
             ? 'border-teal-700/50 bg-teal-900/30 hover:bg-teal-800/40' 
             : 'border-teal-200/50 bg-teal-50/30 hover:bg-teal-100/40'
           }
-          relative overflow-hidden group
-        `}>
+          relative
+        `}
+        style={{ zIndex: 9999 }}
+        >
           <UserButton 
+            afterSignOutUrl="/"
             appearance={{
               elements: {
                 avatarBox: "w-8 h-8 rounded-lg",
-                userButtonPopoverCard: "shadow-2xl border-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl",
-                userButtonPopoverActionButton: "hover:bg-teal-50 dark:hover:bg-teal-900/50"
+                userButtonPopoverCard: "shadow-2xl border-0 bg-white dark:bg-slate-800 backdrop-blur-xl rounded-xl",
+                userButtonPopoverActionButton: "hover:bg-teal-50 dark:hover:bg-teal-900/50 rounded-lg",
+                userButtonPopoverActionButtonText: "text-gray-700 dark:text-gray-200",
+                userButtonPopoverActionButtonIcon: "text-gray-500 dark:text-gray-400",
+                userButtonPopoverFooter: "hidden"
+              },
+              layout: {
+                shimmer: false
+              }
+            }}
+            userProfileMode="modal"
+            userProfileProps={{
+              appearance: {
+                elements: {
+                  rootBox: "bg-white dark:bg-slate-800",
+                  card: "bg-white dark:bg-slate-800"
+                }
               }
             }}
           />
-          
-          {/* Subtle glow effect */}
-          <div className={`
-            absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
-            bg-gradient-to-r ${theme === 'dark' 
-              ? 'from-teal-600/10 to-cyan-600/10' 
-              : 'from-teal-500/5 to-cyan-500/5'
-            }
-          `}></div>
         </div>
       </SignedIn>
     </div>

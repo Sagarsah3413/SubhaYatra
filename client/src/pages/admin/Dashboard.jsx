@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import UserStatsCard from "../../components/UserStatsCard";
 
 export default function AdminDashboard() {
+  const navigate = useNavigate();
   const [lastLoginTime, setLastLoginTime] = useState(null);
   const [lastLogoutTime, setLastLogoutTime] = useState(null);
   const [submittedPlaces, setSubmittedPlaces] = useState([]);
@@ -113,9 +115,16 @@ export default function AdminDashboard() {
       await axios.post("http://localhost:8000/admin/logout", { activity_id });
       localStorage.removeItem("adminToken");
       localStorage.removeItem("adminActivityId");
-      window.location.href = "/login";
+      localStorage.removeItem("admin");
+      // Use navigate instead of window.location for React Router
+      navigate("/admin/login");
     } catch (err) {
       console.error("Sign-out failed:", err);
+      // Even if API fails, clear local storage and redirect
+      localStorage.removeItem("adminToken");
+      localStorage.removeItem("adminActivityId");
+      localStorage.removeItem("admin");
+      navigate("/admin/login");
     }
   };
 

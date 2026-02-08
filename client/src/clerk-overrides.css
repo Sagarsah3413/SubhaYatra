@@ -1,0 +1,53 @@
+/* Clerk UserButton Dropdown Fix */
+
+/* Ensure Clerk popover appears above everything */
+.cl-userButtonPopoverCard {
+  z-index: 99999 !important;
+  position: fixed !important;
+}
+
+.cl-userButtonPopoverRootBox {
+  z-index: 99999 !important;
+}
+
+/* Style the dropdown menu */
+.cl-userButtonPopoverCard {
+  margin-top: 8px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Style the action buttons */
+.cl-userButtonPopoverActionButton {
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+.cl-userButtonPopoverActionButton:hover {
+  background-color: rgba(20, 184, 166, 0.1) !important;
+}
+
+/* Dark mode support */
+.dark .cl-userButtonPopoverCard {
+  background-color: rgb(30, 41, 59) !important;
+  border: 1px solid rgba(71, 85, 105, 0.5) !important;
+}
+
+.dark .cl-userButtonPopoverActionButtonText {
+  color: rgb(226, 232, 240) !important;
+}
+
+.dark .cl-userButtonPopoverActionButton:hover {
+  background-color: rgba(20, 184, 166, 0.2) !important;
+}
+
+/* Ensure avatar is clickable */
+.cl-avatarBox {
+  cursor: pointer !important;
+}
+
+/* Fix any overflow issues */
+.cl-userButtonTrigger {
+  overflow: visible !important;
+}

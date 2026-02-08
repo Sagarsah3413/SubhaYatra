@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "./clerk-overrides.css"; // Clerk dropdown fix
 import App from "./App.jsx";
 import { ClerkProvider } from "@clerk/clerk-react";
 import "./i18n/index.js"; // Initialize i18n
@@ -31,7 +32,10 @@ const renderApp = () => {
   const root = createRoot(document.getElementById("root"));
   
   const AppWithProviders = PUBLISHABLE_KEY ? (
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <ClerkProvider 
+      publishableKey={PUBLISHABLE_KEY}
+      afterSignOutUrl="/"
+    >
       <StrictMode>
         <App />
       </StrictMode>

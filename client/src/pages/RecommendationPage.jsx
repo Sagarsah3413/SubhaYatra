@@ -59,7 +59,8 @@ export default function RecommendationPage() {
     if (!formData.tripDuration)
       newErrors.tripDuration = "Select trip duration";
     if (formData.tripTypes.length === 0)
-      newErrors.tripTypes = "Select a trip type";
+      newErrors.tripTypes = "Select at least one trip type";
+    // Allow 1 or 2 selections (removed max validation)
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -363,29 +364,69 @@ export default function RecommendationPage() {
                 )}
               </div>
 
-              {/* Trip Types */}
+              {/* Trip Types - Select 1 or 2 (Optional) */}
               <div>
-                <label className={`block text-sm font-semibold mb-3 ${
+                <label className={`block text-sm font-semibold mb-2 ${
                   theme === 'dark' ? 'text-slate-200' : 'text-gray-700'
                 }`}>
-                  Preferred Trip Type
+                  <span className="flex items-center justify-between">
+                    <span className="flex items-center gap-2">
+                      <span>🎯</span>
+                      <span>Preferred Trip Types</span>
+                    </span>
+                    <span className={`text-xs font-normal px-3 py-1 rounded-full ${
+                      formData.tripTypes.length === 0
+                        ? theme === 'dark' ? 'bg-slate-700 text-slate-400' : 'bg-gray-200 text-gray-500'
+                        : formData.tripTypes.length === 2
+                          ? 'bg-teal-500/20 text-teal-600 dark:text-teal-400'
+                          : 'bg-cyan-500/20 text-cyan-600 dark:text-cyan-400'
+                    }`}>
+                      {formData.tripTypes.length}/2 selected
+                    </span>
+                  </span>
                 </label>
+                <p className={`text-xs mb-3 ${
+                  theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
+                }`}>
+                  Choose 1 or 2 trip types that interest you most (optional to select 2)
+                </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {tripOptions.map((option) => {
-                    const selected = formData.tripTypes[0] === `${option.icon} ${option.title}`;
+                    const optionValue = `${option.icon} ${option.title}`;
+                    const selected = formData.tripTypes.includes(optionValue);
+                    const selectionIndex = formData.tripTypes.indexOf(optionValue);
+                    const isDisabled = !selected && formData.tripTypes.length >= 2;
+                    
                     return (
                       <button
                         key={option.title}
                         type="button"
-                        onClick={() =>
-                          setFormData({ ...formData, tripTypes: [`${option.icon} ${option.title}`] })
-                        }
-                        className={`p-4 rounded-xl border-2 transition-all duration-200 text-left group ${
+                        disabled={isDisabled}
+                        onClick={() => {
+                          if (selected) {
+                            // Remove if already selected
+                            setFormData({
+                              ...formData,
+                              tripTypes: formData.tripTypes.filter(t => t !== optionValue)
+                            });
+                          } else if (formData.tripTypes.length < 2) {
+                            // Add if less than 2 selected
+                            setFormData({
+                              ...formData,
+                              tripTypes: [...formData.tripTypes, optionValue]
+                            });
+                          }
+                        }}
+                        className={`p-4 rounded-xl border-2 transition-all duration-200 text-left group relative ${
                           selected
                             ? 'border-teal-500 bg-teal-500/10 shadow-lg shadow-teal-500/20'
-                            : theme === 'dark'
-                              ? 'border-slate-600 bg-slate-900/30 hover:border-slate-500 hover:bg-slate-900/50'
-                              : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100'
+                            : isDisabled
+                              ? theme === 'dark'
+                                ? 'border-slate-700 bg-slate-900/20 opacity-50 cursor-not-allowed'
+                                : 'border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
+                              : theme === 'dark'
+                                ? 'border-slate-600 bg-slate-900/30 hover:border-slate-500 hover:bg-slate-900/50'
+                                : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100'
                         }`}
                       >
                         <div className="flex items-start gap-3">
@@ -408,14 +449,29 @@ export default function RecommendationPage() {
                           </div>
                           {selected && (
                             <div className="flex-shrink-0">
-                              <div className="w-5 h-5 rounded-full bg-teal-500 flex items-center justify-center">
-                                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                </svg>
+                              <div className="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center">
+                                <span className="text-white text-xs font-bold">
+                                  {selectionIndex + 1}
+                                </span>
                               </div>
                             </div>
                           )}
                         </div>
+                        
+                        {/* Selection indicator */}
+                        {selected && (
+                          <div className="absolute top-2 right-2">
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                              selectionIndex === 0
+                                ? 'bg-gradient-to-br from-teal-500 to-cyan-500'
+                                : 'bg-gradient-to-br from-cyan-500 to-emerald-500'
+                            } shadow-lg`}>
+                              <span className="text-white text-xs font-bold">
+                                {selectionIndex + 1}
+                              </span>
+                            </div>
+                          </div>
+                        )}
                       </button>
                     );
                   })}
@@ -424,6 +480,22 @@ export default function RecommendationPage() {
                   <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
                     <span>⚠️</span> {errors.tripTypes}
                   </p>
+                )}
+                {formData.tripTypes.length > 0 && !errors.tripTypes && (
+                  <div className={`mt-3 p-3 rounded-lg ${
+                    theme === 'dark' ? 'bg-teal-500/10 border border-teal-500/20' : 'bg-teal-50 border border-teal-200'
+                  }`}>
+                    <p className={`text-xs font-medium ${
+                      theme === 'dark' ? 'text-teal-400' : 'text-teal-700'
+                    }`}>
+                      ✨ Selected: {formData.tripTypes.map((type, idx) => (
+                        <span key={idx}>
+                          {type.split(' ').slice(1).join(' ')}
+                          {idx < formData.tripTypes.length - 1 ? ' & ' : ''}
+                        </span>
+                      ))}
+                    </p>
+                  </div>
                 )}
               </div>
 
