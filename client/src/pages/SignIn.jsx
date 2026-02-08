@@ -37,42 +37,192 @@ export default function SignInPage() {
       
       {/* Ultra-Premium Hero Section */}
       <section className="flex-1 relative overflow-hidden">
-        {/* Dynamic Background */}
+        {/* Animated Gradient Background - Using inline styles like Header */}
         <div 
           className="absolute inset-0"
           style={{
             background: theme === 'dark' 
               ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%)'
-              : 'linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 25%, #99f6e4 50%, #5eead4 75%, #2dd4bf 100%)'
+              : 'linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 25%, #99f6e4 50%, #5eead4 75%, #2dd4bf 100%)',
+            backgroundSize: '400% 400%',
+            animation: 'gradient-shift-bg 15s ease infinite'
           }}
         />
 
+        {/* Animated Mesh Gradient Overlay - Using inline styles like Header */}
+        <div 
+          className="absolute inset-0 opacity-30"
+          style={{
+            background: theme === 'dark'
+              ? 'radial-gradient(circle at 20% 50%, rgba(20, 184, 166, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.3) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(14, 165, 233, 0.2) 0%, transparent 50%)'
+              : 'radial-gradient(circle at 20% 50%, rgba(20, 184, 166, 0.4) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.4) 0%, transparent 50%), radial-gradient(circle at 40% 20%, rgba(14, 165, 233, 0.3) 0%, transparent 50%)',
+            backgroundSize: '200% 200%',
+            animation: 'mesh-gradient 20s ease-in-out infinite'
+          }}
+        />
+
+        {/* Ultra-Premium Enterprise Background - Same as Header */}
+        <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.025] pointer-events-none overflow-hidden">
+          {/* Primary gradient layer with animation */}
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.6) 0%, transparent 70%),
+              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.4) 0%, transparent 70%),
+              radial-gradient(circle at 50% 5%, rgba(16, 185, 129, 0.35) 0%, transparent 80%),
+              radial-gradient(circle at 20% 90%, rgba(139, 92, 246, 0.3) 0%, transparent 60%),
+              radial-gradient(circle at 80% 10%, rgba(236, 72, 153, 0.25) 0%, transparent 65%)
+            `,
+            backgroundSize: '1600px 1600px, 1200px 1200px, 1800px 1800px, 800px 800px, 1000px 1000px',
+            animation: 'float 25s ease-in-out infinite'
+          }}></div>
+          
+          {/* Secondary geometric pattern */}
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(45deg, transparent 47%, rgba(6, 182, 212, 0.03) 48%, rgba(6, 182, 212, 0.03) 52%, transparent 53%),
+              linear-gradient(-45deg, transparent 47%, rgba(16, 185, 129, 0.02) 48%, rgba(16, 185, 129, 0.02) 52%, transparent 53%),
+              linear-gradient(90deg, transparent 47%, rgba(59, 130, 246, 0.015) 48%, rgba(59, 130, 246, 0.015) 52%, transparent 53%)
+            `,
+            backgroundSize: '120px 120px, 80px 80px, 200px 200px'
+          }}></div>
+          
+          {/* Tertiary dot pattern */}
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px',
+            opacity: 0.3
+          }}></div>
+        </div>
+
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
-          {/* Floating Travel Icons */}
-          {[...Array(15)].map((_, i) => (
+          {/* Floating Travel Icons with Parallax */}
+          {[...Array(20)].map((_, i) => (
             <div
               key={i}
-              className="absolute opacity-10 animate-float"
+              className="absolute opacity-10"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 0.3}s`,
-                animationDuration: `${6 + Math.random() * 6}s`
+                animation: `float-parallax ${8 + Math.random() * 8}s ease-in-out infinite`,
+                animationDelay: `${i * 0.4}s`
               }}
             >
               {[FaGlobe, FaCamera, FaCompass, FaMapMarkerAlt, FaPlane, FaHeart][i % 6]({ 
-                size: 20 + Math.random() * 40 
+                size: 20 + Math.random() * 50,
+                className: "drop-shadow-lg"
               })}
             </div>
           ))}
 
-          {/* Geometric Patterns */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-20 left-20 w-32 h-32 border-2 border-teal-500 rotate-45 animate-spin-slow"></div>
-            <div className="absolute bottom-32 right-32 w-24 h-24 border-2 border-cyan-500 rotate-12 animate-pulse"></div>
-            <div className="absolute top-1/2 left-10 w-16 h-16 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-bounce"></div>
-            <div className="absolute bottom-20 left-1/3 w-20 h-20 border border-emerald-400 rounded-full animate-ping"></div>
+          {/* Animated Geometric Patterns */}
+          <div className="absolute inset-0 opacity-10">
+            {/* Rotating Squares */}
+            <div 
+              className="absolute top-20 left-20 w-32 h-32 border-2 border-teal-500"
+              style={{
+                transform: 'rotate(45deg)',
+                animation: 'spin-slow-signin 25s linear infinite'
+              }}
+            ></div>
+            <div 
+              className="absolute top-40 right-40 w-40 h-40 border-2 border-cyan-400"
+              style={{
+                transform: 'rotate(12deg)',
+                animation: 'spin-reverse 30s linear infinite'
+              }}
+            ></div>
+            
+            {/* Pulsing Circles */}
+            <div 
+              className="absolute bottom-32 right-32 w-24 h-24 border-2 border-cyan-500 rounded-full"
+              style={{
+                animation: 'pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+              }}
+            ></div>
+            <div 
+              className="absolute top-1/3 right-1/4 w-32 h-32 border border-emerald-400 rounded-full"
+              style={{
+                animation: 'ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite'
+              }}
+            ></div>
+            
+            {/* Floating Orbs */}
+            <div 
+              className="absolute top-1/2 left-10 w-16 h-16 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full blur-xl"
+              style={{
+                animation: 'float-orb 8s ease-in-out infinite'
+              }}
+            ></div>
+            <div 
+              className="absolute bottom-1/4 right-1/3 w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full blur-xl"
+              style={{
+                animation: 'float-orb-delayed 10s ease-in-out infinite 2s'
+              }}
+            ></div>
+            <div 
+              className="absolute top-1/4 left-1/3 w-24 h-24 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full blur-xl"
+              style={{
+                animation: 'float-orb-slow 12s ease-in-out infinite 1s'
+              }}
+            ></div>
+            
+            {/* Animated Lines */}
+            <div 
+              className="absolute bottom-20 left-1/3 w-20 h-20 border border-emerald-400 rounded-full"
+              style={{
+                animation: 'scale-pulse 3s ease-in-out infinite'
+              }}
+            ></div>
+            <div 
+              className="absolute top-1/4 right-1/4 w-1 h-32 bg-gradient-to-b from-transparent via-teal-400 to-transparent"
+              style={{
+                animation: 'slide-vertical 4s ease-in-out infinite'
+              }}
+            ></div>
+            <div 
+              className="absolute bottom-1/3 left-1/4 w-32 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+              style={{
+                animation: 'slide-horizontal 5s ease-in-out infinite'
+              }}
+            ></div>
+          </div>
+
+          {/* Particle System */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(30)].map((_, i) => (
+              <div
+                key={`particle-${i}`}
+                className="absolute w-1 h-1 bg-white rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  animation: `particle ${3 + Math.random() * 4}s linear infinite`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  opacity: Math.random() * 0.5 + 0.2
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Animated Wave Pattern */}
+          <div className="absolute bottom-0 left-0 right-0 h-64 opacity-10">
+            <svg className="absolute bottom-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <path 
+                style={{ animation: 'wave 8s ease-in-out infinite' }}
+                fill="currentColor" 
+                fillOpacity="0.3" 
+                d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+              />
+            </svg>
+            <svg className="absolute bottom-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+              <path 
+                style={{ animation: 'wave-delayed 10s ease-in-out infinite 1s' }}
+                fill="currentColor" 
+                fillOpacity="0.2" 
+                d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+              />
+            </svg>
           </div>
         </div>
 
@@ -220,12 +370,12 @@ export default function SignInPage() {
                 <div className="mt-6 text-center">
                   <p className="text-white/60 text-sm">
                     Don't have an account?{' '}
-                    <a 
-                      href="/sign-up" 
-                      className="text-teal-300 hover:text-teal-200 font-semibold transition-colors duration-300"
+                    <button
+                      onClick={() => navigate('/sign-up')}
+                      className="text-teal-300 hover:text-teal-200 font-semibold transition-colors duration-300 cursor-pointer hover:underline"
                     >
                       Sign up for free
-                    </a>
+                    </button>
                   </p>
                 </div>
               </div>
@@ -238,61 +388,6 @@ export default function SignInPage() {
       </section>
 
       <Footer />
-
-      {/* Custom Animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .animate-spin-slow {
-          animation: spin-slow 20s linear infinite;
-        }
-        
-        .animate-in {
-          animation-fill-mode: both;
-        }
-        
-        .slide-in-from-left-8 {
-          animation: slideInFromLeft 1s ease-out;
-        }
-        
-        .slide-in-from-right-8 {
-          animation: slideInFromRight 1s ease-out;
-        }
-        
-        @keyframes slideInFromLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-2rem);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        
-        @keyframes slideInFromRight {
-          from {
-            opacity: 0;
-            transform: translateX(2rem);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }

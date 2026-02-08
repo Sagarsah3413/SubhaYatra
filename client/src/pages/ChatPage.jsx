@@ -432,7 +432,7 @@ Provide a brief, helpful response:`;
   };
 
   return (
-    <div className="min-h-screen text-white flex flex-col relative overflow-hidden">
+    <div className="min-h-screen text-white flex flex-col relative chat-page-container">
       {/* Homepage-style Background */}
       <div className="fixed inset-0 w-full h-full z-0">
         {/* Base gradient */}
@@ -460,17 +460,18 @@ Provide a brief, helpful response:`;
       </div>
 
       {/* Content Container - Above Background */}
-      <div className="relative z-10 flex flex-col min-h-screen">
+      <div className="relative z-10 flex flex-col h-screen overflow-hidden">
         <Header />
 
-        <div className="flex flex-1">
+        {/* Full Page Chat Layout - Fixed Height */}
+        <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Sidebar */}
           <div className={`${
-            sidebarCollapsed ? 'w-16' : 'w-80'
-          } transition-all duration-300 bg-white/10 border-slate-200/20 backdrop-blur-xl border-r shadow-lg flex flex-col`}>
+            sidebarCollapsed ? 'w-20' : 'w-80'
+          } transition-all duration-300 bg-slate-800/50 backdrop-blur-xl border-r border-slate-700/50 flex flex-col`}>
             
             {/* Sidebar Header */}
-            <div className="p-6 border-b border-slate-200/20">
+            <div className="p-6 border-b border-slate-700/50">
               <div className="flex items-center justify-between">
                 {!sidebarCollapsed && (
                   <div className="flex items-center space-x-3">
@@ -478,18 +479,15 @@ Provide a brief, helpful response:`;
                       <span className="text-2xl">🤖</span>
                     </div>
                     <div>
-                      <h2 className="text-lg font-black text-white">
-                        AI Assistant
-                      </h2>
-                      <p className="text-sm text-slate-300">
-                        Nepal Travel Expert
-                      </p>
+                      <h2 className="text-lg font-black text-white">AI Assistant</h2>
+                      <p className="text-sm text-slate-400">Nepal Travel Expert</p>
                     </div>
                   </div>
                 )}
                 <button
                   onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                  className="p-2 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white transition-colors duration-200"
+                  className="p-2 rounded-lg hover:bg-slate-700/50 text-slate-400 hover:text-white transition-colors"
+                  title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
                 >
                   <svg className={`w-5 h-5 transition-transform duration-300 ${
                     sidebarCollapsed ? 'rotate-180' : ''
@@ -761,63 +759,80 @@ Provide a brief, helpful response:`;
           </div>
 
           {/* Main Chat Area */}
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col min-w-0 bg-slate-900/30 backdrop-blur-sm">
             {/* Chat Header */}
-            <div className="p-6 border-b border-slate-200/20 bg-white/5 backdrop-blur-xl">
-              <div className="flex items-center space-x-3">
-                <div className="relative">
-                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center">
-                    <span className="text-white text-lg">🤖</span>
+            <div className="p-6 border-b border-slate-700/50 bg-slate-800/30">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="relative">
+                    <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                      <span className="text-white text-xl">🤖</span>
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-slate-900 animate-pulse"></div>
                   </div>
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-slate-800"></div>
+                  <div>
+                    <h1 className="text-2xl font-black text-white">Nepal Travel Assistant</h1>
+                    <p className="text-sm text-slate-400">
+                      {isTyping ? 'AI is typing...' : 
+                       aiStatus === 'ready' ? 'Powered by Gemini AI • Ready to help' :
+                       aiStatus === 'fallback' ? 'Smart Assistant • Ready to help' :
+                       'Initializing...'}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h1 className="text-xl font-black text-white">
-                    Nepal Travel Assistant
-                  </h1>
-                  <p className="text-sm text-slate-300">
-                    {isTyping ? 'AI Assistant is typing...' : 
-                     aiStatus === 'ready' ? 'Powered by Gemini AI • Ready to help' :
-                     aiStatus === 'fallback' ? 'Smart Assistant • Ready to help' :
-                     'Initializing AI Assistant...'}
-                  </p>
+                
+                {/* AI Status Badge */}
+                <div className={`px-4 py-2 rounded-full text-sm font-bold flex items-center space-x-2 ${
+                  aiStatus === 'ready' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                  aiStatus === 'fallback' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
+                  aiStatus === 'initializing' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                  'bg-red-500/20 text-red-400 border border-red-500/30'
+                }`}>
+                  <div className={`w-2 h-2 rounded-full ${
+                    aiStatus === 'ready' ? 'bg-green-500 animate-pulse' :
+                    aiStatus === 'fallback' ? 'bg-yellow-500' :
+                    aiStatus === 'initializing' ? 'bg-blue-500 animate-spin' :
+                    'bg-red-500'
+                  }`}></div>
+                  <span>
+                    {aiStatus === 'ready' ? 'AI Ready' :
+                     aiStatus === 'fallback' ? 'Smart Mode' :
+                     aiStatus === 'initializing' ? 'Starting...' :
+                     'Offline'}
+                  </span>
                 </div>
               </div>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-6">
-              <div className="max-w-4xl mx-auto space-y-6">
+            <div className="flex-1 overflow-y-auto p-6 chat-messages-area">
+              <div className="max-w-5xl mx-auto space-y-6">
                 {messages.length === 0 ? (
-                  <div className="text-center py-12">
-                    <div className="w-20 h-20 bg-gradient-to-br from-teal-500/30 to-cyan-500/30 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
-                      <span className="text-4xl">🗺️</span>
+                  <div className="text-center py-16">
+                    <div className="w-24 h-24 bg-gradient-to-br from-teal-500/30 to-cyan-500/30 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                      <span className="text-5xl">🗺️</span>
                     </div>
-                    <h3 className="text-2xl font-black mb-3 text-white">
-                      Welcome to Nepal Travel Assistant
-                    </h3>
-                    <p className="text-lg mb-6 text-slate-300">
+                    <h3 className="text-4xl font-black mb-4 text-white">Welcome to Nepal Travel Assistant</h3>
+                    <p className="text-xl mb-8 text-slate-300 max-w-2xl mx-auto">
                       {aiStatus === 'ready' ? 
                         'Powered by advanced AI - Ask me anything about Nepal destinations, culture, travel tips, and more!' :
                         'Your intelligent Nepal travel companion - Ask me anything about destinations, culture, travel tips, and more!'
                       }
                     </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
                       {[
-                        { icon: "🏔️", text: "Best trekking routes in Nepal" },
-                        { icon: "🏛️", text: "Cultural sites in Kathmandu" },
-                        { icon: "🍜", text: "Traditional Nepali cuisine" },
-                        { icon: "🎒", text: "Travel planning tips" }
+                        { icon: "🏔️", text: "Best trekking routes" },
+                        { icon: "🏛️", text: "Cultural sites" },
+                        { icon: "🍜", text: "Local cuisine" },
+                        { icon: "🎒", text: "Travel planning" }
                       ].map((suggestion, index) => (
                         <button
                           key={index}
                           onClick={() => setInput(suggestion.text)}
-                          className="p-4 rounded-xl text-left bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white border border-slate-200/20 hover:scale-105 hover:shadow-lg transition-all duration-200 backdrop-blur-sm"
+                          className="p-6 rounded-2xl text-center bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 hover:text-white border border-slate-700/50 hover:border-slate-600 transition-all duration-300 hover:scale-105 hover:shadow-xl"
                         >
-                          <div className="flex items-center space-x-3">
-                            <span className="text-2xl">{suggestion.icon}</span>
-                            <span className="font-medium">{suggestion.text}</span>
-                          </div>
+                          <div className="text-4xl mb-3">{suggestion.icon}</div>
+                          <span className="text-sm font-semibold">{suggestion.text}</span>
                         </button>
                       ))}
                     </div>
@@ -932,28 +947,24 @@ Provide a brief, helpful response:`;
             </div>
 
             {/* Input Area */}
-            <div className="p-6 border-t border-slate-200/20 bg-white/5 backdrop-blur-xl">
-              <div className="max-w-4xl mx-auto">
+            <div className="p-6 border-t border-slate-700/50 bg-slate-800/30">
+              <div className="max-w-5xl mx-auto">
                 <SignedOut>
-                  <div className="text-center p-8 rounded-2xl bg-white/10 border border-slate-200/20 backdrop-blur-sm">
-                    <div className="w-16 h-16 bg-gradient-to-br from-teal-500/30 to-cyan-500/30 rounded-2xl flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
+                  <div className="text-center p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50">
+                    <div className="w-16 h-16 bg-gradient-to-br from-teal-500/30 to-cyan-500/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-3xl">🔐</span>
                     </div>
-                    <h3 className="text-xl font-black mb-3 text-white">
-                      Sign in to start chatting
-                    </h3>
-                    <p className="text-sm mb-6 text-slate-300">
-                      Create an account or sign in to access the AI travel assistant
-                    </p>
+                    <h3 className="text-2xl font-black mb-3 text-white">Sign in to start chatting</h3>
+                    <p className="text-sm mb-6 text-slate-400">Create an account or sign in to access the AI travel assistant</p>
                     <div className="flex justify-center space-x-4">
                       <SignInButton>
-                        <button className="px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                        <button className="px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
                           Sign In
                         </button>
                       </SignInButton>
                       <button
                         onClick={() => navigate('/sign-up')}
-                        className="px-6 py-3 font-semibold rounded-xl border-2 border-slate-300/30 text-slate-300 hover:border-slate-200/50 hover:text-white transition-all duration-300 backdrop-blur-sm"
+                        className="px-6 py-3 font-semibold rounded-xl border-2 border-slate-600 text-slate-300 hover:border-slate-500 hover:text-white transition-all"
                       >
                         Sign Up
                       </button>
@@ -962,55 +973,50 @@ Provide a brief, helpful response:`;
                 </SignedOut>
 
                 <SignedIn>
-                  <div className="relative">
-                    <div className="flex items-end space-x-4 p-4 rounded-2xl bg-white/10 border border-slate-200/20 backdrop-blur-sm shadow-lg">
-                      <div className="flex-1">
-                        <textarea
-                          ref={inputRef}
-                          value={input}
-                          onChange={(e) => setInput(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
-                              e.preventDefault();
-                              handleSend();
-                            }
-                          }}
-                          placeholder="Ask me anything about Nepal..."
-                          rows={1}
-                          className="w-full p-4 rounded-xl border-0 resize-none focus:outline-none bg-white/10 text-white placeholder-slate-300 focus:ring-2 focus:ring-teal-500/20 backdrop-blur-sm"
-                          style={{ minHeight: '56px', maxHeight: '120px' }}
-                          onInput={(e) => {
-                            e.target.style.height = 'auto';
-                            e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
-                          }}
-                        />
-                      </div>
-                      <button
-                        onClick={handleSend}
-                        disabled={!input.trim() || isTyping}
-                        className={`p-4 rounded-xl font-semibold transition-all duration-300 ${
-                          !input.trim() || isTyping
-                            ? 'bg-slate-200/20 text-slate-400 cursor-not-allowed'
-                            : 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
-                        }`}
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
-                      </button>
+                  <div className="flex items-end space-x-4">
+                    <div className="flex-1">
+                      <textarea
+                        ref={inputRef}
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleSend();
+                          }
+                        }}
+                        placeholder="Ask me anything about Nepal..."
+                        rows={1}
+                        className="w-full p-4 rounded-xl border-0 resize-none focus:outline-none bg-slate-800/50 text-white placeholder-slate-400 focus:ring-2 focus:ring-teal-500/30 backdrop-blur-sm"
+                        style={{ minHeight: '56px', maxHeight: '120px' }}
+                        onInput={(e) => {
+                          e.target.style.height = 'auto';
+                          e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+                        }}
+                      />
                     </div>
-                    
-                    <div className="text-xs mt-2 text-center text-slate-400">
-                      Press Enter to send, Shift+Enter for new line
-                    </div>
+                    <button
+                      onClick={handleSend}
+                      disabled={!input.trim() || isTyping}
+                      className={`p-4 rounded-xl font-semibold transition-all duration-300 ${
+                        !input.trim() || isTyping
+                          ? 'bg-slate-700/50 text-slate-500 cursor-not-allowed'
+                          : 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
+                      }`}
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div className="text-xs mt-2 text-center text-slate-400">
+                    Press Enter to send, Shift+Enter for new line
                   </div>
                 </SignedIn>
               </div>
             </div>
           </div>
         </div>
-
-        <Footer />
       </div>
     </div>
   );

@@ -512,7 +512,7 @@ export default function Footer() {
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
                   <span className="font-semibold tracking-wide">{t('footer.newsletter')}</span>
                 </Link>
-                <Link to="/itinerary" className="group/link flex items-center text-sm text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1">
+                <Link to="/guide" className="group/link flex items-center text-sm text-gray-300 hover:text-white transition-all duration-300 hover:translate-x-1">
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
                   <span className="font-semibold tracking-wide">Itinerary Planner</span>
                 </Link>
