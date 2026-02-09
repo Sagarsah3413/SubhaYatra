@@ -399,7 +399,7 @@ export default function Footer() {
                     <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Roamio</span> 
                     <span className="text-teal-400 hover:text-teal-300 transition-all duration-500 hover:scale-105 inline-block">Wanderly</span>
                   </h2>
-                  <p className="text-xs text-gray-300 font-black tracking-wider animate-fade-in-up animation-delay-200 hover:text-gray-100 transition-colors duration-300 uppercase">Your Premium Nepal Travel Companion</p>
+                  <p className="text-xs text-gray-300 font-semibold tracking-wider animate-fade-in-up animation-delay-200 hover:text-gray-100 transition-colors duration-300 uppercase">Your Premium Nepal Travel Companion</p>
                 </div>
               </div>
               <div className="mb-4">

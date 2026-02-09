@@ -499,21 +499,7 @@ export default function PlaceDetailView() {
     }`}>
       <Header />
 
-      <div className="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">
-        {/* Back Button */}
-        <button
-          onClick={handleBackClick}
-          className={`mb-6 flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
-            theme === 'dark'
-              ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              : 'bg-white text-gray-700 hover:bg-gray-50'
-          } shadow-md`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Back to Results
-        </button>
+      <div className="flex-1 max-w-7xl mx-auto px-4 pt-24 pb-8 w-full">
 
         {/* Image Gallery */}
         {place.images && place.images.length > 0 && (

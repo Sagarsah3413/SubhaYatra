@@ -1,13 +1,28 @@
 /* Clerk UserButton Dropdown Fix */
 
-/* Ensure Clerk popover appears above everything */
+/* Ensure Clerk popover appears above everything and doesn't cause scrolling */
 .cl-userButtonPopoverCard {
   z-index: 99999 !important;
   position: fixed !important;
+  top: 64px !important; /* Below header */
+  right: 16px !important;
+  transform: none !important;
 }
 
 .cl-userButtonPopoverRootBox {
   z-index: 99999 !important;
+  position: fixed !important;
+}
+
+/* Prevent body scroll when dropdown is open */
+body:has(.cl-userButtonPopoverCard[data-open="true"]) {
+  overflow: hidden !important;
+}
+
+/* Ensure the popover doesn't cause layout shifts */
+.cl-userButtonPopover {
+  position: fixed !important;
+  inset: auto !important;
 }
 
 /* Style the dropdown menu */
@@ -15,6 +30,8 @@
   margin-top: 8px !important;
   border-radius: 12px !important;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  max-height: calc(100vh - 80px) !important;
+  overflow-y: auto !important;
 }
 
 /* Style the action buttons */
@@ -50,4 +67,9 @@
 /* Fix any overflow issues */
 .cl-userButtonTrigger {
   overflow: visible !important;
+}
+
+/* Prevent page scroll when dropdown opens */
+.cl-internal-b3fm6y {
+  position: fixed !important;
 }

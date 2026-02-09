@@ -2,6 +2,14 @@ import { useState, useEffect } from 'react';
 import Footer from '../components/footer/Footer';
 import { Header } from '../components/header/Header';
 import { useTheme } from '../contexts/ThemeContext';
+
+// Import team images
+import sakshiImg from '../assets/team/sakshi.jpeg';
+import sagarImg from '../assets/team/Sagar.JPG';
+import nirjalaImg from '../assets/team/nirjala.jpeg';
+import smritiImg from '../assets/team/smiriti.jpeg';
+import tanuImg from '../assets/team/tanu.jpeg';
+
 import { 
   FaRocket,
   FaHeart,
@@ -537,6 +545,362 @@ export default function About() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Development Team Section */}
+      <section className="py-24 bg-white dark:bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-full px-8 py-4 mb-8 border border-teal-200/50 dark:border-teal-700/50">
+              <FaCode className="text-teal-600 dark:text-teal-400" />
+              <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Development Team</span>
+            </div>
+            
+            <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
+              <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                Meet the Developers
+              </span>
+            </h2>
+            
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              The talented team behind Roamio Wanderly's innovative platform, bringing together expertise in 
+              technology, design, and user experience to create seamless travel planning.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-16">
+            {/* Developer 1 - Sakshi */}
+            <div className="group bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-slate-700/50 transform hover:scale-105">
+              <div className="relative mb-6">
+                <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden shadow-2xl group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-teal-500 to-cyan-500">
+                  <img 
+                    src={sakshiImg} 
+                    alt="Sakshi" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-teal-500 to-cyan-500 text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg">
+                  Team Leader
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 text-center">
+                Sakshi
+              </h3>
+              
+              <p className="text-teal-600 dark:text-teal-400 font-semibold mb-4 text-center">
+                Team Leader & Full-Stack Developer
+              </p>
+              
+              <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-6">
+                Led the development team and architected both frontend and backend systems. Specialized in React, Python Flask, 
+                and coordinating team efforts to deliver a seamless travel platform.
+              </p>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-teal-100 dark:bg-teal-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaUsers className="text-teal-600 dark:text-teal-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Team Leadership & Coordination</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaCode className="text-cyan-600 dark:text-cyan-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Frontend & Backend Development</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaLightbulb className="text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Project Architecture & Planning</span>
+                </div>
+              </div>
+              
+              <div className="flex justify-center gap-3">
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaLinkedin />
+                </a>
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaTwitter />
+                </a>
+              </div>
+            </div>
+
+            {/* Developer 2 - Sagar */}
+            <div className="group bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-slate-700/50 transform hover:scale-105">
+              <div className="relative mb-6">
+                <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden shadow-2xl group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-purple-500 to-pink-500">
+                  <img 
+                    src={sagarImg} 
+                    alt="Sagar" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg">
+                  Full-Stack Developer
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 text-center">
+                Sagar
+              </h3>
+              
+              <p className="text-purple-600 dark:text-purple-400 font-semibold mb-4 text-center">
+                Frontend & Backend Developer
+              </p>
+              
+              <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-6">
+                Developed key features across the full stack. Expert in React components, API integration, 
+                and creating responsive user interfaces with seamless backend connectivity.
+              </p>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaCode className="text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">React & Component Development</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-pink-100 dark:bg-pink-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaBuilding className="text-pink-600 dark:text-pink-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">API Development & Integration</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaShieldAlt className="text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Database & Backend Logic</span>
+                </div>
+              </div>
+              
+              <div className="flex justify-center gap-3">
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaLinkedin />
+                </a>
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-pink-500 to-red-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaInstagram />
+                </a>
+              </div>
+            </div>
+
+            {/* Developer 3 - Nirjala */}
+            <div className="group bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-slate-700/50 transform hover:scale-105">
+              <div className="relative mb-6">
+                <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden shadow-2xl group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-orange-500 to-red-500">
+                  <img 
+                    src={nirjalaImg} 
+                    alt="Nirjala" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg">
+                  ML & Backend Developer
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 text-center">
+                Nirjala
+              </h3>
+              
+              <p className="text-orange-600 dark:text-orange-400 font-semibold mb-4 text-center">
+                Machine Learning & Backend Developer
+              </p>
+              
+              <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-6">
+                Implemented AI-powered recommendation systems and backend infrastructure. Specialized in machine learning models, 
+                data processing, and intelligent travel suggestions.
+              </p>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaLightbulb className="text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">ML Models & AI Integration</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-red-100 dark:bg-red-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaChartLine className="text-red-600 dark:text-red-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Data Processing & Analysis</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaBuilding className="text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Backend Development</span>
+                </div>
+              </div>
+              
+              <div className="flex justify-center gap-3">
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaLinkedin />
+                </a>
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaTwitter />
+                </a>
+              </div>
+            </div>
+
+            {/* Developer 4 - Smriti */}
+            <div className="group bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-slate-700/50 transform hover:scale-105">
+              <div className="relative mb-6">
+                <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden shadow-2xl group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-green-500 to-emerald-500">
+                  <img 
+                    src={smritiImg} 
+                    alt="Smriti" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg">
+                  ML Developer
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 text-center">
+                Smriti
+              </h3>
+              
+              <p className="text-green-600 dark:text-green-400 font-semibold mb-4 text-center">
+                Machine Learning Developer
+              </p>
+              
+              <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-6">
+                Developed intelligent recommendation algorithms and predictive models. Specialized in machine learning, 
+                data science, and creating personalized travel experiences through AI.
+              </p>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaLightbulb className="text-green-600 dark:text-green-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Recommendation Algorithms</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaChartLine className="text-emerald-600 dark:text-emerald-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Predictive Analytics</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaCode className="text-green-600 dark:text-green-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Model Training & Optimization</span>
+                </div>
+              </div>
+              
+              <div className="flex justify-center gap-3">
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaLinkedin />
+                </a>
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaTwitter />
+                </a>
+              </div>
+            </div>
+
+            {/* Developer 5 - Tanu */}
+            <div className="group bg-gradient-to-br from-white to-gray-50 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200/50 dark:border-slate-700/50 transform hover:scale-105">
+              <div className="relative mb-6">
+                <div className="w-32 h-32 mx-auto rounded-2xl overflow-hidden shadow-2xl group-hover:scale-110 transition-transform duration-300 bg-gradient-to-br from-blue-500 to-indigo-500">
+                  <img 
+                    src={tanuImg} 
+                    alt="Tanu" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg">
+                  Backend Developer
+                </div>
+              </div>
+              
+              <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-2 text-center">
+                Tanu
+              </h3>
+              
+              <p className="text-blue-600 dark:text-blue-400 font-semibold mb-4 text-center">
+                Backend Developer
+              </p>
+              
+              <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-6">
+                Built robust server-side logic and database systems. Specialized in Python Flask, API development, 
+                and ensuring reliable data management for the platform.
+              </p>
+              
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaBuilding className="text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Server-Side Development</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaShieldAlt className="text-indigo-600 dark:text-indigo-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">Database Management</span>
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FaCode className="text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">API Design & Implementation</span>
+                </div>
+              </div>
+              
+              <div className="flex justify-center gap-3">
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaLinkedin />
+                </a>
+                <a href="#" className="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform">
+                  <FaTwitter />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Tech Stack Section */}
+          <div className="bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-600 rounded-3xl p-12 text-white relative overflow-hidden shadow-2xl">
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0" style={{
+                backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px)`,
+                backgroundSize: '40px 40px'
+              }}></div>
+            </div>
+            
+            <div className="relative z-10 text-center">
+              <h3 className="text-3xl md:text-4xl font-black mb-6">Built with Modern Technology</h3>
+              <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+                Our platform leverages cutting-edge technologies to deliver a fast, secure, and seamless experience
+              </p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {[
+                  { name: 'React', icon: '⚛️', desc: 'Frontend Framework' },
+                  { name: 'Python Flask', icon: '🐍', desc: 'Backend API' },
+                  { name: 'SQLite', icon: '🗄️', desc: 'Database' },
+                  { name: 'Tailwind CSS', icon: '🎨', desc: 'Styling' },
+                  { name: 'Google AI', icon: '🤖', desc: 'AI Integration' },
+                  { name: 'Clerk', icon: '🔐', desc: 'Authentication' },
+                  { name: 'Vite', icon: '⚡', desc: 'Build Tool' },
+                  { name: 'Git', icon: '📦', desc: 'Version Control' }
+                ].map((tech, index) => (
+                  <div key={index} className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
+                    <div className="text-4xl mb-3">{tech.icon}</div>
+                    <div className="font-bold text-lg mb-1">{tech.name}</div>
+                    <div className="text-sm text-white/70">{tech.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

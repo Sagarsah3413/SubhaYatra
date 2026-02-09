@@ -2122,7 +2122,7 @@ const AuthenticationButtons = ({ clerkAvailable, onNavigation, theme }) => {
             appearance={{
               elements: {
                 avatarBox: "w-8 h-8 rounded-lg",
-                userButtonPopoverCard: "shadow-2xl border-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl z-[9999]",
+                userButtonPopoverCard: "shadow-2xl border-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl !fixed !top-16 !right-4 z-[9999]",
                 userButtonPopoverActionButton: "hover:bg-teal-50 dark:hover:bg-teal-900/50 cursor-pointer",
                 userButtonPopoverActionButtonText: "text-slate-700 dark:text-slate-200",
                 userButtonPopoverActionButtonIcon: "text-slate-600 dark:text-slate-300",
@@ -2555,7 +2555,6 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
     {
       category: "Plan",
       items: [
-        { name: "AI Chat", path: "/chat", icon: "💬", description: "AI travel assistant" },
         { name: "Recommendations", path: "/recommendation", icon: "💡", description: "Get suggestions" },
         { name: "Itinerary", path: "/guide", icon: "📋", description: "Plan your trip" },
         { name: "Wishlist", path: "/wishlist", icon: "❤️", description: "Saved places" }

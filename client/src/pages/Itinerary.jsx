@@ -468,7 +468,7 @@ const Itinerary = () => {
             }}
           >
             <FaRoute className="text-teal-300 text-xl" />
-            <span className="font-bold text-lg">AI-Powered Itinerary Generator</span>
+            <span className="font-bold text-lg">Itinerary Generator</span>
           </div>
           
           <h1 

@@ -364,43 +364,58 @@ export default function RecommendationPage() {
                 )}
               </div>
 
-              {/* Trip Types - Multiple Selection */}
+              {/* Trip Types - Select 1 or 2 */}
               <div>
                 <label className={`block text-sm font-semibold mb-2 ${
                   theme === 'dark' ? 'text-slate-200' : 'text-gray-700'
                 }`}>
-                  Preferred Trip Types
-                  <span className="text-xs font-normal ml-2 opacity-70">(Select one or more)</span>
+                  <span className="flex items-center justify-between">
+                    <span className="flex items-center gap-2">
+                      <span>🎯</span>
+                      <span>Preferred Trip Types</span>
+                    </span>
+                    <span className={`text-xs font-normal px-3 py-1 rounded-full ${
+                      formData.tripTypes.length === 0
+                        ? theme === 'dark' ? 'bg-slate-700 text-slate-400' : 'bg-gray-200 text-gray-500'
+                        : formData.tripTypes.length === 2
+                          ? 'bg-teal-500/20 text-teal-600 dark:text-teal-400'
+                          : 'bg-cyan-500/20 text-cyan-600 dark:text-cyan-400'
+                    }`}>
+                      {formData.tripTypes.length}/2 selected
+                    </span>
+                  </span>
                 </label>
                 <p className={`text-xs mb-3 ${
                   theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
                 }`}>
-                  Choose 1 or 2 trip types that interest you most (optional to select 2)
+                  Choose 1 or 2 trip types that interest you most
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {tripOptions.map((option) => {
-                    const selected = formData.tripTypes.includes(`${option.icon} ${option.title}`);
+                    const optionValue = `${option.icon} ${option.title}`;
+                    const selected = formData.tripTypes.includes(optionValue);
+                    const selectionIndex = formData.tripTypes.indexOf(optionValue);
+                    const isDisabled = !selected && formData.tripTypes.length >= 2;
+                    
                     return (
                       <button
                         key={option.title}
                         type="button"
+                        disabled={isDisabled}
                         onClick={() => {
-                          const tripType = `${option.icon} ${option.title}`;
                           if (selected) {
-                            // Remove if already selected
-                            setFormData({ 
-                              ...formData, 
-                              tripTypes: formData.tripTypes.filter(t => t !== tripType) 
+                            setFormData({
+                              ...formData,
+                              tripTypes: formData.tripTypes.filter(t => t !== optionValue)
                             });
-                          } else {
-                            // Add to selection
-                            setFormData({ 
-                              ...formData, 
-                              tripTypes: [...formData.tripTypes, tripType] 
+                          } else if (formData.tripTypes.length < 2) {
+                            setFormData({
+                              ...formData,
+                              tripTypes: [...formData.tripTypes, optionValue]
                             });
                           }
                         }}
-                        className={`p-4 rounded-xl border-2 transition-all duration-200 text-left group ${
+                        className={`p-4 rounded-xl border-2 transition-all duration-200 text-left group relative ${
                           selected
                             ? 'border-teal-500 bg-teal-500/10 shadow-lg shadow-teal-500/20'
                             : isDisabled
@@ -430,15 +445,6 @@ export default function RecommendationPage() {
                               {option.desc}
                             </div>
                           </div>
-                          {selected && (
-                            <div className="flex-shrink-0">
-                              <div className="w-6 h-6 rounded-full bg-teal-500 flex items-center justify-center">
-                                <span className="text-white text-xs font-bold">
-                                  {selectionIndex + 1}
-                                </span>
-                              </div>
-                            </div>
-                          )}
                         </div>
                         
                         {/* Selection indicator */}

@@ -257,222 +257,199 @@ const NepaliCalendar = ({
 
   return (
     <div className={containerClass} role="dialog" aria-modal="true" aria-labelledby="nepali-calendar-title">
-      <div className={`flex items-center justify-between px-3 py-2 border-b ${mobile ? 'sticky top-0 bg-teal-700 z-10' : 'bg-teal-700'}`}>
-        <div className="flex items-center gap-3">
-          <button type="button" onClick={(e) => { e.stopPropagation(); goPrev(); }} onMouseDown={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()} className="p-2 rounded-md bg-teal-800 hover:bg-teal-600 text-white" aria-label="Previous month">
-            <HiChevronLeft size={20} />
+      {/* Professional Header - Orange/Red Theme */}
+      <div className={`flex items-center justify-between px-6 py-4 border-b-4 border-orange-600 ${mobile ? 'sticky top-0 z-10' : ''} bg-gradient-to-r from-orange-500 to-red-600`}>
+        <div className="flex items-center gap-4">
+          <button 
+            type="button" 
+            onClick={(e) => { e.stopPropagation(); goPrev(); }} 
+            onMouseDown={(e) => e.stopPropagation()} 
+            onTouchStart={(e) => e.stopPropagation()} 
+            onPointerDown={(e) => e.stopPropagation()} 
+            className="p-2 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-all" 
+            aria-label="Previous month"
+          >
+            <HiChevronLeft size={24} />
           </button>
 
           <div className="text-center">
-            <div id="nepali-calendar-title" className="text-xl font-semibold leading-tight text-white">{gregLabel}</div>
-            <div className="text-sm text-emerald-100 mt-0.5">{bsLabel}</div>
+            <div id="nepali-calendar-title" className="text-2xl font-bold text-white">{bsLabel}</div>
+            <div className="text-sm text-white/90 mt-1">{gregLabel}</div>
           </div>
 
-          <button type="button" onClick={(e) => { e.stopPropagation(); goNext(); }} onMouseDown={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()} className="p-2 rounded-md bg-teal-800 hover:bg-teal-600 text-white" aria-label="Next month">
-            <HiChevronRight size={20} />
+          <button 
+            type="button" 
+            onClick={(e) => { e.stopPropagation(); goNext(); }} 
+            onMouseDown={(e) => e.stopPropagation()} 
+            onTouchStart={(e) => e.stopPropagation()} 
+            onPointerDown={(e) => e.stopPropagation()} 
+            className="p-2 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-all" 
+            aria-label="Next month"
+          >
+            <HiChevronRight size={24} />
           </button>
         </div>
-        {monthFestivalCount > 0 && (
-          <div className="ml-3 px-2 py-1 rounded bg-emerald-50 text-emerald-800 text-sm font-medium flex items-center gap-2" aria-live="polite" title={`${monthFestivalCount} festival(s) this month`}>
-            <HiSparkles className="w-4 h-4 text-emerald-600" aria-hidden="true" />
-            <span>{monthFestivalCount} festival{monthFestivalCount > 1 ? 's' : ''}</span>
-          </div>
-        )}
 
-        <div className="flex items-center gap-2">
-          <button type="button" onClick={(e) => { e.stopPropagation(); goToday(); }} onMouseDown={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()} className={`px-3 py-1 bg-emerald-500 text-white rounded-md`}>Today</button>
+        <div className="flex items-center gap-3">
+          <button 
+            type="button" 
+            onClick={(e) => { e.stopPropagation(); goToday(); }} 
+            onMouseDown={(e) => e.stopPropagation()} 
+            onTouchStart={(e) => e.stopPropagation()} 
+            onPointerDown={(e) => e.stopPropagation()} 
+            className="px-4 py-2 bg-white text-orange-600 rounded-lg font-semibold hover:bg-white/90 transition-all"
+          >
+            Today
+          </button>
           {onClose && (
-            <button type="button" onClick={(e) => { e.stopPropagation(); onClose(); }} onMouseDown={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()} onPointerDown={(e) => e.stopPropagation()} className={`ml-2 px-3 py-1 bg-slate-800 text-white rounded-md`}>{mobile ? 'Close' : 'Close'}</button>
+            <button 
+              type="button" 
+              onClick={(e) => { e.stopPropagation(); onClose(); }} 
+              onMouseDown={(e) => e.stopPropagation()} 
+              onTouchStart={(e) => e.stopPropagation()} 
+              onPointerDown={(e) => e.stopPropagation()} 
+              className="px-4 py-2 bg-white/20 text-white rounded-lg font-semibold hover:bg-white/30 transition-all"
+            >
+              Close
+            </button>
           )}
         </div>  
       </div>
 
-      {/* Month Information Section */}
-      {currentMonthInfo && (
-        <div className="px-3 py-2 bg-gradient-to-r from-teal-50 to-emerald-50 border-b">
-          <div className="flex items-center gap-4">
-            <div className="flex-shrink-0">
-              <img 
-                src={monthImage(nepaliMonthNum)}
-                alt={`${currentMonthInfo.name} month`}
-                className="w-12 h-9 rounded-lg object-cover border-2 border-teal-200 shadow-sm"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = '/src/assets/months/baisakh-month.svg';
-                }}
-              />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="text-lg font-bold text-teal-800">
-                  {currentMonthInfo.name}
-                  <span className="text-sm font-medium text-teal-600 ml-2">({currentMonthInfo.name_np})</span>
-                </h3>
-                <span className="px-2 py-1 bg-teal-100 text-teal-700 text-xs font-medium rounded-full">
-                  {currentMonthInfo.season} • {currentMonthInfo.season_np}
-                </span>
-              </div>
-              <p className="text-sm text-slate-600 mb-2">{currentMonthInfo.description}</p>
-              <div className="flex flex-wrap gap-2 text-xs">
-                <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded">🌡️ {currentMonthInfo.temperature}</span>
-                {currentMonthInfo.festivals.length > 0 && (
-                  <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded">
-                    🎉 {currentMonthInfo.festivals.slice(0, 2).join(', ')}
-                    {currentMonthInfo.festivals.length > 2 && ` +${currentMonthInfo.festivals.length - 2} more`}
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="p-3 overflow-y-auto" style={{maxHeight: mobile ? 'calc(70vh - 80px)' : '400px'}}>
-        <div className="grid grid-cols-7 gap-1 text-xs text-center text-slate-500 mb-2">
-          {weekDaysShort.map((d) => (
-            <div key={d} className="font-medium">{d}</div>
-          ))}
-        </div>
-
+      <div className="p-6 overflow-y-auto bg-white" style={{maxHeight: mobile ? 'calc(70vh - 80px)' : '500px'}}>
+        {/* Professional Calendar Grid */}
         <div className={`transition-opacity duration-200 ${fade ? 'opacity-30' : 'opacity-100'}`}>
-          {/* Calendar grid */}
-          <div className="mb-3">
-            <div className="grid grid-cols-7 gap-1">
-              {cells.map((dt, idx) => {
-                if (!dt) return <div key={idx} className={cellHeight} />;
-
-                const isToday = dt.toDateString() === today.toDateString();
-                const isSelected = selected && dt.toDateString() === selected.toDateString();
-                const isHighlighted = highlightedDate && dt.toDateString() === highlightedDate.toDateString();
-                const bs = BikramSambat.fromAD(dt);
-                const bsDay = bs.get('date');
-                const bsDayDeva = toDevanagari(bsDay);
-                const isBSToday = bs.isSame(bsToday, 'day');
-                const monthKey = getBsMonthName(bs);
-                const festivals = NEPALI_FESTIVALS[`${monthKey}-${bsDay}`] || [];
-
-                return (
-                  <button
-                    key={idx}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      const dateKey = toDateKey(dt);
-                      const shouldDeselect = selected && selected.toDateString() === dt.toDateString();
-                      const newSel = shouldDeselect ? null : dt;
-                      setSelected(newSel);
-                      setHighlightedDate(null); // Clear highlighted date when selecting manually
-                      if (onSelect) onSelect(shouldDeselect ? null : dateKey);
-                    }}
-                    onMouseDown={(e) => e.stopPropagation()}
-                    onTouchStart={(e) => e.stopPropagation()}
-                    onPointerDown={(e) => e.stopPropagation()}
-                    aria-current={isBSToday ? 'date' : undefined}
-                    aria-expanded={isSelected ? 'true' : 'false'}
-                    className={`${cellHeight} p-1 flex flex-col justify-center items-center text-center rounded-lg border transition-all duration-300 relative ${
-                      isSelected 
-                        ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg border-emerald-500 scale-105' 
-                        : isHighlighted
-                        ? 'bg-gradient-to-br from-blue-400 to-blue-500 text-white shadow-lg border-blue-400 scale-105 ring-2 ring-blue-300'
-                        : 'bg-white border-slate-200 hover:border-emerald-300 hover:shadow-md hover:-translate-y-0.5 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-400'
-                    } ${isToday ? 'ring-2 ring-blue-400 border-blue-300' : ''} ${isBSToday && !isSelected && !isHighlighted ? 'bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200' : ''}`}
-                  >
-                    <div className="flex flex-col items-center gap-1 w-full">
-                      <div className={`text-sm font-bold leading-none ${isSelected || isHighlighted ? 'text-white' : isToday ? 'text-blue-600' : 'text-slate-700'}`}>{dt.getDate()}</div>
-                      <div className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${isSelected || isHighlighted ? 'bg-white/20 text-white' : 'bg-emerald-100 text-emerald-700'}`}>{bsDayDeva}</div>
-                      {festivals.length > 0 && (
-                        <div className="absolute top-1 right-1">
-                          <span className="w-2 h-2 inline-block rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 shadow-sm" title="Festival day" />
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+          {/* Week Days Header - Professional Style */}
+          <div className="grid grid-cols-7 gap-2 mb-3 border-b-2 border-orange-500 pb-2">
+            {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, idx) => (
+              <div 
+                key={day} 
+                className={`text-center font-bold text-sm py-2 ${
+                  idx === 6 ? 'text-red-600' : 'text-gray-700'
+                }`}
+              >
+                {day}
+              </div>
+            ))}
           </div>
 
-          {/* Festival list sidebar */}
-          <aside className="w-full">
-            <div className="bg-white p-2 rounded-md shadow-sm border divide-y divide-slate-100">
-              <div className="flex items-center justify-between">
-                <div className="font-medium text-sm">Festivals</div>
-                <div className="text-xs text-slate-500">{monthFestivalDays.length} day(s)</div>
-              </div>
+          {/* Calendar Grid - Clean Professional Layout */}
+          <div className="grid grid-cols-7 gap-2">
+            {cells.map((dt, idx) => {
+              if (!dt) return <div key={idx} className="h-24" />;
 
-              <div className="mt-2 space-y-2 max-h-[150px] overflow-y-auto">
-                {monthFestivalDays.length ? monthFestivalDays.map((item) => {
-                  const title = item.festivals.map(f => (typeof f === 'string' ? f : f.name)).join(', ');
-                  const isFestivalSelected = selected && selected.toDateString() === item.ad.toDateString();
-                  return (
-                    <div key={item.dateKey} role="button" tabIndex={0} onClick={(e) => { e.stopPropagation(); setSelected(new Date(item.dateKey)); if (onSelect) onSelect(item.dateKey); }} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); setSelected(new Date(item.dateKey)); if (onSelect) onSelect(item.dateKey); } }} className={`flex items-start gap-2 p-2 rounded border cursor-pointer transition focus:outline-none focus:ring-2 focus:ring-emerald-200 ${isFestivalSelected ? 'bg-emerald-50 border-emerald-300 shadow-md ring-2 ring-emerald-200' : 'hover:shadow-md hover:bg-slate-50'}`}>
-                      <FestivalImage 
-                        festival={item.festivals[0]}
-                        alt={title}
-                        className="w-10 h-10 rounded object-cover flex-shrink-0 border"
-                        preferExternal={true}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className={`font-semibold text-xs truncate ${isFestivalSelected ? 'text-emerald-800' : 'text-slate-800'}`}>{title}</div>
-                        <div className="text-xs text-slate-500">{item.ad.toLocaleDateString()} — {item.bs.format('YYYY MMMM D')}</div>
-                      </div>
-                      <div>
-                        <button className={`px-2 py-1 text-xs font-semibold rounded ${isFestivalSelected ? 'bg-emerald-700 text-white' : 'bg-emerald-600 text-white hover:bg-emerald-700'}`}>View</button>
+              const isToday = dt.toDateString() === today.toDateString();
+              const isSelected = selected && dt.toDateString() === selected.toDateString();
+              const isHighlighted = highlightedDate && dt.toDateString() === highlightedDate.toDateString();
+              const bs = BikramSambat.fromAD(dt);
+              const bsDay = bs.get('date');
+              const bsDayDeva = toDevanagari(bsDay);
+              const isBSToday = bs.isSame(bsToday, 'day');
+              const monthKey = getBsMonthName(bs);
+              const festivals = NEPALI_FESTIVALS[`${monthKey}-${bsDay}`] || [];
+              const isSaturday = dt.getDay() === 6;
+
+              return (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const dateKey = toDateKey(dt);
+                    const shouldDeselect = selected && selected.toDateString() === dt.toDateString();
+                    const newSel = shouldDeselect ? null : dt;
+                    setSelected(newSel);
+                    setHighlightedDate(null);
+                    if (onSelect) onSelect(shouldDeselect ? null : dateKey);
+                  }}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onTouchStart={(e) => e.stopPropagation()}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  aria-current={isBSToday ? 'date' : undefined}
+                  aria-expanded={isSelected ? 'true' : 'false'}
+                  className={`h-24 p-2 flex flex-col items-center justify-start border-2 rounded-lg transition-all duration-200 relative ${
+                    isSelected 
+                      ? 'bg-orange-100 border-orange-500 shadow-lg scale-105' 
+                      : isHighlighted
+                      ? 'bg-blue-100 border-blue-500 shadow-lg scale-105'
+                      : isToday
+                      ? 'bg-orange-50 border-orange-400'
+                      : 'bg-white border-gray-200 hover:border-orange-300 hover:shadow-md'
+                  }`}
+                >
+                  {/* AD Date - Large */}
+                  <div className={`text-3xl font-bold mb-1 ${
+                    isSaturday ? 'text-red-600' : 
+                    isSelected ? 'text-orange-700' : 
+                    isToday ? 'text-orange-600' : 
+                    'text-gray-800'
+                  }`}>
+                    {dt.getDate()}
+                  </div>
+
+                  {/* BS Date - Devanagari */}
+                  <div className={`text-sm font-semibold ${
+                    isSelected ? 'text-orange-600' : 
+                    isToday ? 'text-orange-500' : 
+                    'text-gray-600'
+                  }`}>
+                    {bsDayDeva}
+                  </div>
+
+                  {/* Festival Indicator */}
+                  {festivals.length > 0 && (
+                    <div className="mt-1">
+                      <div className="w-2 h-2 rounded-full bg-red-500" title="Festival day" />
+                    </div>
+                  )}
+
+                  {/* Festival Names - Small Text */}
+                  {festivals.length > 0 && (
+                    <div className="absolute bottom-1 left-1 right-1">
+                      <div className="text-[9px] text-red-600 font-medium truncate text-center">
+                        {Array.isArray(festivals) ? festivals[0].name : festivals.name}
                       </div>
                     </div>
-                  );
-                }) : (
-                  <div className="text-xs text-slate-500 text-center py-2">No festivals this month</div>
-                )}
-              </div>
-            </div>
-          </aside>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="mt-3 border-t pt-2">
-          <div className="text-sm text-slate-600 flex items-center justify-between">
-            {selected ? (
-              <div className="flex items-center gap-4">
-                <div className="flex flex-col">
-                  <div className="font-medium">Selected</div>
-                  <div className="text-xs text-slate-500">AD: {selected.toLocaleDateString()}</div>
-                  <div className="text-xs text-slate-500">BS: {BikramSambat.fromAD(selected).format('YYYY MMMM D')}</div>
-                  {(() => {
-                    const sbs = BikramSambat.fromAD(selected);
-                    const selFests = NEPALI_FESTIVALS[`${getBsMonthName(sbs)}-${sbs.get('date')}`] || [];
-                    if (!selFests.length) return null;
-                    return (
-                      <div className="mt-2 text-sm">
-                        <div className="font-medium text-slate-700">Festivals</div>
-                        <div className="mt-2 space-y-3">
-                          {selFests.map((f) => {
-                            const obj = typeof f === 'string' ? { id: f.toLowerCase().replace(/[^a-z0-9]+/g,'-'), name: f, name_np: '', desc: '' } : f;
-                            return (
-                              <div key={obj.id || obj.name} className="flex items-start gap-3">
-                                <FestivalImage 
-                                  festival={obj}
-                                  alt={obj.name}
-                                  className="w-8 h-8 rounded-md object-cover flex-shrink-0"
-                                  preferExternal={true}
-                                />
-                                <div>
-                                  <div className="font-semibold text-emerald-700">{obj.name} {obj.name_np ? <span className="text-[11px] text-slate-500">({obj.name_np})</span> : null}</div>
-                                  {obj.desc && <div className="text-xs text-slate-500 mt-1">{obj.desc}</div>}
-                                </div>
-                              </div>
-                            );
-                          })}
+        {/* Festival List Below Calendar */}
+        {monthFestivalDays.length > 0 && (
+          <div className="mt-6 pt-6 border-t-2 border-gray-200">
+            <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+              <HiSparkles className="w-5 h-5 text-orange-500" />
+              Festivals This Month ({monthFestivalDays.length})
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {monthFestivalDays.map(({ ad, bs, festivals }) => (
+                <div 
+                  key={toDateKey(ad)} 
+                  className="p-3 bg-orange-50 border border-orange-200 rounded-lg hover:shadow-md transition-all"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 text-center">
+                      <div className="text-2xl font-bold text-orange-600">{ad.getDate()}</div>
+                      <div className="text-xs text-gray-600">{toDevanagari(bs.get('date'))}</div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      {festivals.map((f, i) => (
+                        <div key={i} className="mb-1">
+                          <div className="font-semibold text-sm text-gray-800 truncate">{f.name}</div>
+                          {f.name_np && (
+                            <div className="text-xs text-gray-600 truncate">{f.name_np}</div>
+                          )}
                         </div>
-                      </div>
-                    );
-                  })()}
+                      ))}
+                    </div>
+                  </div>
                 </div>
-                <div className="px-3 py-1 bg-emerald-600 text-white rounded-md font-semibold">{selected.getDate()}</div>
-              </div>
-            ) : (
-              <div className="text-xs text-slate-500">No date selected — tap a day to select it</div>
-            )}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -379,18 +379,39 @@ Provide a brief, helpful response:`;
           botResponse = getNepalTravelResponse(userText);
         }
 
-        // Save to search history manually if using local AI
+        // Try to save messages to backend even when using local AI
         if (user?.id && currentChatId) {
           try {
+            // Save the conversation to backend
+            await fetch(`${chatService.API_BASE_URL || 'http://localhost:8000/api/chat'}/save-local`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                chat_id: currentChatId,
+                user_id: user.id,
+                user_message: userText,
+                bot_response: botResponse
+              })
+            });
+            
+            // Save to search history
             await chatService.saveSearchHistory(
               user.id, 
               userText, 
               currentChatId, 
               botResponse.length > 200 ? botResponse.substring(0, 197) + "..." : botResponse
             );
+            
+            // Refresh histories
+            await loadChatHistory();
             await loadSearchHistory();
+            
+            console.log('✅ Messages saved to backend');
           } catch (error) {
-            console.error('Error saving search history:', error);
+            console.error('⚠️ Error saving to backend, messages will be lost on refresh:', error);
+            // Continue anyway - at least show the messages in UI
           }
         }
       }
@@ -468,25 +489,25 @@ Provide a brief, helpful response:`;
           {/* Sidebar */}
           <div className={`${
             sidebarCollapsed ? 'w-20' : 'w-80'
-          } transition-all duration-300 bg-slate-800/50 backdrop-blur-xl border-r border-slate-700/50 flex flex-col`}>
+          } transition-all duration-300 bg-slate-900/80 backdrop-blur-2xl border-r border-slate-700/30 flex flex-col shadow-2xl`}>
             
             {/* Sidebar Header */}
-            <div className="p-6 border-b border-slate-700/50">
+            <div className="p-5 border-b border-slate-700/30 bg-gradient-to-br from-slate-800/50 to-slate-900/50">
               <div className="flex items-center justify-between">
                 {!sidebarCollapsed && (
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-gradient-to-br from-teal-500/30 to-cyan-500/30 rounded-xl backdrop-blur-sm">
+                    <div className="p-2.5 bg-gradient-to-br from-teal-500/20 to-cyan-500/20 rounded-xl backdrop-blur-sm border border-teal-500/20 shadow-lg">
                       <span className="text-2xl">🤖</span>
                     </div>
                     <div>
-                      <h2 className="text-lg font-black text-white">AI Assistant</h2>
-                      <p className="text-sm text-slate-400">Nepal Travel Expert</p>
+                      <h2 className="text-lg font-bold text-white tracking-tight">AI Assistant</h2>
+                      <p className="text-xs text-slate-400 font-medium">Nepal Travel Expert</p>
                     </div>
                   </div>
                 )}
                 <button
                   onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                  className="p-2 rounded-lg hover:bg-slate-700/50 text-slate-400 hover:text-white transition-colors"
+                  className="p-2.5 rounded-xl hover:bg-slate-700/50 text-slate-400 hover:text-white transition-all duration-200 hover:scale-105"
                   title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
                 >
                   <svg className={`w-5 h-5 transition-transform duration-300 ${
@@ -501,10 +522,10 @@ Provide a brief, helpful response:`;
             {!sidebarCollapsed && (
               <div className="flex-1 flex flex-col overflow-hidden">
                 {/* Action Buttons */}
-                <div className="p-4 space-y-3 border-b border-slate-200/20">
+                <div className="p-4 space-y-3 border-b border-slate-700/30">
                   <button
                     onClick={createNewChat}
-                    className="w-full p-4 rounded-xl font-semibold bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3"
+                    className="w-full p-4 rounded-xl font-semibold bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-xl hover:shadow-2xl hover:shadow-teal-500/20 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center space-x-3"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -513,15 +534,15 @@ Provide a brief, helpful response:`;
                   </button>
 
                   {/* AI Status Indicator */}
-                  <div className="p-3 rounded-xl bg-white/10 border border-slate-200/20 backdrop-blur-sm">
-                    <div className="flex items-center space-x-2">
-                      <div className={`w-3 h-3 rounded-full ${
-                        aiStatus === 'ready' ? 'bg-green-500 animate-pulse' :
-                        aiStatus === 'fallback' ? 'bg-yellow-500' :
+                  <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/40 backdrop-blur-sm shadow-lg">
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-2.5 h-2.5 rounded-full ${
+                        aiStatus === 'ready' ? 'bg-green-500 animate-pulse shadow-lg shadow-green-500/50' :
+                        aiStatus === 'fallback' ? 'bg-yellow-500 shadow-lg shadow-yellow-500/50' :
                         aiStatus === 'initializing' ? 'bg-blue-500 animate-spin' :
-                        'bg-red-500'
+                        'bg-red-500 shadow-lg shadow-red-500/50'
                       }`}></div>
-                      <span className="text-sm text-slate-300">
+                      <span className="text-sm text-slate-300 font-medium">
                         {aiStatus === 'ready' ? 'AI Ready' :
                          aiStatus === 'fallback' ? 'Smart Mode' :
                          aiStatus === 'initializing' ? 'Starting...' :
@@ -534,20 +555,20 @@ Provide a brief, helpful response:`;
                   <div className="flex space-x-2">
                     <button
                       onClick={() => setShowSearchHistory(false)}
-                      className={`flex-1 p-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      className={`flex-1 p-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                         !showSearchHistory 
-                          ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30' 
-                          : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-300'
+                          ? 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 border border-teal-500/40 shadow-lg' 
+                          : 'bg-slate-800/40 text-slate-400 hover:bg-slate-700/40 hover:text-slate-300 border border-slate-700/30'
                       }`}
                     >
                       💬 Chats
                     </button>
                     <button
                       onClick={() => setShowSearchHistory(true)}
-                      className={`flex-1 p-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      className={`flex-1 p-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                         showSearchHistory 
-                          ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30' 
-                          : 'bg-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-300'
+                          ? 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 border border-teal-500/40 shadow-lg' 
+                          : 'bg-slate-800/40 text-slate-400 hover:bg-slate-700/40 hover:text-slate-300 border border-slate-700/30'
                       }`}
                     >
                       🔍 History
@@ -556,7 +577,7 @@ Provide a brief, helpful response:`;
                 </div>
 
                 {/* Search Bar */}
-                <div className="p-4 border-b border-slate-200/20">
+                <div className="p-4 border-b border-slate-700/30">
                   <div className="relative">
                     <input
                       type="text"
@@ -568,7 +589,7 @@ Provide a brief, helpful response:`;
                           searchChats(e.target.value);
                         }
                       }}
-                      className="w-full p-3 pl-10 rounded-lg bg-white/10 border border-slate-200/20 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500/30 transition-all duration-200"
+                      className="w-full p-3 pl-10 rounded-xl bg-slate-800/60 border border-slate-700/40 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500/50 transition-all duration-200 shadow-inner"
                     />
                     <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
