@@ -145,7 +145,14 @@ def list_places():
     try:
         # Get query parameters
         page = int(request.args.get('page', 1))
-        limit = int(request.args.get('limit', 20))
+        limit_param = request.args.get('limit', '20')
+        
+        # Support 'all' to fetch all places
+        if limit_param.lower() == 'all':
+            limit = None
+        else:
+            limit = int(limit_param)
+            
         place_type = request.args.get('type')
         province = request.args.get('province')
         difficulty = request.args.get('difficulty')
@@ -171,9 +178,15 @@ def list_places():
         # Get total count
         total = query.count()
         
-        # Apply pagination
-        offset = (page - 1) * limit
-        places = query.order_by(Place.id.desc()).offset(offset).limit(limit).all()
+        # Apply pagination only if limit is set
+        if limit:
+            offset = (page - 1) * limit
+            places = query.order_by(Place.id.desc()).offset(offset).limit(limit).all()
+            pages = (total + limit - 1) // limit
+        else:
+            # Fetch all places
+            places = query.order_by(Place.id.desc()).all()
+            pages = 1
         
         # Serialize results
         results = [serialize_place(place) for place in places]
@@ -182,8 +195,8 @@ def list_places():
             'places': results,
             'total': total,
             'page': page,
-            'limit': limit,
-            'pages': (total + limit - 1) // limit
+            'limit': limit if limit else total,
+            'pages': pages
         })
     finally:
         session.close()

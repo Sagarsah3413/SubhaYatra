@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { useToast } from '../contexts/ToastContext';
@@ -145,27 +145,43 @@ const nepalDestinations = {
   }
 };
 
-// Enhanced itinerary generator with comprehensive planning
+// Enhanced itinerary generator with comprehensive planning using database places
 const generateItinerary = (formData) => {
   try {
-    const { duration, destinations, budget = 'mid' } = formData;
-    const selectedDests = destinations.map(id => nepalDestinations[id]).filter(Boolean);
+    const { duration, selectedPlaces, budget = 'mid' } = formData;
     
-    if (selectedDests.length === 0) {
+    if (!selectedPlaces || selectedPlaces.length === 0) {
       console.error('No valid destinations selected');
       return null;
     }
 
-    const totalRecommendedDays = selectedDests.reduce((sum, dest) => sum + dest.days, 0);
+    // Estimate days per destination based on type and activities
+    const estimateDays = (place) => {
+      const type = (place.type || '').toLowerCase();
+      const activities = (place.activities || '').toLowerCase();
+      
+      // Trekking destinations need more days
+      if (type.includes('trek') || activities.includes('trek')) return 7;
+      // Adventure/nature destinations
+      if (type.includes('adventure') || type.includes('natural')) return 4;
+      // Cultural/religious sites
+      if (type.includes('cultural') || type.includes('religious')) return 3;
+      // Urban/city destinations
+      if (type.includes('urban') || type.includes('city')) return 3;
+      // Default
+      return 3;
+    };
+
+    const totalRecommendedDays = selectedPlaces.reduce((sum, place) => sum + estimateDays(place), 0);
     let remainingDays = duration;
     const destinationDays = [];
 
-    selectedDests.forEach((dest, index) => {
-      if (index === selectedDests.length - 1) {
+    selectedPlaces.forEach((place, index) => {
+      if (index === selectedPlaces.length - 1) {
         destinationDays.push(Math.max(1, remainingDays));
       } else {
-        const proportionalDays = Math.max(1, Math.round((dest.days / totalRecommendedDays) * duration));
-        const assignedDays = Math.min(proportionalDays, remainingDays - (selectedDests.length - index - 1));
+        const proportionalDays = Math.max(1, Math.round((estimateDays(place) / totalRecommendedDays) * duration));
+        const assignedDays = Math.min(proportionalDays, remainingDays - (selectedPlaces.length - index - 1));
         destinationDays.push(assignedDays);
         remainingDays -= assignedDays;
       }
@@ -174,25 +190,41 @@ const generateItinerary = (formData) => {
     let currentDay = 1;
     const dailyPlan = [];
 
-    selectedDests.forEach((dest, destIndex) => {
+    selectedPlaces.forEach((place, destIndex) => {
       const daysInDest = destinationDays[destIndex];
+      
+      // Parse activities and attractions
+      const activities = place.activities ? place.activities.split(',').map(a => a.trim()).filter(a => a) : [];
+      const tags = place.tags ? place.tags.split(',').map(t => t.trim()).filter(t => t) : [];
+      
+      // Determine accommodation based on place type and budget
+      const getAccommodation = () => {
+        const type = (place.type || '').toLowerCase();
+        if (type.includes('trek')) {
+          return budget === 'budget' ? 'Tea House Lodge' :
+                 budget === 'luxury' ? 'Premium Mountain Lodge' : 'Mountain Lodge';
+        }
+        return budget === 'budget' ? 'Guesthouse' :
+               budget === 'luxury' ? 'Luxury Resort' : 'Mid-range Hotel';
+      };
       
       for (let dayInDest = 0; dayInDest < daysInDest && currentDay <= duration; dayInDest++) {
         const dayActivities = [];
         
         if (dayInDest === 0) {
+          // Arrival day
           dayActivities.push({
             time: '10:00 - 12:00',
-            activity: `Arrive in ${dest.name} and check-in`,
+            activity: `Arrive in ${place.name} and check-in`,
             type: 'logistics',
-            description: `Settle into your ${dest.accommodation[budget]} and get oriented`
+            description: `Settle into your ${getAccommodation()} and get oriented`
           });
           
           dayActivities.push({
             time: '14:00 - 17:00',
-            activity: dest.attractions[0] ? `Explore ${dest.attractions[0]}` : 'City orientation walk',
+            activity: tags[0] ? `Explore ${tags[0]}` : `${place.name} orientation walk`,
             type: 'sightseeing',
-            description: 'Get your first taste of the local culture and atmosphere'
+            description: place.description || 'Get your first taste of the local culture and atmosphere'
           });
           
           dayActivities.push({
@@ -202,9 +234,10 @@ const generateItinerary = (formData) => {
             description: 'Try authentic local dishes and plan upcoming days'
           });
         } else if (dayInDest === daysInDest - 1 && daysInDest > 1) {
+          // Departure day
           dayActivities.push({
             time: '08:00 - 11:00',
-            activity: dest.activities[dayInDest % dest.activities.length] || 'Final exploration',
+            activity: activities[dayInDest % activities.length] || 'Final exploration',
             type: 'activity',
             description: 'Last chance to experience the highlights'
           });
@@ -216,23 +249,24 @@ const generateItinerary = (formData) => {
             description: 'Pack up and prepare for next destination or departure'
           });
         } else {
+          // Full day
           dayActivities.push({
             time: '08:00 - 11:30',
-            activity: dest.attractions[dayInDest % dest.attractions.length] || `${dest.name} morning exploration`,
+            activity: tags[dayInDest % tags.length] || `${place.name} morning exploration`,
             type: 'sightseeing',
             description: 'Start the day with the most popular attractions'
           });
           
           dayActivities.push({
             time: '13:00 - 17:00',
-            activity: dest.activities[dayInDest % dest.activities.length] || 'Cultural activities',
+            activity: activities[dayInDest % activities.length] || 'Cultural activities',
             type: 'activity',
-            description: 'Immerse yourself in local experiences and adventures'
+            description: place.description || 'Immerse yourself in local experiences and adventures'
           });
           
           dayActivities.push({
             time: '17:30 - 19:00',
-            activity: dest.attractions[(dayInDest + 1) % dest.attractions.length] || 'Evening exploration',
+            activity: tags[(dayInDest + 1) % tags.length] || 'Evening exploration',
             type: 'sightseeing',
             description: 'Discover more attractions in the golden hour'
           });
@@ -245,25 +279,27 @@ const generateItinerary = (formData) => {
           });
         }
 
-        const baseCost = dest.dailyCost[budget] || dest.dailyCost.mid;
+        // Calculate costs based on budget
+        const baseCost = budget === 'budget' ? 35 : budget === 'luxury' ? 120 : 65;
         const mealCosts = budget === 'budget' ? [6, 10, 12] : 
                          budget === 'luxury' ? [15, 25, 35] : [8, 15, 20];
 
         dailyPlan.push({
           day: currentDay,
-          destination: dest.name,
-          title: `Day ${currentDay}: ${dest.name}${dayInDest === 0 ? ' (Arrival)' : dayInDest === daysInDest - 1 && daysInDest > 1 ? ' (Departure)' : ''}`,
+          destination: place.name,
+          title: `Day ${currentDay}: ${place.name}${dayInDest === 0 ? ' (Arrival)' : dayInDest === daysInDest - 1 && daysInDest > 1 ? ' (Departure)' : ''}`,
           activities: dayActivities,
-          accommodation: dest.accommodation[budget],
+          accommodation: getAccommodation(),
           meals: [
             { meal: 'Breakfast', cost: mealCosts[0], included: dayInDest > 0 },
             { meal: 'Lunch', cost: mealCosts[1], included: true },
             { meal: 'Dinner', cost: mealCosts[2], included: true }
           ],
           dailyCost: baseCost,
-          transportation: dest.transportation,
-          highlights: dest.highlights,
-          tips: generateDayTips(dest, dayInDest, budget)
+          transportation: place.transportation || 'Local transport',
+          highlights: `${place.type || 'Destination'} - ${place.best_season || 'Year-round'}`,
+          tips: generateDayTips(place, dayInDest, budget),
+          placeData: place
         });
 
         currentDay++;
@@ -280,9 +316,9 @@ const generateItinerary = (formData) => {
     const totalCost = accommodationCost + mealCost + transportationCost + activitiesCost;
 
     const result = {
-      title: `${duration}-Day ${selectedDests.map(d => d.name).join(' & ')} Adventure`,
+      title: `${duration}-Day ${selectedPlaces.map(p => p.name).join(' & ')} Adventure`,
       duration: `${duration} Days`,
-      destinations: selectedDests.map(d => d.name),
+      destinations: selectedPlaces.map(p => p.name),
       budgetLevel: budget,
       dailyPlan,
       costBreakdown: {
@@ -294,10 +330,10 @@ const generateItinerary = (formData) => {
       },
       totalCost,
       createdAt: new Date().toLocaleDateString(),
-      summary: generateItinerarySummary(selectedDests, duration, budget)
+      summary: generateItinerarySummary(selectedPlaces, duration, budget)
     };
 
-    console.log('Generated comprehensive itinerary:', result);
+    console.log('Generated comprehensive itinerary from database:', result);
     return result;
   } catch (error) {
     console.error('Error in generateItinerary:', error);
@@ -305,14 +341,18 @@ const generateItinerary = (formData) => {
   }
 };
 
-const generateDayTips = (destination, dayIndex, budget) => {
+const generateDayTips = (place, dayIndex, budget) => {
   const tips = [
-    `Best time to visit ${destination.name} attractions is early morning to avoid crowds`,
+    `Best time to visit ${place.name} is ${place.best_season || 'year-round'}`,
     `Don't forget to try the local specialties and traditional cuisine`,
     `Carry cash as many local vendors don't accept cards`,
     `Respect local customs and dress modestly when visiting religious sites`,
     `Stay hydrated and use sunscreen, especially at higher altitudes`
   ];
+  
+  if (place.difficulty_level) {
+    tips.push(`Difficulty level: ${place.difficulty_level} - plan accordingly`);
+  }
   
   if (budget === 'budget') {
     tips.push('Look for local eateries and guesthouses for authentic experiences at lower costs');
@@ -323,8 +363,8 @@ const generateDayTips = (destination, dayIndex, budget) => {
   return tips[dayIndex % tips.length];
 };
 
-const generateItinerarySummary = (destinations, duration, budget) => {
-  const destNames = destinations.map(d => d.name).join(', ');
+const generateItinerarySummary = (places, duration, budget) => {
+  const destNames = places.map(p => p.name).join(', ');
   const budgetDesc = budget === 'budget' ? 'budget-friendly' : 
                     budget === 'luxury' ? 'luxury' : 'mid-range';
   
@@ -338,60 +378,365 @@ const Itinerary = () => {
   const [activeTab, setActiveTab] = useState('create');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedItinerary, setGeneratedItinerary] = useState(null);
+  const [availablePlaces, setAvailablePlaces] = useState([]);
+  const [loadingPlaces, setLoadingPlaces] = useState(true);
+  const [hasShownPreselectedToast, setHasShownPreselectedToast] = useState(false);
   
   const preselectedDestination = location.state?.preselectedDestination;
   
   const [formData, setFormData] = useState({
     duration: 7,
-    destinations: ['kathmandu'],
+    destinations: [],
     activities: [],
     budget: 'mid'
   });
 
+  // Save Itinerary to localStorage
+  const handleSaveItinerary = () => {
+    if (!generatedItinerary) {
+      alert('No itinerary to save!');
+      return;
+    }
+
+    try {
+      // Get existing saved itineraries
+      const savedItineraries = JSON.parse(localStorage.getItem('savedItineraries') || '[]');
+      
+      // Add timestamp and unique ID
+      const itineraryToSave = {
+        ...generatedItinerary,
+        id: Date.now(),
+        savedAt: new Date().toISOString()
+      };
+      
+      // Add to saved itineraries
+      savedItineraries.push(itineraryToSave);
+      
+      // Save back to localStorage
+      localStorage.setItem('savedItineraries', JSON.stringify(savedItineraries));
+      
+      showSuccess(
+        'Itinerary Saved!',
+        'Your itinerary has been saved successfully. You can access it anytime from your saved itineraries.'
+      );
+    } catch (error) {
+      console.error('Error saving itinerary:', error);
+      alert('Failed to save itinerary. Please try again.');
+    }
+  };
+
+  // Download Itinerary as PDF
+  const handleDownloadPDF = () => {
+    if (!generatedItinerary) {
+      alert('No itinerary to download!');
+      return;
+    }
+
+    try {
+      // Create a formatted text version of the itinerary
+      let pdfContent = `
+╔════════════════════════════════════════════════════════════════╗
+║                    NEPAL TRAVEL ITINERARY                      ║
+╚════════════════════════════════════════════════════════════════╝
+
+${generatedItinerary.title}
+${generatedItinerary.summary}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TRIP DETAILS:
+• Duration: ${generatedItinerary.duration}
+• Budget Level: ${generatedItinerary.budgetLevel.charAt(0).toUpperCase() + generatedItinerary.budgetLevel.slice(1)}
+• Total Cost: $${generatedItinerary.totalCost}
+• Created: ${generatedItinerary.createdAt}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DAILY ITINERARY:
+
+`;
+
+      generatedItinerary.dailyPlan.forEach((day) => {
+        pdfContent += `
+┌────────────────────────────────────────────────────────────────┐
+│ ${day.title.padEnd(62)} │
+└────────────────────────────────────────────────────────────────┘
+
+📍 Destination: ${day.destination}
+💰 Daily Cost: $${day.dailyCost + day.meals.reduce((sum, meal) => sum + (meal.included ? meal.cost : 0), 0)}
+🏨 Accommodation: ${day.accommodation}
+🚗 Transportation: ${day.transportation}
+
+ACTIVITIES:
+${day.activities.map((activity, idx) => `
+  ${idx + 1}. ${activity.time} - ${activity.activity}
+     ${activity.description}
+     [${activity.type.toUpperCase()}]
+`).join('\n')}
+
+MEALS:
+${day.meals.map(meal => `  • ${meal.meal}: $${meal.cost} ${meal.included ? '✓' : '✗'}`).join('\n')}
+
+💡 TIP: ${day.tips}
+
+`;
+      });
+
+      pdfContent += `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COST BREAKDOWN:
+
+🏨 Accommodation:     $${generatedItinerary.costBreakdown.accommodation}
+🍽️  Meals:            $${generatedItinerary.costBreakdown.meals}
+🚗 Transportation:    $${generatedItinerary.costBreakdown.transportation}
+🎯 Activities:        $${generatedItinerary.costBreakdown.activities}
+─────────────────────────────────────────────────────────────────
+💰 TOTAL:             $${generatedItinerary.costBreakdown.total}
+
+Average per day: $${Math.round(generatedItinerary.totalCost / parseInt(generatedItinerary.duration))}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Generated by Roamio Wanderly - Your Nepal Travel Companion
+Visit: http://localhost:5173
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`;
+
+      // Create a blob and download
+      const blob = new Blob([pdfContent], { type: 'text/plain;charset=utf-8' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Nepal-Itinerary-${generatedItinerary.destinations.join('-').replace(/\s+/g, '-')}-${Date.now()}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      showSuccess(
+        'Download Started!',
+        'Your itinerary is being downloaded as a text file.'
+      );
+    } catch (error) {
+      console.error('Error downloading itinerary:', error);
+      alert('Failed to download itinerary. Please try again.');
+    }
+  };
+
+  // Share Itinerary
+  const handleShareItinerary = async () => {
+    if (!generatedItinerary) {
+      alert('No itinerary to share!');
+      return;
+    }
+
+    const shareText = `Check out my ${generatedItinerary.duration} Nepal travel itinerary!
+
+${generatedItinerary.title}
+
+Destinations: ${generatedItinerary.destinations.join(', ')}
+Budget: ${generatedItinerary.budgetLevel.charAt(0).toUpperCase() + generatedItinerary.budgetLevel.slice(1)}
+Total Cost: $${generatedItinerary.totalCost}
+
+${generatedItinerary.summary}
+
+Plan your own trip at: http://localhost:5173/itinerary`;
+
+    // Check if Web Share API is available
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: generatedItinerary.title,
+          text: shareText,
+          url: window.location.href
+        });
+        showSuccess('Shared!', 'Itinerary shared successfully!');
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Error sharing:', error);
+          // Fallback to clipboard
+          copyToClipboard(shareText);
+        }
+      }
+    } else {
+      // Fallback: Copy to clipboard
+      copyToClipboard(shareText);
+    }
+  };
+
+  // Helper function to copy to clipboard
+  const copyToClipboard = (text) => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          showSuccess(
+            'Copied to Clipboard!',
+            'Itinerary details copied. You can now paste and share it anywhere!'
+          );
+        })
+        .catch((error) => {
+          console.error('Error copying to clipboard:', error);
+          // Fallback for older browsers
+          fallbackCopyToClipboard(text);
+        });
+    } else {
+      fallbackCopyToClipboard(text);
+    }
+  };
+
+  // Fallback copy method for older browsers
+  const fallbackCopyToClipboard = (text) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+      document.execCommand('copy');
+      showSuccess(
+        'Copied to Clipboard!',
+        'Itinerary details copied. You can now paste and share it anywhere!'
+      );
+    } catch (error) {
+      console.error('Fallback copy failed:', error);
+      alert('Failed to copy to clipboard. Please copy manually.');
+    }
+    
+    document.body.removeChild(textArea);
+  };
+
+  // Fetch available places from backend
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        setLoadingPlaces(true);
+        console.log('🔄 Fetching ALL places from backend...');
+        // Fetch ALL places using 'all' parameter
+        const response = await fetch('http://localhost:8000/api/places?limit=all');
+        if (!response.ok) throw new Error('Failed to fetch places');
+        
+        const data = await response.json();
+        console.log('✅ Successfully fetched places from database!');
+        console.log('📊 Total places in database:', data.total);
+        console.log('📦 Places loaded:', data.places.length);
+        console.log('📋 First 5 places:', data.places.slice(0, 5).map(p => ({ id: p.id, name: p.name })));
+        
+        if (data.places.length === 0) {
+          console.warn('⚠️ No places found in database!');
+          showSuccess('Warning', 'No destinations found in database. Please check your backend.');
+        } else if (data.places.length < data.total) {
+          console.warn(`⚠️ Only loaded ${data.places.length} out of ${data.total} places`);
+        }
+        
+        setAvailablePlaces(data.places || []);
+      } catch (error) {
+        console.error('❌ Error fetching places:', error);
+        showSuccess('Error', 'Failed to load destinations from database. Please check if backend is running.');
+      } finally {
+        setLoadingPlaces(false);
+        console.log('✅ Loading places complete');
+      }
+    };
+
+    fetchPlaces();
+  }, []);
+
   React.useEffect(() => {
     console.log('Itinerary component mounted');
     console.log('Preselected destination:', preselectedDestination);
+    console.log('Available places loaded:', availablePlaces.length);
     
-    if (preselectedDestination) {
-      showSuccess(
-        "Destination Added",
-        `${preselectedDestination.name} has been added to your itinerary planner!`
-      );
+    // Only run once when both conditions are met and toast hasn't been shown
+    if (preselectedDestination && availablePlaces.length > 0 && !hasShownPreselectedToast) {
+      // Improved matching logic - try multiple strategies
+      const findMatchingPlace = () => {
+        const preselectedName = preselectedDestination.name.toLowerCase().trim();
+        
+        // Strategy 1: Exact ID match
+        if (preselectedDestination.id) {
+          const exactIdMatch = availablePlaces.find(p => p.id === preselectedDestination.id);
+          if (exactIdMatch) {
+            console.log('✅ Found by exact ID match:', exactIdMatch.name);
+            return exactIdMatch;
+          }
+        }
+        
+        // Strategy 2: Exact name match
+        const exactNameMatch = availablePlaces.find(p => 
+          p.name.toLowerCase().trim() === preselectedName
+        );
+        if (exactNameMatch) {
+          console.log('✅ Found by exact name match:', exactNameMatch.name);
+          return exactNameMatch;
+        }
+        
+        // Strategy 3: Partial name match (contains)
+        const partialMatch = availablePlaces.find(p => 
+          p.name.toLowerCase().includes(preselectedName) ||
+          preselectedName.includes(p.name.toLowerCase())
+        );
+        if (partialMatch) {
+          console.log('✅ Found by partial match:', partialMatch.name);
+          return partialMatch;
+        }
+        
+        // Strategy 4: Match by first significant word
+        const firstWord = preselectedName.split(/[\s,\-\(\)]+/)[0];
+        if (firstWord && firstWord.length > 3) {
+          const wordMatch = availablePlaces.find(p => 
+            p.name.toLowerCase().includes(firstWord)
+          );
+          if (wordMatch) {
+            console.log('✅ Found by first word match:', wordMatch.name);
+            return wordMatch;
+          }
+        }
+        
+        console.warn('❌ No match found for:', preselectedDestination.name);
+        console.log('Available place names:', availablePlaces.slice(0, 10).map(p => p.name));
+        return null;
+      };
       
-      const matchedDestination = findMatchingDestination(preselectedDestination.name);
-      if (matchedDestination) {
+      const matchedPlace = findMatchingPlace();
+      
+      if (matchedPlace) {
         setFormData(prev => ({
           ...prev,
-          destinations: [matchedDestination]
+          destinations: [matchedPlace.id]
         }));
+        
+        showSuccess(
+          "Destination Added",
+          `${matchedPlace.name} has been added to your itinerary planner!`
+        );
+      } else {
+        showSuccess(
+          "Destination Not Found",
+          `"${preselectedDestination.name}" was not found in the database. Please select from available destinations.`
+        );
       }
+      
+      // Mark that we've shown the toast
+      setHasShownPreselectedToast(true);
     }
-  }, [preselectedDestination, showSuccess]);
-
-  const findMatchingDestination = (destinationName) => {
-    const name = destinationName.toLowerCase();
-    
-    if (name.includes('kathmandu') || name.includes('durbar') || name.includes('swayambhu') || name.includes('boudha')) return 'kathmandu';
-    if (name.includes('pokhara') || name.includes('phewa') || name.includes('sarangkot')) return 'pokhara';
-    if (name.includes('chitwan') || name.includes('safari') || name.includes('jungle')) return 'chitwan';
-    if (name.includes('everest') || name.includes('kala patthar') || name.includes('namche')) return 'everest';
-    if (name.includes('annapurna') || name.includes('poon hill') || name.includes('ghandruk')) return 'annapurna';
-    if (name.includes('lumbini') || name.includes('buddha') || name.includes('maya devi')) return 'lumbini';
-    
-    return 'kathmandu';
-  };
+  }, [preselectedDestination, availablePlaces, hasShownPreselectedToast, showSuccess]);
 
   const handleInputChange = (field, value) => {
     console.log(`Updating ${field} to:`, value);
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const toggleDestination = (destId) => {
-    console.log(`Toggling destination: ${destId}`);
+  const toggleDestination = (placeId) => {
+    console.log(`Toggling destination: ${placeId}`);
     setFormData(prev => {
-      const newDestinations = prev.destinations.includes(destId)
-        ? prev.destinations.filter(id => id !== destId)
-        : [...prev.destinations, destId];
+      const newDestinations = prev.destinations.includes(placeId)
+        ? prev.destinations.filter(id => id !== placeId)
+        : [...prev.destinations, placeId];
       console.log('New destinations:', newDestinations);
       return { ...prev, destinations: newDestinations };
     });
@@ -408,7 +753,15 @@ const Itinerary = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      const itinerary = generateItinerary(formData);
+      // Get selected places from availablePlaces
+      const selectedPlaces = formData.destinations
+        .map(id => availablePlaces.find(p => p.id === id))
+        .filter(Boolean);
+      
+      const itinerary = generateItinerary({
+        ...formData,
+        selectedPlaces
+      });
       
       if (itinerary) {
         setGeneratedItinerary(itinerary);
@@ -620,18 +973,173 @@ const Itinerary = () => {
                         💡 <strong>Tip:</strong> Select additional destinations below or adjust trip duration for a comprehensive Nepal itinerary.
                       </p>
                       <button
-                        onClick={() => {
-                          const matchedDest = findMatchingDestination(preselectedDestination.name);
-                          setFormData(prev => ({
-                            ...prev,
-                            destinations: [matchedDest],
-                            duration: nepalDestinations[matchedDest]?.days || 7
-                          }));
-                          handleGenerateItinerary();
+                        onClick={async () => {
+                          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+                          console.log('🚀 Quick Plan clicked');
+                          console.log('📊 Available places:', availablePlaces.length);
+                          console.log('📍 Preselected destination:', preselectedDestination);
+                          console.log('✅ Current form destinations:', formData.destinations);
+                          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+                          
+                          // Check if destination is already selected in form
+                          if (formData.destinations.length > 0) {
+                            console.log('✅ Using already selected destinations from form');
+                            // Use already selected destination
+                            const selectedPlaces = formData.destinations
+                              .map(id => {
+                                const place = availablePlaces.find(p => p.id === id);
+                                console.log(`  Finding place with ID ${id}:`, place ? place.name : 'NOT FOUND');
+                                return place;
+                              })
+                              .filter(Boolean);
+                            
+                            console.log('📍 Selected places:', selectedPlaces.map(p => p.name));
+                            
+                            if (selectedPlaces.length > 0) {
+                              setIsGenerating(true);
+                              setTimeout(() => {
+                                const itinerary = generateItinerary({
+                                  ...formData,
+                                  duration: 7,
+                                  selectedPlaces
+                                });
+                                
+                                if (itinerary) {
+                                  setGeneratedItinerary(itinerary);
+                                  setActiveTab('generated');
+                                  console.log('✅ Itinerary generated successfully!');
+                                } else {
+                                  alert('Failed to generate itinerary. Please try again.');
+                                  console.error('❌ Failed to generate itinerary');
+                                }
+                                setIsGenerating(false);
+                              }, 1500);
+                            } else {
+                              alert('Selected destination not found. Please try selecting again.');
+                              console.error('❌ Selected places not found in availablePlaces');
+                            }
+                          } else if (preselectedDestination && availablePlaces.length > 0) {
+                            console.log('🔍 Trying to find preselected destination...');
+                            console.log('   Looking for:', preselectedDestination.name);
+                            console.log('   With ID:', preselectedDestination.id);
+                            
+                            // Enhanced matching function
+                            const findMatch = () => {
+                              const searchName = preselectedDestination.name.toLowerCase().trim();
+                              console.log('   Search name:', searchName);
+                              
+                              // Try exact ID match first
+                              if (preselectedDestination.id) {
+                                const idMatch = availablePlaces.find(p => p.id === preselectedDestination.id);
+                                if (idMatch) {
+                                  console.log('✅ Found by ID:', idMatch.name);
+                                  return idMatch;
+                                }
+                              }
+                              
+                              // Try exact name match
+                              const exactMatch = availablePlaces.find(p => 
+                                p.name.toLowerCase().trim() === searchName
+                              );
+                              if (exactMatch) {
+                                console.log('✅ Found by exact name:', exactMatch.name);
+                                return exactMatch;
+                              }
+                              
+                              // Try contains match (both directions)
+                              const containsMatch = availablePlaces.find(p => {
+                                const placeName = p.name.toLowerCase().trim();
+                                return placeName.includes(searchName) || searchName.includes(placeName);
+                              });
+                              if (containsMatch) {
+                                console.log('✅ Found by contains:', containsMatch.name);
+                                return containsMatch;
+                              }
+                              
+                              // Try first word match
+                              const firstWord = searchName.split(/[\s,\-\(\)]+/)[0];
+                              if (firstWord && firstWord.length > 3) {
+                                const wordMatch = availablePlaces.find(p => 
+                                  p.name.toLowerCase().includes(firstWord)
+                                );
+                                if (wordMatch) {
+                                  console.log('✅ Found by first word:', wordMatch.name);
+                                  return wordMatch;
+                                }
+                              }
+                              
+                              // Try fuzzy match - remove common words and match
+                              const cleanName = searchName
+                                .replace(/\(.*?\)/g, '') // Remove parentheses content
+                                .replace(/national park|temple|stupa|monastery|lake|mountain|mount|peak/gi, '')
+                                .trim();
+                              
+                              if (cleanName.length > 3) {
+                                const fuzzyMatch = availablePlaces.find(p => {
+                                  const cleanPlaceName = p.name.toLowerCase()
+                                    .replace(/\(.*?\)/g, '')
+                                    .replace(/national park|temple|stupa|monastery|lake|mountain|mount|peak/gi, '')
+                                    .trim();
+                                  return cleanPlaceName.includes(cleanName) || cleanName.includes(cleanPlaceName);
+                                });
+                                if (fuzzyMatch) {
+                                  console.log('✅ Found by fuzzy match:', fuzzyMatch.name);
+                                  return fuzzyMatch;
+                                }
+                              }
+                              
+                              console.error('❌ No match found!');
+                              console.log('   Available place names (first 20):');
+                              availablePlaces.slice(0, 20).forEach((p, i) => {
+                                console.log(`   ${i + 1}. ${p.name} (ID: ${p.id})`);
+                              });
+                              return null;
+                            };
+                            
+                            const matchedPlace = findMatch();
+                            
+                            if (matchedPlace) {
+                              console.log('✅ Match found! Generating itinerary...');
+                              // Update form data and generate
+                              const updatedFormData = {
+                                ...formData,
+                                destinations: [matchedPlace.id],
+                                duration: 7
+                              };
+                              setFormData(updatedFormData);
+                              
+                              setIsGenerating(true);
+                              setTimeout(() => {
+                                const selectedPlaces = [matchedPlace];
+                                const itinerary = generateItinerary({
+                                  ...updatedFormData,
+                                  selectedPlaces
+                                });
+                                
+                                if (itinerary) {
+                                  setGeneratedItinerary(itinerary);
+                                  setActiveTab('generated');
+                                  console.log('✅ Itinerary generated successfully!');
+                                } else {
+                                  alert('Failed to generate itinerary. Please try again.');
+                                  console.error('❌ Failed to generate itinerary');
+                                }
+                                setIsGenerating(false);
+                              }, 1500);
+                            } else {
+                              console.error('❌ Could not find destination');
+                              alert(`Could not find "${preselectedDestination.name}" in the database. Please select from available destinations below.`);
+                            }
+                          } else {
+                            console.warn('⚠️ No destination selected or places not loaded');
+                            alert('Please wait for destinations to load or select a destination below.');
+                          }
+                          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
                         }}
-                        className="ml-4 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl transform hover:scale-105"
+                        disabled={isGenerating || loadingPlaces}
+                        className="ml-4 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white rounded-xl text-sm font-bold transition-all duration-300 whitespace-nowrap shadow-lg hover:shadow-xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        Quick Plan
+                        {isGenerating ? 'Generating...' : loadingPlaces ? 'Loading...' : 'Quick Plan'}
                       </button>
                     </div>
                   </div>
@@ -681,29 +1189,72 @@ const Itinerary = () => {
                     <p className="text-sm text-gray-500 dark:text-gray-400">Select places to visit</p>
                   </div>
                   <div className="space-y-4 max-h-80 overflow-y-auto custom-scrollbar">
-                    {Object.entries(nepalDestinations).map(([id, dest]) => (
-                      <label 
-                        key={id} 
-                        className={`flex items-center space-x-4 p-4 rounded-xl cursor-pointer transition-all duration-300 ${
-                          formData.destinations.includes(id)
-                            ? 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border-2 border-teal-500 shadow-lg'
-                            : theme === 'dark'
-                              ? 'bg-slate-700/50 hover:bg-slate-700 border-2 border-transparent'
-                              : 'bg-gray-100 hover:bg-gray-200 border-2 border-transparent'
-                        }`}
-                      >
-                        <input 
-                          type="checkbox" 
-                          checked={formData.destinations.includes(id)}
-                          onChange={() => toggleDestination(id)}
-                          className="w-5 h-5 text-teal-600 rounded-lg focus:ring-2 focus:ring-teal-500" 
-                        />
-                        <div className="flex-1">
-                          <span className="font-bold text-lg">{dest.name}</span>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">{dest.days} days recommended</div>
+                    {loadingPlaces ? (
+                      <div className="text-center py-8">
+                        <FaSpinner className="animate-spin text-4xl mx-auto mb-4 text-teal-500" />
+                        <p className="text-gray-600 dark:text-gray-400">Loading destinations from database...</p>
+                      </div>
+                    ) : availablePlaces.length === 0 ? (
+                      <div className="text-center py-8">
+                        <p className="text-red-600 dark:text-red-400 font-bold mb-2">⚠️ No destinations available</p>
+                        <p className="text-gray-600 dark:text-gray-400 text-sm">Please check if the backend is running and database is populated.</p>
+                      </div>
+                    ) : (
+                      <>
+                        <div className={`text-center py-2 px-4 rounded-lg mb-4 ${
+                          theme === 'dark' ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-50 text-teal-700'
+                        }`}>
+                          <p className="text-sm font-bold">
+                            ✅ {availablePlaces.length} destinations loaded from database
+                          </p>
                         </div>
-                      </label>
-                    ))}
+                        {availablePlaces.map((place) => {
+                        const isPreselected = preselectedDestination && 
+                          (place.id === preselectedDestination.id || 
+                           place.name.toLowerCase() === preselectedDestination.name.toLowerCase());
+                        
+                        return (
+                          <label 
+                            key={place.id} 
+                            className={`flex items-center space-x-4 p-4 rounded-xl cursor-pointer transition-all duration-300 ${
+                              formData.destinations.includes(place.id)
+                                ? 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border-2 border-teal-500 shadow-lg'
+                                : isPreselected
+                                  ? 'bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-2 border-purple-400 shadow-md'
+                                  : theme === 'dark'
+                                    ? 'bg-slate-700/50 hover:bg-slate-700 border-2 border-transparent'
+                                    : 'bg-gray-100 hover:bg-gray-200 border-2 border-transparent'
+                            }`}
+                          >
+                            <input 
+                              type="checkbox" 
+                              checked={formData.destinations.includes(place.id)}
+                              onChange={() => toggleDestination(place.id)}
+                              className="w-5 h-5 text-teal-600 rounded-lg focus:ring-2 focus:ring-teal-500" 
+                            />
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2">
+                                <span className="font-bold text-lg">{place.name}</span>
+                                {isPreselected && (
+                                  <span className="px-2 py-0.5 bg-purple-500 text-white text-xs rounded-full font-bold">
+                                    From Details
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-sm text-gray-500 dark:text-gray-400">
+                                {place.location} • {place.type || 'Destination'}
+                              </div>
+                              {place.best_season && (
+                                <div className="text-xs text-teal-600 dark:text-teal-400 mt-1">
+                                  Best: {place.best_season}
+                                </div>
+                              )}
+                            </div>
+                          </label>
+                        );
+                      })}
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -822,15 +1373,24 @@ const Itinerary = () => {
                     </div>
                     
                     <div className="flex flex-wrap justify-center gap-4">
-                      <button className="px-8 py-4 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-2xl font-bold flex items-center gap-3 hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105">
+                      <button 
+                        onClick={handleSaveItinerary}
+                        className="px-8 py-4 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-2xl font-bold flex items-center gap-3 hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                      >
                         <FaSave className="text-lg" />
                         Save Itinerary
                       </button>
-                      <button className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                      <button 
+                        onClick={handleDownloadPDF}
+                        className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                      >
                         <FaDownload className="text-lg" />
                         Download PDF
                       </button>
-                      <button className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                      <button 
+                        onClick={handleShareItinerary}
+                        className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                      >
                         <FaShare className="text-lg" />
                         Share
                       </button>
