@@ -49,6 +49,18 @@ class Attraction(Base):
     all_images = Column(Text)  # JSON string of all image paths
 
 
+class Event(Base):
+    __tablename__ = "events"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    venue = Column(String)
+    month_season = Column(String)
+    event_type = Column(String)
+    description = Column(Text)
+    place_id = Column(Integer, ForeignKey('places.id'))
+
+
 class Place(Base):
     __tablename__ = "places"
 
@@ -67,6 +79,7 @@ class Place(Base):
     accessibility = Column(Text)
     transportation = Column(Text)
     province = Column(String)
+    rating = Column(Float)  # Added to match dataset
     all_images = Column(Text)  # JSON string of all image paths
     created_at = Column(String, default=str(datetime.utcnow()))
 
@@ -158,3 +171,22 @@ class SearchHistory(db.Model):
     response_summary = db.Column(db.Text)  # Brief summary of the AI response
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_favorite = db.Column(db.Boolean, default=False)
+
+
+# ------------------ RECOMMENDATION MODEL ------------------
+
+class Recommendation(Base):
+    __tablename__ = "recommendations"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(String, nullable=False)
+    name = Column(String, nullable=False)
+    age = Column(Integer, nullable=False)
+    phone = Column(String, nullable=False)
+    travellers = Column(Integer, nullable=False)
+    trip_duration = Column(String, nullable=False)  # 1-3, 4-7, 8-14, 15+
+    trip_type = Column(String, nullable=False)  # Natural, Trekking, Cultural, Village, Urban
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Recommended places (stored as JSON string)
+    recommended_places = Column(Text)  # JSON array of place IDs

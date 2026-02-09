@@ -1,91 +1,63 @@
 # Tourism Recommendation System - Backend
 
-## 🚀 Quick Start
+Flask-based backend API for the Tourism Recommendation System.
 
-### 1. Install Dependencies
+## Quick Start
+
+### Start Backend Server
+
 ```bash
-pip install -r requirements.txt
+python -m app.app
 ```
 
-### 2. Run the Server
+Server will run on: `http://localhost:8000`
+
+## Essential Files
+
+- `app/` - Main application code
+  - `app.py` - Flask application entry point
+  - `models.py` - Database models
+  - `routes/` - API endpoints
+  - `database.py` - Database configuration
+
+- `datasets/` - Dataset files and images
+  - `dataset_with_all_image_path.csv` - Places data
+  - `destination_images/` - Place images
+
+- `tourism.db` - SQLite database (757 places)
+
+- `requirements.txt` - Python dependencies
+
+- `load_dataset_simple.py` - Load CSV data into database
+
+- `verify_data.py` - Check database contents
+
+## API Endpoints
+
+- `GET /` - Health check
+- `POST /api/recommendations` - Get personalized recommendations
+- `GET /api/recommendations/stats` - Get statistics
+- `GET /datasets/<path>` - Serve dataset images
+
+## Database
+
+- **SQLite** database with 757 places
+- Includes: name, location, type, description, tags, images, ratings, etc.
+
+## Verify Setup
+
 ```bash
-python run_server.py
+# Check database
+python verify_data.py
+
+# Should show: 757 places
 ```
 
-Server will start at: `http://localhost:8000`
+## Requirements
 
----
+- Python 3.9+
+- Flask
+- SQLAlchemy
+- Flask-CORS
 
-## 🔐 Admin Panel Access
-
-### Create Admin User
-```bash
-python fix_admin_login.py
-```
-
-This will create an admin user with:
-- **Username:** `admin`
-- **Password:** `admin123`
-
-### Login
-Go to: `http://localhost:5173/admin/login`
-
----
-
-## 📁 Essential Files
-
-- **`run_server.py`** - Start the backend server
-- **`fix_admin_login.py`** - Create/reset admin user
-- **`load_csv_data.py`** - Load initial data from CSV
-- **`requirements.txt`** - Python dependencies
-- **`app/`** - Main application code
-- **`datasets/`** - Images and data files
-- **`instance/`** - Database files
-
----
-
-## 🗄️ Database
-
-- **Location:** `instance/tourism.db`
-- **Type:** SQLite
-- **Tables:** places, hotels, restaurants, admin, users, etc.
-
----
-
-## 📸 Uploaded Images
-
-User-submitted place images are stored in:
-```
-datasets/uploads/
-```
-
----
-
-## 🛠️ Troubleshooting
-
-### Server won't start
-- Check if port 8000 is available
-- Install dependencies: `pip install -r requirements.txt`
-
-### Can't login to admin
-- Run: `python fix_admin_login.py`
-- Use credentials: `admin` / `admin123`
-
-### No data showing
-- Run: `python load_csv_data.py`
-- Check database exists: `instance/tourism.db`
-
----
-
-## 📞 API Endpoints
-
-- `GET /api/places` - Get all places
-- `POST /api/places` - Create new place
-- `GET /api/hotels` - Get all hotels
-- `GET /api/restaurants` - Get all restaurants
-- `GET /api/search` - Search places/hotels/restaurants
-- `POST /admin/login` - Admin login
-
----
-
-**Backend is ready! Start with `python run_server.py`** 🚀
+Install: `pip install -r requirements.txt`

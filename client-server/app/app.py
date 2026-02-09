@@ -18,6 +18,8 @@ from .routes.wishlist import wishlist_bp
 from .routes.hotels import hotels_bp
 from .routes.restaurants import restaurants_bp
 from .routes.images import images_bp
+from .routes.recommendations import recommendations_bp  # ⭐ Recommendations routes
+# Removed place_details_bp - using places_bp instead which has events support
 
 # -----------------------------
 # Load .env from backend folder
@@ -68,11 +70,13 @@ def create_app():
     app.register_blueprint(users_blueprint, url_prefix="/users")
     app.register_blueprint(rooms_blueprint, url_prefix="/rooms")
     app.register_blueprint(chat_bp, url_prefix="/api/chat")
-    app.register_blueprint(places_bp, url_prefix="/api")
+    app.register_blueprint(places_bp, url_prefix="/api")  # ⭐ Main places routes with events support
     app.register_blueprint(wishlist_bp, url_prefix="/api")
     app.register_blueprint(hotels_bp, url_prefix="/api")
     app.register_blueprint(restaurants_bp, url_prefix="/api")
     app.register_blueprint(images_bp, url_prefix="/api")
+    app.register_blueprint(recommendations_bp, url_prefix="/api")  # Recommendations routes
+    # Removed place_details_bp registration - using places_bp instead
     app.register_blueprint(admin_bp)  # Admin login/dashboard routes
 
     # -----------------------------

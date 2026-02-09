@@ -26,6 +26,7 @@ const AllNatureDetail = lazy(() => import("./pages/AllNatureDetail"));
 const SearchResultPage = lazy(() => import("./pages/SearchResultPageNew"));
 const ChatPage = lazy(() => import("./pages/ChatPage"));
 const RecommendationPage = lazy(() => import("./pages/RecommendationPage"));
+const PlaceDetailView = lazy(() => import("./pages/PlaceDetailView"));
 const DetailPage = lazy(() => import("./pages/Detailpage"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -594,6 +595,7 @@ const App = memo(() => (
             <Route path="/searchresult" element={<SearchResultPage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/recommendation" element={<RecommendationPage />} />
+            <Route path="/place/:placeId" element={<PlaceDetailView />} />
             <Route path="/details" element={<DetailPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />

@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 import json
 from ..database import SessionLocal
-from ..models import Place, Hotel, Restaurant, Attraction
+from ..models import Place, Hotel, Restaurant, Attraction, Event
 
 places_bp = Blueprint('places', __name__)
 
@@ -78,6 +78,18 @@ def serialize_restaurant(restaurant):
         'price_range': restaurant.price_range,
         'place_id': restaurant.place_id,
         'all_images': json.loads(restaurant.all_images) if restaurant.all_images else []
+    }
+
+def serialize_event(event):
+    """Serialize an event object with all fields"""
+    return {
+        'id': event.id,
+        'name': event.name,
+        'venue': event.venue,
+        'month_season': event.month_season,
+        'event_type': event.event_type,
+        'description': event.description,
+        'place_id': event.place_id
     }
 
 @places_bp.route('/places', methods=['POST'])
@@ -178,20 +190,142 @@ def list_places():
 
 @places_bp.route('/places/<int:place_id>', methods=['GET'])
 def get_place_details(place_id):
-    """Get detailed information about a specific place including hotels and restaurants"""
+    """Get detailed information about a specific place including hotels, restaurants, and events"""
     session = SessionLocal()
     try:
         place = session.query(Place).filter(Place.id == place_id).first()
         if not place:
             return jsonify({'error': 'Place not found'}), 404
         
-        # Get associated hotels and restaurants
+        # Get associated hotels, restaurants, and events
         hotels = session.query(Hotel).filter(Hotel.place_id == place_id).all()
         restaurants = session.query(Restaurant).filter(Restaurant.place_id == place_id).all()
+        events = session.query(Event).filter(Event.place_id == place_id).all()
         
         result = serialize_place(place)
-        result['hotels'] = [serialize_hotel(hotel) for hotel in hotels]
-        result['restaurants'] = [serialize_restaurant(restaurant) for restaurant in restaurants]
+        
+        # Format place images properly
+        place_images = []
+        if place.all_images:
+            try:
+                import json
+                # Parse JSON string
+                image_list = json.loads(place.all_images)
+                for img_path in image_list[:10]:  # Limit to 10 images
+                    img_path = img_path.strip().replace('\\', '/')
+                    if img_path:
+                        # Add destination_images prefix if not present
+                        if img_path.startswith('destination_images/'):
+                            place_images.append(f"/datasets/{img_path}")
+                        elif img_path.startswith('/datasets/'):
+                            place_images.append(img_path)
+                        else:
+                            place_images.append(f"/datasets/destination_images/{img_path}")
+            except:
+                # Fallback to comma-separated
+                image_paths = place.all_images.split(',')
+                for img_path in image_paths[:10]:
+                    img_path = img_path.strip().replace('\\', '/')
+                    if img_path:
+                        if img_path.startswith('destination_images/'):
+                            place_images.append(f"/datasets/{img_path}")
+                        elif img_path.startswith('/datasets/'):
+                            place_images.append(img_path)
+                        else:
+                            place_images.append(f"/datasets/destination_images/{img_path}")
+        
+        # Fallback to image_url if no all_images
+        if not place_images and place.image_url:
+            img_path = place.image_url.replace('\\', '/')
+            if img_path.startswith('destination_images/'):
+                place_images.append(f"/datasets/{img_path}")
+            elif img_path.startswith('/datasets/'):
+                place_images.append(img_path)
+            else:
+                place_images.append(f"/datasets/destination_images/{img_path}")
+        
+        result['images'] = place_images
+        
+        # Format hotel images
+        hotel_list = []
+        for hotel in hotels:
+            hotel_data = serialize_hotel(hotel)
+            hotel_images = []
+            
+            if hotel.all_images:
+                try:
+                    import json
+                    image_list = json.loads(hotel.all_images)
+                    for img_path in image_list[:5]:
+                        img_path = img_path.strip().replace('\\', '/')
+                        if img_path:
+                            # Images already have hotel_images prefix
+                            if img_path.startswith('hotel_images/'):
+                                hotel_images.append(f"/datasets/{img_path}")
+                            elif img_path.startswith('/datasets/'):
+                                hotel_images.append(img_path)
+                            else:
+                                hotel_images.append(f"/datasets/{img_path}")
+                except:
+                    pass
+            
+            # Fallback to image_url
+            if not hotel_images and hotel.image_url:
+                img_path = hotel.image_url.replace('\\', '/')
+                if img_path.startswith('hotel_images/'):
+                    hotel_images.append(f"/datasets/{img_path}")
+                elif img_path.startswith('/datasets/'):
+                    hotel_images.append(img_path)
+                else:
+                    hotel_images.append(f"/datasets/{img_path}")
+            
+            hotel_data['images'] = hotel_images
+            hotel_data['image'] = hotel_images[0] if hotel_images else ''
+            hotel_list.append(hotel_data)
+        
+        # Format restaurant images
+        restaurant_list = []
+        for restaurant in restaurants:
+            restaurant_data = serialize_restaurant(restaurant)
+            restaurant_images = []
+            
+            if restaurant.all_images:
+                try:
+                    import json
+                    image_list = json.loads(restaurant.all_images)
+                    for img_path in image_list[:5]:
+                        img_path = img_path.strip().replace('\\', '/')
+                        if img_path:
+                            # Images already have restaurant_images prefix
+                            if img_path.startswith('restaurant_images/'):
+                                restaurant_images.append(f"/datasets/{img_path}")
+                            elif img_path.startswith('/datasets/'):
+                                restaurant_images.append(img_path)
+                            else:
+                                restaurant_images.append(f"/datasets/{img_path}")
+                except:
+                    pass
+            
+            # Fallback to image_url
+            if not restaurant_images and restaurant.image_url:
+                img_path = restaurant.image_url.replace('\\', '/')
+                if img_path.startswith('restaurant_images/'):
+                    restaurant_images.append(f"/datasets/{img_path}")
+                elif img_path.startswith('/datasets/'):
+                    restaurant_images.append(img_path)
+                else:
+                    restaurant_images.append(f"/datasets/{img_path}")
+            
+            restaurant_data['images'] = restaurant_images
+            restaurant_data['image'] = restaurant_images[0] if restaurant_images else ''
+            restaurant_list.append(restaurant_data)
+        
+        result['hotels'] = hotel_list
+        result['restaurants'] = restaurant_list
+        
+        # Format events
+        event_list = [serialize_event(event) for event in events]
+        result['events'] = event_list
         
         return jsonify(result)
     finally:
