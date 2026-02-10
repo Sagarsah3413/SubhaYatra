@@ -1,32 +1,50 @@
 import sqlite3
+import os
 
-conn = sqlite3.connect('app/tourism.db')
+# Try different database paths
+db_paths = [
+    'app/tourism.db',
+    'client-server/app/tourism.db',
+    'tourism.db',
+    'instance/tourism.db',
+    'client-server/instance/tourism.db'
+]
+
+conn = None
+for db_path in db_paths:
+    if os.path.exists(db_path):
+        print(f'✅ Found database at: {db_path}')
+        conn = sqlite3.connect(db_path)
+        break
+
+if not conn:
+    print('❌ Database not found in any expected location')
+    exit(1)
+
 cursor = conn.cursor()
 
-# Check events for place_id 3
-cursor.execute('SELECT COUNT(*) FROM events WHERE place_id = 3')
-count = cursor.fetchone()[0]
-print(f'Events for place_id 3: {count}')
-
-if count > 0:
-    cursor.execute('SELECT id, name, venue, month_season, event_type, description FROM events WHERE place_id = 3')
-    event = cursor.fetchone()
-    print(f'\nEvent details:')
-    print(f'  ID: {event[0]}')
-    print(f'  Name: {event[1]}')
-    print(f'  Venue: {event[2]}')
-    print(f'  Season: {event[3]}')
-    print(f'  Type: {event[4]}')
-    print(f'  Description: {event[5][:100]}...')
-
-# Check total events
+# Count total events
 cursor.execute('SELECT COUNT(*) FROM events')
 total = cursor.fetchone()[0]
-print(f'\nTotal events in database: {total}')
+print(f'✅ Total events in database: {total}')
 
-# Check places with events
-cursor.execute('SELECT COUNT(DISTINCT place_id) FROM events')
-places_with_events = cursor.fetchone()[0]
-print(f'Places with events: {places_with_events}')
+# Get sample events with place names
+cursor.execute('''
+    SELECT e.name, e.venue, e.month_season, e.event_type, p.name as place_name 
+    FROM events e 
+    JOIN places p ON e.place_id = p.id 
+    WHERE e.name IS NOT NULL AND e.name != 'NO' AND e.name != ''
+    LIMIT 10
+''')
+
+print('\n📅 Sample events from dataset:')
+print('=' * 80)
+for i, row in enumerate(cursor.fetchall(), 1):
+    event_name, venue, season, event_type, place_name = row
+    print(f'\n{i}. {event_name}')
+    print(f'   📍 Place: {place_name}')
+    print(f'   🏛️  Venue: {venue}')
+    print(f'   📆 Season: {season}')
+    print(f'   🎭 Type: {event_type}')
 
 conn.close()

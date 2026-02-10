@@ -16,6 +16,8 @@ export default function PlaceDetailView() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
+  const [similarPlaces, setSimilarPlaces] = useState([]);
+  const [loadingSimilar, setLoadingSimilar] = useState(false);
 
   // Check if we came from recommendation results
   const fromRecommendations = location.state?.fromRecommendations;
@@ -105,11 +107,41 @@ export default function PlaceDetailView() {
         
         setPlace(placeData);
         console.log('✅ Place data loaded successfully');
+        
+        // Fetch similar places after place data is loaded
+        fetchSimilarPlaces(placeId);
       } catch (err) {
         console.error('Error fetching place details:', err);
         setError(err.message);
       } finally {
         setLoading(false);
+      }
+    };
+
+    const fetchSimilarPlaces = async (id) => {
+      try {
+        setLoadingSimilar(true);
+        console.log(`🔍 Fetching similar places for place ID: ${id}`);
+        const response = await fetch(`http://localhost:8000/api/places/${id}/similar?limit=6`);
+        
+        console.log(`Similar places response status: ${response.status}`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Similar places data:', data);
+          if (data.success && data.similar_places) {
+            setSimilarPlaces(data.similar_places);
+            console.log(`✅ Loaded ${data.similar_places.length} similar places`);
+          } else {
+            console.log('⚠️ No similar places found in response');
+          }
+        } else {
+          console.error(`❌ Failed to fetch similar places: ${response.status}`);
+        }
+      } catch (err) {
+        console.error('Error fetching similar places:', err);
+      } finally {
+        setLoadingSimilar(false);
       }
     };
 
@@ -979,6 +1011,97 @@ export default function PlaceDetailView() {
           </div>
         )}
       </div>
+
+      {/* You May Also Like Section */}
+      {(loadingSimilar || (similarPlaces && similarPlaces.length > 0)) && (
+        <div className="max-w-7xl mx-auto px-4 py-12 w-full">
+          <h2 className={`text-3xl font-bold mb-8 ${
+            theme === 'dark' ? 'text-white' : 'text-gray-900'
+          }`}>
+            ✨ You May Also Like
+          </h2>
+          
+          {loadingSimilar ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p className={theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}>
+                  Finding similar places...
+                </p>
+              </div>
+            </div>
+          ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {similarPlaces.map((similarPlace) => (
+              <div
+                key={similarPlace.id}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  navigate(`/place/${similarPlace.id}`, {
+                    state: location.state
+                  });
+                }}
+                className={`rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105 cursor-pointer ${
+                  theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+                }`}
+              >
+                {similarPlace.image && (
+                  <div className="h-48 overflow-hidden">
+                    <img
+                      src={`http://localhost:8000${similarPlace.image}`}
+                      alt={similarPlace.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  </div>
+                )}
+                
+                <div className="p-4">
+                  <h3 className={`text-lg font-bold mb-2 ${
+                    theme === 'dark' ? 'text-white' : 'text-gray-900'
+                  }`}>
+                    {similarPlace.name}
+                  </h3>
+                  
+                  <p className={`text-sm mb-2 ${
+                    theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
+                  }`}>
+                    📍 {similarPlace.location}
+                  </p>
+                  
+                  {similarPlace.description && (
+                    <p className={`text-sm mb-3 line-clamp-2 ${
+                      theme === 'dark' ? 'text-slate-300' : 'text-gray-700'
+                    }`}>
+                      {similarPlace.description}
+                    </p>
+                  )}
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1">
+                      <span className="text-yellow-500">⭐</span>
+                      <span className={`text-sm font-semibold ${
+                        theme === 'dark' ? 'text-white' : 'text-gray-900'
+                      }`}>
+                        {similarPlace.rating?.toFixed(1)}
+                      </span>
+                    </div>
+                    
+                    {similarPlace.difficulty_level && (
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        theme === 'dark' ? 'bg-slate-700 text-slate-300' : 'bg-gray-100 text-gray-700'
+                      }`}>
+                        {similarPlace.difficulty_level}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          )}
+        </div>
+      )}
 
       {/* Modals */}
       {selectedHotel && (

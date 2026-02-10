@@ -120,6 +120,28 @@ def get_place_details(place_id):
                 'price_range': row[7] or 'Moderate'
             })
         
+        # Get events for this place
+        events_query = text("""
+            SELECT id, name, venue, month_season, event_type, description
+            FROM events 
+            WHERE place_id = :place_id
+            LIMIT 10
+        """)
+        events_result = db.execute(events_query, {'place_id': place_id})
+        
+        events = []
+        for row in events_result:
+            # Skip events with 'NO' or empty values
+            if row[1] and row[1].strip() and row[1].upper() not in ['NO', 'N/A']:
+                events.append({
+                    'id': row[0],
+                    'name': row[1],
+                    'venue': row[2] if row[2] and row[2].upper() not in ['NO', 'N/A'] else '',
+                    'month_season': row[3] if row[3] and row[3].upper() not in ['NO', 'N/A'] else '',
+                    'event_type': row[4] if row[4] and row[4].upper() not in ['NO', 'N/A'] else '',
+                    'description': row[5] if row[5] and row[5].upper() not in ['NO', 'N/A'] else ''
+                })
+        
         # Format response
         place_data = {
             'id': place.id,
@@ -139,7 +161,8 @@ def get_place_details(place_id):
             'province': place.province,
             'rating': place.rating or 4.0,
             'hotels': hotels,
-            'restaurants': restaurants
+            'restaurants': restaurants,
+            'events': events
         }
         
         return jsonify({
