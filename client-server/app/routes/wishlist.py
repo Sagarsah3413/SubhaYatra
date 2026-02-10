@@ -1,13 +1,19 @@
 from flask import Blueprint, request, jsonify
 from ..database import SessionLocal
 from .. import crud
+from ..auth import token_required
 import random
 
 wishlist_bp = Blueprint('wishlist', __name__)
 
 @wishlist_bp.route('/wishlist/<user_id>', methods=['GET'])
+@token_required
 def get_user_wishlist(user_id):
-    """Get all places in user's wishlist"""
+    """Get all places in user's wishlist - requires authentication"""
+    # Verify user can only access their own wishlist
+    if request.current_user['user_id'] != user_id and request.current_user['role'] != 'admin':
+        return jsonify({'error': 'Access denied'}), 403
+    
     db = SessionLocal()
     try:
         wishlist_items = crud.get_user_wishlist(db, user_id)
@@ -47,8 +53,13 @@ def get_user_wishlist(user_id):
         db.close()
 
 @wishlist_bp.route('/wishlist/<user_id>/<int:place_id>', methods=['POST'])
+@token_required
 def add_to_wishlist(user_id, place_id):
-    """Add place to user's wishlist"""
+    """Add place to user's wishlist - requires authentication"""
+    # Verify user can only modify their own wishlist
+    if request.current_user['user_id'] != user_id and request.current_user['role'] != 'admin':
+        return jsonify({'error': 'Access denied'}), 403
+    
     db = SessionLocal()
     try:
         # Check if place exists
@@ -69,8 +80,13 @@ def add_to_wishlist(user_id, place_id):
         db.close()
 
 @wishlist_bp.route('/wishlist/<user_id>/<int:place_id>', methods=['DELETE'])
+@token_required
 def remove_from_wishlist(user_id, place_id):
-    """Remove place from user's wishlist"""
+    """Remove place from user's wishlist - requires authentication"""
+    # Verify user can only modify their own wishlist
+    if request.current_user['user_id'] != user_id and request.current_user['role'] != 'admin':
+        return jsonify({'error': 'Access denied'}), 403
+    
     db = SessionLocal()
     try:
         success = crud.remove_from_wishlist(db, user_id, place_id)
@@ -88,8 +104,13 @@ def remove_from_wishlist(user_id, place_id):
         db.close()
 
 @wishlist_bp.route('/wishlist/<user_id>/<int:place_id>/check', methods=['GET'])
+@token_required
 def check_wishlist_status(user_id, place_id):
-    """Check if place is in user's wishlist"""
+    """Check if place is in user's wishlist - requires authentication"""
+    # Verify user can only check their own wishlist
+    if request.current_user['user_id'] != user_id and request.current_user['role'] != 'admin':
+        return jsonify({'error': 'Access denied'}), 403
+    
     db = SessionLocal()
     try:
         is_in_wishlist = crud.is_in_wishlist(db, user_id, place_id)

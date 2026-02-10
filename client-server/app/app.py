@@ -41,7 +41,7 @@ def create_app():
     # -----------------------------
     # Database configuration
     # -----------------------------
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./tourism.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tourism.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
 
@@ -79,7 +79,7 @@ def create_app():
     app.register_blueprint(recommendations_bp, url_prefix="/api")  # Recommendations routes
     app.register_blueprint(similar_places_bp, url_prefix="/api")  # Similar places routes
     # Removed place_details_bp registration - using places_bp instead
-    app.register_blueprint(admin_bp)  # Admin login/dashboard routes
+    app.register_blueprint(admin_bp, url_prefix="/api")  # Admin login/dashboard routes
 
     # -----------------------------
     # Root route

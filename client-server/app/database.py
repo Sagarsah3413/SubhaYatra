@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 # -----------------------------
 # SQLAlchemy setup
 # -----------------------------
-engine = create_engine("sqlite:///./tourism.db", connect_args={"check_same_thread": False})
+engine = create_engine("sqlite:///tourism.db", connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
