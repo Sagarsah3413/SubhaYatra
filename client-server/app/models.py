@@ -82,6 +82,8 @@ class Place(Base):
     rating = Column(Float)  # Added to match dataset
     all_images = Column(Text)  # JSON string of all image paths
     created_at = Column(String, default=str(datetime.utcnow()))
+    status = Column(String, default='approved')  # 'pending', 'approved', 'rejected'
+    source = Column(String, default='dataset')  # 'dataset' or 'user_submission'
 
 
 # ------------------ ADMIN MODEL ------------------
@@ -121,7 +123,13 @@ class Wishlist(Base):
 
     id = Column(Integer, primary_key=True)
     user_id = Column(String, nullable=False)
-    place_id = Column(Integer, ForeignKey('places.id'), nullable=False)
+    place_id = Column(Integer, ForeignKey('places.id'), nullable=True)  # Nullable for string identifiers
+    place_identifier = Column(String, nullable=True)  # For places without database ID
+    place_name = Column(String, nullable=True)  # Store place name directly
+    place_type = Column(String, nullable=True)  # Store place type
+    place_location = Column(String, nullable=True)  # Store location
+    place_image_url = Column(String, nullable=True)  # Store image URL
+    place_description = Column(Text, nullable=True)  # Store description
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
@@ -190,3 +198,24 @@ class Recommendation(Base):
     
     # Recommended places (stored as JSON string)
     recommended_places = Column(Text)  # JSON array of place IDs
+
+
+# ------------------ REVIEW MODEL ------------------
+
+class Review(Base):
+    __tablename__ = "reviews"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    email = Column(String, nullable=False)
+    place = Column(String, nullable=False)
+    visit_date = Column(String)
+    type = Column(String, nullable=False)  # Nature, Cultural, Adventure, City, Relaxation
+    rating = Column(Integer, nullable=False)  # 1-5
+    review = Column(Text, nullable=False)
+    recommend = Column(String, default="yes")  # yes or no
+    images = Column(Text)  # JSON string of image paths
+    status = Column(String, default="pending")  # pending, approved, rejected
+    created_at = Column(DateTime, default=datetime.utcnow)
+    approved_at = Column(DateTime)
+    admin_notes = Column(Text)  # Admin can add notes about the review

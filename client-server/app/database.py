@@ -24,3 +24,9 @@ def init_db():
     Base.metadata.create_all(bind=engine)
     
     print("✅ Database initialized successfully")
+
+def init_flask_db(app):
+    """Initialize Flask-SQLAlchemy tables (Chat, Message, SearchHistory)"""
+    with app.app_context():
+        db.create_all()
+        print("✅ Flask-SQLAlchemy tables created successfully")

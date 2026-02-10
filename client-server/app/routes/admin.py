@@ -2,11 +2,11 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from ..database import SessionLocal
-from ..models import Admin, Booking
-from ..auth import generate_token, hash_password, verify_password, admin_required, token_required
+from ..models import Admin, Booking, Review
 import requests
 import os
 from datetime import datetime
+import json
 
 # -----------------------------
 # Blueprint
@@ -301,3 +301,209 @@ def bookings_per_location():
     session.close()
     data = [{"location": row[0], "count": row[1]} for row in results if row[0]]
     return jsonify(data)
+
+
+# -----------------------------
+# Review Management Endpoints
+# -----------------------------
+
+# Get all reviews for admin panel
+@admin_bp.route("/admin/reviews", methods=["GET"])
+def admin_get_reviews():
+    """Get all reviews with filtering options"""
+    try:
+        session = SessionLocal()
+        
+        # Get query parameters
+        status = request.args.get("status")  # pending, approved, rejected, all
+        page = request.args.get("page", 1, type=int)
+        per_page = request.args.get("per_page", 20, type=int)
+        
+        # Build query
+        query = session.query(Review)
+        
+        if status and status != "all":
+            query = query.filter(Review.status == status)
+        
+        # Get total count
+        total = query.count()
+        
+        # Apply pagination
+        reviews = query.order_by(Review.created_at.desc()).offset((page - 1) * per_page).limit(per_page).all()
+        
+        # Format response
+        reviews_list = []
+        for review in reviews:
+            reviews_list.append({
+                "id": review.id,
+                "name": review.name,
+                "email": review.email,
+                "place": review.place,
+                "visit_date": review.visit_date,
+                "type": review.type,
+                "rating": review.rating,
+                "review": review.review,
+                "recommend": review.recommend,
+                "images": json.loads(review.images) if review.images else [],
+                "status": review.status,
+                "created_at": review.created_at.isoformat() if review.created_at else None,
+                "approved_at": review.approved_at.isoformat() if review.approved_at else None,
+                "admin_notes": review.admin_notes
+            })
+        
+        return jsonify({
+            "reviews": reviews_list,
+            "total": total,
+            "page": page,
+            "per_page": per_page,
+            "total_pages": (total + per_page - 1) // per_page
+        }), 200
+        
+    except Exception as e:
+        print(f"Error fetching reviews: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        session.close()
+
+
+# Get review statistics for dashboard
+@admin_bp.route("/admin/dashboard/review-stats", methods=["GET"])
+def review_stats():
+    """Get review statistics for admin dashboard"""
+    try:
+        session = SessionLocal()
+        
+        total_reviews = session.query(Review).count()
+        pending_reviews = session.query(Review).filter(Review.status == "pending").count()
+        approved_reviews = session.query(Review).filter(Review.status == "approved").count()
+        rejected_reviews = session.query(Review).filter(Review.status == "rejected").count()
+        
+        # Average rating of approved reviews
+        avg_rating = session.query(func.avg(Review.rating)).filter(Review.status == "approved").scalar()
+        
+        # Recent reviews (last 5)
+        recent_reviews = session.query(Review).order_by(Review.created_at.desc()).limit(5).all()
+        recent_list = []
+        for review in recent_reviews:
+            recent_list.append({
+                "id": review.id,
+                "name": review.name,
+                "place": review.place,
+                "rating": review.rating,
+                "status": review.status,
+                "created_at": review.created_at.isoformat() if review.created_at else None
+            })
+        
+        return jsonify({
+            "total_reviews": total_reviews,
+            "pending_reviews": pending_reviews,
+            "approved_reviews": approved_reviews,
+            "rejected_reviews": rejected_reviews,
+            "average_rating": round(avg_rating, 2) if avg_rating else 0,
+            "recent_reviews": recent_list
+        }), 200
+        
+    except Exception as e:
+        print(f"Error fetching review stats: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        session.close()
+
+
+# Approve review
+@admin_bp.route("/admin/reviews/<int:review_id>/approve", methods=["POST"])
+def approve_review(review_id):
+    """Approve a review"""
+    try:
+        session = SessionLocal()
+        review = session.query(Review).filter(Review.id == review_id).first()
+        
+        if not review:
+            return jsonify({"error": "Review not found"}), 404
+        
+        data = request.get_json() or {}
+        admin_notes = data.get("admin_notes")
+        
+        review.status = "approved"
+        review.approved_at = datetime.utcnow()
+        if admin_notes:
+            review.admin_notes = admin_notes
+        
+        session.commit()
+        
+        return jsonify({
+            "message": "Review approved successfully",
+            "review_id": review.id
+        }), 200
+        
+    except Exception as e:
+        print(f"Error approving review: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        session.close()
+
+
+# Reject review
+@admin_bp.route("/admin/reviews/<int:review_id>/reject", methods=["POST"])
+def reject_review(review_id):
+    """Reject a review"""
+    try:
+        session = SessionLocal()
+        review = session.query(Review).filter(Review.id == review_id).first()
+        
+        if not review:
+            return jsonify({"error": "Review not found"}), 404
+        
+        data = request.get_json() or {}
+        admin_notes = data.get("admin_notes")
+        
+        review.status = "rejected"
+        if admin_notes:
+            review.admin_notes = admin_notes
+        
+        session.commit()
+        
+        return jsonify({
+            "message": "Review rejected successfully",
+            "review_id": review.id
+        }), 200
+        
+    except Exception as e:
+        print(f"Error rejecting review: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        session.close()
+
+
+# Delete review
+@admin_bp.route("/admin/reviews/<int:review_id>", methods=["DELETE"])
+def delete_review(review_id):
+    """Delete a review"""
+    try:
+        session = SessionLocal()
+        review = session.query(Review).filter(Review.id == review_id).first()
+        
+        if not review:
+            return jsonify({"error": "Review not found"}), 404
+        
+        # Delete associated images
+        if review.images:
+            image_paths = json.loads(review.images)
+            for image_path in image_paths:
+                full_path = os.path.join(os.getcwd(), image_path.lstrip('/'))
+                if os.path.exists(full_path):
+                    try:
+                        os.remove(full_path)
+                    except Exception as e:
+                        print(f"Error deleting image {full_path}: {str(e)}")
+        
+        session.delete(review)
+        session.commit()
+        
+        return jsonify({"message": "Review deleted successfully"}), 200
+        
+    except Exception as e:
+        print(f"Error deleting review: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        session.close()

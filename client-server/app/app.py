@@ -7,7 +7,7 @@ from dotenv import load_dotenv  # ✅ Load .env
 # Add the app directory to Python path for imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from .database import init_db, db
+from .database import init_db, db, init_flask_db
 from .routes.search import search_blueprint
 from .routes.users import users_blueprint
 from .routes.rooms import rooms_blueprint
@@ -19,7 +19,7 @@ from .routes.hotels import hotels_bp
 from .routes.restaurants import restaurants_bp
 from .routes.images import images_bp
 from .routes.recommendations import recommendations_bp  # ⭐ Recommendations routes
-from .routes.similar_places import similar_places_bp  # ⭐ Similar places recommendations
+from .routes.reviews import reviews_bp  # ⭐ Reviews routes
 # Removed place_details_bp - using places_bp instead which has events support
 
 # -----------------------------
@@ -63,6 +63,7 @@ def create_app():
     # Initialize DB
     # -----------------------------
     init_db()
+    init_flask_db(app)  # Create Flask-SQLAlchemy tables
 
     # -----------------------------
     # Register blueprints/routes
@@ -77,7 +78,7 @@ def create_app():
     app.register_blueprint(restaurants_bp, url_prefix="/api")
     app.register_blueprint(images_bp, url_prefix="/api")
     app.register_blueprint(recommendations_bp, url_prefix="/api")  # Recommendations routes
-    app.register_blueprint(similar_places_bp, url_prefix="/api")  # Similar places routes
+    app.register_blueprint(reviews_bp, url_prefix="/api")  # Reviews routes
     # Removed place_details_bp registration - using places_bp instead
     app.register_blueprint(admin_bp, url_prefix="/api")  # Admin login/dashboard routes
 
@@ -95,6 +96,14 @@ def create_app():
     def datasets_files(filename):
         datasets_dir = os.path.join(os.getcwd(), "datasets")
         return send_from_directory(datasets_dir, filename)
+
+    # -----------------------------
+    # Serve uploaded review images
+    # -----------------------------
+    @app.route("/uploads/reviews/<path:filename>")
+    def review_images(filename):
+        uploads_dir = os.path.join(os.getcwd(), "uploads", "reviews")
+        return send_from_directory(uploads_dir, filename)
 
     return app
 

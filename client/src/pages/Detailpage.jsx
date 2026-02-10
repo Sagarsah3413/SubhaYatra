@@ -125,6 +125,11 @@ export default function DetailPage() {
   };
 
   const handleBookmark = async () => {
+    console.log('handleBookmark called');
+    console.log('isSignedIn:', isSignedIn);
+    console.log('data:', data);
+    console.log('user:', user);
+    
     if (!isSignedIn) {
       showInfo(
         "Sign In Required",
@@ -134,16 +139,20 @@ export default function DetailPage() {
       return;
     }
 
-    if (!data || !data.id) {
-      showInfo("Error", "Place information not available.");
+    if (!data) {
+      showInfo("Error", "Place information not available. Please try refreshing the page.");
       return;
     }
+
+    // Use data.id if available, otherwise create a unique identifier from name and type
+    const placeId = data.id || `${type}-${encodeURIComponent(name)}`;
+    
+    console.log('Using placeId:', placeId);
 
     setIsAddingToWishlist(true);
 
     try {
       const userId = user.id;
-      const placeId = data.id;
 
       if (isBookmarked) {
         // Remove from wishlist
@@ -151,25 +160,41 @@ export default function DetailPage() {
           method: 'DELETE',
         });
 
-        if (!response.ok) throw new Error('Failed to remove from wishlist');
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || 'Failed to remove from wishlist');
+        }
 
         setIsBookmarked(false);
         showSuccess(
           "Removed from Wishlist",
-          `${data.name} has been removed from your wishlist.`
+          `${data.name || name} has been removed from your wishlist.`
         );
       } else {
-        // Add to wishlist
+        // Add to wishlist - send place data in request body
         const response = await fetch(`http://localhost:8000/api/wishlist/${userId}/${placeId}`, {
           method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: data.name || name,
+            type: type,
+            location: data.location || '',
+            image_url: data.image_url || data.image || '',
+            description: data.description || ''
+          })
         });
 
-        if (!response.ok) throw new Error('Failed to add to wishlist');
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || 'Failed to add to wishlist');
+        }
 
         setIsBookmarked(true);
         showWishlist(
           "Added to Travel Wishlist",
-          `${data.name} has been saved to your personal travel collection.`,
+          `${data.name || name} has been saved to your personal travel collection.`,
           {
             action: {
               label: "View Wishlist",
@@ -182,7 +207,7 @@ export default function DetailPage() {
       console.error('Error updating wishlist:', error);
       showInfo(
         "Error",
-        "Failed to update wishlist. Please try again."
+        `Failed to update wishlist: ${error.message}`
       );
     } finally {
       setIsAddingToWishlist(false);
@@ -192,10 +217,12 @@ export default function DetailPage() {
   // Check if place is in wishlist on load
   useEffect(() => {
     const checkWishlistStatus = async () => {
-      if (isSignedIn && user && data && data.id) {
+      if (isSignedIn && user && data) {
         try {
           const userId = user.id;
-          const placeId = data.id;
+          // Use data.id if available, otherwise create identifier from name and type
+          const placeId = data.id || `${type}-${encodeURIComponent(name)}`;
+          
           const response = await fetch(`http://localhost:8000/api/wishlist/${userId}/${placeId}/check`);
           
           if (response.ok) {
@@ -209,7 +236,7 @@ export default function DetailPage() {
     };
 
     checkWishlistStatus();
-  }, [isSignedIn, user, data]);
+  }, [isSignedIn, user, data, type, name]);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -630,11 +657,21 @@ export default function DetailPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
               <button 
-                onClick={handleBookmark}
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log('Wishlist button clicked!');
+                  handleBookmark();
+                }}
                 disabled={isAddingToWishlist}
-                className={`flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 shadow-lg bg-gradient-to-r from-${typeColor}-500 to-${typeColor}-600 hover:from-${typeColor}-600 hover:to-${typeColor}-700 hover:shadow-${typeColor}-500/25 disabled:opacity-50 disabled:cursor-not-allowed`}
+                className={`flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 shadow-lg cursor-pointer relative z-10 ${
+                  isBookmarked 
+                    ? 'bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700' 
+                    : `bg-gradient-to-r from-${typeColor}-500 to-${typeColor}-600 hover:from-${typeColor}-600 hover:to-${typeColor}-700`
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
               >
                 {isAddingToWishlist ? (
                   <>

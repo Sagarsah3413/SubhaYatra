@@ -5,6 +5,7 @@ import Footer from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import chatService from "../services/chatService";
+import Toast from "../components/Toast";
 
 export default function ChatPage() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export default function ChatPage() {
   const [isTyping, setIsTyping] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [geminiAI, setGeminiAI] = useState(null);
-  const [aiStatus, setAiStatus] = useState('initializing'); // 'initializing', 'ready', 'error'
+  const [aiStatus, setAiStatus] = useState('initializing'); // 'initializing', 'ready', 'error', 'fallback', 'quota_exceeded'
   
   // Chat history state
   const [chatHistory, setChatHistory] = useState([]);
@@ -25,6 +26,15 @@ export default function ChatPage() {
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchHistory, setShowSearchHistory] = useState(false);
+  
+  // Confirmation dialog state
+  const [confirmDialog, setConfirmDialog] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    onConfirm: () => {},
+    type: 'danger'
+  });
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -48,22 +58,44 @@ export default function ChatPage() {
 
         console.log('🔄 Initializing Gemini AI...');
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
         
-        // Test the connection with a simple prompt
-        console.log('🧪 Testing connection...');
-        const testResult = await model.generateContent("Respond with exactly: 'Gemini AI Ready for Nepal Tourism'");
-        const testResponse = await testResult.response;
-        const responseText = testResponse.text();
+        // Try different model names in order of preference
+        const modelNames = [
+          'gemini-1.5-flash',
+          'gemini-1.5-pro', 
+          'gemini-pro',
+          'gemini-2.0-flash-exp'
+        ];
         
-        console.log('📝 Test response:', responseText);
+        let model = null;
+        let lastError = null;
         
-        if (responseText && responseText.includes('Gemini')) {
+        for (const modelName of modelNames) {
+          try {
+            console.log(`🧪 Trying model: ${modelName}...`);
+            const testModel = genAI.getGenerativeModel({ model: modelName });
+            
+            // Test the connection with a simple prompt
+            const testResult = await testModel.generateContent("Say 'OK'");
+            const testResponse = await testResult.response;
+            const responseText = testResponse.text();
+            
+            console.log(`✅ Model ${modelName} works! Response:`, responseText);
+            model = testModel;
+            break; // Success, exit loop
+          } catch (err) {
+            console.warn(`⚠️ Model ${modelName} failed:`, err.message);
+            lastError = err;
+            continue; // Try next model
+          }
+        }
+        
+        if (model) {
           setGeminiAI(model);
           setAiStatus('ready');
-          console.log('✅ Gemini AI initialized successfully:', responseText);
+          console.log('✅ Gemini AI initialized successfully');
         } else {
-          throw new Error('Invalid response from Gemini AI');
+          throw lastError || new Error('All model attempts failed');
         }
       } catch (error) {
         console.error('❌ Failed to initialize Gemini AI:', error);
@@ -72,7 +104,21 @@ export default function ChatPage() {
           name: error.name,
           stack: error.stack
         });
-        setAiStatus('fallback');
+        
+        // Check for specific error types
+        if (error.message && error.message.includes('429')) {
+          console.error('⚠️ API Quota Exceeded: Please wait for quota reset or get a new API key');
+          console.error('📝 Get new key at: https://makersuite.google.com/app/apikey');
+          setAiStatus('quota_exceeded');
+        } else if (error.message && error.message.includes('403')) {
+          console.error('⚠️ API Key Invalid or Restricted: Please check your API key');
+          setAiStatus('fallback');
+        } else if (error.message && error.message.includes('404')) {
+          console.error('⚠️ Model Not Found: The requested model may not be available');
+          setAiStatus('fallback');
+        } else {
+          setAiStatus('fallback');
+        }
       }
     };
 
@@ -290,6 +336,169 @@ I can help you with:
 *What would you like to know about Nepal?*`;
   };
 
+  // Smart Mode response - Shows statistics but no database access
+  const getSmartModeResponse = (userInput) => {
+    const input = userInput.toLowerCase();
+    
+    // Check for greetings
+    const greetings = ['hi', 'hello', 'hey', 'namaste', 'good morning', 'good afternoon', 'good evening'];
+    const isGreeting = greetings.some(greeting => input.includes(greeting));
+    
+    if (isGreeting) {
+      return `Hello! 👋 Welcome to Roamio Wanderly!
+
+**📊 Our Database Coverage:**
+• **1,057 Destinations** - Verified places across Nepal
+• **718 Hotels** - From budget to luxury
+• **512 Restaurants** - Authentic Nepali cuisine
+• **805 Events** - Cultural festivals & activities
+
+I'm currently in Smart Mode. For detailed information about specific places, hotels, or restaurants, please ensure Active Mode is enabled.
+
+**What I can help with in Smart Mode:**
+• General Nepal travel information
+• Travel tips and advice
+• Budget planning guidance
+• Best time to visit recommendations
+
+How can I assist you today?`;
+    }
+    
+    // Check for database/statistics queries
+    const statsKeywords = ['how many', 'total', 'count', 'database', 'data', 'statistics', 'stats'];
+    const isStatsQuery = statsKeywords.some(keyword => input.includes(keyword));
+    
+    if (isStatsQuery) {
+      return `**📊 Roamio Wanderly Database Statistics:**
+
+**Destinations:**
+• Total Places: 1,057 verified locations
+• Categories: Natural attractions, cultural sites, trekking routes, adventure spots
+• Coverage: All 7 provinces of Nepal
+
+**Accommodations:**
+• Total Hotels: 718 properties
+• Range: Budget guesthouses to 5-star luxury resorts
+• Ratings: 2.5 - 5.0 stars
+• Price Range: $8 - $250/night
+
+**Dining:**
+• Total Restaurants: 512 establishments
+• Cuisines: Nepali, Indian, Chinese, Continental, Italian
+• Price Range: $2 - $40 per meal
+
+**Events & Festivals:**
+• Total Events: 805 cultural activities
+• Types: Religious festivals, cultural celebrations, seasonal events
+• Coverage: Year-round calendar
+
+**Note:** I'm in Smart Mode and can show you these statistics, but I cannot access specific place details. For detailed information about individual destinations, hotels, or restaurants, please enable Active Mode.
+
+Would you like general travel advice or tips?`;
+    }
+    
+    // For any other query - provide general guidance
+    return `I'm currently in Smart Mode with limited access. 
+
+**📊 What I Know:**
+Our database contains:
+• 1,057 destinations across Nepal
+• 718 hotels (budget to luxury)
+• 512 restaurants with authentic cuisine
+• 805 cultural events and festivals
+
+**💡 What I Can Help With:**
+• General Nepal travel information
+• Travel tips and planning advice
+• Budget recommendations
+• Best time to visit guidance
+• Cultural insights
+
+**🔒 What I Cannot Access:**
+• Specific place details from database
+• Individual hotel information
+• Restaurant reviews and details
+• Detailed event information
+
+**To access full database information**, please ensure Active Mode is enabled. In Active Mode, I can provide comprehensive details about any destination, hotel, or restaurant in our database.
+
+Would you like some general travel advice about Nepal?`;
+  };
+
+  // Delete chat
+  const deleteChat = async (chatId) => {
+    if (!confirm('Are you sure you want to delete this chat? This action cannot be undone.')) {
+      return;
+    }
+    
+    try {
+      await chatService.deleteChat(chatId);
+      
+      // If deleted chat was current, clear messages
+      if (currentChatId === chatId) {
+        setCurrentChatId(null);
+        setMessages([]);
+      }
+      
+      // Refresh chat history
+      await loadChatHistory();
+      
+      console.log('✅ Chat deleted successfully');
+    } catch (error) {
+      console.error('Error deleting chat:', error);
+      alert('Failed to delete chat. Please try again.');
+    }
+  };
+
+  // Clear all chat history
+  const clearAllChats = async () => {
+    if (!user?.id) return;
+    
+    if (!confirm('Are you sure you want to delete ALL chat history? This action cannot be undone.')) {
+      return;
+    }
+    
+    try {
+      // Delete all chats one by one
+      for (const chat of chatHistory) {
+        await chatService.deleteChat(chat.id);
+      }
+      
+      // Clear current chat
+      setCurrentChatId(null);
+      setMessages([]);
+      
+      // Refresh chat history
+      await loadChatHistory();
+      
+      console.log('✅ All chats cleared successfully');
+    } catch (error) {
+      console.error('Error clearing all chats:', error);
+      alert('Failed to clear all chats. Please try again.');
+    }
+  };
+
+  // Clear all search history
+  const clearAllSearchHistory = async () => {
+    if (!user?.id) return;
+    
+    if (!confirm('Are you sure you want to delete ALL search history? This action cannot be undone.')) {
+      return;
+    }
+    
+    try {
+      await chatService.clearSearchHistory(user.id);
+      
+      // Refresh search history
+      await loadSearchHistory();
+      
+      console.log('✅ All search history cleared successfully');
+    } catch (error) {
+      console.error('Error clearing search history:', error);
+      alert('Failed to clear search history. Please try again.');
+    }
+  };
+
   // Auto scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -309,13 +518,16 @@ I can help you with:
     setInput("");
     setIsTyping(true);
 
-    // Create new chat if none exists
-    if (!currentChatId && user?.id) {
+    // Create new chat if none exists and get the chat ID to use
+    let chatIdToUse = currentChatId;
+    if (!chatIdToUse && user?.id) {
       try {
         const newChat = await chatService.createChat(user.id, userText.length > 30 ? userText.substring(0, 27) + "..." : userText);
-        setCurrentChatId(newChat.chat_id);
+        chatIdToUse = newChat.chat_id;
+        setCurrentChatId(chatIdToUse);
+        console.log('✅ New chat created with ID:', chatIdToUse);
       } catch (error) {
-        console.error('Error creating chat:', error);
+        console.error('❌ Error creating chat:', error);
       }
     }
 
@@ -331,17 +543,17 @@ I can help you with:
     try {
       let botResponse;
 
-      // Try to use backend API first if we have a chat ID and user
-      if (currentChatId && user?.id) {
+      // Only try backend API if in Active Mode (aiStatus === 'ready')
+      if (chatIdToUse && user?.id && aiStatus === 'ready') {
         try {
-          const response = await chatService.sendMessage(currentChatId, userText, user.id);
+          const response = await chatService.sendMessage(chatIdToUse, userText, user.id);
           botResponse = response.reply;
           
           // Refresh chat history and search history
           await loadChatHistory();
           await loadSearchHistory();
           
-          console.log('✅ Message sent via backend API');
+          console.log('✅ Message sent via backend API (Active Mode)');
         } catch (apiError) {
           console.warn('⚠️ Backend API failed, falling back to local AI:', apiError);
           // Fall through to local AI processing
@@ -351,56 +563,41 @@ I can help you with:
       // Fallback to local AI processing if backend failed or not available
       if (!botResponse) {
         if (aiStatus === 'ready' && geminiAI) {
-          // Use Gemini AI for intelligent responses
-          const prompt = `You are Roamio AI, a concise Nepal tourism assistant for Roamio Wanderly travel platform.
-
-USER QUESTION: "${userText}"
-
-INSTRUCTIONS:
-- Give SHORT, direct answers (2-3 sentences max for simple questions)
-- Be helpful but concise - don't over-explain
-- Use bullet points only when listing multiple items
-- Include 1-2 practical tips maximum
-- Use emojis sparingly (1-2 per response)
-- If it's a complex question requiring detail, keep it under 150 words
-- Focus on the most important information first
-- Avoid lengthy introductions or conclusions
-
-Provide a brief, helpful response:`;
-
-          console.log('🤖 Generating Gemini AI response...');
-          const result = await geminiAI.generateContent(prompt);
-          const response = await result.response;
-          botResponse = response.text();
-          
-          console.log('✅ Gemini AI response generated successfully');
-        } else {
-          // Fallback to keyword-based responses
+          // Active Mode - Use backend AI for detailed responses
           botResponse = getNepalTravelResponse(userText);
+          console.log('✅ Using local detailed response (Active Mode)');
+        } else {
+          // Smart Mode (fallback) - Shows statistics but no database access
+          botResponse = getSmartModeResponse(userText);
+          console.log('⚠️ Smart Mode: Statistics only, no database access');
         }
 
         // Try to save messages to backend even when using local AI
-        if (user?.id && currentChatId) {
+        if (user?.id && chatIdToUse) {
           try {
             // Save the conversation to backend
-            await fetch(`${chatService.API_BASE_URL || 'http://localhost:8000/api/chat'}/save-local`, {
+            const saveResponse = await fetch(`${chatService.API_BASE_URL || 'http://localhost:8000/api/chat'}/save-local`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                chat_id: currentChatId,
+                chat_id: chatIdToUse,
                 user_id: user.id,
                 user_message: userText,
                 bot_response: botResponse
               })
             });
             
+            if (!saveResponse.ok) {
+              throw new Error(`Failed to save messages: ${saveResponse.statusText}`);
+            }
+            
             // Save to search history
             await chatService.saveSearchHistory(
               user.id, 
               userText, 
-              currentChatId, 
+              chatIdToUse, 
               botResponse.length > 200 ? botResponse.substring(0, 197) + "..." : botResponse
             );
             
@@ -408,11 +605,13 @@ Provide a brief, helpful response:`;
             await loadChatHistory();
             await loadSearchHistory();
             
-            console.log('✅ Messages saved to backend');
+            console.log('✅ Messages saved to backend successfully');
           } catch (error) {
             console.error('⚠️ Error saving to backend, messages will be lost on refresh:', error);
             // Continue anyway - at least show the messages in UI
           }
+        } else {
+          console.warn('⚠️ Cannot save messages: missing user ID or chat ID');
         }
       }
 
@@ -538,12 +737,14 @@ Provide a brief, helpful response:`;
                     <div className="flex items-center space-x-3">
                       <div className={`w-2.5 h-2.5 rounded-full ${
                         aiStatus === 'ready' ? 'bg-green-500 animate-pulse shadow-lg shadow-green-500/50' :
+                        aiStatus === 'quota_exceeded' ? 'bg-orange-500 shadow-lg shadow-orange-500/50' :
                         aiStatus === 'fallback' ? 'bg-yellow-500 shadow-lg shadow-yellow-500/50' :
                         aiStatus === 'initializing' ? 'bg-blue-500 animate-spin' :
                         'bg-red-500 shadow-lg shadow-red-500/50'
                       }`}></div>
                       <span className="text-sm text-slate-300 font-medium">
-                        {aiStatus === 'ready' ? 'AI Ready' :
+                        {aiStatus === 'ready' ? 'Active Mode' :
+                         aiStatus === 'quota_exceeded' ? 'Quota Exceeded' :
                          aiStatus === 'fallback' ? 'Smart Mode' :
                          aiStatus === 'initializing' ? 'Starting...' :
                          'Offline'}
@@ -602,6 +803,21 @@ Provide a brief, helpful response:`;
                   {!showSearchHistory ? (
                     /* Chat History */
                     <div className="p-4">
+                      {/* Clear All Button */}
+                      {chatHistory.length > 0 && (
+                        <div className="mb-3 flex justify-between items-center">
+                          <span className="text-xs text-slate-400 font-medium">
+                            {chatHistory.length} {chatHistory.length === 1 ? 'Chat' : 'Chats'}
+                          </span>
+                          <button
+                            onClick={clearAllChats}
+                            className="text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 px-2 py-1 rounded transition-colors"
+                          >
+                            Clear All
+                          </button>
+                        </div>
+                      )}
+                      
                       {loadingHistory ? (
                         <div className="text-center py-8">
                           <div className="animate-spin w-6 h-6 border-2 border-teal-500 border-t-transparent rounded-full mx-auto mb-2"></div>
@@ -642,9 +858,10 @@ Provide a brief, helpful response:`;
                                   <button
                                     onClick={(e) => {
                                       e.stopPropagation();
-                                      // Add delete functionality here
+                                      deleteChat(chat.id);
                                     }}
                                     className="p-1 rounded hover:bg-red-500/20 text-red-400 hover:text-red-300"
+                                    title="Delete chat"
                                   >
                                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -660,6 +877,21 @@ Provide a brief, helpful response:`;
                   ) : (
                     /* Search History */
                     <div className="p-4">
+                      {/* Clear All Button */}
+                      {searchHistory.length > 0 && (
+                        <div className="mb-3 flex justify-between items-center">
+                          <span className="text-xs text-slate-400 font-medium">
+                            {searchHistory.length} {searchHistory.length === 1 ? 'Search' : 'Searches'}
+                          </span>
+                          <button
+                            onClick={clearAllSearchHistory}
+                            className="text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 px-2 py-1 rounded transition-colors"
+                          >
+                            Clear All
+                          </button>
+                        </div>
+                      )}
+                      
                       {searchHistory.length === 0 ? (
                         <div className="text-center py-8">
                           <div className="w-12 h-12 bg-slate-700/50 rounded-xl flex items-center justify-center mx-auto mb-3">
@@ -764,17 +996,6 @@ Provide a brief, helpful response:`;
                     </div>
                   </div>
                 )}
-
-                {/* Debug Info */}
-                <div className="p-2 border-t border-slate-200/20">
-                  <div className="p-2 rounded-lg bg-slate-800/50 border border-slate-600/30 text-xs text-slate-400">
-                    <div>Status: {aiStatus}</div>
-                    <div>API Key: {import.meta.env.VITE_GEMINI_API_KEY ? 'Configured' : 'Missing'}</div>
-                    <div>AI Object: {geminiAI ? 'Ready' : 'Not Ready'}</div>
-                    <div>User: {user?.id ? 'Signed In' : 'Not Signed In'}</div>
-                    <div>Chat ID: {currentChatId || 'None'}</div>
-                  </div>
-                </div>
               </div>
             )}
           </div>
@@ -795,8 +1016,8 @@ Provide a brief, helpful response:`;
                     <h1 className="text-2xl font-black text-white">Nepal Travel Assistant</h1>
                     <p className="text-sm text-slate-400">
                       {isTyping ? 'AI is typing...' : 
-                       aiStatus === 'ready' ? 'Powered by Gemini AI • Ready to help' :
-                       aiStatus === 'fallback' ? 'Smart Assistant • Ready to help' :
+                       aiStatus === 'ready' ? 'Active Mode • Full database access' :
+                       aiStatus === 'fallback' ? 'Smart Mode • Limited responses' :
                        'Initializing...'}
                     </p>
                   </div>
@@ -816,7 +1037,7 @@ Provide a brief, helpful response:`;
                     'bg-red-500'
                   }`}></div>
                   <span>
-                    {aiStatus === 'ready' ? 'AI Ready' :
+                    {aiStatus === 'ready' ? 'Active Mode' :
                      aiStatus === 'fallback' ? 'Smart Mode' :
                      aiStatus === 'initializing' ? 'Starting...' :
                      'Offline'}
@@ -836,10 +1057,31 @@ Provide a brief, helpful response:`;
                     <h3 className="text-4xl font-black mb-4 text-white">Welcome to Nepal Travel Assistant</h3>
                     <p className="text-xl mb-8 text-slate-300 max-w-2xl mx-auto">
                       {aiStatus === 'ready' ? 
-                        'Powered by advanced AI - Ask me anything about Nepal destinations, culture, travel tips, and more!' :
-                        'Your intelligent Nepal travel companion - Ask me anything about destinations, culture, travel tips, and more!'
+                        'Active Mode with full database access - Ask me anything about Nepal destinations, hotels, restaurants, culture, travel tips, and more!' :
+                        aiStatus === 'quota_exceeded' ?
+                        '⚠️ API Quota Exceeded - Please get a new API key from makersuite.google.com or wait for quota reset. Currently in Smart Mode with limited responses.' :
+                        'Smart Mode with limited responses - For full travel information, please ensure Active Mode is enabled.'}
                       }
                     </p>
+                    
+                    {/* Quota Exceeded Notice */}
+                    {aiStatus === 'quota_exceeded' && (
+                      <div className="mb-6 p-4 bg-orange-500/10 border border-orange-500/30 rounded-xl max-w-2xl mx-auto">
+                        <p className="text-sm text-orange-300">
+                          <strong>🔑 Get New API Key:</strong> Visit{' '}
+                          <a 
+                            href="https://makersuite.google.com/app/apikey" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="underline hover:text-orange-200"
+                          >
+                            makersuite.google.com/app/apikey
+                          </a>
+                          {' '}to create a new key, then update <code className="bg-slate-800 px-1 rounded">client/.env</code> and restart the server.
+                        </p>
+                      </div>
+                    )}
+                    
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
                       {[
                         { icon: "🏔️", text: "Best trekking routes" },

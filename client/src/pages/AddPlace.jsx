@@ -18,8 +18,26 @@ export default function AddPlace() {
   const [errors, setErrors] = useState({});
   const [isDragging, setIsDragging] = useState(false);
   const [successModal, setSuccessModal] = useState(null);
+  const [backendStatus, setBackendStatus] = useState("checking"); // checking, online, offline
 
   const fileInputRef = useRef(null);
+
+  // Check backend status on mount
+  useEffect(() => {
+    const checkBackend = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/", { method: "GET" });
+        if (response.ok) {
+          setBackendStatus("online");
+        } else {
+          setBackendStatus("offline");
+        }
+      } catch (error) {
+        setBackendStatus("offline");
+      }
+    };
+    checkBackend();
+  }, []);
 
   useEffect(() => {
     if (!images.length) return setPreviews([]);
@@ -30,8 +48,12 @@ export default function AddPlace() {
 
   const setField = (name, value) => {
     setForm((s) => ({ ...s, [name]: value }));
-    // live validation clear
-    setErrors((e) => ({ ...e, [name]: undefined }));
+    // live validation clear - remove the error instead of setting to undefined
+    setErrors((e) => {
+      const newErrors = { ...e };
+      delete newErrors[name];
+      return newErrors;
+    });
   };
 
   const handleChange = (e) => {
@@ -81,10 +103,30 @@ export default function AddPlace() {
 
   const validateFields = () => {
     const errs = {};
-    if (!form.name.trim()) errs.name = "Name is required.";
-    if (!form.description.trim() || form.description.trim().length < 20)
-      errs.description = "Description must be at least 20 characters.";
-    if (images.length === 0) errs.images = "At least one photo is recommended.";
+    
+    // Name validation
+    if (!form.name.trim()) {
+      errs.name = "Place name is required.";
+    } else if (form.name.trim().length < 3) {
+      errs.name = "Place name must be at least 3 characters.";
+    } else if (form.name.trim().length > 100) {
+      errs.name = "Place name must be less than 100 characters.";
+    }
+    
+    // Description validation
+    if (!form.description.trim()) {
+      errs.description = "Description is required.";
+    } else if (form.description.trim().length < 20) {
+      errs.description = `Description must be at least 20 characters (currently ${form.description.trim().length}).`;
+    } else if (form.description.trim().length > 2000) {
+      errs.description = "Description must be less than 2000 characters.";
+    }
+    
+    // Location validation (optional but recommended)
+    if (form.location.trim() && form.location.trim().length < 3) {
+      errs.location = "Location must be at least 3 characters if provided.";
+    }
+    
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -105,53 +147,124 @@ export default function AddPlace() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
 
-    if (!validateFields()) return window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!validateFields()) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setMessage("Please fix the errors above before submitting.");
+      return;
+    }
 
     setSubmitting(true);
     setProgress(0);
 
     const data = new FormData();
-    data.append("name", form.name);
-    data.append("location", form.location);
+    data.append("name", form.name.trim());
+    data.append("location", form.location.trim());
     data.append("type", form.type);
-    data.append("description", form.description);
+    data.append("description", form.description.trim());
     data.append("tags", form.tags.join(","));
-    images.forEach((file, idx) => data.append(`image_${idx + 1}`, file));
+    
+    // Add images with proper naming
+    images.forEach((file, idx) => {
+      data.append(`image_${idx + 1}`, file);
+    });
     data.append("cover_index", coverIndex);
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/api/places", true);
+    try {
+      const xhr = new XMLHttpRequest();
+      
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percent = Math.round((event.loaded / event.total) * 100);
+          setProgress(percent);
+        }
+      };
 
-    xhr.upload.onprogress = (event) => {
-      if (event.lengthComputable) {
-        const percent = Math.round((event.loaded / event.total) * 100);
-        setProgress(percent);
-      }
-    };
-
-    xhr.onload = () => {
-      setSubmitting(false);
-      if (xhr.status >= 200 && xhr.status < 300) {
-        const res = JSON.parse(xhr.responseText || "{}");
-        setSuccessModal({ id: res.place_id, name: form.name });
-        setForm({ name: "", location: "", type: "Nature", tags: [], description: "" });
-        setImages([]);
+      xhr.onload = () => {
+        setSubmitting(false);
+        
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const res = JSON.parse(xhr.responseText || "{}");
+            
+            if (res.success || res.place_id) {
+              setSuccessModal({ 
+                id: res.place_id || 'pending', 
+                name: form.name 
+              });
+              
+              // Reset form
+              setForm({ name: "", location: "", type: "Nature", tags: [], description: "" });
+              setImages([]);
+              setProgress(0);
+              setTagInput("");
+              if (fileInputRef.current) fileInputRef.current.value = null;
+              setErrors({});
+              setMessage("");
+            } else {
+              setMessage("✓ Place submitted successfully! Awaiting review.");
+              setTimeout(() => {
+                setForm({ name: "", location: "", type: "Nature", tags: [], description: "" });
+                setImages([]);
+                setProgress(0);
+                setTagInput("");
+                if (fileInputRef.current) fileInputRef.current.value = null;
+                setErrors({});
+                setMessage("");
+              }, 3000);
+            }
+          } catch (error) {
+            console.error("Response parsing error:", error);
+            setMessage("✓ Place submitted successfully! Awaiting review.");
+            setTimeout(() => {
+              setForm({ name: "", location: "", type: "Nature", tags: [], description: "" });
+              setImages([]);
+              setProgress(0);
+              setTagInput("");
+              if (fileInputRef.current) fileInputRef.current.value = null;
+              setErrors({});
+              setMessage("");
+            }, 3000);
+          }
+        } else {
+          // Handle error responses
+          try {
+            const errorData = JSON.parse(xhr.responseText || "{}");
+            const errorMsg = errorData.error || errorData.message || "Failed to submit place";
+            setMessage(`❌ Error: ${errorMsg}. Please try again.`);
+            console.error("Server error:", errorData);
+          } catch {
+            setMessage(`❌ Server error (${xhr.status}). Please check your connection and try again.`);
+          }
+        }
+      };
+      
+      xhr.onerror = () => {
+        setSubmitting(false);
         setProgress(0);
-        fileInputRef.current && (fileInputRef.current.value = null);
-        setErrors({});
-      } else {
-        setMessage("Error submitting. Please try again later.");
-      }
-    };
-    xhr.onerror = () => {
+        setMessage("❌ Network error. Please check if the backend server is running at http://localhost:8000");
+        console.error("Network error - backend may not be running");
+      };
+      
+      xhr.ontimeout = () => {
+        setSubmitting(false);
+        setProgress(0);
+        setMessage("❌ Request timeout. Please try again.");
+      };
+
+      xhr.open("POST", "http://localhost:8000/api/places", true);
+      xhr.timeout = 30000; // 30 second timeout
+      xhr.send(data);
+      
+    } catch (error) {
       setSubmitting(false);
-      setMessage("Network error. Try again.");
-    };
-    xhr.send(data);
+      setProgress(0);
+      setMessage("❌ Unexpected error occurred. Please try again.");
+      console.error("Submit error:", error);
+    }
   };
 
   return (
@@ -215,23 +328,71 @@ export default function AddPlace() {
                 <h2 className="text-3xl font-black text-slate-800 tracking-tight">Place Information</h2>
                 <p className="text-sm text-slate-600 mt-1">Fill in the details below to share your discovery with the community</p>
               </div>
-              <div className="hidden lg:flex items-center gap-2 bg-white rounded-lg px-4 py-2 border border-slate-200 shadow-sm">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                <span className="text-xs font-semibold text-slate-600">Auto-save enabled</span>
+              <div className="hidden lg:flex items-center gap-3">
+                {/* Backend Status Indicator */}
+                <div className={`flex items-center gap-2 rounded-lg px-4 py-2 border shadow-sm ${
+                  backendStatus === "online" 
+                    ? "bg-emerald-50 border-emerald-200" 
+                    : backendStatus === "offline"
+                    ? "bg-rose-50 border-rose-200"
+                    : "bg-slate-50 border-slate-200"
+                }`}>
+                  <div className={`w-2 h-2 rounded-full ${
+                    backendStatus === "online" 
+                      ? "bg-emerald-500 animate-pulse" 
+                      : backendStatus === "offline"
+                      ? "bg-rose-500"
+                      : "bg-slate-400 animate-pulse"
+                  }`}></div>
+                  <span className={`text-xs font-semibold ${
+                    backendStatus === "online" 
+                      ? "text-emerald-700" 
+                      : backendStatus === "offline"
+                      ? "text-rose-700"
+                      : "text-slate-600"
+                  }`}>
+                    {backendStatus === "online" ? "Server Online" : backendStatus === "offline" ? "Server Offline" : "Checking..."}
+                  </span>
+                </div>
               </div>
             </div>
+            
+            {/* Backend Offline Warning */}
+            {backendStatus === "offline" && (
+              <div className="mt-4 p-3 bg-rose-100 border border-rose-300 rounded-lg">
+                <div className="flex items-start gap-2">
+                  <svg className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  <div>
+                    <p className="text-sm font-semibold text-rose-800">Backend Server Not Running</p>
+                    <p className="text-xs text-rose-700 mt-1">Please start the backend server at <code className="bg-rose-200 px-1 rounded">http://localhost:8000</code> before submitting.</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Error Alert */}
-          {Object.keys(errors).length > 0 && (
+          {Object.keys(errors).filter(key => errors[key]).length > 0 && (
             <div role="alert" className="mx-8 mt-6 p-4 rounded-xl bg-gradient-to-r from-rose-50 to-red-50 border-l-4 border-rose-500 shadow-sm">
               <div className="flex items-start gap-3">
                 <svg className="w-5 h-5 text-rose-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                 </svg>
-                <div>
+                <div className="flex-1">
                   <h3 className="font-bold text-rose-800 text-sm">Please Review Your Submission</h3>
-                  <p className="text-rose-700 text-sm mt-1">There are {Object.keys(errors).length} error(s) that need your attention before submitting.</p>
+                  <p className="text-rose-700 text-sm mt-1">There {Object.keys(errors).filter(key => errors[key]).length === 1 ? 'is 1 error' : `are ${Object.keys(errors).filter(key => errors[key]).length} errors`} that need your attention:</p>
+                  <ul className="mt-2 space-y-1">
+                    {Object.entries(errors)
+                      .filter(([field, message]) => message) // Only show errors with actual messages
+                      .map(([field, message]) => (
+                        <li key={field} className="text-rose-700 text-sm flex items-start gap-2">
+                          <span className="text-rose-500 font-bold">•</span>
+                          <span><strong className="capitalize">{field}:</strong> {message}</span>
+                        </li>
+                      ))}
+                  </ul>
                 </div>
               </div>
             </div>
@@ -274,7 +435,7 @@ export default function AddPlace() {
                     onChange={handleChange} 
                     aria-required="true" 
                     aria-invalid={errors.name ? "true" : "false"} 
-                    className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-teal-500/20 transition-all duration-200 ${errors.name ? 'border-rose-400 bg-rose-50 focus:border-rose-500' : 'border-slate-200 focus:border-teal-500 bg-white'}`} 
+                    className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-teal-500/20 transition-all duration-200 text-slate-900 ${errors.name ? 'border-rose-400 bg-rose-50 focus:border-rose-500' : 'border-slate-200 focus:border-teal-500 bg-white'}`} 
                     placeholder="e.g., Phewa Lake, Annapurna Base Camp" 
                   />
                   {errors.name && (
@@ -295,15 +456,28 @@ export default function AddPlace() {
                         <path fillRule="evenodd" d="M12 1.586l-4 4v12.828l4-4V1.586zM3.707 3.293A1 1 0 002 4v10a1 1 0 00.293.707L6 18.414V5.586L3.707 3.293zM17.707 5.293L14 1.586v12.828l2.293 2.293A1 1 0 0018 16V6a1 1 0 00-.293-.707z" clipRule="evenodd" />
                       </svg>
                       Location
+                      <span className="text-xs font-normal text-slate-500">(recommended)</span>
                     </label>
                     <input 
                       id="place-location" 
                       name="location" 
                       value={form.location} 
                       onChange={handleChange} 
-                      className="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200" 
+                      className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 text-slate-900 ${
+                        errors.location 
+                          ? 'border-rose-400 bg-rose-50 focus:border-rose-500' 
+                          : 'border-slate-200 focus:border-blue-500 bg-white'
+                      }`}
                       placeholder="e.g., Pokhara, Gandaki Province" 
                     />
+                    {errors.location && (
+                      <div className="flex items-center gap-2 text-rose-600 text-sm mt-2">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                        </svg>
+                        {errors.location}
+                      </div>
+                    )}
                   </div>
 
                   <div className="group">
@@ -318,13 +492,16 @@ export default function AddPlace() {
                       name="type" 
                       value={form.type} 
                       onChange={handleChange} 
-                      className="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-200 bg-white"
+                      className="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-200 bg-white text-slate-900"
                     >
-                      <option>Nature</option>
-                      <option>Cultural</option>
-                      <option>Adventure</option>
-                      <option>City</option>
-                      <option>Relaxation</option>
+                      <option value="Nature">Nature</option>
+                      <option value="Cultural">Cultural</option>
+                      <option value="Adventure">Adventure</option>
+                      <option value="City">City</option>
+                      <option value="Relaxation">Relaxation</option>
+                      <option value="Religious">Religious</option>
+                      <option value="Historical">Historical</option>
+                      <option value="Wildlife">Wildlife</option>
                     </select>
                   </div>
                 </div>
@@ -343,7 +520,7 @@ export default function AddPlace() {
                     value={form.description} 
                     onChange={handleChange} 
                     rows={7} 
-                    className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-emerald-500/20 resize-none transition-all duration-200 ${errors.description ? 'border-rose-400 bg-rose-50 focus:border-rose-500' : 'border-slate-200 focus:border-emerald-500 bg-white'}`} 
+                    className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-emerald-500/20 resize-none transition-all duration-200 text-slate-900 ${errors.description ? 'border-rose-400 bg-rose-50 focus:border-rose-500' : 'border-slate-200 focus:border-emerald-500 bg-white'}`} 
                     placeholder="Share what makes this place special. Include tips for visitors, best time to visit, what to expect, and any insider knowledge that would help fellow travelers..."
                   ></textarea>
                   <div className="flex justify-between items-center mt-3">
@@ -359,7 +536,10 @@ export default function AddPlace() {
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                         </svg>
-                        <span className={form.description.length >= 20 ? 'text-emerald-600 font-semibold' : ''}>{form.description.length} characters</span>
+                        <span className={form.description.length >= 20 ? 'text-emerald-600 font-semibold' : form.description.length >= 10 ? 'text-amber-600' : ''}>
+                          {form.description.length} / 2000 characters
+                          {form.description.length < 20 && ` (${20 - form.description.length} more needed)`}
+                        </span>
                       </div>
                     )}
                     <div className="flex items-center gap-3 text-xs text-slate-400">
@@ -396,13 +576,13 @@ export default function AddPlace() {
                       value={tagInput} 
                       onChange={(e) => setTagInput(e.target.value)} 
                       onKeyDown={handleTagKey} 
-                      className="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl text-slate-700 focus:ring-4 focus:ring-amber-500/20 focus:border-amber-500 transition-all duration-200" 
+                      className="flex-1 px-4 py-3 border-2 border-slate-200 rounded-xl text-slate-700 focus:ring-4 focus:ring-slate-500/20 focus:border-slate-500 transition-all duration-200" 
                       placeholder="Type a tag and press Enter" 
                     />
                     <button 
                       type="button"
                       onClick={handleAddTag} 
-                      className="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                      className="px-6 py-3 bg-slate-700 text-white rounded-xl font-semibold hover:bg-slate-800 transition-all duration-200 shadow-md hover:shadow-lg"
                     >
                       Add
                     </button>
@@ -455,7 +635,7 @@ export default function AddPlace() {
                           className={`text-xs px-3 py-1.5 rounded-full border-2 transition-all duration-200 ${
                             form.tags.includes(s) 
                               ? 'bg-slate-100 border-slate-200 text-slate-400 cursor-not-allowed' 
-                              : 'bg-white border-slate-200 text-slate-700 hover:border-teal-400 hover:bg-teal-50 hover:text-teal-700 hover:scale-105'
+                              : 'bg-white border-slate-300 text-slate-700 hover:border-slate-500 hover:bg-slate-50 hover:text-slate-900'
                           }`}
                         >
                           {s}
@@ -474,7 +654,7 @@ export default function AddPlace() {
                       <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
                     </svg>
                     Photos
-                    <span className="text-xs font-normal text-slate-500">(up to 6 images)</span>
+                    <span className="text-xs font-normal text-slate-500">(optional, up to 6 images)</span>
                   </label>
 
                   {/* Drag & Drop Zone */}
@@ -505,7 +685,7 @@ export default function AddPlace() {
                         <button 
                           type="button" 
                           onClick={() => fileInputRef.current.click()} 
-                          className="mt-2 px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm font-semibold rounded-lg hover:from-indigo-600 hover:to-purple-600 transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                          className="mt-2 px-4 py-2 bg-slate-700 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-all duration-200 shadow-md hover:shadow-lg"
                         >
                           Browse Files
                         </button>
@@ -583,7 +763,7 @@ export default function AddPlace() {
                                   <button 
                                     type="button" 
                                     onClick={() => setCoverIndex(idx)} 
-                                    className="bg-white text-slate-700 px-2 py-1 text-xs font-semibold rounded shadow-lg hover:bg-teal-500 hover:text-white transition-colors duration-200"
+                                    className="bg-white text-slate-700 px-2 py-1 text-xs font-semibold rounded shadow-lg hover:bg-slate-700 hover:text-white transition-colors duration-200"
                                   >
                                     {coverIndex === idx ? '✓ Cover' : 'Set Cover'}
                                   </button>
@@ -666,8 +846,8 @@ export default function AddPlace() {
               <div className="flex items-center gap-4">
                 <button 
                   type="submit" 
-                  disabled={submitting || Object.keys(errors).length > 0} 
-                  className="group relative px-8 py-4 bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 text-white rounded-xl font-bold text-lg hover:from-teal-700 hover:via-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none overflow-hidden"
+                  disabled={submitting || Object.keys(errors).filter(key => errors[key]).length > 0 || backendStatus === "offline"} 
+                  className="group relative px-8 py-4 bg-slate-800 text-white rounded-xl font-bold text-lg hover:bg-slate-900 transition-all duration-300 shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     {submitting ? (
@@ -678,6 +858,13 @@ export default function AddPlace() {
                         </svg>
                         Uploading...
                       </>
+                    ) : backendStatus === "offline" ? (
+                      <>
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clipRule="evenodd" />
+                        </svg>
+                        Server Offline
+                      </>
                     ) : (
                       <>
                         <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
@@ -687,7 +874,6 @@ export default function AddPlace() {
                       </>
                     )}
                   </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </button>
 
                 <button 
@@ -756,6 +942,60 @@ export default function AddPlace() {
             </p>
           </div>
         </div>
+
+        {/* Submission Guidelines */}
+        <div className="mt-12 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 rounded-2xl p-8 border border-indigo-200 shadow-lg">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-indigo-100 rounded-xl flex-shrink-0">
+              <svg className="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-2xl font-black text-slate-800 mb-4">Submission Guidelines</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-indigo-100">
+                  <h4 className="font-bold text-indigo-900 mb-2 flex items-center gap-2">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    What to Include
+                  </h4>
+                  <ul className="text-sm text-slate-700 space-y-1">
+                    <li>• Accurate place name and location</li>
+                    <li>• Detailed, helpful description (20+ chars)</li>
+                    <li>• Relevant tags for discoverability</li>
+                    <li>• High-quality photos (optional)</li>
+                    <li>• Best time to visit tips</li>
+                  </ul>
+                </div>
+                <div className="bg-white/70 backdrop-blur-sm rounded-lg p-4 border border-indigo-100">
+                  <h4 className="font-bold text-rose-900 mb-2 flex items-center gap-2">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clipRule="evenodd" />
+                    </svg>
+                    What to Avoid
+                  </h4>
+                  <ul className="text-sm text-slate-700 space-y-1">
+                    <li>• Duplicate submissions</li>
+                    <li>• Inaccurate or misleading info</li>
+                    <li>• Low-quality or copyrighted images</li>
+                    <li>• Promotional or spam content</li>
+                    <li>• Incomplete descriptions</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-4 p-3 bg-amber-100 rounded-lg border border-amber-300">
+                <p className="text-sm text-amber-900 flex items-start gap-2">
+                  <svg className="w-5 h-5 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                  <span><strong>Pro Tip:</strong> The more detailed and accurate your submission, the faster it will be approved. Include insider tips and personal experiences to make your contribution stand out!</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
 
       <Footer />
@@ -822,7 +1062,7 @@ export default function AddPlace() {
               </button>
               <button 
                 onClick={() => { setSuccessModal(null); window.location.href = '/'; }} 
-                className="flex-1 px-4 py-3 bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-xl font-semibold hover:from-teal-700 hover:to-emerald-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                className="flex-1 px-4 py-3 bg-slate-800 text-white rounded-xl font-semibold hover:bg-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Back to Home
               </button>
@@ -831,7 +1071,6 @@ export default function AddPlace() {
         </div>
       )}
 
-      <Footer />
     </div>
   );
 }

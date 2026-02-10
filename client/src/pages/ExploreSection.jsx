@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { FaMapMarkerAlt, FaStar, FaArrowRight } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaMapMarkerAlt, FaStar, FaArrowRight, FaRoute } from "react-icons/fa";
 
 // ✅ Import all images
 import Basantapur from "../assets/Basantapur.jpeg";
@@ -83,6 +83,7 @@ const spots = [
 export default function ExploreSection() {
   const scrollRef = useRef(null);
   const [paused, setPaused] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
@@ -195,7 +196,7 @@ export default function ExploreSection() {
                       </p>
                       
                       {/* Action Button */}
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2 text-teal-600 dark:text-teal-400">
                           <FaMapMarkerAlt className="text-sm" />
                           <span className="text-sm font-medium">Kathmandu Valley</span>
@@ -204,6 +205,28 @@ export default function ExploreSection() {
                           Explore →
                         </div>
                       </div>
+                      
+                      {/* Plan to Visit Button */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          navigate('/itinerary', { 
+                            state: { 
+                              preselectedDestination: {
+                                name: place.name,
+                                type: 'Place',
+                                location: 'Kathmandu Valley',
+                                description: place.description
+                              }
+                            }
+                          });
+                        }}
+                        className="w-full bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                      >
+                        <FaRoute />
+                        Plan to Visit
+                      </button>
                     </div>
                   </div>
                 </Link>

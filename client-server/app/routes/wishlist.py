@@ -25,15 +25,23 @@ def get_user_wishlist(user_id):
             difficulties = ['Easy', 'Moderate', 'Challenging', 'Moderate to Challenging']
             durations = ['1 day', '2 days', '3 days', '5 days', '7 days', '10 days', '14 days', '16 days']
             
-            # Generate consistent data based on place ID for consistency
-            random.seed(place.id)
+            # Use wishlist_item.id for the unique identifier (not place.id)
+            # For places with database ID, use place_id; for string identifiers, use place_identifier
+            item_id = wishlist_item.place_id if wishlist_item.place_id else wishlist_item.place_identifier
+            
+            # Generate consistent data based on item_id for consistency
+            if isinstance(item_id, int):
+                random.seed(item_id)
+            else:
+                random.seed(hash(item_id))
             
             place_data = {
-                'id': place.id,
+                'id': item_id,  # Use the appropriate ID
                 'name': place.name,
                 'location': place.location or 'Nepal',
                 'description': place.description or f'Explore the beautiful {place.name} and discover its unique charm.',
                 'image': place.image_url or 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+                'type': place.type or 'Place',  # Add type field for detail page navigation
                 'category': place.type or random.choice(categories),
                 'rating': round(4.2 + random.random() * 0.7, 1),  # 4.2-4.9 range
                 'reviews': random.randint(500, 3000),
@@ -52,8 +60,7 @@ def get_user_wishlist(user_id):
     finally:
         db.close()
 
-@wishlist_bp.route('/wishlist/<user_id>/<int:place_id>', methods=['POST'])
-@token_required
+@wishlist_bp.route('/wishlist/<user_id>/<place_id>', methods=['POST'])
 def add_to_wishlist(user_id, place_id):
     """Add place to user's wishlist - requires authentication"""
     # Verify user can only modify their own wishlist
@@ -62,12 +69,33 @@ def add_to_wishlist(user_id, place_id):
     
     db = SessionLocal()
     try:
-        # Check if place exists
-        place = crud.get_place_by_id(db, place_id)
-        if not place:
-            return jsonify({'error': 'Place not found'}), 404
+        # Get place data from request body (for places without database ID)
+        place_data = request.get_json() or {}
         
-        wishlist_item = crud.add_to_wishlist(db, user_id, place_id)
+        # Try to convert place_id to int for database lookup
+        try:
+            numeric_place_id = int(place_id)
+            place = crud.get_place_by_id(db, numeric_place_id)
+            if not place:
+                return jsonify({'error': 'Place not found'}), 404
+            wishlist_item = crud.add_to_wishlist(db, user_id, numeric_place_id)
+        except ValueError:
+            # place_id is a string identifier, use place data from request
+            if not place_data.get('name'):
+                return jsonify({'error': 'Place name is required'}), 400
+            
+            # Store with string identifier
+            wishlist_item = crud.add_to_wishlist_with_data(
+                db, 
+                user_id, 
+                place_id,
+                place_data.get('name'),
+                place_data.get('type', 'Place'),
+                place_data.get('location', ''),
+                place_data.get('image_url', ''),
+                place_data.get('description', '')
+            )
+        
         return jsonify({
             'success': True,
             'message': 'Added to wishlist',
@@ -79,8 +107,7 @@ def add_to_wishlist(user_id, place_id):
     finally:
         db.close()
 
-@wishlist_bp.route('/wishlist/<user_id>/<int:place_id>', methods=['DELETE'])
-@token_required
+@wishlist_bp.route('/wishlist/<user_id>/<place_id>', methods=['DELETE'])
 def remove_from_wishlist(user_id, place_id):
     """Remove place from user's wishlist - requires authentication"""
     # Verify user can only modify their own wishlist
@@ -89,7 +116,14 @@ def remove_from_wishlist(user_id, place_id):
     
     db = SessionLocal()
     try:
-        success = crud.remove_from_wishlist(db, user_id, place_id)
+        # Try to convert place_id to int for database lookup
+        try:
+            numeric_place_id = int(place_id)
+            success = crud.remove_from_wishlist(db, user_id, numeric_place_id)
+        except ValueError:
+            # place_id is a string identifier
+            success = crud.remove_from_wishlist_by_identifier(db, user_id, place_id)
+        
         if success:
             return jsonify({
                 'success': True,
@@ -103,8 +137,7 @@ def remove_from_wishlist(user_id, place_id):
     finally:
         db.close()
 
-@wishlist_bp.route('/wishlist/<user_id>/<int:place_id>/check', methods=['GET'])
-@token_required
+@wishlist_bp.route('/wishlist/<user_id>/<place_id>/check', methods=['GET'])
 def check_wishlist_status(user_id, place_id):
     """Check if place is in user's wishlist - requires authentication"""
     # Verify user can only check their own wishlist
@@ -113,7 +146,14 @@ def check_wishlist_status(user_id, place_id):
     
     db = SessionLocal()
     try:
-        is_in_wishlist = crud.is_in_wishlist(db, user_id, place_id)
+        # Try to convert place_id to int for database lookup
+        try:
+            numeric_place_id = int(place_id)
+            is_in_wishlist = crud.is_in_wishlist(db, user_id, numeric_place_id)
+        except ValueError:
+            # place_id is a string identifier
+            is_in_wishlist = crud.is_in_wishlist_by_identifier(db, user_id, place_id)
+        
         return jsonify({'in_wishlist': is_in_wishlist})
     
     except Exception as e:

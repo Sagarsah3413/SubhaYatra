@@ -54,7 +54,7 @@ def search_places(db: Session, query: str):
 # ------------------ WISHLIST CRUD ------------------
 
 def add_to_wishlist(db: Session, user_id: str, place_id: int):
-    """Add place to user's wishlist"""
+    """Add place to user's wishlist (for database places with numeric ID)"""
     # Check if already in wishlist
     existing = db.query(models.Wishlist).filter(
         models.Wishlist.user_id == user_id,
@@ -70,8 +70,35 @@ def add_to_wishlist(db: Session, user_id: str, place_id: int):
     db.refresh(wishlist_item)
     return wishlist_item
 
+def add_to_wishlist_with_data(db: Session, user_id: str, place_identifier: str, 
+                               name: str, place_type: str, location: str, 
+                               image_url: str, description: str):
+    """Add place to user's wishlist with full data (for places without database ID)"""
+    # Check if already in wishlist
+    existing = db.query(models.Wishlist).filter(
+        models.Wishlist.user_id == user_id,
+        models.Wishlist.place_identifier == place_identifier
+    ).first()
+    
+    if existing:
+        return existing
+    
+    wishlist_item = models.Wishlist(
+        user_id=user_id,
+        place_identifier=place_identifier,
+        place_name=name,
+        place_type=place_type,
+        place_location=location,
+        place_image_url=image_url,
+        place_description=description
+    )
+    db.add(wishlist_item)
+    db.commit()
+    db.refresh(wishlist_item)
+    return wishlist_item
+
 def remove_from_wishlist(db: Session, user_id: str, place_id: int):
-    """Remove place from user's wishlist"""
+    """Remove place from user's wishlist (for database places with numeric ID)"""
     wishlist_item = db.query(models.Wishlist).filter(
         models.Wishlist.user_id == user_id,
         models.Wishlist.place_id == place_id
@@ -83,17 +110,70 @@ def remove_from_wishlist(db: Session, user_id: str, place_id: int):
         return True
     return False
 
+def remove_from_wishlist_by_identifier(db: Session, user_id: str, place_identifier: str):
+    """Remove place from user's wishlist by string identifier"""
+    wishlist_item = db.query(models.Wishlist).filter(
+        models.Wishlist.user_id == user_id,
+        models.Wishlist.place_identifier == place_identifier
+    ).first()
+    
+    if wishlist_item:
+        db.delete(wishlist_item)
+        db.commit()
+        return True
+    return False
+
 def get_user_wishlist(db: Session, user_id: str):
     """Get all places in user's wishlist with place details"""
-    return db.query(models.Wishlist, models.Place).join(
+    # Get wishlist items with database places
+    db_places = db.query(models.Wishlist, models.Place).join(
         models.Place, models.Wishlist.place_id == models.Place.id
-    ).filter(models.Wishlist.user_id == user_id).all()
+    ).filter(
+        models.Wishlist.user_id == user_id,
+        models.Wishlist.place_id.isnot(None)
+    ).all()
+    
+    # Get wishlist items with string identifiers (no database place)
+    identifier_places = db.query(models.Wishlist).filter(
+        models.Wishlist.user_id == user_id,
+        models.Wishlist.place_identifier.isnot(None)
+    ).all()
+    
+    # Combine both types
+    result = []
+    
+    # Add database places
+    for wishlist_item, place in db_places:
+        result.append((wishlist_item, place))
+    
+    # Add identifier places (create pseudo-place objects)
+    for wishlist_item in identifier_places:
+        # Create a pseudo-place object from stored data
+        pseudo_place = type('obj', (object,), {
+            'id': None,
+            'name': wishlist_item.place_name,
+            'location': wishlist_item.place_location,
+            'type': wishlist_item.place_type,
+            'description': wishlist_item.place_description,
+            'image_url': wishlist_item.place_image_url,
+            'tags': ''
+        })()
+        result.append((wishlist_item, pseudo_place))
+    
+    return result
 
 def is_in_wishlist(db: Session, user_id: str, place_id: int):
-    """Check if place is in user's wishlist"""
+    """Check if place is in user's wishlist (for database places with numeric ID)"""
     return db.query(models.Wishlist).filter(
         models.Wishlist.user_id == user_id,
         models.Wishlist.place_id == place_id
+    ).first() is not None
+
+def is_in_wishlist_by_identifier(db: Session, user_id: str, place_identifier: str):
+    """Check if place is in user's wishlist by string identifier"""
+    return db.query(models.Wishlist).filter(
+        models.Wishlist.user_id == user_id,
+        models.Wishlist.place_identifier == place_identifier
     ).first() is not None
 
 

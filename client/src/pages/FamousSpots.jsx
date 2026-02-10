@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { FaMapMarkerAlt, FaStar, FaArrowRight, FaMountain, FaHeart } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaMapMarkerAlt, FaStar, FaArrowRight, FaMountain, FaHeart, FaRoute } from "react-icons/fa";
 
 // Importing famous tourist spot images
 import Pokhara from "../assets/Fspots/Pokhara.jpg";
@@ -98,6 +98,7 @@ const spots = [
 export default function FamousSpots() {
   const scrollRef = useRef(null);
   const [paused, setPaused] = useState(false);
+  const navigate = useNavigate();
 
   // Scrolling effect
   useEffect(() => {
@@ -218,7 +219,7 @@ export default function FamousSpots() {
                       </p>
                       
                       {/* Stats and Action */}
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between mb-4">
                         <div className="flex flex-col gap-1">
                           <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
                             <FaMapMarkerAlt className="text-sm" />
@@ -232,6 +233,28 @@ export default function FamousSpots() {
                           Discover →
                         </div>
                       </div>
+                      
+                      {/* Plan to Visit Button */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          navigate('/itinerary', { 
+                            state: { 
+                              preselectedDestination: {
+                                name: spot.name,
+                                type: 'Place',
+                                location: 'Nepal',
+                                description: spot.description
+                              }
+                            }
+                          });
+                        }}
+                        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                      >
+                        <FaRoute />
+                        Plan to Visit
+                      </button>
                     </div>
                   </div>
                 </Link>

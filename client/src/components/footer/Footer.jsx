@@ -384,7 +384,7 @@ export default function Footer() {
 
       {/* Smart Professional Main Footer Content */}
       <div className="relative max-w-7xl mx-auto py-8 px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
           
           {/* Professional Company Info Container */}
           <div className="lg:col-span-2 group bg-slate-800/50 rounded-xl p-6 border border-slate-600/30 backdrop-blur-sm hover:bg-slate-800/60 transition-all duration-300 relative">
@@ -399,7 +399,7 @@ export default function Footer() {
                     <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Roamio</span> 
                     <span className="text-teal-400 hover:text-teal-300 transition-all duration-500 hover:scale-105 inline-block">Wanderly</span>
                   </h2>
-                  <p className="text-xs text-gray-300 font-semibold tracking-wider animate-fade-in-up animation-delay-200 hover:text-gray-100 transition-colors duration-300 uppercase">Your Premium Nepal Travel Companion</p>
+                  <p className="text-xs text-gray-300 font-semibold tracking-wider animate-fade-in-up animation-delay-200 hover:text-gray-100 transition-colors duration-300 uppercase italic bg-gradient-to-r from-amber-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent font-serif">Your Premium Nepal Travel Companion</p>
                 </div>
               </div>
               <div className="mb-4">
@@ -528,8 +528,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Smart Newsletter & Legal Container */}
-          <div className="group bg-gradient-to-br from-slate-800/45 via-slate-700/35 to-slate-800/45 rounded-2xl p-6 border border-slate-600/30 backdrop-blur-sm hover:bg-gradient-to-br hover:from-slate-800/55 hover:via-slate-700/45 hover:to-slate-800/55 transition-all duration-300 relative overflow-hidden">
+          {/* Smart Newsletter & Legal Container - LARGER */}
+          <div className="lg:col-span-2 group bg-gradient-to-br from-slate-800/45 via-slate-700/35 to-slate-800/45 rounded-2xl p-8 border border-slate-600/30 backdrop-blur-sm hover:bg-gradient-to-br hover:from-slate-800/55 hover:via-slate-700/45 hover:to-slate-800/55 transition-all duration-300 relative overflow-hidden">
             {/* Smart Glass Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/4 via-transparent to-white/2 rounded-2xl pointer-events-none"></div>
             
@@ -538,34 +538,34 @@ export default function Footer() {
             
             {/* Clean Professional Newsletter Section */}
             <div className="relative">
-              <div className="flex items-center mb-4">
-                <div className="flex items-center justify-center w-8 h-8 bg-teal-500/15 rounded-lg mr-3 border border-teal-500/25">
-                  <svg className="w-4 h-4 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
+              <div className="flex items-center mb-6">
+                <div className="flex items-center justify-center w-12 h-12 bg-teal-500/15 rounded-xl mr-4 border border-teal-500/25">
+                  <svg className="w-6 h-6 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-white tracking-wide">{t('footer.stayUpdated')}</h3>
-                  <p className="text-xs text-gray-400 mt-0.5 font-semibold">Curated travel insights delivered weekly</p>
+                  <h3 className="text-lg font-black text-white tracking-wide">{t('footer.stayUpdated')}</h3>
+                  <p className="text-sm text-gray-400 mt-1 font-semibold">Curated travel insights delivered weekly</p>
                 </div>
               </div>
               
               {/* Clean Newsletter Form */}
               <form onSubmit={handleSubscribe} className="mb-6">
                 <div className="relative">
-                  <div className="flex bg-slate-700/60 rounded-lg border border-slate-600/50 overflow-hidden">
+                  <div className="flex bg-slate-700/60 rounded-xl border border-slate-600/50 overflow-hidden">
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={t('footer.yourEmail')}
-                      className="flex-1 px-3 py-2 text-sm bg-transparent text-white placeholder-gray-400 focus:outline-none"
+                      className="flex-1 px-4 py-3 text-sm bg-transparent text-white placeholder-gray-400 focus:outline-none"
                       required
                     />
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white text-sm font-bold transition-colors duration-200 flex items-center justify-center min-w-[80px]"
+                      className="px-6 py-3 bg-teal-600 hover:bg-teal-500 text-white text-sm font-bold transition-colors duration-200 flex items-center justify-center min-w-[100px]"
                     >
                       <span>Subscribe</span>
                     </button>
@@ -573,23 +573,23 @@ export default function Footer() {
                 </div>
                 
                 {/* Clean Trust Indicators */}
-                <div className="flex items-center justify-center mt-3 space-x-4 text-xs text-gray-500">
-                  <div className="flex items-center space-x-1">
-                    <svg className="w-3 h-3 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                <div className="flex items-center justify-center mt-4 space-x-6 text-xs text-gray-500">
+                  <div className="flex items-center space-x-1.5">
+                    <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                     <span className="font-semibold">No spam</span>
                   </div>
-                  <div className="w-px h-3 bg-gray-600"></div>
-                  <div className="flex items-center space-x-1">
-                    <svg className="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="w-px h-4 bg-gray-600"></div>
+                  <div className="flex items-center space-x-1.5">
+                    <svg className="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                     </svg>
                     <span className="font-semibold">Secure</span>
                   </div>
-                  <div className="w-px h-3 bg-gray-600"></div>
-                  <div className="flex items-center space-x-1">
-                    <svg className="w-3 h-3 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="w-px h-4 bg-gray-600"></div>
+                  <div className="flex items-center space-x-1.5">
+                    <svg className="w-4 h-4 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span className="font-semibold">Weekly</span>
@@ -599,39 +599,39 @@ export default function Footer() {
             </div>
             
             {/* Smart Legal Section */}
-            <div className="relative border-t border-slate-600/30 pt-4">
-              <h4 className="text-xs font-semibold mb-3 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
-                <svg className="w-3 h-3 text-amber-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <div className="relative border-t border-slate-600/30 pt-6">
+              <h4 className="text-sm font-semibold mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+                <svg className="w-4 h-4 text-amber-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 2L3 7v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-7-5zM10 4.5L15 8v9H5V8l5-3.5z" clipRule="evenodd" />
                 </svg>
                 <span className="font-black tracking-wide">{t('footer.legal')}</span>
               </h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 <Link 
                   to="/privacy-policy" 
-                  className={`inline-flex items-center px-3 py-1.5 text-xs rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
+                  className={`inline-flex items-center px-4 py-2 text-sm rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
                     location.pathname === "/privacy-policy" 
                       ? "bg-teal-500/20 border-teal-500/40 text-teal-300" 
                       : "bg-slate-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
                   }`}
                 >
-                  <svg className="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="font-medium tracking-wide">Privacy</span>
+                  <span className="font-medium tracking-wide">Privacy Policy</span>
                 </Link>
                 <Link 
                   to="/terms-of-service" 
-                  className={`inline-flex items-center px-3 py-1.5 text-xs rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
+                  className={`inline-flex items-center px-4 py-2 text-sm rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
                     location.pathname === "/terms-of-service" 
                       ? "bg-teal-500/20 border-teal-500/40 text-teal-300" 
                       : "bg-slate-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
                   }`}
                 >
-                  <svg className="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd" />
                   </svg>
-                  <span className="font-medium tracking-wide">Terms</span>
+                  <span className="font-medium tracking-wide">Terms of Service</span>
                 </Link>
               </div>
             </div>

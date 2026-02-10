@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState} from "react";
-import { Link } from "react-router-dom";
-import { FaMapMarkerAlt, FaStar, FaArrowRight, FaLeaf, FaHeart, FaCamera } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaMapMarkerAlt, FaStar, FaArrowRight, FaLeaf, FaHeart, FaCamera, FaRoute } from "react-icons/fa";
 
 import Shivapuri from "../assets/Nature/Shivapuri.jpeg";
 import Lomanthang from "../assets/Nature/Lomanthang.jpeg";
@@ -97,6 +97,7 @@ const places = [
 export default function NaturePlaces() {
   const scrollRef = useRef(null);
   const [paused, setPaused] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
@@ -218,7 +219,7 @@ export default function NaturePlaces() {
                       </p>
                       
                       {/* Stats and Action */}
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between mb-4">
                         <div className="flex flex-col gap-1">
                           <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
                             <FaMapMarkerAlt className="text-sm" />
@@ -232,6 +233,28 @@ export default function NaturePlaces() {
                           Explore →
                         </div>
                       </div>
+                      
+                      {/* Plan to Visit Button */}
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          navigate('/itinerary', { 
+                            state: { 
+                              preselectedDestination: {
+                                name: place.name,
+                                type: 'Place',
+                                location: 'Nepal',
+                                description: place.description
+                              }
+                            }
+                          });
+                        }}
+                        className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                      >
+                        <FaRoute />
+                        Plan to Visit
+                      </button>
                     </div>
                   </div>
                 </Link>

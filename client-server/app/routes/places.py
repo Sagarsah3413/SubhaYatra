@@ -47,7 +47,9 @@ def serialize_place(place):
         'transportation': place.transportation,
         'province': place.province,
         'all_images': all_images,
-        'created_at': place.created_at
+        'created_at': place.created_at,
+        'status': getattr(place, 'status', 'approved'),  # Include status, default to approved for old records
+        'source': getattr(place, 'source', 'dataset')  # Include source, default to dataset
     }
 
 def serialize_hotel(hotel):
@@ -116,7 +118,7 @@ def create_place():
             image_url = f"/datasets/uploads/{filename}"
             break
 
-    # Save to DB
+    # Save to DB with 'pending' status and 'user_submission' source
     session = SessionLocal()
     try:
         place = Place(
@@ -125,12 +127,14 @@ def create_place():
             type=ptype,
             description=description,
             tags=tags,
-            image_url=image_url
+            image_url=image_url,
+            status='pending',  # Set as pending for admin approval
+            source='user_submission'  # Mark as user submission
         )
         session.add(place)
         session.commit()
         session.refresh(place)
-        return jsonify({'success': True, 'place_id': place.id}), 201
+        return jsonify({'success': True, 'place_id': place.id, 'status': 'pending'}), 201
     except Exception as e:
         session.rollback()
         current_app.logger.error('Failed to create place: %s', e)
@@ -157,9 +161,15 @@ def list_places():
         province = request.args.get('province')
         difficulty = request.args.get('difficulty')
         search = request.args.get('search')
+        status = request.args.get('status', 'approved')  # Default to approved only
         
         # Build query
         query = session.query(Place)
+        
+        # Apply status filter (show only approved places by default for public)
+        # Admin can pass status='all' to see all places
+        if status != 'all':
+            query = query.filter(Place.status == status)
         
         # Apply filters
         if place_type:
@@ -457,5 +467,80 @@ def search_places():
             'total_available': len(results),  # Same as count since we show all
             'unlimited': True
         })
+    finally:
+        session.close()
+
+@places_bp.route('/places/<int:place_id>', methods=['DELETE'])
+def delete_place(place_id):
+    """Delete a place by ID"""
+    session = SessionLocal()
+    try:
+        place = session.query(Place).filter(Place.id == place_id).first()
+        if not place:
+            return jsonify({'error': 'Place not found'}), 404
+        
+        # Delete the place
+        session.delete(place)
+        session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Place deleted successfully',
+            'place_id': place_id
+        }), 200
+    except Exception as e:
+        session.rollback()
+        current_app.logger.error('Failed to delete place: %s', e)
+        return jsonify({'error': 'Failed to delete place'}), 500
+    finally:
+        session.close()
+
+@places_bp.route('/places/<int:place_id>/approve', methods=['POST'])
+def approve_place(place_id):
+    """Approve a pending place"""
+    session = SessionLocal()
+    try:
+        place = session.query(Place).filter(Place.id == place_id).first()
+        if not place:
+            return jsonify({'error': 'Place not found'}), 404
+        
+        place.status = 'approved'
+        session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Place approved successfully',
+            'place_id': place_id,
+            'status': 'approved'
+        }), 200
+    except Exception as e:
+        session.rollback()
+        current_app.logger.error('Failed to approve place: %s', e)
+        return jsonify({'error': 'Failed to approve place'}), 500
+    finally:
+        session.close()
+
+@places_bp.route('/places/<int:place_id>/reject', methods=['POST'])
+def reject_place(place_id):
+    """Reject a pending place"""
+    session = SessionLocal()
+    try:
+        place = session.query(Place).filter(Place.id == place_id).first()
+        if not place:
+            return jsonify({'error': 'Place not found'}), 404
+        
+        place.status = 'rejected'
+        session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Place rejected successfully',
+            'place_id': place_id,
+            'status': 'rejected'
+        }), 200
+    except Exception as e:
+        session.rollback()
+        current_app.logger.error('Failed to reject place: %s', e)
+        return jsonify({'error': 'Failed to reject place'}), 500
     finally:
         session.close()

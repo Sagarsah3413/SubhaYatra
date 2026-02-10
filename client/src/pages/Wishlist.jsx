@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { wishlistService } from '../services/wishlistService';
 import { 
@@ -21,6 +22,7 @@ import {
 const Wishlist = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
+  const { user, isSignedIn } = useUser();
   
   const [wishlistItems, setWishlistItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
@@ -31,10 +33,16 @@ const Wishlist = () => {
   // Load wishlist data from API
   useEffect(() => {
     const loadWishlist = async () => {
+      if (!isSignedIn || !user) {
+        setIsLoading(false);
+        return;
+      }
+
       try {
         setIsLoading(true);
         setError(null);
-        const data = await wishlistService.getUserWishlist();
+        const data = await wishlistService.getUserWishlist(user.id);
+        console.log('Wishlist data loaded:', data);
         setWishlistItems(data);
         setFilteredItems(data);
       } catch (err) {
@@ -46,7 +54,7 @@ const Wishlist = () => {
     };
 
     loadWishlist();
-  }, []);
+  }, [isSignedIn, user]);
 
   // Filter functionality
   useEffect(() => {
@@ -64,8 +72,12 @@ const Wishlist = () => {
   }, [wishlistItems, searchQuery]);
 
   const removeFromWishlist = async (itemId) => {
+    if (!isSignedIn || !user) {
+      return;
+    }
+
     try {
-      await wishlistService.removeFromWishlist(itemId);
+      await wishlistService.removeFromWishlist(itemId, user.id);
       const removedItem = wishlistItems.find(item => item.id === itemId);
       setWishlistItems(prev => prev.filter(item => item.id !== itemId));
       setFilteredItems(prev => prev.filter(item => item.id !== itemId));
@@ -97,6 +109,30 @@ const Wishlist = () => {
     if (difficulty.includes('Challenging')) return 'text-red-600 bg-red-100';
     return 'text-gray-600 bg-gray-100';
   };
+
+  if (!isSignedIn) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'}`}>
+        <div className="text-center">
+          <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 ${
+            theme === 'dark' ? 'bg-slate-800' : 'bg-gray-100'
+          }`}>
+            <FaHeart className="text-4xl text-gray-400" />
+          </div>
+          <h3 className="text-2xl font-bold mb-4">Sign In Required</h3>
+          <p className={`text-lg mb-8 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
+            Please sign in to view your wishlist
+          </p>
+          <button
+            onClick={() => navigate('/sign-in')}
+            className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+          >
+            Sign In
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -251,6 +287,14 @@ const Wishlist = () => {
 // Simplified Wishlist Card Component
 const WishlistCard = ({ item, theme, onRemove, getCategoryIcon, getDifficultyColor }) => {
   const CategoryIcon = getCategoryIcon(item.category);
+  const navigate = useNavigate();
+  
+  const handleViewDetails = () => {
+    // Navigate to detail page with item type and name
+    const itemType = item.type || item.category || 'Place';
+    const itemName = item.name;
+    navigate(`/details?type=${encodeURIComponent(itemType)}&name=${encodeURIComponent(itemName)}`);
+  };
   
   return (
     <div className={`group rounded-3xl border transition-all duration-500 hover:transform hover:-translate-y-2 ${
@@ -331,7 +375,10 @@ const WishlistCard = ({ item, theme, onRemove, getCategoryIcon, getDifficultyCol
           <span className="text-xl font-bold text-teal-500">{item.price}</span>
         </div>
 
-        <button className="w-full mt-4 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2">
+        <button 
+          onClick={handleViewDetails}
+          className="w-full mt-4 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2"
+        >
           <span>View Details</span>
           <FaArrowRight />
         </button>
