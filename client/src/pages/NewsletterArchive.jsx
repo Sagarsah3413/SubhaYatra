@@ -60,6 +60,7 @@ const NewsletterArchive = () => {
   const [imageLoadingStates, setImageLoadingStates] = useState(new Set());
   const [selectedNewsletter, setSelectedNewsletter] = useState(null);
   const [showFullContent, setShowFullContent] = useState(false);
+  const [expandedCards, setExpandedCards] = useState(new Set());
   const [viewMode, setViewMode] = useState("grid"); // grid or list
   const [sortBy, setSortBy] = useState("latest");
   // Handle keyboard events for modal
@@ -134,7 +135,27 @@ const NewsletterArchive = () => {
       image: BoudhanathImage,
       author: "Cultural Heritage Team",
       authorBio: "Dedicated team of cultural historians and heritage experts preserving Nepal's rich traditions.",
-      content: "Kathmandu Valley is home to countless temples and spiritual sites that tell the story of Nepal's religious heritage. This guide explores lesser-known temples and their architectural marvels."
+      content: `
+        <h2>Hidden Temples of Kathmandu Valley</h2>
+        
+        <p>Kathmandu Valley is home to countless temples and spiritual sites that tell the story of Nepal's religious heritage. Beyond the famous UNESCO World Heritage Sites, there are hidden gems waiting to be discovered.</p>
+        
+        <h3>Lesser-Known Temple Treasures</h3>
+        <ul>
+          <li><strong>Changu Narayan Temple:</strong> The oldest temple in Nepal, dating back to the 4th century, featuring exquisite wood and stone carvings</li>
+          <li><strong>Dakshinkali Temple:</strong> A powerful goddess temple nestled in a forested valley, known for its spiritual energy</li>
+          <li><strong>Budhanilkantha Temple:</strong> Home to a stunning 5-meter reclining Vishnu statue carved from a single stone</li>
+          <li><strong>Kirtipur's Ancient Shrines:</strong> Medieval temples with panoramic valley views and authentic Newar culture</li>
+        </ul>
+        
+        <h3>Architectural Marvels</h3>
+        <p>These temples showcase the incredible craftsmanship of Newar artisans. Intricate wood carvings, stone sculptures, and pagoda-style architecture reflect centuries of artistic tradition. Each temple tells a unique story through its design and decorative elements.</p>
+        
+        <h3>Visiting Tips</h3>
+        <p>Dress modestly and remove shoes before entering temple premises. Early morning visits offer peaceful experiences and better photography light. Consider hiring a local guide to understand the rich symbolism and history behind each site.</p>
+        
+        <p>These hidden temples provide an authentic glimpse into Nepal's spiritual heart, away from tourist crowds.</p>
+      `
     },
     {
       id: 3,
@@ -146,7 +167,33 @@ const NewsletterArchive = () => {
       views: 1654,
       tags: ["photography", "landscapes", "portraits", "equipment"],
       featured: false,
-      image: NagarkotImage
+      image: NagarkotImage,
+      author: "Photography Experts",
+      content: `
+        <h2>Photography Guide: Capturing Nepal's Beauty</h2>
+        
+        <p>Nepal offers endless photography opportunities, from majestic Himalayan peaks to vibrant street scenes. This guide will help you capture the essence of this beautiful country.</p>
+        
+        <h3>Best Photography Locations</h3>
+        <ul>
+          <li><strong>Nagarkot:</strong> Sunrise over the Himalayas with panoramic mountain views</li>
+          <li><strong>Patan Durbar Square:</strong> Ancient architecture and traditional Newar life</li>
+          <li><strong>Phewa Lake, Pokhara:</strong> Mountain reflections and colorful boats</li>
+          <li><strong>Thamel Streets:</strong> Vibrant street photography and cultural diversity</li>
+          <li><strong>Annapurna Base Camp:</strong> Epic mountain landscapes and trekking scenes</li>
+        </ul>
+        
+        <h3>Essential Equipment</h3>
+        <p><strong>Camera:</strong> DSLR or mirrorless with weather sealing for mountain conditions<br>
+        <strong>Lenses:</strong> Wide-angle (16-35mm) for landscapes, 24-70mm for versatility, 70-200mm for portraits and wildlife<br>
+        <strong>Accessories:</strong> Polarizing filter, neutral density filters, sturdy tripod, extra batteries</p>
+        
+        <h3>Photography Tips</h3>
+        <p>Golden hour (sunrise and sunset) provides the best light for landscapes. For portraits, always ask permission before photographing locals. Respect religious sites and ceremonies. Protect your gear from dust and moisture in monsoon season.</p>
+        
+        <h3>Cultural Sensitivity</h3>
+        <p>Be respectful when photographing people, especially in rural areas. Offer to share photos with subjects. Avoid photographing cremation ceremonies at Pashupatinath without permission.</p>
+      `
     },
     {
       id: 4,
@@ -197,7 +244,34 @@ const NewsletterArchive = () => {
       tags: ["budget", "tips", "accommodation", "food"],
       featured: false,
       image: PokharaImage,
-      author: "Budget Travel Experts"
+      author: "Budget Travel Experts",
+      content: `
+        <h2>Budget Travel Tips for Nepal</h2>
+        
+        <p>Nepal is one of the most budget-friendly destinations in Asia. With smart planning, you can experience incredible adventures without breaking the bank.</p>
+        
+        <h3>Accommodation Costs</h3>
+        <ul>
+          <li><strong>Budget Guesthouses:</strong> $5-15 per night in Kathmandu and Pokhara</li>
+          <li><strong>Teahouses on Treks:</strong> $3-10 per night (often free if you eat meals there)</li>
+          <li><strong>Mid-range Hotels:</strong> $20-40 per night with private bathroom and WiFi</li>
+          <li><strong>Hostels:</strong> $4-8 per dorm bed, great for meeting other travelers</li>
+        </ul>
+        
+        <h3>Food Budget</h3>
+        <p><strong>Local Restaurants:</strong> Dal bhat (traditional meal) $2-4, momos $1-3<br>
+        <strong>Street Food:</strong> Samosas, chow mein $0.50-2<br>
+        <strong>Tourist Restaurants:</strong> $5-10 per meal<br>
+        <strong>Trekking:</strong> $8-15 per day for three meals</p>
+        
+        <h3>Transportation</h3>
+        <p>Local buses are incredibly cheap ($0.20-5 for long distances). Tourist buses cost more but are more comfortable ($10-25 for Kathmandu-Pokhara). Taxis in cities: $2-5 for short rides. Domestic flights: $100-200 for mountain flights.</p>
+        
+        <h3>Money-Saving Tips</h3>
+        <p>Eat dal bhat for at least one meal daily - it's nutritious and often comes with free refills. Book treks independently instead of through agencies. Travel during shoulder season (March-April, October-November) for better deals. Bargain at markets but be fair. Use local SIM cards for cheap data.</p>
+        
+        <p><strong>Daily Budget Estimate:</strong> Backpacker: $15-25, Mid-range: $40-60, Comfortable: $80-120</p>
+      `
     },
     {
       id: 6,
@@ -209,7 +283,33 @@ const NewsletterArchive = () => {
       views: 987,
       tags: ["monsoon", "trekking", "weather", "preparation"],
       featured: false,
-      image: GosaikundaImage
+      image: GosaikundaImage,
+      author: "Trekking Safety Team",
+      content: `
+        <h2>Monsoon Trekking: What You Need to Know</h2>
+        
+        <p>Monsoon season (June-September) brings challenges but also unique beauty to Nepal's trekking routes. With proper preparation, you can enjoy quieter trails and lush green landscapes.</p>
+        
+        <h3>Best Monsoon Trekking Routes</h3>
+        <ul>
+          <li><strong>Upper Mustang:</strong> Rain shadow area, stays relatively dry</li>
+          <li><strong>Dolpo Region:</strong> Protected from monsoon by high mountains</li>
+          <li><strong>Lower Elevation Treks:</strong> Ghorepani Poon Hill, shorter Annapurna routes</li>
+          <li><strong>Langtang Valley:</strong> Manageable with proper gear, fewer crowds</li>
+        </ul>
+        
+        <h3>Essential Monsoon Gear</h3>
+        <p><strong>Waterproofing:</strong> Quality rain jacket and pants, waterproof pack cover, dry bags for electronics<br>
+        <strong>Footwear:</strong> Waterproof boots with good grip, gaiters to keep pants dry<br>
+        <strong>Clothing:</strong> Quick-dry fabrics, avoid cotton, extra socks<br>
+        <strong>Protection:</strong> Waterproof phone case, ziplock bags for documents</p>
+        
+        <h3>Safety Considerations</h3>
+        <p>Leeches are common in monsoon - bring salt or leech socks. Trails can be slippery and muddy - trekking poles help. Landslides and floods are risks on some routes. Check weather forecasts daily. Have flexible itinerary for weather delays. Consider travel insurance covering monsoon-related issues.</p>
+        
+        <h3>Advantages of Monsoon Trekking</h3>
+        <p>Fewer tourists mean quieter trails and better accommodation availability. Lush green landscapes and blooming wildflowers. Lower prices for guides, porters, and accommodation. Clearer mountain views in early morning before clouds form.</p>
+      `
     },
     {
       id: 7,
@@ -221,7 +321,33 @@ const NewsletterArchive = () => {
       views: 1876,
       tags: ["pokhara", "adventure", "activities", "sports"],
       featured: true,
-      image: ChitwanImage
+      image: ChitwanImage,
+      author: "Adventure Sports Team",
+      content: `
+        <h2>Pokhara's Adventure Activities Guide</h2>
+        
+        <p>Pokhara is Nepal's adventure capital, offering thrilling activities against the backdrop of the Annapurna range. From flying high to diving deep, there's something for every adrenaline seeker.</p>
+        
+        <h3>Top Adventure Activities</h3>
+        <ul>
+          <li><strong>Paragliding:</strong> Soar above Phewa Lake with Himalayan views. Cost: $75-100 for 30-minute flight. Best season: October-April</li>
+          <li><strong>Ultralight Flight:</strong> Powered flight for closer mountain views. Cost: $150-200. Duration: 15-60 minutes</li>
+          <li><strong>White Water Rafting:</strong> Seti and Kali Gandaki rivers. Cost: $30-50 per day. Grades II-IV rapids</li>
+          <li><strong>Bungee Jumping:</strong> 70-meter jump at Hemja. Cost: $100. Includes video and photos</li>
+          <li><strong>Zip-lining:</strong> One of the world's steepest zip-lines. Cost: $85. 1.8km long, 600m drop</li>
+        </ul>
+        
+        <h3>Water Activities</h3>
+        <p><strong>Kayaking:</strong> Phewa Lake and river kayaking courses available<br>
+        <strong>Stand-Up Paddleboarding:</strong> Peaceful lake exploration<br>
+        <strong>Canyoning:</strong> Waterfall rappelling and cliff jumping adventures</p>
+        
+        <h3>Mountain Activities</h3>
+        <p>Mountain biking trails around Pokhara valley. Rock climbing at natural and artificial walls. Via ferrata routes for beginners to advanced climbers. Trekking day trips to Sarangkot, World Peace Pagoda, and nearby villages.</p>
+        
+        <h3>Booking Tips</h3>
+        <p>Book directly with operators in Lakeside for best prices. Check safety equipment and pilot/guide certifications. Read recent reviews online. Weather can affect activities - have backup plans. Many operators offer package deals for multiple activities.</p>
+      `
     },
     {
       id: 8,
@@ -233,7 +359,37 @@ const NewsletterArchive = () => {
       views: 2234,
       tags: ["food", "cuisine", "local", "restaurants"],
       featured: false,
-      image: PashupatinathImage
+      image: PashupatinathImage,
+      author: "Food Culture Team",
+      content: `
+        <h2>Local Food Guide: Must-Try Nepali Dishes</h2>
+        
+        <p>Nepali cuisine is a delicious blend of Indian, Tibetan, and indigenous flavors. From hearty mountain meals to street food delights, here's your guide to authentic Nepali eating.</p>
+        
+        <h3>Essential Nepali Dishes</h3>
+        <ul>
+          <li><strong>Dal Bhat:</strong> The national dish - lentil soup with rice, vegetables, and pickles. Unlimited refills are traditional!</li>
+          <li><strong>Momos:</strong> Tibetan-style dumplings filled with vegetables, chicken, or buffalo. Steamed or fried, served with spicy tomato chutney</li>
+          <li><strong>Newari Cuisine:</strong> Chatamari (rice crepe), bara (lentil pancake), choila (spiced grilled meat)</li>
+          <li><strong>Thukpa:</strong> Hearty noodle soup perfect for cold mountain evenings</li>
+          <li><strong>Sel Roti:</strong> Sweet rice flour bread, crispy outside and soft inside</li>
+        </ul>
+        
+        <h3>Street Food Favorites</h3>
+        <p><strong>Samosas:</strong> Crispy pastries filled with spiced potatoes<br>
+        <strong>Pani Puri:</strong> Crispy shells filled with spicy water and chickpeas<br>
+        <strong>Chow Mein:</strong> Nepali-style stir-fried noodles<br>
+        <strong>Lassi:</strong> Refreshing yogurt drink, sweet or salty</p>
+        
+        <h3>Where to Eat</h3>
+        <p><strong>Local Bhatti:</strong> Small family-run restaurants for authentic dal bhat<br>
+        <strong>Newari Restaurants:</strong> Newa Lahana in Patan for traditional Newari feasts<br>
+        <strong>Street Stalls:</strong> Asan Tole in Kathmandu for street food<br>
+        <strong>Thamel:</strong> International and fusion options</p>
+        
+        <h3>Dining Etiquette</h3>
+        <p>Eat with your right hand (left is considered unclean). Remove shoes before entering traditional restaurants. Say "Mitho chha" (delicious) to compliment the cook. Tipping 10% is appreciated but not mandatory in local restaurants.</p>
+      `
     },
     {
       id: 9,
@@ -245,7 +401,33 @@ const NewsletterArchive = () => {
       views: 1765,
       tags: ["yoga", "wellness", "meditation", "retreats"],
       featured: false,
-      image: KhaptadImage
+      image: KhaptadImage,
+      author: "Wellness Experts",
+      content: `
+        <h2>Yoga and Wellness Retreats in Nepal</h2>
+        
+        <p>Nepal's spiritual energy and natural beauty make it an ideal destination for yoga and wellness retreats. From Himalayan meditation centers to lakeside yoga studios, find your path to inner peace.</p>
+        
+        <h3>Top Wellness Destinations</h3>
+        <ul>
+          <li><strong>Pokhara Lakeside:</strong> Numerous yoga studios with mountain views. Daily drop-in classes and week-long retreats available</li>
+          <li><strong>Kathmandu Valley:</strong> Traditional meditation centers and modern wellness resorts</li>
+          <li><strong>Kopan Monastery:</strong> Buddhist meditation courses in peaceful hilltop setting</li>
+          <li><strong>Namo Buddha:</strong> Spiritual retreat center with stunning valley views</li>
+        </ul>
+        
+        <h3>Types of Retreats</h3>
+        <p><strong>Yoga Retreats:</strong> 3-14 day programs combining asana practice, meditation, and healthy meals. Cost: $300-1000<br>
+        <strong>Meditation Courses:</strong> Vipassana and Buddhist meditation. Often donation-based<br>
+        <strong>Ayurvedic Wellness:</strong> Traditional healing treatments and consultations<br>
+        <strong>Detox Programs:</strong> Juice cleanses and holistic health programs</p>
+        
+        <h3>What to Expect</h3>
+        <p>Most retreats include accommodation, vegetarian meals, yoga/meditation sessions, and wellness activities. Daily schedule typically starts with morning meditation (6-7 AM), followed by yoga practice, healthy breakfast, free time, afternoon session, and evening meditation. Many retreats offer additional activities like sound healing, pranayama, and nature walks.</p>
+        
+        <h3>Choosing a Retreat</h3>
+        <p>Consider your experience level - some retreats cater to beginners while others are for advanced practitioners. Check teacher credentials and retreat reviews. Location matters - mountain retreats offer solitude, while Pokhara provides more amenities. Book in advance during peak season (October-November, March-April).</p>
+      `
     },
     {
       id: 10,
@@ -257,7 +439,33 @@ const NewsletterArchive = () => {
       views: 1432,
       tags: ["biking", "adventure", "trails", "mountains"],
       featured: false,
-      image: ShivapuriImage
+      image: ShivapuriImage,
+      author: "Mountain Biking Team",
+      content: `
+        <h2>Mountain Biking Adventures in Nepal</h2>
+        
+        <p>Nepal's diverse terrain offers world-class mountain biking opportunities. From technical single tracks to scenic valley rides, there's a trail for every skill level.</p>
+        
+        <h3>Best Mountain Biking Routes</h3>
+        <ul>
+          <li><strong>Kathmandu Valley Rim:</strong> Shivapuri to Nagarkot circuit. 40km, intermediate level, stunning valley views</li>
+          <li><strong>Annapurna Circuit:</strong> Multi-day epic ride through diverse landscapes. Advanced level, requires acclimatization</li>
+          <li><strong>Pokhara Trails:</strong> Sarangkot, World Peace Pagoda loops. Beginner to intermediate, 15-30km</li>
+          <li><strong>Upper Mustang:</strong> High-altitude desert biking. Advanced, 10-14 days, unique landscapes</li>
+          <li><strong>Kathmandu to Pokhara:</strong> 200km road ride through hills and valleys. 3-5 days</li>
+        </ul>
+        
+        <h3>Bike Rentals and Tours</h3>
+        <p><strong>Rental Costs:</strong> Basic mountain bike $10-15/day, quality full-suspension $25-40/day<br>
+        <strong>Guided Tours:</strong> Day trips $50-80, multi-day tours $100-150/day including support vehicle<br>
+        <strong>Where to Rent:</strong> Thamel in Kathmandu, Lakeside in Pokhara</p>
+        
+        <h3>Essential Gear</h3>
+        <p>Helmet (mandatory), gloves, padded shorts, repair kit, spare tubes, pump, first aid kit. For high-altitude rides: warm layers, sunscreen, altitude medication. Consider bringing your own pedals and seat for comfort.</p>
+        
+        <h3>Trail Conditions and Safety</h3>
+        <p>Best season: October-November and March-May. Monsoon (June-September) makes trails muddy and dangerous. Always ride with a buddy or guide in remote areas. Carry plenty of water and snacks. Respect local communities and stay on designated trails. Be prepared for altitude effects above 3000m.</p>
+      `
     }
   ];
   const categories = [
@@ -315,6 +523,16 @@ const NewsletterArchive = () => {
   const handleImageLoadStart = (id) => {
     setImageLoadingStates(prev => new Set(prev).add(id));
   };
+
+  const toggleExpanded = (id) => {
+    const newExpanded = new Set(expandedCards);
+    if (newExpanded.has(id)) {
+      newExpanded.delete(id);
+    } else {
+      newExpanded.add(id);
+    }
+    setExpandedCards(newExpanded);
+  };
   const NewsletterCard = ({ newsletter, featured = false }) => (
     <article className={`group relative overflow-hidden transition-all duration-700 transform-gpu hover:scale-[1.02] ${
       featured 
@@ -323,7 +541,7 @@ const NewsletterArchive = () => {
     } rounded-3xl`}>
       
       {/* Premium Background Effects */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 rounded-full blur-2xl"></div>
         <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-xl"></div>
       </div>
@@ -359,7 +577,7 @@ const NewsletterArchive = () => {
         />
         
         {/* Premium Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"></div>
         {/* Ultra Premium Action Buttons */}
         <div className="absolute top-6 right-6 flex gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
           <button
@@ -423,24 +641,44 @@ const NewsletterArchive = () => {
           </div>
         </div>
         {/* Ultra Premium Title */}
-        <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-4 leading-tight group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setSelectedNewsletter(newsletter);
-              setShowFullContent(true);
-            }}
-            className="text-left hover:text-teal-600 dark:hover:text-teal-400 transition-colors cursor-pointer w-full text-left line-clamp-2"
-          >
-            {newsletter.title}
-          </button>
+        <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-4 leading-tight group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300 line-clamp-2">
+          {newsletter.title}
         </h3>
 
         {/* Premium Excerpt */}
-        <p className="text-gray-600 dark:text-slate-300 mb-6 leading-relaxed line-clamp-3 text-lg">
-          {newsletter.excerpt}
-        </p>
+        <div className="text-gray-600 dark:text-slate-300 mb-6 leading-relaxed text-base">
+          {newsletter.content ? (
+            <div className="relative">
+              <div 
+                className={`prose prose-sm max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-600 dark:prose-p:text-slate-300 prose-ul:text-gray-600 dark:prose-ul:text-slate-300 prose-li:text-gray-600 dark:prose-li:text-slate-300 overflow-hidden transition-all duration-500 ${
+                  expandedCards.has(newsletter.id) ? 'max-h-none' : 'max-h-20'
+                }`}
+                dangerouslySetInnerHTML={{ __html: newsletter.content }} 
+              />
+              {!expandedCards.has(newsletter.id) && (
+                <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white dark:from-slate-800 to-transparent pointer-events-none"></div>
+              )}
+              <button
+                type="button"
+                onClick={() => toggleExpanded(newsletter.id)}
+                className="mt-4 inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+              >
+                <span>{expandedCards.has(newsletter.id) ? 'Show Less' : 'Read More'}</span>
+                <svg 
+                  className={`w-5 h-5 transition-transform duration-300 ${expandedCards.has(newsletter.id) ? 'rotate-180' : ''}`}
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  strokeWidth={2.5}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </div>
+          ) : (
+            <p className="line-clamp-3">{newsletter.excerpt}</p>
+          )}
+        </div>
 
         {/* Ultra Premium Tags */}
         <div className="flex flex-wrap gap-2 mb-8">
@@ -460,21 +698,7 @@ const NewsletterArchive = () => {
         </div>
 
         {/* Ultra Premium CTA Section */}
-        <div className="flex items-center justify-between">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setSelectedNewsletter(newsletter);
-              setShowFullContent(true);
-            }}
-            className="group/btn inline-flex items-center gap-3 text-teal-600 dark:text-teal-400 font-black text-lg hover:text-teal-700 dark:hover:text-teal-300 transition-all duration-300 cursor-pointer"
-          >
-            <span>Read Full Article</span>
-            <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center transition-all duration-300 group-hover/btn:scale-110 group-hover/btn:rotate-12">
-              <FaArrowRight className="text-white text-sm" />
-            </div>
-          </button>
+        <div className="flex items-center justify-between relative z-10">
           
           {/* Author Info */}
           {newsletter.author && (
@@ -495,17 +719,8 @@ const NewsletterArchive = () => {
       
       {/* Ultra Premium Hero Section */}    
       <div className="relative overflow-hidden">
-        {/* Premium Background with Video-like Effect */}
+        {/* Premium Background with Gradient */}
         <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'}`}></div>
-        <div 
-          className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage: `url(${SwayambhunathImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        ></div>
         
         {/* Premium Floating Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">

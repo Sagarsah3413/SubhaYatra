@@ -600,6 +600,7 @@ const App = memo(() => (
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/guide" element={<Itinerary />} />
+            <Route path="/itinerary" element={<Itinerary />} />
             <Route path="/explore-nepal" element={<ExploreNepal />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/help" element={<Help />} />

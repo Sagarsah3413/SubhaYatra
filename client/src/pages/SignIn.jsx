@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { SignIn } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
@@ -227,7 +226,7 @@ export default function SignInPage() {
         </div>
 
         {/* Main Content */}
-        <div className="relative z-10 flex items-center justify-center min-h-full py-12 px-4">
+        <div className="relative z-10 flex items-center justify-center min-h-full py-20 px-4 mt-20">
           <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
             {/* Left Side - Welcome Content */}
@@ -278,49 +277,28 @@ export default function SignInPage() {
                   </div>
                 ))}
               </div>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button 
-                  onClick={() => navigate('/explore-nepal')}
-                  className="group relative px-8 py-4 bg-white/10 dark:bg-slate-800/30 backdrop-blur-xl border border-white/20 dark:border-slate-700/50 text-white rounded-2xl font-semibold hover:bg-white/20 dark:hover:bg-slate-700/50 transition-all duration-300 flex items-center gap-3"
-                >
-                  <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <FaPlay className="text-sm ml-1" />
-                  </div>
-                  <span>Explore Nepal</span>
-                </button>
-
-                <button 
-                  onClick={() => navigate('/guide')}
-                  className="group flex items-center gap-2 text-white/80 hover:text-white transition-colors duration-300"
-                >
-                  <span>Itinerary</span>
-                  <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-                </button>
-              </div>
             </div>
 
             {/* Right Side - Sign In Form */}
             <div className={`${isLoaded ? 'animate-in slide-in-from-right-8 duration-1000 delay-300' : 'opacity-0'} flex justify-center lg:justify-end`}>
               <div className="w-full max-w-md">
                 {/* Form Container */}
-                <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-2xl rounded-3xl p-8 border border-white/20 dark:border-slate-700/50 shadow-2xl">
+                <div className="bg-white/10 dark:bg-slate-800/30 backdrop-blur-2xl rounded-3xl p-8 border border-white/20 dark:border-slate-700/50 shadow-2xl relative z-20">
                   {/* Form Header */}
-                  <div className="text-center mb-8">
+                  <div className="text-center mb-8 relative z-30">
                     <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
                       <FaLock className="text-white text-xl" />
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-black text-white mb-2">
+                    <h2 className="text-2xl md:text-3xl font-black text-white mb-2 relative z-30">
                       Welcome Back
                     </h2>
-                    <p className="text-white/70">
+                    <p className="text-white/70 relative z-30">
                       Sign in to your account and continue your journey
                     </p>
                   </div>
 
                   {/* Clerk Sign In Component */}
-                  <div className="mb-6">
+                  <div className="mb-6 relative z-30">
                     <SignIn 
                       appearance={{
                         elements: {

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
 import { useToast } from '../contexts/ToastContext';
+import { Header } from '../components/header/Header';
+import Footer from '../components/footer/Footer';
 import { 
   FaRoute, FaPlus, FaSave, FaInfoCircle, 
   FaCalendarAlt, FaMapMarkerAlt,
@@ -381,8 +383,10 @@ const Itinerary = () => {
   const [availablePlaces, setAvailablePlaces] = useState([]);
   const [loadingPlaces, setLoadingPlaces] = useState(true);
   const [hasShownPreselectedToast, setHasShownPreselectedToast] = useState(false);
+  const [hasShownTipsToast, setHasShownTipsToast] = useState(false);
   
   const preselectedDestination = location.state?.preselectedDestination;
+  const openTab = location.state?.openTab; // Check if a specific tab should be opened
   
   const [formData, setFormData] = useState({
     duration: 7,
@@ -390,6 +394,29 @@ const Itinerary = () => {
     activities: [],
     budget: 'mid'
   });
+
+  // Open specific tab if requested (e.g., from "Get Expert Tips" button)
+  useEffect(() => {
+    if (openTab && !hasShownTipsToast) {
+      console.log('🎯 Opening requested tab:', openTab);
+      // Small delay to ensure component is mounted
+      setTimeout(() => {
+        setActiveTab(openTab);
+        console.log('✅ Active tab set to:', openTab);
+      }, 100);
+      
+      // Show success message if coming from detail page (only once)
+      if (location.state?.fromDetailPage) {
+        setTimeout(() => {
+          showSuccess(
+            'Travel Tips',
+            'Explore expert travel tips and local insights for Nepal destinations!'
+          );
+          setHasShownTipsToast(true);
+        }, 500);
+      }
+    }
+  }, [openTab, location.state?.fromDetailPage, hasShownTipsToast, showSuccess]);
 
   // Save Itinerary to localStorage
   const handleSaveItinerary = () => {
@@ -779,8 +806,10 @@ Plan your own trip at: http://localhost:5173/itinerary`;
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+      <Header />
+      
       {/* Professional Hero Section with Animations */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative py-24 pt-32 overflow-hidden">
         {/* Animated Background */}
         <div 
           className="absolute inset-0"
@@ -1584,6 +1613,10 @@ Plan your own trip at: http://localhost:5173/itinerary`;
           {/* Travel Tips Tab */}
           {activeTab === 'tips' && (
             <div className="space-y-12">
+              {console.log('🎨 Rendering Travel Tips tab')}
+              {console.log('Available places:', availablePlaces.length)}
+              {console.log('Loading places:', loadingPlaces)}
+              
               <div className="text-center mb-16">
                 <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
                   Nepal Travel Tips
@@ -1593,34 +1626,40 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                {[
-                  { icon: '🗓️', title: 'Best Time to Visit', desc: 'October to December and March to May offer the best weather conditions for most activities.' },
-                  { icon: '🏔️', title: 'Altitude Considerations', desc: 'Plan acclimatization days for high-altitude destinations to avoid altitude sickness.' },
-                  { icon: '🎒', title: 'Packing Essentials', desc: 'Bring layers, comfortable hiking boots, sunscreen, and a good camera for stunning landscapes.' },
-                  { icon: '💰', title: 'Budget Planning', desc: 'Budget $30-150 per day depending on accommodation level and activities chosen.' },
-                  { icon: '🍜', title: 'Local Cuisine', desc: 'Try Dal Bhat, Momos, and Thukpa. Most restaurants cater to international tastes too.' },
-                  { icon: '📱', title: 'Connectivity', desc: 'Get a local SIM card for data. WiFi is available in most tourist areas.' },
-                  { icon: '🏥', title: 'Health & Safety', desc: 'Carry basic medicines, drink bottled water, and have travel insurance.' },
-                  { icon: '🙏', title: 'Cultural Respect', desc: 'Dress modestly at temples, remove shoes before entering, and ask before photographing people.' }
-                ].map((tip, index) => (
-                  <div 
-                    key={index}
-                    className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
-                    style={{
-                      animation: `fadeInUp ${0.3 + index * 0.1}s ease-out`
-                    }}
-                  >
-                    <div className="text-5xl mb-5">{tip.icon}</div>
-                    <h3 className="text-2xl font-black mb-4">{tip.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium">{tip.desc}</p>
-                  </div>
-                ))}
+              {/* General Tips */}
+              <div className="mb-12">
+                <h3 className="text-3xl font-black mb-8 text-center">General Travel Tips</h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                  {[
+                    { icon: '🗓️', title: 'Best Time to Visit', desc: 'October to December and March to May offer the best weather conditions for most activities.' },
+                    { icon: '🏔️', title: 'Altitude Considerations', desc: 'Plan acclimatization days for high-altitude destinations to avoid altitude sickness.' },
+                    { icon: '🎒', title: 'Packing Essentials', desc: 'Bring layers, comfortable hiking boots, sunscreen, and a good camera for stunning landscapes.' },
+                    { icon: '💰', title: 'Budget Planning', desc: 'Budget $30-150 per day depending on accommodation level and activities chosen.' },
+                    { icon: '🍜', title: 'Local Cuisine', desc: 'Try Dal Bhat, Momos, and Thukpa. Most restaurants cater to international tastes too.' },
+                    { icon: '📱', title: 'Connectivity', desc: 'Get a local SIM card for data. WiFi is available in most tourist areas.' },
+                    { icon: '🏥', title: 'Health & Safety', desc: 'Carry basic medicines, drink bottled water, and have travel insurance.' },
+                    { icon: '🙏', title: 'Cultural Respect', desc: 'Dress modestly at temples, remove shoes before entering, and ask before photographing people.' }
+                  ].map((tip, index) => (
+                    <div 
+                      key={index}
+                      className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
+                      style={{
+                        animation: `fadeInUp ${0.3 + index * 0.1}s ease-out`
+                      }}
+                    >
+                      <div className="text-5xl mb-5">{tip.icon}</div>
+                      <h3 className="text-2xl font-black mb-4">{tip.title}</h3>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium">{tip.desc}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           )}
         </div>
       </main>
+      
+      <Footer />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 import { useTheme } from "../contexts/ThemeContext";
 import { useToast } from "../contexts/ToastContext";
 import { 
@@ -41,12 +42,14 @@ export default function DetailPage() {
   const { theme } = useTheme();
   const { showWishlist, showSuccess, showInfo } = useToast();
   const navigate = useNavigate();
+  const { user, isSignedIn } = useUser();
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [isAddingToWishlist, setIsAddingToWishlist] = useState(false);
   
   const search = new URLSearchParams(useLocation().search);
   const type = search.get("type");
@@ -121,9 +124,92 @@ export default function DetailPage() {
     setIsLiked(!isLiked);
   };
 
-  const handleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
+  const handleBookmark = async () => {
+    if (!isSignedIn) {
+      showInfo(
+        "Sign In Required",
+        "Please sign in to add places to your wishlist."
+      );
+      navigate('/sign-in');
+      return;
+    }
+
+    if (!data || !data.id) {
+      showInfo("Error", "Place information not available.");
+      return;
+    }
+
+    setIsAddingToWishlist(true);
+
+    try {
+      const userId = user.id;
+      const placeId = data.id;
+
+      if (isBookmarked) {
+        // Remove from wishlist
+        const response = await fetch(`http://localhost:8000/api/wishlist/${userId}/${placeId}`, {
+          method: 'DELETE',
+        });
+
+        if (!response.ok) throw new Error('Failed to remove from wishlist');
+
+        setIsBookmarked(false);
+        showSuccess(
+          "Removed from Wishlist",
+          `${data.name} has been removed from your wishlist.`
+        );
+      } else {
+        // Add to wishlist
+        const response = await fetch(`http://localhost:8000/api/wishlist/${userId}/${placeId}`, {
+          method: 'POST',
+        });
+
+        if (!response.ok) throw new Error('Failed to add to wishlist');
+
+        setIsBookmarked(true);
+        showWishlist(
+          "Added to Travel Wishlist",
+          `${data.name} has been saved to your personal travel collection.`,
+          {
+            action: {
+              label: "View Wishlist",
+              onClick: () => navigate('/wishlist')
+            }
+          }
+        );
+      }
+    } catch (error) {
+      console.error('Error updating wishlist:', error);
+      showInfo(
+        "Error",
+        "Failed to update wishlist. Please try again."
+      );
+    } finally {
+      setIsAddingToWishlist(false);
+    }
   };
+
+  // Check if place is in wishlist on load
+  useEffect(() => {
+    const checkWishlistStatus = async () => {
+      if (isSignedIn && user && data && data.id) {
+        try {
+          const userId = user.id;
+          const placeId = data.id;
+          const response = await fetch(`http://localhost:8000/api/wishlist/${userId}/${placeId}/check`);
+          
+          if (response.ok) {
+            const result = await response.json();
+            setIsBookmarked(result.in_wishlist);
+          }
+        } catch (error) {
+          console.error('Error checking wishlist status:', error);
+        }
+      }
+    };
+
+    checkWishlistStatus();
+  }, [isSignedIn, user, data]);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -546,24 +632,21 @@ export default function DetailPage() {
             {/* Action Buttons */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button 
-                onClick={() => {
-                  // Add to travel wishlist/itinerary
-                  handleBookmark();
-                  showWishlist(
-                    "Added to Travel Wishlist",
-                    "Your selected destination has been saved to your personal travel collection. Our travel experts at Roamio Wanderly are ready to help you plan the perfect itinerary.",
-                    {
-                      action: {
-                        label: "View Wishlist",
-                        onClick: () => navigate('/wishlist')
-                      }
-                    }
-                  );
-                }}
-                className={`flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 shadow-lg bg-gradient-to-r from-${typeColor}-500 to-${typeColor}-600 hover:from-${typeColor}-600 hover:to-${typeColor}-700 hover:shadow-${typeColor}-500/25`}
+                onClick={handleBookmark}
+                disabled={isAddingToWishlist}
+                className={`flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 shadow-lg bg-gradient-to-r from-${typeColor}-500 to-${typeColor}-600 hover:from-${typeColor}-600 hover:to-${typeColor}-700 hover:shadow-${typeColor}-500/25 disabled:opacity-50 disabled:cursor-not-allowed`}
               >
-                <FaHeart />
-                Add to Wishlist
+                {isAddingToWishlist ? (
+                  <>
+                    <FaSpinner className="animate-spin" />
+                    {isBookmarked ? 'Removing...' : 'Adding...'}
+                  </>
+                ) : (
+                  <>
+                    <FaHeart className={isBookmarked ? 'fill-current' : ''} />
+                    {isBookmarked ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                  </>
+                )}
               </button>
               
               <button 
@@ -630,17 +713,13 @@ export default function DetailPage() {
               
               <button 
                 onClick={() => {
-                  // Get travel tips and recommendations
-                  showSuccess(
-                    "Expert Travel Tips Available",
-                    "Connect with our local travel experts at Roamio Wanderly for insider tips, cultural insights, and personalized recommendations for your Nepal journey.",
-                    {
-                      action: {
-                        label: "Get Expert Tips",
-                        onClick: () => window.open('mailto:info@roamiowanderly.com?subject=Travel Tips Request&body=I would like to get expert travel tips and local insights for my Nepal trip.')
-                      }
-                    }
-                  );
+                  // Navigate to Itinerary planner Travel Tips section
+                  navigate('/itinerary', { 
+                    state: { 
+                      openTab: 'tips',
+                      fromDetailPage: true 
+                    } 
+                  });
                 }}
                 className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105 ${
                   theme === 'dark' 
