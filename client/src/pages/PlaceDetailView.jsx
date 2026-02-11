@@ -986,13 +986,13 @@ export default function PlaceDetailView() {
         )}
       </div>
 
-      {/* You May Also Like Section */}
+      {/* Nearby Places Section */}
       {(loadingSimilar || (similarPlaces && similarPlaces.length > 0)) && (
         <div className="max-w-7xl mx-auto px-4 py-12 w-full">
           <h2 className={`text-3xl font-bold mb-8 ${
             theme === 'dark' ? 'text-white' : 'text-gray-900'
           }`}>
-            ✨ You May Also Like
+            📍 Nearby Places to Explore
           </h2>
           
           {loadingSimilar ? (
@@ -1000,7 +1000,7 @@ export default function PlaceDetailView() {
               <div className="text-center">
                 <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
                 <p className={theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}>
-                  Finding similar places...
+                  Finding nearby places...
                 </p>
               </div>
             </div>

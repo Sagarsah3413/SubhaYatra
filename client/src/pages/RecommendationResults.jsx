@@ -57,7 +57,9 @@ export default function RecommendationResults() {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to fetch recommendations');
+          const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+          console.error('API Error Response:', errorData);
+          throw new Error(errorData.error || 'Failed to fetch recommendations');
         }
 
         const data = await response.json();
@@ -72,9 +74,17 @@ export default function RecommendationResults() {
         console.error('Error details:', {
           message: err.message,
           stack: err.stack,
-          preferences: preferences
+          preferences: preferences,
+          errorType: err.name
         });
-        setError(err.message || 'Failed to fetch recommendations. Please check if backend is running on port 8000.');
+        
+        // Provide more specific error messages
+        let errorMessage = err.message;
+        if (err.name === 'TypeError' && err.message.includes('fetch')) {
+          errorMessage = 'Cannot connect to backend server. Please ensure the backend is running on http://localhost:8000';
+        }
+        
+        setError(errorMessage || 'Failed to fetch recommendations. Please check if backend is running on port 8000.');
       } finally {
         setLoading(false);
       }
@@ -233,8 +243,12 @@ export default function RecommendationResults() {
                       theme === 'dark' ? 'text-white' : 'text-gray-900'
                     }`}>
                       {Array.isArray(preferences.tripTypes) 
-                        ? preferences.tripTypes.map(t => t.split(' ')[0]).join(' ')
-                        : preferences.tripType?.split(' ')[0]}
+                        ? preferences.tripTypes.map(t => {
+                            // Remove emoji and get text (e.g., "⛰️ Natural Attractions" -> "Natural Attractions")
+                            const parts = t.split(' ');
+                            return parts.slice(1).join(' '); // Skip first part (emoji)
+                          }).join(', ')
+                        : preferences.tripType?.split(' ').slice(1).join(' ')}
                     </div>
                   </div>
                 </div>
