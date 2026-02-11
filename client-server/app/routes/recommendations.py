@@ -74,10 +74,11 @@ def get_trip_type_mapping(trip_type_str):
     return mapping.get(trip_type_str, {"tags": [], "main_category": [], "activities": []})
 
 
-def calculate_match_score(place, trip_type_mappings_list, duration_days):
+def calculate_match_score(place, trip_type_mappings_list, duration_days, travel_month=None):
     """
     Calculate how well a place matches the user's preferences
     trip_type_mappings_list: List of mapping dicts for each selected trip type
+    travel_month: User's preferred travel month (e.g., "March", "October")
     """
     score = 0
     
@@ -87,6 +88,57 @@ def calculate_match_score(place, trip_type_mappings_list, duration_days):
     place_type = (place.type or "").lower()
     place_activities = (place.activities or "").lower().replace(';', ',')
     place_description = (place.description or "").lower()
+    place_best_season = (place.best_season or "").lower()
+    
+    # Month-based season matching (HIGHEST PRIORITY)
+    if travel_month:
+        month_season_map = {
+            "January": ["winter", "jan", "january", "dec-feb", "oct-mar", "nov-mar"],
+            "February": ["winter", "feb", "february", "dec-feb", "jan-mar", "oct-mar", "nov-mar"],
+            "March": ["spring", "mar", "march", "mar-may", "feb-apr", "oct-mar", "nov-mar"],
+            "April": ["spring", "apr", "april", "mar-may", "mar-jun", "feb-apr"],
+            "May": ["spring", "may", "mar-may", "apr-jun", "mar-jun"],
+            "June": ["summer", "monsoon", "jun", "june", "apr-jun", "may-jul", "mar-jun"],
+            "July": ["summer", "monsoon", "jul", "july", "may-jul", "jun-aug"],
+            "August": ["summer", "monsoon", "aug", "august", "jun-aug", "jul-sep"],
+            "September": ["autumn", "fall", "sep", "september", "sep-nov", "jul-sep", "aug-oct"],
+            "October": ["autumn", "fall", "oct", "october", "sep-nov", "oct-dec", "aug-oct", "oct-mar"],
+            "November": ["autumn", "fall", "nov", "november", "sep-nov", "oct-dec", "nov-jan", "oct-mar", "nov-mar"],
+            "December": ["winter", "dec", "december", "oct-dec", "nov-jan", "dec-feb"]
+        }
+        
+        month_keywords = month_season_map.get(travel_month, [])
+        month_matched = False
+        
+        for keyword in month_keywords:
+            if keyword in place_best_season:
+                score += 20  # High bonus for season match
+                month_matched = True
+                break
+        
+        # Penalty for places that explicitly don't match the season
+        if not month_matched and place_best_season:
+            # Check if place has a specific season that doesn't include user's month
+            opposite_seasons = {
+                "January": ["summer", "monsoon", "jun", "jul", "aug"],
+                "February": ["summer", "monsoon", "jun", "jul", "aug"],
+                "March": ["monsoon", "jul", "aug"],
+                "April": ["winter", "monsoon", "jul", "aug", "dec", "jan"],
+                "May": ["winter", "monsoon", "dec", "jan", "feb"],
+                "June": ["winter", "dec", "jan", "feb"],
+                "July": ["winter", "dec", "jan", "feb"],
+                "August": ["winter", "dec", "jan", "feb"],
+                "September": ["winter", "dec", "jan", "feb"],
+                "October": ["summer", "monsoon", "jun", "jul", "aug"],
+                "November": ["summer", "monsoon", "jun", "jul", "aug"],
+                "December": ["summer", "monsoon", "jun", "jul", "aug"]
+            }
+            
+            opposite_keywords = opposite_seasons.get(travel_month, [])
+            for keyword in opposite_keywords:
+                if keyword in place_best_season and len(place_best_season) < 20:  # Specific season mentioned
+                    score -= 10  # Penalty for wrong season
+                    break
     
     # Tag matching (most important) - check all trip types
     matched_types = 0
@@ -169,7 +221,7 @@ def create_recommendation():
         data = request.json
         
         # Validate required fields
-        required_fields = ['name', 'age', 'phone', 'travellers', 'tripDuration']
+        required_fields = ['name', 'age', 'phone', 'travellers', 'tripDuration', 'travelMonth']
         for field in required_fields:
             if field not in data:
                 return jsonify({'error': f'Missing required field: {field}'}), 400
@@ -190,6 +242,7 @@ def create_recommendation():
         # Get trip type mappings for matching - now handles multiple types with full mapping
         trip_type_mappings_list = [get_trip_type_mapping(trip_type) for trip_type in trip_types]
         duration_days = get_duration_days(data['tripDuration'])
+        travel_month = data.get('travelMonth')  # Get travel month
         
         # Query places from database
         all_places = db.query(Place).all()
@@ -197,7 +250,7 @@ def create_recommendation():
         # Calculate match scores for each place
         place_scores = []
         for place in all_places:
-            score = calculate_match_score(place, trip_type_mappings_list, duration_days)
+            score = calculate_match_score(place, trip_type_mappings_list, duration_days, travel_month)
             if score > 0:  # Only include places with some match
                 # Determine which trip types this place matches
                 matched_types = []
@@ -305,6 +358,7 @@ def create_recommendation():
             travellers=int(data['travellers']),
             trip_duration=data['tripDuration'],
             trip_type=json.dumps(trip_types),  # Store as JSON array
+            travel_month=travel_month,  # Store travel month
             recommended_places=json.dumps(recommended_place_ids),
             created_at=datetime.utcnow()
         )
@@ -323,6 +377,7 @@ def create_recommendation():
                 'age': data['age'],
                 'travellers': data['travellers'],
                 'tripDuration': data['tripDuration'],
+                'travelMonth': travel_month,
                 'tripTypes': trip_types,
                 'multiple_types': len(trip_types) > 1
             }

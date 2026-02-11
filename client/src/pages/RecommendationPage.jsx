@@ -23,9 +23,11 @@ export default function RecommendationPage() {
     travellers: "",
     tripDuration: "",
     tripTypes: [],
+    travelMonth: "", // Added month selection
   });
 
   const [errors, setErrors] = useState({});
+  const [showValidationAlert, setShowValidationAlert] = useState(false);
 
   // Auth check
   useEffect(() => {
@@ -58,11 +60,20 @@ export default function RecommendationPage() {
       newErrors.travellers = "Select number of travellers";
     if (!formData.tripDuration)
       newErrors.tripDuration = "Select trip duration";
+    if (!formData.travelMonth)
+      newErrors.travelMonth = "Select travel month";
     if (formData.tripTypes.length === 0)
       newErrors.tripTypes = "Select at least one trip type";
-    // Allow 1 or 2 selections (removed max validation)
 
     setErrors(newErrors);
+    
+    // Show validation alert if there are errors
+    if (Object.keys(newErrors).length > 0) {
+      setShowValidationAlert(true);
+      // Auto-hide after 5 seconds
+      setTimeout(() => setShowValidationAlert(false), 5000);
+    }
+    
     return Object.keys(newErrors).length === 0;
   };
 
@@ -182,9 +193,12 @@ export default function RecommendationPage() {
                 </label>
                 <input
                   type="text"
+                  name="name"
                   placeholder="Enter your name"
                   className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 ${
-                    theme === 'dark'
+                    errors.name
+                      ? 'border-red-500 ring-2 ring-red-500/20'
+                      : theme === 'dark'
                       ? 'bg-slate-900/50 border-slate-600 text-white placeholder-slate-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
                       : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
                   } outline-none`}
@@ -295,7 +309,9 @@ export default function RecommendationPage() {
                         className={`p-4 rounded-xl border-2 transition-all duration-200 text-center ${
                           selected
                             ? 'border-teal-500 bg-teal-500/10 shadow-lg shadow-teal-500/20'
-                            : theme === 'dark'
+                            : errors.tripDuration
+                              ? 'border-red-500/50 bg-red-500/5'
+                              : theme === 'dark'
                               ? 'border-slate-600 bg-slate-900/30 hover:border-slate-500 hover:bg-slate-900/50'
                               : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100'
                         }`}
@@ -326,6 +342,61 @@ export default function RecommendationPage() {
                 {errors.tripDuration && (
                   <p className="text-red-500 text-sm mt-2 flex items-center gap-1">
                     <span>⚠️</span> {errors.tripDuration}
+                  </p>
+                )}
+              </div>
+
+              {/* Travel Month */}
+              <div>
+                <label className={`block text-sm font-semibold mb-2 ${
+                  theme === 'dark' ? 'text-slate-200' : 'text-gray-700'
+                }`}>
+                  <span className="flex items-center gap-2">
+                    <span>🗓️</span>
+                    <span>Preferred Travel Month</span>
+                  </span>
+                </label>
+                <select
+                  name="travelMonth"
+                  className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 ${
+                    errors.travelMonth
+                      ? 'border-red-500 ring-2 ring-red-500/20'
+                      : theme === 'dark'
+                      ? 'bg-slate-900/50 border-slate-600 text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                      : 'bg-white border-gray-300 text-gray-900 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                  } outline-none`}
+                  value={formData.travelMonth}
+                  onChange={(e) =>
+                    setFormData({ ...formData, travelMonth: e.target.value })
+                  }
+                >
+                  <option value="">Select travel month</option>
+                  <option value="January">January</option>
+                  <option value="February">February</option>
+                  <option value="March">March</option>
+                  <option value="April">April</option>
+                  <option value="May">May</option>
+                  <option value="June">June</option>
+                  <option value="July">July</option>
+                  <option value="August">August</option>
+                  <option value="September">September</option>
+                  <option value="October">October</option>
+                  <option value="November">November</option>
+                  <option value="December">December</option>
+                </select>
+                {errors.travelMonth && (
+                  <p className="text-red-500 text-sm mt-1 flex items-center gap-1">
+                    <span>⚠️</span> {errors.travelMonth}
+                  </p>
+                )}
+                {formData.travelMonth && !errors.travelMonth && (
+                  <p className={`text-sm mt-2 flex items-center gap-2 ${
+                    theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
+                  }`}>
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>We'll recommend destinations perfect for {formData.travelMonth}</span>
                   </p>
                 )}
               </div>
@@ -497,6 +568,36 @@ export default function RecommendationPage() {
                   </div>
                 )}
               </div>
+
+              {/* Validation Alert - Right before submit button */}
+              {showValidationAlert && Object.keys(errors).length > 0 && (
+                <div className={`p-4 rounded-xl border-2 ${
+                  theme === 'dark'
+                    ? 'bg-red-900/20 border-red-500/50 text-red-400'
+                    : 'bg-red-50 border-red-300 text-red-700'
+                } animate-shake`}>
+                  <div className="flex items-start gap-3">
+                    <span className="text-2xl">⚠️</span>
+                    <div className="flex-1">
+                      <h4 className="font-semibold mb-2">Please complete all required fields:</h4>
+                      <ul className="text-sm space-y-1 list-disc list-inside">
+                        {Object.entries(errors).map(([field, message]) => (
+                          <li key={field}>{message}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowValidationAlert(false)}
+                      className="text-current hover:opacity-70 transition-opacity"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Submit Button */}
               <button

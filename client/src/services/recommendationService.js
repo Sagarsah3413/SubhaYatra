@@ -23,6 +23,7 @@ export const createRecommendation = async (preferences) => {
         phone: preferences.phone,
         travellers: preferences.travellers,
         tripDuration: preferences.tripDuration,
+        travelMonth: preferences.travelMonth, // Added travel month
         tripTypes: preferences.tripTypes || [preferences.tripType], // Support multiple types
         userId: preferences.userId || 'anonymous'
       }),

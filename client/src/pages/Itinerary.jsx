@@ -152,6 +152,13 @@ const generateItinerary = (formData) => {
   try {
     const { duration, selectedPlaces, budget = 'mid' } = formData;
     
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('🎯 GENERATING ITINERARY');
+    console.log('📅 Requested Duration:', duration, 'days');
+    console.log('📍 Selected Places:', selectedPlaces.length);
+    console.log('💰 Budget Level:', budget);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    
     if (!selectedPlaces || selectedPlaces.length === 0) {
       console.error('No valid destinations selected');
       return null;
@@ -178,16 +185,25 @@ const generateItinerary = (formData) => {
     let remainingDays = duration;
     const destinationDays = [];
 
+    // Distribute days across destinations, ensuring we don't exceed the total duration
     selectedPlaces.forEach((place, index) => {
       if (index === selectedPlaces.length - 1) {
+        // Last destination gets all remaining days (at least 1)
         destinationDays.push(Math.max(1, remainingDays));
       } else {
+        // Calculate proportional days but ensure we have enough days left for remaining destinations
         const proportionalDays = Math.max(1, Math.round((estimateDays(place) / totalRecommendedDays) * duration));
-        const assignedDays = Math.min(proportionalDays, remainingDays - (selectedPlaces.length - index - 1));
-        destinationDays.push(assignedDays);
-        remainingDays -= assignedDays;
+        const minDaysNeeded = selectedPlaces.length - index - 1; // At least 1 day per remaining destination
+        const assignedDays = Math.min(proportionalDays, remainingDays - minDaysNeeded);
+        destinationDays.push(Math.max(1, assignedDays));
+        remainingDays -= Math.max(1, assignedDays);
       }
     });
+
+    console.log('📅 Duration requested:', duration);
+    console.log('📍 Destinations:', selectedPlaces.length);
+    console.log('🗓️ Days per destination:', destinationDays);
+    console.log('✅ Total days allocated:', destinationDays.reduce((sum, d) => sum + d, 0));
 
     let currentDay = 1;
     const dailyPlan = [];
@@ -210,6 +226,7 @@ const generateItinerary = (formData) => {
                budget === 'luxury' ? 'Luxury Resort' : 'Mid-range Hotel';
       };
       
+      // STRICT CHECK: Stop if we've reached the duration limit
       for (let dayInDest = 0; dayInDest < daysInDest && currentDay <= duration; dayInDest++) {
         const dayActivities = [];
         
@@ -317,6 +334,14 @@ const generateItinerary = (formData) => {
     
     const totalCost = accommodationCost + mealCost + transportationCost + activitiesCost;
 
+    // VALIDATION: Ensure we generated exactly the requested number of days
+    const actualDays = dailyPlan.length;
+    if (actualDays !== duration) {
+      console.warn(`⚠️ Generated ${actualDays} days but requested ${duration} days`);
+    } else {
+      console.log(`✅ Successfully generated exactly ${duration} days as requested`);
+    }
+
     const result = {
       title: `${duration}-Day ${selectedPlaces.map(p => p.name).join(' & ')} Adventure`,
       duration: `${duration} Days`,
@@ -336,6 +361,7 @@ const generateItinerary = (formData) => {
     };
 
     console.log('Generated comprehensive itinerary from database:', result);
+    console.log(`📊 Final check: Requested ${duration} days, Generated ${dailyPlan.length} days`);
     return result;
   } catch (error) {
     console.error('Error in generateItinerary:', error);
@@ -387,13 +413,31 @@ const Itinerary = () => {
   
   const preselectedDestination = location.state?.preselectedDestination;
   const openTab = location.state?.openTab; // Check if a specific tab should be opened
+  const userPreferences = location.state?.userPreferences; // Get user preferences from recommendations
   
+  // Initialize form data with user preferences if available
   const [formData, setFormData] = useState({
-    duration: 7,
+    duration: userPreferences?.tripDuration ? 
+      (userPreferences.tripDuration === '1-3' ? 3 :
+       userPreferences.tripDuration === '4-7' ? 7 :
+       userPreferences.tripDuration === '8-14' ? 10 :
+       userPreferences.tripDuration === '15+' ? 14 : 7) : 7,
     destinations: [],
     activities: [],
     budget: 'mid'
   });
+
+  // Show user preferences info when available
+  useEffect(() => {
+    if (userPreferences && !hasShownPreselectedToast) {
+      console.log('✅ User preferences received:', userPreferences);
+      showSuccess(
+        'Preferences Applied',
+        `Your trip preferences have been pre-filled: ${userPreferences.travellers} traveller(s), ${userPreferences.tripDuration} days, ${userPreferences.travelMonth || 'any month'}`
+      );
+      setHasShownPreselectedToast(true);
+    }
+  }, [userPreferences, hasShownPreselectedToast, showSuccess]);
 
   // Open specific tab if requested (e.g., from "Get Expert Tips" button)
   useEffect(() => {
@@ -775,6 +819,13 @@ Plan your own trip at: http://localhost:5173/itinerary`;
       return;
     }
 
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('🎯 Generate My Itinerary clicked');
+    console.log('📅 Duration from formData:', formData.duration, 'days');
+    console.log('📍 Destinations:', formData.destinations);
+    console.log('💰 Budget:', formData.budget);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+
     setIsGenerating(true);
     
     try {
@@ -785,6 +836,8 @@ Plan your own trip at: http://localhost:5173/itinerary`;
         .map(id => availablePlaces.find(p => p.id === id))
         .filter(Boolean);
       
+      console.log('📍 Selected places:', selectedPlaces.map(p => p.name));
+      
       const itinerary = generateItinerary({
         ...formData,
         selectedPlaces
@@ -793,8 +846,10 @@ Plan your own trip at: http://localhost:5173/itinerary`;
       if (itinerary) {
         setGeneratedItinerary(itinerary);
         setActiveTab('generated');
+        console.log('✅ Itinerary generated successfully!');
       } else {
         alert('Failed to generate itinerary. Please try again.');
+        console.error('❌ Failed to generate itinerary');
       }
     } catch (error) {
       console.error('Error generating itinerary:', error);
@@ -951,6 +1006,53 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                 <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                   Build a personalized travel plan with detailed activities, costs, and recommendations
                 </p>
+                
+                {/* User Preferences Applied Banner */}
+                {userPreferences && (
+                  <div 
+                    className={`mt-8 p-6 rounded-2xl max-w-3xl mx-auto ${
+                      theme === 'dark' 
+                        ? 'bg-gradient-to-r from-teal-900/30 to-cyan-900/30 border border-teal-500/30' 
+                        : 'bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200'
+                    }`}
+                    style={{
+                      animation: 'slideDown 0.6s ease-out'
+                    }}
+                  >
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-full flex items-center justify-center">
+                        <FaCheckCircle className="text-white text-lg" />
+                      </div>
+                      <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                        Your Preferences Applied
+                      </h3>
+                    </div>
+                    <div className="flex flex-wrap gap-3 justify-center">
+                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                        theme === 'dark' ? 'bg-slate-800 text-teal-400' : 'bg-white text-teal-600'
+                      }`}>
+                        👥 {userPreferences.travellers} Traveller{userPreferences.travellers !== '1' ? 's' : ''}
+                      </span>
+                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                        theme === 'dark' ? 'bg-slate-800 text-cyan-400' : 'bg-white text-cyan-600'
+                      }`}>
+                        📅 {userPreferences.tripDuration} Days
+                      </span>
+                      {userPreferences.travelMonth && (
+                        <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                          theme === 'dark' ? 'bg-slate-800 text-blue-400' : 'bg-white text-blue-600'
+                        }`}>
+                          🗓️ {userPreferences.travelMonth}
+                        </span>
+                      )}
+                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                        theme === 'dark' ? 'bg-slate-800 text-purple-400' : 'bg-white text-purple-600'
+                      }`}>
+                        🎯 {userPreferences.age} years old
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Preselected Destination Info */}
@@ -1008,6 +1110,8 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                           console.log('📊 Available places:', availablePlaces.length);
                           console.log('📍 Preselected destination:', preselectedDestination);
                           console.log('✅ Current form destinations:', formData.destinations);
+                          console.log('📅 Current form duration:', formData.duration, 'days');
+                          console.log('👤 User preferences:', userPreferences);
                           console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
                           
                           // Check if destination is already selected in form
@@ -1029,7 +1133,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                               setTimeout(() => {
                                 const itinerary = generateItinerary({
                                   ...formData,
-                                  duration: 7,
+                                  // Use the duration from formData (which includes user preferences)
                                   selectedPlaces
                                 });
                                 
@@ -1129,11 +1233,11 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                             
                             if (matchedPlace) {
                               console.log('✅ Match found! Generating itinerary...');
-                              // Update form data and generate
+                              // Update form data and generate (keep existing duration from formData)
                               const updatedFormData = {
                                 ...formData,
-                                destinations: [matchedPlace.id],
-                                duration: 7
+                                destinations: [matchedPlace.id]
+                                // duration is already in formData from user preferences
                               };
                               setFormData(updatedFormData);
                               
@@ -1189,6 +1293,14 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     </div>
                     <h3 className="text-2xl font-black mb-2">Trip Duration</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">How long will you explore?</p>
+                    {userPreferences && (
+                      <div className={`mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ${
+                        theme === 'dark' ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-100 text-teal-700'
+                      }`}>
+                        <FaCheckCircle />
+                        <span>Pre-filled from your preferences</span>
+                      </div>
+                    )}
                   </div>
                   <select 
                     value={formData.duration}

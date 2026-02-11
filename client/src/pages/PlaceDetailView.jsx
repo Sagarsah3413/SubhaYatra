@@ -21,6 +21,7 @@ export default function PlaceDetailView() {
 
   // Check if we came from recommendation results
   const fromRecommendations = location.state?.fromRecommendations;
+  const userPreferences = location.state?.preferences; // Get user preferences
 
   const handleBackClick = () => {
     if (fromRecommendations) {
@@ -100,10 +101,12 @@ export default function PlaceDetailView() {
         // Ensure hotels and restaurants exist
         placeData.hotels = placeData.hotels || [];
         placeData.restaurants = placeData.restaurants || [];
+        placeData.events = placeData.events || [];
         
         console.log('Place images:', placeData.images);
         console.log('Hotels:', placeData.hotels.length);
         console.log('Restaurants:', placeData.restaurants.length);
+        console.log('Events:', placeData.events.length);
         
         setPlace(placeData);
         console.log('✅ Place data loaded successfully');
@@ -674,7 +677,15 @@ export default function PlaceDetailView() {
                     activities: place.activities,
                     difficulty_level: place.difficulty_level,
                     transportation: place.transportation
-                  }
+                  },
+                  // Pass user preferences if available (from recommendations)
+                  userPreferences: userPreferences ? {
+                    travellers: userPreferences.travellers,
+                    tripDuration: userPreferences.tripDuration,
+                    travelMonth: userPreferences.travelMonth,
+                    age: userPreferences.age,
+                    tripTypes: userPreferences.tripTypes
+                  } : null
                 }
               })}
               className="px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl font-semibold hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
@@ -787,8 +798,41 @@ export default function PlaceDetailView() {
                 </div>
               </div>
             )}
-          </div>
 
+            {/* Events - Same style as transportation */}
+            {place.events && place.events.length > 0 && (
+              <div className={`p-4 rounded-xl ${
+                theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+              }`}>
+                <div className="text-2xl mb-2">🎉</div>
+                <div className={`text-sm ${
+                  theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
+                }`}>
+                  Events & Festivals
+                </div>
+                <div className={`font-semibold ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
+                  {place.events.length} {place.events.length === 1 ? 'Event' : 'Events'}
+                </div>
+                {/* Show first event name as preview */}
+                {place.events[0] && (
+                  <div className={`text-sm mt-2 ${
+                    theme === 'dark' ? 'text-slate-300' : 'text-gray-700'
+                  }`}>
+                    {place.events[0].name}
+                    {place.events.length > 1 && (
+                      <span className={`text-xs ml-1 ${
+                        theme === 'dark' ? 'text-slate-500' : 'text-gray-500'
+                      }`}>
+                        +{place.events.length - 1} more
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
           {/* Activities */}
           {place.activities && place.activities.length > 0 && (
             <div className="mt-6">
@@ -933,76 +977,6 @@ export default function PlaceDetailView() {
                       }`}>
                         {restaurant.price_range}
                       </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Events Section */}
-        {place.events && place.events.length > 0 && (
-          <div className="mb-8">
-            <h2 className={`text-3xl font-bold mb-6 ${
-              theme === 'dark' ? 'text-white' : 'text-gray-900'
-            }`}>
-              🎉 Events & Festivals
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {place.events.map((event) => (
-                <div
-                  key={event.id}
-                  className={`rounded-xl shadow-lg p-6 transition-all hover:scale-102 ${
-                    theme === 'dark' ? 'bg-slate-800' : 'bg-white'
-                  }`}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="text-4xl">🎊</div>
-                    <div className="flex-1">
-                      <h3 className={`text-xl font-bold mb-2 ${
-                        theme === 'dark' ? 'text-white' : 'text-gray-900'
-                      }`}>
-                        {event.name}
-                      </h3>
-                      
-                      {event.venue && (
-                        <p className={`text-sm mb-2 flex items-center gap-2 ${
-                          theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
-                        }`}>
-                          <span>📍</span>
-                          <span>{event.venue}</span>
-                        </p>
-                      )}
-                      
-                      {event.month_season && (
-                        <p className={`text-sm mb-2 flex items-center gap-2 ${
-                          theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
-                        }`}>
-                          <span>📅</span>
-                          <span>{event.month_season}</span>
-                        </p>
-                      )}
-                      
-                      {event.event_type && (
-                        <div className="mb-3">
-                          <span className={`inline-block px-3 py-1 rounded-full text-sm ${
-                            theme === 'dark' 
-                              ? 'bg-purple-900/30 text-purple-400' 
-                              : 'bg-purple-50 text-purple-700'
-                          }`}>
-                            {event.event_type}
-                          </span>
-                        </div>
-                      )}
-                      
-                      {event.description && (
-                        <p className={`text-sm leading-relaxed ${
-                          theme === 'dark' ? 'text-slate-300' : 'text-gray-700'
-                        }`}>
-                          {event.description}
-                        </p>
-                      )}
                     </div>
                   </div>
                 </div>

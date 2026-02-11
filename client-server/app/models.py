@@ -194,6 +194,7 @@ class Recommendation(Base):
     travellers = Column(Integer, nullable=False)
     trip_duration = Column(String, nullable=False)  # 1-3, 4-7, 8-14, 15+
     trip_type = Column(String, nullable=False)  # Natural, Trekking, Cultural, Village, Urban
+    travel_month = Column(String, nullable=True)  # Preferred travel month
     created_at = Column(DateTime, default=datetime.utcnow)
     
     # Recommended places (stored as JSON string)
