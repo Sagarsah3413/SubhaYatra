@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Shivapuri from "../assets/Nature/Shivapuri.jpeg";
 import Lomanthang from "../assets/Nature/Lomanthang.jpeg";
 import Langtang from "../assets/Nature/Langtang.jpeg";
@@ -134,56 +135,20 @@ const places = [
 ];
 
 export default function AllNatureDetail() {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [selectedRegion, setSelectedRegion] = useState('All');
-  const [selectedDifficulty, setSelectedDifficulty] = useState('All');
-  const [sortBy, setSortBy] = useState('rating');
-
-  const categories = ['All', 'National Park', 'Wildlife Reserve', 'Sacred Lake', 'Trekking Valley', 'Cultural Landscape', 'Mountain Village'];
-  const regions = ['All', 'Central Nepal', 'Western Nepal', 'Far Western Nepal'];
-  const difficulties = ['All', 'Easy', 'Easy-Moderate', 'Moderate', 'Challenging'];
-
-  const filteredPlaces = useMemo(() => {
-    let filtered = places.filter(place => {
-      return (selectedCategory === 'All' || place.category === selectedCategory) &&
-             (selectedRegion === 'All' || place.region === selectedRegion) &&
-             (selectedDifficulty === 'All' || place.difficulty === selectedDifficulty);
-    });
-
-    return filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'rating':
-          return b.rating - a.rating;
-        case 'reviews':
-          return b.reviews - a.reviews;
-        case 'name':
-          return a.name.localeCompare(b.name);
-        case 'elevation':
-          return parseInt(b.elevation) - parseInt(a.elevation);
-        default:
-          return 0;
-      }
-    });
-  }, [selectedCategory, selectedRegion, selectedDifficulty, sortBy]);
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-green-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <Header />
       
       {/* Hero Section */}
-      <div className="relative h-[60vh] overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url(${Langtang})`
-          }}
-        />
+      <div className="relative h-[60vh] overflow-hidden bg-gradient-to-br from-blue-600 via-green-600 to-teal-600 dark:from-blue-900 dark:via-green-900 dark:to-teal-900 pt-20">
         <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-4">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-green-100 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6">
               Nepal's Natural Wonders
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto leading-relaxed">
               Discover pristine wilderness, sacred lakes, and breathtaking landscapes across Nepal's diverse natural heritage
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base">
@@ -201,83 +166,11 @@ export default function AllNatureDetail() {
         </div>
       </div>
 
-      {/* Filters Section */}
-      <div className="bg-white shadow-lg border-b sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {/* Category Filter */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
-              <select 
-                value={selectedCategory} 
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Region Filter */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Region</label>
-              <select 
-                value={selectedRegion} 
-                onChange={(e) => setSelectedRegion(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-              >
-                {regions.map(region => (
-                  <option key={region} value={region}>{region}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Difficulty Filter */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Difficulty</label>
-              <select 
-                value={selectedDifficulty} 
-                onChange={(e) => setSelectedDifficulty(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-              >
-                {difficulties.map(difficulty => (
-                  <option key={difficulty} value={difficulty}>{difficulty}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Sort By */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Sort By</label>
-              <select 
-                value={sortBy} 
-                onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
-              >
-                <option value="rating">Highest Rated</option>
-                <option value="reviews">Most Reviewed</option>
-                <option value="name">Name A-Z</option>
-                <option value="elevation">Highest Elevation</option>
-              </select>
-            </div>
-
-            {/* Results Count */}
-            <div className="flex items-end">
-              <div className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-4 py-2 rounded-lg text-center w-full">
-                <div className="text-sm font-medium">Showing</div>
-                <div className="text-lg font-bold">{filteredPlaces.length} Places</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Places Grid */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPlaces.map((place) => (
-            <div key={place.id} className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
+          {places.map((place) => (
+            <div key={place.id} className="group bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-slate-700">
               {/* Image */}
               <div className="relative h-64 overflow-hidden">
                 <img 
@@ -289,16 +182,16 @@ export default function AllNatureDetail() {
                 
                 {/* Category Badge */}
                 <div className="absolute top-4 left-4">
-                  <span className="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">
+                  <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-gray-800 dark:text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {place.category}
                   </span>
                 </div>
 
                 {/* Rating Badge */}
                 <div className="absolute top-4 right-4">
-                  <div className="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                  <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
                     <span className="text-yellow-500 text-sm">★</span>
-                    <span className="text-gray-800 text-sm font-semibold">{place.rating}</span>
+                    <span className="text-gray-800 dark:text-white text-sm font-semibold">{place.rating}</span>
                   </div>
                 </div>
 
@@ -318,26 +211,26 @@ export default function AllNatureDetail() {
                 {/* Quick Info */}
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <div className="text-xs text-gray-500 uppercase tracking-wide">Best Time</div>
-                    <div className="text-sm font-semibold text-gray-800">{place.bestTime}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Best Time</div>
+                    <div className="text-sm font-semibold text-gray-800 dark:text-white">{place.bestTime}</div>
                   </div>
                   <div>
-                    <div className="text-xs text-gray-500 uppercase tracking-wide">Duration</div>
-                    <div className="text-sm font-semibold text-gray-800">{place.duration}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Duration</div>
+                    <div className="text-sm font-semibold text-gray-800 dark:text-white">{place.duration}</div>
                   </div>
                 </div>
 
                 {/* Highlights */}
                 <div className="mb-4">
-                  <div className="text-xs text-gray-500 uppercase tracking-wide mb-2">Highlights</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Highlights</div>
                   <div className="flex flex-wrap gap-1">
                     {place.highlights.slice(0, 3).map((highlight, index) => (
-                      <span key={index} className="bg-blue-50 text-blue-700 px-2 py-1 rounded-md text-xs font-medium">
+                      <span key={index} className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 px-2 py-1 rounded-md text-xs font-medium">
                         {highlight}
                       </span>
                     ))}
                     {place.highlights.length > 3 && (
-                      <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-md text-xs font-medium">
+                      <span className="bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-md text-xs font-medium">
                         +{place.highlights.length - 3} more
                       </span>
                     )}
@@ -345,55 +238,50 @@ export default function AllNatureDetail() {
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
                   {place.description}
                 </p>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-slate-700">
+                  <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                     <div className="flex items-center gap-1">
                       <span className="text-yellow-500">★</span>
                       <span>{place.rating}</span>
                     </div>
                     <div>({place.reviews} reviews)</div>
                     <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      place.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
-                      place.difficulty === 'Easy-Moderate' ? 'bg-blue-100 text-blue-700' :
-                      place.difficulty === 'Moderate' ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-red-100 text-red-700'
+                      place.difficulty === 'Easy' ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400' :
+                      place.difficulty === 'Easy-Moderate' ? 'bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400' :
+                      place.difficulty === 'Moderate' ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400' :
+                      'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400'
                     }`}>
                       {place.difficulty}
                     </div>
                   </div>
                   
-                  <button className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-200 transform hover:scale-105">
-                    Explore
+                  <button 
+                    onClick={() => {
+                      navigate('/itinerary', { 
+                        state: { 
+                          preselectedDestination: {
+                            name: place.name,
+                            type: 'Place',
+                            location: place.region,
+                            description: place.description
+                          }
+                        }
+                      });
+                    }}
+                    className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
+                  >
+                    Plan Your Visit
                   </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
-
-        {/* No Results */}
-        {filteredPlaces.length === 0 && (
-          <div className="text-center py-16">
-            <div className="text-6xl mb-4">🏔️</div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-2">No places found</h3>
-            <p className="text-gray-600 mb-6">Try adjusting your filters to see more results</p>
-            <button 
-              onClick={() => {
-                setSelectedCategory('All');
-                setSelectedRegion('All');
-                setSelectedDifficulty('All');
-              }}
-              className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-200"
-            >
-              Clear All Filters
-            </button>
-          </div>
-        )}
       </div>
 
       <Footer />

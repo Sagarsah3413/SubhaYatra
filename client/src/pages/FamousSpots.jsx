@@ -170,10 +170,11 @@ export default function FamousSpots() {
           >
             {spots.concat(spots).map((spot, index) => (
               <div key={index} className="min-w-[350px] flex-shrink-0 group">
-                <Link to="/all-famous-spots" className="block">
+                <div className="block">
                   <div className="relative bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-slate-700">
                     {/* Image Container */}
-                    <div className="relative h-72 overflow-hidden">
+                    <Link to="/all-famous-spots">
+                      <div className="relative h-72 overflow-hidden">
                       <img
                         src={spot.img}
                         alt={spot.name}
@@ -204,6 +205,7 @@ export default function FamousSpots() {
                         <FaArrowRight className="text-white" />
                       </div>
                     </div>
+                    </Link>
                     
                     {/* Content */}
                     <div className="p-6">
@@ -236,9 +238,8 @@ export default function FamousSpots() {
                       
                       {/* Plan to Visit Button */}
                       <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
+                        onClick={() => {
+                          console.log('Button clicked!', spot.name);
                           navigate('/itinerary', { 
                             state: { 
                               preselectedDestination: {
@@ -253,11 +254,11 @@ export default function FamousSpots() {
                         className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                       >
                         <FaRoute />
-                        Plan to Visit
+                        Plan Your Visit
                       </button>
                     </div>
                   </div>
-                </Link>
+                </div>
               </div>
             ))}
           </div>

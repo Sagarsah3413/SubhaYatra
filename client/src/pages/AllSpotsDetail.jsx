@@ -409,7 +409,22 @@ export default function AllSpotsDetails() {
                   </div>
                   
                   {/* Action Button */}
-                  <button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                  <button 
+                    onClick={() => {
+                      navigate('/itinerary', { 
+                        state: { 
+                          preselectedDestination: {
+                            name: spot.name,
+                            type: 'Place',
+                            location: spot.location,
+                            description: spot.description
+                          }
+                        }
+                      });
+                    }}
+                    className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                  >
+                    <FaRoute />
                     Plan Your Visit
                   </button>
                 </div>

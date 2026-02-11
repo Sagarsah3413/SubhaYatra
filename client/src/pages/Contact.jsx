@@ -93,22 +93,40 @@ export default function Contact() {
     
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setSubmitted(true);
-    setIsSubmitting(false);
-    setFormData({ 
-      name: '', 
-      email: '', 
-      phone: '',
-      subject: '', 
-      travelType: '',
-      budget: '',
-      message: '' 
-    });
-    
-    setTimeout(() => setSubmitted(false), 5000);
+    try {
+      // Send form data to backend
+      const response = await fetch('http://localhost:8000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ 
+          name: '', 
+          email: '', 
+          phone: '',
+          subject: '', 
+          travelType: '',
+          budget: '',
+          message: '' 
+        });
+        
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        alert(data.error || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      alert('An error occurred. Please try again or contact us directly at wanderlyroamio@gmail.com');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactMethods = [
@@ -116,37 +134,21 @@ export default function Contact() {
       icon: FaPhone,
       title: 'Call Us',
       subtitle: 'Speak with our travel experts',
-      info: '+977-1-234567',
+      info: '+977-9861402251',
       action: 'Call Now',
       color: 'emerald',
-      gradient: 'from-emerald-500 to-green-600'
+      gradient: 'from-emerald-500 to-green-600',
+      link: 'tel:+9779861402251'
     },
     {
       icon: FaEnvelope,
       title: 'Email Us',
       subtitle: 'Get detailed responses',
-      info: 'info@roamiowanderly.com',
+      info: 'wanderlyroamio@gmail.com',
       action: 'Send Email',
       color: 'blue',
-      gradient: 'from-blue-500 to-cyan-600'
-    },
-    {
-      icon: FaWhatsapp,
-      title: 'WhatsApp',
-      subtitle: 'Quick chat support',
-      info: '+977-98-12345678',
-      action: 'Chat Now',
-      color: 'green',
-      gradient: 'from-green-500 to-emerald-600'
-    },
-    {
-      icon: FaCalendarAlt,
-      title: 'Book Consultation',
-      subtitle: 'Free 30-min planning session',
-      info: 'Available Mon-Fri',
-      action: 'Schedule',
-      color: 'purple',
-      gradient: 'from-purple-500 to-indigo-600'
+      gradient: 'from-blue-500 to-cyan-600',
+      link: 'mailto:wanderlyroamio@gmail.com'
     }
   ];
 
@@ -169,14 +171,14 @@ export default function Contact() {
       answer: "We combine local expertise with advanced AI technology to provide authentic, personalized experiences. Our team of local guides and travel experts ensure every recommendation is current, safe, and culturally respectful."
     },
     {
-      category: 'booking',
-      question: "Can I book tours and accommodations through your platform?",
-      answer: "We partner with trusted local operators and verified accommodations. While we provide recommendations and facilitate connections, bookings are handled by our certified partners to ensure the best rates and authentic experiences."
+      category: 'general',
+      question: "What is the best time to visit Nepal?",
+      answer: "The best time to visit Nepal is during autumn (September-November) and spring (March-May). Autumn offers clear skies and perfect trekking conditions, while spring brings blooming rhododendrons and warm weather. However, each season has its unique charm - monsoon brings lush greenery, and winter offers snow-capped mountain views."
     },
     {
-      category: 'booking',
-      question: "What payment methods do you accept?",
-      answer: "We accept all major credit cards, PayPal, bank transfers, and local payment methods. All transactions are secured with 256-bit SSL encryption and processed through certified payment gateways."
+      category: 'general',
+      question: "Do I need a visa to visit Nepal?",
+      answer: "Most nationalities can obtain a visa on arrival at Tribhuvan International Airport in Kathmandu or at land border crossings. Tourist visas are available for 15, 30, or 90 days. You'll need a valid passport (with at least 6 months validity), a passport photo, and the visa fee in cash (USD). We recommend checking the latest requirements before your trip."
     },
     {
       category: 'support',
@@ -187,6 +189,16 @@ export default function Contact() {
       category: 'support',
       question: "What if I need help during my trip?",
       answer: "Our 24/7 emergency support team is always available. You'll receive emergency contact numbers and have access to our mobile app with real-time assistance, local emergency services, and instant communication with our support team."
+    },
+    {
+      category: 'support',
+      question: "Is it safe to travel solo in Nepal?",
+      answer: "Nepal is generally very safe for solo travelers, including women. The Nepali people are known for their hospitality and friendliness. However, we always recommend taking standard safety precautions: stay in reputable accommodations, inform someone of your itinerary, avoid walking alone late at night, and keep your valuables secure. Our 24/7 support team is always available if you need assistance."
+    },
+    {
+      category: 'support',
+      question: "What should I pack for a trip to Nepal?",
+      answer: "Essential items include comfortable walking shoes, layered clothing (temperatures vary by altitude), sunscreen, a reusable water bottle, power adapter (Type C, D, and M), basic medications, and a good camera. For trekking, add a warm jacket, trekking poles, and a quality backpack. We provide detailed packing lists based on your specific itinerary and season of travel."
     }
   ];
 
@@ -257,7 +269,7 @@ export default function Contact() {
 
             {/* Main Heading */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-white via-teal-200 to-cyan-200 dark:from-teal-200 dark:via-cyan-200 dark:to-white bg-clip-text text-transparent">
+              <span className="text-white dark:text-white drop-shadow-lg">
                 Get In
               </span>
               <br />
@@ -322,7 +334,7 @@ export default function Contact() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {contactMethods.map((method, index) => (
               <div 
                 key={index}
@@ -350,11 +362,6 @@ export default function Contact() {
                 <p className={`text-${method.color}-600 dark:text-${method.color}-400 text-center font-semibold mb-6`}>
                   {method.info}
                 </p>
-                
-                <button className={`w-full bg-gradient-to-r ${method.gradient} hover:shadow-lg text-white py-3 px-6 rounded-xl transition-all duration-300 font-semibold flex items-center justify-center gap-2 group-hover:shadow-xl`}>
-                  {method.action}
-                  <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" />
-                </button>
               </div>
             ))}
           </div>
@@ -648,23 +655,38 @@ export default function Contact() {
                   <MapContainer
                     center={[27.7172, 85.3240]}
                     zoom={13}
+                    scrollWheelZoom={true}
                     style={{ height: '100%', width: '100%' }}
                   >
                     <TileLayer
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
+                    
+                    {/* Office Location Marker */}
                     <Marker position={[27.7172, 85.3240]}>
                       <Popup>
                         <div className="text-center p-2">
-                          <strong className="text-lg">Roamio Wanderly</strong><br />
+                          <strong className="text-lg text-teal-600">Roamio Wanderly Office</strong><br />
                           <span className="text-gray-600">Chaksibari Marg, Thamel-26</span><br />
                           <span className="text-gray-600">Kathmandu, Nepal</span><br />
-                          <span className="text-sm text-teal-600">Your Gateway to Nepal</span>
+                          <span className="text-sm text-teal-600">Your Gateway to Nepal 🏔️</span>
                         </div>
                       </Popup>
                     </Marker>
                   </MapContainer>
+                </div>
+                <div className="mt-4 text-center">
+                  <a 
+                    href="https://www.google.com/maps/search/?api=1&query=27.7172,85.3240"
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 font-semibold transition-colors duration-300"
+                  >
+                    <FaMapMarkerAlt />
+                    Get Directions
+                    <FaArrowRight className="text-sm" />
+                  </a>
                 </div>
               </div>
             </div>
@@ -701,7 +723,6 @@ export default function Contact() {
             <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-2 border border-gray-200/50 dark:border-slate-700/50">
               {[
                 { id: 'general', label: 'General', icon: FaLightbulb },
-                { id: 'booking', label: 'Booking', icon: FaCalendarAlt },
                 { id: 'support', label: 'Support', icon: FaHeadset }
               ].map((tab) => (
                 <button

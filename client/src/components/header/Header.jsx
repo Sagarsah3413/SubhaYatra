@@ -48,6 +48,8 @@ export const Header = () => {
   const [showLocationDebug, setShowLocationDebug] = useState(false); // Debug panel toggle
   const [locationDebugInfo, setLocationDebugInfo] = useState([]); // Debug information
   const [locationAnimating, setLocationAnimating] = useState(false); // Location update animation
+  const [showSearchModal, setShowSearchModal] = useState(false); // Search modal state
+  const [searchQuery, setSearchQuery] = useState(''); // Search query state
 
   // Debug logging
   console.log('Header render - showCalendar:', showCalendar);
@@ -1299,6 +1301,65 @@ export const Header = () => {
           </div>
         </div>
       )}
+
+      {/* Search Modal */}
+      {showSearchModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={() => setShowSearchModal(false)}>
+          <div className={`w-full max-w-2xl mx-4 rounded-2xl shadow-2xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'}`} onClick={(e) => e.stopPropagation()}>
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                  Search Places
+                </h3>
+                <button
+                  onClick={() => setShowSearchModal(false)}
+                  className={`p-2 rounded-lg transition-colors ${theme === 'dark' ? 'hover:bg-slate-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'}`}
+                >
+                  ✕
+                </button>
+              </div>
+              
+              <div className="relative">
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' && searchQuery.trim()) {
+                      navigate(`/searchresult?query=${encodeURIComponent(searchQuery)}`);
+                      setShowSearchModal(false);
+                      setSearchQuery('');
+                    }
+                  }}
+                  placeholder="Search for destinations, hotels, restaurants..."
+                  className={`w-full px-4 py-3 pr-12 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-teal-500 ${
+                    theme === 'dark' 
+                      ? 'bg-slate-700 border-slate-600 text-white placeholder-gray-400' 
+                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                  }`}
+                  autoFocus
+                />
+                <button
+                  onClick={() => {
+                    if (searchQuery.trim()) {
+                      navigate(`/searchresult?query=${encodeURIComponent(searchQuery)}`);
+                      setShowSearchModal(false);
+                      setSearchQuery('');
+                    }
+                  }}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-lg hover:from-teal-700 hover:to-cyan-700 transition-all"
+                >
+                  <FaSearch />
+                </button>
+              </div>
+              
+              <p className={`mt-3 text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                Press Enter or click the search icon to search
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
@@ -1883,7 +1944,7 @@ const MobileNavigationItems = ({
     {
       icon: FaSearch,
       label: "Search",
-      path: "/searchresult",
+      action: () => setShowSearchModal(true),
       description: "Find destinations",
       color: "bg-emerald-500"
     },
@@ -1975,9 +2036,13 @@ const MobileNavigationItems = ({
           const IconComponent = item.icon;
           return (
             <button
-              key={item.path}
+              key={item.path || item.label}
               onClick={() => {
-                onNavigation(item.path);
+                if (item.action) {
+                  item.action();
+                } else if (item.path) {
+                  onNavigation(item.path);
+                }
                 onClose();
               }}
               className={`
@@ -2534,8 +2599,12 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleMenuClick = (path) => {
-    onNavigation(path);
+  const handleMenuClick = (item) => {
+    if (item.action) {
+      item.action();
+    } else if (item.path) {
+      onNavigation(item.path);
+    }
     setIsOpen(false);
   };
 
@@ -2545,7 +2614,6 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
       category: "Explore",
       items: [
         { name: "Home", path: "/", icon: "🏠", description: "Back to home" },
-        { name: "Search", path: "/searchresult", icon: "🔍", description: "Find destinations" },
         { name: "Explore Nepal", path: "/explore-nepal", icon: "🗺️", description: "Discover Nepal" },
         { name: "All Places", path: "/all-places-detail", icon: "📍", description: "View all places" },
         { name: "Famous Spots", path: "/all-famous-spots", icon: "⭐", description: "Popular locations" },
@@ -2831,8 +2899,8 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
                 <div className="space-y-1">
                   {category.items.map((item) => (
                     <button
-                      key={item.path}
-                      onClick={() => handleMenuClick(item.path)}
+                      key={item.path || item.name}
+                      onClick={() => handleMenuClick(item)}
                       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left group ${
                         theme === "dark" 
                           ? "hover:bg-slate-800/60 text-slate-200 hover:text-white" 
@@ -2891,8 +2959,12 @@ const FeaturesBox = ({ theme, onNavigation }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleFeatureClick = (path) => {
-    onNavigation(path);
+  const handleFeatureClick = (feature) => {
+    if (feature.action) {
+      feature.action();
+    } else if (feature.path) {
+      onNavigation(feature.path);
+    }
     setIsOpen(false);
   };
 
@@ -2904,7 +2976,6 @@ const FeaturesBox = ({ theme, onNavigation }) => {
       color: "from-teal-500 to-cyan-500",
       features: [
         { name: "Newsletter Archive", path: "/newsletter-archive", icon: "📧", description: "Travel updates" },
-        { name: "Search Places", path: "/searchresult", icon: "🔍", description: "Find places" },
         { name: "My Wishlist", path: "/wishlist", icon: "❤️", description: "Saved places" }
       ]
     }
@@ -2962,7 +3033,7 @@ const FeaturesBox = ({ theme, onNavigation }) => {
                   <h3 className={`text-lg font-bold ${
                     theme === "dark" ? "text-slate-200" : "text-slate-700"
                   }`}>
-                    Core Features
+                    Features
                   </h3>
                   <p className={`text-sm ${
                     theme === "dark" ? "text-slate-400" : "text-slate-500"
@@ -3004,7 +3075,7 @@ const FeaturesBox = ({ theme, onNavigation }) => {
                   {category.features.map((feature, featureIndex) => (
                     <button
                       key={featureIndex}
-                      onClick={() => handleFeatureClick(feature.path)}
+                      onClick={() => handleFeatureClick(feature)}
                       className={`w-full p-4 text-left rounded-xl transition-all duration-200 flex items-center space-x-4 group hover:scale-[1.02] ${
                         theme === "dark" 
                           ? "hover:bg-slate-800/50 text-slate-300 hover:text-white border border-slate-700/30 hover:border-slate-600/50" 
