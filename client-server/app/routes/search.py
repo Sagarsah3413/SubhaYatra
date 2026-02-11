@@ -81,12 +81,13 @@ def search_items():
 
     # Search based on category filter
     if category == "all" or category == "place":
-        # Places (New tourism places data)
+        # Places (New tourism places data) - Only show approved places
         places = db.query(models.Place).filter(
-            models.Place.name.ilike(query) |
+            (models.Place.name.ilike(query) |
             models.Place.tags.ilike(query) |
             models.Place.description.ilike(query) |
-            models.Place.location.ilike(query)
+            models.Place.location.ilike(query)),
+            models.Place.status == 'approved'  # Only show approved places
         ).all()
         for p in places:
             add_result(p, "Place")
@@ -113,15 +114,15 @@ def search_items():
         for r in restaurants:
             add_result(r, "Restaurant")
 
-    if category == "all" or category == "attraction":
-        # Attractions
-        attractions = db.query(models.Attraction).filter(
-            models.Attraction.name.ilike(query) |
-            models.Attraction.tags.ilike(query) |
-            models.Attraction.description.ilike(query)
-        ).all()
-        for a in attractions:
-            add_result(a, "Attraction")
+    # Skip attractions for now - table schema mismatch
+    # if category == "all" or category == "attraction":
+    #     attractions = db.query(models.Attraction).filter(
+    #         models.Attraction.name.ilike(query) |
+    #         models.Attraction.tags.ilike(query) |
+    #         models.Attraction.description.ilike(query)
+    #     ).all()
+    #     for a in attractions:
+    #         add_result(a, "Attraction")
 
     db.close()
     return jsonify({
