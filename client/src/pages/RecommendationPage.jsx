@@ -12,7 +12,7 @@ import Footer from "../components/footer/Footer";
 export default function RecommendationPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isSignedIn, isLoaded } = useUser();
+  const { user, isSignedIn, isLoaded } = useUser();
   const { theme } = useTheme();
 
   // State
@@ -35,6 +35,17 @@ export default function RecommendationPage() {
       navigate("/sign-in");
     }
   }, [isLoaded, isSignedIn, navigate]);
+
+  // Autofill form with user data from Clerk
+  useEffect(() => {
+    if (isSignedIn && user) {
+      setFormData(prev => ({
+        ...prev,
+        name: user.fullName || user.firstName || prev.name,
+        phone: user.primaryPhoneNumber?.phoneNumber || prev.phone,
+      }));
+    }
+  }, [isSignedIn, user]);
 
   const handleHomeClick = () => {
     if (location.pathname !== "/") navigate(-1);
