@@ -93,6 +93,42 @@
   }
 }
 
+/* Location Text Scrolling Animation */
+@keyframes locationScroll {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-15%);
+  }
+  50% {
+    transform: translateX(-30%);
+  }
+  75% {
+    transform: translateX(-15%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Location scroll container and text styles */
+.location-scroll-container {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.location-scroll-text {
+  animation: locationScroll 12s ease-in-out infinite;
+  display: inline-block;
+  padding-right: 1rem;
+}
+
+.location-scroll-text:hover {
+  animation-play-state: paused;
+}
+
 @keyframes pulseGlow {
   0%, 100% {
     box-shadow: 0 0 5px rgba(20, 184, 166, 0.3);

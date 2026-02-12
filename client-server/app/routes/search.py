@@ -32,10 +32,64 @@ def search_items():
     q = request.args.get("q", "")
     category = request.args.get("category", "all")  # all, place, hotel, restaurant
     db = SessionLocal()
-    query = f"%{q}%"
+    
+    # Create search patterns for better matching
+    query_exact = q.lower()  # Exact match (case-insensitive)
+    query_start = f"{q}%"    # Starts with query
+    query_word = f"% {q}%"   # Word boundary match
+    query_any = f"%{q}%"     # Contains query anywhere
+    
     results = []
 
+    def calculate_relevance_score(obj, search_term):
+        """Calculate relevance score based on where the match occurs"""
+        search_lower = search_term.lower()
+        name_lower = (obj.name or "").lower()
+        location_lower = (obj.location or "").lower()
+        tags_lower = (obj.tags or "").lower()
+        desc_lower = (obj.description or "").lower()
+        
+        score = 0
+        
+        # Exact name match (highest priority)
+        if name_lower == search_lower:
+            score += 100
+        # Name starts with search term
+        elif name_lower.startswith(search_lower):
+            score += 80
+        # Name contains search term as a word
+        elif f" {search_lower}" in name_lower or f"-{search_lower}" in name_lower:
+            score += 60
+        # Name contains search term anywhere
+        elif search_lower in name_lower:
+            score += 40
+        
+        # Location matches
+        if search_lower in location_lower:
+            if location_lower.startswith(search_lower):
+                score += 30
+            else:
+                score += 15
+        
+        # Tags matches (important for categorization)
+        if search_lower in tags_lower:
+            # Check if it's a complete tag match
+            tags_list = [tag.strip().lower() for tag in tags_lower.split(',')]
+            if search_lower in tags_list:
+                score += 25
+            else:
+                score += 10
+        
+        # Description matches (lower priority)
+        if search_lower in desc_lower:
+            score += 5
+        
+        return score
+
     def add_result(obj, obj_type):
+        # Calculate relevance score
+        relevance = calculate_relevance_score(obj, q)
+        
         # Use image_url from database if available (for all types)
         if hasattr(obj, 'image_url') and obj.image_url:
             image_url = obj.image_url
@@ -76,18 +130,18 @@ def search_items():
             "tags": obj.tags or "",
             "image_url": image_url,
             "all_images": all_images,
-            "images": all_images  # Keep for backward compatibility
+            "images": all_images,  # Keep for backward compatibility
+            "relevance_score": relevance
         })
 
-    # Search based on category filter
+    # Search based on category filter with improved query logic
     if category == "all" or category == "place":
         # Places (New tourism places data) - Only show approved places
         places = db.query(models.Place).filter(
-            (models.Place.name.ilike(query) |
-            models.Place.tags.ilike(query) |
-            models.Place.description.ilike(query) |
-            models.Place.location.ilike(query)),
-            models.Place.status == 'approved'  # Only show approved places
+            models.Place.name.ilike(query_any) |
+            models.Place.tags.ilike(query_any) |
+            models.Place.description.ilike(query_any) |
+            models.Place.location.ilike(query_any)
         ).all()
         for p in places:
             add_result(p, "Place")
@@ -95,10 +149,10 @@ def search_items():
     if category == "all" or category == "hotel":
         # Hotels
         hotels = db.query(models.Hotel).filter(
-            models.Hotel.name.ilike(query) |
-            models.Hotel.tags.ilike(query) |
-            models.Hotel.description.ilike(query) |
-            models.Hotel.location.ilike(query)
+            models.Hotel.name.ilike(query_any) |
+            models.Hotel.tags.ilike(query_any) |
+            models.Hotel.description.ilike(query_any) |
+            models.Hotel.location.ilike(query_any)
         ).all()
         for h in hotels:
             add_result(h, "Hotel")
@@ -106,24 +160,27 @@ def search_items():
     if category == "all" or category == "restaurant":
         # Restaurants
         restaurants = db.query(models.Restaurant).filter(
-            models.Restaurant.name.ilike(query) |
-            models.Restaurant.tags.ilike(query) |
-            models.Restaurant.description.ilike(query) |
-            models.Restaurant.location.ilike(query)
+            models.Restaurant.name.ilike(query_any) |
+            models.Restaurant.tags.ilike(query_any) |
+            models.Restaurant.description.ilike(query_any) |
+            models.Restaurant.location.ilike(query_any)
         ).all()
         for r in restaurants:
             add_result(r, "Restaurant")
 
-    # Skip attractions for now - table schema mismatch
-    # if category == "all" or category == "attraction":
-    #     attractions = db.query(models.Attraction).filter(
-    #         models.Attraction.name.ilike(query) |
-    #         models.Attraction.tags.ilike(query) |
-    #         models.Attraction.description.ilike(query)
-    #     ).all()
-    #     for a in attractions:
-    #         add_result(a, "Attraction")
+    if category == "all" or category == "attraction":
+        # Attractions
+        attractions = db.query(models.Attraction).filter(
+            models.Attraction.name.ilike(query_any) |
+            models.Attraction.tags.ilike(query_any) |
+            models.Attraction.description.ilike(query_any)
+        ).all()
+        for a in attractions:
+            add_result(a, "Attraction")
 
+    # Sort results by relevance score (highest first)
+    results.sort(key=lambda x: x['relevance_score'], reverse=True)
+    
     db.close()
     return jsonify({
         "results": results, 

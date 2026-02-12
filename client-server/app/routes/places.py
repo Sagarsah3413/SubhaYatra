@@ -472,21 +472,53 @@ def search_places():
 
 @places_bp.route('/places/<int:place_id>', methods=['DELETE'])
 def delete_place(place_id):
-    """Delete a place by ID"""
+    """Delete a place by ID and remove associated image files"""
     session = SessionLocal()
     try:
         place = session.query(Place).filter(Place.id == place_id).first()
         if not place:
             return jsonify({'error': 'Place not found'}), 404
         
-        # Delete the place
+        # Delete associated image files from filesystem
+        deleted_files = []
+        if place.image_url:
+            # Handle single image_url
+            if place.image_url.startswith('/datasets/uploads/'):
+                filename = place.image_url.split('/')[-1]
+                file_path = os.path.join(UPLOAD_DIR, filename)
+                if os.path.exists(file_path):
+                    try:
+                        os.remove(file_path)
+                        deleted_files.append(filename)
+                    except Exception as e:
+                        current_app.logger.warning(f'Failed to delete file {filename}: {e}')
+        
+        # Handle all_images if present
+        if place.all_images:
+            try:
+                images = json.loads(place.all_images)
+                for img_path in images:
+                    if img_path.startswith('/datasets/uploads/'):
+                        filename = img_path.split('/')[-1]
+                        file_path = os.path.join(UPLOAD_DIR, filename)
+                        if os.path.exists(file_path) and filename not in deleted_files:
+                            try:
+                                os.remove(file_path)
+                                deleted_files.append(filename)
+                            except Exception as e:
+                                current_app.logger.warning(f'Failed to delete file {filename}: {e}')
+            except json.JSONDecodeError:
+                pass
+        
+        # Delete the place from database
         session.delete(place)
         session.commit()
         
         return jsonify({
             'success': True,
-            'message': 'Place deleted successfully',
-            'place_id': place_id
+            'message': 'Place and associated files deleted successfully',
+            'place_id': place_id,
+            'deleted_files': deleted_files
         }), 200
     except Exception as e:
         session.rollback()

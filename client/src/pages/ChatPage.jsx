@@ -3,7 +3,7 @@ import { SignedIn, SignedOut, SignInButton, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { CohereClient } from "cohere-ai";
 import chatService from "../services/chatService";
 import Toast from "../components/Toast";
 
@@ -16,8 +16,8 @@ export default function ChatPage() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [geminiAI, setGeminiAI] = useState(null);
-  const [aiStatus, setAiStatus] = useState('initializing'); // 'initializing', 'ready', 'error', 'fallback', 'quota_exceeded'
+  const [cohereAI, setCohereAI] = useState(null);
+  const [aiStatus, setAiStatus] = useState('initializing'); // 'initializing', 'ready', 'error', 'fallback'
   
   // Chat history state
   const [chatHistory, setChatHistory] = useState([]);
@@ -26,103 +26,49 @@ export default function ChatPage() {
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearchHistory, setShowSearchHistory] = useState(false);
-  
-  // Confirmation dialog state
-  const [confirmDialog, setConfirmDialog] = useState({
-    isOpen: false,
-    title: '',
-    message: '',
-    onConfirm: () => {},
-    type: 'danger'
-  });
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Initialize Gemini AI
+  // Initialize Cohere AI
   useEffect(() => {
-    const initializeGemini = async () => {
+    const initializeAI = async () => {
       try {
-        const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+        const cohereApiKey = import.meta.env.VITE_COHERE_API_KEY;
         
-        console.log('🔍 Debug Info:');
-        console.log('- API Key from env:', apiKey ? `${apiKey.substring(0, 10)}...` : 'NOT FOUND');
-        console.log('- API Key length:', apiKey ? apiKey.length : 0);
-        console.log('- All env vars:', Object.keys(import.meta.env));
+        console.log('🔍 Cohere Debug Info:');
+        console.log('- API Key from env:', cohereApiKey ? `${cohereApiKey.substring(0, 10)}...` : 'NOT FOUND');
         
-        if (!apiKey || apiKey === 'your_gemini_api_key_here') {
-          console.warn('⚠️ Gemini API key not configured, using fallback responses');
+        if (!cohereApiKey || cohereApiKey === 'your_cohere_api_key_here') {
+          console.warn('⚠️ Cohere API key not configured, using fallback responses');
           setAiStatus('fallback');
           return;
         }
 
-        console.log('🔄 Initializing Gemini AI...');
-        const genAI = new GoogleGenerativeAI(apiKey);
-        
-        // Try different model names in order of preference
-        const modelNames = [
-          'gemini-1.5-flash',
-          'gemini-1.5-pro', 
-          'gemini-pro',
-          'gemini-2.0-flash-exp'
-        ];
-        
-        let model = null;
-        let lastError = null;
-        
-        for (const modelName of modelNames) {
-          try {
-            console.log(`🧪 Trying model: ${modelName}...`);
-            const testModel = genAI.getGenerativeModel({ model: modelName });
-            
-            // Test the connection with a simple prompt
-            const testResult = await testModel.generateContent("Say 'OK'");
-            const testResponse = await testResult.response;
-            const responseText = testResponse.text();
-            
-            console.log(`✅ Model ${modelName} works! Response:`, responseText);
-            model = testModel;
-            break; // Success, exit loop
-          } catch (err) {
-            console.warn(`⚠️ Model ${modelName} failed:`, err.message);
-            lastError = err;
-            continue; // Try next model
-          }
-        }
-        
-        if (model) {
-          setGeminiAI(model);
-          setAiStatus('ready');
-          console.log('✅ Gemini AI initialized successfully');
-        } else {
-          throw lastError || new Error('All model attempts failed');
-        }
-      } catch (error) {
-        console.error('❌ Failed to initialize Gemini AI:', error);
-        console.error('Error details:', {
-          message: error.message,
-          name: error.name,
-          stack: error.stack
+        console.log('🔄 Initializing Cohere AI...');
+        const cohere = new CohereClient({
+          token: cohereApiKey,
         });
         
-        // Check for specific error types
-        if (error.message && error.message.includes('429')) {
-          console.error('⚠️ API Quota Exceeded: Please wait for quota reset or get a new API key');
-          console.error('📝 Get new key at: https://makersuite.google.com/app/apikey');
-          setAiStatus('quota_exceeded');
-        } else if (error.message && error.message.includes('403')) {
-          console.error('⚠️ API Key Invalid or Restricted: Please check your API key');
-          setAiStatus('fallback');
-        } else if (error.message && error.message.includes('404')) {
-          console.error('⚠️ Model Not Found: The requested model may not be available');
-          setAiStatus('fallback');
-        } else {
-          setAiStatus('fallback');
-        }
+        // Test the connection with a simple prompt
+        console.log('🧪 Testing Cohere API...');
+        const testResponse = await cohere.chat({
+          message: "Say 'OK'",
+          model: "command-r7b-12-2024",
+        });
+        
+        console.log('✅ Cohere API works! Response:', testResponse.text);
+        setCohereAI(cohere);
+        setAiStatus('ready');
+        console.log('✅ Cohere AI initialized successfully');
+      } catch (error) {
+        console.error('❌ Failed to initialize Cohere AI:', error.message);
+        console.warn('⚠️ Using fallback responses');
+        setAiStatus('fallback');
       }
     };
 
-    initializeGemini();
+    initializeAI();
   }, []);
 
   // Load chat history and search history when user is available
@@ -562,10 +508,22 @@ Would you like some general travel advice about Nepal?`;
 
       // Fallback to local AI processing if backend failed or not available
       if (!botResponse) {
-        if (aiStatus === 'ready' && geminiAI) {
-          // Active Mode - Use backend AI for detailed responses
-          botResponse = getNepalTravelResponse(userText);
-          console.log('✅ Using local detailed response (Active Mode)');
+        if (aiStatus === 'ready' && cohereAI) {
+          // Active Mode - Use Cohere AI for detailed responses
+          try {
+            console.log('🤖 Using Cohere AI for response...');
+            const response = await cohereAI.chat({
+              message: userText,
+              model: "command-r7b-12-2024",
+              preamble: `You are a Nepal travel expert assistant. Provide helpful, accurate information about Nepal travel, culture, destinations, hotels, restaurants, and activities. Be friendly, informative, and provide specific recommendations when relevant.`,
+            });
+            botResponse = response.text;
+            console.log('✅ Cohere AI response generated');
+          } catch (error) {
+            console.error('❌ Cohere AI error:', error);
+            botResponse = getNepalTravelResponse(userText);
+          }
+          console.log('✅ Using AI response (Active Mode)');
         } else {
           // Smart Mode (fallback) - Shows statistics but no database access
           botResponse = getSmartModeResponse(userText);
@@ -737,18 +695,23 @@ Would you like some general travel advice about Nepal?`;
                     <div className="flex items-center space-x-3">
                       <div className={`w-2.5 h-2.5 rounded-full ${
                         aiStatus === 'ready' ? 'bg-green-500 animate-pulse shadow-lg shadow-green-500/50' :
-                        aiStatus === 'quota_exceeded' ? 'bg-orange-500 shadow-lg shadow-orange-500/50' :
                         aiStatus === 'fallback' ? 'bg-yellow-500 shadow-lg shadow-yellow-500/50' :
                         aiStatus === 'initializing' ? 'bg-blue-500 animate-spin' :
                         'bg-red-500 shadow-lg shadow-red-500/50'
                       }`}></div>
-                      <span className="text-sm text-slate-300 font-medium">
-                        {aiStatus === 'ready' ? 'Active Mode' :
-                         aiStatus === 'quota_exceeded' ? 'Quota Exceeded' :
-                         aiStatus === 'fallback' ? 'Smart Mode' :
-                         aiStatus === 'initializing' ? 'Starting...' :
-                         'Offline'}
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-sm text-slate-300 font-medium">
+                          {aiStatus === 'ready' ? 'Active Mode' :
+                           aiStatus === 'fallback' ? 'Smart Mode' :
+                           aiStatus === 'initializing' ? 'Starting...' :
+                           'Offline'}
+                        </span>
+                        {aiStatus === 'ready' && (
+                          <span className="text-xs text-slate-400">
+                            🚀 Cohere AI
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -1016,7 +979,7 @@ Would you like some general travel advice about Nepal?`;
                     <h1 className="text-2xl font-black text-white">Nepal Travel Assistant</h1>
                     <p className="text-sm text-slate-400">
                       {isTyping ? 'AI is typing...' : 
-                       aiStatus === 'ready' ? 'Active Mode • Full database access' :
+                       aiStatus === 'ready' ? 'Active Mode • Cohere AI' :
                        aiStatus === 'fallback' ? 'Smart Mode • Limited responses' :
                        'Initializing...'}
                     </p>
@@ -1057,30 +1020,9 @@ Would you like some general travel advice about Nepal?`;
                     <h3 className="text-4xl font-black mb-4 text-white">Welcome to Nepal Travel Assistant</h3>
                     <p className="text-xl mb-8 text-slate-300 max-w-2xl mx-auto">
                       {aiStatus === 'ready' ? 
-                        'Active Mode with full database access - Ask me anything about Nepal destinations, hotels, restaurants, culture, travel tips, and more!' :
-                        aiStatus === 'quota_exceeded' ?
-                        '⚠️ API Quota Exceeded - Please get a new API key from makersuite.google.com or wait for quota reset. Currently in Smart Mode with limited responses.' :
-                        'Smart Mode with limited responses - For full travel information, please ensure Active Mode is enabled.'}
-                      }
+                        'Active Mode with Cohere AI - Ask me anything about Nepal destinations, hotels, restaurants, culture, travel tips, and more!' :
+                        'Smart Mode with limited responses - For full AI-powered travel information, please ensure Active Mode is enabled.'}
                     </p>
-                    
-                    {/* Quota Exceeded Notice */}
-                    {aiStatus === 'quota_exceeded' && (
-                      <div className="mb-6 p-4 bg-orange-500/10 border border-orange-500/30 rounded-xl max-w-2xl mx-auto">
-                        <p className="text-sm text-orange-300">
-                          <strong>🔑 Get New API Key:</strong> Visit{' '}
-                          <a 
-                            href="https://makersuite.google.com/app/apikey" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="underline hover:text-orange-200"
-                          >
-                            makersuite.google.com/app/apikey
-                          </a>
-                          {' '}to create a new key, then update <code className="bg-slate-800 px-1 rounded">client/.env</code> and restart the server.
-                        </p>
-                      </div>
-                    )}
                     
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
                       {[

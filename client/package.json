@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.53.3",
-    "@google/generative-ai": "^0.24.1",
     "@nakarmi23/bikram-sambat": "^1.4.8",
     "@tailwindcss/vite": "^4.1.16",
     "axios": "^1.13.2",
     "classnames": "^2.5.1",
+    "cohere-ai": "^7.20.0",
     "i18next": "^25.7.3",
     "i18next-browser-languagedetector": "^8.2.0",
     "leaflet": "^1.9.4",

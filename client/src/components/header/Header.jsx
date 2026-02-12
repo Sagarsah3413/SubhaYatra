@@ -92,14 +92,14 @@ export const Header = () => {
     setLocationError(null);
     setLocationAnimating(true); // Trigger animation
     
-    addDebugLog(`Starting high-accuracy location detection (attempt ${retryCount + 1})`);
+    addDebugLog(`Starting ULTRA high-accuracy location detection (attempt ${retryCount + 1})`);
     
     try {
-      // Get user's position with maximum accuracy settings
+      // Get user's position with MAXIMUM accuracy settings
       const position = await getCurrentPositionAsync({
-        enableHighAccuracy: true, // Always use high accuracy
-        timeout: 30000, // Longer timeout for better accuracy
-        maximumAge: 0 // Always get fresh location, no cache
+        enableHighAccuracy: true, // Always use high accuracy GPS
+        timeout: 45000, // Extended timeout for maximum accuracy (45 seconds)
+        maximumAge: 0 // Always get fresh location, absolutely no cache
       });
 
       if (position) {
@@ -301,49 +301,58 @@ export const Header = () => {
 
   // Ultra-accurate reverse geocoding with forced neighborhood detection
   const reverseGeocodeWithMaxAccuracy = async (latitude, longitude, language, gpsAccuracy) => {
-    addDebugLog(`Starting FORCED neighborhood detection for: ${latitude}, ${longitude} (GPS accuracy: ±${gpsAccuracy}m)`);
+    addDebugLog(`Starting ULTRA-PRECISE neighborhood detection for: ${latitude}, ${longitude} (GPS accuracy: ±${gpsAccuracy}m)`);
     
-    // Use maximum zoom for neighborhood detection
-    const zoomLevel = 20; // Always use maximum zoom for neighborhood detection
+    // Use maximum zoom for neighborhood detection - ALWAYS zoom 20 for best results
+    const zoomLevel = 20; // Maximum zoom for street-level accuracy
     
-    addDebugLog(`Using maximum zoom level ${zoomLevel} for neighborhood detection`);
+    addDebugLog(`Using MAXIMUM zoom level ${zoomLevel} for precise neighborhood detection`);
     
     const apis = [
-      // Ultra-high resolution Nominatim for neighborhoods
+      // Ultra-high resolution Nominatim for neighborhoods - PRIMARY SOURCE
       {
-        name: 'Nominatim-Neighborhood',
+        name: 'Nominatim-Ultra-Precise',
         url: `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=${language}&addressdetails=1&zoom=20&extratags=1&namedetails=1&polygon_geojson=0`,
         priority: 1,
         parser: (data) => {
-          addDebugLog(`Nominatim-Neighborhood response:`, data);
+          addDebugLog(`Nominatim-Ultra-Precise response:`, data);
           
           const address = data.address || {};
           let parts = [];
           
-          // Force neighborhood detection - check all possible neighborhood fields
+          // FORCE neighborhood detection - check ALL possible neighborhood fields in priority order
           const neighborhood = address.neighbourhood || address.suburb || address.quarter || 
                               address.residential || address.hamlet || address.village ||
-                              address.locality || address.town_district || address.district;
+                              address.locality || address.town_district || address.district ||
+                              address.city_district || address.borough;
           
-          const road = address.road || address.street;
-          const houseNumber = address.house_number;
-          const city = address.city || address.town || address.municipality;
-          const state = address.state || address.region;
+          const road = address.road || address.street || address.pedestrian || address.footway;
+          const houseNumber = address.house_number || address.building;
+          const city = address.city || address.town || address.municipality || address.county;
+          const state = address.state || address.region || address.province;
           const country = address.country;
           
-          // Build most specific location possible
+          // Build MOST specific location possible with priority hierarchy
           if (houseNumber && road && neighborhood) {
+            // Best case: House number + Road + Neighborhood
             parts.push(`${houseNumber} ${road}`, neighborhood, city || country);
-          } else if (road && neighborhood) {
+          } else if (road && neighborhood && road !== neighborhood) {
+            // Very good: Road + Neighborhood (different)
             parts.push(`${road}`, neighborhood, city || country);
           } else if (neighborhood && city && neighborhood !== city) {
+            // Good: Neighborhood + City (different)
             parts.push(neighborhood, city, country);
           } else if (neighborhood) {
+            // Acceptable: Just neighborhood
             parts.push(neighborhood, city || state || country);
+          } else if (road && city) {
+            // Fallback: Road + City
+            parts.push(road, city, country);
           } else if (road) {
+            // Minimal: Just road
             parts.push(road, city || state || country);
           } else {
-            // Fallback to display name parsing for neighborhoods
+            // Last resort: Parse display name for most specific parts
             const displayParts = data.display_name?.split(',') || [];
             if (displayParts.length >= 3) {
               // Take first 3 parts which are usually most specific
@@ -352,7 +361,7 @@ export const Header = () => {
           }
           
           const result = parts.filter(Boolean).slice(0, 3).join(', ');
-          addDebugLog(`Nominatim-Neighborhood parsed: ${result}`);
+          addDebugLog(`Nominatim-Ultra-Precise parsed: ${result}`);
           return result || null;
         }
       },
@@ -898,182 +907,224 @@ export const Header = () => {
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-teal-500/5 via-cyan-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
         </div>
 
-        {/* Modern Location Indicator with New Design */}
+        {/* Enhanced Location Indicator with Improved Accuracy & Layout */}
         <div 
           className={`
-            hidden lg:flex items-center gap-3 px-4 py-2.5 rounded-full border backdrop-blur-xl
+            hidden lg:flex items-center gap-3 px-5 py-3 rounded-2xl border backdrop-blur-xl
             cursor-pointer transition-all duration-500 group relative overflow-hidden
             ${theme === 'dark' 
-              ? 'bg-gradient-to-r from-slate-800/80 to-slate-700/60 border-slate-600/40 hover:from-slate-700/90 hover:to-slate-600/70 hover:border-slate-500/60' 
-              : 'bg-gradient-to-r from-white/90 to-slate-50/70 border-slate-300/40 hover:from-white/95 hover:to-slate-100/80 hover:border-slate-400/60'
+              ? 'bg-gradient-to-br from-slate-800/90 via-slate-800/80 to-slate-700/70 border-slate-600/50 hover:from-slate-700/95 hover:to-slate-600/80 hover:border-teal-500/60' 
+              : 'bg-gradient-to-br from-white/95 via-white/90 to-slate-50/80 border-slate-300/50 hover:from-white hover:to-slate-100/90 hover:border-teal-400/60'
             }
-            hover:shadow-lg hover:shadow-teal-500/20 hover:scale-[1.02] transform-gpu
-            before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r
+            hover:shadow-2xl hover:shadow-teal-500/30 hover:scale-[1.03] transform-gpu
+            before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br
             ${theme === 'dark' 
-              ? 'before:from-teal-500/10 before:via-cyan-500/5 before:to-emerald-500/10' 
-              : 'before:from-teal-400/8 before:via-cyan-400/4 before:to-emerald-400/8'
+              ? 'before:from-teal-500/15 before:via-cyan-500/8 before:to-emerald-500/15' 
+              : 'before:from-teal-400/12 before:via-cyan-400/6 before:to-emerald-400/12'
             }
             before:opacity-0 hover:before:opacity-100 before:transition-all before:duration-500
-            animate-slide-in-left
+            animate-slide-in-left shadow-lg
           `}
           onClick={forceRefreshLocation}
-          title="" // Remove default title since we're using custom tooltip
+          title="Click to refresh location"
         >
-          {/* Custom Tooltip */}
+          {/* Enhanced Tooltip with More Info */}
           <div className={`
-            absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 rounded-lg
-            text-sm font-medium whitespace-nowrap pointer-events-none z-50
+            absolute bottom-full left-1/2 transform -translate-x-1/2 mb-3 px-4 py-3 rounded-xl
+            text-sm font-medium pointer-events-none z-50 min-w-[280px]
             opacity-0 group-hover:opacity-100 transition-all duration-300 delay-500
             ${theme === 'dark' 
-              ? 'bg-slate-900/95 text-slate-100 border border-slate-700/50' 
-              : 'bg-white/95 text-slate-800 border border-slate-200/50'
+              ? 'bg-slate-900/98 text-slate-100 border border-slate-700/60' 
+              : 'bg-white/98 text-slate-800 border border-slate-200/60'
             }
-            backdrop-blur-xl shadow-xl
+            backdrop-blur-2xl shadow-2xl
             before:absolute before:top-full before:left-1/2 before:transform before:-translate-x-1/2
-            before:border-4 before:border-transparent
+            before:border-8 before:border-transparent
             ${theme === 'dark' 
-              ? 'before:border-t-slate-900/95' 
-              : 'before:border-t-white/95'
+              ? 'before:border-t-slate-900/98' 
+              : 'before:border-t-white/98'
             }
           `}>
-            {isLocationLoading 
-              ? (locationRetryCount > 0 ? `Retrying location detection (${locationRetryCount}/2)` : 'Detecting your location...') 
-              : currentLocation}
-            {locationError && (
-              <div className="text-red-400 text-xs mt-1">
-                Error: {locationError}
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 pb-2 border-b border-slate-600/30">
+                <FaMapMarkerAlt className="text-teal-500" />
+                <span className="font-bold">Your Location</span>
               </div>
-            )}
+              
+              <div className="text-sm">
+                {isLocationLoading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
+                    <span>{locationRetryCount > 0 ? `Retrying (${locationRetryCount}/2)...` : 'Detecting with high accuracy GPS...'}</span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="font-semibold text-teal-500">{currentLocation}</div>
+                    <div className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
+                      Click to refresh • High accuracy mode
+                    </div>
+                  </>
+                )}
+              </div>
+              
+              {locationError && (
+                <div className="flex items-center gap-2 text-red-400 text-xs pt-2 border-t border-red-500/20">
+                  <span>⚠️</span>
+                  <span>{locationError}</span>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Modern Location Icon with Pulse Effect */}
+          {/* Enhanced Location Icon with Better Visual Feedback */}
           <div className="relative flex-shrink-0">
             <div className={`
-              w-8 h-8 rounded-full flex items-center justify-center transition-all duration-500 relative
+              w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 relative
               ${theme === 'dark' 
-                ? 'bg-gradient-to-br from-teal-600/30 to-cyan-600/20 group-hover:from-teal-500/40 group-hover:to-cyan-500/30' 
-                : 'bg-gradient-to-br from-teal-500/20 to-cyan-500/15 group-hover:from-teal-500/30 group-hover:to-cyan-500/25'
+                ? 'bg-gradient-to-br from-teal-600/40 to-cyan-600/30 group-hover:from-teal-500/50 group-hover:to-cyan-500/40' 
+                : 'bg-gradient-to-br from-teal-500/30 to-cyan-500/20 group-hover:from-teal-500/40 group-hover:to-cyan-500/30'
               }
               ${isLocationLoading ? 'animate-pulse' : ''}
+              shadow-inner
             `}>
               <FaMapMarkerAlt className={`
-                text-sm transition-all duration-500
+                text-base transition-all duration-500
                 ${isLocationLoading 
                   ? 'text-amber-500 animate-bounce' 
-                  : 'text-teal-600 group-hover:text-teal-500'
+                  : locationError
+                  ? 'text-red-500'
+                  : 'text-teal-600 group-hover:text-teal-400'
                 }
               `} />
               
               {/* Animated ring around icon */}
               <div className={`
-                absolute inset-0 rounded-full border-2 transition-all duration-500
+                absolute inset-0 rounded-xl border-2 transition-all duration-500
                 ${isLocationLoading 
-                  ? 'border-amber-400/50 animate-ping' 
-                  : 'border-teal-500/0 group-hover:border-teal-500/30'
+                  ? 'border-amber-400/60 animate-ping' 
+                  : 'border-teal-500/0 group-hover:border-teal-500/40'
                 }
               `}></div>
             </div>
             
-            {/* Status dot indicator */}
-            {!isLocationLoading && (
+            {/* Enhanced Status Indicator */}
+            {!isLocationLoading && !locationError && (
               <div className="absolute -top-1 -right-1 flex items-center justify-center">
-                <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse">
-                  <div className="absolute inset-0 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+                <div className="relative w-4 h-4">
+                  <div className="absolute inset-0 bg-emerald-500 rounded-full animate-pulse"></div>
+                  <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Error Indicator */}
+            {locationError && (
+              <div className="absolute -top-1 -right-1 flex items-center justify-center">
+                <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
+                  !
                 </div>
               </div>
             )}
           </div>
           
-          {/* Location Text with Modern Typography */}
-          <div className="flex flex-col min-w-0 max-w-36 relative">
+          {/* Enhanced Location Text with Better Layout */}
+          <div className="flex flex-col min-w-0 max-w-48 relative">
+            {/* Main Location Text with Scrolling Animation */}
             <div className="relative overflow-hidden">
-              <span className={`
-                text-sm font-semibold leading-tight truncate block
-                ${theme === 'dark' ? 'text-slate-100' : 'text-slate-800'}
-                group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-500
-                ${isLocationLoading ? 'animate-pulse' : locationAnimating ? 'animate-slide-text' : ''}
-              `}>
-                {isLocationLoading 
-                  ? (locationRetryCount > 0 ? `Retry ${locationRetryCount}/2` : 'Locating...') 
-                  : currentLocation}
-              </span>
+              <div className="location-scroll-container">
+                <span className={`
+                  text-sm font-bold leading-tight whitespace-nowrap inline-block
+                  ${theme === 'dark' ? 'text-slate-50' : 'text-slate-900'}
+                  group-hover:text-teal-600 dark:group-hover:text-teal-300 transition-colors duration-500
+                  ${isLocationLoading ? 'animate-pulse' : 'location-scroll-text'}
+                `}>
+                  {isLocationLoading 
+                    ? (locationRetryCount > 0 ? `Retrying ${locationRetryCount}/2...` : 'Detecting location...') 
+                    : currentLocation}
+                </span>
+              </div>
               
-              {/* Modern sliding highlight effect */}
+              {/* Gradient fade edges for smooth scroll effect */}
               <div className={`
-                absolute inset-0 bg-gradient-to-r from-transparent via-teal-400/15 to-transparent
-                transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out
-                ${theme === 'dark' ? 'via-teal-300/15' : 'via-teal-500/15'}
+                absolute left-0 top-0 bottom-0 w-4 pointer-events-none z-10
+                bg-gradient-to-r ${theme === 'dark' 
+                  ? 'from-slate-800 to-transparent' 
+                  : 'from-white to-transparent'
+                }
+              `}></div>
+              <div className={`
+                absolute right-0 top-0 bottom-0 w-4 pointer-events-none z-10
+                bg-gradient-to-l ${theme === 'dark' 
+                  ? 'from-slate-800 to-transparent' 
+                  : 'from-white to-transparent'
+                }
               `}></div>
             </div>
             
-            <div className="flex items-center gap-1 mt-0.5">
-              <div className={`
-                w-1 h-1 rounded-full transition-all duration-500
-                ${isLocationLoading 
-                  ? 'bg-amber-400 animate-pulse' 
-                  : 'bg-emerald-400 group-hover:bg-teal-400'
-                }
-              `}></div>
-              <span className={`
-                text-xs font-medium uppercase tracking-wider
-                ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}
-                opacity-70 group-hover:opacity-100 group-hover:text-teal-500 transition-all duration-500
-              `}>
-                Live
-              </span>
+            {/* Status Row with Enhanced Info */}
+            <div className="flex items-center gap-2 mt-1">
+              <div className="flex items-center gap-1">
+                <div className={`
+                  w-1.5 h-1.5 rounded-full transition-all duration-500
+                  ${isLocationLoading 
+                    ? 'bg-amber-400 animate-pulse' 
+                    : locationError
+                    ? 'bg-red-400'
+                    : 'bg-emerald-400 group-hover:bg-teal-400'
+                  }
+                `}></div>
+                <span className={`
+                  text-xs font-semibold uppercase tracking-wider
+                  ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}
+                  opacity-80 group-hover:opacity-100 group-hover:text-teal-500 transition-all duration-500
+                `}>
+                  {isLocationLoading ? 'Locating' : locationError ? 'Error' : 'Live GPS'}
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Modern Action Indicator */}
-          <div className="flex-shrink-0 ml-1">
+          {/* Enhanced Action Indicator */}
+          <div className="flex-shrink-0 ml-2">
             {!isLocationLoading ? (
               <div className={`
-                w-6 h-6 rounded-full flex items-center justify-center transition-all duration-500
+                w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-500
                 ${theme === 'dark' 
-                  ? 'bg-slate-700/50 group-hover:bg-teal-600/30' 
-                  : 'bg-slate-200/50 group-hover:bg-teal-500/20'
+                  ? 'bg-slate-700/60 group-hover:bg-teal-600/40' 
+                  : 'bg-slate-200/60 group-hover:bg-teal-500/30'
                 }
-                opacity-0 group-hover:opacity-100 transform scale-75 group-hover:scale-100
+                opacity-70 group-hover:opacity-100 transform scale-90 group-hover:scale-100
+                shadow-sm group-hover:shadow-md
               `}>
-                <svg className="w-3 h-3 text-slate-400 group-hover:text-teal-500 transition-all duration-500 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-slate-400 group-hover:text-teal-500 transition-all duration-500 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
                 </svg>
               </div>
             ) : (
-              <div className="w-6 h-6 flex items-center justify-center">
-                <div className="w-3 h-3 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-7 h-7 flex items-center justify-center">
+                <div className="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
               </div>
             )}
           </div>
           
-          {/* Error indicator with modern design */}
-          {locationError && (
-            <div className="flex items-center ml-2">
-              <div className={`
-                w-6 h-6 rounded-full flex items-center justify-center
-                ${theme === 'dark' ? 'bg-red-900/30' : 'bg-red-100/50'}
-                animate-pulse
-              `}>
-                <span className="text-red-500 text-xs">!</span>
-              </div>
-            </div>
-          )}
-          
-          {/* Modern border glow effect */}
+          {/* Enhanced border glow effect */}
           <div className={`
-            absolute inset-0 rounded-full border transition-all duration-500 pointer-events-none
+            absolute inset-0 rounded-2xl border-2 transition-all duration-500 pointer-events-none
             ${theme === 'dark' 
-              ? 'border-teal-500/0 group-hover:border-teal-500/30' 
-              : 'border-teal-400/0 group-hover:border-teal-400/40'
+              ? 'border-teal-500/0 group-hover:border-teal-500/40' 
+              : 'border-teal-400/0 group-hover:border-teal-400/50'
             }
           `}></div>
           
-          {/* Subtle background animation */}
+          {/* Enhanced background animation */}
           <div className={`
-            absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700
-            bg-gradient-to-r ${theme === 'dark' 
-              ? 'from-teal-600/5 via-cyan-600/3 to-emerald-600/5' 
-              : 'from-teal-500/5 via-cyan-500/3 to-emerald-500/5'
+            absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700
+            bg-gradient-to-br ${theme === 'dark' 
+              ? 'from-teal-600/8 via-cyan-600/5 to-emerald-600/8' 
+              : 'from-teal-500/8 via-cyan-500/5 to-emerald-500/8'
             }
           `}></div>
         </div>
@@ -2580,7 +2631,7 @@ const CalendarModals = ({
 };
 
 /**
- * MenuBar Component - Navigation Menu with Dropdown
+ * MenuBar Component - Professional Navigation Menu with Dropdown
  */
 const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, handleLanguageChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -2612,6 +2663,8 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
   const menuItems = [
     {
       category: "Explore",
+      icon: FaCompass,
+      color: "teal",
       items: [
         { name: "Home", path: "/", icon: "🏠", description: "Back to home" },
         { name: "Explore Nepal", path: "/explore-nepal", icon: "🗺️", description: "Discover Nepal" },
@@ -2622,6 +2675,8 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
     },
     {
       category: "Plan",
+      icon: FaBookOpen,
+      color: "purple",
       items: [
         { name: "Recommendations", path: "/recommendation", icon: "💡", description: "Get suggestions" },
         { name: "Itinerary", path: "/guide", icon: "📋", description: "Plan your trip" },
@@ -2629,7 +2684,9 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
       ]
     },
     {
-      category: "More",
+      category: "Support",
+      icon: FaQuestionCircle,
+      color: "cyan",
       items: [
         { name: "About", path: "/about", icon: "ℹ️", description: "About us" },
         { name: "Contact", path: "/contact", icon: "📧", description: "Get in touch" },
@@ -2641,44 +2698,82 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Menu Button - Icon Only */}
+      {/* Menu Button - Professional Design */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-center p-3 rounded-xl font-semibold text-sm transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${
+        className={`flex items-center justify-center w-11 h-11 rounded-xl font-semibold text-sm transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${
           theme === "dark" 
-            ? "border-slate-700/40 hover:border-slate-600/70 hover:bg-gradient-to-r hover:from-slate-800/50 hover:to-slate-700/50 hover:shadow-xl hover:shadow-slate-900/30 hover:scale-105 text-slate-200 hover:text-white" 
-            : "border-slate-200/40 hover:border-slate-300/70 hover:bg-gradient-to-r hover:from-slate-50/50 hover:to-slate-100/50 hover:shadow-xl hover:shadow-slate-200/30 hover:scale-105 text-slate-700 hover:text-slate-900"
-        } before:absolute before:inset-0 before:bg-gradient-to-r ${
-          theme === "dark"
-            ? "before:from-slate-600/10 before:to-slate-500/10"
-            : "before:from-slate-400/5 before:to-slate-300/5"
-        } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300`}
+            ? "border-slate-700/40 hover:border-teal-600/60 hover:bg-gradient-to-br hover:from-slate-800/60 hover:to-slate-700/60 hover:shadow-xl hover:shadow-teal-900/20 hover:scale-105 text-slate-200 hover:text-white" 
+            : "border-slate-200/40 hover:border-teal-500/60 hover:bg-gradient-to-br hover:from-white/60 hover:to-slate-50/60 hover:shadow-xl hover:shadow-teal-500/20 hover:scale-105 text-slate-700 hover:text-slate-900"
+        } ${isOpen ? 'border-teal-500/60 bg-teal-500/10' : ''}`}
         title="Navigation Menu"
       >
-        <FaBars className={`text-lg transition-all duration-300 ${isOpen ? 'text-teal-500' : ''}`} />
+        <FaBars className={`text-lg transition-all duration-300 ${isOpen ? 'text-teal-500 rotate-90' : ''}`} />
+        
+        {/* Active indicator */}
+        {isOpen && (
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-cyan-500/10 rounded-xl"></div>
+        )}
       </button>
 
-      {/* Dropdown Menu - Scrollable with Location & Language */}
+      {/* Professional Dropdown Menu - Fixed to Left Corner */}
       {isOpen && (
-        <div className={`absolute top-full left-0 mt-2 w-72 rounded-2xl backdrop-blur-2xl border shadow-2xl z-50 overflow-hidden max-h-[70vh] ${
-          theme === "dark" 
-            ? "bg-slate-900/95 border-slate-700/50 shadow-slate-900/50" 
-            : "bg-white/95 border-slate-200/50 shadow-slate-900/20"
-        }`}>
-          {/* Top Section: Location & Language */}
-          <div className={`p-4 border-b ${
-            theme === "dark" ? "border-slate-700/50" : "border-slate-200/50"
+        <div 
+          className={`fixed left-4 top-32 w-80 rounded-2xl backdrop-blur-2xl border shadow-2xl z-[60] overflow-hidden ${
+            theme === "dark" 
+              ? "bg-slate-900/98 border-slate-700/50 shadow-slate-900/60" 
+              : "bg-white/98 border-slate-200/50 shadow-slate-900/20"
+          }`}
+          style={{ maxHeight: "calc(100vh - 140px)" }}
+        >
+          
+          {/* Header Section */}
+          <div className={`px-5 py-4 border-b ${
+            theme === "dark" 
+              ? "bg-gradient-to-br from-slate-800/60 to-slate-800/40 border-slate-700/50" 
+              : "bg-gradient-to-br from-slate-50/80 to-white/80 border-slate-200/50"
           }`}>
-            {/* Location Indicator */}
+            <div className="flex items-center gap-3 mb-1">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                theme === 'dark' 
+                  ? 'bg-gradient-to-br from-teal-600/30 to-cyan-600/20' 
+                  : 'bg-gradient-to-br from-teal-500/20 to-cyan-500/15'
+              }`}>
+                <FaBars className="text-lg text-teal-600 dark:text-teal-400" />
+              </div>
+              <div>
+                <h3 className={`text-base font-bold ${
+                  theme === 'dark' ? 'text-slate-100' : 'text-slate-900'
+                }`}>
+                  Navigation
+                </h3>
+                <p className={`text-xs ${
+                  theme === 'dark' ? 'text-slate-400' : 'text-slate-600'
+                }`}>
+                  Quick access to all features
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Scrollable Content Container */}
+          <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 dark:scrollbar-thumb-slate-400 scrollbar-track-transparent" style={{ maxHeight: "calc(100vh - 240px)" }}>
+            
+            {/* Location & Language Section */}
+            <div className={`px-5 py-4 border-b ${
+              theme === "dark" ? "border-slate-700/50 bg-slate-800/20" : "border-slate-200/50 bg-slate-50/30"
+            }`}>
+            
+            {/* Location Card */}
             <div 
               className={`
-                flex items-center gap-2.5 px-3 py-2.5 rounded-xl border mb-3
+                flex items-center gap-3 px-4 py-3 rounded-xl border mb-3
                 cursor-pointer transition-all duration-300 group
                 ${theme === 'dark' 
-                  ? 'bg-slate-800/40 border-slate-700/40 hover:bg-slate-800/60 hover:border-slate-600/50' 
-                  : 'bg-white/40 border-slate-200/40 hover:bg-white/60 hover:border-slate-300/50'
+                  ? 'bg-gradient-to-br from-slate-800/60 to-slate-800/40 border-slate-700/50 hover:border-teal-600/50 hover:shadow-lg hover:shadow-teal-900/20' 
+                  : 'bg-gradient-to-br from-white/80 to-slate-50/60 border-slate-200/50 hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/20'
                 }
-                hover:shadow-md
+                hover:scale-[1.02] transform-gpu
               `}
               onClick={() => {
                 if (typeof forceRefreshLocation === 'function') {
@@ -2689,20 +2784,23 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
             >
               {/* Icon */}
               <div className={`
-                w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
-                ${theme === 'dark' ? 'bg-teal-500/20' : 'bg-teal-500/15'}
+                w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner
+                ${theme === 'dark' 
+                  ? 'bg-gradient-to-br from-teal-600/30 to-cyan-600/20' 
+                  : 'bg-gradient-to-br from-teal-500/20 to-cyan-500/15'
+                }
               `}>
-                <FaMapMarkerAlt className="text-sm text-teal-600 dark:text-teal-400" />
+                <FaMapMarkerAlt className="text-base text-teal-600 dark:text-teal-400" />
               </div>
               
               {/* Text */}
               <div className="flex-1 min-w-0">
-                <div className={`text-xs font-semibold mb-0.5 ${
+                <div className={`text-xs font-bold mb-0.5 ${
                   theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
                 }`}>
                   Your Location
                 </div>
-                <div className={`text-xs truncate ${
+                <div className={`text-xs truncate font-medium ${
                   theme === 'dark' ? 'text-slate-400' : 'text-slate-500'
                 }`}>
                   Kathmandu, Nepal
@@ -2710,206 +2808,142 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
               </div>
 
               {/* Refresh Icon */}
-              <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <svg className="w-4 h-4 text-slate-400 group-hover:text-teal-500 transition-all duration-300 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
-                </svg>
+              <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                  theme === 'dark' ? 'bg-slate-700/50' : 'bg-slate-100/50'
+                }`}>
+                  <svg className="w-4 h-4 text-slate-400 group-hover:text-teal-500 transition-all duration-300 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+                  </svg>
+                </div>
               </div>
             </div>
 
-            {/* Language Selector */}
+            {/* Language Card */}
             <div className={`
-              rounded-xl border
+              rounded-xl border overflow-hidden
               ${theme === 'dark' 
-                ? 'bg-slate-800/40 border-slate-700/40' 
-                : 'bg-white/40 border-slate-200/40'
+                ? 'bg-gradient-to-br from-slate-800/60 to-slate-800/40 border-slate-700/50' 
+                : 'bg-gradient-to-br from-white/80 to-slate-50/60 border-slate-200/50'
               }
             `}>
               {/* Header */}
-              <div className="flex items-center gap-2.5 px-3 py-2.5 border-b border-slate-700/40 dark:border-slate-600/40">
+              <div className={`flex items-center gap-3 px-4 py-3 border-b ${
+                theme === 'dark' ? 'border-slate-700/50' : 'border-slate-200/50'
+              }`}>
                 <div className={`
-                  w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
-                  ${theme === 'dark' ? 'bg-cyan-500/20' : 'bg-cyan-500/15'}
+                  w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner
+                  ${theme === 'dark' 
+                    ? 'bg-gradient-to-br from-cyan-600/30 to-blue-600/20' 
+                    : 'bg-gradient-to-br from-cyan-500/20 to-blue-500/15'
+                  }
                 `}>
-                  <FaGlobe className="text-sm text-cyan-600 dark:text-cyan-400" />
+                  <FaGlobe className="text-base text-cyan-600 dark:text-cyan-400" />
                 </div>
                 <div className="flex-1">
-                  <div className={`text-xs font-semibold ${
+                  <div className={`text-xs font-bold ${
                     theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
                   }`}>
                     Language
                   </div>
-                  <div className={`text-[10px] ${
+                  <div className={`text-[10px] font-medium ${
                     theme === 'dark' ? 'text-slate-400' : 'text-slate-500'
                   }`}>
-                    Choose your language
+                    Choose your preference
                   </div>
                 </div>
               </div>
               
               {/* Language Grid */}
               <div className="p-3 grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => {
-                    if (typeof handleLanguageChange === 'function') {
-                      handleLanguageChange('en');
-                    }
-                  }}
-                  className={`
-                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
-                    ${selectedLanguage === 'en'
-                      ? theme === 'dark'
-                        ? 'bg-teal-600 text-white shadow-md'
-                        : 'bg-teal-500 text-white shadow-md'
-                      : theme === 'dark'
-                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
-                    }
-                  `}
-                >
-                  <span className="text-base">🇬🇧</span>
-                  <span>English</span>
-                </button>
-                
-                <button
-                  onClick={() => {
-                    if (typeof handleLanguageChange === 'function') {
-                      handleLanguageChange('ne');
-                    }
-                  }}
-                  className={`
-                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
-                    ${selectedLanguage === 'ne'
-                      ? theme === 'dark'
-                        ? 'bg-teal-600 text-white shadow-md'
-                        : 'bg-teal-500 text-white shadow-md'
-                      : theme === 'dark'
-                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
-                    }
-                  `}
-                >
-                  <span className="text-base">🇳🇵</span>
-                  <span>नेपाली</span>
-                </button>
-                
-                <button
-                  onClick={() => {
-                    if (typeof handleLanguageChange === 'function') {
-                      handleLanguageChange('hi');
-                    }
-                  }}
-                  className={`
-                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
-                    ${selectedLanguage === 'hi'
-                      ? theme === 'dark'
-                        ? 'bg-teal-600 text-white shadow-md'
-                        : 'bg-teal-500 text-white shadow-md'
-                      : theme === 'dark'
-                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
-                    }
-                  `}
-                >
-                  <span className="text-base">🇮🇳</span>
-                  <span>हिन्दी</span>
-                </button>
-                
-                <button
-                  onClick={() => {
-                    if (typeof handleLanguageChange === 'function') {
-                      handleLanguageChange('zh');
-                    }
-                  }}
-                  className={`
-                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
-                    ${selectedLanguage === 'zh'
-                      ? theme === 'dark'
-                        ? 'bg-teal-600 text-white shadow-md'
-                        : 'bg-teal-500 text-white shadow-md'
-                      : theme === 'dark'
-                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
-                    }
-                  `}
-                >
-                  <span className="text-base">🇨🇳</span>
-                  <span>中文</span>
-                </button>
-                
-                <button
-                  onClick={() => {
-                    if (typeof handleLanguageChange === 'function') {
-                      handleLanguageChange('ja');
-                    }
-                  }}
-                  className={`
-                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
-                    ${selectedLanguage === 'ja'
-                      ? theme === 'dark'
-                        ? 'bg-teal-600 text-white shadow-md'
-                        : 'bg-teal-500 text-white shadow-md'
-                      : theme === 'dark'
-                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
-                    }
-                  `}
-                >
-                  <span className="text-base">🇯🇵</span>
-                  <span>日本語</span>
-                </button>
-                
-                <button
-                  onClick={() => {
-                    if (typeof handleLanguageChange === 'function') {
-                      handleLanguageChange('ko');
-                    }
-                  }}
-                  className={`
-                    px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 flex items-center justify-center gap-1.5
-                    ${selectedLanguage === 'ko'
-                      ? theme === 'dark'
-                        ? 'bg-teal-600 text-white shadow-md'
-                        : 'bg-teal-500 text-white shadow-md'
-                      : theme === 'dark'
-                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-                        : 'bg-slate-100/50 text-slate-600 hover:bg-slate-100'
-                    }
-                  `}
-                >
-                  <span className="text-base">🇰🇷</span>
-                  <span>한국어</span>
-                </button>
+                {[
+                  { code: 'en', flag: '🇬🇧', name: 'English' },
+                  { code: 'ne', flag: '🇳🇵', name: 'नेपाली' },
+                  { code: 'hi', flag: '🇮🇳', name: 'हिन्दी' },
+                  { code: 'zh', flag: '🇨🇳', name: '中文' },
+                  { code: 'ja', flag: '🇯🇵', name: '日本語' },
+                  { code: 'ko', flag: '🇰🇷', name: '한국어' }
+                ].map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => {
+                      if (typeof handleLanguageChange === 'function') {
+                        handleLanguageChange(lang.code);
+                      }
+                    }}
+                    className={`
+                      px-3 py-2.5 rounded-lg text-xs font-bold transition-all duration-200 
+                      flex items-center justify-center gap-2 border
+                      ${selectedLanguage === lang.code
+                        ? theme === 'dark'
+                          ? 'bg-gradient-to-br from-teal-600 to-cyan-600 text-white shadow-lg border-teal-500/50'
+                          : 'bg-gradient-to-br from-teal-500 to-cyan-500 text-white shadow-lg border-teal-400/50'
+                        : theme === 'dark'
+                          ? 'bg-slate-700/40 text-slate-300 hover:bg-slate-700/60 border-slate-600/40 hover:border-slate-500/60'
+                          : 'bg-slate-50/40 text-slate-600 hover:bg-slate-100/60 border-slate-200/40 hover:border-slate-300/60'
+                      }
+                      hover:scale-105 transform-gpu
+                    `}
+                  >
+                    <span className="text-base">{lang.flag}</span>
+                    <span>{lang.name}</span>
+                  </button>
+                ))}
               </div>
             </div>
-          </div>
+            </div>
 
-          {/* Menu Items - Scrollable */}
-          <div className="p-4 overflow-y-auto max-h-[calc(70vh-12rem)] scrollbar-thin scrollbar-thumb-slate-600 dark:scrollbar-thumb-slate-400 scrollbar-track-transparent">
-            {menuItems.map((category, categoryIndex) => (
-              <div key={category.category} className={categoryIndex > 0 ? 'mt-4' : ''}>
-                {/* Category Header */}
-                <div className={`text-xs font-bold uppercase tracking-wider mb-3 px-2 ${
-                  theme === "dark" ? "text-slate-400" : "text-slate-500"
-                }`}>
-                  {category.category}
+            {/* Menu Items */}
+            <div className="p-4">
+              {menuItems.map((category, categoryIndex) => (
+              <div key={category.category} className={categoryIndex > 0 ? 'mt-5' : ''}>
+                {/* Category Header with Icon */}
+                <div className="flex items-center gap-2.5 mb-3 px-2">
+                  <div className={`
+                    w-8 h-8 rounded-lg flex items-center justify-center
+                    ${category.color === 'teal' 
+                      ? theme === 'dark' ? 'bg-teal-600/20' : 'bg-teal-500/15'
+                      : category.color === 'purple'
+                      ? theme === 'dark' ? 'bg-purple-600/20' : 'bg-purple-500/15'
+                      : theme === 'dark' ? 'bg-cyan-600/20' : 'bg-cyan-500/15'
+                    }
+                  `}>
+                    <category.icon className={`text-sm ${
+                      category.color === 'teal' 
+                        ? 'text-teal-600 dark:text-teal-400'
+                        : category.color === 'purple'
+                        ? 'text-purple-600 dark:text-purple-400'
+                        : 'text-cyan-600 dark:text-cyan-400'
+                    }`} />
+                  </div>
+                  <div className={`text-xs font-black uppercase tracking-wider ${
+                    theme === "dark" ? "text-slate-300" : "text-slate-700"
+                  }`}>
+                    {category.category}
+                  </div>
                 </div>
                 
                 {/* Category Items */}
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   {category.items.map((item) => (
                     <button
                       key={item.path || item.name}
                       onClick={() => handleMenuClick(item)}
-                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left group ${
+                      className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 text-left group border ${
                         theme === "dark" 
-                          ? "hover:bg-slate-800/60 text-slate-200 hover:text-white" 
-                          : "hover:bg-slate-50/60 text-slate-700 hover:text-slate-900"
+                          ? "hover:bg-slate-800/60 text-slate-200 hover:text-white border-transparent hover:border-slate-700/50 hover:shadow-lg" 
+                          : "hover:bg-slate-50/60 text-slate-700 hover:text-slate-900 border-transparent hover:border-slate-200/50 hover:shadow-md"
                       }`}
                     >
-                      <span className="text-lg flex-shrink-0">{item.icon}</span>
+                      <div className={`
+                        w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-xl
+                        ${theme === 'dark' ? 'bg-slate-800/60 group-hover:bg-slate-700/60' : 'bg-slate-100/60 group-hover:bg-slate-200/60'}
+                        transition-all duration-200
+                      `}>
+                        {item.icon}
+                      </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium text-sm">{item.name}</div>
+                        <div className="font-semibold text-sm mb-0.5">{item.name}</div>
                         <div className={`text-xs ${
                           theme === "dark" ? "text-slate-400" : "text-slate-500"
                         }`}>
@@ -2917,20 +2951,34 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
                         </div>
                       </div>
                       <svg 
-                        className={`w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${
-                          theme === "dark" ? "text-slate-400" : "text-slate-500"
+                        className={`w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 flex-shrink-0 ${
+                          theme === "dark" ? "text-teal-400" : "text-teal-600"
                         }`} 
                         fill="none" 
                         stroke="currentColor" 
                         viewBox="0 0 24 24"
                       >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                       </svg>
                     </button>
                   ))}
                 </div>
               </div>
             ))}
+            </div>
+          </div>
+
+          {/* Footer */}
+          <div className={`px-5 py-3 border-t text-center ${
+            theme === "dark" 
+              ? "bg-slate-800/40 border-slate-700/50" 
+              : "bg-slate-50/60 border-slate-200/50"
+          }`}>
+            <p className={`text-xs font-medium ${
+              theme === "dark" ? "text-slate-400" : "text-slate-500"
+            }`}>
+              Roamio Wanderly © 2024
+            </p>
           </div>
         </div>
       )}
