@@ -64,7 +64,8 @@ def serialize_hotel(hotel):
         'rating': hotel.rating,
         'price_range': hotel.price_range,
         'place_id': hotel.place_id,
-        'all_images': json.loads(hotel.all_images) if hotel.all_images else []
+        'all_images': json.loads(hotel.all_images) if hotel.all_images else [],
+        'source': getattr(hotel, 'source', 'dataset')  # Include source field
     }
 
 def serialize_restaurant(restaurant):
@@ -78,8 +79,10 @@ def serialize_restaurant(restaurant):
         'image_url': restaurant.image_url,
         'rating': restaurant.rating,
         'price_range': restaurant.price_range,
+        'cuisine': getattr(restaurant, 'cuisine', None),  # Include cuisine, handle if column doesn't exist yet
         'place_id': restaurant.place_id,
-        'all_images': json.loads(restaurant.all_images) if restaurant.all_images else []
+        'all_images': json.loads(restaurant.all_images) if restaurant.all_images else [],
+        'source': getattr(restaurant, 'source', 'dataset')  # Include source field
     }
 
 def serialize_event(event):
@@ -102,42 +105,99 @@ def create_place():
     ptype = request.form.get('type')
     description = request.form.get('description')
     tags = request.form.get('tags')
+    submission_type = request.form.get('submission_type', 'place')  # Default to 'place'
+    
+    # Type-specific fields
+    price_range = request.form.get('price_range')
+    rating = request.form.get('rating')
+    cuisine = request.form.get('cuisine')
+    price_level = request.form.get('price_level')
 
     if not name:
         return jsonify({'error': 'Name is required'}), 400
 
-    # handle file uploads (image_1, image_2 etc.) - take first if present
+    # Handle file uploads (image_1, image_2 etc.)
     image_url = None
-    for key in request.files:
+    all_images = []
+    cover_index = int(request.form.get('cover_index', 0))
+    
+    # Collect all uploaded images
+    for key in sorted(request.files.keys()):
         f = request.files[key]
         if f and f.filename:
             filename = secure_filename(f.filename)
             save_path = os.path.join(UPLOAD_DIR, filename)
             f.save(save_path)
-            # store path relative to /datasets for serving
-            image_url = f"/datasets/uploads/{filename}"
-            break
+            img_path = f"/datasets/uploads/{filename}"
+            all_images.append(img_path)
+    
+    # Set cover image
+    if all_images:
+        image_url = all_images[cover_index] if cover_index < len(all_images) else all_images[0]
 
-    # Save to DB with 'pending' status and 'user_submission' source
+    # Save to DB based on submission type
     session = SessionLocal()
     try:
-        place = Place(
-            name=name,
-            location=location,
-            type=ptype,
-            description=description,
-            tags=tags,
-            image_url=image_url,
-            status='pending',  # Set as pending for admin approval
-            source='user_submission'  # Mark as user submission
-        )
-        session.add(place)
-        session.commit()
-        session.refresh(place)
-        return jsonify({'success': True, 'place_id': place.id, 'status': 'pending'}), 201
+        if submission_type == 'hotel':
+            # Create hotel entry
+            hotel = Hotel(
+                name=name,
+                location=location,
+                description=description,
+                tags=tags,
+                image_url=image_url,
+                rating=float(rating) if rating else None,  # Don't set default rating
+                price_range=price_range or 'Mid-range ($30-80)',
+                all_images=json.dumps(all_images) if all_images else None,
+                source='user_submission',  # Mark as user submission
+                status='pending'  # Set as pending for admin approval
+            )
+            session.add(hotel)
+            session.commit()
+            session.refresh(hotel)
+            return jsonify({'success': True, 'hotel_id': hotel.id, 'status': 'pending', 'type': 'hotel'}), 201
+            
+        elif submission_type == 'restaurant':
+            # Create restaurant entry
+            restaurant = Restaurant(
+                name=name,
+                location=location,
+                description=description,
+                tags=tags,
+                image_url=image_url,
+                rating=float(rating) if rating else None,  # Don't set default rating
+                price_range=price_level or '$ (Moderate)',
+                cuisine=cuisine,  # Add cuisine field
+                all_images=json.dumps(all_images) if all_images else None,
+                source='user_submission',  # Mark as user submission
+                status='pending'  # Set as pending for admin approval
+            )
+            session.add(restaurant)
+            session.commit()
+            session.refresh(restaurant)
+            return jsonify({'success': True, 'restaurant_id': restaurant.id, 'status': 'pending', 'type': 'restaurant'}), 201
+            
+        else:
+            # Create place entry (default)
+            place = Place(
+                name=name,
+                location=location,
+                type=ptype,
+                description=description,
+                tags=tags,
+                image_url=image_url,
+                all_images=json.dumps(all_images) if all_images else None,
+                status='pending',  # Set as pending for admin approval
+                source='user_submission'  # Mark as user submission
+            )
+            session.add(place)
+            session.commit()
+            session.refresh(place)
+            return jsonify({'success': True, 'place_id': place.id, 'status': 'pending', 'type': 'place'}), 201
+            
     except Exception as e:
         session.rollback()
-        current_app.logger.error('Failed to create place: %s', e)
+        current_app.logger.error('Failed to create submission: %s', e)
         return jsonify({'error': 'internal server error'}), 500
     finally:
         session.close()

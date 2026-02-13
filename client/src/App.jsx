@@ -8,6 +8,7 @@ import { FaSearch, FaHotel, FaUtensils, FaMapMarkedAlt, FaCamera, FaRobot } from
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { useTranslation } from 'react-i18next';
+import ScrollToTop from "./components/ScrollToTop";
 
 // Lazy load components for better performance
 import { lazy, Suspense } from "react";
@@ -54,70 +55,102 @@ const AdminRoute = lazy(() => import("./pages/admin/AdminRoute"));
 import nepalImage from "./assets/nepal.jpg";
 import { hotelService } from "./services/hotelService";
 
-// Ultra Professional InspireButton component
-const InspireButton = memo(({ isSignedIn, onClick, theme }) => (
-  <div className="fixed top-28 right-4 md:top-32 md:right-6 z-50">
+// Ultra Professional InspireButton component with scroll detection
+const InspireButton = memo(({ isSignedIn, onClick, theme }) => {
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Only show button at the very top of the page (first 300px)
+      // Hide completely when scrolling down
+      if (currentScrollY > 300) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
+  return (
+  <div className={`fixed top-36 left-12 md:top-40 md:left-16 z-50 transition-all duration-500 ${
+    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20 pointer-events-none'
+  }`}>
     <div className="relative group">
-      {/* Premium Background Glow */}
-      <div className={`absolute -inset-4 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-700 ${
+      {/* Enhanced Premium Background Glow - More Visible */}
+      <div className={`absolute -inset-6 rounded-full opacity-60 group-hover:opacity-100 transition-all duration-700 animate-pulse ${
         theme === "dark" 
-          ? "bg-gradient-to-r from-teal-600/20 via-emerald-600/15 to-cyan-600/20" 
-          : "bg-gradient-to-r from-teal-500/15 via-emerald-500/10 to-cyan-500/15"
+          ? "bg-gradient-to-r from-teal-500/40 via-emerald-500/30 to-cyan-500/40" 
+          : "bg-gradient-to-r from-teal-400/30 via-emerald-400/25 to-cyan-400/30"
       } blur-2xl`} />
+      
+      {/* Rotating Ring Animation */}
+      <div className="absolute inset-0 rounded-full">
+        <div className={`absolute inset-0 rounded-full border-2 border-dashed animate-spin-slow ${
+          theme === "dark" ? "border-teal-400/30" : "border-teal-500/40"
+        }`} style={{ animationDuration: '8s' }} />
+      </div>
       
       <button
         onClick={onClick}
-        className={`relative w-16 h-16 md:w-18 md:h-18 rounded-full backdrop-blur-2xl border transition-all duration-500 transform-gpu will-change-transform group-hover:scale-110 ${
+        className={`relative w-18 h-18 md:w-22 md:h-22 rounded-full backdrop-blur-2xl border-2 transition-all duration-500 transform-gpu will-change-transform group-hover:scale-110 animate-bounce-slow ${
           theme === "dark" 
-            ? "bg-slate-900/95 border-slate-700/50 hover:border-slate-600/70 shadow-2xl hover:shadow-teal-500/20" 
-            : "bg-white/98 border-slate-200/50 hover:border-slate-300/70 shadow-2xl hover:shadow-teal-500/30"
+            ? "bg-gradient-to-br from-slate-900/95 to-slate-800/95 border-teal-500/60 hover:border-teal-400/80 shadow-2xl shadow-teal-500/30 hover:shadow-teal-400/50" 
+            : "bg-gradient-to-br from-white/98 to-teal-50/98 border-teal-400/60 hover:border-teal-500/80 shadow-2xl shadow-teal-400/40 hover:shadow-teal-500/60"
         }`}
         title={isSignedIn ? "Inspire My Journey" : "Sign in for personalized recommendations"}
       >
         {/* Premium Glass Effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-white/10 dark:from-slate-700/20 dark:via-transparent dark:to-slate-700/10 rounded-full pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 dark:from-teal-400/20 dark:via-transparent dark:to-emerald-400/10 rounded-full pointer-events-none"></div>
         
-        {/* Executive Icon Container */}
-        <div className={`absolute inset-3 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ${
+        {/* Executive Icon Container - Larger & More Vibrant */}
+        <div className={`absolute inset-3 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 ${
           theme === "dark" 
-            ? "bg-gradient-to-br from-teal-600 via-emerald-600 to-cyan-600" 
-            : "bg-gradient-to-br from-teal-500 via-emerald-500 to-cyan-500"
-        } shadow-xl`}>
-          <FaCamera className="text-white text-xl md:text-2xl group-hover:scale-110 transition-transform duration-500 drop-shadow-sm" />
+            ? "bg-gradient-to-br from-teal-500 via-emerald-500 to-cyan-500" 
+            : "bg-gradient-to-br from-teal-400 via-emerald-400 to-cyan-400"
+        } shadow-2xl shadow-teal-500/50`}>
+          <FaCamera className="text-white text-xl md:text-2xl group-hover:scale-125 transition-transform duration-500 drop-shadow-lg animate-pulse" />
           
           {/* Premium Lock overlay */}
           {!isSignedIn && (
             <div className="absolute inset-0 bg-slate-900/60 rounded-full flex items-center justify-center backdrop-blur-sm">
-              <svg className="w-5 h-5 text-white drop-shadow-sm" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-6 h-6 text-white drop-shadow-lg" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
               </svg>
             </div>
           )}
         </div>
         
-        {/* Premium Sparkle */}
-        <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full flex items-center justify-center animate-bounce shadow-lg">
-          <span className="text-white text-sm font-bold drop-shadow-sm">✨</span>
+        {/* Enhanced Premium Sparkle - Bigger & More Animated */}
+        <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-yellow-400 via-amber-400 to-orange-500 rounded-full flex items-center justify-center shadow-xl shadow-yellow-500/50 animate-bounce">
+          <span className="text-white text-base font-bold drop-shadow-lg animate-pulse">✨</span>
         </div>
         
-        {/* Executive Ring Effect */}
-        <div className={`absolute inset-0 rounded-full border-2 opacity-0 group-hover:opacity-100 transition-all duration-500 ${
+        {/* Pulsing Ring Effect - More Visible */}
+        <div className={`absolute -inset-1 rounded-full border-3 opacity-70 group-hover:opacity-100 transition-all duration-500 ${
           theme === "dark" 
-            ? "border-teal-400/40" 
-            : "border-teal-500/40"
-        } animate-pulse`}></div>
+            ? "border-teal-400/60 shadow-lg shadow-teal-400/30" 
+            : "border-teal-500/60 shadow-lg shadow-teal-500/30"
+        } animate-ping`} style={{ animationDuration: '2s' }}></div>
         
         {/* Premium Shine Effect */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-shimmer" />
       </button>
       
-      {/* Executive Tooltip */}
-      <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-4 px-4 py-3 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500 whitespace-nowrap ${
+      {/* Executive Tooltip - More Prominent */}
+      <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-4 px-5 py-3 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500 whitespace-nowrap ${
         theme === "dark" 
-          ? "bg-slate-900/98 text-white border border-slate-700/50" 
-          : "bg-white/98 text-slate-800 border border-slate-200/50"
-      } shadow-2xl backdrop-blur-xl`}>
-        <span className="text-sm font-semibold tracking-wide">
+          ? "bg-gradient-to-br from-slate-900/98 to-slate-800/98 text-white border-2 border-teal-500/50 shadow-xl shadow-teal-500/30" 
+          : "bg-gradient-to-br from-white/98 to-teal-50/98 text-slate-800 border-2 border-teal-400/50 shadow-xl shadow-teal-400/30"
+      } backdrop-blur-xl`}>
+        <span className="text-base font-bold tracking-wide bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent">
           {isSignedIn ? "Inspire My Journey" : "Premium Access Required"}
         </span>
         {!isSignedIn && (
@@ -125,13 +158,14 @@ const InspireButton = memo(({ isSignedIn, onClick, theme }) => (
             Personalized travel recommendations
           </div>
         )}
-        <div className={`absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rotate-45 ${
-          theme === "dark" ? "bg-slate-900 border-l border-t border-slate-700/50" : "bg-white border-l border-t border-slate-200/50"
+        <div className={`absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 rotate-45 ${
+          theme === "dark" ? "bg-slate-900 border-l-2 border-t-2 border-teal-500/50" : "bg-white border-l-2 border-t-2 border-teal-400/50"
         }`}></div>
       </div>
     </div>
   </div>
-));
+  );
+});
 
 InspireButton.displayName = 'InspireButton';
 
@@ -305,20 +339,30 @@ const MainApp = memo(() => {
             {/* Premium Glass Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-white/20 dark:from-slate-800/40 dark:via-transparent dark:to-slate-800/20 pointer-events-none"></div>
             
-            {/* Nepal Background Image - Balanced Visibility */}
-            <div 
-              className="absolute inset-0 opacity-45 dark:opacity-35 transition-opacity duration-700 group-hover:opacity-55 dark:group-hover:opacity-45"
-              style={{
-                backgroundImage: `url(${nepalImage})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                filter: 'brightness(0.9) contrast(0.9) saturate(0.8) blur(0.3px)'
-              }}
-            />
+            {/* Nepal Background Video - Beautiful Nature */}
+            <div className="absolute inset-0 opacity-60 dark:opacity-50 transition-opacity duration-700 group-hover:opacity-70 dark:group-hover:opacity-60 overflow-hidden">
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+                style={{
+                  filter: 'brightness(1) contrast(1.05) saturate(1.1)'
+                }}
+              >
+                <source src="/IMG_8851.MP4" type="video/mp4" />
+                {/* Fallback to image if video doesn't load */}
+                <img 
+                  src={nepalImage} 
+                  alt="Nepal" 
+                  className="w-full h-full object-cover"
+                />
+              </video>
+            </div>
             
-            {/* Professional Gradient Overlay - Balanced */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/85 via-white/75 to-white/85 dark:from-slate-900/85 dark:via-slate-900/75 dark:to-slate-900/85"></div>
+            {/* Professional Gradient Overlay - Lighter for better video visibility */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/60 to-white/70 dark:from-slate-900/70 dark:via-slate-900/60 dark:to-slate-900/70"></div>
             
             {/* Premium Top Border */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-500/40 to-transparent"></div>
@@ -551,13 +595,13 @@ const ChatButton = memo(({ onClick, theme }) => (
         {/* Pulsing Ring */}
         <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-full animate-ping opacity-75"></div>
         
-        {/* Main Button */}
-        <div className="relative w-16 h-16 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 group-hover:rotate-12">
-          <FaRobot className="text-white text-2xl" />
+        {/* Main Button - Increased Size */}
+        <div className="relative w-20 h-20 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 group-hover:rotate-12">
+          <FaRobot className="text-white text-3xl" />
         </div>
         
         {/* Tooltip */}
-        <div className={`absolute bottom-full right-0 mb-2 px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ${
+        <div className={`absolute bottom-full right-0 mb-2 px-4 py-2.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-base font-semibold ${
           theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-800 text-white"
         }`}>
           Chat with Travel Expert
@@ -577,6 +621,7 @@ const App = memo(() => (
   <ThemeProvider>
     <ToastProvider>
       <Router>
+        <ScrollToTop />
         <Suspense fallback={
           <div className="min-h-screen bg-slate-900 flex items-center justify-center">
             <div className="text-center">

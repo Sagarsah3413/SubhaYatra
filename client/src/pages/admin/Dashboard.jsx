@@ -8,11 +8,16 @@ export default function AdminDashboard() {
   const [lastLoginTime, setLastLoginTime] = useState(null);
   const [lastLogoutTime, setLastLogoutTime] = useState(null);
   const [submittedPlaces, setSubmittedPlaces] = useState([]);
+  const [submittedHotels, setSubmittedHotels] = useState([]);
+  const [submittedRestaurants, setSubmittedRestaurants] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all');
+  const [submissionTypeFilter, setSubmissionTypeFilter] = useState('all'); // all, place, hotel, restaurant
   const [stats, setStats] = useState({
     totalPlaces: 0,
     totalHotels: 0,
@@ -29,24 +34,62 @@ export default function AdminDashboard() {
   });
   const [selectedReview, setSelectedReview] = useState(null);
 
-  // Fetch submitted places (user submissions only) - load on mount for stats
+  // Helper function to get auth headers with JWT token
+  const getAuthHeaders = () => {
+    const adminData = localStorage.getItem("admin");
+    if (!adminData) {
+      navigate("/admin/login");
+      return null;
+    }
+    
+    try {
+      const admin = JSON.parse(adminData);
+      if (!admin.access_token) {
+        navigate("/admin/login");
+        return null;
+      }
+      
+      return {
+        headers: {
+          'Authorization': `Bearer ${admin.access_token}`
+        }
+      };
+    } catch (err) {
+      console.error("Failed to parse admin data:", err);
+      navigate("/admin/login");
+      return null;
+    }
+  };
+
+  // Fetch submitted places, hotels, and restaurants (user submissions only) - load on mount for stats
   useEffect(() => {
-    const fetchSubmittedPlaces = async () => {
+    const fetchSubmittedData = async () => {
       setLoading(true);
       try {
         // Fetch all places including pending ones for admin
-        const res = await axios.get("http://localhost:8000/api/places?limit=1000&status=all");
+        const placesRes = await axios.get("http://localhost:8000/api/places?limit=1000&status=all");
         // Filter to only show user submissions (not dataset places)
-        const userSubmissions = (res.data.places || []).filter(place => place.source === 'user_submission');
+        const userSubmissions = (placesRes.data.places || []).filter(place => place.source === 'user_submission');
         setSubmittedPlaces(userSubmissions);
+
+        // Fetch all hotels and filter for user submissions
+        const hotelsRes = await axios.get("http://localhost:8000/api/hotels?limit=1000");
+        const userHotels = (hotelsRes.data.hotels || []).filter(hotel => hotel.source === 'user_submission');
+        setSubmittedHotels(userHotels);
+
+        // Fetch all restaurants and filter for user submissions
+        const restaurantsRes = await axios.get("http://localhost:8000/api/restaurants?limit=1000");
+        const userRestaurants = (restaurantsRes.data.restaurants || []).filter(restaurant => restaurant.source === 'user_submission');
+        setSubmittedRestaurants(userRestaurants);
+
       } catch (err) {
-        console.error("Failed to fetch submitted places:", err);
+        console.error("Failed to fetch submitted data:", err);
       } finally {
         setLoading(false);
       }
     };
     
-    fetchSubmittedPlaces();
+    fetchSubmittedData();
   }, []);
 
   // Fetch stats (for hotels and restaurants only - places stats come from submittedPlaces)
@@ -62,14 +105,14 @@ export default function AdminDashboard() {
           totalPlaces: 0, // Will be calculated from submittedPlaces
           totalHotels: hotelsRes.data.total || 0,
           totalRestaurants: restaurantsRes.data.total || 0,
-          recentSubmissions: 0 // Will be calculated from submittedPlaces
+          recentSubmissions: 0 // Will be calculated from all submissions
         });
       } catch (err) {
         console.error("Failed to fetch stats:", err);
       }
     };
     fetchStats();
-  }, []);
+  }, [submittedPlaces, submittedHotels, submittedRestaurants]);
 
   // Fetch last login/logout times
   useEffect(() => {
@@ -169,6 +212,104 @@ export default function AdminDashboard() {
     } catch (err) {
       console.error("Failed to reject place:", err);
       showToast('error', 'Failed to reject place. Please try again.');
+    }
+  };
+
+  // Hotel handlers
+  const handleApproveHotel = async (hotelId) => {
+    try {
+      await axios.post(`http://localhost:8000/api/hotels/${hotelId}/approve`);
+      setSubmittedHotels(prev => prev.map(h => 
+        h.id === hotelId ? { ...h, status: 'approved' } : h
+      ));
+      if (selectedHotel?.id === hotelId) {
+        setSelectedHotel({ ...selectedHotel, status: 'approved' });
+      }
+      showToast('success', 'Hotel approved successfully!');
+    } catch (err) {
+      console.error("Failed to approve hotel:", err);
+      showToast('error', 'Failed to approve hotel. Please try again.');
+    }
+  };
+
+  const handleRejectHotel = async (hotelId) => {
+    if (!window.confirm("Are you sure you want to reject this hotel?")) return;
+    
+    try {
+      await axios.post(`http://localhost:8000/api/hotels/${hotelId}/reject`);
+      setSubmittedHotels(prev => prev.map(h => 
+        h.id === hotelId ? { ...h, status: 'rejected' } : h
+      ));
+      if (selectedHotel?.id === hotelId) {
+        setSelectedHotel({ ...selectedHotel, status: 'rejected' });
+      }
+      showToast('success', 'Hotel rejected successfully!');
+    } catch (err) {
+      console.error("Failed to reject hotel:", err);
+      showToast('error', 'Failed to reject hotel. Please try again.');
+    }
+  };
+
+  const handleDeleteHotel = async (hotelId) => {
+    if (!window.confirm("Are you sure you want to delete this hotel?")) return;
+    
+    try {
+      await axios.delete(`http://localhost:8000/api/hotels/${hotelId}`);
+      setSubmittedHotels(prev => prev.filter(h => h.id !== hotelId));
+      setSelectedHotel(null);
+      showToast('success', 'Hotel deleted successfully!');
+    } catch (err) {
+      console.error("Failed to delete hotel:", err);
+      showToast('error', 'Failed to delete hotel. Please try again.');
+    }
+  };
+
+  // Restaurant handlers
+  const handleApproveRestaurant = async (restaurantId) => {
+    try {
+      await axios.post(`http://localhost:8000/api/restaurants/${restaurantId}/approve`);
+      setSubmittedRestaurants(prev => prev.map(r => 
+        r.id === restaurantId ? { ...r, status: 'approved' } : r
+      ));
+      if (selectedRestaurant?.id === restaurantId) {
+        setSelectedRestaurant({ ...selectedRestaurant, status: 'approved' });
+      }
+      showToast('success', 'Restaurant approved successfully!');
+    } catch (err) {
+      console.error("Failed to approve restaurant:", err);
+      showToast('error', 'Failed to approve restaurant. Please try again.');
+    }
+  };
+
+  const handleRejectRestaurant = async (restaurantId) => {
+    if (!window.confirm("Are you sure you want to reject this restaurant?")) return;
+    
+    try {
+      await axios.post(`http://localhost:8000/api/restaurants/${restaurantId}/reject`);
+      setSubmittedRestaurants(prev => prev.map(r => 
+        r.id === restaurantId ? { ...r, status: 'rejected' } : r
+      ));
+      if (selectedRestaurant?.id === restaurantId) {
+        setSelectedRestaurant({ ...selectedRestaurant, status: 'rejected' });
+      }
+      showToast('success', 'Restaurant rejected successfully!');
+    } catch (err) {
+      console.error("Failed to reject restaurant:", err);
+      showToast('error', 'Failed to reject restaurant. Please try again.');
+    }
+  };
+
+  const handleDeleteRestaurant = async (restaurantId) => {
+    if (!window.confirm("Are you sure you want to delete this restaurant?")) return;
+    
+    try {
+      await axios.delete(`http://localhost:8000/api/restaurants/${restaurantId}`);
+      setSubmittedRestaurants(prev => prev.filter(r => r.id !== restaurantId));
+      setSelectedRestaurant(null);
+      showToast('success', 'Restaurant deleted successfully!');
+    } catch (err) {
+      console.error("Failed to delete restaurant:", err);
+      showToast('error', 'Failed to delete restaurant. Please try again.');
     }
   };
 
@@ -375,10 +516,10 @@ export default function AdminDashboard() {
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
-                <span>User Submissions</span>
-                {submittedPlaces.length > 0 && (
+                <span>All Submissions</span>
+                {(submittedPlaces.length + submittedHotels.length + submittedRestaurants.length) > 0 && (
                   <span className="px-2.5 py-0.5 bg-gradient-to-r from-teal-500 to-blue-500 text-white text-xs font-black rounded-full shadow-lg">
-                    {submittedPlaces.length}
+                    {submittedPlaces.length + submittedHotels.length + submittedRestaurants.length}
                   </span>
                 )}
               </div>
@@ -443,7 +584,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Detailed Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Place Submissions Stats */}
               <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
                 <div className="flex items-center gap-3 mb-4">
@@ -470,32 +611,54 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              {/* Review Stats */}
+              {/* Hotel Submissions Stats */}
               <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-purple-100 rounded-lg">
-                    <svg className="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  <div className="p-3 bg-blue-100 rounded-lg">
+                    <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                     </svg>
                   </div>
-                  <h3 className="text-lg font-bold text-slate-800">User Reviews</h3>
+                  <h3 className="text-lg font-bold text-slate-800">Hotel Submissions</h3>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg">
                     <span className="text-sm font-semibold text-emerald-700">Approved</span>
-                    <span className="text-lg font-black text-emerald-900">{reviewStats.approved_reviews || 0}</span>
+                    <span className="text-lg font-black text-emerald-900">{submittedHotels.filter(h => h.status === 'approved').length || 0}</span>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
-                    <span className="text-sm font-semibold text-orange-700">Pending</span>
-                    <span className="text-lg font-black text-orange-900">{reviewStats.pending_reviews || 0}</span>
+                  <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
+                    <span className="text-sm font-semibold text-amber-700">Pending</span>
+                    <span className="text-lg font-black text-amber-900">{submittedHotels.filter(h => h.status === 'pending').length || 0}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-rose-50 rounded-lg">
                     <span className="text-sm font-semibold text-rose-700">Rejected</span>
-                    <span className="text-lg font-black text-rose-900">{reviewStats.rejected_reviews || 0}</span>
+                    <span className="text-lg font-black text-rose-900">{submittedHotels.filter(h => h.status === 'rejected').length || 0}</span>
                   </div>
-                  <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border-2 border-blue-200">
-                    <span className="text-sm font-semibold text-blue-700">Average Rating</span>
-                    <span className="text-lg font-black text-blue-900">{reviewStats.average_rating || 0} ⭐</span>
+                </div>
+              </div>
+
+              {/* Restaurant Submissions Stats */}
+              <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-3 bg-orange-100 rounded-lg">
+                    <svg className="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-800">Restaurant Submissions</h3>
+                </div>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg">
+                    <span className="text-sm font-semibold text-emerald-700">Approved</span>
+                    <span className="text-lg font-black text-emerald-900">{submittedRestaurants.filter(r => r.status === 'approved').length || 0}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
+                    <span className="text-sm font-semibold text-amber-700">Pending</span>
+                    <span className="text-lg font-black text-amber-900">{submittedRestaurants.filter(r => r.status === 'pending').length || 0}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-rose-50 rounded-lg">
+                    <span className="text-sm font-semibold text-rose-700">Rejected</span>
+                    <span className="text-lg font-black text-rose-900">{submittedRestaurants.filter(r => r.status === 'rejected').length || 0}</span>
                   </div>
                 </div>
               </div>
@@ -503,11 +666,30 @@ export default function AdminDashboard() {
           </div>
         ) : activeTab === 'places' ? (
           <div className="space-y-6">
-            {/* Place Submissions Section */}
+            {/* All Submissions Section */}
             <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
               <div className="bg-gradient-to-r from-teal-50 to-blue-50 border-b border-slate-200 px-6 py-4">
-                <h2 className="text-2xl font-black text-slate-800">Place Submissions</h2>
-                <p className="text-sm text-slate-600 mt-1">Review and manage places submitted by users through the Add Place form</p>
+                <div className="flex items-center justify-between flex-wrap gap-4">
+                  <div>
+                    <h2 className="text-2xl font-black text-slate-800">All Submissions</h2>
+                    <p className="text-sm text-slate-600 mt-1">Review and manage all submissions from the Add Place form</p>
+                  </div>
+                  
+                  {/* Submission Type Filter */}
+                  <div className="flex items-center gap-3">
+                    <label className="text-sm font-semibold text-slate-700">Filter:</label>
+                    <select
+                      value={submissionTypeFilter}
+                      onChange={(e) => setSubmissionTypeFilter(e.target.value)}
+                      className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white hover:border-teal-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all"
+                    >
+                      <option value="all">All Types ({submittedPlaces.length + submittedHotels.length + submittedRestaurants.length})</option>
+                      <option value="place">Places Only ({submittedPlaces.length})</option>
+                      <option value="hotel">Hotels Only ({submittedHotels.length})</option>
+                      <option value="restaurant">Restaurants Only ({submittedRestaurants.length})</option>
+                    </select>
+                  </div>
+                </div>
               </div>
 
               {loading ? (
@@ -517,10 +699,10 @@ export default function AdminDashboard() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span className="font-semibold">Loading places...</span>
+                    <span className="font-semibold">Loading submissions...</span>
                   </div>
                 </div>
-              ) : submittedPlaces.length === 0 ? (
+              ) : (submittedPlaces.length + submittedHotels.length + submittedRestaurants.length) === 0 ? (
                 <div className="p-12 text-center">
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-full mb-4">
                     <svg className="w-8 h-8 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
@@ -528,23 +710,25 @@ export default function AdminDashboard() {
                     </svg>
                   </div>
                   <h3 className="text-lg font-bold text-slate-800 mb-2">No User Submissions Yet</h3>
-                  <p className="text-slate-600">Places submitted by users through the Add Place form will appear here.</p>
+                  <p className="text-slate-600">Places, hotels, and restaurants submitted through the Add Place form will appear here.</p>
                 </div>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead className="bg-slate-50 border-b border-slate-200">
                       <tr>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Place</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Location</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Name</th>
                         <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Type</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Location</th>
+                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Details</th>
                         <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Status</th>
                         <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-200">
-                      {submittedPlaces.map((place) => (
-                        <tr key={place.id} className="hover:bg-slate-50 transition-colors duration-150">
+                      {/* Places */}
+                      {(submissionTypeFilter === 'all' || submissionTypeFilter === 'place') && submittedPlaces.map((place) => (
+                        <tr key={`place-${place.id}`} className="hover:bg-slate-50 transition-colors duration-150">
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
                               {place.image_url ? (
@@ -567,9 +751,17 @@ export default function AdminDashboard() {
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-sm text-slate-600">{place.location || 'N/A'}</td>
                           <td className="px-6 py-4">
                             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 text-teal-700">
+                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                              </svg>
+                              Place
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-slate-600">{place.location || 'N/A'}</td>
+                          <td className="px-6 py-4">
+                            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 text-slate-700">
                               {place.type || 'N/A'}
                             </span>
                           </td>
@@ -625,6 +817,221 @@ export default function AdminDashboard() {
                               )}
                               <button
                                 onClick={() => handleDeletePlace(place.id)}
+                                className="px-3 py-1.5 bg-rose-100 text-rose-700 rounded-lg text-xs font-semibold hover:bg-rose-200 transition-colors duration-200"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                      
+                      {/* Hotels */}
+                      {(submissionTypeFilter === 'all' || submissionTypeFilter === 'hotel') && submittedHotels.map((hotel) => (
+                        <tr key={`hotel-${hotel.id}`} className="hover:bg-slate-50 transition-colors duration-150">
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-3">
+                              {hotel.image_url ? (
+                                <img 
+                                  src={`http://localhost:8000${hotel.image_url}`} 
+                                  alt={hotel.name}
+                                  className="w-12 h-12 rounded-lg object-cover border border-slate-200"
+                                  onError={(e) => e.target.src = 'https://via.placeholder.com/48?text=No+Image'}
+                                />
+                              ) : (
+                                <div className="w-12 h-12 rounded-lg bg-blue-200 flex items-center justify-center">
+                                  <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                  </svg>
+                                </div>
+                              )}
+                              <div>
+                                <p className="font-semibold text-slate-800">{hotel.name}</p>
+                                <p className="text-xs text-slate-500">ID: {hotel.id}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
+                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                              </svg>
+                              Hotel
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-slate-600">{hotel.location || 'N/A'}</td>
+                          <td className="px-6 py-4">
+                            <div className="flex flex-col gap-1">
+                              <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                                {hotel.price_range || 'N/A'}
+                              </span>
+                              {hotel.rating && (
+                                <span className="text-xs text-amber-600">⭐ {hotel.rating}</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
+                              hotel.status === 'pending' 
+                                ? 'bg-amber-100 text-amber-700' 
+                                : hotel.status === 'approved'
+                                ? 'bg-emerald-100 text-emerald-700'
+                                : 'bg-rose-100 text-rose-700'
+                            }`}>
+                              {hotel.status === 'pending' && (
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                              {hotel.status === 'approved' && (
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                              {hotel.status === 'rejected' && (
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                              {hotel.status || 'approved'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => setSelectedHotel(hotel)}
+                                className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold hover:bg-blue-200 transition-colors duration-200"
+                              >
+                                View
+                              </button>
+                              {hotel.status === 'pending' && (
+                                <>
+                                  <button
+                                    onClick={() => handleApproveHotel(hotel.id)}
+                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
+                                  >
+                                    Approve
+                                  </button>
+                                  <button
+                                    onClick={() => handleRejectHotel(hotel.id)}
+                                    className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-semibold hover:bg-amber-200 transition-colors duration-200"
+                                  >
+                                    Reject
+                                  </button>
+                                </>
+                              )}
+                              <button
+                                onClick={() => handleDeleteHotel(hotel.id)}
+                                className="px-3 py-1.5 bg-rose-100 text-rose-700 rounded-lg text-xs font-semibold hover:bg-rose-200 transition-colors duration-200"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                      
+                      {/* Restaurants */}
+                      {(submissionTypeFilter === 'all' || submissionTypeFilter === 'restaurant') && submittedRestaurants.map((restaurant) => (
+                        <tr key={`restaurant-${restaurant.id}`} className="hover:bg-slate-50 transition-colors duration-150">
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-3">
+                              {restaurant.image_url ? (
+                                <img 
+                                  src={`http://localhost:8000${restaurant.image_url}`} 
+                                  alt={restaurant.name}
+                                  className="w-12 h-12 rounded-lg object-cover border border-slate-200"
+                                  onError={(e) => e.target.src = 'https://via.placeholder.com/48?text=No+Image'}
+                                />
+                              ) : (
+                                <div className="w-12 h-12 rounded-lg bg-orange-200 flex items-center justify-center">
+                                  <svg className="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                                  </svg>
+                                </div>
+                              )}
+                              <div>
+                                <p className="font-semibold text-slate-800">{restaurant.name}</p>
+                                <p className="text-xs text-slate-500">ID: {restaurant.id}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
+                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                              </svg>
+                              Restaurant
+                            </span>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-slate-600">{restaurant.location || 'N/A'}</td>
+                          <td className="px-6 py-4">
+                            <div className="flex flex-col gap-1">
+                              {restaurant.cuisine && (
+                                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-purple-100 text-purple-700">
+                                  {restaurant.cuisine}
+                                </span>
+                              )}
+                              <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
+                                {restaurant.price_range || 'N/A'}
+                              </span>
+                              {restaurant.rating && (
+                                <span className="text-xs text-amber-600">⭐ {restaurant.rating}</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
+                              restaurant.status === 'pending' 
+                                ? 'bg-amber-100 text-amber-700' 
+                                : restaurant.status === 'approved'
+                                ? 'bg-emerald-100 text-emerald-700'
+                                : 'bg-rose-100 text-rose-700'
+                            }`}>
+                              {restaurant.status === 'pending' && (
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                              {restaurant.status === 'approved' && (
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                              {restaurant.status === 'rejected' && (
+                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                              {restaurant.status || 'approved'}
+                            </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => setSelectedRestaurant(restaurant)}
+                                className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold hover:bg-blue-200 transition-colors duration-200"
+                              >
+                                View
+                              </button>
+                              {restaurant.status === 'pending' && (
+                                <>
+                                  <button
+                                    onClick={() => handleApproveRestaurant(restaurant.id)}
+                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
+                                  >
+                                    Approve
+                                  </button>
+                                  <button
+                                    onClick={() => handleRejectRestaurant(restaurant.id)}
+                                    className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-semibold hover:bg-amber-200 transition-colors duration-200"
+                                  >
+                                    Reject
+                                  </button>
+                                </>
+                              )}
+                              <button
+                                onClick={() => handleDeleteRestaurant(restaurant.id)}
                                 className="px-3 py-1.5 bg-rose-100 text-rose-700 rounded-lg text-xs font-semibold hover:bg-rose-200 transition-colors duration-200"
                               >
                                 Delete
@@ -1070,6 +1477,269 @@ export default function AdminDashboard() {
                 <button
                   onClick={() => {
                     handleDeleteReview(selectedReview.id);
+                  }}
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-semibold hover:from-rose-600 hover:to-red-700 transition-all duration-200 shadow-lg"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Hotel Detail Modal */}
+      {selectedHotel && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-gradient-to-r from-blue-500 to-indigo-500 p-6 rounded-t-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-black text-white">Hotel Details</h3>
+                <button
+                  onClick={() => setSelectedHotel(null)}
+                  className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
+                >
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {selectedHotel.image_url && (
+                <img 
+                  src={`http://localhost:8000${selectedHotel.image_url}`}
+                  alt={selectedHotel.name}
+                  className="w-full h-64 object-cover rounded-xl border border-slate-200"
+                  onError={(e) => e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'}
+                />
+              )}
+
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Hotel Name</label>
+                  <p className="text-lg font-semibold text-slate-800 mt-1">{selectedHotel.name}</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Location</label>
+                    <p className="text-slate-800 mt-1">{selectedHotel.location || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Price Range</label>
+                    <p className="text-slate-800 mt-1">{selectedHotel.price_range || 'N/A'}</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Rating</label>
+                    <p className="text-slate-800 mt-1">
+                      {selectedHotel.rating ? `⭐ ${selectedHotel.rating}/5` : 'Not rated yet'}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Status</label>
+                    <div className="mt-1">
+                      <span className={`inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold ${
+                        selectedHotel.status === 'pending' 
+                          ? 'bg-amber-100 text-amber-700' 
+                          : selectedHotel.status === 'approved'
+                          ? 'bg-emerald-100 text-emerald-700'
+                          : 'bg-rose-100 text-rose-700'
+                      }`}>
+                        {selectedHotel.status === 'pending' && '⏳ '}
+                        {selectedHotel.status === 'approved' && '✓ '}
+                        {selectedHotel.status === 'rejected' && '✗ '}
+                        {selectedHotel.status ? selectedHotel.status.toUpperCase() : 'APPROVED'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Description</label>
+                  <p className="text-slate-700 mt-1 leading-relaxed">{selectedHotel.description || 'No description provided'}</p>
+                </div>
+
+                <div>
+                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Tags</label>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {selectedHotel.tags ? selectedHotel.tags.split(',').map((tag, idx) => (
+                      <span key={idx} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
+                        #{tag.trim()}
+                      </span>
+                    )) : <span className="text-slate-500">No tags</span>}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4 border-t border-slate-200">
+                <button
+                  onClick={() => setSelectedHotel(null)}
+                  className="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-colors duration-200"
+                >
+                  Close
+                </button>
+                {selectedHotel.status === 'pending' && (
+                  <>
+                    <button
+                      onClick={() => {
+                        handleApproveHotel(selectedHotel.id);
+                      }}
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
+                    >
+                      Approve
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleRejectHotel(selectedHotel.id);
+                      }}
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-semibold hover:from-amber-600 hover:to-orange-700 transition-all duration-200 shadow-lg"
+                    >
+                      Reject
+                    </button>
+                  </>
+                )}
+                <button
+                  onClick={() => {
+                    handleDeleteHotel(selectedHotel.id);
+                  }}
+                  className="flex-1 px-4 py-3 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-semibold hover:from-rose-600 hover:to-red-700 transition-all duration-200 shadow-lg"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Restaurant Detail Modal */}
+      {selectedRestaurant && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-gradient-to-r from-orange-500 to-red-500 p-6 rounded-t-2xl">
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-black text-white">Restaurant Details</h3>
+                <button
+                  onClick={() => setSelectedRestaurant(null)}
+                  className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
+                >
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {selectedRestaurant.image_url && (
+                <img 
+                  src={`http://localhost:8000${selectedRestaurant.image_url}`}
+                  alt={selectedRestaurant.name}
+                  className="w-full h-64 object-cover rounded-xl border border-slate-200"
+                  onError={(e) => e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'}
+                />
+              )}
+
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Restaurant Name</label>
+                  <p className="text-lg font-semibold text-slate-800 mt-1">{selectedRestaurant.name}</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Location</label>
+                    <p className="text-slate-800 mt-1">{selectedRestaurant.location || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Cuisine</label>
+                    <p className="text-slate-800 mt-1">{selectedRestaurant.cuisine || 'N/A'}</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Price Level</label>
+                    <p className="text-slate-800 mt-1">{selectedRestaurant.price_range || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Rating</label>
+                    <p className="text-slate-800 mt-1">
+                      {selectedRestaurant.rating ? `⭐ ${selectedRestaurant.rating}/5` : 'Not rated yet'}
+                    </p>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Status</label>
+                  <div className="mt-2">
+                    <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold ${
+                      selectedRestaurant.status === 'pending' 
+                        ? 'bg-amber-100 text-amber-700' 
+                        : selectedRestaurant.status === 'approved'
+                        ? 'bg-emerald-100 text-emerald-700'
+                        : 'bg-rose-100 text-rose-700'
+                    }`}>
+                      {selectedRestaurant.status === 'pending' && '⏳ '}
+                      {selectedRestaurant.status === 'approved' && '✓ '}
+                      {selectedRestaurant.status === 'rejected' && '✗ '}
+                      {selectedRestaurant.status ? selectedRestaurant.status.toUpperCase() : 'APPROVED'}
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Description</label>
+                  <p className="text-slate-700 mt-1 leading-relaxed">{selectedRestaurant.description || 'No description provided'}</p>
+                </div>
+
+                <div>
+                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Tags</label>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {selectedRestaurant.tags ? selectedRestaurant.tags.split(',').map((tag, idx) => (
+                      <span key={idx} className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold">
+                        #{tag.trim()}
+                      </span>
+                    )) : <span className="text-slate-500">No tags</span>}
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-3 pt-4 border-t border-slate-200">
+                <button
+                  onClick={() => setSelectedRestaurant(null)}
+                  className="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-colors duration-200"
+                >
+                  Close
+                </button>
+                {selectedRestaurant.status === 'pending' && (
+                  <>
+                    <button
+                      onClick={() => {
+                        handleApproveRestaurant(selectedRestaurant.id);
+                      }}
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
+                    >
+                      Approve
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleRejectRestaurant(selectedRestaurant.id);
+                      }}
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-semibold hover:from-amber-600 hover:to-orange-700 transition-all duration-200 shadow-lg"
+                    >
+                      Reject
+                    </button>
+                  </>
+                )}
+                <button
+                  onClick={() => {
+                    handleDeleteRestaurant(selectedRestaurant.id);
                   }}
                   className="flex-1 px-4 py-3 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-semibold hover:from-rose-600 hover:to-red-700 transition-all duration-200 shadow-lg"
                 >

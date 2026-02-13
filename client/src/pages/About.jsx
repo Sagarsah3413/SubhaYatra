@@ -888,7 +888,7 @@ export default function About() {
                   { name: 'Python Flask', icon: '🐍', desc: 'Backend API' },
                   { name: 'SQLite', icon: '🗄️', desc: 'Database' },
                   { name: 'Tailwind CSS', icon: '🎨', desc: 'Styling' },
-                  { name: 'Google AI', icon: '🤖', desc: 'AI Integration' },
+                  { name: 'Cohere AI', icon: '🤖', desc: 'AI Integration' },
                   { name: 'Clerk', icon: '🔐', desc: 'Authentication' },
                   { name: 'Vite', icon: '⚡', desc: 'Build Tool' },
                   { name: 'Git', icon: '📦', desc: 'Version Control' }

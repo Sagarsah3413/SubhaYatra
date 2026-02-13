@@ -35,7 +35,10 @@ def serialize_restaurant(restaurant):
         'rating': restaurant.rating,
         'price_range': restaurant.price_range,
         'place_id': restaurant.place_id,
-        'all_images': all_images
+        'all_images': all_images,
+        'source': getattr(restaurant, 'source', 'dataset'),  # Include source field
+        'cuisine': getattr(restaurant, 'cuisine', None),  # Include cuisine field
+        'status': getattr(restaurant, 'status', 'approved')  # Include status field
     }
 
 @restaurants_bp.route('/restaurants', methods=['GET'])
@@ -159,5 +162,77 @@ def get_featured_restaurants():
         return jsonify(results)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    finally:
+        session.close()
+
+
+@restaurants_bp.route('/restaurants/<int:restaurant_id>/approve', methods=['POST'])
+def approve_restaurant(restaurant_id):
+    """Approve a pending restaurant"""
+    session = SessionLocal()
+    try:
+        restaurant = session.query(Restaurant).filter(Restaurant.id == restaurant_id).first()
+        if not restaurant:
+            return jsonify({'error': 'Restaurant not found'}), 404
+        
+        restaurant.status = 'approved'
+        session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Restaurant approved successfully',
+            'restaurant_id': restaurant_id,
+            'status': 'approved'
+        }), 200
+    except Exception as e:
+        session.rollback()
+        return jsonify({'error': 'Failed to approve restaurant'}), 500
+    finally:
+        session.close()
+
+@restaurants_bp.route('/restaurants/<int:restaurant_id>/reject', methods=['POST'])
+def reject_restaurant(restaurant_id):
+    """Reject a pending restaurant"""
+    session = SessionLocal()
+    try:
+        restaurant = session.query(Restaurant).filter(Restaurant.id == restaurant_id).first()
+        if not restaurant:
+            return jsonify({'error': 'Restaurant not found'}), 404
+        
+        restaurant.status = 'rejected'
+        session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Restaurant rejected successfully',
+            'restaurant_id': restaurant_id,
+            'status': 'rejected'
+        }), 200
+    except Exception as e:
+        session.rollback()
+        return jsonify({'error': 'Failed to reject restaurant'}), 500
+    finally:
+        session.close()
+
+@restaurants_bp.route('/restaurants/<int:restaurant_id>', methods=['DELETE'])
+def delete_restaurant(restaurant_id):
+    """Delete a restaurant by ID"""
+    session = SessionLocal()
+    try:
+        restaurant = session.query(Restaurant).filter(Restaurant.id == restaurant_id).first()
+        if not restaurant:
+            return jsonify({'error': 'Restaurant not found'}), 404
+        
+        session.delete(restaurant)
+        session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Restaurant deleted successfully',
+            'restaurant_id': restaurant_id
+        }), 200
+    except Exception as e:
+        session.rollback()
+        return jsonify({'error': 'Failed to delete restaurant'}), 500
     finally:
         session.close()

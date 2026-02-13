@@ -83,28 +83,57 @@ const spots = [
 export default function ExploreSection() {
   const scrollRef = useRef(null);
   const [paused, setPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
   const navigate = useNavigate();
 
+  // Smooth auto-scroll effect
   useEffect(() => {
     const scrollContainer = scrollRef.current;
-    let scrollAmount = 0;
     let animationFrame;
+    let scrollAmount = 0;
 
-    const step = () => {
-      if (scrollContainer && !paused) {
-        scrollAmount += 0.5;
+    const smoothScroll = () => {
+      if (scrollContainer && !paused && !isDragging) {
+        scrollAmount += 0.3; // Reduced for smoother animation
         if (scrollAmount >= scrollContainer.scrollWidth / 2) {
           scrollAmount = 0;
+          scrollContainer.scrollLeft = 0;
+        } else {
+          scrollContainer.scrollLeft = scrollAmount;
         }
-        scrollContainer.scrollLeft = scrollAmount;
       }
-      animationFrame = requestAnimationFrame(step);
+      animationFrame = requestAnimationFrame(smoothScroll);
     };
 
-    animationFrame = requestAnimationFrame(step);
-
+    animationFrame = requestAnimationFrame(smoothScroll);
     return () => cancelAnimationFrame(animationFrame);
-  }, [paused]);
+  }, [paused, isDragging]);
+
+  // Manual drag handlers
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    setPaused(false);
+  };
 
   return (
     <section className="py-20 relative overflow-hidden">

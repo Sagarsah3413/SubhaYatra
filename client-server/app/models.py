@@ -18,6 +18,8 @@ class Hotel(Base):
     price_range = Column(String)  # budget, mid-range, luxury
     place_id = Column(Integer, ForeignKey('places.id'))
     all_images = Column(Text)  # JSON string of all image paths
+    source = Column(String, default='dataset')  # 'dataset' or 'user_submission'
+    status = Column(String, default='approved')  # 'pending', 'approved', 'rejected'
 
 
 class Restaurant(Base):
@@ -31,8 +33,11 @@ class Restaurant(Base):
     image_url = Column(String)
     rating = Column(Float)
     price_range = Column(String)  # budget, mid-range, luxury
+    cuisine = Column(String)  # Cuisine type (e.g., Nepali, Indian, Chinese)
     place_id = Column(Integer, ForeignKey('places.id'))
     all_images = Column(Text)  # JSON string of all image paths
+    source = Column(String, default='dataset')  # 'dataset' or 'user_submission'
+    status = Column(String, default='approved')  # 'pending', 'approved', 'rejected'
 
 
 class Attraction(Base):

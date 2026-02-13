@@ -718,7 +718,7 @@ const NewsletterArchive = () => {
       <Header />
       
       {/* Ultra Premium Hero Section */}    
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden pt-20">
         {/* Premium Background with Gradient */}
         <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'}`}></div>
         

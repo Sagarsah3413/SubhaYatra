@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import Footer from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
 import { useTheme } from "../contexts/ThemeContext";
+import { useToast } from "../contexts/ToastContext";
 import { FaStar, FaCamera, FaMapMarkerAlt, FaCalendarAlt, FaUser, FaEnvelope, FaEdit, FaHeart, FaThumbsUp, FaThumbsDown, FaTimes, FaCheck, FaUpload, FaImage, FaTrash } from "react-icons/fa";
 
 export default function WriteReview() {
   const { theme } = useTheme();
+  const { showToast } = useToast();
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -91,6 +93,7 @@ export default function WriteReview() {
     const v = validate();
     if (v) {
       setError(v);
+      showToast('error', v);
       return;
     }
 
@@ -109,19 +112,24 @@ export default function WriteReview() {
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
         console.error("Review endpoint returned non-OK status", res.status, errorData);
-        setError(errorData.error || "Failed to submit review. Please try again.");
+        const errorMsg = errorData.error || "Failed to submit review. Please try again.";
+        setError(errorMsg);
+        showToast('error', errorMsg);
         setSubmitting(false);
         return;
       }
 
       setSubmitted(true);
+      showToast('success', '🎉 Review submitted successfully! Thank you for sharing your experience.');
       setForm({ name: "", email: "", place: "", visitDate: "", type: "Nature", rating: 0, review: "", recommend: "yes" });
       setImages([]);
       localStorage.removeItem("writeReviewDraft");
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
       console.error(err);
-      setError("Failed to submit review. Please check your connection and try again.");
+      const errorMsg = "Failed to submit review. Please check your connection and try again.";
+      setError(errorMsg);
+      showToast('error', errorMsg);
     } finally {
       setSubmitting(false);
     }

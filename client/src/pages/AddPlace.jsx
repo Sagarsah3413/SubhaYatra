@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../contexts/ThemeContext";
+import { useToast } from "../contexts/ToastContext";
 import Footer from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
 
@@ -7,7 +8,21 @@ const SUGGESTED_TAGS = ["waterfall", "hiking", "temple", "photography", "camping
 
 export default function AddPlace() {
   const { bgClass, textClass } = useTheme();
-  const [form, setForm] = useState({ name: "", location: "", type: "Nature", tags: [], description: "" });
+  const { showToast } = useToast();
+  const [form, setForm] = useState({ 
+    submissionType: "place", // new field: place, hotel, restaurant
+    name: "", 
+    location: "", 
+    type: "Nature", 
+    tags: [], 
+    description: "",
+    // Hotel-specific fields
+    priceRange: "",
+    rating: "",
+    // Restaurant-specific fields
+    cuisine: "",
+    priceLevel: ""
+  });
   const [tagInput, setTagInput] = useState("");
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
@@ -104,13 +119,16 @@ export default function AddPlace() {
   const validateFields = () => {
     const errs = {};
     
+    // Dynamic label for name field
+    const nameLabel = form.submissionType === 'hotel' ? 'Hotel name' : form.submissionType === 'restaurant' ? 'Restaurant name' : 'Place name';
+    
     // Name validation
     if (!form.name.trim()) {
-      errs.name = "Place name is required.";
+      errs.name = `${nameLabel} is required.`;
     } else if (form.name.trim().length < 3) {
-      errs.name = "Place name must be at least 3 characters.";
+      errs.name = `${nameLabel} must be at least 3 characters.`;
     } else if (form.name.trim().length > 100) {
-      errs.name = "Place name must be less than 100 characters.";
+      errs.name = `${nameLabel} must be less than 100 characters.`;
     }
     
     // Description validation
@@ -138,7 +156,18 @@ export default function AddPlace() {
 
   const confirmReset = () => {
     if (window.confirm("Reset the form? All changes will be lost.")) {
-      setForm({ name: "", location: "", type: "Nature", tags: [], description: "" });
+      setForm({ 
+        submissionType: "place",
+        name: "", 
+        location: "", 
+        type: "Nature", 
+        tags: [], 
+        description: "",
+        priceRange: "",
+        rating: "",
+        cuisine: "",
+        priceLevel: ""
+      });
       setImages([]);
       setTagInput("");
       fileInputRef.current && (fileInputRef.current.value = null);
@@ -161,11 +190,22 @@ export default function AddPlace() {
     setProgress(0);
 
     const data = new FormData();
+    data.append("submission_type", form.submissionType); // Add submission type
     data.append("name", form.name.trim());
     data.append("location", form.location.trim());
     data.append("type", form.type);
     data.append("description", form.description.trim());
     data.append("tags", form.tags.join(","));
+    
+    // Add type-specific fields
+    if (form.submissionType === "hotel") {
+      data.append("price_range", form.priceRange);
+      data.append("rating", form.rating || "4.0");
+    } else if (form.submissionType === "restaurant") {
+      data.append("cuisine", form.cuisine);
+      data.append("price_level", form.priceLevel);
+      data.append("rating", form.rating || "4.0");
+    }
     
     // Add images with proper naming
     images.forEach((file, idx) => {
@@ -191,13 +231,27 @@ export default function AddPlace() {
             const res = JSON.parse(xhr.responseText || "{}");
             
             if (res.success || res.place_id) {
+              const submissionTypeLabel = form.submissionType === 'hotel' ? 'Hotel' : form.submissionType === 'restaurant' ? 'Restaurant' : 'Place';
+              showToast('success', `🎉 ${submissionTypeLabel} submitted successfully! Awaiting admin approval.`);
+              
               setSuccessModal({ 
                 id: res.place_id || 'pending', 
                 name: form.name 
               });
               
               // Reset form
-              setForm({ name: "", location: "", type: "Nature", tags: [], description: "" });
+              setForm({ 
+                submissionType: "place",
+                name: "", 
+                location: "", 
+                type: "Nature", 
+                tags: [], 
+                description: "",
+                priceRange: "",
+                rating: "",
+                cuisine: "",
+                priceLevel: ""
+              });
               setImages([]);
               setProgress(0);
               setTagInput("");
@@ -205,9 +259,22 @@ export default function AddPlace() {
               setErrors({});
               setMessage("");
             } else {
-              setMessage("✓ Place submitted successfully! Awaiting review.");
+              const successMsg = "✓ Place submitted successfully! Awaiting review.";
+              setMessage(successMsg);
+              showToast('success', successMsg);
               setTimeout(() => {
-                setForm({ name: "", location: "", type: "Nature", tags: [], description: "" });
+                setForm({ 
+                  submissionType: "place",
+                  name: "", 
+                  location: "", 
+                  type: "Nature", 
+                  tags: [], 
+                  description: "",
+                  priceRange: "",
+                  rating: "",
+                  cuisine: "",
+                  priceLevel: ""
+                });
                 setImages([]);
                 setProgress(0);
                 setTagInput("");
@@ -218,9 +285,22 @@ export default function AddPlace() {
             }
           } catch (error) {
             console.error("Response parsing error:", error);
-            setMessage("✓ Place submitted successfully! Awaiting review.");
+            const successMsg = "✓ Place submitted successfully! Awaiting review.";
+            setMessage(successMsg);
+            showToast('success', successMsg);
             setTimeout(() => {
-              setForm({ name: "", location: "", type: "Nature", tags: [], description: "" });
+              setForm({ 
+                submissionType: "place",
+                name: "", 
+                location: "", 
+                type: "Nature", 
+                tags: [], 
+                description: "",
+                priceRange: "",
+                rating: "",
+                cuisine: "",
+                priceLevel: ""
+              });
               setImages([]);
               setProgress(0);
               setTagInput("");
@@ -234,10 +314,14 @@ export default function AddPlace() {
           try {
             const errorData = JSON.parse(xhr.responseText || "{}");
             const errorMsg = errorData.error || errorData.message || "Failed to submit place";
-            setMessage(`❌ Error: ${errorMsg}. Please try again.`);
+            const fullErrorMsg = `❌ Error: ${errorMsg}. Please try again.`;
+            setMessage(fullErrorMsg);
+            showToast('error', errorMsg);
             console.error("Server error:", errorData);
           } catch {
-            setMessage(`❌ Server error (${xhr.status}). Please check your connection and try again.`);
+            const errorMsg = `❌ Server error (${xhr.status}). Please check your connection and try again.`;
+            setMessage(errorMsg);
+            showToast('error', `Server error (${xhr.status})`);
           }
         }
       };
@@ -245,7 +329,9 @@ export default function AddPlace() {
       xhr.onerror = () => {
         setSubmitting(false);
         setProgress(0);
-        setMessage("❌ Network error. Please check if the backend server is running at http://localhost:8000");
+        const errorMsg = "❌ Network error. Please check if the backend server is running at http://localhost:8000";
+        setMessage(errorMsg);
+        showToast('error', 'Network error. Backend server may not be running.');
         console.error("Network error - backend may not be running");
       };
       
@@ -294,26 +380,9 @@ export default function AddPlace() {
             Share Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-blue-300">Discovery</span>
           </h1>
           <p className="text-base sm:text-lg lg:text-xl text-slate-200 max-w-3xl leading-relaxed font-light">
-            Help fellow travelers discover Nepal's hidden gems. Share your favorite places and contribute to our growing community of explorers.
+            Help fellow travelers discover Nepal's hidden gems. Share places, hotels, or restaurants and contribute to our growing community of explorers.
           </p>
           
-          {/* Stats */}
-          <div className="flex flex-wrap gap-4 sm:gap-6 mt-6">
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-teal-300">1,000+</div>
-              <div className="text-xs text-slate-300 uppercase tracking-wider">Places Shared</div>
-            </div>
-            <div className="w-px bg-slate-600"></div>
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-blue-300">500+</div>
-              <div className="text-xs text-slate-300 uppercase tracking-wider">Contributors</div>
-            </div>
-            <div className="w-px bg-slate-600"></div>
-            <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-emerald-300">24h</div>
-              <div className="text-xs text-slate-300 uppercase tracking-wider">Review Time</div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -417,16 +486,144 @@ export default function AddPlace() {
           )}
 
           <form onSubmit={handleSubmit} className="p-8 space-y-8">
+            {/* Submission Type Selector */}
+            <div className="bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 rounded-2xl p-6 border-2 border-indigo-200 shadow-lg">
+              <label className="flex items-center gap-2 text-base font-black text-slate-800 mb-4">
+                <svg className="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                  <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                </svg>
+                What are you submitting? <span className="text-rose-500">*</span>
+              </label>
+              <p className="text-sm text-slate-600 mb-4">Choose the type of submission based on your dataset category</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Place Option */}
+                <button
+                  type="button"
+                  onClick={() => setField("submissionType", "place")}
+                  className={`group relative p-6 rounded-xl border-2 transition-all duration-300 ${
+                    form.submissionType === "place"
+                      ? "border-teal-500 bg-teal-50 shadow-lg scale-105"
+                      : "border-slate-300 bg-white hover:border-teal-300 hover:shadow-md"
+                  }`}
+                >
+                  <div className="flex flex-col items-center text-center space-y-3">
+                    <div className={`p-4 rounded-full transition-colors duration-300 ${
+                      form.submissionType === "place"
+                        ? "bg-teal-500"
+                        : "bg-slate-100 group-hover:bg-teal-100"
+                    }`}>
+                      <svg className={`w-8 h-8 ${
+                        form.submissionType === "place" ? "text-white" : "text-slate-600 group-hover:text-teal-600"
+                      }`} fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className={`font-bold text-lg ${
+                        form.submissionType === "place" ? "text-teal-700" : "text-slate-800"
+                      }`}>Place / Destination</h3>
+                      <p className="text-xs text-slate-600 mt-1">Tourist spots, landmarks, attractions</p>
+                    </div>
+                    {form.submissionType === "place" && (
+                      <div className="absolute top-3 right-3">
+                        <svg className="w-6 h-6 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                </button>
+
+                {/* Hotel Option */}
+                <button
+                  type="button"
+                  onClick={() => setField("submissionType", "hotel")}
+                  className={`group relative p-6 rounded-xl border-2 transition-all duration-300 ${
+                    form.submissionType === "hotel"
+                      ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
+                      : "border-slate-300 bg-white hover:border-blue-300 hover:shadow-md"
+                  }`}
+                >
+                  <div className="flex flex-col items-center text-center space-y-3">
+                    <div className={`p-4 rounded-full transition-colors duration-300 ${
+                      form.submissionType === "hotel"
+                        ? "bg-blue-500"
+                        : "bg-slate-100 group-hover:bg-blue-100"
+                    }`}>
+                      <svg className={`w-8 h-8 ${
+                        form.submissionType === "hotel" ? "text-white" : "text-slate-600 group-hover:text-blue-600"
+                      }`} fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className={`font-bold text-lg ${
+                        form.submissionType === "hotel" ? "text-blue-700" : "text-slate-800"
+                      }`}>Hotel / Accommodation</h3>
+                      <p className="text-xs text-slate-600 mt-1">Hotels, lodges, guesthouses</p>
+                    </div>
+                    {form.submissionType === "hotel" && (
+                      <div className="absolute top-3 right-3">
+                        <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                </button>
+
+                {/* Restaurant Option */}
+                <button
+                  type="button"
+                  onClick={() => setField("submissionType", "restaurant")}
+                  className={`group relative p-6 rounded-xl border-2 transition-all duration-300 ${
+                    form.submissionType === "restaurant"
+                      ? "border-orange-500 bg-orange-50 shadow-lg scale-105"
+                      : "border-slate-300 bg-white hover:border-orange-300 hover:shadow-md"
+                  }`}
+                >
+                  <div className="flex flex-col items-center text-center space-y-3">
+                    <div className={`p-4 rounded-full transition-colors duration-300 ${
+                      form.submissionType === "restaurant"
+                        ? "bg-orange-500"
+                        : "bg-slate-100 group-hover:bg-orange-100"
+                    }`}>
+                      <svg className={`w-8 h-8 ${
+                        form.submissionType === "restaurant" ? "text-white" : "text-slate-600 group-hover:text-orange-600"
+                      }`} fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className={`font-bold text-lg ${
+                        form.submissionType === "restaurant" ? "text-orange-700" : "text-slate-800"
+                      }`}>Restaurant / Dining</h3>
+                      <p className="text-xs text-slate-600 mt-1">Restaurants, cafes, eateries</p>
+                    </div>
+                    {form.submissionType === "restaurant" && (
+                      <div className="absolute top-3 right-3">
+                        <svg className="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                </button>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
                 
-                {/* Place Name */}
+                {/* Dynamic Name Field */}
                 <div className="group">
                   <label htmlFor="place-name" className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
                     <svg className="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
-                    Place Name <span className="text-rose-500">*</span>
+                    {form.submissionType === 'hotel' ? 'Hotel Name' : form.submissionType === 'restaurant' ? 'Restaurant Name' : 'Place Name'} <span className="text-rose-500">*</span>
                   </label>
                   <input 
                     id="place-name" 
@@ -436,7 +633,13 @@ export default function AddPlace() {
                     aria-required="true" 
                     aria-invalid={errors.name ? "true" : "false"} 
                     className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-teal-500/20 transition-all duration-200 text-slate-900 ${errors.name ? 'border-rose-400 bg-rose-50 focus:border-rose-500' : 'border-slate-200 focus:border-teal-500 bg-white'}`} 
-                    placeholder="e.g., Phewa Lake, Annapurna Base Camp" 
+                    placeholder={
+                      form.submissionType === 'hotel' 
+                        ? 'e.g., Hotel Everest View, Yak & Yeti Hotel' 
+                        : form.submissionType === 'restaurant'
+                        ? 'e.g., Fire and Ice Pizzeria, Bhojan Griha'
+                        : 'e.g., Phewa Lake, Annapurna Base Camp'
+                    } 
                   />
                   {errors.name && (
                     <div className="flex items-center gap-2 text-rose-600 text-sm mt-2">
@@ -505,6 +708,138 @@ export default function AddPlace() {
                     </select>
                   </div>
                 </div>
+
+                {/* Conditional Fields for Hotel */}
+                {form.submissionType === "hotel" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
+                    <div className="md:col-span-2">
+                      <div className="flex items-center gap-2 mb-4">
+                        <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                        </svg>
+                        <h3 className="text-lg font-bold text-blue-900">Hotel Details</h3>
+                      </div>
+                    </div>
+                    
+                    <div className="group">
+                      <label htmlFor="price-range" className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
+                        <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd" />
+                        </svg>
+                        Price Range
+                      </label>
+                      <select 
+                        id="price-range" 
+                        name="priceRange" 
+                        value={form.priceRange} 
+                        onChange={handleChange} 
+                        className="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 bg-white text-slate-900"
+                      >
+                        <option value="">Select price range</option>
+                        <option value="Budget ($10-30)">Budget ($10-30)</option>
+                        <option value="Mid-range ($30-80)">Mid-range ($30-80)</option>
+                        <option value="Luxury ($80+)">Luxury ($80+)</option>
+                      </select>
+                    </div>
+
+                    <div className="group">
+                      <label htmlFor="hotel-rating" className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
+                        <svg className="w-4 h-4 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        Rating (optional)
+                      </label>
+                      <input 
+                        id="hotel-rating" 
+                        name="rating" 
+                        type="number" 
+                        min="1" 
+                        max="5" 
+                        step="0.1"
+                        value={form.rating} 
+                        onChange={handleChange} 
+                        className="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 bg-white text-slate-900"
+                        placeholder="e.g., 4.5"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Conditional Fields for Restaurant */}
+                {form.submissionType === "restaurant" && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-orange-50 rounded-xl border-2 border-orange-200">
+                    <div className="md:col-span-2">
+                      <div className="flex items-center gap-2 mb-4">
+                        <svg className="w-5 h-5 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+                        </svg>
+                        <h3 className="text-lg font-bold text-orange-900">Restaurant Details</h3>
+                      </div>
+                    </div>
+                    
+                    <div className="group">
+                      <label htmlFor="cuisine" className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
+                        <svg className="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                        </svg>
+                        Cuisine Type
+                      </label>
+                      <input 
+                        id="cuisine" 
+                        name="cuisine" 
+                        value={form.cuisine} 
+                        onChange={handleChange} 
+                        className="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-200 bg-white text-slate-900"
+                        placeholder="e.g., Nepali, Indian, Chinese"
+                      />
+                    </div>
+
+                    <div className="group">
+                      <label htmlFor="price-level" className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
+                        <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd" />
+                        </svg>
+                        Price Level
+                      </label>
+                      <select 
+                        id="price-level" 
+                        name="priceLevel" 
+                        value={form.priceLevel} 
+                        onChange={handleChange} 
+                        className="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-200 bg-white text-slate-900"
+                      >
+                        <option value="">Select price level</option>
+                        <option value="$ (Budget)">$ (Budget)</option>
+                        <option value="$$ (Moderate)">$$ (Moderate)</option>
+                        <option value="$$$ (Expensive)">$$$ (Expensive)</option>
+                        <option value="$$$$ (Very Expensive)">$$$$ (Very Expensive)</option>
+                      </select>
+                    </div>
+
+                    <div className="group">
+                      <label htmlFor="restaurant-rating" className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
+                        <svg className="w-4 h-4 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        Rating (optional)
+                      </label>
+                      <input 
+                        id="restaurant-rating" 
+                        name="rating" 
+                        type="number" 
+                        min="1" 
+                        max="5" 
+                        step="0.1"
+                        value={form.rating} 
+                        onChange={handleChange} 
+                        className="w-full px-4 py-3.5 border-2 border-slate-200 rounded-xl focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500 transition-all duration-200 bg-white text-slate-900"
+                        placeholder="e.g., 4.5"
+                      />
+                    </div>
+                  </div>
+                )}
 
                 {/* Description */}
                 <div className="group">

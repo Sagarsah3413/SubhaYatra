@@ -546,8 +546,8 @@ VITE_CURRENCY_API_KEY=your_exchangerate_key
 # Clerk Authentication
 VITE_CLERK_PUBLISHABLE_KEY=your_clerk_key
 
-# Gemini AI
-VITE_GEMINI_API_KEY=your_gemini_key
+# Cohere AI
+VITE_COHERE_API_KEY=your_cohere_key
 
 # Social Media
 VITE_FACEBOOK_URL=https://facebook.com/roamiowanderly
@@ -564,15 +564,14 @@ CLERK_API_KEY=your_clerk_secret_key
 GMAIL_USER=wanderlyroamio@gmail.com
 GMAIL_APP_PASSWORD=your_app_password
 
-# Gemini AI
-GEMINI_API_KEY=your_gemini_key
+# Cohere AI (optional - used by backend if needed)
+COHERE_API_KEY=your_cohere_key
 
 # JWT Secret
 JWT_SECRET_KEY=your_secret_key
 ```
 
 ---
-
 ## 🎯 Key Features Summary
 
 ### Frontend Features

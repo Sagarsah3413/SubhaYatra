@@ -35,7 +35,9 @@ def serialize_hotel(hotel):
         'rating': hotel.rating,
         'price_range': hotel.price_range,
         'place_id': hotel.place_id,
-        'all_images': all_images
+        'all_images': all_images,
+        'source': getattr(hotel, 'source', 'dataset'),  # Include source field
+        'status': getattr(hotel, 'status', 'approved')  # Include status field
     }
 
 @hotels_bp.route('/hotels', methods=['GET'])
@@ -159,5 +161,77 @@ def get_featured_hotels():
         return jsonify(results)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    finally:
+        session.close()
+
+
+@hotels_bp.route('/hotels/<int:hotel_id>/approve', methods=['POST'])
+def approve_hotel(hotel_id):
+    """Approve a pending hotel"""
+    session = SessionLocal()
+    try:
+        hotel = session.query(Hotel).filter(Hotel.id == hotel_id).first()
+        if not hotel:
+            return jsonify({'error': 'Hotel not found'}), 404
+        
+        hotel.status = 'approved'
+        session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Hotel approved successfully',
+            'hotel_id': hotel_id,
+            'status': 'approved'
+        }), 200
+    except Exception as e:
+        session.rollback()
+        return jsonify({'error': 'Failed to approve hotel'}), 500
+    finally:
+        session.close()
+
+@hotels_bp.route('/hotels/<int:hotel_id>/reject', methods=['POST'])
+def reject_hotel(hotel_id):
+    """Reject a pending hotel"""
+    session = SessionLocal()
+    try:
+        hotel = session.query(Hotel).filter(Hotel.id == hotel_id).first()
+        if not hotel:
+            return jsonify({'error': 'Hotel not found'}), 404
+        
+        hotel.status = 'rejected'
+        session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Hotel rejected successfully',
+            'hotel_id': hotel_id,
+            'status': 'rejected'
+        }), 200
+    except Exception as e:
+        session.rollback()
+        return jsonify({'error': 'Failed to reject hotel'}), 500
+    finally:
+        session.close()
+
+@hotels_bp.route('/hotels/<int:hotel_id>', methods=['DELETE'])
+def delete_hotel(hotel_id):
+    """Delete a hotel by ID"""
+    session = SessionLocal()
+    try:
+        hotel = session.query(Hotel).filter(Hotel.id == hotel_id).first()
+        if not hotel:
+            return jsonify({'error': 'Hotel not found'}), 404
+        
+        session.delete(hotel)
+        session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': 'Hotel deleted successfully',
+            'hotel_id': hotel_id
+        }), 200
+    except Exception as e:
+        session.rollback()
+        return jsonify({'error': 'Failed to delete hotel'}), 500
     finally:
         session.close()

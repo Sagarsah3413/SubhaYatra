@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import NepaliCalendar from "../../pages/NepaliCalendar";
 import { useTheme } from "../../contexts/ThemeContext";
-import { FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaUser, FaCog, FaQuestionCircle, FaSearch, FaInfoCircle, FaPhone, FaBars } from "react-icons/fa";
+import { FaMapMarkerAlt, FaGlobe, FaCompass, FaCamera, FaBookOpen, FaEnvelope, FaUser, FaCog, FaQuestionCircle, FaSearch, FaInfoCircle, FaPhone, FaBars, FaPlusCircle } from "react-icons/fa";
 
 /**
  * Premium Header Component
@@ -63,6 +63,7 @@ export const Header = () => {
   const handleLogoClick = () => navigate("/");
 
   const handleNavigation = (path) => {
+    console.log('Header navigation clicked:', path);
     navigate(path);
   };
 
@@ -2038,10 +2039,10 @@ const MobileNavigationItems = ({
       color: "bg-cyan-500"
     },
     {
-      icon: FaEnvelope,
-      label: "Newsletter",
-      path: "/newsletter",
-      description: "Stay updated",
+      icon: FaPlusCircle,
+      label: "Add Place",
+      path: "/add-place",
+      description: "Share your discovery",
       color: "bg-green-500"
     }
   ];
@@ -3023,7 +3024,7 @@ const FeaturesBox = ({ theme, onNavigation }) => {
       icon: "🎯",
       color: "from-teal-500 to-cyan-500",
       features: [
-        { name: "Newsletter Archive", path: "/newsletter-archive", icon: "📧", description: "Travel updates" },
+        { name: "Add Place", path: "/add-place", icon: "➕", description: "Share your discovery" },
         { name: "My Wishlist", path: "/wishlist", icon: "❤️", description: "Saved places" }
       ]
     }

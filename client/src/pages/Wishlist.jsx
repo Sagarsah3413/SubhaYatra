@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 import { useTheme } from '../contexts/ThemeContext';
+import { useToast } from '../contexts/ToastContext';
 import { wishlistService } from '../services/wishlistService';
 import { 
   FaHeart, 
@@ -21,6 +22,7 @@ import {
 
 const Wishlist = () => {
   const { theme } = useTheme();
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const { user, isSignedIn } = useUser();
   
@@ -47,7 +49,9 @@ const Wishlist = () => {
         setFilteredItems(data);
       } catch (err) {
         console.error('Failed to load wishlist:', err);
-        setError('Failed to load wishlist. Please try again.');
+        const errorMsg = 'Failed to load wishlist. Please try again.';
+        setError(errorMsg);
+        showToast('error', errorMsg);
       } finally {
         setIsLoading(false);
       }
@@ -73,6 +77,7 @@ const Wishlist = () => {
 
   const removeFromWishlist = async (itemId) => {
     if (!isSignedIn || !user) {
+      showToast('error', 'Please sign in to manage your wishlist');
       return;
     }
 
@@ -82,11 +87,12 @@ const Wishlist = () => {
       setWishlistItems(prev => prev.filter(item => item.id !== itemId));
       setFilteredItems(prev => prev.filter(item => item.id !== itemId));
       
-      // Show success message (you can replace this with a toast notification)
-      console.log(`✅ Removed "${removedItem?.name}" from wishlist`);
+      showToast('wishlist', `Removed "${removedItem?.name || 'item'}" from wishlist`);
     } catch (err) {
       console.error('Failed to remove from wishlist:', err);
-      setError('Failed to remove item. Please try again.');
+      const errorMsg = 'Failed to remove item. Please try again.';
+      setError(errorMsg);
+      showToast('error', errorMsg);
       
       // Clear error after 3 seconds
       setTimeout(() => setError(null), 3000);

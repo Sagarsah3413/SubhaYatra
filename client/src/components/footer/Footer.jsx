@@ -399,7 +399,9 @@ export default function Footer() {
                     <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Roamio</span> 
                     <span className="text-teal-400 hover:text-teal-300 transition-all duration-500 hover:scale-105 inline-block">Wanderly</span>
                   </h2>
-                  <p className="text-xs text-gray-300 font-semibold tracking-wider animate-fade-in-up animation-delay-200 hover:text-gray-100 transition-colors duration-300 uppercase italic bg-gradient-to-r from-amber-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent font-serif">Your Premium Nepal Travel Companion</p>
+                  <p className="text-xs text-gray-300 font-semibold tracking-wider animate-fade-in-up animation-delay-200 hover:text-white transition-colors duration-300 uppercase">
+                    Your Premium Nepal Travel Companion
+                  </p>
                 </div>
               </div>
               <div className="mb-4">
@@ -448,9 +450,12 @@ export default function Footer() {
           <div className="group bg-slate-800/30 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-slate-800/40 transition-all duration-300 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-white/2 to-transparent rounded-xl pointer-events-none"></div>
             <div className="relative">
-              <h3 className="text-sm font-black mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+              <h3 className="text-sm font-black mb-4 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-teal-400 to-amber-400 rounded-full mr-2"></span>
-                <span className="tracking-wide">{t('footer.company')}</span>
+                <span className="tracking-wide">
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Com</span>
+                  <span className="text-teal-400 hover:text-teal-300 transition-colors duration-300">pany</span>
+                </span>
               </h3>
               <div className="space-y-3">
                 <Link to="/about" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/about" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
@@ -463,9 +468,12 @@ export default function Footer() {
                 </Link>
               </div>
               
-              <h3 className="text-sm font-black mb-4 mt-6 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+              <h3 className="text-sm font-black mb-4 mt-6 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mr-2"></span>
-                <span className="tracking-wide">{t('footer.support')}</span>
+                <span className="tracking-wide">
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Sup</span>
+                  <span className="text-teal-400 hover:text-teal-300 transition-colors duration-300">port</span>
+                </span>
               </h3>
               <div className="space-y-3">
                 <Link to="/help" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/help" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
@@ -484,9 +492,12 @@ export default function Footer() {
           <div className="group bg-slate-800/30 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-slate-800/40 transition-all duration-300 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-white/2 to-transparent rounded-xl pointer-events-none"></div>
             <div className="relative">
-              <h3 className="text-sm font-black mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+              <h3 className="text-sm font-black mb-4 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mr-2"></span>
-                <span className="tracking-wide">{t('footer.community')}</span>
+                <span className="tracking-wide">
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Commu</span>
+                  <span className="text-teal-400 hover:text-teal-300 transition-colors duration-300">nity</span>
+                </span>
               </h3>
               <div className="space-y-3">
                 <NavLink to="/write-review" className={({ isActive }) => `group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${isActive ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
@@ -503,9 +514,12 @@ export default function Footer() {
                 </Link>
               </div>
               
-              <h3 className="text-sm font-black mb-4 mt-6 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+              <h3 className="text-sm font-black mb-4 mt-6 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full mr-2"></span>
-                <span className="tracking-wide">{t('footer.resources')}</span>
+                <span className="tracking-wide">
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Resour</span>
+                  <span className="text-teal-400 hover:text-teal-300 transition-colors duration-300">ces</span>
+                </span>
               </h3>
               <div className="space-y-3">
                 <Link to="/newsletter-archive" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/newsletter-archive" ? "text-teal-400" : "text-gray-300 hover:text-white"}`}>
@@ -546,7 +560,10 @@ export default function Footer() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-lg font-black text-white tracking-wide">{t('footer.stayUpdated')}</h3>
+                  <h3 className="text-lg font-black tracking-wide">
+                    <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Stay</span>{' '}
+                    <span className="text-teal-400 hover:text-teal-300 transition-all duration-500 hover:scale-105 inline-block">Updated</span>
+                  </h3>
                   <p className="text-sm text-gray-400 mt-1 font-semibold">Curated travel insights delivered weekly</p>
                 </div>
               </div>
@@ -600,11 +617,14 @@ export default function Footer() {
             
             {/* Smart Legal Section */}
             <div className="relative border-t border-slate-600/30 pt-6">
-              <h4 className="text-sm font-semibold mb-4 text-white flex items-center group-hover:scale-[1.02] transition-transform duration-300">
+              <h4 className="text-sm font-semibold mb-4 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <svg className="w-4 h-4 text-amber-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 2L3 7v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-7-5zM10 4.5L15 8v9H5V8l5-3.5z" clipRule="evenodd" />
                 </svg>
-                <span className="font-black tracking-wide">{t('footer.legal')}</span>
+                <span className="font-black tracking-wide">
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Le</span>
+                  <span className="text-teal-400 hover:text-teal-300 transition-colors duration-300">gal</span>
+                </span>
               </h4>
               <div className="flex flex-wrap gap-3">
                 <Link 
