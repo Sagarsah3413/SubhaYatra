@@ -885,22 +885,12 @@ export const Header = () => {
           
           {/* Enhanced Brand Text */}
           <div className="hidden sm:block">
-            <h1 className={`
-              font-black text-3xl leading-none mb-1
-              bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-600 bg-clip-text text-transparent
-              group-hover:from-teal-500 group-hover:via-cyan-500 group-hover:to-emerald-500 
-              transition-all duration-500 gradient-text
-            `}>
-              Roamio
+            <h1 className="font-black text-3xl leading-none mb-1">
+              <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Roamio</span>
             </h1>
-            <p className={`
-              text-base font-bold tracking-widest uppercase
-              ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}
-              group-hover:text-teal-500 transition-all duration-500
-              relative
-            `}>
-              Wanderly
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-500 to-cyan-500 group-hover:w-full transition-all duration-700"></span>
+            <p className="text-base font-bold tracking-widest uppercase">
+              <span className="text-teal-400 hover:text-teal-300 transition-all duration-500 hover:scale-105 inline-block">Wanderly</span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-teal-500 group-hover:w-full transition-all duration-700"></span>
             </p>
           </div>
           
