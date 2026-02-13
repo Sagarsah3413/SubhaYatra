@@ -378,7 +378,7 @@ const WishlistCard = ({ item, theme, onRemove, getCategoryIcon, getDifficultyCol
               ({item.reviews} reviews)
             </span>
           </div>
-          <span className="text-xl font-bold text-teal-500">{item.price}</span>
+          <span className="text-base font-semibold text-teal-500">{item.price}</span>
         </div>
 
         <button 
