@@ -13,6 +13,9 @@ client-server/env/
 env/
 venv/
 ENV/
+venv*/
+.venv*/
+env*/
 
 # Node modules
 node_modules/
@@ -30,4 +33,9 @@ Thumbs.db
 .env
 client-server/.env
 client/.env
+
+# NODE_MODULE
+node_modules/
+client\node_modulesclient\node_modules
+node_modules\node\node_modules
 

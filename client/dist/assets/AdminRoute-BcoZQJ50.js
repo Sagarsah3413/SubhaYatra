@@ -1,0 +1,1 @@
+import{q as e,j as n,aW as i}from"./index-DQRB4LQk.js";function s({children:t}){const a=localStorage.getItem("admin"),o=e();return a?t:n.jsx(i,{to:"/admin/login",state:{from:o},replace:!0})}export{s as default};
