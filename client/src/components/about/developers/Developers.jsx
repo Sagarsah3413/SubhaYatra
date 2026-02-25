@@ -1,5 +1,5 @@
 import Contributions from './contribution/Contributions'
-import Contact from './contact/contact'
+import Contact from './contact/Contact'
 
 const Developers = ({ name, image, intro, position, description, contribution, contact }) => {
   return (
