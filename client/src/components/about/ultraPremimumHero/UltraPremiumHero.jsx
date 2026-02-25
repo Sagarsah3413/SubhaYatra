@@ -58,7 +58,7 @@ const UltraPremiumHero = () => {
                         </span>
                         <br />
                         <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                            SubhaYatra
+                            Roamio Wanderly
                         </span>
                     </h1>
 

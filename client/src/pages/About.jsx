@@ -9,7 +9,6 @@ import Mission from '../components/about/mission/Mission';
 import CoreValues from '../components/about/coreValues/CoreValues';
 import Story from '../components/about/story/Story';
 
-
 export default function About() {
   const { bgClass, textClass } = useTheme();
   return (
