@@ -3,6 +3,7 @@ import sagarImg from '../assets/team/Sagar.JPG';
 import nirjalaImg from '../assets/team/nirjala.jpeg';
 import smritiImg from '../assets/team/smiriti.jpeg';
 import tanuImg from '../assets/team/tanu.jpeg';
+import sagarSahImg from '../assets/team/Sagarsah1772001501.jpeg';
 import {
     FaUsers,
     FaShieldAlt,
@@ -12,8 +13,12 @@ import {
     FaBuilding,
     FaLinkedin,
     FaTwitter,
-    FaInstagram
+    FaInstagram,
+    // SiLeetcode,
+    // FaGithub
 } from 'react-icons/fa';
+import { FaGithub } from "react-icons/fa";
+import { TbBrandLeetcode } from "react-icons/tb";
 
 const developersData = [
     {
@@ -99,6 +104,24 @@ const developersData = [
         contact: [
             { icon: FaLinkedin, link: "#" },
             { icon: FaTwitter, link: "#" },
+        ]
+    },
+    {
+        id: 6,
+        name: "Sagar Kumar Sah",
+        intro: "Full-Stack Developer",
+        image: sagarSahImg,
+        position: "Full-Stack Developer",
+        description: "Architected both frontend and backend systems using React and Python Flask. Built robust server-side logic and    database systems using Python Flask with reliable API design.",
+        contribution: [
+            { icon: FaCode, point: "Project Architecture & Planning" },
+            { icon: FaBuilding, point: "Frontend & Backend Development" },
+            { icon: FaShieldAlt, point: "API Development & Integration" }
+        ],
+        contact: [
+            { icon: FaLinkedin, link: "https://www.linkedin.com/in/sagarkumarsah/" },
+            { icon: TbBrandLeetcode, link: "https://leetcode.com/u/sagarsah/" },
+            { icon: FaGithub, link: "https://github.com/Sagarsah3413" }
         ]
     }
 ];
