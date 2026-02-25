@@ -59,7 +59,8 @@ def create_app():
         "http://127.0.0.1:5173",
         "http://127.0.0.1:5174",
         "http://127.0.0.1:5175",
-        "http://127.0.0.1:3000"
+        "http://127.0.0.1:3000",
+        "https://roamiowanderly-eyk8dfgy6-sagar-kumar-sahs-projects.vercel.app/"
     ], supports_credentials=True)
 
     # -----------------------------
@@ -122,4 +123,4 @@ if __name__ == "__main__":
     print("📊 Database: SQLite (tourism.db)")
     print("=" * 50)
     
-    app.run(debug=True, host="0.0.0.0", port=8000)
+    app.run(debug=True, host="0.0.0.0", port=10000)
