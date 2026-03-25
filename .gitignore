@@ -39,3 +39,5 @@ node_modules/
 client\node_modulesclient\node_modules
 node_modules\node\node_modules
 
+# SQLITE
+client-server/app/instance/*.db
