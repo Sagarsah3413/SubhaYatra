@@ -86,22 +86,6 @@ const AuthSection = ({ theme, onNavigation, onSearchOpen }) => {
                         : 'border-slate-200 hover:border-teal-400'
                     }
         `}>
-                    {/* <UserButton
-                        afterSignOutUrl="/"
-                        appearance={{
-                            elements: {
-                                avatarBox: 'w-7 h-7 rounded-lg',
-                                userButtonPopoverCard:
-                                    'shadow-2xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl !fixed !top-16 !right-4 z-[9999] rounded-xl border border-slate-200 dark:border-slate-700',
-                                userButtonPopoverActionButton:
-                                    'hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg',
-                                userButtonPopoverActionButtonText:
-                                    'text-slate-700 dark:text-slate-200 text-sm',
-                                userButtonPopoverFooter: 'hidden',
-                            },
-                        }}
-                        userProfileMode="modal"
-                    /> */}
                     <UserButton
                         afterSignOutUrl="/"
                         appearance={{
