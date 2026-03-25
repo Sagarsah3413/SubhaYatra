@@ -80,13 +80,13 @@ const AuthSection = ({ theme, onNavigation, onSearchOpen }) => {
             {/* ── Signed IN ───────────────────────────────────────── */}
             <SignedIn>
                 <div className={`
-          p-1 rounded-xl border transition-all duration-200
+          p-1 rounded-xl border transition-all duration-200 pb-0
           ${theme === 'dark'
                         ? 'border-slate-700 hover:border-teal-600'
                         : 'border-slate-200 hover:border-teal-400'
                     }
         `}>
-                    <UserButton
+                    {/* <UserButton
                         afterSignOutUrl="/"
                         appearance={{
                             elements: {
@@ -98,6 +98,25 @@ const AuthSection = ({ theme, onNavigation, onSearchOpen }) => {
                                 userButtonPopoverActionButtonText:
                                     'text-slate-700 dark:text-slate-200 text-sm',
                                 userButtonPopoverFooter: 'hidden',
+                            },
+                        }}
+                        userProfileMode="modal"
+                    /> */}
+                    <UserButton
+                        afterSignOutUrl="/"
+                        appearance={{
+                            elements: {
+                                avatarBox: "w-7 h-7 rounded-lg ",
+                                userButtonPopoverCard:
+                                    "shadow-2xl  bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-xl border border-slate-200 dark:border-slate-700 ",
+                                userButtonPopoverActionButton:
+                                    "hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg",
+                                userButtonPopoverActionButtonText:
+                                    "text-slate-700 dark:text-slate-200 text-sm",
+                                userButtonPopoverFooter: "hidden",
+                            },
+                            layout: {
+                                placement: "bottom-end",
                             },
                         }}
                         userProfileMode="modal"
