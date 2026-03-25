@@ -86,6 +86,7 @@ const AuthSection = ({ theme, onNavigation, onSearchOpen }) => {
                         : 'border-slate-200 hover:border-teal-400'
                     }
         `}>
+
                     <UserButton
                         afterSignOutUrl="/"
                         appearance={{
