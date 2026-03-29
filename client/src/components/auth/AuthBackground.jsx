@@ -25,8 +25,8 @@ const AuthBackground = ({ dark }) => (
         {/* Base gradient */}
         <div
             className={`absolute inset-0 ${dark
-                    ? 'bg-linear-to-br from-slate-950 via-slate-900 to-slate-950'
-                    : 'bg-linear-to-br from-teal-50 via-white to-cyan-50'
+                ? 'bg-linear-to-br from-slate-950 via-slate-900 to-slate-950'
+                : 'bg-linear-to-br from-teal-50 via-white to-cyan-50'
                 }`}
         />
 
@@ -59,7 +59,7 @@ const AuthBackground = ({ dark }) => (
         ))}
 
         {/* Floating icons */}
-        {FLOAT_ICONS.map(({ icon: Icon, top, left, size, delay, dur }, i) => (
+        {FLOAT_ICONS.map(({ Icon, top, left, size, delay, dur }, i) => (
             <div
                 key={i}
                 className={`absolute pointer-events-none ${dark ? 'text-teal-500/20' : 'text-teal-600/15'}`}

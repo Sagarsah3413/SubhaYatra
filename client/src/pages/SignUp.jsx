@@ -9,7 +9,6 @@ import AuthBackground from '../components/auth/AuthBackground';
 import AuthBrandPanel from '../components/auth/AuthBrandPanel';
 import AuthFormCard from '../components/auth/AuthFormCard';
 import { getClerkAppearance } from '../components/auth/clerkAppearance';
-import { SIGN_UP_FEATURES } from '../components/auth/authConstants';
 
 export default function SignUpPage() {
   const { theme } = useTheme();
