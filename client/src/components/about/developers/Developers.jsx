@@ -10,7 +10,7 @@ const Developers = ({ name, image, intro, position, description, contribution, c
         <div className="w-20 h-20 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-2xl group-hover:scale-110 transition-transform duration-300 bg-linear-to-br from-teal-500 to-cyan-500">
           <img src={image} alt={name} className="w-full h-full object-cover" />
         </div>
-        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-linear-to-br from-teal-500 to-cyan-500 text-white px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold shadow-lg whitespace-nowrap">
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-linear-to-br from-teal-500 to-cyan-500 text-white px-2 py-0.5 md:hidden md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold shadow-lg whitespace-nowrap">
           {position}
         </div>
       </div>
@@ -24,7 +24,7 @@ const Developers = ({ name, image, intro, position, description, contribution, c
         <p className="text-teal-600 dark:text-teal-400 font-semibold mb-4 text-center">{intro}</p>
         <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-6">{description}</p>
 
-        <div className="space-y-3 mb-6">
+        <div className="flex  justify-center gap-4 space-y-3  mb-6">
           {contribution.map((item, index) => (
             <Contributions key={index} {...item} />
           ))}

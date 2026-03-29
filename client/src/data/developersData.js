@@ -3,7 +3,8 @@ import sagarImg from '../assets/team/Sagar.JPG';
 import nirjalaImg from '../assets/team/nirjala.jpeg';
 import smritiImg from '../assets/team/smiriti.jpeg';
 import tanuImg from '../assets/team/tanu.jpeg';
-import sagarSahImg from '../assets/team/Sagarsah1772001501.jpeg';
+// import sagarSahImg from '../assets/team/Sagarsah1772001501.jpeg';
+import sagarNewImg from '../assets/team/SagarNew.jpeg';
 import {
     FaUsers,
     FaShieldAlt,
@@ -110,7 +111,7 @@ const developersData = [
         id: 6,
         name: "Sagar Kumar Sah",
         intro: "Full-Stack Developer",
-        image: sagarSahImg,
+        image: sagarNewImg,
         position: "Full-Stack Developer",
         description: "Architected both frontend and backend systems using React and Python Flask. Built robust server-side logic and    database systems using Python Flask with reliable API design.",
         contribution: [

@@ -36,13 +36,13 @@ const DevelopmentTeam = () => {
                     ))}
                 </div>
 
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-16 px-4">
-                    {developersData
-                        .filter((developer) => developer.id === 6)
-                        .map((developer) => (
-                            <Developers key={developer.id} {...developer} />
-                        ))}
-                </div>
+                {/* <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-16 px-4"> */}
+                {developersData
+                    .filter((developer) => developer.id === 6)
+                    .map((developer) => (
+                        <Developers key={developer.id} {...developer} />
+                    ))}
+                {/* </div> */}
                 {/* Tech Stack Section */}
                 <TechStack />
             </section></>
