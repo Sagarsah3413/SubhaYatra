@@ -35,7 +35,7 @@ export default function SignInPage() {
         <AuthBackground dark={dark} />
 
         <div className="relative z-10 flex items-center justify-center min-h-[calc(100vh-4rem)] py-16 px-4">
-          <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
 
             {/* LEFT */}
             <AuthBrandPanel
