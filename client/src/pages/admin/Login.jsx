@@ -14,10 +14,10 @@ export default function AdminLogin() {
 
     try {
       // Call backend login API
+      const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
       const res = await axios.post(
-        "http://localhost:8000/admin/login",
-        { username, password },
-        { withCredentials: true }
+        `${API}/api/admin/login`,
+        { username, password }
       );
 
       // Save admin info and login time

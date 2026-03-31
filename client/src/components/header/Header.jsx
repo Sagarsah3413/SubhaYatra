@@ -7,14 +7,13 @@ import { useTheme } from '../../contexts/ThemeContext';
 // Hooks
 import { useLocation } from '../../hooks/useLocation';
 import { useCalendar } from '../../hooks/useCalendar';
-import { useSearch } from '../../hooks/useSearch';
 
 // Components
 import Logo from './Logo.jsx';
 import NavLinks from './NavLinks.jsx';
 import AuthSection from './AuthSection.jsx';
 import CalendarModal from './CalendarModal.jsx';
-import SearchModal from './SearchModal.jsx';
+import SearchBar from '../../pages/SearchBar.jsx';
 
 // Dev-only
 import LocationDebugPanel from './LocationDebugPanel';
@@ -28,6 +27,8 @@ export const Header = () => {
     const clerkAvailable = !!user;
 
     const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || 'en');
+    const [showSearch, setShowSearch] = useState(false);
+
     const handleLanguageChange = (lang) => {
         setSelectedLanguage(lang);
         i18n.changeLanguage(lang);
@@ -45,10 +46,6 @@ export const Header = () => {
         handleCalendarOpen, handleCalendarClose,
     } = useCalendar();
 
-    const {
-        showSearchModal, searchQuery, setShowSearchModal, setSearchQuery, handleSearch,
-    } = useSearch();
-
     return (
         <header className={`
       fixed top-0 left-0 right-0 z-50
@@ -64,26 +61,36 @@ export const Header = () => {
             {/* LEFT ── Logo */}
             <Logo onClick={() => navigate('/')} theme={theme} />
 
-            {/* CENTER ── Nav links */}
-            <NavLinks
-                theme={theme}
-                onNavigation={(path) => navigate(path)}
-                onCalendarOpen={handleCalendarOpen}
-                showCalendar={showCalendar}
-                triggerRef={triggerRef}
-                selectedLanguage={selectedLanguage}
-                onLanguageChange={handleLanguageChange}
-                currentLocation={currentLocation}
-                isLocationLoading={isLocationLoading}
-                onLocationRefresh={refreshLocation}
-            />
+            {/* CENTER ── Search bar (when open) or Nav links */}
+            {showSearch ? (
+                <div className="flex-1 max-w-xl mx-4">
+                    <SearchBar
+                        placeholder="Search destinations, hotels, restaurants…"
+                        onSearch={() => setShowSearch(false)}
+                        className="w-full"
+                    />
+                </div>
+            ) : (
+                <NavLinks
+                    theme={theme}
+                    onNavigation={(path) => navigate(path)}
+                    onCalendarOpen={handleCalendarOpen}
+                    showCalendar={showCalendar}
+                    triggerRef={triggerRef}
+                    selectedLanguage={selectedLanguage}
+                    onLanguageChange={handleLanguageChange}
+                    currentLocation={currentLocation}
+                    isLocationLoading={isLocationLoading}
+                    onLocationRefresh={refreshLocation}
+                />
+            )}
 
             {/* RIGHT ── Auth */}
             <AuthSection
                 theme={theme}
                 clerkAvailable={clerkAvailable}
                 onNavigation={(path) => navigate(path)}
-                onSearchOpen={() => setShowSearchModal(true)}
+                onSearchOpen={() => setShowSearch(s => !s)}
             />
 
             {/* Modals */}
@@ -92,14 +99,6 @@ export const Header = () => {
                 mobileAnimating={mobileAnimating}
                 calendarRef={calendarRef}
                 onClose={handleCalendarClose}
-            />
-            <SearchModal
-                isOpen={showSearchModal}
-                onClose={() => setShowSearchModal(false)}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                onSearch={handleSearch}
-                theme={theme}
             />
 
             {import.meta.env.DEV && showLocationDebug && (
