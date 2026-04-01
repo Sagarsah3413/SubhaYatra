@@ -11,7 +11,7 @@
  *   onNudge     {Function}   — called when nudge button clicked
  */
 const AuthFormCard = ({ dark, mounted, clerkForm, nudgeText, nudgeAction, onNudge }) => (
-    <div style={mounted ? { animation: 'fadeUp 0.6s ease both', animationDelay: '0.2s' } : { opacity: 0 }}>
+    <div style={{ animation: 'fadeUp 0.4s ease both' }}>
 
         {/* Glass card */}
         <div className={`

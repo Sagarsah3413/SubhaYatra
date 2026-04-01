@@ -111,17 +111,19 @@ def search():
 
     total = sum(len(v) for v in results.values())
 
-    # Save to history
-    try:
-        from sqlalchemy import text
-        db.session.execute(text(
-            "INSERT INTO search_history (clerk_id, user_name, query, query_type, response_summary, created_at, user_id) "
-            "VALUES (:cid, :uname, :q, :qt, :rs, CURRENT_TIMESTAMP, :uid)"
-        ), {'cid': clerk_id, 'uname': user_name, 'q': query,
-            'qt': category, 'rs': f"{total} results", 'uid': clerk_id or ''})
-        db.session.commit()
-    except Exception:
-        db.session.rollback()
+    # Only save to history when user explicitly submits (not on every keystroke)
+    # Frontend sends ?save=1 only on explicit search submission
+    if request.args.get('save') == '1' and len(query) >= 3:
+        try:
+            from sqlalchemy import text
+            db.session.execute(text(
+                "INSERT INTO search_history (clerk_id, user_name, query, query_type, response_summary, created_at, user_id) "
+                "VALUES (:cid, :uname, :q, :qt, :rs, CURRENT_TIMESTAMP, :uid)"
+            ), {'cid': clerk_id, 'uname': user_name, 'q': query,
+                'qt': category, 'rs': f"{total} results", 'uid': clerk_id or ''})
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
 
     return jsonify({'query': query, 'results': results, 'total': total})
 

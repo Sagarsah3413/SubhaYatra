@@ -390,3 +390,33 @@ def sync_all_from_clerk():
 
 
 
+
+
+@admin_bp.route('/admin/search-history', methods=['GET'])
+@admin_required
+def admin_search_history():
+    """Return all search history entries for admin view."""
+    from sqlalchemy import text
+    limit  = request.args.get('limit', 100, type=int)
+    search = request.args.get('search', '').strip()
+
+    sql = """
+        SELECT id, clerk_id, user_name, query, query_type, response_summary, created_at
+        FROM search_history
+        WHERE (:search = '' OR query LIKE :like OR user_name LIKE :like)
+        ORDER BY created_at DESC
+        LIMIT :limit
+    """
+    rows = db.session.execute(text(sql), {
+        'search': search, 'like': f'%{search}%', 'limit': limit
+    }).fetchall()
+
+    return jsonify([{
+        'id':       r[0],
+        'clerk_id': r[1],
+        'user':     r[2] or 'Anonymous',
+        'query':    r[3],
+        'type':     r[4],
+        'results':  r[5],
+        'at':       r[6],
+    } for r in rows])

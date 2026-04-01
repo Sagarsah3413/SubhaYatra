@@ -72,12 +72,13 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
     return 0;
   };
 
-  const performSearch = useCallback(async (searchQuery) => {
+  const performSearch = useCallback(async (searchQuery, save = false) => {
     if (!searchQuery.trim() || !isSignedIn || !user) return;
     setIsLoading(true);
     try {
+      const saveParam = save && searchQuery.trim().length >= 3 ? '&save=1' : '';
       const res = await fetch(
-        `${API}/api/search?q=${encodeURIComponent(searchQuery)}&category=${activeCategory}`,
+        `${API}/api/search?q=${encodeURIComponent(searchQuery)}&category=${activeCategory}${saveParam}`,
         { headers: { 'X-Clerk-User-Id': user.id, 'X-Clerk-User-Name': user.fullName || '' } }
       );
       if (res.status === 401) { setShowLoginPrompt(true); return; }
@@ -132,6 +133,8 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
     if (!isSignedIn) { setShowLoginPrompt(true); return; }
     setShowSuggestions(false);
     setResults([]);
+    // Save to history on explicit search
+    performSearch(query, true);
     navigate(`/searchresult?q=${encodeURIComponent(query)}&category=${activeCategory}`);
     if (onSearch) onSearch(query);
   };
@@ -140,6 +143,8 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
     setQuery(item.name);
     setShowSuggestions(false);
     setResults([]);
+    // Save selected item name to history
+    performSearch(item.name, true);
     navigate(`/details?type=${item._type || item.type}&name=${encodeURIComponent(item.name)}`);
   };
 

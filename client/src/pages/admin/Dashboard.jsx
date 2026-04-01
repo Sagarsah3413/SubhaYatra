@@ -40,6 +40,11 @@ export default function AdminDashboard() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [userSearch, setUserSearch] = useState('');
 
+  // Search history tab state
+  const [searchHistory, setSearchHistory] = useState([]);
+  const [searchHistoryLoading, setSearchHistoryLoading] = useState(false);
+  const [searchHistoryFilter, setSearchHistoryFilter] = useState('');
+
   const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
   const getAuthHeaders = () => {
     const adminData = localStorage.getItem("admin");
@@ -81,6 +86,23 @@ export default function AdminDashboard() {
       console.error("Failed to fetch users:", err);
     } finally {
       setUsersLoading(false);
+    }
+  };
+
+  const fetchSearchHistory = async (filter = '') => {
+    const auth = getAuthHeaders();
+    if (!auth) return;
+    setSearchHistoryLoading(true);
+    try {
+      const res = await axios.get(
+        `${API}/api/admin/search-history?limit=200&search=${encodeURIComponent(filter)}`,
+        auth
+      );
+      setSearchHistory(res.data || []);
+    } catch (err) {
+      console.error('Failed to fetch search history:', err);
+    } finally {
+      setSearchHistoryLoading(false);
     }
   };
 
@@ -594,6 +616,25 @@ export default function AdminDashboard() {
                 <span>Users</span>
               </div>
               {activeTab === 'users' && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
+              )}
+            </button>
+
+            <button
+              onClick={() => { setActiveTab('searches'); fetchSearchHistory(); }}
+              className={`relative px-8 py-4 font-bold transition-all duration-300 ${
+                activeTab === 'searches'
+                  ? 'text-teal-600'
+                  : 'text-slate-600 hover:text-slate-800'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                </svg>
+                <span>Search History</span>
+              </div>
+              {activeTab === 'searches' && (
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
               )}
             </button>
@@ -1322,6 +1363,62 @@ export default function AdminDashboard() {
                   {users.length === 0 && (
                     <div className="p-12 text-center text-slate-400">No users found. Users appear here after their first login.</div>
                   )}
+                </div>
+              )}
+            </div>
+          </div>
+        ) : activeTab === 'searches' ? (
+          <div className="space-y-4">
+            <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-b border-slate-200 px-6 py-4 flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <h2 className="text-2xl font-black text-slate-800">Search History</h2>
+                  <p className="text-sm text-slate-600 mt-1">All searches made by users</p>
+                </div>
+                <div className="flex gap-3">
+                  <input
+                    type="text"
+                    placeholder="Filter by query or user…"
+                    value={searchHistoryFilter}
+                    onChange={e => { setSearchHistoryFilter(e.target.value); fetchSearchHistory(e.target.value); }}
+                    className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm focus:border-teal-500 outline-none"
+                  />
+                  <button onClick={() => fetchSearchHistory(searchHistoryFilter)}
+                    className="px-4 py-2 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700">
+                    Refresh
+                  </button>
+                </div>
+              </div>
+              {searchHistoryLoading ? (
+                <div className="p-12 text-center text-slate-500">Loading…</div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead className="bg-slate-50 border-b border-slate-200">
+                      <tr>
+                        {['User', 'Search Query', 'Category', 'Results', 'Date & Time'].map(h => (
+                          <th key={h} className="px-5 py-3 text-left text-xs font-black text-slate-500 uppercase tracking-wider">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {searchHistory.length === 0 ? (
+                        <tr><td colSpan={5} className="px-5 py-12 text-center text-slate-400">No search history yet.</td></tr>
+                      ) : searchHistory.map(h => (
+                        <tr key={h.id} className="hover:bg-slate-50 transition-colors">
+                          <td className="px-5 py-3 font-semibold text-slate-700">{h.user}</td>
+                          <td className="px-5 py-3">
+                            <span className="px-2 py-1 bg-teal-50 text-teal-700 rounded font-semibold">{h.query}</span>
+                          </td>
+                          <td className="px-5 py-3 text-slate-500 capitalize">{h.type || 'all'}</td>
+                          <td className="px-5 py-3 text-slate-500">{h.results}</td>
+                          <td className="px-5 py-3 text-slate-400 text-xs">
+                            {h.at ? new Date(h.at).toLocaleString() : '—'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </div>
