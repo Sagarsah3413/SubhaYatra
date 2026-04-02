@@ -1,162 +1,128 @@
+"""Wishlist routes."""
+
 from flask import Blueprint, request, jsonify
-from ..database import SessionLocal
-from .. import crud
+from ..database import db
+from ..models import Wishlist, Place
 from ..auth import token_required
-import random
 
 wishlist_bp = Blueprint('wishlist', __name__)
 
-@wishlist_bp.route('/wishlist/<user_id>', methods=['GET'])
+
+def _own_or_admin(clerk_id):
+    """Return True if the request user owns the resource or is admin."""
+    u = request.current_user
+    return u['user_id'] == clerk_id or u['role'] == 'admin'
+
+
+@wishlist_bp.route('/wishlist/<clerk_id>', methods=['GET'])
 @token_required
-def get_user_wishlist(user_id):
-    """Get all places in user's wishlist - requires authentication"""
-    # Verify user can only access their own wishlist
-    if request.current_user['user_id'] != user_id and request.current_user['role'] != 'admin':
+def get_wishlist(clerk_id):
+    if not _own_or_admin(clerk_id):
         return jsonify({'error': 'Access denied'}), 403
-    
-    db = SessionLocal()
-    try:
-        wishlist_items = crud.get_user_wishlist(db, user_id)
-        
-        result = []
-        for wishlist_item, place in wishlist_items:
-            # Generate realistic additional data for tourism
-            categories = ['trekking', 'culture', 'nature', 'wildlife', 'adventure', 'heritage']
-            difficulties = ['Easy', 'Moderate', 'Challenging', 'Moderate to Challenging']
-            durations = ['1 day', '2 days', '3 days', '5 days', '7 days', '10 days', '14 days', '16 days']
-            
-            # Use wishlist_item.id for the unique identifier (not place.id)
-            # For places with database ID, use place_id; for string identifiers, use place_identifier
-            item_id = wishlist_item.place_id if wishlist_item.place_id else wishlist_item.place_identifier
-            
-            # Generate consistent data based on item_id for consistency
-            if isinstance(item_id, int):
-                random.seed(item_id)
-            else:
-                random.seed(hash(item_id))
-            
-            place_data = {
-                'id': item_id,  # Use the appropriate ID
-                'name': place.name,
-                'location': place.location or 'Nepal',
-                'description': place.description or f'Explore the beautiful {place.name} and discover its unique charm.',
-                'image': place.image_url or 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
-                'type': place.type or 'Place',  # Add type field for detail page navigation
-                'category': place.type or random.choice(categories),
-                'rating': round(4.2 + random.random() * 0.7, 1),  # 4.2-4.9 range
-                'reviews': random.randint(500, 3000),
-                'duration': random.choice(durations),
-                'difficulty': random.choice(difficulties),
-                'price': f'${random.randint(200, 1500)}',
-                'tags': place.tags or '',
-                'added_at': wishlist_item.created_at.isoformat() if wishlist_item.created_at else None
-            }
-            result.append(place_data)
-        
-        return jsonify(result)
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        db.close()
 
-@wishlist_bp.route('/wishlist/<user_id>/<place_id>', methods=['POST'])
-def add_to_wishlist(user_id, place_id):
-    """Add place to user's wishlist - requires authentication"""
-    # Verify user can only modify their own wishlist
-    if request.current_user['user_id'] != user_id and request.current_user['role'] != 'admin':
-        return jsonify({'error': 'Access denied'}), 403
-    
-    db = SessionLocal()
-    try:
-        # Get place data from request body (for places without database ID)
-        place_data = request.get_json() or {}
-        
-        # Try to convert place_id to int for database lookup
-        try:
-            numeric_place_id = int(place_id)
-            place = crud.get_place_by_id(db, numeric_place_id)
-            if not place:
-                return jsonify({'error': 'Place not found'}), 404
-            wishlist_item = crud.add_to_wishlist(db, user_id, numeric_place_id)
-        except ValueError:
-            # place_id is a string identifier, use place data from request
-            if not place_data.get('name'):
-                return jsonify({'error': 'Place name is required'}), 400
-            
-            # Store with string identifier
-            wishlist_item = crud.add_to_wishlist_with_data(
-                db, 
-                user_id, 
-                place_id,
-                place_data.get('name'),
-                place_data.get('type', 'Place'),
-                place_data.get('location', ''),
-                place_data.get('image_url', ''),
-                place_data.get('description', '')
-            )
-        
-        return jsonify({
-            'success': True,
-            'message': 'Added to wishlist',
-            'wishlist_id': wishlist_item.id
-        })
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        db.close()
-
-@wishlist_bp.route('/wishlist/<user_id>/<place_id>', methods=['DELETE'])
-def remove_from_wishlist(user_id, place_id):
-    """Remove place from user's wishlist - requires authentication"""
-    # Verify user can only modify their own wishlist
-    if request.current_user['user_id'] != user_id and request.current_user['role'] != 'admin':
-        return jsonify({'error': 'Access denied'}), 403
-    
-    db = SessionLocal()
-    try:
-        # Try to convert place_id to int for database lookup
-        try:
-            numeric_place_id = int(place_id)
-            success = crud.remove_from_wishlist(db, user_id, numeric_place_id)
-        except ValueError:
-            # place_id is a string identifier
-            success = crud.remove_from_wishlist_by_identifier(db, user_id, place_id)
-        
-        if success:
-            return jsonify({
-                'success': True,
-                'message': 'Removed from wishlist'
+    items = Wishlist.query.filter_by(clerk_id=clerk_id).all()
+    result = []
+    for item in items:
+        if item.place_id and item.place:
+            p = item.place
+            result.append({
+                'wishlist_id':  item.id,
+                'id':           p.id,
+                'name':         p.name,
+                'location':     p.location,
+                'type':         p.type,
+                'description':  p.description,
+                'image_url':    p.image_url,
+                'tags':         p.tags,
+                'added_at':     item.created_at.isoformat(),
             })
         else:
-            return jsonify({'error': 'Item not found in wishlist'}), 404
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        db.close()
+            result.append({
+                'wishlist_id':  item.id,
+                'id':           item.place_identifier,
+                'name':         item.place_name,
+                'location':     item.place_location,
+                'type':         item.place_type,
+                'description':  item.place_description,
+                'image_url':    item.place_image_url,
+                'added_at':     item.created_at.isoformat(),
+            })
+    return jsonify(result)
 
-@wishlist_bp.route('/wishlist/<user_id>/<place_id>/check', methods=['GET'])
-def check_wishlist_status(user_id, place_id):
-    """Check if place is in user's wishlist - requires authentication"""
-    # Verify user can only check their own wishlist
-    if request.current_user['user_id'] != user_id and request.current_user['role'] != 'admin':
+
+@wishlist_bp.route('/wishlist/<clerk_id>/<place_id>', methods=['POST'])
+@token_required
+def add_to_wishlist(clerk_id, place_id):
+    if not _own_or_admin(clerk_id):
         return jsonify({'error': 'Access denied'}), 403
-    
-    db = SessionLocal()
+
+    user_name = request.headers.get('X-Clerk-User-Name')
+    data      = request.get_json() or {}
+
     try:
-        # Try to convert place_id to int for database lookup
-        try:
-            numeric_place_id = int(place_id)
-            is_in_wishlist = crud.is_in_wishlist(db, user_id, numeric_place_id)
-        except ValueError:
-            # place_id is a string identifier
-            is_in_wishlist = crud.is_in_wishlist_by_identifier(db, user_id, place_id)
-        
-        return jsonify({'in_wishlist': is_in_wishlist})
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        db.close()
+        pid   = int(place_id)
+        place = Place.query.get(pid)
+        if not place:
+            return jsonify({'error': 'Place not found'}), 404
+        # Check duplicate
+        existing = Wishlist.query.filter_by(clerk_id=clerk_id, place_id=pid).first()
+        if existing:
+            return jsonify({'success': True, 'wishlist_id': existing.id, 'duplicate': True})
+        item = Wishlist(clerk_id=clerk_id, user_name=user_name, place_id=pid)
+    except ValueError:
+        # String identifier (external place)
+        if not data.get('name'):
+            return jsonify({'error': 'Place name required'}), 400
+        existing = Wishlist.query.filter_by(clerk_id=clerk_id,
+                                            place_identifier=place_id).first()
+        if existing:
+            return jsonify({'success': True, 'wishlist_id': existing.id, 'duplicate': True})
+        item = Wishlist(
+            clerk_id          = clerk_id,
+            user_name         = user_name,
+            place_identifier  = place_id,
+            place_name        = data.get('name'),
+            place_type        = data.get('type'),
+            place_location    = data.get('location'),
+            place_image_url   = data.get('image_url'),
+            place_description = data.get('description'),
+        )
+
+    db.session.add(item)
+    db.session.commit()
+    return jsonify({'success': True, 'wishlist_id': item.id})
+
+
+@wishlist_bp.route('/wishlist/<clerk_id>/<place_id>', methods=['DELETE'])
+@token_required
+def remove_from_wishlist(clerk_id, place_id):
+    if not _own_or_admin(clerk_id):
+        return jsonify({'error': 'Access denied'}), 403
+
+    try:
+        pid  = int(place_id)
+        item = Wishlist.query.filter_by(clerk_id=clerk_id, place_id=pid).first()
+    except ValueError:
+        item = Wishlist.query.filter_by(clerk_id=clerk_id,
+                                        place_identifier=place_id).first()
+
+    if not item:
+        return jsonify({'error': 'Not in wishlist'}), 404
+    db.session.delete(item)
+    db.session.commit()
+    return jsonify({'success': True})
+
+
+@wishlist_bp.route('/wishlist/<clerk_id>/<place_id>/check', methods=['GET'])
+@token_required
+def check_wishlist(clerk_id, place_id):
+    if not _own_or_admin(clerk_id):
+        return jsonify({'error': 'Access denied'}), 403
+
+    try:
+        pid = int(place_id)
+        exists = Wishlist.query.filter_by(clerk_id=clerk_id, place_id=pid).first()
+    except ValueError:
+        exists = Wishlist.query.filter_by(clerk_id=clerk_id,
+                                          place_identifier=place_id).first()
+    return jsonify({'in_wishlist': exists is not None})

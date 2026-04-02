@@ -34,7 +34,18 @@ export default function AdminDashboard() {
   });
   const [selectedReview, setSelectedReview] = useState(null);
 
-  // Helper function to get auth headers with JWT token
+  // Users tab state
+  const [users, setUsers] = useState([]);
+  const [usersLoading, setUsersLoading] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [userSearch, setUserSearch] = useState('');
+
+  // Search history tab state
+  const [searchHistory, setSearchHistory] = useState([]);
+  const [searchHistoryLoading, setSearchHistoryLoading] = useState(false);
+  const [searchHistoryFilter, setSearchHistoryFilter] = useState('');
+
+  const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
   const getAuthHeaders = () => {
     const adminData = localStorage.getItem("admin");
     if (!adminData) {
@@ -61,24 +72,58 @@ export default function AdminDashboard() {
     }
   };
 
+  const fetchUsers = async () => {
+    const auth = getAuthHeaders();
+    if (!auth) return;
+    setUsersLoading(true);
+    try {
+      const res = await axios.get(
+        `${API}/api/admin/users?limit=100`,
+        auth
+      );
+      setUsers(res.data.users || []);
+    } catch (err) {
+      console.error("Failed to fetch users:", err);
+    } finally {
+      setUsersLoading(false);
+    }
+  };
+
+  const fetchSearchHistory = async (filter = '') => {
+    const auth = getAuthHeaders();
+    if (!auth) return;
+    setSearchHistoryLoading(true);
+    try {
+      const res = await axios.get(
+        `${API}/api/admin/search-history?limit=200&search=${encodeURIComponent(filter)}`,
+        auth
+      );
+      setSearchHistory(res.data || []);
+    } catch (err) {
+      console.error('Failed to fetch search history:', err);
+    } finally {
+      setSearchHistoryLoading(false);
+    }
+  };
+
   // Fetch submitted places, hotels, and restaurants (user submissions only) - load on mount for stats
   useEffect(() => {
     const fetchSubmittedData = async () => {
       setLoading(true);
       try {
         // Fetch all places including pending ones for admin
-        const placesRes = await axios.get("http://localhost:8000/api/places?limit=1000&status=all");
+        const placesRes = await axios.get(`${API}/api/places?limit=1000&status=all`);
         // Filter to only show user submissions (not dataset places)
         const userSubmissions = (placesRes.data.places || []).filter(place => place.source === 'user_submission');
         setSubmittedPlaces(userSubmissions);
 
         // Fetch all hotels and filter for user submissions
-        const hotelsRes = await axios.get("http://localhost:8000/api/hotels?limit=1000");
+        const hotelsRes = await axios.get(`${API}/api/hotels?limit=1000`);
         const userHotels = (hotelsRes.data.hotels || []).filter(hotel => hotel.source === 'user_submission');
         setSubmittedHotels(userHotels);
 
         // Fetch all restaurants and filter for user submissions
-        const restaurantsRes = await axios.get("http://localhost:8000/api/restaurants?limit=1000");
+        const restaurantsRes = await axios.get(`${API}/api/restaurants?limit=1000`);
         const userRestaurants = (restaurantsRes.data.restaurants || []).filter(restaurant => restaurant.source === 'user_submission');
         setSubmittedRestaurants(userRestaurants);
 
@@ -97,8 +142,8 @@ export default function AdminDashboard() {
     const fetchStats = async () => {
       try {
         const [hotelsRes, restaurantsRes] = await Promise.all([
-          axios.get("http://localhost:8000/api/hotels?limit=1"),
-          axios.get("http://localhost:8000/api/restaurants?limit=1")
+          axios.get(`${API}/api/hotels?limit=1`),
+          axios.get(`${API}/api/restaurants?limit=1`)
         ]);
         
         setStats({
@@ -118,9 +163,9 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchAdminActivity = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/admin/activity");
-        setLastLoginTime(res.data.lastLogin);
-        setLastLogoutTime(res.data.lastLogout);
+        const res = await axios.get(`${API}/api/admin/sessions`, getAuthHeaders());
+        setLastLoginTime(res.data?.[0]?.login_at ? new Date(res.data[0].login_at).toLocaleString() : null);
+        setLastLogoutTime(res.data?.[0]?.logout_at ? new Date(res.data[0].logout_at).toLocaleString() : null);
       } catch (err) {
         console.error("Failed to fetch admin activity:", err);
       }
@@ -132,7 +177,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/admin/reviews");
+        const res = await axios.get(`${API}/api/reviews?status=pending&limit=100`);
         setReviews(res.data.reviews || []);
       } catch (err) {
         console.error("Failed to fetch reviews:", err);
@@ -145,8 +190,15 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchReviewStats = async () => {
       try {
-        const res = await axios.get("http://localhost:8000/admin/dashboard/review-stats");
-        setReviewStats(res.data);
+        const res = await axios.get(`${API}/api/admin/dashboard`, getAuthHeaders());
+        const d = res.data;
+        setReviewStats({
+          total_reviews:    d.review_stats?.total    ?? 0,
+          pending_reviews:  d.review_stats?.pending  ?? d.pending?.reviews ?? 0,
+          approved_reviews: d.review_stats?.approved ?? 0,
+          rejected_reviews: d.review_stats?.rejected ?? 0,
+          average_rating:   d.review_stats?.avg_rating ?? 0,
+        });
       } catch (err) {
         console.error("Failed to fetch review stats:", err);
       }
@@ -167,7 +219,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this place?")) return;
     
     try {
-      await axios.delete(`http://localhost:8000/api/places/${placeId}`);
+      await axios.delete(`${API}/api/places/${placeId}`, getAuthHeaders());
       setSubmittedPlaces(prev => prev.filter(p => p.id !== placeId));
       setSelectedPlace(null);
       
@@ -182,7 +234,7 @@ export default function AdminDashboard() {
   // Approve place handler
   const handleApprovePlace = async (placeId) => {
     try {
-      await axios.post(`http://localhost:8000/api/places/${placeId}/approve`);
+      await axios.post(`${API}/api/places/${placeId}/approve`, {}, getAuthHeaders());
       setSubmittedPlaces(prev => prev.map(p => 
         p.id === placeId ? { ...p, status: 'approved' } : p
       ));
@@ -201,7 +253,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to reject this place?")) return;
     
     try {
-      await axios.post(`http://localhost:8000/api/places/${placeId}/reject`);
+      await axios.post(`${API}/api/places/${placeId}/reject`, {}, getAuthHeaders());
       setSubmittedPlaces(prev => prev.map(p => 
         p.id === placeId ? { ...p, status: 'rejected' } : p
       ));
@@ -218,7 +270,7 @@ export default function AdminDashboard() {
   // Hotel handlers
   const handleApproveHotel = async (hotelId) => {
     try {
-      await axios.post(`http://localhost:8000/api/hotels/${hotelId}/approve`);
+      await axios.post(`${API}/api/hotels/${hotelId}/approve`, {}, getAuthHeaders());
       setSubmittedHotels(prev => prev.map(h => 
         h.id === hotelId ? { ...h, status: 'approved' } : h
       ));
@@ -236,7 +288,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to reject this hotel?")) return;
     
     try {
-      await axios.post(`http://localhost:8000/api/hotels/${hotelId}/reject`);
+      await axios.post(`${API}/api/hotels/${hotelId}/reject`, {}, getAuthHeaders());
       setSubmittedHotels(prev => prev.map(h => 
         h.id === hotelId ? { ...h, status: 'rejected' } : h
       ));
@@ -254,7 +306,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this hotel?")) return;
     
     try {
-      await axios.delete(`http://localhost:8000/api/hotels/${hotelId}`);
+      await axios.delete(`${API}/api/hotels/${hotelId}`, getAuthHeaders());
       setSubmittedHotels(prev => prev.filter(h => h.id !== hotelId));
       setSelectedHotel(null);
       showToast('success', 'Hotel deleted successfully!');
@@ -267,7 +319,7 @@ export default function AdminDashboard() {
   // Restaurant handlers
   const handleApproveRestaurant = async (restaurantId) => {
     try {
-      await axios.post(`http://localhost:8000/api/restaurants/${restaurantId}/approve`);
+      await axios.post(`${API}/api/restaurants/${restaurantId}/approve`, {}, getAuthHeaders());
       setSubmittedRestaurants(prev => prev.map(r => 
         r.id === restaurantId ? { ...r, status: 'approved' } : r
       ));
@@ -285,7 +337,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to reject this restaurant?")) return;
     
     try {
-      await axios.post(`http://localhost:8000/api/restaurants/${restaurantId}/reject`);
+      await axios.post(`${API}/api/restaurants/${restaurantId}/reject`, {}, getAuthHeaders());
       setSubmittedRestaurants(prev => prev.map(r => 
         r.id === restaurantId ? { ...r, status: 'rejected' } : r
       ));
@@ -303,7 +355,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this restaurant?")) return;
     
     try {
-      await axios.delete(`http://localhost:8000/api/restaurants/${restaurantId}`);
+      await axios.delete(`${API}/api/restaurants/${restaurantId}`, getAuthHeaders());
       setSubmittedRestaurants(prev => prev.filter(r => r.id !== restaurantId));
       setSelectedRestaurant(null);
       showToast('success', 'Restaurant deleted successfully!');
@@ -316,7 +368,7 @@ export default function AdminDashboard() {
   // Approve review handler
   const handleApproveReview = async (reviewId) => {
     try {
-      await axios.post(`http://localhost:8000/admin/reviews/${reviewId}/approve`);
+      await axios.patch(`${API}/api/reviews/${reviewId}/status`, { status: 'approved' }, getAuthHeaders());
       setReviews(prev => prev.map(r => 
         r.id === reviewId ? { ...r, status: 'approved' } : r
       ));
@@ -341,7 +393,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to reject this review?")) return;
     
     try {
-      await axios.post(`http://localhost:8000/admin/reviews/${reviewId}/reject`);
+      await axios.patch(`${API}/api/reviews/${reviewId}/status`, { status: 'rejected' }, getAuthHeaders());
       setReviews(prev => prev.map(r => 
         r.id === reviewId ? { ...r, status: 'rejected' } : r
       ));
@@ -366,7 +418,7 @@ export default function AdminDashboard() {
     if (!window.confirm("Are you sure you want to delete this review? This action cannot be undone.")) return;
     
     try {
-      await axios.delete(`http://localhost:8000/admin/reviews/${reviewId}`);
+      await axios.delete(`${API}/api/reviews/${reviewId}`, getAuthHeaders());
       setReviews(prev => prev.filter(r => r.id !== reviewId));
       setSelectedReview(null);
       // Update stats
@@ -391,16 +443,13 @@ export default function AdminDashboard() {
   // Sign Out handler
   const handleSignOut = async () => {
     try {
-      const activity_id = localStorage.getItem("adminActivityId");
-      await axios.post("http://localhost:8000/admin/logout", { activity_id });
+      await axios.post(`${API}/api/admin/logout`, {}, getAuthHeaders());
       localStorage.removeItem("adminToken");
       localStorage.removeItem("adminActivityId");
       localStorage.removeItem("admin");
-      // Use navigate instead of window.location for React Router
       navigate("/admin/login");
     } catch (err) {
       console.error("Sign-out failed:", err);
-      // Even if API fails, clear local storage and redirect
       localStorage.removeItem("adminToken");
       localStorage.removeItem("adminActivityId");
       localStorage.removeItem("admin");
@@ -548,6 +597,44 @@ export default function AdminDashboard() {
                 )}
               </div>
               {activeTab === 'reviews' && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
+              )}
+            </button>
+
+            <button
+              onClick={() => { setActiveTab('users'); fetchUsers(); }}
+              className={`relative px-8 py-4 font-bold transition-all duration-300 ${
+                activeTab === 'users'
+                  ? 'text-teal-600'
+                  : 'text-slate-600 hover:text-slate-800'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                </svg>
+                <span>Users</span>
+              </div>
+              {activeTab === 'users' && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
+              )}
+            </button>
+
+            <button
+              onClick={() => { setActiveTab('searches'); fetchSearchHistory(); }}
+              className={`relative px-8 py-4 font-bold transition-all duration-300 ${
+                activeTab === 'searches'
+                  ? 'text-teal-600'
+                  : 'text-slate-600 hover:text-slate-800'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                </svg>
+                <span>Search History</span>
+              </div>
+              {activeTab === 'searches' && (
                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
               )}
             </button>
@@ -733,7 +820,7 @@ export default function AdminDashboard() {
                             <div className="flex items-center gap-3">
                               {place.image_url ? (
                                 <img 
-                                  src={`http://localhost:8000${place.image_url}`} 
+                                  src={`${API}${place.image_url}`} 
                                   alt={place.name}
                                   className="w-12 h-12 rounded-lg object-cover border border-slate-200"
                                   onError={(e) => e.target.src = 'https://via.placeholder.com/48?text=No+Image'}
@@ -833,7 +920,7 @@ export default function AdminDashboard() {
                             <div className="flex items-center gap-3">
                               {hotel.image_url ? (
                                 <img 
-                                  src={`http://localhost:8000${hotel.image_url}`} 
+                                  src={`${API}${hotel.image_url}`} 
                                   alt={hotel.name}
                                   className="w-12 h-12 rounded-lg object-cover border border-slate-200"
                                   onError={(e) => e.target.src = 'https://via.placeholder.com/48?text=No+Image'}
@@ -938,7 +1025,7 @@ export default function AdminDashboard() {
                             <div className="flex items-center gap-3">
                               {restaurant.image_url ? (
                                 <img 
-                                  src={`http://localhost:8000${restaurant.image_url}`} 
+                                  src={`${API}${restaurant.image_url}`} 
                                   alt={restaurant.name}
                                   className="w-12 h-12 rounded-lg object-cover border border-slate-200"
                                   onError={(e) => e.target.src = 'https://via.placeholder.com/48?text=No+Image'}
@@ -1046,8 +1133,7 @@ export default function AdminDashboard() {
               )}
             </div>
           </div>
-        ) : (
-          // Reviews Tab
+        ) : activeTab === 'reviews' ? (
           <div className="space-y-6">
             {/* Reviews Section */}
             <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
@@ -1178,8 +1264,229 @@ export default function AdminDashboard() {
               )}
             </div>
           </div>
-        )}
+        ) : activeTab === 'users' ? (
+          <div className="space-y-6">
+            <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+              <div className="bg-gradient-to-r from-teal-50 to-blue-50 border-b border-slate-200 px-6 py-4 flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <h2 className="text-2xl font-black text-slate-800">All Users</h2>
+                  <p className="text-sm text-slate-600 mt-1">Every user who has logged in — with full session history</p>
+                </div>
+                <div className="flex gap-3">
+                  <input
+                    type="text"
+                    placeholder="Search by name or email…"
+                    value={userSearch}
+                    onChange={(e) => setUserSearch(e.target.value)}
+                    className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none"
+                  />
+                  <button
+                    onClick={fetchUsers}
+                    className="px-4 py-2 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700 transition-colors"
+                  >
+                    Refresh
+                  </button>
+                  <button
+                    onClick={async () => {
+                      const auth = getAuthHeaders();
+                      if (!auth) return;
+                      try {
+                        
+                        await axios.post(`${API}/api/admin/users/sync-from-clerk`, {}, auth);
+                        fetchUsers();
+                      } catch (err) {
+                        console.error('Clerk sync failed:', err);
+                      }
+                    }}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
+                  >
+                    Sync from Clerk
+                  </button>
+                </div>
+              </div>
+
+              {usersLoading ? (
+                <div className="p-12 text-center text-slate-500 font-semibold">Loading users…</div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead className="bg-slate-50 border-b border-slate-200">
+                      <tr>
+                        {['User', 'Email', 'Status', 'Total Logins', 'Last Login', 'Last Logout', 'Actions'].map(h => (
+                          <th key={h} className="px-5 py-3 text-left text-xs font-black text-slate-500 uppercase tracking-wider">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {users
+                        .filter(u =>
+                          !userSearch ||
+                          u.name?.toLowerCase().includes(userSearch.toLowerCase()) ||
+                          u.email?.toLowerCase().includes(userSearch.toLowerCase())
+                        )
+                        .map(u => (
+                          <tr key={u.clerk_id} className="hover:bg-slate-50 transition-colors">
+                            <td className="px-5 py-4">
+                              <div className="flex items-center gap-3">
+                                {u.avatar_url
+                                  ? <img src={u.avatar_url} alt="" className="w-8 h-8 rounded-full object-cover" />
+                                  : <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-sm">{(u.name || u.email || '?')[0].toUpperCase()}</div>
+                                }
+                                <span className="font-semibold text-slate-800">{u.name || '—'}</span>
+                              </div>
+                            </td>
+                            <td className="px-5 py-4 text-slate-600">{u.email}</td>
+                            <td className="px-5 py-4">
+                              <span className={`px-2 py-1 rounded-full text-xs font-bold ${u.is_active ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
+                                {u.is_active ? 'Active' : 'Inactive'}
+                              </span>
+                            </td>
+                            <td className="px-5 py-4 font-bold text-slate-700">{u.total_logins ?? 0}</td>
+                            <td className="px-5 py-4 text-slate-600 text-xs">
+                              {u.last_login ? new Date(u.last_login).toLocaleString() : '—'}
+                            </td>
+                            <td className="px-5 py-4 text-slate-600 text-xs">
+                              {u.last_logout ? new Date(u.last_logout).toLocaleString() : '—'}
+                            </td>
+                            <td className="px-5 py-4">
+                              <button
+                                onClick={() => setSelectedUser(u)}
+                                className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold hover:bg-blue-200 transition-colors"
+                              >
+                                View History
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                  {users.length === 0 && (
+                    <div className="p-12 text-center text-slate-400">No users found. Users appear here after their first login.</div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        ) : activeTab === 'searches' ? (
+          <div className="space-y-4">
+            <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-b border-slate-200 px-6 py-4 flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <h2 className="text-2xl font-black text-slate-800">Search History</h2>
+                  <p className="text-sm text-slate-600 mt-1">All searches made by users</p>
+                </div>
+                <div className="flex gap-3">
+                  <input
+                    type="text"
+                    placeholder="Filter by query or user…"
+                    value={searchHistoryFilter}
+                    onChange={e => { setSearchHistoryFilter(e.target.value); fetchSearchHistory(e.target.value); }}
+                    className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm focus:border-teal-500 outline-none"
+                  />
+                  <button onClick={() => fetchSearchHistory(searchHistoryFilter)}
+                    className="px-4 py-2 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700">
+                    Refresh
+                  </button>
+                </div>
+              </div>
+              {searchHistoryLoading ? (
+                <div className="p-12 text-center text-slate-500">Loading…</div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead className="bg-slate-50 border-b border-slate-200">
+                      <tr>
+                        {['User', 'Search Query', 'Category', 'Results', 'Date & Time'].map(h => (
+                          <th key={h} className="px-5 py-3 text-left text-xs font-black text-slate-500 uppercase tracking-wider">{h}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {searchHistory.length === 0 ? (
+                        <tr><td colSpan={5} className="px-5 py-12 text-center text-slate-400">No search history yet.</td></tr>
+                      ) : searchHistory.map(h => (
+                        <tr key={h.id} className="hover:bg-slate-50 transition-colors">
+                          <td className="px-5 py-3 font-semibold text-slate-700">{h.user}</td>
+                          <td className="px-5 py-3">
+                            <span className="px-2 py-1 bg-teal-50 text-teal-700 rounded font-semibold">{h.query}</span>
+                          </td>
+                          <td className="px-5 py-3 text-slate-500 capitalize">{h.type || 'all'}</td>
+                          <td className="px-5 py-3 text-slate-500">{h.results}</td>
+                          <td className="px-5 py-3 text-slate-400 text-xs">
+                            {h.at ? new Date(h.at).toLocaleString() : '—'}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        ) : null}
       </main>
+
+      {/* User Session History Modal */}
+      {selectedUser && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-gradient-to-r from-teal-500 to-blue-500 p-6 rounded-t-2xl flex items-center justify-between">
+              <div>
+                <h3 className="text-xl font-black text-white">{selectedUser.name || selectedUser.email}</h3>
+                <p className="text-teal-100 text-sm mt-0.5">{selectedUser.email} · {selectedUser.total_logins} total logins</p>
+              </div>
+              <button onClick={() => setSelectedUser(null)} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </button>
+            </div>
+            <div className="p-6 space-y-4">
+              {/* Activity counts */}
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { label: 'Reviews', val: selectedUser.activity?.review_count ?? 0 },
+                  { label: 'Wishlists', val: selectedUser.activity?.wishlist_count ?? 0 },
+                  { label: 'Bookings', val: selectedUser.activity?.booking_count ?? 0 },
+                  { label: 'Searches', val: selectedUser.activity?.search_count ?? 0 },
+                  { label: 'Itineraries', val: selectedUser.activity?.itinerary_count ?? 0 },
+                  { label: 'Place Views', val: selectedUser.activity?.place_views ?? 0 },
+                ].map(item => (
+                  <div key={item.label} className="p-3 bg-slate-50 rounded-lg text-center border border-slate-100">
+                    <p className="text-xl font-black text-slate-800">{item.val}</p>
+                    <p className="text-xs text-slate-500 font-semibold mt-0.5">{item.label}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Session history */}
+              <div>
+                <h4 className="text-sm font-black text-slate-700 uppercase tracking-wide mb-3">Login History</h4>
+                {(selectedUser.recent_sessions?.length > 0) ? (
+                  <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+                    {selectedUser.recent_sessions.map((s, i) => (
+                      <div key={i} className="flex items-start justify-between p-3 bg-slate-50 rounded-lg border border-slate-100 text-xs">
+                        <div>
+                          <p className="font-semibold text-slate-700">Login: {s.login_at ? new Date(s.login_at).toLocaleString() : '—'}</p>
+                          <p className="text-slate-500 mt-0.5">Logout: {s.logout_at ? new Date(s.logout_at).toLocaleString() : 'Still active'}</p>
+                          {s.ip && <p className="text-slate-400 mt-0.5">IP: {s.ip}</p>}
+                        </div>
+                        {s.duration_seconds != null && (
+                          <span className="px-2 py-1 bg-teal-100 text-teal-700 rounded font-bold whitespace-nowrap">
+                            {Math.round(s.duration_seconds / 60)}m
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-slate-400 text-sm">No session history yet.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Place Detail Modal */}
       {selectedPlace && (
@@ -1202,7 +1509,7 @@ export default function AdminDashboard() {
             <div className="p-6 space-y-6">
               {selectedPlace.image_url && (
                 <img 
-                  src={`http://localhost:8000${selectedPlace.image_url}`}
+                  src={`${API}${selectedPlace.image_url}`}
                   alt={selectedPlace.name}
                   className="w-full h-64 object-cover rounded-xl border border-slate-200"
                   onError={(e) => e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'}
@@ -1417,7 +1724,7 @@ export default function AdminDashboard() {
                     {selectedReview.images.map((img, idx) => (
                       <img
                         key={idx}
-                        src={`http://localhost:8000${img}`}
+                        src={`${API}${img}`}
                         alt={`Review photo ${idx + 1}`}
                         className="w-full h-48 object-cover rounded-xl border border-slate-200"
                         onError={(e) => e.target.src = 'https://via.placeholder.com/400x300?text=Image+Not+Found'}
@@ -1509,7 +1816,7 @@ export default function AdminDashboard() {
             <div className="p-6 space-y-6">
               {selectedHotel.image_url && (
                 <img 
-                  src={`http://localhost:8000${selectedHotel.image_url}`}
+                  src={`${API}${selectedHotel.image_url}`}
                   alt={selectedHotel.name}
                   className="w-full h-64 object-cover rounded-xl border border-slate-200"
                   onError={(e) => e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'}
@@ -1638,7 +1945,7 @@ export default function AdminDashboard() {
             <div className="p-6 space-y-6">
               {selectedRestaurant.image_url && (
                 <img 
-                  src={`http://localhost:8000${selectedRestaurant.image_url}`}
+                  src={`${API}${selectedRestaurant.image_url}`}
                   alt={selectedRestaurant.name}
                   className="w-full h-64 object-cover rounded-xl border border-slate-200"
                   onError={(e) => e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'}
@@ -1759,3 +2066,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

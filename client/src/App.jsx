@@ -9,6 +9,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { useTranslation } from 'react-i18next';
 import ScrollToTop from "./components/ScrollToTop";
+import { useUserSync } from "./hooks/useUserSync";
 
 // Lazy load components for better performance
 import { lazy, Suspense } from "react";
@@ -219,6 +220,8 @@ const MainApp = memo(() => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { isSignedIn } = useUser() || { isSignedIn: false };
+
+  useUserSync(); // sync Clerk user to backend on every login/logout
 
   // Optimized theme state
   const [theme] = useState(() => localStorage.getItem("theme") ?? "dark");

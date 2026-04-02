@@ -5,6 +5,12 @@ from ..ai import get_ai_reply
 from datetime import datetime
 import re
 
+# Helper: get clerk_id from request (header or body)
+def _clerk_id(data=None):
+    return (request.headers.get('X-Clerk-User-Id') or
+            (data or {}).get('user_id') or
+            (data or {}).get('clerk_id'))
+
 
 chat_bp = Blueprint("chat", __name__)
 
@@ -12,10 +18,10 @@ chat_bp = Blueprint("chat", __name__)
 @chat_bp.route("/new", methods=["POST"])
 def create_chat():
     data = request.json
-    user_id = data.get("user_id")
+    clerk_id = _clerk_id(data)
     title = data.get("title", "New Chat")
 
-    new_chat = Chat(user_id=user_id, title=title)
+    new_chat = Chat(clerk_id=clerk_id, title=title)
     db.session.add(new_chat)
     db.session.commit()
 
@@ -64,7 +70,7 @@ def chat_history():
     user_id = request.args.get("user_id")
     limit = request.args.get("limit", 20, type=int)
     
-    chats = db.session.query(Chat).filter_by(user_id=user_id, is_active=True)\
+    chats = db.session.query(Chat).filter_by(clerk_id=_clerk_id(), is_active=True)\
                      .order_by(Chat.updated_at.desc())\
                      .limit(limit).all()
 
