@@ -1,20 +1,10 @@
 from flask import Blueprint, request, jsonify
-from sqlalchemy.orm import Session
-from ..database import SessionLocal
+from ..database import db
 from ..models import Recommendation, Place
 import json
 from datetime import datetime
 
 recommendations_bp = Blueprint('recommendations', __name__)
-
-
-def get_db():
-    """Get database session"""
-    db = SessionLocal()
-    try:
-        return db
-    finally:
-        pass  # Session will be closed after use
 
 
 def get_trip_type_mapping(trip_type_str):
@@ -216,7 +206,7 @@ def get_duration_days(duration_str):
 @recommendations_bp.route('/recommendations', methods=['POST'])
 def create_recommendation():
     """Create a new recommendation request and return personalized results"""
-    db = SessionLocal()
+    
     try:
         data = request.json
         
@@ -245,7 +235,7 @@ def create_recommendation():
         travel_month = data.get('travelMonth')  # Get travel month
         
         # Query places from database
-        all_places = db.query(Place).all()
+        all_places = db.session.query(Place).all()
         
         # Calculate match scores for each place
         place_scores = []
@@ -351,21 +341,20 @@ def create_recommendation():
         
         # Save recommendation to database (store all trip types)
         recommendation = Recommendation(
-            user_id=user_id,
-            name=data['name'],
+            clerk_id=user_id,
+            user_name=data['name'],
             age=int(data['age']),
             phone=data['phone'],
             travellers=int(data['travellers']),
             trip_duration=data['tripDuration'],
-            trip_type=json.dumps(trip_types),  # Store as JSON array
-            travel_month=travel_month,  # Store travel month
+            trip_type=json.dumps(trip_types),
+            travel_month=travel_month,
             recommended_places=json.dumps(recommended_place_ids),
-            created_at=datetime.utcnow()
         )
         
-        db.add(recommendation)
-        db.commit()
-        db.refresh(recommendation)
+        db.session.add(recommendation)
+        db.session.commit()
+        db.session.refresh(recommendation)
         
         return jsonify({
             'success': True,
@@ -384,19 +373,17 @@ def create_recommendation():
         }), 200
         
     except Exception as e:
-        db.rollback()
+        db.session.rollback()
         print(f"Error creating recommendation: {str(e)}")
         import traceback
         traceback.print_exc()
         return jsonify({'error': str(e)}), 500
-    finally:
-        db.close()
 
 
 @recommendations_bp.route('/recommendations/<int:recommendation_id>', methods=['GET'])
 def get_recommendation(recommendation_id):
     """Get a specific recommendation by ID"""
-    db = SessionLocal()
+    
     try:
         recommendation = db.query(Recommendation).filter(
             Recommendation.id == recommendation_id
@@ -448,7 +435,7 @@ def get_recommendation(recommendation_id):
 @recommendations_bp.route('/recommendations/user/<user_id>', methods=['GET'])
 def get_user_recommendations(user_id):
     """Get all recommendations for a specific user"""
-    db = SessionLocal()
+    
     try:
         recommendations = db.query(Recommendation).filter(
             Recommendation.user_id == user_id
@@ -481,7 +468,7 @@ def get_user_recommendations(user_id):
 @recommendations_bp.route('/recommendations/stats', methods=['GET'])
 def get_recommendation_stats():
     """Get statistics about recommendations"""
-    db = SessionLocal()
+    
     try:
         total_recommendations = db.query(Recommendation).count()
         

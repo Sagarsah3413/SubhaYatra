@@ -1,510 +1,422 @@
-from flask import Blueprint, jsonify, request
-from sqlalchemy.orm import Session
-from sqlalchemy import func
-from ..database import SessionLocal
-from ..models import Admin, Booking, Review
-from ..auth import admin_required, token_required, generate_token, verify_password, hash_password
-import requests
+"""
+Admin routes — login, dashboard stats, review/place/hotel/restaurant moderation.
+All moderation actions are logged to AdminLog.
+"""
+
 import os
+import requests
 from datetime import datetime
-import json
+from flask import Blueprint, request, jsonify
+from sqlalchemy import func
+from ..database import db
+from ..models import (Admin, Place, Hotel, Restaurant, Event,
+                      Review, User, Wishlist,
+                      Itinerary, PlaceView)
+from ..auth import (admin_required, token_required,
+                    generate_token, verify_password, hash_password)
 
-# -----------------------------
-# Blueprint
-# -----------------------------
-admin_bp = Blueprint("admin", __name__)
+admin_bp = Blueprint('admin', __name__)
 
-# -----------------------------
-# Admin Login with JWT
-# -----------------------------
-@admin_bp.route("/admin/login", methods=["POST"])
-def admin_login():
-    """Admin login endpoint - returns JWT tokens"""
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "Missing data"}), 400
-
-    username = data.get("username")
-    password = data.get("password")
-    
-    if not username or not password:
-        return jsonify({"error": "Username and password required"}), 400
-
-    db: Session = SessionLocal()
-    try:
-        admin = db.query(Admin).filter(Admin.username == username).first()
-        
-        if not admin:
-            return jsonify({"error": "Invalid credentials"}), 401
-        
-        # Verify password (supports both hashed and plain text for migration)
-        if admin.password.startswith('pbkdf2:sha256:'):
-            # Hashed password
-            if not verify_password(password, admin.password):
-                return jsonify({"error": "Invalid credentials"}), 401
-        else:
-            # Plain text password (for backward compatibility)
-            if admin.password != password:
-                return jsonify({"error": "Invalid credentials"}), 401
-            
-            # Update to hashed password
-            admin.password = hash_password(password)
-            db.commit()
-
-        # Generate JWT tokens
-        access_token = generate_token(admin.id, admin.username, role='admin', token_type='access')
-        refresh_token = generate_token(admin.id, admin.username, role='admin', token_type='refresh')
-
-        return jsonify({
-            "message": "Admin login successful",
-            "admin_id": admin.id,
-            "username": admin.username,
-            "access_token": access_token,
-            "refresh_token": refresh_token,
-            "token_type": "Bearer",
-            "expires_in": 86400  # 24 hours in seconds
-        }), 200
-    finally:
-        db.close()
-
-
-# -----------------------------
-# Admin Registration (Protected - only existing admins can create new admins)
-# -----------------------------
-@admin_bp.route("/admin/register", methods=["POST"])
-@admin_required
-def admin_register():
-    """Register new admin - requires existing admin authentication"""
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "Missing data"}), 400
-
-    username = data.get("username")
-    password = data.get("password")
-    
-    if not username or not password:
-        return jsonify({"error": "Username and password required"}), 400
-    
-    if len(password) < 8:
-        return jsonify({"error": "Password must be at least 8 characters"}), 400
-
-    db: Session = SessionLocal()
-    try:
-        # Check if admin already exists
-        existing = db.query(Admin).filter(Admin.username == username).first()
-        if existing:
-            return jsonify({"error": "Admin username already exists"}), 400
-        
-        # Create new admin with hashed password
-        new_admin = Admin(
-            username=username,
-            password=hash_password(password)
-        )
-        db.add(new_admin)
-        db.commit()
-        
-        return jsonify({
-            "message": "Admin registered successfully",
-            "admin_id": new_admin.id,
-            "username": new_admin.username
-        }), 201
-    finally:
-        db.close()
-
-
-# -----------------------------
-# Token Refresh
-# -----------------------------
-@admin_bp.route("/admin/refresh", methods=["POST"])
-def admin_refresh_token():
-    """Refresh access token using refresh token"""
-    from ..auth import decode_token
-    
-    data = request.get_json()
-    refresh_token = data.get("refresh_token")
-    
-    if not refresh_token:
-        return jsonify({"error": "Refresh token required"}), 400
-    
-    payload = decode_token(refresh_token)
-    
-    if not payload or payload.get('type') != 'refresh':
-        return jsonify({"error": "Invalid refresh token"}), 401
-    
-    # Generate new access token
-    access_token = generate_token(
-        payload['user_id'],
-        payload['username'],
-        role=payload['role'],
-        token_type='access'
-    )
-    
-    return jsonify({
-        "access_token": access_token,
-        "token_type": "Bearer",
-        "expires_in": 86400
-    }), 200
-
-
-# -----------------------------
-# Admin Logout
-# -----------------------------
-@admin_bp.route("/admin/logout", methods=["POST"])
-@token_required
-def admin_logout():
-    """Logout admin - blacklist the token"""
-    from ..auth import blacklist_token
-    
-    auth_header = request.headers.get('Authorization')
-    if auth_header:
-        token = auth_header.split(' ')[1]
-        blacklist_token(token)
-    
-    return jsonify({"message": "Logged out successfully"}), 200
-
-# -----------------------------
-# Clerk Helper
-# -----------------------------
 CLERK_API_KEY = os.environ.get("CLERK_API_KEY")
 CLERK_API_URL = "https://api.clerk.dev/v1/users"
 
-def get_users_from_clerk():
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+def _clerk_users():
     if not CLERK_API_KEY:
-        print("⚠️ CLERK_API_KEY is missing!")
+        return []
+    try:
+        r = requests.get(CLERK_API_URL,
+                         headers={"Authorization": f"Bearer {CLERK_API_KEY}"})
+        return r.json() if r.status_code == 200 else []
+    except Exception:
         return []
 
-    headers = {"Authorization": f"Bearer {CLERK_API_KEY}"}
-    try:
-        response = requests.get(CLERK_API_URL, headers=headers)
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print("⚠️ Clerk API error:", response.status_code, response.text)
-            return []
-    except Exception as e:
-        print("⚠️ Clerk API request failed:", str(e))
-        return []
 
-# -----------------------------
-# Dashboard Endpoints (Protected)
-# -----------------------------
+def _log(action, target_type=None, target_id=None, notes=None):
+    """Append an action entry to the current admin's action_log JSON."""
+    admin = Admin.query.get(request.current_user['user_id'])
+    if admin:
+        admin.log_action(action, target_type=target_type,
+                         target_id=target_id, notes=notes)
 
-# Main Dashboard - Get all statistics
-@admin_bp.route("/admin/dashboard", methods=["GET"])
+
+# ── Auth ──────────────────────────────────────────────────────────────────────
+
+@admin_bp.route('/admin/login', methods=['POST'])
+def admin_login():
+    data = request.get_json() or {}
+    username = data.get('username')
+    password = data.get('password')
+    if not username or not password:
+        return jsonify({'error': 'Username and password required'}), 400
+
+    admin = Admin.query.filter_by(username=username, is_active=True).first()
+    if not admin or not verify_password(password, admin.password):
+        return jsonify({'error': 'Invalid credentials'}), 401
+
+    admin.record_login(ip=request.remote_addr,
+                       ua=request.headers.get('User-Agent', ''))
+    db.session.commit()
+
+    access_token  = generate_token(admin.id, admin.username, role='admin', token_type='access')
+    refresh_token = generate_token(admin.id, admin.username, role='admin', token_type='refresh')
+
+    return jsonify({
+        'message':        'Login successful',
+        'admin':          admin.to_dict(),
+        'access_token':   access_token,
+        'refresh_token':  refresh_token,
+        'token_type':     'Bearer',
+        'expires_in':     86400,
+    })
+
+
+@admin_bp.route('/admin/register', methods=['POST'])
 @admin_required
-def admin_dashboard():
-    """Get all dashboard statistics - requires admin authentication"""
-    from ..models import Place, Event, Hotel, Restaurant
-    
-    session = SessionLocal()
-    try:
-        # Get counts from database
-        total_places = session.query(Place).count()
-        total_events = session.query(Event).count()
-        total_hotels = session.query(Hotel).count()
-        total_restaurants = session.query(Restaurant).count()
-        total_bookings = session.query(Booking).count()
-        
-        # Get users from Clerk
-        users = get_users_from_clerk()
-        total_users = len([u for u in users if u.get("id")])
-        
-        # Get new users this month
-        this_month = datetime.utcnow().month
-        new_users_count = 0
-        for u in users:
-            created_at = u.get("created_at")
-            if not created_at:
-                continue
-            try:
-                if isinstance(created_at, int):
-                    if created_at > 1e12:
-                        created_at /= 1000
-                    dt = datetime.utcfromtimestamp(created_at)
-                else:
-                    dt = datetime.fromisoformat(str(created_at).replace("Z", "+00:00"))
-                if dt.month == this_month:
-                    new_users_count += 1
-            except Exception:
-                continue
-        
-        # Get bookings per location
-        bookings_by_location = session.query(Booking.place_location, func.count(Booking.id)).group_by(Booking.place_location).all()
-        bookings_data = [{"location": row[0], "count": row[1]} for row in bookings_by_location if row[0]]
-        
-        return jsonify({
-            "total_places": total_places,
-            "total_events": total_events,
-            "total_hotels": total_hotels,
-            "total_restaurants": total_restaurants,
-            "total_bookings": total_bookings,
-            "total_users": total_users,
-            "new_users_this_month": new_users_count,
-            "bookings_by_location": bookings_data
-        })
-    finally:
-        session.close()
+def admin_register():
+    data     = request.get_json() or {}
+    username = data.get('username')
+    password = data.get('password')
+    email    = data.get('email')
+    role     = data.get('role', 'moderator')
 
-# Total registered users
-@admin_bp.route("/admin/dashboard/user-count", methods=["GET"])
-@admin_required
-def total_users():
-    """Get total user count - requires admin authentication"""
-    users = get_users_from_clerk()
-    valid_users = [u for u in users if u.get("id")]
-    return jsonify({"totalUsers": len(valid_users)})
+    if not username or not password:
+        return jsonify({'error': 'Username and password required'}), 400
+    if len(password) < 8:
+        return jsonify({'error': 'Password must be at least 8 characters'}), 400
+    if Admin.query.filter_by(username=username).first():
+        return jsonify({'error': 'Username already exists'}), 400
 
-# New users this month
-@admin_bp.route("/admin/dashboard/new-users", methods=["GET"])
+    new_admin = Admin(username=username, password=hash_password(password),
+                      email=email, role=role)
+    db.session.add(new_admin)
+    db.session.flush()
+    _log('create_admin', 'admin', notes=f'Created admin: {username}')
+    db.session.commit()
+    return jsonify({'message': 'Admin created', 'admin': new_admin.to_dict()}), 201
+
+
+@admin_bp.route('/admin/refresh', methods=['POST'])
+def admin_refresh():
+    from ..auth import decode_token
+    data  = request.get_json() or {}
+    token = data.get('refresh_token')
+    if not token:
+        return jsonify({'error': 'Refresh token required'}), 400
+    payload = decode_token(token)
+    if not payload or payload.get('type') != 'refresh':
+        return jsonify({'error': 'Invalid refresh token'}), 401
+    access_token = generate_token(payload['user_id'], payload['username'],
+                                  role=payload['role'], token_type='access')
+    return jsonify({'access_token': access_token, 'token_type': 'Bearer', 'expires_in': 86400})
+
+
+@admin_bp.route('/admin/logout', methods=['POST'])
+@token_required
+def admin_logout():
+    from ..auth import blacklist_token
+    admin = Admin.query.get(request.current_user['user_id'])
+    if admin:
+        admin.record_logout()
+        db.session.commit()
+    auth = request.headers.get('Authorization', '')
+    if ' ' in auth:
+        blacklist_token(auth.split(' ')[1])
+    return jsonify({'message': 'Logged out'})
+
+
+# ── Dashboard ─────────────────────────────────────────────────────────────────
+
+@admin_bp.route('/admin/dashboard', methods=['GET'])
 @admin_required
-def new_users():
-    """Get new users this month - requires admin authentication"""
-    users = get_users_from_clerk()
+def dashboard():
+    users      = _clerk_users()
     this_month = datetime.utcnow().month
-    count = 0
 
+    new_users = 0
     for u in users:
-        created_at = u.get("created_at")
-        if not created_at:
+        ts = u.get('created_at')
+        if not ts:
             continue
         try:
-            if isinstance(created_at, int):
-                if created_at > 1e12:  # milliseconds
-                    created_at /= 1000
-                dt = datetime.utcfromtimestamp(created_at)
-            else:
-                dt = datetime.fromisoformat(str(created_at).replace("Z", "+00:00"))
-
+            dt = datetime.utcfromtimestamp(ts / 1000 if ts > 1e12 else ts) \
+                 if isinstance(ts, int) \
+                 else datetime.fromisoformat(str(ts).replace('Z', '+00:00'))
             if dt.month == this_month:
-                count += 1
+                new_users += 1
         except Exception:
-            continue
+            pass
 
-    return jsonify({"newUsersThisMonth": count})
+    # Pending submissions
+    pending_places      = Place.query.filter_by(status='pending').count()
+    pending_hotels      = Hotel.query.filter_by(status='pending').count()
+    pending_restaurants = Restaurant.query.filter_by(status='pending').count()
+    pending_reviews     = Review.query.filter_by(status='pending').count()
 
-# Total bookings from SQLite
-@admin_bp.route("/admin/dashboard/total-bookings", methods=["GET"])
+    return jsonify({
+        'total_places':       Place.query.count(),
+        'total_hotels':       Hotel.query.count(),
+        'total_restaurants':  Restaurant.query.count(),
+        'total_events':       Event.query.count(),
+        'total_bookings':     0,
+        'total_users':        len(users),
+        'total_users_local':  User.query.count(),          # users synced to local DB
+        'active_users':       User.query.filter_by(is_active=True).count(),
+        'new_users_this_month': new_users,
+        'total_sessions':     sum(u.total_logins or 0 for u in User.query.all()),
+        'pending': {
+            'places':      pending_places,
+            'hotels':      pending_hotels,
+            'restaurants': pending_restaurants,
+            'reviews':     pending_reviews,
+        },
+        'review_stats': {
+            'total':    Review.query.count(),
+            'pending':  pending_reviews,
+            'approved': Review.query.filter_by(status='approved').count(),
+            'rejected': Review.query.filter_by(status='rejected').count(),
+            'avg_rating': round(
+                db.session.query(func.avg(Review.rating))
+                          .filter(Review.status == 'approved').scalar() or 0, 2
+            ),
+        },
+    })
+
+
+# ── Admin logs ────────────────────────────────────────────────────────────────
+
+@admin_bp.route('/admin/logs', methods=['GET'])
 @admin_required
-def total_bookings():
-    """Get total bookings - requires admin authentication"""
-    session = SessionLocal()
-    count = session.query(Booking).count()
-    session.close()
-    return jsonify({"totalBookings": count})
+def admin_logs():
+    """Return the action log for the current admin (or all admins for superadmin)."""
+    admin = Admin.query.get(request.current_user['user_id'])
+    return jsonify(admin.get_action_log() if admin else [])
 
-# Bookings per location
-@admin_bp.route("/admin/dashboard/bookings-per-location", methods=["GET"])
+
+@admin_bp.route('/admin/sessions', methods=['GET'])
 @admin_required
-def bookings_per_location():
-    """Get bookings per location - requires admin authentication"""
-    session = SessionLocal()
-    results = session.query(Booking.place_location, func.count(Booking.id)).group_by(Booking.place_location).all()
-    session.close()
-    data = [{"location": row[0], "count": row[1]} for row in results if row[0]]
+def admin_sessions():
+    """Return session history for the current admin."""
+    admin = Admin.query.get(request.current_user['user_id'])
+    return jsonify(admin.get_session_history() if admin else [])
+
+
+# ── Pending submissions management ───────────────────────────────────────────
+
+@admin_bp.route('/admin/pending', methods=['GET'])
+@admin_required
+def pending_submissions():
+    """Return all pending places, hotels, and restaurants in one call."""
+    return jsonify({
+        'places':      [p.to_dict() for p in Place.query.filter_by(status='pending').all()],
+        'hotels':      [h.to_dict() for h in Hotel.query.filter_by(status='pending').all()],
+        'restaurants': [r.to_dict() for r in Restaurant.query.filter_by(status='pending').all()],
+        'reviews':     [r.to_dict() for r in Review.query.filter_by(status='pending').all()],
+    })
+
+
+# ── User management (admin view) ──────────────────────────────────────────────
+
+def _enrich_user(user):
+    """
+    Build the full user detail dict for the admin panel.
+    Includes every Clerk field + activity counts + recent sessions.
+    """
+    from sqlalchemy import func
+
+    cid = user.clerk_id
+
+    activity = {
+        'wishlist_count':  db.session.query(func.count(Wishlist.id))
+                             .filter(Wishlist.clerk_id == cid).scalar() or 0,
+        'review_count':    db.session.query(func.count(Review.id))
+                             .filter(Review.clerk_id == cid).scalar() or 0,
+        'booking_count':   0,
+        'search_count':    0,
+        'itinerary_count': db.session.query(func.count(Itinerary.id))
+                             .filter(Itinerary.clerk_id == cid).scalar() or 0,
+        'total_sessions':  user.total_logins or 0,
+        'place_views':     db.session.query(func.count(PlaceView.id))
+                             .filter(PlaceView.clerk_id == cid).scalar() or 0,
+    }
+
+    recent_sessions = user.get_session_history()[-5:][::-1]
+
+    return {
+        **user.to_dict(),
+        'activity':        activity,
+        'recent_sessions': recent_sessions,
+    }
+
+@admin_bp.route('/admin/users', methods=['GET'])
+@admin_required
+def list_users():
+    """
+    Full user list for admin panel.
+    Every user synced from Clerk — with login/logout times, activity counts,
+    and recent session history.
+    """
+    page      = request.args.get('page', 1, type=int)
+    limit     = request.args.get('limit', 20, type=int)
+    search    = request.args.get('search', '').strip()
+    is_active = request.args.get('is_active')
+
+    q = User.query
+    if search:
+        q = q.filter(User.name.ilike(f'%{search}%') | User.email.ilike(f'%{search}%'))
+    if is_active is not None:
+        q = q.filter(User.is_active == (is_active.lower() == 'true'))
+
+    total = q.count()
+    users = q.order_by(User.created_at.desc())\
+              .offset((page - 1) * limit).limit(limit).all()
+
+    return jsonify({
+        'users':  [_enrich_user(u) for u in users],
+        'total':  total,
+        'page':   page,
+        'limit':  limit,
+        'pages':  (total + limit - 1) // limit,
+    })
+
+
+@admin_bp.route('/admin/users/<clerk_id>', methods=['GET'])
+@admin_required
+def get_user_detail(clerk_id):
+    """
+    Full profile of a single user for admin panel.
+    Includes: Clerk data, login/logout history, all activity counts,
+    recent wishlists, reviews, bookings, searches.
+    """
+    user = User.query.filter_by(clerk_id=clerk_id).first_or_404()
+
+    # Full session history from JSON column
+    sessions = user.get_session_history()[::-1][:20]
+
+    # Recent activity details
+    recent_reviews    = Review.query.filter_by(clerk_id=clerk_id)\
+                               .order_by(Review.created_at.desc()).limit(5).all()
+    recent_searches   = []
+    recent_wishlists  = Wishlist.query.filter_by(clerk_id=clerk_id)\
+                                 .order_by(Wishlist.created_at.desc()).limit(5).all()
+
+    data = _enrich_user(user)
+    data['sessions']         = sessions
+    data['recent_reviews']   = [r.to_dict() for r in recent_reviews]
+    data['recent_bookings']  = []
+    data['recent_searches']  = []
+    data['recent_wishlists'] = [{'place_name': w.place_name or (w.place.name if w.place else ''),
+                                  'added_at': w.created_at.isoformat()} for w in recent_wishlists]
     return jsonify(data)
 
 
-# -----------------------------
-# Review Management Endpoints
-# -----------------------------
+@admin_bp.route('/admin/users/<clerk_id>/sessions', methods=['GET'])
+@admin_required
+def user_sessions(clerk_id):
+    """Full login/logout session history for a user (from JSON column)."""
+    user = User.query.filter_by(clerk_id=clerk_id).first_or_404()
+    history = user.get_session_history()[::-1]  # newest first
+    return jsonify({'sessions': history, 'total_logins': user.total_logins})
 
-# Get all reviews for admin panel
-@admin_bp.route("/admin/reviews", methods=["GET"])
-def admin_get_reviews():
-    """Get all reviews with filtering options"""
+
+@admin_bp.route('/admin/users/<clerk_id>/deactivate', methods=['POST'])
+@admin_required
+def deactivate_user(clerk_id):
+    """Deactivate a user account."""
+    user = User.query.filter_by(clerk_id=clerk_id).first_or_404()
+    user.is_active = False
+    _log('deactivate_user', 'user', notes=f'Deactivated: {user.email}')
+    db.session.commit()
+    return jsonify({'success': True, 'message': f'User {user.email} deactivated.'})
+
+
+@admin_bp.route('/admin/users/<clerk_id>/activate', methods=['POST'])
+@admin_required
+def activate_user(clerk_id):
+    """Reactivate a user account."""
+    user = User.query.filter_by(clerk_id=clerk_id).first_or_404()
+    user.is_active = True
+    _log('activate_user', 'user', notes=f'Activated: {user.email}')
+    db.session.commit()
+    return jsonify({'success': True, 'message': f'User {user.email} activated.'})
+
+
+@admin_bp.route('/admin/users/sync-from-clerk', methods=['POST'])
+@admin_required
+def sync_all_from_clerk():
+    """Pull all users from Clerk API and upsert into local DB."""
+    if not CLERK_API_KEY:
+        return jsonify({'error': 'CLERK_API_KEY not configured'}), 500
+
     try:
-        session = SessionLocal()
-        
-        # Get query parameters
-        status = request.args.get("status")  # pending, approved, rejected, all
-        page = request.args.get("page", 1, type=int)
-        per_page = request.args.get("per_page", 20, type=int)
-        
-        # Build query
-        query = session.query(Review)
-        
-        if status and status != "all":
-            query = query.filter(Review.status == status)
-        
-        # Get total count
-        total = query.count()
-        
-        # Apply pagination
-        reviews = query.order_by(Review.created_at.desc()).offset((page - 1) * per_page).limit(per_page).all()
-        
-        # Format response
-        reviews_list = []
-        for review in reviews:
-            reviews_list.append({
-                "id": review.id,
-                "name": review.name,
-                "email": review.email,
-                "place": review.place,
-                "visit_date": review.visit_date,
-                "type": review.type,
-                "rating": review.rating,
-                "review": review.review,
-                "recommend": review.recommend,
-                "images": json.loads(review.images) if review.images else [],
-                "status": review.status,
-                "created_at": review.created_at.isoformat() if review.created_at else None,
-                "approved_at": review.approved_at.isoformat() if review.approved_at else None,
-                "admin_notes": review.admin_notes
-            })
-        
-        return jsonify({
-            "reviews": reviews_list,
-            "total": total,
-            "page": page,
-            "per_page": per_page,
-            "total_pages": (total + per_page - 1) // per_page
-        }), 200
-        
+        r = requests.get(
+            f"{CLERK_API_URL}?limit=500",
+            headers={"Authorization": f"Bearer {CLERK_API_KEY}"}
+        )
+        if r.status_code != 200:
+            return jsonify({'error': 'Clerk API error', 'status': r.status_code}), 502
+        clerk_users = r.json()
     except Exception as e:
-        print(f"Error fetching reviews: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        session.close()
+        return jsonify({'error': str(e)}), 500
+
+    synced = 0
+    for cu in clerk_users:
+        uid = cu.get('id')
+        emails = cu.get('email_addresses', [])
+        email = emails[0].get('email_address') if emails else None
+        if not uid or not email:
+            continue
+        fname = (cu.get('first_name') or '').strip()
+        lname = (cu.get('last_name') or '').strip()
+        name = f"{fname} {lname}".strip()
+        avatar = cu.get('image_url') or cu.get('profile_image_url') or ''
+
+        user = User.query.filter_by(clerk_id=uid).first()
+        if user:
+            user.email = email
+            user.name = name
+            user.avatar_url = avatar
+        else:
+            user = User(clerk_id=uid, email=email, name=name,
+                        avatar_url=avatar, total_logins=0)
+            db.session.add(user)
+        synced += 1
+
+    db.session.commit()
+    _log('sync_clerk_users', notes=f'Synced {synced} users from Clerk')
+    return jsonify({'message': f'Synced {synced} users from Clerk', 'total': synced})
 
 
-# Get review statistics for dashboard
-@admin_bp.route("/admin/dashboard/review-stats", methods=["GET"])
-def review_stats():
-    """Get review statistics for admin dashboard"""
-    try:
-        session = SessionLocal()
-        
-        total_reviews = session.query(Review).count()
-        pending_reviews = session.query(Review).filter(Review.status == "pending").count()
-        approved_reviews = session.query(Review).filter(Review.status == "approved").count()
-        rejected_reviews = session.query(Review).filter(Review.status == "rejected").count()
-        
-        # Average rating of approved reviews
-        avg_rating = session.query(func.avg(Review.rating)).filter(Review.status == "approved").scalar()
-        
-        # Recent reviews (last 5)
-        recent_reviews = session.query(Review).order_by(Review.created_at.desc()).limit(5).all()
-        recent_list = []
-        for review in recent_reviews:
-            recent_list.append({
-                "id": review.id,
-                "name": review.name,
-                "place": review.place,
-                "rating": review.rating,
-                "status": review.status,
-                "created_at": review.created_at.isoformat() if review.created_at else None
-            })
-        
-        return jsonify({
-            "total_reviews": total_reviews,
-            "pending_reviews": pending_reviews,
-            "approved_reviews": approved_reviews,
-            "rejected_reviews": rejected_reviews,
-            "average_rating": round(avg_rating, 2) if avg_rating else 0,
-            "recent_reviews": recent_list
-        }), 200
-        
-    except Exception as e:
-        print(f"Error fetching review stats: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        session.close()
 
 
-# Approve review
-@admin_bp.route("/admin/reviews/<int:review_id>/approve", methods=["POST"])
-def approve_review(review_id):
-    """Approve a review"""
-    try:
-        session = SessionLocal()
-        review = session.query(Review).filter(Review.id == review_id).first()
-        
-        if not review:
-            return jsonify({"error": "Review not found"}), 404
-        
-        data = request.get_json() or {}
-        admin_notes = data.get("admin_notes")
-        
-        review.status = "approved"
-        review.approved_at = datetime.utcnow()
-        if admin_notes:
-            review.admin_notes = admin_notes
-        
-        session.commit()
-        
-        return jsonify({
-            "message": "Review approved successfully",
-            "review_id": review.id
-        }), 200
-        
-    except Exception as e:
-        print(f"Error approving review: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        session.close()
 
+@admin_bp.route('/admin/search-history', methods=['GET'])
+@admin_required
+def admin_search_history():
+    """Return all search history entries for admin view."""
+    from sqlalchemy import text
+    limit  = request.args.get('limit', 100, type=int)
+    search = request.args.get('search', '').strip()
 
-# Reject review
-@admin_bp.route("/admin/reviews/<int:review_id>/reject", methods=["POST"])
-def reject_review(review_id):
-    """Reject a review"""
-    try:
-        session = SessionLocal()
-        review = session.query(Review).filter(Review.id == review_id).first()
-        
-        if not review:
-            return jsonify({"error": "Review not found"}), 404
-        
-        data = request.get_json() or {}
-        admin_notes = data.get("admin_notes")
-        
-        review.status = "rejected"
-        if admin_notes:
-            review.admin_notes = admin_notes
-        
-        session.commit()
-        
-        return jsonify({
-            "message": "Review rejected successfully",
-            "review_id": review.id
-        }), 200
-        
-    except Exception as e:
-        print(f"Error rejecting review: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        session.close()
+    sql = """
+        SELECT id, clerk_id, user_name, query, query_type, response_summary, created_at
+        FROM search_history
+        WHERE (:search = '' OR query LIKE :like OR user_name LIKE :like)
+        ORDER BY created_at DESC
+        LIMIT :limit
+    """
+    rows = db.session.execute(text(sql), {
+        'search': search, 'like': f'%{search}%', 'limit': limit
+    }).fetchall()
 
-
-# Delete review
-@admin_bp.route("/admin/reviews/<int:review_id>", methods=["DELETE"])
-def delete_review(review_id):
-    """Delete a review"""
-    try:
-        session = SessionLocal()
-        review = session.query(Review).filter(Review.id == review_id).first()
-        
-        if not review:
-            return jsonify({"error": "Review not found"}), 404
-        
-        # Delete associated images
-        if review.images:
-            image_paths = json.loads(review.images)
-            for image_path in image_paths:
-                full_path = os.path.join(os.getcwd(), image_path.lstrip('/'))
-                if os.path.exists(full_path):
-                    try:
-                        os.remove(full_path)
-                    except Exception as e:
-                        print(f"Error deleting image {full_path}: {str(e)}")
-        
-        session.delete(review)
-        session.commit()
-        
-        return jsonify({"message": "Review deleted successfully"}), 200
-        
-    except Exception as e:
-        print(f"Error deleting review: {str(e)}")
-        return jsonify({"error": str(e)}), 500
-    finally:
-        session.close()
+    return jsonify([{
+        'id':       r[0],
+        'clerk_id': r[1],
+        'user':     r[2] or 'Anonymous',
+        'query':    r[3],
+        'type':     r[4],
+        'results':  r[5],
+        'at':       r[6],
+    } for r in rows])

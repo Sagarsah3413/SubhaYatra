@@ -90,8 +90,15 @@ export default function DetailPage() {
     const fetchDetails = async () => {
       try {
         setIsLoading(true);
+        const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+        const headers = {};
+        if (user?.id) {
+          headers["X-Clerk-User-Id"] = user.id;
+          headers["X-Clerk-User-Name"] = user.fullName || "";
+        }
         const res = await fetch(
-          `http://localhost:8000/api/details/${type}/${encodeURIComponent(name)}`
+          `${API}/api/details/${type}/${encodeURIComponent(name)}`,
+          { headers }
         );
         if (!res.ok) throw new Error("Failed to fetch details");
         const json = await res.json();
@@ -99,7 +106,7 @@ export default function DetailPage() {
         // Enhance data with mock features
         const enhancedData = {
           ...json,
-          type: type,
+          type: json._type || type,
           ...mockEnhancedData
         };
         
@@ -156,7 +163,7 @@ export default function DetailPage() {
 
       if (isBookmarked) {
         // Remove from wishlist
-        const response = await fetch(`http://localhost:8000/api/wishlist/${userId}/${placeId}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/wishlist/${userId}/${placeId}`, {
           method: 'DELETE',
         });
 
@@ -172,7 +179,7 @@ export default function DetailPage() {
         );
       } else {
         // Add to wishlist - send place data in request body
-        const response = await fetch(`http://localhost:8000/api/wishlist/${userId}/${placeId}`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/wishlist/${userId}/${placeId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -223,7 +230,7 @@ export default function DetailPage() {
           // Use data.id if available, otherwise create identifier from name and type
           const placeId = data.id || `${type}-${encodeURIComponent(name)}`;
           
-          const response = await fetch(`http://localhost:8000/api/wishlist/${userId}/${placeId}/check`);
+          const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/wishlist/${userId}/${placeId}/check`);
           
           if (response.ok) {
             const result = await response.json();

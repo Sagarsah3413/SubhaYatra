@@ -14,7 +14,7 @@ import { FaCompass } from 'react-icons/fa';
 const AuthBrandPanel = ({ dark, mounted, badge, headline, tagline, subtext }) => (
     <div
         className="space-y-8"
-        style={mounted ? { animation: 'fadeUp 0.6s ease both' } : { opacity: 0 }}
+        style={{ animation: 'fadeUp 0.4s ease both' }}
     >
         {/* Badge */}
         <div className={` mt-4

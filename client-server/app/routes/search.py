@@ -1,258 +1,157 @@
-# app/routes/search.py
+"""
+Search route — name-first relevance search, saves to history for logged-in users.
+"""
 
 from flask import Blueprint, request, jsonify
-from ..database import SessionLocal
-from .. import models
-import os
+from sqlalchemy import case, func
+from ..database import db
+from ..models import Place, Hotel, Restaurant
 
-# IMPORTANT: blueprint name must be UNIQUE
-search_blueprint = Blueprint('search_bp', __name__)
-
-BASE_IMAGE_DIR = "datasets/project_imgfold/project_images"
+search_bp = Blueprint('search', __name__)
 
 
-# ---------------------- Helper: Get Images ----------------------
-def get_images_for_place(place_name):
-    folder_path = os.path.join(BASE_IMAGE_DIR, place_name)
-    images = []
-
-    if os.path.exists(folder_path):
-        for file in os.listdir(folder_path):
-            if file.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
-                images.append(
-                    os.path.join(BASE_IMAGE_DIR, place_name, file).replace("\\", "/")
-                )
-
-    return images
-
-
-# ---------------------- SEARCH ROUTE ----------------------
-@search_blueprint.route("/search", methods=["GET"])
-def search_items():
-    q = request.args.get("q", "")
-    category = request.args.get("category", "all")  # all, place, hotel, restaurant
-    db = SessionLocal()
-    
-    # Create search patterns for better matching
-    query_exact = q.lower()  # Exact match (case-insensitive)
-    query_start = f"{q}%"    # Starts with query
-    query_word = f"% {q}%"   # Word boundary match
-    query_any = f"%{q}%"     # Contains query anywhere
-    
-    results = []
-
-    def calculate_relevance_score(obj, search_term):
-        """Calculate relevance score based on where the match occurs"""
-        search_lower = search_term.lower()
-        name_lower = (obj.name or "").lower()
-        location_lower = (obj.location or "").lower()
-        tags_lower = (obj.tags or "").lower()
-        desc_lower = (obj.description or "").lower()
-        
-        score = 0
-        
-        # Exact name match (highest priority)
-        if name_lower == search_lower:
-            score += 100
-        # Name starts with search term
-        elif name_lower.startswith(search_lower):
-            score += 80
-        # Name contains search term as a word
-        elif f" {search_lower}" in name_lower or f"-{search_lower}" in name_lower:
-            score += 60
-        # Name contains search term anywhere
-        elif search_lower in name_lower:
-            score += 40
-        
-        # Location matches
-        if search_lower in location_lower:
-            if location_lower.startswith(search_lower):
-                score += 30
-            else:
-                score += 15
-        
-        # Tags matches (important for categorization)
-        if search_lower in tags_lower:
-            # Check if it's a complete tag match
-            tags_list = [tag.strip().lower() for tag in tags_lower.split(',')]
-            if search_lower in tags_list:
-                score += 25
-            else:
-                score += 10
-        
-        # Description matches (lower priority)
-        if search_lower in desc_lower:
-            score += 5
-        
-        return score
-
-    def add_result(obj, obj_type):
-        # Calculate relevance score
-        relevance = calculate_relevance_score(obj, q)
-        
-        # Use image_url from database if available (for all types)
-        if hasattr(obj, 'image_url') and obj.image_url:
-            image_url = obj.image_url
-            # Parse all_images if available
-            if hasattr(obj, 'all_images') and obj.all_images:
-                try:
-                    import json
-                    all_images_raw = json.loads(obj.all_images) if isinstance(obj.all_images, str) else obj.all_images
-                    # Normalize paths
-                    all_images = []
-                    for img in all_images_raw:
-                        if img:
-                            # Convert backslashes to forward slashes
-                            img = img.replace('\\', '/')
-                            # Add folder prefix if missing based on type
-                            if obj_type == 'Hotel' and not img.startswith('hotel_images/'):
-                                img = f"hotel_images/{img}"
-                            elif obj_type == 'Restaurant' and not img.startswith('restaurant_images/'):
-                                img = f"restaurant_images/{img}"
-                            elif obj_type == 'Place' and not img.startswith('destination_images/'):
-                                img = f"destination_images/{img}"
-                            all_images.append(img)
-                except:
-                    all_images = [obj.image_url]
-            else:
-                all_images = [obj.image_url]
-        else:
-            # Fallback to folder images (legacy support)
-            images = get_images_for_place(obj.name)
-            image_url = images[0] if images else None
-            all_images = images
-            
-        results.append({
-            "name": obj.name,
-            "type": obj_type,
-            "description": obj.description or "",
-            "location": obj.location or "",
-            "tags": obj.tags or "",
-            "image_url": image_url,
-            "all_images": all_images,
-            "images": all_images,  # Keep for backward compatibility
-            "relevance_score": relevance
-        })
-
-    # Search based on category filter with improved query logic
-    if category == "all" or category == "place":
-        # Places (New tourism places data) - Only show approved places
-        places = db.query(models.Place).filter(
-            models.Place.name.ilike(query_any) |
-            models.Place.tags.ilike(query_any) |
-            models.Place.description.ilike(query_any) |
-            models.Place.location.ilike(query_any)
-        ).all()
-        for p in places:
-            add_result(p, "Place")
-
-    if category == "all" or category == "hotel":
-        # Hotels
-        hotels = db.query(models.Hotel).filter(
-            models.Hotel.name.ilike(query_any) |
-            models.Hotel.tags.ilike(query_any) |
-            models.Hotel.description.ilike(query_any) |
-            models.Hotel.location.ilike(query_any)
-        ).all()
-        for h in hotels:
-            add_result(h, "Hotel")
-
-    if category == "all" or category == "restaurant":
-        # Restaurants
-        restaurants = db.query(models.Restaurant).filter(
-            models.Restaurant.name.ilike(query_any) |
-            models.Restaurant.tags.ilike(query_any) |
-            models.Restaurant.description.ilike(query_any) |
-            models.Restaurant.location.ilike(query_any)
-        ).all()
-        for r in restaurants:
-            add_result(r, "Restaurant")
-
-    if category == "all" or category == "attraction":
-        # Attractions
-        attractions = db.query(models.Attraction).filter(
-            models.Attraction.name.ilike(query_any) |
-            models.Attraction.tags.ilike(query_any) |
-            models.Attraction.description.ilike(query_any)
-        ).all()
-        for a in attractions:
-            add_result(a, "Attraction")
-
-    # Sort results by relevance score (highest first)
-    results.sort(key=lambda x: x['relevance_score'], reverse=True)
-    
-    db.close()
-    return jsonify({
-        "results": results, 
-        "category": category,
-        "count": len(results),
-        "unlimited": True
-    })
-
-
-# ---------------------- DETAILS ROUTE ----------------------
-@search_blueprint.route("/details/<string:type>/<string:name>", methods=["GET"])
-def get_details(type, name):
-    db = SessionLocal()
-    obj = None
-
-    t = type.lower()
-
-    if t == "place":
-        obj = db.query(models.Place).filter(models.Place.name == name).first()
-    elif t == "hotel":
-        obj = db.query(models.Hotel).filter(models.Hotel.name == name).first()
-    elif t == "restaurant":
-        obj = db.query(models.Restaurant).filter(models.Restaurant.name == name).first()
-    elif t == "attraction":
-        obj = db.query(models.Attraction).filter(models.Attraction.name == name).first()
-
-    if not obj:
-        db.close()
-        return jsonify({"error": f"No {type} found with name '{name}'"}), 404
-
-    # Handle images - use image_url from database if available (for all types)
-    if hasattr(obj, 'image_url') and obj.image_url:
-        image_url = obj.image_url
-        # Parse all_images if available
-        if hasattr(obj, 'all_images') and obj.all_images:
-            try:
-                import json
-                all_images_raw = json.loads(obj.all_images) if isinstance(obj.all_images, str) else obj.all_images
-                # Normalize paths
-                all_images = []
-                for img in all_images_raw:
-                    if img:
-                        # Convert backslashes to forward slashes
-                        img = img.replace('\\', '/')
-                        # Add folder prefix if missing based on type
-                        if t == 'hotel' and not img.startswith('hotel_images/'):
-                            img = f"hotel_images/{img}"
-                        elif t == 'restaurant' and not img.startswith('restaurant_images/'):
-                            img = f"restaurant_images/{img}"
-                        elif t == 'place' and not img.startswith('destination_images/'):
-                            img = f"destination_images/{img}"
-                        all_images.append(img)
-            except:
-                all_images = [obj.image_url]
-        else:
-            all_images = [obj.image_url]
+def _search_places(query, limit=10):
+    q = query.lower()
+    # Always match on name; only broaden to location/tags for queries >= 3 chars
+    name_filter = Place.name.ilike(f'%{query}%')
+    if len(q) >= 3:
+        broad = (
+            Place.name.ilike(f'%{query}%') |
+            Place.location.ilike(f'%{query}%') |
+            Place.tags.ilike(f'%{query}%')
+        )
     else:
-        # Fallback to folder images (legacy support)
-        images = get_images_for_place(obj.name)
-        image_url = images[0] if images else None
-        all_images = images
+        broad = name_filter
 
-    result = {
-        "name": obj.name,
-        "description": obj.description or "",
-        "location": obj.location or "",
-        "tags": obj.tags or "",
-        "image_url": image_url,
-        "all_images": all_images,
-        "images": all_images,  # Keep for backward compatibility
-        "wikipedia_url": f"https://en.wikipedia.org/wiki/{obj.name.replace(' ', '_')}"
-    }
+    places = (
+        Place.query
+        .filter(Place.status == 'approved', broad)
+        .order_by(
+            # name starts with query → highest priority
+            case(
+                (func.lower(Place.name).like(f'{q}%'), 0),
+                (func.lower(Place.name).like(f'%{q}%'), 1),
+                else_=2
+            ),
+            Place.name
+        )
+        .limit(limit)
+        .all()
+    )
+    return places
 
-    db.close()
-    return jsonify(result)
+
+def _search_hotels(query, limit=10):
+    q = query.lower()
+    broad = Hotel.name.ilike(f'%{query}%')
+    if len(q) >= 3:
+        broad = broad | Hotel.location.ilike(f'%{query}%')
+
+    return (
+        Hotel.query
+        .filter(Hotel.status == 'approved', broad)
+        .order_by(
+            case(
+                (func.lower(Hotel.name).like(f'{q}%'), 0),
+                (func.lower(Hotel.name).like(f'%{q}%'), 1),
+                else_=2
+            ),
+            Hotel.name
+        )
+        .limit(limit)
+        .all()
+    )
+
+
+def _search_restaurants(query, limit=10):
+    q = query.lower()
+    broad = Restaurant.name.ilike(f'%{query}%')
+    if len(q) >= 3:
+        broad = broad | Restaurant.location.ilike(f'%{query}%')
+
+    return (
+        Restaurant.query
+        .filter(Restaurant.status == 'approved', broad)
+        .order_by(
+            case(
+                (func.lower(Restaurant.name).like(f'{q}%'), 0),
+                (func.lower(Restaurant.name).like(f'%{q}%'), 1),
+                else_=2
+            ),
+            Restaurant.name
+        )
+        .limit(limit)
+        .all()
+    )
+
+
+@search_bp.route('/search', methods=['GET'])
+def search():
+    query    = request.args.get('q', '').strip()
+    category = request.args.get('category', 'all')
+    clerk_id = request.headers.get('X-Clerk-User-Id')
+    user_name = request.headers.get('X-Clerk-User-Name', '')
+
+    if not query:
+        return jsonify({'error': 'Query required'}), 400
+
+    if not clerk_id:
+        return jsonify({'error': 'Login required to search', 'auth_required': True}), 401
+
+    results = {'places': [], 'hotels': [], 'restaurants': []}
+
+    if category in ('all', 'place', 'places'):
+        results['places'] = [p.to_dict() for p in _search_places(query)]
+
+    if category in ('all', 'hotel', 'hotels'):
+        results['hotels'] = [h.to_dict() for h in _search_hotels(query)]
+
+    if category in ('all', 'restaurant', 'restaurants'):
+        results['restaurants'] = [r.to_dict() for r in _search_restaurants(query)]
+
+    total = sum(len(v) for v in results.values())
+
+    # Only save to history when user explicitly submits (not on every keystroke)
+    # Frontend sends ?save=1 only on explicit search submission
+    if request.args.get('save') == '1' and len(query) >= 3:
+        try:
+            from sqlalchemy import text
+            db.session.execute(text(
+                "INSERT INTO search_history (clerk_id, user_name, query, query_type, response_summary, created_at, user_id) "
+                "VALUES (:cid, :uname, :q, :qt, :rs, CURRENT_TIMESTAMP, :uid)"
+            ), {'cid': clerk_id, 'uname': user_name, 'q': query,
+                'qt': category, 'rs': f"{total} results", 'uid': clerk_id or ''})
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+
+    return jsonify({'query': query, 'results': results, 'total': total})
+
+
+@search_bp.route('/search/history', methods=['GET'])
+def get_search_history():
+    clerk_id = request.headers.get('X-Clerk-User-Id')
+    if not clerk_id:
+        return jsonify({'error': 'Login required'}), 401
+    from sqlalchemy import text
+    rows = db.session.execute(text(
+        "SELECT id, query, query_type, created_at FROM search_history "
+        "WHERE clerk_id = :cid ORDER BY created_at DESC LIMIT 10"
+    ), {'cid': clerk_id}).fetchall()
+    return jsonify([{
+        'id': r[0], 'query': r[1],
+        'query_type': r[2], 'at': r[3],
+    } for r in rows])
+
+
+@search_bp.route('/search/history/<int:entry_id>', methods=['DELETE'])
+def delete_search_entry(entry_id):
+    clerk_id = request.headers.get('X-Clerk-User-Id')
+    if not clerk_id:
+        return jsonify({'error': 'Login required'}), 401
+    from sqlalchemy import text
+    db.session.execute(text(
+        "DELETE FROM search_history WHERE id = :id AND clerk_id = :cid"
+    ), {'id': entry_id, 'cid': clerk_id})
+    db.session.commit()
+    return jsonify({'message': 'Deleted'})
