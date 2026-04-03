@@ -314,28 +314,79 @@ def create_recommendation():
             else:
                 rec_duration = "3-7 days recommended"
             
-            # Format image URL for frontend
-            image_url = ""
-            if place.image_url:
-                # Convert backslashes to forward slashes
-                image_path = place.image_url.replace('\\', '/')
-                
-                # Check if path already starts with /datasets or destination_images
-                if image_path.startswith('/datasets/'):
-                    image_url = image_path
-                elif image_path.startswith('destination_images/'):
-                    image_url = f"/datasets/{image_path}"
-                else:
-                    # Assume it's a relative path from destination_images
-                    image_url = f"/datasets/destination_images/{image_path}"
+            # Format image URLs using the /api/images/ endpoints
+            import json as _json
+
+            def _encode_path(path):
+                if not path or path == 'null':
+                    return None
+                if path.startswith('http'):
+                    return path
+                # path is like /api/images/destinations/<folder>/<file>
+                parts = path.split('/')
+                prefix = '/'.join(parts[:4])   # /api/images/destinations
+                rest   = '/'.join(
+                    __import__('urllib.parse', fromlist=['quote']).quote(p, safe='')
+                    for p in parts[4:]
+                )
+                return f"{prefix}/{rest}"
+
+            # All images list
+            raw_all = []
+            if place.all_images:
+                try:
+                    raw_all = _json.loads(place.all_images)
+                except Exception:
+                    pass
+            if not raw_all and place.image_url:
+                raw_all = [place.image_url]
+
+            all_images = [_encode_path(p) for p in raw_all if p and p != 'null']
+            image_url  = all_images[0] if all_images else ""
+
+            # Linked hotels and restaurants for this place
+            hotels_data = []
+            restaurants_data = []
+            from ..models import Hotel, Restaurant
+            for h in place.hotels[:3]:
+                h_imgs_raw = []
+                if h.all_images:
+                    try: h_imgs_raw = _json.loads(h.all_images)
+                    except: pass
+                if not h_imgs_raw and h.image_url:
+                    h_imgs_raw = [h.image_url]
+                h_imgs = [_encode_path(p) for p in h_imgs_raw if p and p != 'null']
+                hotels_data.append({
+                    'id': h.id, 'name': h.name,
+                    'location': h.location, 'rating': h.rating,
+                    'price_range': h.price_range,
+                    'image_url': h_imgs[0] if h_imgs else None,
+                    'all_images': h_imgs,
+                })
+            for r in place.restaurants[:3]:
+                r_imgs_raw = []
+                if r.all_images:
+                    try: r_imgs_raw = _json.loads(r.all_images)
+                    except: pass
+                if not r_imgs_raw and r.image_url:
+                    r_imgs_raw = [r.image_url]
+                r_imgs = [_encode_path(p) for p in r_imgs_raw if p and p != 'null']
+                restaurants_data.append({
+                    'id': r.id, 'name': r.name,
+                    'location': r.location, 'rating': r.rating,
+                    'price_range': r.price_range, 'cuisine': r.cuisine,
+                    'image_url': r_imgs[0] if r_imgs else None,
+                    'all_images': r_imgs,
+                })
             
             recommended_places.append({
                 'id': place.id,
                 'name': place.name,
                 'type': place.type or "Destination",
-                'matched_types': item['matched_types'],  # All types this place matches
+                'matched_types': item['matched_types'],
                 'description': place.description or "Discover this amazing destination",
                 'image': image_url,
+                'all_images': all_images,
                 'rating': place.rating or 4.0,
                 'duration': rec_duration,
                 'location': place.location or "",
@@ -346,7 +397,9 @@ def create_recommendation():
                 'latitude': place.latitude,
                 'longitude': place.longitude,
                 'match_score': item['score'],
-                'is_versatile': len(item['matched_types']) > 1  # Matches multiple preferences
+                'is_versatile': len(item['matched_types']) > 1,
+                'hotels': hotels_data,
+                'restaurants': restaurants_data,
             })
         
         # Save recommendation to database (store all trip types)

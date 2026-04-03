@@ -40,7 +40,7 @@ export default function RecommendationResults() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch('http://localhost:8000/api/recommendations', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/recommendations`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -315,200 +315,17 @@ export default function RecommendationResults() {
         ) : (
           <>
             <div className="mb-6">
-              <h2 className={`text-2xl font-bold ${
-                theme === 'dark' ? 'text-white' : 'text-gray-900'
-              }`}>
+              <h2 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                 Recommended Destinations
               </h2>
-              <p className={`text-sm mt-1 ${
-                theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
-              }`}>
+              <p className={`text-sm mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
                 {recommendedPlaces.length} perfect {recommendedPlaces.length === 1 ? 'match' : 'matches'} for your {formatTripDuration(preferences.tripDuration).toLowerCase()} trip
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {recommendedPlaces.map((place) => (
-                <div
-                  key={place.id}
-                  className={`rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl ${
-                    theme === 'dark' 
-                      ? 'bg-slate-800/50 border border-slate-700/50' 
-                      : 'bg-white/80 border border-white/50'
-                  } backdrop-blur-xl`}
-                >
-                  {/* Image */}
-                  <div className={`h-48 relative overflow-hidden ${
-                    theme === 'dark' ? 'bg-slate-900/50' : 'bg-gradient-to-br from-teal-50 to-cyan-50'
-                  }`}>
-                    {place.image ? (
-                      <img 
-                        src={`http://localhost:8000${place.image}`}
-                        alt={place.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        onError={(e) => {
-                          // Fallback to icon if image fails to load
-                          e.target.style.display = 'none';
-                          if (!e.target.parentElement.querySelector('.fallback-icon')) {
-                            e.target.parentElement.classList.add('flex', 'items-center', 'justify-center');
-                            const icon = document.createElement('div');
-                            icon.className = 'text-7xl fallback-icon';
-                            icon.textContent = place.type?.includes('Natural') ? '🏞️' : 
-                                             place.type?.includes('Trekking') ? '⛰️' :
-                                             place.type?.includes('Cultural') ? '🛕' :
-                                             place.type?.includes('Village') ? '🏡' :
-                                             place.type?.includes('Urban') ? '🏙️' : '📍';
-                            e.target.parentElement.appendChild(icon);
-                          }
-                        }}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-7xl">
-                        {place.type?.includes('Natural') ? '🏞️' : 
-                         place.type?.includes('Trekking') ? '⛰️' :
-                         place.type?.includes('Cultural') ? '🛕' :
-                         place.type?.includes('Village') ? '🏡' :
-                         place.type?.includes('Urban') ? '🏙️' : '📍'}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="p-6">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1">
-                        <h3 className={`text-xl font-bold ${
-                          theme === 'dark' ? 'text-white' : 'text-gray-900'
-                        }`}>
-                          {place.name}
-                        </h3>
-                        {place.location && (
-                          <p className={`text-xs mt-1 flex items-center gap-1 ${
-                            theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
-                          }`}>
-                            <span>📍</span>
-                            <span>{place.location}</span>
-                          </p>
-                        )}
-                        {place.is_versatile && (
-                          <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border border-teal-500/30">
-                            <svg className="w-3 h-3 text-teal-500" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            <span className={`text-xs font-semibold ${
-                              theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
-                            }`}>
-                              Versatile Match
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-1 ml-2">
-                        <span className="text-yellow-500">⭐</span>
-                        <span className={`text-sm font-semibold ${
-                          theme === 'dark' ? 'text-slate-300' : 'text-gray-700'
-                        }`}>
-                          {place.rating?.toFixed(1) || '4.0'}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className={`text-sm mb-3 flex flex-wrap items-center gap-2 ${
-                      theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
-                    }`}>
-                      {place.matched_types && place.matched_types.length > 0 ? (
-                        place.matched_types.map((type, idx) => (
-                          <span key={idx} className="inline-flex items-center gap-1">
-                            <span>{type}</span>
-                            {idx < place.matched_types.length - 1 && <span className="text-slate-400">•</span>}
-                          </span>
-                        ))
-                      ) : (
-                        <span>{place.type}</span>
-                      )}
-                    </div>
-
-                    <p className={`text-sm mb-3 line-clamp-2 ${
-                      theme === 'dark' ? 'text-slate-300' : 'text-gray-600'
-                    }`}>
-                      {place.description || 'Discover this amazing destination in Nepal'}
-                    </p>
-
-                    {/* Tags */}
-                    {place.tags && (
-                      <div className="mb-3 flex flex-wrap gap-1">
-                        {place.tags.split(/[,;]/).slice(0, 3).map((tag, idx) => (
-                          <span 
-                            key={idx}
-                            className={`text-xs px-2 py-1 rounded-full ${
-                              theme === 'dark' 
-                                ? 'bg-slate-700/50 text-slate-300' 
-                                : 'bg-gray-100 text-gray-600'
-                            }`}
-                          >
-                            {tag.trim()}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className="space-y-2 mb-4">
-                      {place.duration && (
-                        <div className={`text-xs flex items-center gap-2 ${
-                          theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
-                        }`}>
-                          <span>📅</span>
-                          <span>{place.duration}</span>
-                        </div>
-                      )}
-                      
-                      {place.difficulty_level && (
-                        <div className={`text-xs flex items-center gap-2 ${
-                          theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
-                        }`}>
-                          <span>💪</span>
-                          <span>{place.difficulty_level}</span>
-                        </div>
-                      )}
-                      
-                      {place.best_season && (
-                        <div className={`text-xs flex items-center gap-2 ${
-                          theme === 'dark' ? 'text-slate-400' : 'text-gray-500'
-                        }`}>
-                          <span>🌤️</span>
-                          <span>Best: {place.best_season}</span>
-                        </div>
-                      )}
-                      
-                      {place.match_score && (
-                        <div className={`text-xs flex items-center gap-2 ${
-                          theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
-                        }`}>
-                          <span>🎯</span>
-                          <span>Match Score: {place.match_score}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    <button
-                      onClick={() => {
-                        navigate(`/place/${place.id}`, {
-                          state: {
-                            fromRecommendations: true,
-                            preferences: preferences,
-                            recommendations: recommendations
-                          }
-                        });
-                      }}
-                      className="w-full bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-600 hover:from-teal-700 hover:via-cyan-700 hover:to-emerald-700 text-white font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 flex items-center justify-center gap-2"
-                    >
-                      <span>View Details</span>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+                <RecommendationCard key={place.id} place={place} theme={theme} navigate={navigate} preferences={preferences} recommendations={recommendations} />
               ))}
             </div>
 
@@ -537,6 +354,162 @@ export default function RecommendationResults() {
       </div>
 
       <Footer />
+    </div>
+  );
+}
+
+// ── Recommendation Card with multi-image slider + hotels/restaurants ──────────
+function RecommendationCard({ place, theme, navigate, preferences, recommendations }) {
+  const [activeTab, setActiveTab] = useState('place');
+  const [tabImgIdx, setTabImgIdx] = useState(0);
+  const [tabImgErrors, setTabImgErrors] = useState({});
+
+  const dark = theme === 'dark';
+  const cardBg = dark ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white/80 border-white/50';
+
+  const allImgs = place.all_images?.length ? place.all_images : (place.image ? [place.image] : []);
+
+  // Images for the active tab
+  const tabImages = activeTab === 'place'
+    ? allImgs
+    : activeTab === 'hotels' && place.hotels?.length
+      ? place.hotels.flatMap(h => h.all_images?.length ? h.all_images : (h.image_url ? [h.image_url] : []))
+      : activeTab === 'restaurants' && place.restaurants?.length
+        ? place.restaurants.flatMap(r => r.all_images?.length ? r.all_images : (r.image_url ? [r.image_url] : []))
+        : allImgs;
+
+  const tabSrc = !tabImgErrors[tabImgIdx] && tabImages[tabImgIdx] ? tabImages[tabImgIdx] : null;
+  const typeEmoji = place.type?.includes('Natural') ? '🏞️' : place.type?.includes('Trekking') ? '⛰️' :
+    place.type?.includes('Cultural') ? '🛕' : place.type?.includes('Village') ? '🏡' : '📍';
+
+  return (
+    <div className={`rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl border backdrop-blur-xl ${cardBg}`}>
+
+      {/* Tab selector */}
+      <div className={`flex border-b text-xs font-semibold ${dark ? 'border-slate-700' : 'border-slate-200'}`}>
+        {[
+          { key: 'place', label: '🏔 Destination' },
+          ...(place.hotels?.length ? [{ key: 'hotels', label: `🏨 Hotels (${place.hotels.length})` }] : []),
+          ...(place.restaurants?.length ? [{ key: 'restaurants', label: `🍴 Restaurants (${place.restaurants.length})` }] : []),
+        ].map(tab => (
+          <button key={tab.key} onClick={() => { setActiveTab(tab.key); setTabImgIdx(0); setTabImgErrors({}); }}
+            className={`flex-1 py-2 px-3 transition-colors ${
+              activeTab === tab.key
+                ? 'bg-teal-600 text-white'
+                : dark ? 'text-slate-400 hover:bg-slate-700' : 'text-slate-500 hover:bg-slate-50'
+            }`}>
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Image slider */}
+      <div className={`h-48 relative overflow-hidden ${dark ? 'bg-slate-900/50' : 'bg-teal-50'}`}>
+        {tabSrc ? (
+          <img src={tabSrc} alt={place.name} className="w-full h-full object-cover"
+            onError={() => setTabImgErrors(e => ({ ...e, [tabImgIdx]: true }))} />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-6xl">{typeEmoji}</div>
+        )}
+
+        {/* Dot nav */}
+        {tabImages.length > 1 && (
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+            {tabImages.slice(0, 6).map((_, i) => (
+              <button key={i} onClick={() => setTabImgIdx(i)}
+                className={`w-1.5 h-1.5 rounded-full transition-all ${i === tabImgIdx ? 'bg-white scale-125' : 'bg-white/50'}`} />
+            ))}
+          </div>
+        )}
+        {tabImages.length > 1 && (
+          <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/50 text-white text-[10px] font-semibold">
+            {tabImages.length} photos
+          </div>
+        )}
+
+        {/* Match score */}
+        {place.match_score && (
+          <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-teal-600/90 text-white text-[10px] font-bold">
+            🎯 {place.match_score}
+          </div>
+        )}
+      </div>
+
+      {/* Hotel/Restaurant list when tab active */}
+      {activeTab === 'hotels' && place.hotels?.length > 0 && (
+        <div className={`px-4 py-2 border-b text-xs space-y-1 ${dark ? 'border-slate-700' : 'border-slate-100'}`}>
+          {place.hotels.map((h, i) => (
+            <div key={i} className="flex items-center justify-between">
+              <span className={`font-semibold truncate ${dark ? 'text-slate-200' : 'text-slate-700'}`}>{h.name}</span>
+              <span className={`ml-2 shrink-0 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+                {h.rating ? `⭐ ${h.rating}` : ''} {h.price_range || ''}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+      {activeTab === 'restaurants' && place.restaurants?.length > 0 && (
+        <div className={`px-4 py-2 border-b text-xs space-y-1 ${dark ? 'border-slate-700' : 'border-slate-100'}`}>
+          {place.restaurants.map((r, i) => (
+            <div key={i} className="flex items-center justify-between">
+              <span className={`font-semibold truncate ${dark ? 'text-slate-200' : 'text-slate-700'}`}>{r.name}</span>
+              <span className={`ml-2 shrink-0 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+                {r.rating ? `⭐ ${r.rating}` : ''} {r.cuisine || ''}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Card body */}
+      <div className="p-5">
+        <div className="flex items-start justify-between mb-1">
+          <div className="flex-1">
+            <h3 className={`text-lg font-bold ${dark ? 'text-white' : 'text-gray-900'}`}>{place.name}</h3>
+            {place.location && (
+              <p className={`text-xs flex items-center gap-1 mt-0.5 ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
+                📍 {place.location}
+              </p>
+            )}
+          </div>
+          <span className="text-sm font-semibold text-yellow-500 ml-2">⭐ {place.rating?.toFixed(1) || '4.0'}</span>
+        </div>
+
+        {place.is_versatile && (
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-teal-500/20 border border-teal-500/30 text-xs font-semibold text-teal-500 mb-2">
+            ✨ Versatile Match
+          </span>
+        )}
+
+        <p className={`text-sm mb-3 line-clamp-2 ${dark ? 'text-slate-300' : 'text-gray-600'}`}>
+          {place.description || 'Discover this amazing destination in Nepal'}
+        </p>
+
+        {place.tags && (
+          <div className="flex flex-wrap gap-1 mb-3">
+            {place.tags.split(/[,;]/).slice(0, 3).map((tag, i) => (
+              <span key={i} className={`text-xs px-2 py-0.5 rounded-full ${dark ? 'bg-slate-700 text-slate-300' : 'bg-gray-100 text-gray-600'}`}>
+                {tag.trim()}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className={`text-xs space-y-1 mb-4 ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
+          {place.best_season && <div>🌤️ Best: {place.best_season}</div>}
+          {place.difficulty_level && <div>💪 {place.difficulty_level}</div>}
+          {place.duration && <div>📅 {place.duration}</div>}
+        </div>
+
+        <button
+          onClick={() => navigate(`/details?type=place&name=${encodeURIComponent(place.name)}`, {
+            state: { fromRecommendations: true, preferences, recommendations }
+          })}
+          className="w-full bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-600 hover:from-teal-700 hover:via-cyan-700 hover:to-emerald-700 text-white font-semibold py-2.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm"
+        >
+          View Details →
+        </button>
+      </div>
     </div>
   );
 }
