@@ -867,12 +867,16 @@ export default function PlaceDetailView() {
                   }`}
                 >
                   <div className="h-48 overflow-hidden relative bg-slate-200 dark:bg-slate-700">
-                      <img
-                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${hotel.image}`}
-                        alt={hotel.name}
-                        className="w-full h-full object-cover"
-                        onError={(e) => e.target.style.display = 'none'}
-                      />
+                  {hotel.image ? (
+                    <img
+                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${hotel.image}`}
+                      alt={hotel.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-4xl">🏨</div>
+                  )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span className="text-white font-semibold">Click for details</span>
                       </div>
@@ -929,12 +933,16 @@ export default function PlaceDetailView() {
                   }`}
                 >
                   <div className="h-48 overflow-hidden relative bg-slate-200 dark:bg-slate-700">
-                      <img
-                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${restaurant.image}`}
-                        alt={restaurant.name}
-                        className="w-full h-full object-cover"
-                        onError={(e) => e.target.style.display = 'none'}
-                      />
+                  {restaurant.image ? (
+                    <img
+                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${restaurant.image}`}
+                      alt={restaurant.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-4xl">🍽️</div>
+                  )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span className="text-white font-semibold">Click for details</span>
                       </div>
@@ -1007,16 +1015,18 @@ export default function PlaceDetailView() {
                   theme === 'dark' ? 'bg-slate-800' : 'bg-white'
                 }`}
               >
-                {similarPlace.image && (
-                  <div className="h-48 overflow-hidden">
+                <div className="h-48 overflow-hidden bg-slate-200 dark:bg-slate-700">
+                  {similarPlace.image ? (
                     <img
                       src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${similarPlace.image}`}
                       alt={similarPlace.name}
                       className="w-full h-full object-cover"
-                      onError={(e) => e.target.style.display = 'none'}
+                      onError={(e) => { e.target.style.display = 'none'; }}
                     />
-                  </div>
-                )}
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-4xl">📍</div>
+                  )}
+                </div>
                 
                 <div className="p-4">
                   <h3 className={`text-lg font-bold mb-2 ${

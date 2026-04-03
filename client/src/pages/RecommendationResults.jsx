@@ -530,7 +530,7 @@ function RecommendationCard({ place, theme, navigate, preferences, recommendatio
         </div>
 
         <button
-          onClick={() => navigate(`/details?type=place&name=${encodeURIComponent(place.name)}`, {
+          onClick={() => navigate(`/place/${place.id}`, {
             state: { fromRecommendations: true, preferences, recommendations }
           })}
           className="w-full bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-600 hover:from-teal-700 hover:via-cyan-700 hover:to-emerald-700 text-white font-semibold py-2.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm"
