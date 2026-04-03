@@ -11,78 +11,69 @@ UPLOAD_DIR = os.path.join(os.getcwd(), 'datasets', 'uploads')
 if not os.path.exists(UPLOAD_DIR):
     os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+def _fix_img(path):
+    """Convert any image path to /datasets/... format that Flask serves."""
+    if not path or path == 'null': return None
+    p = path.strip().replace('\\', '/')
+    if p.startswith('http'): return p
+    if p.startswith('/api/images/destinations/'):
+        return '/datasets/destination_images/' + p[len('/api/images/destinations/'):]
+    if p.startswith('/api/images/hotels/'):
+        return '/datasets/hotel_images/' + p[len('/api/images/hotels/'):]
+    if p.startswith('/api/images/restaurants/'):
+        return '/datasets/restaurant_images/' + p[len('/api/images/restaurants/'):]
+    if p.startswith('/datasets/'): return p
+    if p.startswith('destination_images/') or p.startswith('hotel_images/') or p.startswith('restaurant_images/'):
+        return f'/datasets/{p}'
+    return None
+
+
+def _parse_images(raw):
+    if not raw: return []
+    try:
+        imgs = json.loads(raw)
+        return [u for u in (_fix_img(i) for i in imgs) if u]
+    except Exception:
+        return []
+
+
 def serialize_place(place):
-    """Serialize a place object with all fields"""
-    # Parse all_images and normalize paths
-    all_images = []
-    if place.all_images:
-        try:
-            images = json.loads(place.all_images)
-            # Normalize each image path
-            for img in images:
-                if img:
-                    # Convert backslashes to forward slashes
-                    img = img.replace('\\', '/')
-                    # Add folder prefix if missing
-                    if not img.startswith('destination_images/'):
-                        img = f"destination_images/{img}"
-                    all_images.append(img)
-        except:
-            all_images = []
-    
+    imgs = _parse_images(place.all_images)
     return {
-        'id': place.id,
-        'name': place.name,
-        'location': place.location,
-        'type': place.type or 'Place',  # Ensure type is always set
-        'description': place.description,
-        'tags': place.tags,
-        'image_url': place.image_url,
-        'latitude': place.latitude,
-        'longitude': place.longitude,
-        'best_season': place.best_season,
-        'activities': place.activities,
-        'difficulty_level': place.difficulty_level,
-        'accessibility': place.accessibility,
-        'transportation': place.transportation,
-        'province': place.province,
-        'all_images': all_images,
-        'created_at': place.created_at,
-        'status': getattr(place, 'status', 'approved'),  # Include status, default to approved for old records
-        'source': getattr(place, 'source', 'dataset')  # Include source, default to dataset
+        'id': place.id, 'name': place.name, 'location': place.location,
+        'type': place.type or 'Place', 'description': place.description,
+        'tags': place.tags, 'image_url': _fix_img(place.image_url),
+        'latitude': place.latitude, 'longitude': place.longitude,
+        'best_season': place.best_season, 'activities': place.activities,
+        'difficulty_level': place.difficulty_level, 'accessibility': place.accessibility,
+        'transportation': place.transportation, 'province': place.province,
+        'all_images': imgs, 'created_at': str(place.created_at) if place.created_at else None,
+        'status': getattr(place, 'status', 'approved'),
+        'source': getattr(place, 'source', 'dataset'),
     }
+
 
 def serialize_hotel(hotel):
-    """Serialize a hotel object with all fields"""
+    imgs = _parse_images(hotel.all_images)
     return {
-        'id': hotel.id,
-        'name': hotel.name,
-        'location': hotel.location,
-        'description': hotel.description,
-        'tags': hotel.tags,
-        'image_url': hotel.image_url,
-        'rating': hotel.rating,
-        'price_range': hotel.price_range,
-        'place_id': hotel.place_id,
-        'all_images': json.loads(hotel.all_images) if hotel.all_images else [],
-        'source': getattr(hotel, 'source', 'dataset')  # Include source field
+        'id': hotel.id, 'name': hotel.name, 'location': hotel.location,
+        'description': hotel.description, 'tags': hotel.tags,
+        'image_url': _fix_img(hotel.image_url), 'rating': hotel.rating,
+        'price_range': hotel.price_range, 'place_id': hotel.place_id,
+        'all_images': imgs, 'source': getattr(hotel, 'source', 'dataset'),
     }
 
+
 def serialize_restaurant(restaurant):
-    """Serialize a restaurant object with all fields"""
+    imgs = _parse_images(restaurant.all_images)
     return {
-        'id': restaurant.id,
-        'name': restaurant.name,
-        'location': restaurant.location,
-        'description': restaurant.description,
-        'tags': restaurant.tags,
-        'image_url': restaurant.image_url,
-        'rating': restaurant.rating,
+        'id': restaurant.id, 'name': restaurant.name, 'location': restaurant.location,
+        'description': restaurant.description, 'tags': restaurant.tags,
+        'image_url': _fix_img(restaurant.image_url), 'rating': restaurant.rating,
         'price_range': restaurant.price_range,
-        'cuisine': getattr(restaurant, 'cuisine', None),  # Include cuisine, handle if column doesn't exist yet
+        'cuisine': getattr(restaurant, 'cuisine', None),
         'place_id': restaurant.place_id,
-        'all_images': json.loads(restaurant.all_images) if restaurant.all_images else [],
-        'source': getattr(restaurant, 'source', 'dataset')  # Include source field
+        'all_images': imgs, 'source': getattr(restaurant, 'source', 'dataset'),
     }
 
 def serialize_event(event):
@@ -202,143 +193,33 @@ def create_place():
     finally:
         session.close()
 
-@places_bp.route('/places', methods=['GET'])
-def list_places():
-    """Get all places with optional filtering"""
-    session = SessionLocal()
-    try:
-        # Get query parameters
-        page = int(request.args.get('page', 1))
-        limit_param = request.args.get('limit', '20')
-        
-        # Support 'all' to fetch all places
-        if limit_param.lower() == 'all':
-            limit = None
-        else:
-            limit = int(limit_param)
-            
-        place_type = request.args.get('type')
-        province = request.args.get('province')
-        difficulty = request.args.get('difficulty')
-        search = request.args.get('search')
-        status = request.args.get('status', 'approved')  # Default to approved only
-        
-        # Build query
-        query = session.query(Place)
-        
-        # Apply status filter (show only approved places by default for public)
-        # Admin can pass status='all' to see all places
-        if status != 'all':
-            query = query.filter(Place.status == status)
-        
-        # Apply filters
-        if place_type:
-            query = query.filter(Place.type.ilike(f'%{place_type}%'))
-        if province:
-            query = query.filter(Place.province == province)
-        if difficulty:
-            query = query.filter(Place.difficulty_level.ilike(f'%{difficulty}%'))
-        if search:
-            query = query.filter(
-                Place.name.ilike(f'%{search}%') |
-                Place.description.ilike(f'%{search}%') |
-                Place.tags.ilike(f'%{search}%')
-            )
-        
-        # Get total count
-        total = query.count()
-        
-        # Apply pagination only if limit is set
-        if limit:
-            offset = (page - 1) * limit
-            places = query.order_by(Place.id.desc()).offset(offset).limit(limit).all()
-            pages = (total + limit - 1) // limit
-        else:
-            # Fetch all places
-            places = query.order_by(Place.id.desc()).all()
-            pages = 1
-        
-        # Serialize results
-        results = [serialize_place(place) for place in places]
-        
-        return jsonify({
-            'places': results,
-            'total': total,
-            'page': page,
-            'limit': limit if limit else total,
-            'pages': pages
-        })
-    finally:
-        session.close()
-
 @places_bp.route('/places/<int:place_id>', methods=['GET'])
 def get_place_details(place_id):
-    """Get detailed information about a specific place including hotels, restaurants, and events"""
-    from urllib.parse import quote as url_quote
     session = SessionLocal()
     try:
         place = session.query(Place).filter(Place.id == place_id).first()
         if not place:
             return jsonify({'error': 'Place not found'}), 404
-
         hotels = session.query(Hotel).filter(Hotel.place_id == place_id).all()
         restaurants = session.query(Restaurant).filter(Restaurant.place_id == place_id).all()
         events = session.query(Event).filter(Event.place_id == place_id).all()
-
-        def fix_img(path):
-            """Ensure image path is a proper /api/images/... URL with encoding."""
-            if not path or path == 'null':
-                return None
-            path = path.strip()
-            if path.startswith('http'):
-                return path
-            if path.startswith('/api/'):
-                parts = path.split('/')
-                prefix = '/'.join(parts[:4])
-                rest = '/'.join(url_quote(p, safe='') for p in parts[4:])
-                return f"{prefix}/{rest}"
-            # Legacy /datasets/ paths — skip (no static route for them)
-            return None
-
-        def get_images(obj, raw_field):
-            imgs = []
-            if raw_field:
-                try:
-                    for p in json.loads(raw_field):
-                        u = fix_img(p)
-                        if u: imgs.append(u)
-                except Exception:
-                    pass
-            if not imgs and getattr(obj, 'image_url', None):
-                u = fix_img(obj.image_url)
-                if u: imgs.append(u)
-            return imgs
-
         result = serialize_place(place)
-        place_imgs = get_images(place, place.all_images)
-        result['images'] = place_imgs
-        result['image_url'] = place_imgs[0] if place_imgs else None
-
+        result['images'] = result['all_images']
         hotel_list = []
         for h in hotels:
             hd = serialize_hotel(h)
-            h_imgs = get_images(h, h.all_images)
-            hd['images'] = h_imgs
-            hd['image'] = h_imgs[0] if h_imgs else ''
+            hd['images'] = hd['all_images']
+            hd['image'] = hd['all_images'][0] if hd['all_images'] else ''
             hotel_list.append(hd)
-
         restaurant_list = []
         for r in restaurants:
             rd = serialize_restaurant(r)
-            r_imgs = get_images(r, r.all_images)
-            rd['images'] = r_imgs
-            rd['image'] = r_imgs[0] if r_imgs else ''
+            rd['images'] = rd['all_images']
+            rd['image'] = rd['all_images'][0] if rd['all_images'] else ''
             restaurant_list.append(rd)
-
         result['hotels'] = hotel_list
         result['restaurants'] = restaurant_list
         result['events'] = [serialize_event(e) for e in events]
-
         return jsonify(result)
     finally:
         session.close()

@@ -866,10 +866,9 @@ export default function PlaceDetailView() {
                     theme === 'dark' ? 'bg-slate-800' : 'bg-white'
                   }`}
                 >
-                  {hotel.image && (
-                    <div className="h-48 overflow-hidden relative">
+                  <div className="h-48 overflow-hidden relative bg-slate-200 dark:bg-slate-700">
                       <img
-                        src={`http://localhost:8000${hotel.image}`}
+                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${hotel.image}`}
                         alt={hotel.name}
                         className="w-full h-full object-cover"
                         onError={(e) => e.target.style.display = 'none'}
@@ -929,10 +928,9 @@ export default function PlaceDetailView() {
                     theme === 'dark' ? 'bg-slate-800' : 'bg-white'
                   }`}
                 >
-                  {restaurant.image && (
-                    <div className="h-48 overflow-hidden relative">
+                  <div className="h-48 overflow-hidden relative bg-slate-200 dark:bg-slate-700">
                       <img
-                        src={`http://localhost:8000${restaurant.image}`}
+                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${restaurant.image}`}
                         alt={restaurant.name}
                         className="w-full h-full object-cover"
                         onError={(e) => e.target.style.display = 'none'}
@@ -1012,7 +1010,7 @@ export default function PlaceDetailView() {
                 {similarPlace.image && (
                   <div className="h-48 overflow-hidden">
                     <img
-                      src={`http://localhost:8000${similarPlace.image}`}
+                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${similarPlace.image}`}
                       alt={similarPlace.name}
                       className="w-full h-full object-cover"
                       onError={(e) => e.target.style.display = 'none'}
