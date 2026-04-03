@@ -365,13 +365,15 @@ function toAbsUrl(path) {
   if (!path || path === 'null') return null;
   const p = path.trim();
   if (p.startsWith('http')) return p;
+  // /datasets/... paths — just prepend API base
+  if (p.startsWith('/datasets/')) return `${REC_API}${p}`;
+  // Legacy /api/images/... paths
   if (p.startsWith('/api/images/destinations/'))
     return `${REC_API}/datasets/destination_images/${p.slice('/api/images/destinations/'.length)}`;
   if (p.startsWith('/api/images/hotels/'))
     return `${REC_API}/datasets/hotel_images/${p.slice('/api/images/hotels/'.length)}`;
   if (p.startsWith('/api/images/restaurants/'))
     return `${REC_API}/datasets/restaurant_images/${p.slice('/api/images/restaurants/'.length)}`;
-  if (p.startsWith('/datasets/')) return `${REC_API}${p}`;
   if (p.startsWith('destination_images/') || p.startsWith('hotel_images/') || p.startsWith('restaurant_images/'))
     return `${REC_API}/datasets/${p}`;
   return null;

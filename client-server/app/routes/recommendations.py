@@ -314,22 +314,23 @@ def create_recommendation():
             else:
                 rec_duration = "3-7 days recommended"
             
-            # Format image URLs using the /api/images/ endpoints
+            # Format image URLs — convert to /datasets/ paths that Flask serves
             import json as _json
 
-            def _encode_path(path):
-                if not path or path == 'null':
-                    return None
-                if path.startswith('http'):
-                    return path
-                # path is like /api/images/destinations/<folder>/<file>
-                parts = path.split('/')
-                prefix = '/'.join(parts[:4])   # /api/images/destinations
-                rest   = '/'.join(
-                    __import__('urllib.parse', fromlist=['quote']).quote(p, safe='')
-                    for p in parts[4:]
-                )
-                return f"{prefix}/{rest}"
+            def _fix_path(path):
+                if not path or path == 'null': return None
+                p = path.strip()
+                if p.startswith('http'): return p
+                if p.startswith('/api/images/destinations/'):
+                    return '/datasets/destination_images/' + p[len('/api/images/destinations/'):]
+                if p.startswith('/api/images/hotels/'):
+                    return '/datasets/hotel_images/' + p[len('/api/images/hotels/'):]
+                if p.startswith('/api/images/restaurants/'):
+                    return '/datasets/restaurant_images/' + p[len('/api/images/restaurants/'):]
+                if p.startswith('/datasets/'): return p
+                if p.startswith('destination_images/') or p.startswith('hotel_images/') or p.startswith('restaurant_images/'):
+                    return f'/datasets/{p}'
+                return None
 
             # All images list
             raw_all = []
@@ -341,7 +342,7 @@ def create_recommendation():
             if not raw_all and place.image_url:
                 raw_all = [place.image_url]
 
-            all_images = [_encode_path(p) for p in raw_all if p and p != 'null']
+            all_images = [u for u in (_fix_path(p) for p in raw_all if p and p != 'null') if u]
             image_url  = all_images[0] if all_images else ""
 
             # Linked hotels and restaurants — query directly by place_id
@@ -360,7 +361,7 @@ def create_recommendation():
                         except: pass
                     if not h_imgs_raw and h.image_url:
                         h_imgs_raw = [h.image_url]
-                    h_imgs = [_encode_path(p) for p in h_imgs_raw if p and p != 'null']
+                    h_imgs = [u for u in (_fix_path(p) for p in h_imgs_raw if p and p != 'null') if u]
                     hotels_data.append({
                         'id': h.id, 'name': h.name,
                         'location': h.location, 'rating': h.rating,
@@ -379,7 +380,7 @@ def create_recommendation():
                         except: pass
                     if not r_imgs_raw and r.image_url:
                         r_imgs_raw = [r.image_url]
-                    r_imgs = [_encode_path(p) for p in r_imgs_raw if p and p != 'null']
+                    r_imgs = [u for u in (_fix_path(p) for p in r_imgs_raw if p and p != 'null') if u]
                     restaurants_data.append({
                         'id': r.id, 'name': r.name,
                         'location': r.location, 'rating': r.rating,

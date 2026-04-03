@@ -139,19 +139,13 @@ def remove_from_wishlist(user_id, place_id):
 
 @wishlist_bp.route('/wishlist/<user_id>/<place_id>/check', methods=['GET'])
 def check_wishlist_status(user_id, place_id):
-    """Check if place is in user's wishlist - requires authentication"""
-    # Verify user can only check their own wishlist
-    if request.current_user['user_id'] != user_id and request.current_user['role'] != 'admin':
-        return jsonify({'error': 'Access denied'}), 403
-    
+    """Check if place is in user's wishlist"""
     db = SessionLocal()
     try:
-        # Try to convert place_id to int for database lookup
         try:
             numeric_place_id = int(place_id)
             is_in_wishlist = crud.is_in_wishlist(db, user_id, numeric_place_id)
         except ValueError:
-            # place_id is a string identifier
             is_in_wishlist = crud.is_in_wishlist_by_identifier(db, user_id, place_id)
         
         return jsonify({'in_wishlist': is_in_wishlist})
