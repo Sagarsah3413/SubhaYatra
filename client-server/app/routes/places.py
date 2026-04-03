@@ -225,10 +225,37 @@ def get_place_details(place_id):
         session.close()
 
 
+# Load cosine similarity matrix once at module level
+import pickle as _pickle
+import numpy as _np
+_SIM_MATRIX = None
+_SIM_PLACES = []  # ordered list of (id, name) for dataset places
+
+def _load_similarity():
+    global _SIM_MATRIX, _SIM_PLACES
+    if _SIM_MATRIX is not None:
+        return
+    try:
+        sim_path = os.path.join(os.getcwd(), 'datasets', 'similarity.pkl')
+        _SIM_MATRIX = _pickle.load(open(sim_path, 'rb'))
+        # Build ordered place list matching matrix rows (dataset places ordered by id)
+        session = SessionLocal()
+        try:
+            places = session.query(Place).filter(
+                Place.source == 'dataset'
+            ).order_by(Place.id).all()
+            _SIM_PLACES = [(p.id, p.name) for p in places]
+        finally:
+            session.close()
+    except Exception as e:
+        print(f'Warning: Could not load similarity matrix: {e}')
+        _SIM_MATRIX = None
+
+
 @places_bp.route('/places/<int:place_id>/similar', methods=['GET'])
 def get_similar_places(place_id):
-    """Return similar places based on shared tags and type."""
-    from urllib.parse import quote as url_quote
+    """Return similar places using cosine similarity matrix."""
+    _load_similarity()
     session = SessionLocal()
     try:
         limit = int(request.args.get('limit', 6))
@@ -236,64 +263,74 @@ def get_similar_places(place_id):
         if not place:
             return jsonify({'success': False, 'error': 'Place not found'}), 404
 
-        # Build tag set from this place
-        raw_tags = (place.tags or '').lower().replace(';', ',')
-        tag_set = {t.strip() for t in raw_tags.split(',') if t.strip()}
-        place_type = (place.type or '').lower()
-
-        # Score all other approved places
-        candidates = session.query(Place).filter(
-            Place.id != place_id,
-            Place.status == 'approved'
-        ).all()
-
-        scored = []
-        for c in candidates:
-            score = 0
-            c_tags = (c.tags or '').lower().replace(';', ',')
-            c_tag_set = {t.strip() for t in c_tags.split(',') if t.strip()}
-            score += len(tag_set & c_tag_set) * 3
-            if (c.type or '').lower() == place_type:
-                score += 5
-            if c.province and c.province == place.province:
-                score += 2
-            if score > 0:
-                scored.append((score, c))
-
-        scored.sort(key=lambda x: x[0], reverse=True)
-        similar = [c for _, c in scored[:limit]]
-
-        def fix_img(path):
-            if not path or path == 'null': return None
-            path = path.strip()
-            if path.startswith('http'): return path
-            if path.startswith('/api/'):
-                parts = path.split('/')
-                prefix = '/'.join(parts[:4])
-                rest = '/'.join(url_quote(p, safe='') for p in parts[4:])
-                return f"{prefix}/{rest}"
-            return None
-
         results = []
-        for p in similar:
-            imgs = []
-            if p.all_images:
-                try:
-                    for img in json.loads(p.all_images):
-                        u = fix_img(img)
-                        if u: imgs.append(u)
-                except Exception:
-                    pass
-            if not imgs and p.image_url:
-                u = fix_img(p.image_url)
-                if u: imgs.append(u)
-            results.append({
-                'id': p.id, 'name': p.name, 'type': p.type,
-                'location': p.location, 'description': p.description,
-                'tags': p.tags, 'rating': p.rating,
-                'image': imgs[0] if imgs else None,
-                'all_images': imgs,
-            })
+
+        # Use cosine similarity matrix if available
+        if _SIM_MATRIX is not None and _SIM_PLACES:
+            # Find index of this place in the ordered dataset list
+            place_idx = next((i for i, (pid, _) in enumerate(_SIM_PLACES) if pid == place_id), None)
+
+            if place_idx is not None:
+                scores = _SIM_MATRIX[place_idx]
+                # Get top similar indices (excluding self)
+                top_indices = _np.argsort(scores)[::-1]
+                top_indices = [i for i in top_indices if i != place_idx][:limit * 2]
+
+                for idx in top_indices:
+                    if len(results) >= limit:
+                        break
+                    if idx >= len(_SIM_PLACES):
+                        continue
+                    sim_id = _SIM_PLACES[idx][0]
+                    sim_place = session.query(Place).filter(
+                        Place.id == sim_id, Place.status == 'approved'
+                    ).first()
+                    if not sim_place:
+                        continue
+                    imgs = _parse_images(sim_place.all_images)
+                    if not imgs and sim_place.image_url:
+                        u = _fix_img(sim_place.image_url)
+                        if u: imgs = [u]
+                    results.append({
+                        'id': sim_place.id, 'name': sim_place.name,
+                        'type': sim_place.type, 'location': sim_place.location,
+                        'description': sim_place.description, 'tags': sim_place.tags,
+                        'rating': sim_place.rating,
+                        'image': imgs[0] if imgs else None,
+                        'all_images': imgs,
+                        'similarity_score': float(scores[idx]),
+                    })
+
+        # Fallback: tag-based if matrix unavailable or not enough results
+        if len(results) < limit:
+            raw_tags = (place.tags or '').lower().replace(';', ',')
+            tag_set = {t.strip() for t in raw_tags.split(',') if t.strip()}
+            existing_ids = {r['id'] for r in results} | {place_id}
+            candidates = session.query(Place).filter(
+                Place.id.notin_(existing_ids), Place.status == 'approved'
+            ).all()
+            scored = []
+            for c in candidates:
+                c_tags = (c.tags or '').lower().replace(';', ',')
+                c_tag_set = {t.strip() for t in c_tags.split(',') if t.strip()}
+                score = len(tag_set & c_tag_set) * 3
+                if (c.type or '').lower() == (place.type or '').lower():
+                    score += 5
+                if score > 0:
+                    scored.append((score, c))
+            scored.sort(key=lambda x: x[0], reverse=True)
+            for _, c in scored[:limit - len(results)]:
+                imgs = _parse_images(c.all_images)
+                if not imgs and c.image_url:
+                    u = _fix_img(c.image_url)
+                    if u: imgs = [u]
+                results.append({
+                    'id': c.id, 'name': c.name, 'type': c.type,
+                    'location': c.location, 'description': c.description,
+                    'tags': c.tags, 'rating': c.rating,
+                    'image': imgs[0] if imgs else None,
+                    'all_images': imgs,
+                })
 
         return jsonify({'success': True, 'similar_places': results, 'total': len(results)})
     finally:
