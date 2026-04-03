@@ -274,143 +274,147 @@ def list_places():
 @places_bp.route('/places/<int:place_id>', methods=['GET'])
 def get_place_details(place_id):
     """Get detailed information about a specific place including hotels, restaurants, and events"""
+    from urllib.parse import quote as url_quote
     session = SessionLocal()
     try:
         place = session.query(Place).filter(Place.id == place_id).first()
         if not place:
             return jsonify({'error': 'Place not found'}), 404
-        
-        # Get associated hotels, restaurants, and events
+
         hotels = session.query(Hotel).filter(Hotel.place_id == place_id).all()
         restaurants = session.query(Restaurant).filter(Restaurant.place_id == place_id).all()
         events = session.query(Event).filter(Event.place_id == place_id).all()
-        
+
+        def fix_img(path):
+            """Ensure image path is a proper /api/images/... URL with encoding."""
+            if not path or path == 'null':
+                return None
+            path = path.strip()
+            if path.startswith('http'):
+                return path
+            if path.startswith('/api/'):
+                parts = path.split('/')
+                prefix = '/'.join(parts[:4])
+                rest = '/'.join(url_quote(p, safe='') for p in parts[4:])
+                return f"{prefix}/{rest}"
+            # Legacy /datasets/ paths — skip (no static route for them)
+            return None
+
+        def get_images(obj, raw_field):
+            imgs = []
+            if raw_field:
+                try:
+                    for p in json.loads(raw_field):
+                        u = fix_img(p)
+                        if u: imgs.append(u)
+                except Exception:
+                    pass
+            if not imgs and getattr(obj, 'image_url', None):
+                u = fix_img(obj.image_url)
+                if u: imgs.append(u)
+            return imgs
+
         result = serialize_place(place)
-        
-        # Format place images properly
-        place_images = []
-        if place.all_images:
-            try:
-                import json
-                # Parse JSON string
-                image_list = json.loads(place.all_images)
-                for img_path in image_list[:10]:  # Limit to 10 images
-                    img_path = img_path.strip().replace('\\', '/')
-                    if img_path:
-                        # Add destination_images prefix if not present
-                        if img_path.startswith('destination_images/'):
-                            place_images.append(f"/datasets/{img_path}")
-                        elif img_path.startswith('/datasets/'):
-                            place_images.append(img_path)
-                        else:
-                            place_images.append(f"/datasets/destination_images/{img_path}")
-            except:
-                # Fallback to comma-separated
-                image_paths = place.all_images.split(',')
-                for img_path in image_paths[:10]:
-                    img_path = img_path.strip().replace('\\', '/')
-                    if img_path:
-                        if img_path.startswith('destination_images/'):
-                            place_images.append(f"/datasets/{img_path}")
-                        elif img_path.startswith('/datasets/'):
-                            place_images.append(img_path)
-                        else:
-                            place_images.append(f"/datasets/destination_images/{img_path}")
-        
-        # Fallback to image_url if no all_images
-        if not place_images and place.image_url:
-            img_path = place.image_url.replace('\\', '/')
-            if img_path.startswith('destination_images/'):
-                place_images.append(f"/datasets/{img_path}")
-            elif img_path.startswith('/datasets/'):
-                place_images.append(img_path)
-            else:
-                place_images.append(f"/datasets/destination_images/{img_path}")
-        
-        result['images'] = place_images
-        
-        # Format hotel images
+        place_imgs = get_images(place, place.all_images)
+        result['images'] = place_imgs
+        result['image_url'] = place_imgs[0] if place_imgs else None
+
         hotel_list = []
-        for hotel in hotels:
-            hotel_data = serialize_hotel(hotel)
-            hotel_images = []
-            
-            if hotel.all_images:
-                try:
-                    import json
-                    image_list = json.loads(hotel.all_images)
-                    for img_path in image_list[:5]:
-                        img_path = img_path.strip().replace('\\', '/')
-                        if img_path:
-                            # Images already have hotel_images prefix
-                            if img_path.startswith('hotel_images/'):
-                                hotel_images.append(f"/datasets/{img_path}")
-                            elif img_path.startswith('/datasets/'):
-                                hotel_images.append(img_path)
-                            else:
-                                hotel_images.append(f"/datasets/{img_path}")
-                except:
-                    pass
-            
-            # Fallback to image_url
-            if not hotel_images and hotel.image_url:
-                img_path = hotel.image_url.replace('\\', '/')
-                if img_path.startswith('hotel_images/'):
-                    hotel_images.append(f"/datasets/{img_path}")
-                elif img_path.startswith('/datasets/'):
-                    hotel_images.append(img_path)
-                else:
-                    hotel_images.append(f"/datasets/{img_path}")
-            
-            hotel_data['images'] = hotel_images
-            hotel_data['image'] = hotel_images[0] if hotel_images else ''
-            hotel_list.append(hotel_data)
-        
-        # Format restaurant images
+        for h in hotels:
+            hd = serialize_hotel(h)
+            h_imgs = get_images(h, h.all_images)
+            hd['images'] = h_imgs
+            hd['image'] = h_imgs[0] if h_imgs else ''
+            hotel_list.append(hd)
+
         restaurant_list = []
-        for restaurant in restaurants:
-            restaurant_data = serialize_restaurant(restaurant)
-            restaurant_images = []
-            
-            if restaurant.all_images:
-                try:
-                    import json
-                    image_list = json.loads(restaurant.all_images)
-                    for img_path in image_list[:5]:
-                        img_path = img_path.strip().replace('\\', '/')
-                        if img_path:
-                            # Images already have restaurant_images prefix
-                            if img_path.startswith('restaurant_images/'):
-                                restaurant_images.append(f"/datasets/{img_path}")
-                            elif img_path.startswith('/datasets/'):
-                                restaurant_images.append(img_path)
-                            else:
-                                restaurant_images.append(f"/datasets/{img_path}")
-                except:
-                    pass
-            
-            # Fallback to image_url
-            if not restaurant_images and restaurant.image_url:
-                img_path = restaurant.image_url.replace('\\', '/')
-                if img_path.startswith('restaurant_images/'):
-                    restaurant_images.append(f"/datasets/{img_path}")
-                elif img_path.startswith('/datasets/'):
-                    restaurant_images.append(img_path)
-                else:
-                    restaurant_images.append(f"/datasets/{img_path}")
-            
-            restaurant_data['images'] = restaurant_images
-            restaurant_data['image'] = restaurant_images[0] if restaurant_images else ''
-            restaurant_list.append(restaurant_data)
-        
+        for r in restaurants:
+            rd = serialize_restaurant(r)
+            r_imgs = get_images(r, r.all_images)
+            rd['images'] = r_imgs
+            rd['image'] = r_imgs[0] if r_imgs else ''
+            restaurant_list.append(rd)
+
         result['hotels'] = hotel_list
         result['restaurants'] = restaurant_list
-        
-        # Format events
-        event_list = [serialize_event(event) for event in events]
-        result['events'] = event_list
-        
+        result['events'] = [serialize_event(e) for e in events]
+
         return jsonify(result)
+    finally:
+        session.close()
+
+
+@places_bp.route('/places/<int:place_id>/similar', methods=['GET'])
+def get_similar_places(place_id):
+    """Return similar places based on shared tags and type."""
+    from urllib.parse import quote as url_quote
+    session = SessionLocal()
+    try:
+        limit = int(request.args.get('limit', 6))
+        place = session.query(Place).filter(Place.id == place_id).first()
+        if not place:
+            return jsonify({'success': False, 'error': 'Place not found'}), 404
+
+        # Build tag set from this place
+        raw_tags = (place.tags or '').lower().replace(';', ',')
+        tag_set = {t.strip() for t in raw_tags.split(',') if t.strip()}
+        place_type = (place.type or '').lower()
+
+        # Score all other approved places
+        candidates = session.query(Place).filter(
+            Place.id != place_id,
+            Place.status == 'approved'
+        ).all()
+
+        scored = []
+        for c in candidates:
+            score = 0
+            c_tags = (c.tags or '').lower().replace(';', ',')
+            c_tag_set = {t.strip() for t in c_tags.split(',') if t.strip()}
+            score += len(tag_set & c_tag_set) * 3
+            if (c.type or '').lower() == place_type:
+                score += 5
+            if c.province and c.province == place.province:
+                score += 2
+            if score > 0:
+                scored.append((score, c))
+
+        scored.sort(key=lambda x: x[0], reverse=True)
+        similar = [c for _, c in scored[:limit]]
+
+        def fix_img(path):
+            if not path or path == 'null': return None
+            path = path.strip()
+            if path.startswith('http'): return path
+            if path.startswith('/api/'):
+                parts = path.split('/')
+                prefix = '/'.join(parts[:4])
+                rest = '/'.join(url_quote(p, safe='') for p in parts[4:])
+                return f"{prefix}/{rest}"
+            return None
+
+        results = []
+        for p in similar:
+            imgs = []
+            if p.all_images:
+                try:
+                    for img in json.loads(p.all_images):
+                        u = fix_img(img)
+                        if u: imgs.append(u)
+                except Exception:
+                    pass
+            if not imgs and p.image_url:
+                u = fix_img(p.image_url)
+                if u: imgs.append(u)
+            results.append({
+                'id': p.id, 'name': p.name, 'type': p.type,
+                'location': p.location, 'description': p.description,
+                'tags': p.tags, 'rating': p.rating,
+                'image': imgs[0] if imgs else None,
+                'all_images': imgs,
+            })
+
+        return jsonify({'success': True, 'similar_places': results, 'total': len(results)})
     finally:
         session.close()
 

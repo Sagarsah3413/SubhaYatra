@@ -47,7 +47,7 @@ export default function PlaceDetailView() {
         setError(null);
         
         console.log(`Fetching details for place ID: ${placeId}`);
-        const response = await fetch(`http://localhost:8000/api/places/${placeId}`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/places/${placeId}`);
         
         console.log(`Response status: ${response.status}`);
         
@@ -83,19 +83,9 @@ export default function PlaceDetailView() {
         }
         
         // Images should already be formatted by backend, but ensure they exist
+        // images already come as /api/images/... from backend
         if (!placeData.images || placeData.images.length === 0) {
-          if (placeData.image_url) {
-            const path = placeData.image_url.replace(/\\/g, '/');
-            if (path.startsWith('/datasets/')) {
-              placeData.images = [path];
-            } else if (path.startsWith('destination_images/')) {
-              placeData.images = [`/datasets/${path}`];
-            } else {
-              placeData.images = [`/datasets/destination_images/${path}`];
-            }
-          } else {
-            placeData.images = [];
-          }
+          placeData.images = [];
         }
         
         // Ensure hotels and restaurants exist
@@ -125,7 +115,7 @@ export default function PlaceDetailView() {
       try {
         setLoadingSimilar(true);
         console.log(`🔍 Fetching similar places for place ID: ${id}`);
-        const response = await fetch(`http://localhost:8000/api/places/${id}/similar?limit=6`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/places/${id}/similar?limit=6`);
         
         console.log(`Similar places response status: ${response.status}`);
         
@@ -195,7 +185,7 @@ export default function PlaceDetailView() {
             <div>
               <div className="h-96 relative group">
                 <img
-                  src={`http://localhost:8000${hotel.images[currentImage]}`}
+                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${hotel.images[currentImage]}`}
                   alt={hotel.name}
                   className="w-full h-full object-cover"
                   onError={(e) => e.target.style.display = 'none'}
@@ -244,7 +234,7 @@ export default function PlaceDetailView() {
                       }`}
                     >
                       <img
-                        src={`http://localhost:8000${img}`}
+                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img}`}
                         alt={`${hotel.name} ${idx + 1}`}
                         className="w-full h-full object-cover"
                       />
@@ -358,7 +348,7 @@ export default function PlaceDetailView() {
             <div>
               <div className="h-96 relative group">
                 <img
-                  src={`http://localhost:8000${restaurant.images[currentImage]}`}
+                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${restaurant.images[currentImage]}`}
                   alt={restaurant.name}
                   className="w-full h-full object-cover"
                   onError={(e) => e.target.style.display = 'none'}
@@ -407,7 +397,7 @@ export default function PlaceDetailView() {
                       }`}
                     >
                       <img
-                        src={`http://localhost:8000${img}`}
+                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img}`}
                         alt={`${restaurant.name} ${idx + 1}`}
                         className="w-full h-full object-cover"
                       />
@@ -544,7 +534,7 @@ export default function PlaceDetailView() {
             {/* Main Image */}
             <div className="h-96 relative group">
               <img
-                src={`http://localhost:8000${place.images[selectedImage]}`}
+                src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${place.images[selectedImage]}`}
                 alt={place.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -598,7 +588,7 @@ export default function PlaceDetailView() {
                     }`}
                   >
                     <img
-                      src={`http://localhost:8000${img}`}
+                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img}`}
                       alt={`${place.name} ${idx + 1}`}
                       className="w-full h-full object-cover"
                     />

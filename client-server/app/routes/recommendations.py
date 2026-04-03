@@ -344,40 +344,51 @@ def create_recommendation():
             all_images = [_encode_path(p) for p in raw_all if p and p != 'null']
             image_url  = all_images[0] if all_images else ""
 
-            # Linked hotels and restaurants for this place
+            # Linked hotels and restaurants — query directly by place_id
+            from ..models import Hotel, Restaurant
+            from ..database import db as flask_db
             hotels_data = []
             restaurants_data = []
-            from ..models import Hotel, Restaurant
-            for h in place.hotels[:3]:
-                h_imgs_raw = []
-                if h.all_images:
-                    try: h_imgs_raw = _json.loads(h.all_images)
-                    except: pass
-                if not h_imgs_raw and h.image_url:
-                    h_imgs_raw = [h.image_url]
-                h_imgs = [_encode_path(p) for p in h_imgs_raw if p and p != 'null']
-                hotels_data.append({
-                    'id': h.id, 'name': h.name,
-                    'location': h.location, 'rating': h.rating,
-                    'price_range': h.price_range,
-                    'image_url': h_imgs[0] if h_imgs else None,
-                    'all_images': h_imgs,
-                })
-            for r in place.restaurants[:3]:
-                r_imgs_raw = []
-                if r.all_images:
-                    try: r_imgs_raw = _json.loads(r.all_images)
-                    except: pass
-                if not r_imgs_raw and r.image_url:
-                    r_imgs_raw = [r.image_url]
-                r_imgs = [_encode_path(p) for p in r_imgs_raw if p and p != 'null']
-                restaurants_data.append({
-                    'id': r.id, 'name': r.name,
-                    'location': r.location, 'rating': r.rating,
-                    'price_range': r.price_range, 'cuisine': r.cuisine,
-                    'image_url': r_imgs[0] if r_imgs else None,
-                    'all_images': r_imgs,
-                })
+            try:
+                linked_hotels = flask_db.session.query(Hotel).filter_by(
+                    place_id=place.id, status='approved'
+                ).limit(3).all()
+                for h in linked_hotels:
+                    h_imgs_raw = []
+                    if h.all_images:
+                        try: h_imgs_raw = _json.loads(h.all_images)
+                        except: pass
+                    if not h_imgs_raw and h.image_url:
+                        h_imgs_raw = [h.image_url]
+                    h_imgs = [_encode_path(p) for p in h_imgs_raw if p and p != 'null']
+                    hotels_data.append({
+                        'id': h.id, 'name': h.name,
+                        'location': h.location, 'rating': h.rating,
+                        'price_range': h.price_range,
+                        'image_url': h_imgs[0] if h_imgs else None,
+                        'all_images': h_imgs,
+                    })
+
+                linked_rests = flask_db.session.query(Restaurant).filter_by(
+                    place_id=place.id, status='approved'
+                ).limit(3).all()
+                for r in linked_rests:
+                    r_imgs_raw = []
+                    if r.all_images:
+                        try: r_imgs_raw = _json.loads(r.all_images)
+                        except: pass
+                    if not r_imgs_raw and r.image_url:
+                        r_imgs_raw = [r.image_url]
+                    r_imgs = [_encode_path(p) for p in r_imgs_raw if p and p != 'null']
+                    restaurants_data.append({
+                        'id': r.id, 'name': r.name,
+                        'location': r.location, 'rating': r.rating,
+                        'price_range': r.price_range, 'cuisine': r.cuisine,
+                        'image_url': r_imgs[0] if r_imgs else None,
+                        'all_images': r_imgs,
+                    })
+            except Exception:
+                pass
             
             recommended_places.append({
                 'id': place.id,
@@ -402,27 +413,31 @@ def create_recommendation():
                 'restaurants': restaurants_data,
             })
         
-        # Save recommendation to database (store all trip types)
-        recommendation = Recommendation(
-            user_id=user_id,
-            name=data['name'],
-            age=int(data['age']),
-            phone=data['phone'],
-            travellers=int(data['travellers']),
-            trip_duration=data['tripDuration'],
-            trip_type=json.dumps(trip_types),  # Store as JSON array
-            travel_month=travel_month,  # Store travel month
-            recommended_places=json.dumps(recommended_place_ids),
-            created_at=datetime.utcnow()
-        )
-        
-        db.add(recommendation)
-        db.commit()
-        db.refresh(recommendation)
+        # Save recommendation to database
+        from ..database import db as flask_db
+        from ..models import Recommendation as RecModel
+        try:
+            rec = RecModel(
+                clerk_id=user_id,
+                user_name=data['name'],
+                age=int(data['age']),
+                phone=data['phone'],
+                travellers=int(data['travellers']),
+                trip_duration=data['tripDuration'],
+                trip_type=json.dumps(trip_types),
+                travel_month=travel_month,
+                recommended_places=json.dumps(recommended_place_ids),
+            )
+            flask_db.session.add(rec)
+            flask_db.session.commit()
+            rec_id = rec.id
+        except Exception:
+            flask_db.session.rollback()
+            rec_id = None
         
         return jsonify({
             'success': True,
-            'recommendation_id': recommendation.id,
+            'recommendation_id': rec_id,
             'recommendations': recommended_places,
             'total_matches': len(recommended_places),
             'preferences': {

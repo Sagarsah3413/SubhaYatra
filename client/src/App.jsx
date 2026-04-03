@@ -80,19 +80,19 @@ const InspireButton = memo(({ isSignedIn, onClick, theme }) => {
   }, [lastScrollY]);
 
   return (
-  <div className={`fixed top-36 left-12 md:top-40 md:left-16 z-50 transition-all duration-500 ${
+  <div className={`fixed top-36 left-12 md:top-40 md:left-16 z-[60] transition-all duration-500 ${
     isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20 pointer-events-none'
   }`}>
     <div className="relative group">
       {/* Enhanced Premium Background Glow - More Visible */}
-      <div className={`absolute -inset-6 rounded-full opacity-60 group-hover:opacity-100 transition-all duration-700 animate-pulse ${
+      <div className={`absolute -inset-6 rounded-full opacity-60 group-hover:opacity-100 transition-all duration-700 animate-pulse pointer-events-none ${
         theme === "dark" 
           ? "bg-gradient-to-r from-teal-500/40 via-emerald-500/30 to-cyan-500/40" 
           : "bg-gradient-to-r from-teal-400/30 via-emerald-400/25 to-cyan-400/30"
       } blur-2xl`} />
       
       {/* Rotating Ring Animation */}
-      <div className="absolute inset-0 rounded-full">
+      <div className="absolute inset-0 rounded-full pointer-events-none">
         <div className={`absolute inset-0 rounded-full border-2 border-dashed animate-spin-slow ${
           theme === "dark" ? "border-teal-400/30" : "border-teal-500/40"
         }`} style={{ animationDuration: '8s' }} />
@@ -134,7 +134,7 @@ const InspireButton = memo(({ isSignedIn, onClick, theme }) => {
         </div>
         
         {/* Pulsing Ring Effect - More Visible */}
-        <div className={`absolute -inset-1 rounded-full border-3 opacity-70 group-hover:opacity-100 transition-all duration-500 ${
+        <div className={`absolute -inset-1 rounded-full border-3 opacity-70 group-hover:opacity-100 transition-all duration-500 pointer-events-none ${
           theme === "dark" 
             ? "border-teal-400/60 shadow-lg shadow-teal-400/30" 
             : "border-teal-500/60 shadow-lg shadow-teal-500/30"

@@ -359,6 +359,14 @@ export default function RecommendationResults() {
 }
 
 // ── Recommendation Card with multi-image slider + hotels/restaurants ──────────
+const REC_API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
+function toAbsUrl(path) {
+  if (!path || path === 'null') return null;
+  if (path.startsWith('http')) return path;
+  return `${REC_API}${path}`;
+}
+
 function RecommendationCard({ place, theme, navigate, preferences, recommendations }) {
   const [activeTab, setActiveTab] = useState('place');
   const [tabImgIdx, setTabImgIdx] = useState(0);
@@ -367,20 +375,25 @@ function RecommendationCard({ place, theme, navigate, preferences, recommendatio
   const dark = theme === 'dark';
   const cardBg = dark ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white/80 border-white/50';
 
-  const allImgs = place.all_images?.length ? place.all_images : (place.image ? [place.image] : []);
+  const allImgs = (place.all_images?.length ? place.all_images : (place.image ? [place.image] : []))
+    .map(toAbsUrl).filter(Boolean);
 
   // Images for the active tab
   const tabImages = activeTab === 'place'
     ? allImgs
     : activeTab === 'hotels' && place.hotels?.length
-      ? place.hotels.flatMap(h => h.all_images?.length ? h.all_images : (h.image_url ? [h.image_url] : []))
+      ? place.hotels.flatMap(h =>
+          (h.all_images?.length ? h.all_images : (h.image_url ? [h.image_url] : []))
+            .map(toAbsUrl).filter(Boolean))
       : activeTab === 'restaurants' && place.restaurants?.length
-        ? place.restaurants.flatMap(r => r.all_images?.length ? r.all_images : (r.image_url ? [r.image_url] : []))
+        ? place.restaurants.flatMap(r =>
+            (r.all_images?.length ? r.all_images : (r.image_url ? [r.image_url] : []))
+              .map(toAbsUrl).filter(Boolean))
         : allImgs;
 
   const tabSrc = !tabImgErrors[tabImgIdx] && tabImages[tabImgIdx] ? tabImages[tabImgIdx] : null;
-  const typeEmoji = place.type?.includes('Natural') ? '🏞️' : place.type?.includes('Trekking') ? '⛰️' :
-    place.type?.includes('Cultural') ? '🛕' : place.type?.includes('Village') ? '🏡' : '📍';
+  const typeEmoji = place.type?.includes('Natural') ? '📍' : place.type?.includes('Trekking') ? '📍' :
+    place.type?.includes('Cultural') ? '📍' : '📍';
 
   return (
     <div className={`rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl border backdrop-blur-xl ${cardBg}`}>
@@ -404,12 +417,15 @@ function RecommendationCard({ place, theme, navigate, preferences, recommendatio
       </div>
 
       {/* Image slider */}
-      <div className={`h-48 relative overflow-hidden ${dark ? 'bg-slate-900/50' : 'bg-teal-50'}`}>
+      <div className={`h-48 relative overflow-hidden ${dark ? 'bg-slate-800' : 'bg-slate-100'}`}>
         {tabSrc ? (
           <img src={tabSrc} alt={place.name} className="w-full h-full object-cover"
             onError={() => setTabImgErrors(e => ({ ...e, [tabImgIdx]: true }))} />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-6xl">{typeEmoji}</div>
+          <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+            <span className="text-5xl">📍</span>
+            <span className={`text-xs font-medium ${dark ? 'text-slate-500' : 'text-slate-400'}`}>No image available</span>
+          </div>
         )}
 
         {/* Dot nav */}
