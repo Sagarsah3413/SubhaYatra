@@ -410,14 +410,15 @@ function RecommendationCard({ place, theme, navigate, preferences, recommendatio
   return (
     <div className={`rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl border backdrop-blur-xl ${cardBg}`}>
 
-      {/* Tab selector */}
-      <div className={`flex border-b text-xs font-semibold ${dark ? 'border-slate-700' : 'border-slate-200'}`}>
-        {[
-          { key: 'place', label: '🏔 Destination' },
-          ...(place.hotels?.length ? [{ key: 'hotels', label: `🏨 Hotels (${place.hotels.length})` }] : []),
-          ...(place.restaurants?.length ? [{ key: 'restaurants', label: `🍴 Restaurants (${place.restaurants.length})` }] : []),
-        ].map(tab => (
-          <button key={tab.key} onClick={() => { setActiveTab(tab.key); setTabImgIdx(0); setTabImgErrors({}); }}
+      {/* Tab selector — only show if hotels or restaurants exist */}
+      {(place.hotels?.length > 0 || place.restaurants?.length > 0) && (
+        <div className={`flex border-b text-xs font-semibold ${dark ? 'border-slate-700' : 'border-slate-200'}`}>
+          {[
+            { key: 'place', label: '🏔 Destination' },
+            ...(place.hotels?.length ? [{ key: 'hotels', label: `🏨 Hotels (${place.hotels.length})` }] : []),
+            ...(place.restaurants?.length ? [{ key: 'restaurants', label: `🍴 Restaurants (${place.restaurants.length})` }] : []),
+          ].map(tab => (
+            <button key={tab.key} onClick={() => { setActiveTab(tab.key); setTabImgIdx(0); setTabImgErrors({}); }}
             className={`flex-1 py-2 px-3 transition-colors ${
               activeTab === tab.key
                 ? 'bg-teal-600 text-white'
@@ -427,6 +428,7 @@ function RecommendationCard({ place, theme, navigate, preferences, recommendatio
           </button>
         ))}
       </div>
+      )}
 
       {/* Image slider */}
       <div className={`h-48 relative overflow-hidden ${dark ? 'bg-slate-800' : 'bg-slate-100'}`}>
