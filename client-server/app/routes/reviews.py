@@ -39,19 +39,16 @@ def create_review():
         if not all([name, email, place, rating, review_text]):
             return jsonify({"error": "Missing required fields"}), 400
         
-        # Handle image uploads
+        # Handle image uploads — Cloudinary or local
+        from ..cloudinary_helper import upload_image as cloud_upload
         image_paths = []
-        for i in range(1, 5):  # Support up to 4 images
+        for i in range(1, 5):
             file_key = f"image_{i}"
             if file_key in request.files:
                 file = request.files[file_key]
                 if file and file.filename and allowed_file(file.filename):
-                    # Create unique filename
-                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    filename = secure_filename(f"{timestamp}_{i}_{file.filename}")
-                    filepath = os.path.join(UPLOAD_FOLDER, filename)
-                    file.save(filepath)
-                    image_paths.append(f"/uploads/reviews/{filename}")
+                    result = cloud_upload(file, item_type='review', item_id=None)
+                    image_paths.append(result['url'])
         
         # Create review
         new_review = Review(

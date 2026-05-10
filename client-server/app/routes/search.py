@@ -3,6 +3,7 @@
 from flask import Blueprint, request, jsonify
 from ..database import SessionLocal
 from .. import models
+from ..models import SearchLog
 import os
 
 # IMPORTANT: blueprint name must be UNIQUE
@@ -181,6 +182,26 @@ def search_items():
     # Sort results by relevance score (highest first)
     results.sort(key=lambda x: x['relevance_score'], reverse=True)
     
+    # ── Log this search (uses Flask-SQLAlchemy session) ──────────────────────
+    try:
+        from ..database import db as flask_db
+        clerk_id  = request.args.get("clerk_id", "").strip() or None
+        user_name = request.args.get("user_name", "").strip() or None
+        device    = request.headers.get("User-Agent", "")[:255]
+        log = SearchLog(
+            clerk_id     = clerk_id,
+            user_name    = user_name,
+            query        = q[:512],
+            category     = category,
+            result_count = len(results),
+            device       = device,
+        )
+        flask_db.session.add(log)
+        flask_db.session.commit()
+    except Exception:
+        pass  # never break search because of logging
+    # ─────────────────────────────────────────────────────────────────────────
+
     db.close()
     return jsonify({
         "results": results, 

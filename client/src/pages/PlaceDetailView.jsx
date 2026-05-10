@@ -3,6 +3,113 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import { Header } from "../components/header/Header";
 import Footer from "../components/footer/Footer";
+import imageService from "../services/imageService";
+
+// ─── Reusable card matching the RecommendationCard design ───────────────────
+function PlaceCard({ item, accentColor = "teal", fallbackEmoji = "📍", theme, onClick }) {
+  const dark = theme === 'dark';
+  const allUrls = imageService.getAllImageUrls(item);
+  const [imgIdx, setImgIdx] = useState(0);
+  const [imgErrors, setImgErrors] = useState({});
+
+  const src = !imgErrors[imgIdx] && allUrls[imgIdx] ? allUrls[imgIdx] : null;
+
+  const accent = {
+    teal:    { badge: 'bg-teal-600/90',    text: dark ? 'text-teal-400' : 'text-teal-600',    tag: dark ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-50 text-teal-700' },
+    emerald: { badge: 'bg-emerald-600/90', text: dark ? 'text-emerald-400' : 'text-emerald-600', tag: dark ? 'bg-emerald-900/30 text-emerald-400' : 'bg-emerald-50 text-emerald-700' },
+  }[accentColor] ?? {};
+
+  const cardBg = dark ? 'bg-slate-800/50 border-slate-700/50' : 'bg-white/80 border-white/50';
+
+  return (
+    <div
+      onClick={onClick}
+      className={`rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl border backdrop-blur-xl cursor-pointer ${cardBg}`}
+    >
+      {/* Image area */}
+      <div className={`h-48 relative overflow-hidden ${dark ? 'bg-slate-800' : 'bg-slate-100'}`}>
+        {src ? (
+          <img
+            src={src}
+            alt={item.name}
+            loading="lazy"
+            className="w-full h-full object-cover"
+            onError={() => setImgErrors(e => ({ ...e, [imgIdx]: true }))}
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+            <span className="text-5xl">{fallbackEmoji}</span>
+          </div>
+        )}
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+
+        {/* Dot nav */}
+        {allUrls.length > 1 && (
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+            {allUrls.slice(0, 6).map((_, i) => (
+              <button
+                key={i}
+                onClick={e => { e.stopPropagation(); setImgIdx(i); }}
+                className={`w-1.5 h-1.5 rounded-full transition-all ${i === imgIdx ? 'bg-white scale-125' : 'bg-white/50'}`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Photo count badge */}
+        {allUrls.length > 1 && (
+          <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/50 text-white text-[10px] font-semibold">
+            {allUrls.length} photos
+          </div>
+        )}
+
+        {/* Rating badge */}
+        {item.rating != null && (
+          <div className={`absolute top-2 right-2 px-2 py-0.5 rounded-full ${accent.badge} text-white text-[10px] font-bold`}>
+            ⭐ {Number(item.rating).toFixed(1)}
+          </div>
+        )}
+      </div>
+
+      {/* Card body */}
+      <div className="p-5">
+        <h3 className={`text-lg font-bold mb-1 ${dark ? 'text-white' : 'text-gray-900'}`}>
+          {item.name}
+        </h3>
+
+        {item.location && (
+          <p className={`text-xs flex items-center gap-1 mb-2 ${dark ? 'text-slate-400' : 'text-gray-500'}`}>
+            📍 {item.location}
+          </p>
+        )}
+
+        {item.description && (
+          <p className={`text-sm line-clamp-2 mb-3 ${dark ? 'text-slate-300' : 'text-gray-600'}`}>
+            {item.description}
+          </p>
+        )}
+
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          {item.price_range && (
+            <span className={`text-xs font-semibold px-2 py-1 rounded-full ${accent.tag}`}>
+              💰 {item.price_range}
+            </span>
+          )}
+          {item.cuisine && (
+            <span className={`text-xs font-semibold px-2 py-1 rounded-full ${accent.tag}`}>
+              🍴 {item.cuisine}
+            </span>
+          )}
+          <span className={`text-xs ml-auto ${dark ? 'text-slate-500' : 'text-gray-400'}`}>
+            View details →
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function PlaceDetailView() {
   const { placeId } = useParams();
@@ -185,7 +292,7 @@ export default function PlaceDetailView() {
             <div>
               <div className="h-96 relative group">
                 <img
-                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${hotel.images[currentImage]}`}
+                  src={imageService.getImageUrl({ all_images: hotel.images }, currentImage)}
                   alt={hotel.name}
                   className="w-full h-full object-cover"
                   onError={(e) => e.target.style.display = 'none'}
@@ -234,7 +341,7 @@ export default function PlaceDetailView() {
                       }`}
                     >
                       <img
-                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img}`}
+                        src={imageService.getImageUrl({ all_images: hotel.images }, idx)}
                         alt={`${hotel.name} ${idx + 1}`}
                         className="w-full h-full object-cover"
                       />
@@ -348,7 +455,7 @@ export default function PlaceDetailView() {
             <div>
               <div className="h-96 relative group">
                 <img
-                  src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${restaurant.images[currentImage]}`}
+                  src={imageService.getImageUrl({ all_images: restaurant.images }, currentImage)}
                   alt={restaurant.name}
                   className="w-full h-full object-cover"
                   onError={(e) => e.target.style.display = 'none'}
@@ -397,7 +504,7 @@ export default function PlaceDetailView() {
                       }`}
                     >
                       <img
-                        src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img}`}
+                        src={imageService.getImageUrl({ all_images: restaurant.images }, idx)}
                         alt={`${restaurant.name} ${idx + 1}`}
                         className="w-full h-full object-cover"
                       />
@@ -534,7 +641,7 @@ export default function PlaceDetailView() {
             {/* Main Image */}
             <div className="h-96 relative group">
               <img
-                src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${place.images[selectedImage]}`}
+                src={imageService.getImageUrl({ all_images: place.images }, selectedImage)}
                 alt={place.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -588,7 +695,7 @@ export default function PlaceDetailView() {
                     }`}
                   >
                     <img
-                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${img}`}
+                      src={imageService.getImageUrl({ all_images: place.images }, idx)}
                       alt={`${place.name} ${idx + 1}`}
                       className="w-full h-full object-cover"
                     />
@@ -849,133 +956,43 @@ export default function PlaceDetailView() {
           )}
         </div>
 
-        {/* Hotels Section */}
-        {place.hotels && place.hotels.length > 0 && (
+        {/* Hotels Section — only rendered when data exists */}
+        {place.hotels?.length > 0 && (
           <div className="mb-8">
-            <h2 className={`text-3xl font-bold mb-6 ${
-              theme === 'dark' ? 'text-white' : 'text-gray-900'
-            }`}>
+            <h2 className={`text-3xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
               🏨 Nearby Hotels
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {place.hotels.map((hotel) => (
-                <div
+                <PlaceCard
                   key={hotel.id}
+                  item={hotel}
+                  accentColor="teal"
+                  fallbackEmoji="🏨"
+                  theme={theme}
                   onClick={() => setSelectedHotel(hotel)}
-                  className={`rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105 cursor-pointer ${
-                    theme === 'dark' ? 'bg-slate-800' : 'bg-white'
-                  }`}
-                >
-                  <div className="h-48 overflow-hidden relative bg-slate-200 dark:bg-slate-700">
-                  {hotel.image ? (
-                    <img
-                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${hotel.image}`}
-                      alt={hotel.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => e.target.style.display = 'none'}
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-4xl">🏨</div>
-                  )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span className="text-white font-semibold">Click for details</span>
-                      </div>
-                    </div>
-                  )}
-                  <div className="p-4">
-                    <h3 className={`text-lg font-bold mb-2 ${
-                      theme === 'dark' ? 'text-white' : 'text-gray-900'
-                    }`}>
-                      {hotel.name}
-                    </h3>
-                    <p className={`text-sm mb-2 ${
-                      theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
-                    }`}>
-                      📍 {hotel.location}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1">
-                        <span className="text-yellow-500">⭐</span>
-                        <span className={`text-sm font-semibold ${
-                          theme === 'dark' ? 'text-white' : 'text-gray-900'
-                        }`}>
-                          {hotel.rating?.toFixed(1)}
-                        </span>
-                      </div>
-                      <span className={`text-sm font-semibold ${
-                        theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
-                      }`}>
-                        {hotel.price_range}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                />
               ))}
             </div>
           </div>
         )}
 
-        {/* Restaurants Section */}
-        {place.restaurants && place.restaurants.length > 0 && (
+        {/* Restaurants Section — only rendered when data exists */}
+        {place.restaurants?.length > 0 && (
           <div className="mb-8">
-            <h2 className={`text-3xl font-bold mb-6 ${
-              theme === 'dark' ? 'text-white' : 'text-gray-900'
-            }`}>
+            <h2 className={`text-3xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
               🍽️ Nearby Restaurants
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {place.restaurants.map((restaurant) => (
-                <div
+                <PlaceCard
                   key={restaurant.id}
+                  item={restaurant}
+                  accentColor="emerald"
+                  fallbackEmoji="🍽️"
+                  theme={theme}
                   onClick={() => setSelectedRestaurant(restaurant)}
-                  className={`rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105 cursor-pointer ${
-                    theme === 'dark' ? 'bg-slate-800' : 'bg-white'
-                  }`}
-                >
-                  <div className="h-48 overflow-hidden relative bg-slate-200 dark:bg-slate-700">
-                  {restaurant.image ? (
-                    <img
-                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${restaurant.image}`}
-                      alt={restaurant.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => e.target.style.display = 'none'}
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-4xl">🍽️</div>
-                  )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <span className="text-white font-semibold">Click for details</span>
-                      </div>
-                    </div>
-                  )}
-                  <div className="p-4">
-                    <h3 className={`text-lg font-bold mb-2 ${
-                      theme === 'dark' ? 'text-white' : 'text-gray-900'
-                    }`}>
-                      {restaurant.name}
-                    </h3>
-                    <p className={`text-sm mb-2 ${
-                      theme === 'dark' ? 'text-slate-400' : 'text-gray-600'
-                    }`}>
-                      📍 {restaurant.location}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1">
-                        <span className="text-yellow-500">⭐</span>
-                        <span className={`text-sm font-semibold ${
-                          theme === 'dark' ? 'text-white' : 'text-gray-900'
-                        }`}>
-                          {restaurant.rating?.toFixed(1)}
-                        </span>
-                      </div>
-                      <span className={`text-sm font-semibold ${
-                        theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
-                      }`}>
-                        {restaurant.price_range}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                />
               ))}
             </div>
           </div>
@@ -1018,7 +1035,7 @@ export default function PlaceDetailView() {
                 <div className="h-48 overflow-hidden bg-slate-200 dark:bg-slate-700">
                   {similarPlace.image ? (
                     <img
-                      src={`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${similarPlace.image}`}
+                      src={imageService.getImageUrl(similarPlace, 0)}
                       alt={similarPlace.name}
                       className="w-full h-full object-cover"
                       onError={(e) => { e.target.style.display = 'none'; }}

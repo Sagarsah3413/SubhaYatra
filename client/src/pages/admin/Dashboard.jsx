@@ -1,1761 +1,1029 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import UserStatsCard from "../../components/UserStatsCard";
 
-export default function AdminDashboard() {
-  const navigate = useNavigate();
-  const [lastLoginTime, setLastLoginTime] = useState(null);
-  const [lastLogoutTime, setLastLogoutTime] = useState(null);
-  const [submittedPlaces, setSubmittedPlaces] = useState([]);
-  const [submittedHotels, setSubmittedHotels] = useState([]);
-  const [submittedRestaurants, setSubmittedRestaurants] = useState([]);
+const API = "http://localhost:8000/api";
+
+function getAuth(navigate) {
+  const raw = localStorage.getItem("admin");
+  if (!raw) { navigate("/admin/login"); return null; }
+  try {
+    const a = JSON.parse(raw);
+    if (!a.access_token) { navigate("/admin/login"); return null; }
+    return { headers: { Authorization: `Bearer ${a.access_token}` } };
+  } catch { navigate("/admin/login"); return null; }
+}
+
+// ── tiny stat card ────────────────────────────────────────────────────────────
+function StatCard({ label, value, sub, color = "teal", icon }) {
+  const colors = {
+    teal:   "from-teal-500 to-cyan-600",
+    blue:   "from-blue-500 to-indigo-600",
+    purple: "from-purple-500 to-pink-600",
+    amber:  "from-amber-500 to-orange-600",
+    emerald:"from-emerald-500 to-green-600",
+    rose:   "from-rose-500 to-red-600",
+  };
+  return (
+    <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6 flex items-center gap-4">
+      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${colors[color]} flex items-center justify-center text-white text-2xl shadow-lg flex-shrink-0`}>
+        {icon}
+      </div>
+      <div>
+        <p className="text-sm text-slate-500 font-medium">{label}</p>
+        <p className="text-3xl font-black text-slate-800">{value ?? "—"}</p>
+        {sub && <p className="text-xs text-slate-400 mt-0.5">{sub}</p>}
+      </div>
+    </div>
+  );
+}
+
+// ── bar chart (pure CSS) ──────────────────────────────────────────────────────
+function BarChart({ data, labelKey, valueKey, color = "teal" }) {
+  if (!data?.length) return <p className="text-slate-400 text-sm py-4 text-center">No data yet</p>;
+  const max = Math.max(...data.map(d => d[valueKey]), 1);
+  const colors = { teal: "bg-teal-500", blue: "bg-blue-500", amber: "bg-amber-500", purple: "bg-purple-500" };
+  return (
+    <div className="space-y-2">
+      {data.map((d, i) => (
+        <div key={i} className="flex items-center gap-3">
+          <span className="text-xs text-slate-500 w-28 truncate flex-shrink-0">{d[labelKey]}</span>
+          <div className="flex-1 bg-slate-100 rounded-full h-5 overflow-hidden">
+            <div
+              className={`h-full ${colors[color] || "bg-teal-500"} rounded-full transition-all duration-700`}
+              style={{ width: `${(d[valueKey] / max) * 100}%` }}
+            />
+          </div>
+          <span className="text-xs font-bold text-slate-700 w-8 text-right">{d[valueKey]}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── toast ─────────────────────────────────────────────────────────────────────
+function Toast({ toast }) {
+  if (!toast) return null;
+  return (
+    <div className="fixed top-6 right-6 z-50 animate-in slide-in-from-right duration-300">
+      <div className={`px-6 py-4 rounded-xl shadow-2xl border-l-4 flex items-center gap-3 ${
+        toast.type === "success" ? "bg-emerald-50 border-emerald-500 text-emerald-800" : "bg-rose-50 border-rose-500 text-rose-800"
+      }`}>
+        <span>{toast.type === "success" ? "✅" : "❌"}</span>
+        <span className="font-semibold">{toast.message}</span>
+      </div>
+    </div>
+  );
+}
+
+// ── Overview tab ──────────────────────────────────────────────────────────────
+function OverviewTab({ auth }) {
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('overview');
-  const [selectedPlace, setSelectedPlace] = useState(null);
-  const [selectedHotel, setSelectedHotel] = useState(null);
-  const [selectedRestaurant, setSelectedRestaurant] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterType, setFilterType] = useState('all');
-  const [submissionTypeFilter, setSubmissionTypeFilter] = useState('all'); // all, place, hotel, restaurant
-  const [stats, setStats] = useState({
-    totalPlaces: 0,
-    totalHotels: 0,
-    totalRestaurants: 0,
-    recentSubmissions: 0
-  });
-  const [reviews, setReviews] = useState([]);
-  const [reviewStats, setReviewStats] = useState({
-    total_reviews: 0,
-    pending_reviews: 0,
-    approved_reviews: 0,
-    rejected_reviews: 0,
-    average_rating: 0
-  });
-  const [selectedReview, setSelectedReview] = useState(null);
 
-  // Helper function to get auth headers with JWT token
-  const getAuthHeaders = () => {
-    const adminData = localStorage.getItem("admin");
-    if (!adminData) {
-      navigate("/admin/login");
-      return null;
-    }
-    
-    try {
-      const admin = JSON.parse(adminData);
-      if (!admin.access_token) {
-        navigate("/admin/login");
-        return null;
-      }
-      
-      return {
-        headers: {
-          'Authorization': `Bearer ${admin.access_token}`
-        }
-      };
-    } catch (err) {
-      console.error("Failed to parse admin data:", err);
-      navigate("/admin/login");
-      return null;
-    }
-  };
-
-  // Fetch submitted places, hotels, and restaurants (user submissions only) - load on mount for stats
   useEffect(() => {
-    const fetchSubmittedData = async () => {
-      setLoading(true);
-      try {
-        // Fetch all places including pending ones for admin
-        const placesRes = await axios.get("http://localhost:8000/api/places?limit=1000&status=all");
-        // Filter to only show user submissions (not dataset places)
-        const userSubmissions = (placesRes.data.places || []).filter(place => place.source === 'user_submission');
-        setSubmittedPlaces(userSubmissions);
+    if (!auth) return;
+    axios.get(`${API}/analytics/overview`, auth)
+      .then(r => setData(r.data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [auth]);
 
-        // Fetch all hotels and filter for user submissions
-        const hotelsRes = await axios.get("http://localhost:8000/api/hotels?limit=1000");
-        const userHotels = (hotelsRes.data.hotels || []).filter(hotel => hotel.source === 'user_submission');
-        setSubmittedHotels(userHotels);
+  if (loading) return <div className="flex justify-center py-20"><div className="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin" /></div>;
+  if (!data) return <p className="text-center text-slate-400 py-10">Failed to load overview</p>;
 
-        // Fetch all restaurants and filter for user submissions
-        const restaurantsRes = await axios.get("http://localhost:8000/api/restaurants?limit=1000");
-        const userRestaurants = (restaurantsRes.data.restaurants || []).filter(restaurant => restaurant.source === 'user_submission');
-        setSubmittedRestaurants(userRestaurants);
+  return (
+    <div className="space-y-8">
+      {/* KPI cards */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <StatCard label="Total Users"       value={data.users.total}            sub={`+${data.users.new_today} today`}       color="teal"   icon="👥" />
+        <StatCard label="New This Week"     value={data.users.new_this_week}    sub="registered users"                       color="blue"   icon="🆕" />
+        <StatCard label="Total Searches"    value={data.searches.total}         sub={`${data.searches.today} today`}         color="purple" icon="🔍" />
+        <StatCard label="Recommendations"   value={data.recommendations.total}  sub="sessions"                               color="amber"  icon="🗺️" />
+        <StatCard label="Itineraries"       value={data.itineraries.total}      sub="created"                                color="emerald"icon="📅" />
+        <StatCard label="Chat Sessions"     value={data.chats.total}            sub={`${data.chats.messages} messages`}      color="rose"   icon="💬" />
+      </div>
 
-      } catch (err) {
-        console.error("Failed to fetch submitted data:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchSubmittedData();
-  }, []);
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Search trend */}
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+          <h3 className="font-bold text-slate-800 mb-4">📈 Search Trend (Last 7 Days)</h3>
+          <BarChart data={data.search_trend} labelKey="date" valueKey="searches" color="teal" />
+        </div>
 
-  // Fetch stats (for hotels and restaurants only - places stats come from submittedPlaces)
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const [hotelsRes, restaurantsRes] = await Promise.all([
-          axios.get("http://localhost:8000/api/hotels?limit=1"),
-          axios.get("http://localhost:8000/api/restaurants?limit=1")
-        ]);
-        
-        setStats({
-          totalPlaces: 0, // Will be calculated from submittedPlaces
-          totalHotels: hotelsRes.data.total || 0,
-          totalRestaurants: restaurantsRes.data.total || 0,
-          recentSubmissions: 0 // Will be calculated from all submissions
-        });
-      } catch (err) {
-        console.error("Failed to fetch stats:", err);
-      }
-    };
-    fetchStats();
-  }, [submittedPlaces, submittedHotels, submittedRestaurants]);
+        {/* Top queries */}
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+          <h3 className="font-bold text-slate-800 mb-4">🔥 Top Search Queries</h3>
+          <BarChart data={data.top_queries} labelKey="query" valueKey="count" color="purple" />
+        </div>
+      </div>
 
-  // Fetch last login/logout times
-  useEffect(() => {
-    const fetchAdminActivity = async () => {
-      try {
-        const res = await axios.get("http://localhost:8000/admin/activity");
-        setLastLoginTime(res.data.lastLogin);
-        setLastLogoutTime(res.data.lastLogout);
-      } catch (err) {
-        console.error("Failed to fetch admin activity:", err);
-      }
-    };
-    fetchAdminActivity();
-  }, []);
+      {/* Recent users */}
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+        <h3 className="font-bold text-slate-800 mb-4">🆕 Recent Sign-ups</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead><tr className="text-left text-slate-500 border-b border-slate-100">
+              <th className="pb-2 pr-4">Name</th><th className="pb-2 pr-4">Email</th>
+              <th className="pb-2 pr-4">Logins</th><th className="pb-2">Joined</th>
+            </tr></thead>
+            <tbody>
+              {data.recent_users.map(u => (
+                <tr key={u.clerk_id} className="border-b border-slate-50 hover:bg-slate-50">
+                  <td className="py-2 pr-4 font-medium text-slate-800">{u.name || "—"}</td>
+                  <td className="py-2 pr-4 text-slate-500">{u.email}</td>
+                  <td className="py-2 pr-4 text-slate-600">{u.total_logins}</td>
+                  <td className="py-2 text-slate-400">{new Date(u.created_at).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-  // Fetch reviews
-  useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const res = await axios.get("http://localhost:8000/admin/reviews");
-        setReviews(res.data.reviews || []);
-      } catch (err) {
-        console.error("Failed to fetch reviews:", err);
-      }
-    };
-    fetchReviews();
-  }, []);
+// ── Users tab ─────────────────────────────────────────────────────────────────
+function UsersTab({ auth }) {
+  const [users, setUsers] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [q, setQ] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [detail, setDetail] = useState(null);
 
-  // Fetch review stats
-  useEffect(() => {
-    const fetchReviewStats = async () => {
-      try {
-        const res = await axios.get("http://localhost:8000/admin/dashboard/review-stats");
-        setReviewStats(res.data);
-      } catch (err) {
-        console.error("Failed to fetch review stats:", err);
-      }
-    };
-    fetchReviewStats();
-  }, []);
+  const load = useCallback((pg = 1, search = "") => {
+    if (!auth) return;
+    setLoading(true);
+    axios.get(`${API}/analytics/users`, { ...auth, params: { page: pg, per_page: 20, q: search } })
+      .then(r => { setUsers(r.data.users); setTotal(r.data.total); setPage(pg); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [auth]);
 
-  // Filter places
-  const filteredPlaces = submittedPlaces.filter(place => {
-    const matchesSearch = place.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         place.location?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesType = filterType === 'all' || place.type === filterType;
-    return matchesSearch && matchesType;
-  });
+  useEffect(() => { load(1, ""); }, [load]);
 
-  // Delete place handler
-  const handleDeletePlace = async (placeId) => {
-    if (!window.confirm("Are you sure you want to delete this place?")) return;
-    
-    try {
-      await axios.delete(`http://localhost:8000/api/places/${placeId}`);
-      setSubmittedPlaces(prev => prev.filter(p => p.id !== placeId));
-      setSelectedPlace(null);
-      
-      // Show success toast
-      showToast('success', 'Place deleted successfully!');
-    } catch (err) {
-      console.error("Failed to delete place:", err);
-      showToast('error', 'Failed to delete place. Please try again.');
-    }
+  const openUser = (u) => {
+    setSelected(u);
+    axios.get(`${API}/analytics/users/${u.clerk_id}`, auth)
+      .then(r => setDetail(r.data))
+      .catch(() => setDetail(null));
   };
 
-  // Approve place handler
-  const handleApprovePlace = async (placeId) => {
-    try {
-      await axios.post(`http://localhost:8000/api/places/${placeId}/approve`);
-      setSubmittedPlaces(prev => prev.map(p => 
-        p.id === placeId ? { ...p, status: 'approved' } : p
-      ));
-      if (selectedPlace?.id === placeId) {
-        setSelectedPlace({ ...selectedPlace, status: 'approved' });
-      }
-      showToast('success', 'Place approved successfully!');
-    } catch (err) {
-      console.error("Failed to approve place:", err);
-      showToast('error', 'Failed to approve place. Please try again.');
-    }
-  };
-
-  // Reject place handler
-  const handleRejectPlace = async (placeId) => {
-    if (!window.confirm("Are you sure you want to reject this place?")) return;
-    
-    try {
-      await axios.post(`http://localhost:8000/api/places/${placeId}/reject`);
-      setSubmittedPlaces(prev => prev.map(p => 
-        p.id === placeId ? { ...p, status: 'rejected' } : p
-      ));
-      if (selectedPlace?.id === placeId) {
-        setSelectedPlace({ ...selectedPlace, status: 'rejected' });
-      }
-      showToast('success', 'Place rejected successfully!');
-    } catch (err) {
-      console.error("Failed to reject place:", err);
-      showToast('error', 'Failed to reject place. Please try again.');
-    }
-  };
-
-  // Hotel handlers
-  const handleApproveHotel = async (hotelId) => {
-    try {
-      await axios.post(`http://localhost:8000/api/hotels/${hotelId}/approve`);
-      setSubmittedHotels(prev => prev.map(h => 
-        h.id === hotelId ? { ...h, status: 'approved' } : h
-      ));
-      if (selectedHotel?.id === hotelId) {
-        setSelectedHotel({ ...selectedHotel, status: 'approved' });
-      }
-      showToast('success', 'Hotel approved successfully!');
-    } catch (err) {
-      console.error("Failed to approve hotel:", err);
-      showToast('error', 'Failed to approve hotel. Please try again.');
-    }
-  };
-
-  const handleRejectHotel = async (hotelId) => {
-    if (!window.confirm("Are you sure you want to reject this hotel?")) return;
-    
-    try {
-      await axios.post(`http://localhost:8000/api/hotels/${hotelId}/reject`);
-      setSubmittedHotels(prev => prev.map(h => 
-        h.id === hotelId ? { ...h, status: 'rejected' } : h
-      ));
-      if (selectedHotel?.id === hotelId) {
-        setSelectedHotel({ ...selectedHotel, status: 'rejected' });
-      }
-      showToast('success', 'Hotel rejected successfully!');
-    } catch (err) {
-      console.error("Failed to reject hotel:", err);
-      showToast('error', 'Failed to reject hotel. Please try again.');
-    }
-  };
-
-  const handleDeleteHotel = async (hotelId) => {
-    if (!window.confirm("Are you sure you want to delete this hotel?")) return;
-    
-    try {
-      await axios.delete(`http://localhost:8000/api/hotels/${hotelId}`);
-      setSubmittedHotels(prev => prev.filter(h => h.id !== hotelId));
-      setSelectedHotel(null);
-      showToast('success', 'Hotel deleted successfully!');
-    } catch (err) {
-      console.error("Failed to delete hotel:", err);
-      showToast('error', 'Failed to delete hotel. Please try again.');
-    }
-  };
-
-  // Restaurant handlers
-  const handleApproveRestaurant = async (restaurantId) => {
-    try {
-      await axios.post(`http://localhost:8000/api/restaurants/${restaurantId}/approve`);
-      setSubmittedRestaurants(prev => prev.map(r => 
-        r.id === restaurantId ? { ...r, status: 'approved' } : r
-      ));
-      if (selectedRestaurant?.id === restaurantId) {
-        setSelectedRestaurant({ ...selectedRestaurant, status: 'approved' });
-      }
-      showToast('success', 'Restaurant approved successfully!');
-    } catch (err) {
-      console.error("Failed to approve restaurant:", err);
-      showToast('error', 'Failed to approve restaurant. Please try again.');
-    }
-  };
-
-  const handleRejectRestaurant = async (restaurantId) => {
-    if (!window.confirm("Are you sure you want to reject this restaurant?")) return;
-    
-    try {
-      await axios.post(`http://localhost:8000/api/restaurants/${restaurantId}/reject`);
-      setSubmittedRestaurants(prev => prev.map(r => 
-        r.id === restaurantId ? { ...r, status: 'rejected' } : r
-      ));
-      if (selectedRestaurant?.id === restaurantId) {
-        setSelectedRestaurant({ ...selectedRestaurant, status: 'rejected' });
-      }
-      showToast('success', 'Restaurant rejected successfully!');
-    } catch (err) {
-      console.error("Failed to reject restaurant:", err);
-      showToast('error', 'Failed to reject restaurant. Please try again.');
-    }
-  };
-
-  const handleDeleteRestaurant = async (restaurantId) => {
-    if (!window.confirm("Are you sure you want to delete this restaurant?")) return;
-    
-    try {
-      await axios.delete(`http://localhost:8000/api/restaurants/${restaurantId}`);
-      setSubmittedRestaurants(prev => prev.filter(r => r.id !== restaurantId));
-      setSelectedRestaurant(null);
-      showToast('success', 'Restaurant deleted successfully!');
-    } catch (err) {
-      console.error("Failed to delete restaurant:", err);
-      showToast('error', 'Failed to delete restaurant. Please try again.');
-    }
-  };
-
-  // Approve review handler
-  const handleApproveReview = async (reviewId) => {
-    try {
-      await axios.post(`http://localhost:8000/admin/reviews/${reviewId}/approve`);
-      setReviews(prev => prev.map(r => 
-        r.id === reviewId ? { ...r, status: 'approved' } : r
-      ));
-      if (selectedReview?.id === reviewId) {
-        setSelectedReview({ ...selectedReview, status: 'approved' });
-      }
-      // Update stats
-      setReviewStats(prev => ({
-        ...prev,
-        pending_reviews: prev.pending_reviews - 1,
-        approved_reviews: prev.approved_reviews + 1
-      }));
-      showToast('success', 'Review approved successfully!');
-    } catch (err) {
-      console.error("Failed to approve review:", err);
-      showToast('error', 'Failed to approve review. Please try again.');
-    }
-  };
-
-  // Reject review handler
-  const handleRejectReview = async (reviewId) => {
-    if (!window.confirm("Are you sure you want to reject this review?")) return;
-    
-    try {
-      await axios.post(`http://localhost:8000/admin/reviews/${reviewId}/reject`);
-      setReviews(prev => prev.map(r => 
-        r.id === reviewId ? { ...r, status: 'rejected' } : r
-      ));
-      if (selectedReview?.id === reviewId) {
-        setSelectedReview({ ...selectedReview, status: 'rejected' });
-      }
-      // Update stats
-      setReviewStats(prev => ({
-        ...prev,
-        pending_reviews: prev.pending_reviews - 1,
-        rejected_reviews: prev.rejected_reviews + 1
-      }));
-      showToast('success', 'Review rejected successfully!');
-    } catch (err) {
-      console.error("Failed to reject review:", err);
-      showToast('error', 'Failed to reject review. Please try again.');
-    }
-  };
-
-  // Delete review handler
-  const handleDeleteReview = async (reviewId) => {
-    if (!window.confirm("Are you sure you want to delete this review? This action cannot be undone.")) return;
-    
-    try {
-      await axios.delete(`http://localhost:8000/admin/reviews/${reviewId}`);
-      setReviews(prev => prev.filter(r => r.id !== reviewId));
-      setSelectedReview(null);
-      // Update stats
-      setReviewStats(prev => ({
-        ...prev,
-        total_reviews: prev.total_reviews - 1
-      }));
-      showToast('success', 'Review deleted successfully!');
-    } catch (err) {
-      console.error("Failed to delete review:", err);
-      showToast('error', 'Failed to delete review. Please try again.');
-    }
-  };
-
-  // Toast notification
-  const [toast, setToast] = useState(null);
-  const showToast = (type, message) => {
-    setToast({ type, message });
-    setTimeout(() => setToast(null), 3000);
-  };
-
-  // Sign Out handler
-  const handleSignOut = async () => {
-    try {
-      const activity_id = localStorage.getItem("adminActivityId");
-      await axios.post("http://localhost:8000/admin/logout", { activity_id });
-      localStorage.removeItem("adminToken");
-      localStorage.removeItem("adminActivityId");
-      localStorage.removeItem("admin");
-      // Use navigate instead of window.location for React Router
-      navigate("/admin/login");
-    } catch (err) {
-      console.error("Sign-out failed:", err);
-      // Even if API fails, clear local storage and redirect
-      localStorage.removeItem("adminToken");
-      localStorage.removeItem("adminActivityId");
-      localStorage.removeItem("admin");
-      navigate("/admin/login");
-    }
+  const exportCSV = () => {
+    window.open(`${API}/analytics/export/users?` + new URLSearchParams({ Authorization: auth.headers.Authorization }));
+    // Use anchor with auth header via fetch
+    fetch(`${API}/analytics/export/users`, { headers: auth.headers })
+      .then(r => r.blob()).then(blob => {
+        const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+        a.download = "users.csv"; a.click();
+      });
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100">
-      {/* Toast Notification */}
-      {toast && (
-        <div className="fixed top-6 right-6 z-50 animate-in slide-in-from-right duration-300">
-          <div className={`px-6 py-4 rounded-xl shadow-2xl border-l-4 ${
-            toast.type === 'success' 
-              ? 'bg-emerald-50 border-emerald-500 text-emerald-800' 
-              : 'bg-rose-50 border-rose-500 text-rose-800'
-          }`}>
-            <div className="flex items-center gap-3">
-              {toast.type === 'success' ? (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-              ) : (
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-              )}
-              <span className="font-semibold">{toast.message}</span>
-            </div>
-          </div>
+    <div className="space-y-4">
+      <div className="flex flex-wrap gap-3 items-center justify-between">
+        <div className="flex gap-2">
+          <input value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => e.key === "Enter" && load(1, q)}
+            placeholder="Search name / email…"
+            className="border border-slate-200 rounded-xl px-4 py-2 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+          <button onClick={() => load(1, q)} className="px-4 py-2 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700">Search</button>
         </div>
-      )}
+        <button onClick={exportCSV} className="px-4 py-2 bg-slate-700 text-white rounded-xl text-sm font-semibold hover:bg-slate-800">⬇ Export CSV</button>
+      </div>
 
-      {/* Professional Header */}
-      <header className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white shadow-2xl overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr className="text-left text-slate-600">
+                <th className="px-4 py-3">Name</th><th className="px-4 py-3">Email</th>
+                <th className="px-4 py-3">Searches</th><th className="px-4 py-3">Recs</th>
+                <th className="px-4 py-3">Itineraries</th><th className="px-4 py-3">Chats</th>
+                <th className="px-4 py-3">Logins</th><th className="px-4 py-3">Joined</th>
+                <th className="px-4 py-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan={9} className="text-center py-10 text-slate-400">Loading…</td></tr>
+              ) : users.map(u => (
+                <tr key={u.clerk_id} className="border-b border-slate-50 hover:bg-slate-50">
+                  <td className="px-4 py-3 font-medium text-slate-800 flex items-center gap-2">
+                    {u.avatar_url && <img src={u.avatar_url} className="w-7 h-7 rounded-full object-cover" alt="" />}
+                    {u.name || "—"}
+                  </td>
+                  <td className="px-4 py-3 text-slate-500">{u.email}</td>
+                  <td className="px-4 py-3 text-center">{u.activity?.searches ?? 0}</td>
+                  <td className="px-4 py-3 text-center">{u.activity?.recommendations ?? 0}</td>
+                  <td className="px-4 py-3 text-center">{u.activity?.itineraries ?? 0}</td>
+                  <td className="px-4 py-3 text-center">{u.activity?.chats ?? 0}</td>
+                  <td className="px-4 py-3 text-center">{u.total_logins}</td>
+                  <td className="px-4 py-3 text-slate-400">{new Date(u.created_at).toLocaleDateString()}</td>
+                  <td className="px-4 py-3">
+                    <button onClick={() => openUser(u)} className="text-teal-600 hover:underline text-xs font-semibold">View</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-
-        <div className="relative max-w-7xl mx-auto px-6 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div className="flex items-center gap-4">
-              <div className="p-4 bg-gradient-to-br from-teal-500 to-blue-600 rounded-2xl shadow-xl">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
-                </svg>
-              </div>
-              <div>
-                <h1 className="text-4xl font-black tracking-tight bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-                  Admin Dashboard
-                </h1>
-                <p className="text-slate-400 text-sm mt-1 font-medium">Tourism Management System</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/20">
-                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                <span className="text-sm font-semibold text-slate-200">System Online</span>
-              </div>
-              
-              <button
-                onClick={handleSignOut}
-                className="group relative px-6 py-3 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 rounded-xl font-bold transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 overflow-hidden"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
-                  </svg>
-                  Sign Out
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Professional Navigation Tabs */}
-      <div className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex gap-1">
-            <button
-              onClick={() => setActiveTab('overview')}
-              className={`relative px-8 py-4 font-bold transition-all duration-300 ${
-                activeTab === 'overview'
-                  ? 'text-teal-600'
-                  : 'text-slate-600 hover:text-slate-800'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
-                </svg>
-                <span>Overview</span>
-              </div>
-              {activeTab === 'overview' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
-              )}
-            </button>
-            
-            <button
-              onClick={() => setActiveTab('places')}
-              className={`relative px-8 py-4 font-bold transition-all duration-300 ${
-                activeTab === 'places'
-                  ? 'text-teal-600'
-                  : 'text-slate-600 hover:text-slate-800'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                </svg>
-                <span>All Submissions</span>
-                {(submittedPlaces.length + submittedHotels.length + submittedRestaurants.length) > 0 && (
-                  <span className="px-2.5 py-0.5 bg-gradient-to-r from-teal-500 to-blue-500 text-white text-xs font-black rounded-full shadow-lg">
-                    {submittedPlaces.length + submittedHotels.length + submittedRestaurants.length}
-                  </span>
-                )}
-              </div>
-              {activeTab === 'places' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
-              )}
-            </button>
-
-            <button
-              onClick={() => setActiveTab('reviews')}
-              className={`relative px-8 py-4 font-bold transition-all duration-300 ${
-                activeTab === 'reviews'
-                  ? 'text-teal-600'
-                  : 'text-slate-600 hover:text-slate-800'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-                <span>Reviews</span>
-                {reviewStats.pending_reviews > 0 && (
-                  <span className="px-2.5 py-0.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black rounded-full shadow-lg">
-                    {reviewStats.pending_reviews}
-                  </span>
-                )}
-              </div>
-              {activeTab === 'reviews' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
-              )}
-            </button>
+        {/* Pagination */}
+        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100 text-sm text-slate-500">
+          <span>{total} users total</span>
+          <div className="flex gap-2">
+            <button disabled={page <= 1} onClick={() => load(page - 1, q)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">←</button>
+            <span className="px-3 py-1">Page {page}</span>
+            <button disabled={page * 20 >= total} onClick={() => load(page + 1, q)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">→</button>
           </div>
         </div>
       </div>
 
-      {/* Main content */}
-      <main className="p-6 flex-1 max-w-7xl mx-auto w-full">
-        {activeTab === 'overview' ? (
-          <div className="space-y-6">
-            <UserStatsCard />
-            
-            {/* Admin activity info */}
-            <div className="p-6 bg-white shadow-lg rounded-xl border border-slate-200">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-3 bg-blue-100 rounded-lg">
-                  <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <h3 className="text-lg font-bold text-slate-800">Admin Activity</h3>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg border border-emerald-200">
-                  <p className="text-sm text-emerald-700 font-semibold mb-1">Last Login</p>
-                  <p className="text-lg font-bold text-emerald-900">{lastLoginTime || "N/A"}</p>
-                </div>
-                <div className="p-4 bg-gradient-to-br from-rose-50 to-red-50 rounded-lg border border-rose-200">
-                  <p className="text-sm text-rose-700 font-semibold mb-1">Last Logout</p>
-                  <p className="text-lg font-bold text-rose-900">{lastLogoutTime || "N/A"}</p>
+      {/* User detail modal */}
+      {selected && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4" onClick={() => { setSelected(null); setDetail(null); }}>
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {selected.avatar_url && <img src={selected.avatar_url} className="w-12 h-12 rounded-full object-cover" alt="" />}
+                <div>
+                  <h3 className="font-bold text-slate-800 text-lg">{selected.name || "Unknown"}</h3>
+                  <p className="text-slate-500 text-sm">{selected.email}</p>
                 </div>
               </div>
+              <button onClick={() => { setSelected(null); setDetail(null); }} className="text-slate-400 hover:text-slate-700 text-2xl">×</button>
             </div>
-
-            {/* Detailed Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Place Submissions Stats */}
-              <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-teal-100 rounded-lg">
-                    <svg className="w-6 h-6 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800">Place Submissions</h3>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg">
-                    <span className="text-sm font-semibold text-emerald-700">Approved</span>
-                    <span className="text-lg font-black text-emerald-900">{submittedPlaces.filter(p => p.status === 'approved').length || 0}</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
-                    <span className="text-sm font-semibold text-amber-700">Pending</span>
-                    <span className="text-lg font-black text-amber-900">{submittedPlaces.filter(p => p.status === 'pending').length || 0}</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-rose-50 rounded-lg">
-                    <span className="text-sm font-semibold text-rose-700">Rejected</span>
-                    <span className="text-lg font-black text-rose-900">{submittedPlaces.filter(p => p.status === 'rejected').length || 0}</span>
-                  </div>
-                </div>
+            <div className="p-6 space-y-4">
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="bg-slate-50 rounded-xl p-3"><span className="text-slate-500">Clerk ID</span><p className="font-mono text-xs mt-1 break-all">{selected.clerk_id}</p></div>
+                <div className="bg-slate-50 rounded-xl p-3"><span className="text-slate-500">Total Logins</span><p className="font-bold text-lg">{selected.total_logins}</p></div>
+                <div className="bg-slate-50 rounded-xl p-3"><span className="text-slate-500">Last Login</span><p className="text-xs mt-1">{selected.last_login ? new Date(selected.last_login).toLocaleString() : "—"}</p></div>
+                <div className="bg-slate-50 rounded-xl p-3"><span className="text-slate-500">Joined</span><p className="text-xs mt-1">{new Date(selected.created_at).toLocaleString()}</p></div>
               </div>
-
-              {/* Hotel Submissions Stats */}
-              <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-blue-100 rounded-lg">
-                    <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800">Hotel Submissions</h3>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg">
-                    <span className="text-sm font-semibold text-emerald-700">Approved</span>
-                    <span className="text-lg font-black text-emerald-900">{submittedHotels.filter(h => h.status === 'approved').length || 0}</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
-                    <span className="text-sm font-semibold text-amber-700">Pending</span>
-                    <span className="text-lg font-black text-amber-900">{submittedHotels.filter(h => h.status === 'pending').length || 0}</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-rose-50 rounded-lg">
-                    <span className="text-sm font-semibold text-rose-700">Rejected</span>
-                    <span className="text-lg font-black text-rose-900">{submittedHotels.filter(h => h.status === 'rejected').length || 0}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Restaurant Submissions Stats */}
-              <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-orange-100 rounded-lg">
-                    <svg className="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800">Restaurant Submissions</h3>
-                </div>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg">
-                    <span className="text-sm font-semibold text-emerald-700">Approved</span>
-                    <span className="text-lg font-black text-emerald-900">{submittedRestaurants.filter(r => r.status === 'approved').length || 0}</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
-                    <span className="text-sm font-semibold text-amber-700">Pending</span>
-                    <span className="text-lg font-black text-amber-900">{submittedRestaurants.filter(r => r.status === 'pending').length || 0}</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 bg-rose-50 rounded-lg">
-                    <span className="text-sm font-semibold text-rose-700">Rejected</span>
-                    <span className="text-lg font-black text-rose-900">{submittedRestaurants.filter(r => r.status === 'rejected').length || 0}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : activeTab === 'places' ? (
-          <div className="space-y-6">
-            {/* All Submissions Section */}
-            <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
-              <div className="bg-gradient-to-r from-teal-50 to-blue-50 border-b border-slate-200 px-6 py-4">
-                <div className="flex items-center justify-between flex-wrap gap-4">
+              {detail ? (
+                <>
                   <div>
-                    <h2 className="text-2xl font-black text-slate-800">All Submissions</h2>
-                    <p className="text-sm text-slate-600 mt-1">Review and manage all submissions from the Add Place form</p>
-                  </div>
-                  
-                  {/* Submission Type Filter */}
-                  <div className="flex items-center gap-3">
-                    <label className="text-sm font-semibold text-slate-700">Filter:</label>
-                    <select
-                      value={submissionTypeFilter}
-                      onChange={(e) => setSubmissionTypeFilter(e.target.value)}
-                      className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white hover:border-teal-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all"
-                    >
-                      <option value="all">All Types ({submittedPlaces.length + submittedHotels.length + submittedRestaurants.length})</option>
-                      <option value="place">Places Only ({submittedPlaces.length})</option>
-                      <option value="hotel">Hotels Only ({submittedHotels.length})</option>
-                      <option value="restaurant">Restaurants Only ({submittedRestaurants.length})</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {loading ? (
-                <div className="p-12 text-center">
-                  <div className="inline-flex items-center gap-3 text-slate-600">
-                    <svg className="animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    <span className="font-semibold">Loading submissions...</span>
-                  </div>
-                </div>
-              ) : (submittedPlaces.length + submittedHotels.length + submittedRestaurants.length) === 0 ? (
-                <div className="p-12 text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-full mb-4">
-                    <svg className="w-8 h-8 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800 mb-2">No User Submissions Yet</h3>
-                  <p className="text-slate-600">Places, hotels, and restaurants submitted through the Add Place form will appear here.</p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-slate-50 border-b border-slate-200">
-                      <tr>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Name</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Type</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Location</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Details</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Status</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-200">
-                      {/* Places */}
-                      {(submissionTypeFilter === 'all' || submissionTypeFilter === 'place') && submittedPlaces.map((place) => (
-                        <tr key={`place-${place.id}`} className="hover:bg-slate-50 transition-colors duration-150">
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
-                              {place.image_url ? (
-                                <img 
-                                  src={`http://localhost:8000${place.image_url}`} 
-                                  alt={place.name}
-                                  className="w-12 h-12 rounded-lg object-cover border border-slate-200"
-                                  onError={(e) => e.target.src = 'https://via.placeholder.com/48?text=No+Image'}
-                                />
-                              ) : (
-                                <div className="w-12 h-12 rounded-lg bg-slate-200 flex items-center justify-center">
-                                  <svg className="w-6 h-6 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                                  </svg>
-                                </div>
-                              )}
-                              <div>
-                                <p className="font-semibold text-slate-800">{place.name}</p>
-                                <p className="text-xs text-slate-500">ID: {place.id}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 text-teal-700">
-                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                              </svg>
-                              Place
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 text-sm text-slate-600">{place.location || 'N/A'}</td>
-                          <td className="px-6 py-4">
-                            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-slate-100 text-slate-700">
-                              {place.type || 'N/A'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
-                              place.status === 'pending' 
-                                ? 'bg-amber-100 text-amber-700' 
-                                : place.status === 'approved'
-                                ? 'bg-emerald-100 text-emerald-700'
-                                : 'bg-rose-100 text-rose-700'
-                            }`}>
-                              {place.status === 'pending' && (
-                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                              {place.status === 'approved' && (
-                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                              {place.status === 'rejected' && (
-                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                              {place.status || 'approved'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => setSelectedPlace(place)}
-                                className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold hover:bg-blue-200 transition-colors duration-200"
-                              >
-                                View
-                              </button>
-                              {place.status === 'pending' && (
-                                <>
-                                  <button
-                                    onClick={() => handleApprovePlace(place.id)}
-                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
-                                  >
-                                    Approve
-                                  </button>
-                                  <button
-                                    onClick={() => handleRejectPlace(place.id)}
-                                    className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-semibold hover:bg-amber-200 transition-colors duration-200"
-                                  >
-                                    Reject
-                                  </button>
-                                </>
-                              )}
-                              <button
-                                onClick={() => handleDeletePlace(place.id)}
-                                className="px-3 py-1.5 bg-rose-100 text-rose-700 rounded-lg text-xs font-semibold hover:bg-rose-200 transition-colors duration-200"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
+                    <h4 className="font-semibold text-slate-700 mb-2">Recent Searches ({detail.searches.length})</h4>
+                    <div className="space-y-1 max-h-32 overflow-y-auto">
+                      {detail.searches.slice(0, 10).map((s, i) => (
+                        <div key={i} className="flex justify-between text-xs bg-slate-50 rounded-lg px-3 py-1.5">
+                          <span className="font-medium text-slate-700">"{s.query}"</span>
+                          <span className="text-slate-400">{s.category} · {new Date(s.created_at).toLocaleDateString()}</span>
+                        </div>
                       ))}
-                      
-                      {/* Hotels */}
-                      {(submissionTypeFilter === 'all' || submissionTypeFilter === 'hotel') && submittedHotels.map((hotel) => (
-                        <tr key={`hotel-${hotel.id}`} className="hover:bg-slate-50 transition-colors duration-150">
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
-                              {hotel.image_url ? (
-                                <img 
-                                  src={`http://localhost:8000${hotel.image_url}`} 
-                                  alt={hotel.name}
-                                  className="w-12 h-12 rounded-lg object-cover border border-slate-200"
-                                  onError={(e) => e.target.src = 'https://via.placeholder.com/48?text=No+Image'}
-                                />
-                              ) : (
-                                <div className="w-12 h-12 rounded-lg bg-blue-200 flex items-center justify-center">
-                                  <svg className="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                                  </svg>
-                                </div>
-                              )}
-                              <div>
-                                <p className="font-semibold text-slate-800">{hotel.name}</p>
-                                <p className="text-xs text-slate-500">ID: {hotel.id}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">
-                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                              </svg>
-                              Hotel
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 text-sm text-slate-600">{hotel.location || 'N/A'}</td>
-                          <td className="px-6 py-4">
-                            <div className="flex flex-col gap-1">
-                              <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
-                                {hotel.price_range || 'N/A'}
-                              </span>
-                              {hotel.rating && (
-                                <span className="text-xs text-amber-600">⭐ {hotel.rating}</span>
-                              )}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
-                              hotel.status === 'pending' 
-                                ? 'bg-amber-100 text-amber-700' 
-                                : hotel.status === 'approved'
-                                ? 'bg-emerald-100 text-emerald-700'
-                                : 'bg-rose-100 text-rose-700'
-                            }`}>
-                              {hotel.status === 'pending' && (
-                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                              {hotel.status === 'approved' && (
-                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                              {hotel.status === 'rejected' && (
-                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                              {hotel.status || 'approved'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => setSelectedHotel(hotel)}
-                                className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold hover:bg-blue-200 transition-colors duration-200"
-                              >
-                                View
-                              </button>
-                              {hotel.status === 'pending' && (
-                                <>
-                                  <button
-                                    onClick={() => handleApproveHotel(hotel.id)}
-                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
-                                  >
-                                    Approve
-                                  </button>
-                                  <button
-                                    onClick={() => handleRejectHotel(hotel.id)}
-                                    className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-semibold hover:bg-amber-200 transition-colors duration-200"
-                                  >
-                                    Reject
-                                  </button>
-                                </>
-                              )}
-                              <button
-                                onClick={() => handleDeleteHotel(hotel.id)}
-                                className="px-3 py-1.5 bg-rose-100 text-rose-700 rounded-lg text-xs font-semibold hover:bg-rose-200 transition-colors duration-200"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                      
-                      {/* Restaurants */}
-                      {(submissionTypeFilter === 'all' || submissionTypeFilter === 'restaurant') && submittedRestaurants.map((restaurant) => (
-                        <tr key={`restaurant-${restaurant.id}`} className="hover:bg-slate-50 transition-colors duration-150">
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
-                              {restaurant.image_url ? (
-                                <img 
-                                  src={`http://localhost:8000${restaurant.image_url}`} 
-                                  alt={restaurant.name}
-                                  className="w-12 h-12 rounded-lg object-cover border border-slate-200"
-                                  onError={(e) => e.target.src = 'https://via.placeholder.com/48?text=No+Image'}
-                                />
-                              ) : (
-                                <div className="w-12 h-12 rounded-lg bg-orange-200 flex items-center justify-center">
-                                  <svg className="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-                                  </svg>
-                                </div>
-                              )}
-                              <div>
-                                <p className="font-semibold text-slate-800">{restaurant.name}</p>
-                                <p className="text-xs text-slate-500">ID: {restaurant.id}</p>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">
-                              <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-                              </svg>
-                              Restaurant
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 text-sm text-slate-600">{restaurant.location || 'N/A'}</td>
-                          <td className="px-6 py-4">
-                            <div className="flex flex-col gap-1">
-                              {restaurant.cuisine && (
-                                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-purple-100 text-purple-700">
-                                  {restaurant.cuisine}
-                                </span>
-                              )}
-                              <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700">
-                                {restaurant.price_range || 'N/A'}
-                              </span>
-                              {restaurant.rating && (
-                                <span className="text-xs text-amber-600">⭐ {restaurant.rating}</span>
-                              )}
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
-                              restaurant.status === 'pending' 
-                                ? 'bg-amber-100 text-amber-700' 
-                                : restaurant.status === 'approved'
-                                ? 'bg-emerald-100 text-emerald-700'
-                                : 'bg-rose-100 text-rose-700'
-                            }`}>
-                              {restaurant.status === 'pending' && (
-                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                              {restaurant.status === 'approved' && (
-                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                              {restaurant.status === 'rejected' && (
-                                <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                                </svg>
-                              )}
-                              {restaurant.status || 'approved'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => setSelectedRestaurant(restaurant)}
-                                className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold hover:bg-blue-200 transition-colors duration-200"
-                              >
-                                View
-                              </button>
-                              {restaurant.status === 'pending' && (
-                                <>
-                                  <button
-                                    onClick={() => handleApproveRestaurant(restaurant.id)}
-                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
-                                  >
-                                    Approve
-                                  </button>
-                                  <button
-                                    onClick={() => handleRejectRestaurant(restaurant.id)}
-                                    className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-semibold hover:bg-amber-200 transition-colors duration-200"
-                                  >
-                                    Reject
-                                  </button>
-                                </>
-                              )}
-                              <button
-                                onClick={() => handleDeleteRestaurant(restaurant.id)}
-                                className="px-3 py-1.5 bg-rose-100 text-rose-700 rounded-lg text-xs font-semibold hover:bg-rose-200 transition-colors duration-200"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          // Reviews Tab
-          <div className="space-y-6">
-            {/* Reviews Section */}
-            <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
-              <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-b border-slate-200 px-6 py-4">
-                <h2 className="text-2xl font-black text-slate-800">User Reviews</h2>
-                <p className="text-sm text-slate-600 mt-1">Review and manage reviews submitted by users through the Write a Review form</p>
-              </div>
-
-              {loading ? (
-                <div className="p-12 text-center">
-                  <div className="inline-flex items-center gap-3 text-slate-600">
-                    <svg className="animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    <span className="font-semibold">Loading reviews...</span>
-                  </div>
-                </div>
-              ) : reviews.length === 0 ? (
-                <div className="p-12 text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-100 rounded-full mb-4">
-                    <svg className="w-8 h-8 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-800 mb-2">No Reviews Yet</h3>
-                  <p className="text-slate-600">Reviews submitted by users through the Write a Review form will appear here.</p>
-                </div>
-              ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="bg-slate-50 border-b border-slate-200">
-                      <tr>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Reviewer</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Place</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Rating</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Type</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Status</th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-200">
-                      {reviews.map((review) => (
-                        <tr key={review.id} className="hover:bg-slate-50 transition-colors duration-150">
-                          <td className="px-6 py-4">
-                            <div>
-                              <p className="font-semibold text-slate-800">{review.name}</p>
-                              <p className="text-xs text-slate-500">{review.email}</p>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <p className="font-medium text-slate-700">{review.place}</p>
-                            {review.visit_date && (
-                              <p className="text-xs text-slate-500">Visited: {review.visit_date}</p>
-                            )}
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-1">
-                              {[...Array(5)].map((_, i) => (
-                                <svg
-                                  key={i}
-                                  className={`w-4 h-4 ${i < review.rating ? 'text-amber-400' : 'text-slate-300'}`}
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                              ))}
-                              <span className="ml-2 text-sm font-bold text-slate-700">{review.rating}/5</span>
-                            </div>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-700">
-                              {review.type}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
-                              review.status === 'pending' 
-                                ? 'bg-orange-100 text-orange-700' 
-                                : review.status === 'approved'
-                                ? 'bg-emerald-100 text-emerald-700'
-                                : 'bg-rose-100 text-rose-700'
-                            }`}>
-                              {review.status === 'pending' && '⏳ '}
-                              {review.status === 'approved' && '✓ '}
-                              {review.status === 'rejected' && '✗ '}
-                              {review.status || 'pending'}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => setSelectedReview(review)}
-                                className="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold hover:bg-blue-200 transition-colors duration-200"
-                              >
-                                View
-                              </button>
-                              {review.status === 'pending' && (
-                                <>
-                                  <button
-                                    onClick={() => handleApproveReview(review.id)}
-                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
-                                  >
-                                    Approve
-                                  </button>
-                                  <button
-                                    onClick={() => handleRejectReview(review.id)}
-                                    className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-lg text-xs font-semibold hover:bg-amber-200 transition-colors duration-200"
-                                  >
-                                    Reject
-                                  </button>
-                                </>
-                              )}
-                              <button
-                                onClick={() => handleDeleteReview(review.id)}
-                                className="px-3 py-1.5 bg-rose-100 text-rose-700 rounded-lg text-xs font-semibold hover:bg-rose-200 transition-colors duration-200"
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-      </main>
-
-      {/* Place Detail Modal */}
-      {selectedPlace && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-gradient-to-r from-teal-500 to-blue-500 p-6 rounded-t-2xl">
-              <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-black text-white">Place Details</h3>
-                <button
-                  onClick={() => setSelectedPlace(null)}
-                  className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
-                >
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <div className="p-6 space-y-6">
-              {selectedPlace.image_url && (
-                <img 
-                  src={`http://localhost:8000${selectedPlace.image_url}`}
-                  alt={selectedPlace.name}
-                  className="w-full h-64 object-cover rounded-xl border border-slate-200"
-                  onError={(e) => e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'}
-                />
-              )}
-
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Name</label>
-                  <p className="text-lg font-semibold text-slate-800 mt-1">{selectedPlace.name}</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Location</label>
-                    <p className="text-slate-800 mt-1">{selectedPlace.location || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Type</label>
-                    <p className="text-slate-800 mt-1">{selectedPlace.type || 'N/A'}</p>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Status</label>
-                  <div className="mt-2">
-                    <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold ${
-                      selectedPlace.status === 'pending' 
-                        ? 'bg-amber-100 text-amber-700' 
-                        : selectedPlace.status === 'approved'
-                        ? 'bg-emerald-100 text-emerald-700'
-                        : 'bg-rose-100 text-rose-700'
-                    }`}>
-                      {selectedPlace.status === 'pending' && (
-                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                      {selectedPlace.status === 'approved' && (
-                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                      {selectedPlace.status === 'rejected' && (
-                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                        </svg>
-                      )}
-                      {selectedPlace.status ? selectedPlace.status.toUpperCase() : 'APPROVED'}
-                    </span>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Description</label>
-                  <p className="text-slate-700 mt-1 leading-relaxed">{selectedPlace.description || 'No description provided'}</p>
-                </div>
-
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Tags</label>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {selectedPlace.tags ? selectedPlace.tags.split(',').map((tag, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold">
-                        #{tag.trim()}
-                      </span>
-                    )) : <span className="text-slate-500">No tags</span>}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex gap-3 pt-4 border-t border-slate-200">
-                <button
-                  onClick={() => setSelectedPlace(null)}
-                  className="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-colors duration-200"
-                >
-                  Close
-                </button>
-                {selectedPlace.status === 'pending' && (
-                  <>
-                    <button
-                      onClick={() => {
-                        handleApprovePlace(selectedPlace.id);
-                      }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleRejectPlace(selectedPlace.id);
-                      }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-semibold hover:from-amber-600 hover:to-orange-700 transition-all duration-200 shadow-lg"
-                    >
-                      Reject
-                    </button>
-                  </>
-                )}
-                <button
-                  onClick={() => {
-                    handleDeletePlace(selectedPlace.id);
-                  }}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-semibold hover:from-rose-600 hover:to-red-700 transition-all duration-200 shadow-lg"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Review Detail Modal */}
-      {selectedReview && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-3xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-gradient-to-r from-purple-500 to-pink-500 p-6 rounded-t-2xl">
-              <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-black text-white">Review Details</h3>
-                <button
-                  onClick={() => setSelectedReview(null)}
-                  className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
-                >
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <div className="p-6 space-y-6">
-              {/* Reviewer Info */}
-              <div className="bg-slate-50 p-4 rounded-xl">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Reviewer Name</label>
-                    <p className="text-lg font-semibold text-slate-800 mt-1">{selectedReview.name}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Email</label>
-                    <p className="text-slate-800 mt-1">{selectedReview.email}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Place & Visit Info */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Place Reviewed</label>
-                  <p className="text-lg font-semibold text-slate-800 mt-1">{selectedReview.place}</p>
-                </div>
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Visit Date</label>
-                  <p className="text-slate-800 mt-1">{selectedReview.visit_date || 'Not specified'}</p>
-                </div>
-              </div>
-
-              {/* Rating & Type */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Rating</label>
-                  <div className="flex items-center gap-2 mt-2">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className={`w-6 h-6 ${i < selectedReview.rating ? 'text-amber-400' : 'text-slate-300'}`}
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                    <span className="ml-2 text-xl font-black text-slate-800">{selectedReview.rating}/5</span>
-                  </div>
-                </div>
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Experience Type</label>
-                  <p className="mt-2">
-                    <span className="inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold bg-purple-100 text-purple-700">
-                      {selectedReview.type}
-                    </span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Recommendation */}
-              <div>
-                <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Would Recommend?</label>
-                <p className="mt-2">
-                  <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold ${
-                    selectedReview.recommend === 'yes' 
-                      ? 'bg-emerald-100 text-emerald-700' 
-                      : 'bg-rose-100 text-rose-700'
-                  }`}>
-                    {selectedReview.recommend === 'yes' ? '👍 Yes' : '👎 No'}
-                  </span>
-                </p>
-              </div>
-
-              {/* Review Text */}
-              <div>
-                <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Review</label>
-                <div className="mt-2 p-4 bg-slate-50 rounded-xl border border-slate-200">
-                  <p className="text-slate-700 leading-relaxed whitespace-pre-wrap">{selectedReview.review}</p>
-                </div>
-              </div>
-
-              {/* Images */}
-              {selectedReview.images && selectedReview.images.length > 0 && (
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Photos ({selectedReview.images.length})</label>
-                  <div className="mt-2 grid grid-cols-2 gap-4">
-                    {selectedReview.images.map((img, idx) => (
-                      <img
-                        key={idx}
-                        src={`http://localhost:8000${img}`}
-                        alt={`Review photo ${idx + 1}`}
-                        className="w-full h-48 object-cover rounded-xl border border-slate-200"
-                        onError={(e) => e.target.src = 'https://via.placeholder.com/400x300?text=Image+Not+Found'}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Status */}
-              <div>
-                <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Status</label>
-                <div className="mt-2">
-                  <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold ${
-                    selectedReview.status === 'pending' 
-                      ? 'bg-orange-100 text-orange-700' 
-                      : selectedReview.status === 'approved'
-                      ? 'bg-emerald-100 text-emerald-700'
-                      : 'bg-rose-100 text-rose-700'
-                  }`}>
-                    {selectedReview.status === 'pending' && '⏳ '}
-                    {selectedReview.status === 'approved' && '✓ '}
-                    {selectedReview.status === 'rejected' && '✗ '}
-                    {selectedReview.status ? selectedReview.status.toUpperCase() : 'PENDING'}
-                  </span>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex gap-3 pt-4 border-t border-slate-200">
-                <button
-                  onClick={() => setSelectedReview(null)}
-                  className="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-colors duration-200"
-                >
-                  Close
-                </button>
-                {selectedReview.status === 'pending' && (
-                  <>
-                    <button
-                      onClick={() => {
-                        handleApproveReview(selectedReview.id);
-                      }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleRejectReview(selectedReview.id);
-                      }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-semibold hover:from-amber-600 hover:to-orange-700 transition-all duration-200 shadow-lg"
-                    >
-                      Reject
-                    </button>
-                  </>
-                )}
-                <button
-                  onClick={() => {
-                    handleDeleteReview(selectedReview.id);
-                  }}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-semibold hover:from-rose-600 hover:to-red-700 transition-all duration-200 shadow-lg"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Hotel Detail Modal */}
-      {selectedHotel && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-gradient-to-r from-blue-500 to-indigo-500 p-6 rounded-t-2xl">
-              <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-black text-white">Hotel Details</h3>
-                <button
-                  onClick={() => setSelectedHotel(null)}
-                  className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
-                >
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <div className="p-6 space-y-6">
-              {selectedHotel.image_url && (
-                <img 
-                  src={`http://localhost:8000${selectedHotel.image_url}`}
-                  alt={selectedHotel.name}
-                  className="w-full h-64 object-cover rounded-xl border border-slate-200"
-                  onError={(e) => e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'}
-                />
-              )}
-
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Hotel Name</label>
-                  <p className="text-lg font-semibold text-slate-800 mt-1">{selectedHotel.name}</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Location</label>
-                    <p className="text-slate-800 mt-1">{selectedHotel.location || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Price Range</label>
-                    <p className="text-slate-800 mt-1">{selectedHotel.price_range || 'N/A'}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Rating</label>
-                    <p className="text-slate-800 mt-1">
-                      {selectedHotel.rating ? `⭐ ${selectedHotel.rating}/5` : 'Not rated yet'}
-                    </p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Status</label>
-                    <div className="mt-1">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold ${
-                        selectedHotel.status === 'pending' 
-                          ? 'bg-amber-100 text-amber-700' 
-                          : selectedHotel.status === 'approved'
-                          ? 'bg-emerald-100 text-emerald-700'
-                          : 'bg-rose-100 text-rose-700'
-                      }`}>
-                        {selectedHotel.status === 'pending' && '⏳ '}
-                        {selectedHotel.status === 'approved' && '✓ '}
-                        {selectedHotel.status === 'rejected' && '✗ '}
-                        {selectedHotel.status ? selectedHotel.status.toUpperCase() : 'APPROVED'}
-                      </span>
                     </div>
                   </div>
-                </div>
-
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Description</label>
-                  <p className="text-slate-700 mt-1 leading-relaxed">{selectedHotel.description || 'No description provided'}</p>
-                </div>
-
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Tags</label>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {selectedHotel.tags ? selectedHotel.tags.split(',').map((tag, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">
-                        #{tag.trim()}
-                      </span>
-                    )) : <span className="text-slate-500">No tags</span>}
+                  <div>
+                    <h4 className="font-semibold text-slate-700 mb-2">Recommendations ({detail.recommendations.length})</h4>
+                    <div className="space-y-1 max-h-32 overflow-y-auto">
+                      {detail.recommendations.slice(0, 5).map((r, i) => (
+                        <div key={i} className="text-xs bg-slate-50 rounded-lg px-3 py-1.5">
+                          <span className="font-medium text-slate-700">{r.trip_type || "—"}</span>
+                          <span className="text-slate-400 ml-2">{r.travel_month} · {r.travellers} travellers · {new Date(r.created_at).toLocaleDateString()}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-700 mb-2">Itineraries ({detail.itineraries.length})</h4>
+                    <div className="space-y-1 max-h-32 overflow-y-auto">
+                      {detail.itineraries.slice(0, 5).map((it, i) => (
+                        <div key={i} className="text-xs bg-slate-50 rounded-lg px-3 py-1.5">
+                          <span className="font-medium text-slate-700">{it.destination || "—"}</span>
+                          <span className="text-slate-400 ml-2">{it.duration_days}d · {it.budget} · {new Date(it.created_at).toLocaleDateString()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : <p className="text-slate-400 text-sm text-center py-4">Loading activity…</p>}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
-              <div className="flex gap-3 pt-4 border-t border-slate-200">
-                <button
-                  onClick={() => setSelectedHotel(null)}
-                  className="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-colors duration-200"
-                >
-                  Close
-                </button>
-                {selectedHotel.status === 'pending' && (
-                  <>
-                    <button
-                      onClick={() => {
-                        handleApproveHotel(selectedHotel.id);
-                      }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleRejectHotel(selectedHotel.id);
-                      }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-semibold hover:from-amber-600 hover:to-orange-700 transition-all duration-200 shadow-lg"
-                    >
-                      Reject
-                    </button>
-                  </>
-                )}
-                <button
-                  onClick={() => {
-                    handleDeleteHotel(selectedHotel.id);
-                  }}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-semibold hover:from-rose-600 hover:to-red-700 transition-all duration-200 shadow-lg"
-                >
-                  Delete
-                </button>
-              </div>
+// ── Search Analytics tab ──────────────────────────────────────────────────────
+function SearchAnalyticsTab({ auth }) {
+  const [data, setData] = useState(null);
+  const [page, setPage] = useState(1);
+  const [q, setQ] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const load = useCallback((pg = 1, search = "") => {
+    if (!auth) return;
+    setLoading(true);
+    axios.get(`${API}/analytics/searches`, { ...auth, params: { page: pg, per_page: 30, q: search } })
+      .then(r => { setData(r.data); setPage(pg); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [auth]);
+
+  useEffect(() => { load(); }, [load]);
+
+  const exportCSV = () => {
+    fetch(`${API}/analytics/export/searches`, { headers: auth.headers })
+      .then(r => r.blob()).then(blob => {
+        const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+        a.download = "searches.csv"; a.click();
+      });
+  };
+
+  return (
+    <div className="space-y-6">
+      {data && (
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+          <h3 className="font-bold text-slate-800 mb-4">🔥 Most Searched</h3>
+          <BarChart data={data.top_queries} labelKey="query" valueKey="count" color="purple" />
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-3 items-center justify-between">
+        <div className="flex gap-2">
+          <input value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => e.key === "Enter" && load(1, q)}
+            placeholder="Filter by query…"
+            className="border border-slate-200 rounded-xl px-4 py-2 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+          <button onClick={() => load(1, q)} className="px-4 py-2 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700">Filter</button>
+        </div>
+        <button onClick={exportCSV} className="px-4 py-2 bg-slate-700 text-white rounded-xl text-sm font-semibold hover:bg-slate-800">⬇ Export CSV</button>
+      </div>
+
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr className="text-left text-slate-600">
+                <th className="px-4 py-3">Query</th><th className="px-4 py-3">Category</th>
+                <th className="px-4 py-3">Results</th><th className="px-4 py-3">User</th>
+                <th className="px-4 py-3">Device</th><th className="px-4 py-3">Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? <tr><td colSpan={6} className="text-center py-10 text-slate-400">Loading…</td></tr>
+              : (data?.logs || []).map((s, i) => (
+                <tr key={i} className="border-b border-slate-50 hover:bg-slate-50">
+                  <td className="px-4 py-2 font-medium text-slate-800">"{s.query}"</td>
+                  <td className="px-4 py-2"><span className="px-2 py-0.5 bg-purple-100 text-purple-700 rounded-full text-xs">{s.category}</span></td>
+                  <td className="px-4 py-2 text-center text-slate-600">{s.result_count}</td>
+                  <td className="px-4 py-2 text-slate-500 text-xs">{s.user_name || s.clerk_id?.slice(0, 12) || "Guest"}</td>
+                  <td className="px-4 py-2 text-slate-400 text-xs max-w-[160px] truncate">{s.device}</td>
+                  <td className="px-4 py-2 text-slate-400 text-xs">{new Date(s.created_at).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100 text-sm text-slate-500">
+          <span>{data?.total ?? 0} searches total</span>
+          <div className="flex gap-2">
+            <button disabled={page <= 1} onClick={() => load(page - 1, q)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">←</button>
+            <span className="px-3 py-1">Page {page}</span>
+            <button disabled={!data || page * 30 >= data.total} onClick={() => load(page + 1, q)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Recommendations tab ───────────────────────────────────────────────────────
+function RecommendationsTab({ auth }) {
+  const [data, setData] = useState(null);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const load = useCallback((pg = 1) => {
+    if (!auth) return;
+    setLoading(true);
+    axios.get(`${API}/analytics/recommendations`, { ...auth, params: { page: pg, per_page: 30 } })
+      .then(r => { setData(r.data); setPage(pg); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [auth]);
+
+  useEffect(() => { load(); }, [load]);
+
+  const exportCSV = () => {
+    fetch(`${API}/analytics/export/recommendations`, { headers: auth.headers })
+      .then(r => r.blob()).then(blob => {
+        const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+        a.download = "recommendations.csv"; a.click();
+      });
+  };
+
+  return (
+    <div className="space-y-6">
+      {data && (
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+          <h3 className="font-bold text-slate-800 mb-4">🗺️ Most Recommended Places</h3>
+          <BarChart data={data.top_places} labelKey="name" valueKey="count" color="amber" />
+        </div>
+      )}
+      <div className="flex justify-end">
+        <button onClick={exportCSV} className="px-4 py-2 bg-slate-700 text-white rounded-xl text-sm font-semibold hover:bg-slate-800">⬇ Export CSV</button>
+      </div>
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr className="text-left text-slate-600">
+                <th className="px-4 py-3">User</th><th className="px-4 py-3">Trip Type</th>
+                <th className="px-4 py-3">Month</th><th className="px-4 py-3">Travellers</th>
+                <th className="px-4 py-3">Duration</th><th className="px-4 py-3">Places Shown</th>
+                <th className="px-4 py-3">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? <tr><td colSpan={7} className="text-center py-10 text-slate-400">Loading…</td></tr>
+              : (data?.logs || []).map((r, i) => (
+                <tr key={i} className="border-b border-slate-50 hover:bg-slate-50">
+                  <td className="px-4 py-2 text-slate-700">{r.user_name || r.clerk_id?.slice(0, 12) || "Guest"}</td>
+                  <td className="px-4 py-2 text-xs text-slate-600 max-w-[140px] truncate">{r.trip_type || "—"}</td>
+                  <td className="px-4 py-2 text-slate-500">{r.travel_month || "—"}</td>
+                  <td className="px-4 py-2 text-center">{r.travellers ?? "—"}</td>
+                  <td className="px-4 py-2 text-slate-500">{r.duration || "—"}</td>
+                  <td className="px-4 py-2 text-xs text-slate-400">{(r.places_shown || []).slice(0, 3).join(", ")}{r.places_shown?.length > 3 ? ` +${r.places_shown.length - 3}` : ""}</td>
+                  <td className="px-4 py-2 text-slate-400 text-xs">{new Date(r.created_at).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100 text-sm text-slate-500">
+          <span>{data?.total ?? 0} sessions total</span>
+          <div className="flex gap-2">
+            <button disabled={page <= 1} onClick={() => load(page - 1)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">←</button>
+            <span className="px-3 py-1">Page {page}</span>
+            <button disabled={!data || page * 30 >= data.total} onClick={() => load(page + 1)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Itineraries tab ───────────────────────────────────────────────────────────
+function ItinerariesTab({ auth }) {
+  const [data, setData] = useState(null);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const load = useCallback((pg = 1) => {
+    if (!auth) return;
+    setLoading(true);
+    axios.get(`${API}/analytics/itineraries`, { ...auth, params: { page: pg, per_page: 30 } })
+      .then(r => { setData(r.data); setPage(pg); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [auth]);
+
+  useEffect(() => { load(); }, [load]);
+
+  const exportCSV = () => {
+    fetch(`${API}/analytics/export/itineraries`, { headers: auth.headers })
+      .then(r => r.blob()).then(blob => {
+        const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+        a.download = "itineraries.csv"; a.click();
+      });
+  };
+
+  return (
+    <div className="space-y-6">
+      {data && (
+        <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+          <h3 className="font-bold text-slate-800 mb-4">📅 Top Destinations</h3>
+          <BarChart data={data.top_destinations} labelKey="destination" valueKey="count" color="blue" />
+        </div>
+      )}
+      <div className="flex justify-end">
+        <button onClick={exportCSV} className="px-4 py-2 bg-slate-700 text-white rounded-xl text-sm font-semibold hover:bg-slate-800">⬇ Export CSV</button>
+      </div>
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr className="text-left text-slate-600">
+                <th className="px-4 py-3">User</th><th className="px-4 py-3">Destination</th>
+                <th className="px-4 py-3">Dates</th><th className="px-4 py-3">Days</th>
+                <th className="px-4 py-3">Budget</th><th className="px-4 py-3">Travellers</th>
+                <th className="px-4 py-3">Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? <tr><td colSpan={7} className="text-center py-10 text-slate-400">Loading…</td></tr>
+              : (data?.logs || []).map((it, i) => (
+                <tr key={i} className="border-b border-slate-50 hover:bg-slate-50">
+                  <td className="px-4 py-2 text-slate-700">{it.user_name || it.clerk_id?.slice(0, 12) || "Guest"}</td>
+                  <td className="px-4 py-2 font-medium text-slate-800">{it.destination || "—"}</td>
+                  <td className="px-4 py-2 text-xs text-slate-500">{it.start_date} → {it.end_date}</td>
+                  <td className="px-4 py-2 text-center">{it.duration_days ?? "—"}</td>
+                  <td className="px-4 py-2 text-slate-500">{it.budget || "—"}</td>
+                  <td className="px-4 py-2 text-center">{it.travellers ?? "—"}</td>
+                  <td className="px-4 py-2 text-slate-400 text-xs">{new Date(it.created_at).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100 text-sm text-slate-500">
+          <span>{data?.total ?? 0} itineraries total</span>
+          <div className="flex gap-2">
+            <button disabled={page <= 1} onClick={() => load(page - 1)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">←</button>
+            <span className="px-3 py-1">Page {page}</span>
+            <button disabled={!data || page * 30 >= data.total} onClick={() => load(page + 1)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Chat History tab ──────────────────────────────────────────────────────────
+function ChatHistoryTab({ auth }) {
+  const [data, setData] = useState(null);
+  const [page, setPage] = useState(1);
+  const [expanded, setExpanded] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const load = useCallback((pg = 1) => {
+    if (!auth) return;
+    setLoading(true);
+    axios.get(`${API}/analytics/chats`, { ...auth, params: { page: pg, per_page: 20 } })
+      .then(r => { setData(r.data); setPage(pg); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [auth]);
+
+  useEffect(() => { load(); }, [load]);
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr className="text-left text-slate-600">
+                <th className="px-4 py-3">User</th><th className="px-4 py-3">Title</th>
+                <th className="px-4 py-3">Messages</th><th className="px-4 py-3">Date</th>
+                <th className="px-4 py-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? <tr><td colSpan={5} className="text-center py-10 text-slate-400">Loading…</td></tr>
+              : (data?.chats || []).map((c, i) => (
+                <>
+                  <tr key={i} className="border-b border-slate-50 hover:bg-slate-50">
+                    <td className="px-4 py-2 text-slate-700">{c.user_name || c.clerk_id?.slice(0, 12) || "Guest"}</td>
+                    <td className="px-4 py-2 font-medium text-slate-800">{c.title}</td>
+                    <td className="px-4 py-2 text-center">{c.message_count}</td>
+                    <td className="px-4 py-2 text-slate-400 text-xs">{new Date(c.created_at).toLocaleDateString()}</td>
+                    <td className="px-4 py-2">
+                      <button onClick={() => setExpanded(expanded === i ? null : i)} className="text-teal-600 hover:underline text-xs font-semibold">
+                        {expanded === i ? "Hide" : "View"}
+                      </button>
+                    </td>
+                  </tr>
+                  {expanded === i && (
+                    <tr key={`${i}-msgs`} className="bg-slate-50">
+                      <td colSpan={5} className="px-6 py-3">
+                        <div className="space-y-2 max-h-48 overflow-y-auto">
+                          {c.messages.map((m, j) => (
+                            <div key={j} className={`flex gap-2 text-xs ${m.sender === "user" ? "justify-end" : "justify-start"}`}>
+                              <div className={`px-3 py-2 rounded-xl max-w-[80%] ${m.sender === "user" ? "bg-teal-100 text-teal-900" : "bg-white border border-slate-200 text-slate-700"}`}>
+                                <span className="font-semibold mr-1">{m.sender === "user" ? "User:" : "Bot:"}</span>
+                                {m.content}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100 text-sm text-slate-500">
+          <span>{data?.total ?? 0} chats total</span>
+          <div className="flex gap-2">
+            <button disabled={page <= 1} onClick={() => load(page - 1)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">←</button>
+            <span className="px-3 py-1">Page {page}</span>
+            <button disabled={!data || page * 20 >= data.total} onClick={() => load(page + 1)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Submissions + Reviews tabs (preserved from original) ─────────────────────
+function SubmissionsTab({ auth }) {
+  const [places, setPlaces] = useState([]);
+  const [hotels, setHotels] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState(null);
+  const showToast = (type, message) => { setToast({ type, message }); setTimeout(() => setToast(null), 3000); };
+
+  useEffect(() => {
+    Promise.all([
+      axios.get("http://localhost:8000/api/places?limit=all&status=all"),
+      axios.get("http://localhost:8000/api/hotels?limit=all"),
+      axios.get("http://localhost:8000/api/restaurants?limit=all"),
+    ]).then(([p, h, r]) => {
+      setPlaces((p.data.places || []).filter(x => x.source === "user_submission"));
+      setHotels((h.data.hotels || []).filter(x => x.source === "user_submission"));
+      setRestaurants((r.data.restaurants || []).filter(x => x.source === "user_submission"));
+    }).catch(() => {}).finally(() => setLoading(false));
+  }, []);
+
+  const action = async (url, method = "post") => {
+    try {
+      await axios[method](url, {}, auth || {});
+      showToast("success", "Done!");
+    } catch { showToast("error", "Failed"); }
+  };
+
+  if (loading) return <div className="flex justify-center py-20"><div className="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin" /></div>;
+
+  const API_BASE = "http://localhost:8000";
+
+  // Resolve image URL — handles Cloudinary URLs and local paths
+  const resolveImg = (url) => {
+    if (!url) return null;
+    if (url.startsWith("http")) return url;
+    return `${API_BASE}${url}`;
+  };
+
+  const Section = ({ title, items, type }) => (
+    <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden mb-6">
+      <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+        <h3 className="font-bold text-slate-800">{title} <span className="text-slate-400 font-normal text-sm">({items.length})</span></h3>
+      </div>
+      {items.length === 0 ? <p className="text-slate-400 text-sm text-center py-8">No {type} submissions</p> : (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr className="text-left text-slate-600">
+                <th className="px-4 py-3">Image</th>
+                <th className="px-4 py-3">Name</th><th className="px-4 py-3">Location</th>
+                <th className="px-4 py-3">Status</th><th className="px-4 py-3">Submitted by</th>
+                <th className="px-4 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map(item => {
+                const imgSrc = resolveImg(item.image_url || (item.all_images?.[0]));
+                return (
+                  <tr key={item.id} className="border-b border-slate-50 hover:bg-slate-50">
+                    <td className="px-4 py-2">
+                      {imgSrc ? (
+                        <img src={imgSrc} alt={item.name}
+                          className="w-14 h-14 rounded-lg object-cover border border-slate-200"
+                          onError={e => { e.target.style.display = 'none'; }} />
+                      ) : (
+                        <div className="w-14 h-14 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 text-xs">No img</div>
+                      )}
+                    </td>
+                    <td className="px-4 py-2 font-medium text-slate-800">{item.name}</td>
+                    <td className="px-4 py-2 text-slate-500">{item.location || "—"}</td>
+                    <td className="px-4 py-2">
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                        item.status === "approved" ? "bg-emerald-100 text-emerald-700" :
+                        item.status === "pending"  ? "bg-amber-100 text-amber-700" :
+                        "bg-rose-100 text-rose-700"
+                      }`}>{item.status}</span>
+                    </td>
+                    <td className="px-4 py-2 text-slate-400 text-xs">{item.submitted_by?.slice(0, 12) || "—"}</td>
+                    <td className="px-4 py-2 flex gap-2">
+                      {item.status !== "approved" && <button onClick={() => action(`http://localhost:8000/api/${type}s/${item.id}/approve`)} className="text-xs px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg hover:bg-emerald-200">Approve</button>}
+                      {item.status !== "rejected" && <button onClick={() => action(`http://localhost:8000/api/${type}s/${item.id}/reject`)} className="text-xs px-2 py-1 bg-rose-100 text-rose-700 rounded-lg hover:bg-rose-200">Reject</button>}
+                      <button onClick={() => action(`http://localhost:8000/api/${type}s/${item.id}`, "delete")} className="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded-lg hover:bg-slate-200">Delete</button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <Toast toast={toast} />
+    </div>
+  );
+
+  return (
+    <>
+      <Section title="🗺️ Place Submissions" items={places} type="place" />
+      <Section title="🏨 Hotel Submissions" items={hotels} type="hotel" />
+      <Section title="🍽️ Restaurant Submissions" items={restaurants} type="restaurant" />
+    </>
+  );
+}
+
+// ── Reviews tab (simplified) ──────────────────────────────────────────────────
+function ReviewsTab({ auth }) {
+  const [reviews, setReviews] = useState([]);
+  const [stats, setStats] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState(null);
+  const showToast = (type, message) => { setToast({ type, message }); setTimeout(() => setToast(null), 3000); };
+
+  useEffect(() => {
+    Promise.all([
+      axios.get("http://localhost:8000/api/admin/reviews"),
+      axios.get("http://localhost:8000/api/admin/dashboard/review-stats"),
+    ]).then(([r, s]) => { setReviews(r.data.reviews || []); setStats(s.data); })
+      .catch(() => {}).finally(() => setLoading(false));
+  }, []);
+
+  const action = async (id, act) => {
+    try {
+      await axios.post(`http://localhost:8000/api/admin/reviews/${id}/${act}`, {}, auth || {});
+      setReviews(prev => prev.map(r => r.id === id ? { ...r, status: act === "approve" ? "approved" : "rejected" } : r));
+      showToast("success", `Review ${act}d!`);
+    } catch { showToast("error", "Failed"); }
+  };
+
+  if (loading) return <div className="flex justify-center py-20"><div className="w-10 h-10 border-4 border-teal-500 border-t-transparent rounded-full animate-spin" /></div>;
+
+  return (
+    <div className="space-y-6">
+      <Toast toast={toast} />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <StatCard label="Total Reviews"    value={stats.total_reviews}    color="teal"   icon="⭐" />
+        <StatCard label="Pending"          value={stats.pending_reviews}  color="amber"  icon="⏳" />
+        <StatCard label="Approved"         value={stats.approved_reviews} color="emerald"icon="✅" />
+        <StatCard label="Avg Rating"       value={stats.average_rating}   color="blue"   icon="📊" />
+      </div>
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr className="text-left text-slate-600">
+                <th className="px-4 py-3">Name</th><th className="px-4 py-3">Place</th>
+                <th className="px-4 py-3">Rating</th><th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Date</th><th className="px-4 py-3">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reviews.map(r => (
+                <tr key={r.id} className="border-b border-slate-50 hover:bg-slate-50">
+                  <td className="px-4 py-2 font-medium text-slate-800">{r.name}</td>
+                  <td className="px-4 py-2 text-slate-500">{r.place}</td>
+                  <td className="px-4 py-2">{"⭐".repeat(Math.min(r.rating, 5))}</td>
+                  <td className="px-4 py-2">
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                      r.status === "approved" ? "bg-emerald-100 text-emerald-700" :
+                      r.status === "pending"  ? "bg-amber-100 text-amber-700" :
+                      "bg-rose-100 text-rose-700"
+                    }`}>{r.status}</span>
+                  </td>
+                  <td className="px-4 py-2 text-slate-400 text-xs">{r.created_at ? new Date(r.created_at).toLocaleDateString() : "—"}</td>
+                  <td className="px-4 py-2 flex gap-2">
+                    {r.status !== "approved" && <button onClick={() => action(r.id, "approve")} className="text-xs px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg hover:bg-emerald-200">Approve</button>}
+                    {r.status !== "rejected" && <button onClick={() => action(r.id, "reject")} className="text-xs px-2 py-1 bg-rose-100 text-rose-700 rounded-lg hover:bg-rose-200">Reject</button>}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Saved Itineraries Admin Tab ───────────────────────────────────────────────
+function SavedItinerariesAdminTab({ auth }) {
+  const [data, setData] = useState(null);
+  const [stats, setStats] = useState(null);
+  const [page, setPage] = useState(1);
+  const [q, setQ] = useState("");
+  const [dest, setDest] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [expanded, setExpanded] = useState(null);
+  const [detail, setDetail] = useState({});
+
+  const load = useCallback((pg = 1, search = "", destination = "") => {
+    if (!auth) return;
+    setLoading(true);
+    axios.get(`${API}/admin/itineraries`, { ...auth, params: { page: pg, per_page: 30, q: search, destination } })
+      .then(r => { setData(r.data); setPage(pg); })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [auth]);
+
+  useEffect(() => {
+    load();
+    if (auth) {
+      axios.get(`${API}/admin/itineraries/stats`, auth)
+        .then(r => setStats(r.data))
+        .catch(() => {});
+    }
+  }, [load, auth]);
+
+  const openDetail = async (id) => {
+    if (detail[id]) { setExpanded(expanded === id ? null : id); return; }
+    try {
+      const r = await axios.get(`${API}/itineraries/${id}`, auth);
+      setDetail(prev => ({ ...prev, [id]: r.data }));
+      setExpanded(id);
+    } catch { setExpanded(expanded === id ? null : id); }
+  };
+
+  const exportCSV = () => {
+    fetch(`${API}/analytics/export/itineraries`, { headers: auth.headers })
+      .then(r => r.blob()).then(blob => {
+        const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+        a.download = "saved_itineraries.csv"; a.click();
+      });
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Stats */}
+      {stats && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+            <h3 className="font-bold text-slate-800 mb-4">🔖 Total Saved: <span className="text-teal-600">{stats.total}</span></h3>
+            <h4 className="font-semibold text-slate-700 mb-3 text-sm">Top Destinations</h4>
+            <BarChart data={stats.top_destinations} labelKey="destination" valueKey="count" color="teal" />
+          </div>
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-100 p-6">
+            <h4 className="font-semibold text-slate-700 mb-3 text-sm">Budget Distribution</h4>
+            <BarChart data={stats.budget_distribution} labelKey="budget" valueKey="count" color="blue" />
+            <h4 className="font-semibold text-slate-700 mt-4 mb-3 text-sm">Recent Saves</h4>
+            <div className="space-y-1">
+              {(stats.recent || []).map((i, idx) => (
+                <div key={idx} className="flex justify-between text-xs bg-slate-50 rounded-lg px-3 py-1.5">
+                  <span className="font-medium text-slate-700 truncate max-w-[60%]">{i.title}</span>
+                  <span className="text-slate-400">{i.user_name || "—"} · {new Date(i.created_at).toLocaleDateString()}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       )}
 
-      {/* Restaurant Detail Modal */}
-      {selectedRestaurant && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-gradient-to-r from-orange-500 to-red-500 p-6 rounded-t-2xl">
-              <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-black text-white">Restaurant Details</h3>
-                <button
-                  onClick={() => setSelectedRestaurant(null)}
-                  className="p-2 hover:bg-white/20 rounded-lg transition-colors duration-200"
-                >
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+      {/* Filters */}
+      <div className="flex flex-wrap gap-3 items-center justify-between">
+        <div className="flex gap-2 flex-wrap">
+          <input value={q} onChange={e => setQ(e.target.value)} onKeyDown={e => e.key === "Enter" && load(1, q, dest)}
+            placeholder="Search title / user…"
+            className="border border-slate-200 rounded-xl px-4 py-2 text-sm w-52 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+          <input value={dest} onChange={e => setDest(e.target.value)} onKeyDown={e => e.key === "Enter" && load(1, q, dest)}
+            placeholder="Filter destination…"
+            className="border border-slate-200 rounded-xl px-4 py-2 text-sm w-44 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+          <button onClick={() => load(1, q, dest)} className="px-4 py-2 bg-teal-600 text-white rounded-xl text-sm font-semibold hover:bg-teal-700">Filter</button>
+        </div>
+        <button onClick={exportCSV} className="px-4 py-2 bg-slate-700 text-white rounded-xl text-sm font-semibold hover:bg-slate-800">⬇ Export CSV</button>
+      </div>
 
-            <div className="p-6 space-y-6">
-              {selectedRestaurant.image_url && (
-                <img 
-                  src={`http://localhost:8000${selectedRestaurant.image_url}`}
-                  alt={selectedRestaurant.name}
-                  className="w-full h-64 object-cover rounded-xl border border-slate-200"
-                  onError={(e) => e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'}
-                />
-              )}
-
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Restaurant Name</label>
-                  <p className="text-lg font-semibold text-slate-800 mt-1">{selectedRestaurant.name}</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Location</label>
-                    <p className="text-slate-800 mt-1">{selectedRestaurant.location || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Cuisine</label>
-                    <p className="text-slate-800 mt-1">{selectedRestaurant.cuisine || 'N/A'}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Price Level</label>
-                    <p className="text-slate-800 mt-1">{selectedRestaurant.price_range || 'N/A'}</p>
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Rating</label>
-                    <p className="text-slate-800 mt-1">
-                      {selectedRestaurant.rating ? `⭐ ${selectedRestaurant.rating}/5` : 'Not rated yet'}
-                    </p>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Status</label>
-                  <div className="mt-2">
-                    <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold ${
-                      selectedRestaurant.status === 'pending' 
-                        ? 'bg-amber-100 text-amber-700' 
-                        : selectedRestaurant.status === 'approved'
-                        ? 'bg-emerald-100 text-emerald-700'
-                        : 'bg-rose-100 text-rose-700'
-                    }`}>
-                      {selectedRestaurant.status === 'pending' && '⏳ '}
-                      {selectedRestaurant.status === 'approved' && '✓ '}
-                      {selectedRestaurant.status === 'rejected' && '✗ '}
-                      {selectedRestaurant.status ? selectedRestaurant.status.toUpperCase() : 'APPROVED'}
-                    </span>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Description</label>
-                  <p className="text-slate-700 mt-1 leading-relaxed">{selectedRestaurant.description || 'No description provided'}</p>
-                </div>
-
-                <div>
-                  <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Tags</label>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {selectedRestaurant.tags ? selectedRestaurant.tags.split(',').map((tag, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold">
-                        #{tag.trim()}
-                      </span>
-                    )) : <span className="text-slate-500">No tags</span>}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex gap-3 pt-4 border-t border-slate-200">
-                <button
-                  onClick={() => setSelectedRestaurant(null)}
-                  className="flex-1 px-4 py-3 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-colors duration-200"
-                >
-                  Close
-                </button>
-                {selectedRestaurant.status === 'pending' && (
-                  <>
-                    <button
-                      onClick={() => {
-                        handleApproveRestaurant(selectedRestaurant.id);
-                      }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleRejectRestaurant(selectedRestaurant.id);
-                      }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl font-semibold hover:from-amber-600 hover:to-orange-700 transition-all duration-200 shadow-lg"
-                    >
-                      Reject
-                    </button>
-                  </>
-                )}
-                <button
-                  onClick={() => {
-                    handleDeleteRestaurant(selectedRestaurant.id);
-                  }}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-rose-500 to-red-600 text-white rounded-xl font-semibold hover:from-rose-600 hover:to-red-700 transition-all duration-200 shadow-lg"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+      {/* Table */}
+      <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr className="text-left text-slate-600">
+                <th className="px-4 py-3">Title</th><th className="px-4 py-3">User</th>
+                <th className="px-4 py-3">Destinations</th><th className="px-4 py-3">Duration</th>
+                <th className="px-4 py-3">Budget</th><th className="px-4 py-3">Cost</th>
+                <th className="px-4 py-3">Saved</th><th className="px-4 py-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? <tr><td colSpan={8} className="text-center py-10 text-slate-400">Loading…</td></tr>
+              : (data?.itineraries || []).map((it, i) => (
+                <>
+                  <tr key={i} className="border-b border-slate-50 hover:bg-slate-50">
+                    <td className="px-4 py-2 font-medium text-slate-800 max-w-[180px] truncate">{it.title}</td>
+                    <td className="px-4 py-2 text-slate-600">{it.user_name || it.clerk_id?.slice(0, 12) || "—"}</td>
+                    <td className="px-4 py-2 text-slate-500 max-w-[160px] truncate">{it.destinations || "—"}</td>
+                    <td className="px-4 py-2 text-slate-500">{it.duration || "—"}</td>
+                    <td className="px-4 py-2"><span className="px-2 py-0.5 bg-teal-100 text-teal-700 rounded-full text-xs">{it.budget_level || "—"}</span></td>
+                    <td className="px-4 py-2 text-slate-600">{it.total_cost ? `NPR ${it.total_cost.toLocaleString()}` : "—"}</td>
+                    <td className="px-4 py-2 text-slate-400 text-xs">{new Date(it.created_at).toLocaleDateString()}</td>
+                    <td className="px-4 py-2">
+                      <button onClick={() => openDetail(it.id)} className="text-teal-600 hover:underline text-xs font-semibold">
+                        {expanded === it.id ? "Hide" : "View"}
+                      </button>
+                    </td>
+                  </tr>
+                  {expanded === it.id && detail[it.id] && (
+                    <tr key={`${i}-detail`} className="bg-slate-50">
+                      <td colSpan={8} className="px-6 py-4">
+                        <div className="text-xs space-y-2">
+                          {detail[it.id].notes && <p><span className="font-semibold text-slate-600">Notes:</span> {detail[it.id].notes}</p>}
+                          {detail[it.id].itinerary?.summary && <p><span className="font-semibold text-slate-600">Summary:</span> {detail[it.id].itinerary.summary}</p>}
+                          {detail[it.id].itinerary?.dailyPlan?.length > 0 && (
+                            <p><span className="font-semibold text-slate-600">Days:</span> {detail[it.id].itinerary.dailyPlan.map(d => d.destination).join(" → ")}</p>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex items-center justify-between px-4 py-3 border-t border-slate-100 text-sm text-slate-500">
+          <span>{data?.total ?? 0} saved itineraries total</span>
+          <div className="flex gap-2">
+            <button disabled={page <= 1} onClick={() => load(page - 1, q, dest)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">←</button>
+            <span className="px-3 py-1">Page {page}</span>
+            <button disabled={!data || page * 30 >= data.total} onClick={() => load(page + 1, q, dest)} className="px-3 py-1 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-50">→</button>
           </div>
         </div>
-      )}
+      </div>
+    </div>
+  );
+}
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 text-slate-600 p-6 text-center text-sm mt-auto">
-        <p className="font-semibold">Tourism Management System — Admin Portal</p>
-        <p className="text-slate-500 mt-1">&copy; {new Date().getFullYear()} All rights reserved.</p>
-      </footer>
+// ── Main Dashboard ────────────────────────────────────────────────────────────
+const TABS = [
+  { key: "overview",         label: "📊 Overview" },
+  { key: "users",            label: "👥 Users" },
+  { key: "searches",         label: "🔍 Searches" },
+  { key: "recommendations",  label: "🗺️ Recommendations" },
+  { key: "saved_itineraries",label: "📅 Itineraries" },
+  { key: "chats",            label: "💬 Chat History" },
+  { key: "submissions",      label: "📝 Submissions" },
+  { key: "reviews",          label: "⭐ Reviews" },
+];
+
+export default function AdminDashboard() {
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("overview");
+  const [toast, setToast] = useState(null);
+
+  const auth = getAuth(navigate);
+
+  const handleSignOut = async () => {
+    try { await axios.post("http://localhost:8000/api/admin/logout", {}, auth || {}); } catch {}
+    localStorage.removeItem("admin");
+    navigate("/admin/login");
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100">
+      <Toast toast={toast} />
+
+      {/* Header */}
+      <header className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white shadow-2xl">
+        <div className="max-w-screen-2xl mx-auto px-6 py-5 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-gradient-to-br from-teal-500 to-blue-600 rounded-2xl shadow-xl">
+              <span className="text-2xl">🏔️</span>
+            </div>
+            <div>
+              <h1 className="text-2xl font-black tracking-tight">Admin Dashboard</h1>
+              <p className="text-slate-400 text-xs mt-0.5">Tourism Management System</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-2 bg-white/10 rounded-xl px-3 py-1.5 border border-white/20">
+              <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
+              <span className="text-xs font-semibold text-slate-200">Online</span>
+            </div>
+            <button onClick={handleSignOut} className="px-5 py-2 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 rounded-xl font-bold text-sm transition-all shadow-lg hover:shadow-xl">
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Tab nav */}
+      <div className="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-40 overflow-x-auto">
+        <div className="max-w-screen-2xl mx-auto px-6 flex gap-1 min-w-max">
+          {TABS.map(t => (
+            <button key={t.key} onClick={() => setActiveTab(t.key)}
+              className={`relative px-5 py-4 font-semibold text-sm transition-all whitespace-nowrap ${
+                activeTab === t.key ? "text-teal-600" : "text-slate-500 hover:text-slate-800"
+              }`}>
+              {t.label}
+              {activeTab === t.key && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full" />}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Content */}
+      <main className="max-w-screen-2xl mx-auto px-6 py-8">
+        {activeTab === "overview"        && <OverviewTab auth={auth} />}
+        {activeTab === "users"           && <UsersTab auth={auth} />}
+        {activeTab === "searches"        && <SearchAnalyticsTab auth={auth} />}
+        {activeTab === "recommendations" && <RecommendationsTab auth={auth} />}
+        {activeTab === "saved_itineraries" && <SavedItinerariesAdminTab auth={auth} />}
+        {activeTab === "chats"            && <ChatHistoryTab auth={auth} />}
+        {activeTab === "submissions"      && <SubmissionsTab auth={auth} />}
+        {activeTab === "reviews"          && <ReviewsTab auth={auth} />}
+      </main>
     </div>
   );
 }

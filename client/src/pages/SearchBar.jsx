@@ -2,10 +2,12 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { FaSearch, FaTimes, FaSpinner, FaMicrophone } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
+import { useUser } from "@clerk/clerk-react";
 import SearchDropdownList from "../components/SearchDropdownList";
 
 export default function SearchBar({ placeholder, className = "", onSearch = null, category = "all" }) {
   const { theme } = useTheme();
+  const { user } = useUser() || {};
   const navigate = useNavigate();
   const location = useLocation();
   const inputRef = useRef(null);
@@ -79,8 +81,10 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
     setIsLoading(true);
     
     try {
+      const clerkId  = user?.id || "";
+      const userName = user?.fullName || user?.username || "";
       const res = await fetch(
-        `http://localhost:8000/api/search?q=${encodeURIComponent(searchQuery)}&category=${activeCategory}`
+        `http://localhost:8000/api/search?q=${encodeURIComponent(searchQuery)}&category=${activeCategory}&clerk_id=${encodeURIComponent(clerkId)}&user_name=${encodeURIComponent(userName)}`
       );
       
       if (!res.ok) throw new Error(`HTTP ${res.status}`);

@@ -88,17 +88,49 @@ def serialize_event(event):
         'place_id': event.place_id
     }
 
+@places_bp.route('/places', methods=['GET'])
+def list_places():
+    """List all approved places with pagination. Supports limit=all for full list."""
+    session = SessionLocal()
+    try:
+        status = request.args.get('status', 'approved')
+        limit_raw = request.args.get('limit', '50')
+        page = int(request.args.get('page', 1))
+
+        query = session.query(Place)
+        if status != 'all':
+            query = query.filter(Place.status == status)
+
+        total = query.count()
+
+        if limit_raw == 'all':
+            places = query.order_by(Place.id).all()
+        else:
+            limit = int(limit_raw)
+            offset = (page - 1) * limit
+            places = query.order_by(Place.id).offset(offset).limit(limit).all()
+
+        return jsonify({
+            'places': [serialize_place(p) for p in places],
+            'total': total,
+            'page': page,
+        })
+    finally:
+        session.close()
+
+
 @places_bp.route('/places', methods=['POST'])
 def create_place():
+    from ..cloudinary_helper import upload_image as cloud_upload
+
     # Accept multipart/form-data
     name = request.form.get('name')
     location = request.form.get('location')
     ptype = request.form.get('type')
     description = request.form.get('description')
     tags = request.form.get('tags')
-    submission_type = request.form.get('submission_type', 'place')  # Default to 'place'
+    submission_type = request.form.get('submission_type', 'place')
     
-    # Type-specific fields
     price_range = request.form.get('price_range')
     rating = request.form.get('rating')
     cuisine = request.form.get('cuisine')
@@ -107,84 +139,81 @@ def create_place():
     if not name:
         return jsonify({'error': 'Name is required'}), 400
 
-    # Handle file uploads (image_1, image_2 etc.)
+    # Upload all images via Cloudinary helper (falls back to local)
     image_url = None
     all_images = []
     cover_index = int(request.form.get('cover_index', 0))
-    
-    # Collect all uploaded images
+
     for key in sorted(request.files.keys()):
         f = request.files[key]
         if f and f.filename:
-            filename = secure_filename(f.filename)
-            save_path = os.path.join(UPLOAD_DIR, filename)
-            f.save(save_path)
-            img_path = f"/datasets/uploads/{filename}"
-            all_images.append(img_path)
-    
-    # Set cover image
+            result = cloud_upload(f, item_type=submission_type, item_id=None)
+            all_images.append(result['url'])
+
     if all_images:
         image_url = all_images[cover_index] if cover_index < len(all_images) else all_images[0]
 
     # Save to DB based on submission type
+    from datetime import datetime as _dt
+    _now = _dt.utcnow()
     session = SessionLocal()
     try:
         if submission_type == 'hotel':
-            # Create hotel entry
-            hotel = Hotel(
-                name=name,
-                location=location,
-                description=description,
-                tags=tags,
-                image_url=image_url,
-                rating=float(rating) if rating else None,  # Don't set default rating
-                price_range=price_range or 'Mid-range ($30-80)',
-                all_images=json.dumps(all_images) if all_images else None,
-                source='user_submission',  # Mark as user submission
-                status='pending'  # Set as pending for admin approval
-            )
-            session.add(hotel)
+            from sqlalchemy import text as _text
+            session.execute(_text('''
+                INSERT INTO hotels (name, location, description, tags, image_url, rating,
+                    price_range, all_images, source, status, created_at, updated_at)
+                VALUES (:name, :location, :description, :tags, :image_url, :rating,
+                    :price_range, :all_images, 'user_submission', 'pending', :ts, :ts)
+            '''), {
+                'name': name, 'location': location, 'description': description, 'tags': tags,
+                'image_url': image_url, 'rating': float(rating) if rating else None,
+                'price_range': price_range or 'Mid-range ($30-80)',
+                'all_images': json.dumps(all_images) if all_images else None,
+                'ts': _now,
+            })
             session.commit()
-            session.refresh(hotel)
-            return jsonify({'success': True, 'hotel_id': hotel.id, 'status': 'pending', 'type': 'hotel'}), 201
-            
+            row = session.execute(_text('SELECT id FROM hotels WHERE name=:n AND created_at=:ts ORDER BY id DESC LIMIT 1'), {'n': name, 'ts': _now}).fetchone()
+            return jsonify({'success': True, 'hotel_id': row[0] if row else None, 'status': 'pending', 'type': 'hotel'}), 201
+
         elif submission_type == 'restaurant':
-            # Create restaurant entry
-            restaurant = Restaurant(
-                name=name,
-                location=location,
-                description=description,
-                tags=tags,
-                image_url=image_url,
-                rating=float(rating) if rating else None,  # Don't set default rating
-                price_range=price_level or '$ (Moderate)',
-                cuisine=cuisine,  # Add cuisine field
-                all_images=json.dumps(all_images) if all_images else None,
-                source='user_submission',  # Mark as user submission
-                status='pending'  # Set as pending for admin approval
-            )
-            session.add(restaurant)
+            from sqlalchemy import text as _text
+            session.execute(_text('''
+                INSERT INTO restaurants (name, location, description, tags, image_url, rating,
+                    price_range, cuisine, all_images, source, status, created_at, updated_at)
+                VALUES (:name, :location, :description, :tags, :image_url, :rating,
+                    :price_range, :cuisine, :all_images, 'user_submission', 'pending', :ts, :ts)
+            '''), {
+                'name': name, 'location': location, 'description': description, 'tags': tags,
+                'image_url': image_url, 'rating': float(rating) if rating else None,
+                'price_range': price_level or '$ (Moderate)', 'cuisine': cuisine,
+                'all_images': json.dumps(all_images) if all_images else None,
+                'ts': _now,
+            })
             session.commit()
-            session.refresh(restaurant)
-            return jsonify({'success': True, 'restaurant_id': restaurant.id, 'status': 'pending', 'type': 'restaurant'}), 201
-            
+            row = session.execute(_text('SELECT id FROM restaurants WHERE name=:n AND created_at=:ts ORDER BY id DESC LIMIT 1'), {'n': name, 'ts': _now}).fetchone()
+            return jsonify({'success': True, 'restaurant_id': row[0] if row else None, 'status': 'pending', 'type': 'restaurant'}), 201
+
         else:
-            # Create place entry (default)
-            place = Place(
-                name=name,
-                location=location,
-                type=ptype,
-                description=description,
-                tags=tags,
-                image_url=image_url,
-                all_images=json.dumps(all_images) if all_images else None,
-                status='pending',  # Set as pending for admin approval
-                source='user_submission'  # Mark as user submission
-            )
-            session.add(place)
+            # Use raw SQL to bypass the old Base model which lacks updated_at
+            from sqlalchemy import text as _text
+            session.execute(_text('''
+                INSERT INTO places (name, location, type, description, tags, image_url,
+                    all_images, status, source, created_at, updated_at)
+                VALUES (:name, :location, :type, :description, :tags, :image_url,
+                    :all_images, 'pending', 'user_submission', :ts, :ts)
+            '''), {
+                'name': name, 'location': location, 'type': ptype,
+                'description': description, 'tags': tags,
+                'image_url': image_url,
+                'all_images': json.dumps(all_images) if all_images else None,
+                'ts': _now,
+            })
             session.commit()
-            session.refresh(place)
-            return jsonify({'success': True, 'place_id': place.id, 'status': 'pending', 'type': 'place'}), 201
+            # Get the inserted id
+            row = session.execute(_text('SELECT id FROM places WHERE name=:n AND created_at=:ts ORDER BY id DESC LIMIT 1'), {'n': name, 'ts': _now}).fetchone()
+            place_id = row[0] if row else None
+            return jsonify({'success': True, 'place_id': place_id, 'status': 'pending', 'type': 'place'}), 201
             
     except Exception as e:
         session.rollback()

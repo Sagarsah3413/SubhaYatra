@@ -47,8 +47,9 @@ def list_restaurants():
     session = SessionLocal()
     try:
         # Get query parameters
-        page = int(request.args.get('page', 1))
-        limit = int(request.args.get('limit', 20))
+        page      = int(request.args.get('page', 1))
+        limit_raw = request.args.get('limit', '20')
+        limit     = None if limit_raw == 'all' else int(limit_raw)
         price_range = request.args.get('price_range')
         min_rating = request.args.get('min_rating')
         place_id = request.args.get('place_id')
@@ -71,22 +72,15 @@ def list_restaurants():
                 Restaurant.location.ilike(f'%{search}%')
             )
         
-        # Get total count
-        total = query.count()
-        
-        # Apply pagination
-        offset = (page - 1) * limit
-        restaurants = query.order_by(Restaurant.rating.desc().nullslast()).offset(offset).limit(limit).all()
-        
-        # Serialize results
-        results = [serialize_restaurant(restaurant) for restaurant in restaurants]
-        
+        total  = query.count()
+        offset = (page - 1) * (limit or total)
+        q2     = query.order_by(Restaurant.rating.desc().nullslast())
+        restaurants = q2.all() if limit is None else q2.offset(offset).limit(limit).all()
+        results = [serialize_restaurant(r) for r in restaurants]
         return jsonify({
-            'restaurants': results,
-            'total': total,
-            'page': page,
-            'limit': limit,
-            'pages': (total + limit - 1) // limit
+            'restaurants': results, 'total': total, 'page': page,
+            'limit': limit or total,
+            'pages': 1 if limit is None else (total + limit - 1) // limit,
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500

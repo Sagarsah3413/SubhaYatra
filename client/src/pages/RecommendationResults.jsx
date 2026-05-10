@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
+import { useUser } from "@clerk/clerk-react";
 
 // Components
 import { Header } from "../components/header/Header";
@@ -10,16 +11,17 @@ export default function RecommendationResults() {
   const location = useLocation();
   const navigate = useNavigate();
   const { theme } = useTheme();
+  const { user } = useUser() || {};
 
   // State for recommendations
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // � Get preferences safely
+  // Get preferences safely
   const preferences = location.state?.preferences;
 
-  // �🔒 Prevent direct access
+  // Prevent direct access
   useEffect(() => {
     if (!preferences) {
       navigate("/recommendation");
@@ -51,7 +53,7 @@ export default function RecommendationResults() {
             phone: preferences.phone,
             travellers: preferences.travellers,
             tripDuration: preferences.tripDuration,
-            travelMonth: preferences.travelMonth, // Added travel month
+            travelMonth: preferences.travelMonth,
             tripTypes: preferences.tripTypes || [preferences.tripType],
           }),
         });
@@ -66,24 +68,33 @@ export default function RecommendationResults() {
         
         if (data.success && data.recommendations) {
           setRecommendations(data.recommendations);
+
+          // ── Track recommendation session ──────────────────────────────────
+          try {
+            fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/track/recommendation`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                clerk_id:    user?.id || null,
+                user_name:   user?.fullName || user?.username || preferences.name || null,
+                trip_type:   (preferences.tripTypes || [preferences.tripType]).join(', '),
+                travel_month: preferences.travelMonth || null,
+                travellers:  preferences.travellers || null,
+                duration:    preferences.tripDuration || null,
+                places_shown: data.recommendations.map(p => p.name),
+              }),
+            }).catch(() => {});
+          } catch (_) {}
+          // ─────────────────────────────────────────────────────────────────
         } else {
           throw new Error('Invalid response format');
         }
       } catch (err) {
         console.error('Error fetching recommendations:', err);
-        console.error('Error details:', {
-          message: err.message,
-          stack: err.stack,
-          preferences: preferences,
-          errorType: err.name
-        });
-        
-        // Provide more specific error messages
         let errorMessage = err.message;
         if (err.name === 'TypeError' && err.message.includes('fetch')) {
           errorMessage = 'Cannot connect to backend server. Please ensure the backend is running on http://localhost:8000';
         }
-        
         setError(errorMessage || 'Failed to fetch recommendations. Please check if backend is running on port 8000.');
       } finally {
         setLoading(false);

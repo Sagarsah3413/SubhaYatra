@@ -10,6 +10,26 @@ import { ToastProvider } from "./contexts/ToastContext";
 import { useTranslation } from 'react-i18next';
 import ScrollToTop from "./components/ScrollToTop";
 
+// ── Clerk user sync: runs once after sign-in, upserts user in our DB ─────────
+function ClerkSync() {
+  const { isSignedIn, user } = useUser();
+  useEffect(() => {
+    if (!isSignedIn || !user) return;
+    const payload = {
+      clerk_id:   user.id,
+      email:      user.primaryEmailAddress?.emailAddress || "",
+      name:       user.fullName || user.username || "",
+      avatar_url: user.imageUrl || "",
+    };
+    fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/clerk/sync`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }).catch(() => {});  // fire-and-forget, never block UI
+  }, [isSignedIn, user?.id]);
+  return null;
+}
+
 // Lazy load components for better performance
 import { lazy, Suspense } from "react";
 import SearchBar from "./pages/SearchBar";
@@ -622,6 +642,7 @@ const App = memo(() => (
     <ToastProvider>
       <Router>
         <ScrollToTop />
+        <ClerkSync />
         <Suspense fallback={
           <div className="min-h-screen bg-slate-900 flex items-center justify-center">
             <div className="text-center">
@@ -646,6 +667,7 @@ const App = memo(() => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/guide" element={<Itinerary />} />
             <Route path="/itinerary" element={<Itinerary />} />
+            <Route path="/my-itineraries" element={<Itinerary />} />
             <Route path="/explore-nepal" element={<ExploreNepal />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/help" element={<Help />} />

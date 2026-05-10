@@ -15,7 +15,7 @@ export default function AdminLogin() {
     try {
       // Call backend login API
       const res = await axios.post(
-        "http://localhost:8000/admin/login",
+        "http://localhost:8000/api/admin/login",
         { username, password },
         { withCredentials: true }
       );

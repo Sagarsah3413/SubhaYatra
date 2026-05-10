@@ -21,6 +21,10 @@ from .routes.images import images_bp
 from .routes.recommendations import recommendations_bp  # ⭐ Recommendations routes
 from .routes.reviews import reviews_bp  # ⭐ Reviews routes
 from .routes.contact import contact_bp  # ⭐ Contact form routes
+from .routes.clerk_sync import clerk_sync_bp  # ⭐ Clerk user sync + webhook
+from .routes.analytics import analytics_bp    # ⭐ Analytics / admin dashboard
+from .routes.tracking import tracking_bp      # ⭐ Search / recommendation / itinerary tracking
+from .routes.saved_itineraries import saved_itineraries_bp  # ⭐ Saved itineraries
 # Removed place_details_bp - using places_bp instead which has events support
 
 # -----------------------------
@@ -44,7 +48,10 @@ def create_app():
     # -----------------------------
     # Database configuration
     # -----------------------------
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tourism.db"
+    # Use absolute path to ensure Flask-SQLAlchemy and SessionLocal use the same DB file
+    import os as _os
+    db_path = _os.path.join(_os.getcwd(), "tourism.db")
+    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
 
@@ -70,6 +77,15 @@ def create_app():
     init_flask_db(app)  # Create Flask-SQLAlchemy tables
 
     # -----------------------------
+    # Initialize Cloudinary
+    # -----------------------------
+    from .cloudinary_helper import CLOUDINARY_ENABLED  # triggers config on import
+    if CLOUDINARY_ENABLED:
+        print("☁️  Cloudinary image storage: ACTIVE")
+    else:
+        print("📁  Image storage: local filesystem (add Cloudinary keys to .env to enable cloud)")
+
+    # -----------------------------
     # Register blueprints/routes
     # -----------------------------
     app.register_blueprint(search_blueprint, url_prefix="/api")
@@ -84,6 +100,10 @@ def create_app():
     app.register_blueprint(recommendations_bp, url_prefix="/api")  # Recommendations routes
     app.register_blueprint(reviews_bp, url_prefix="/api")  # Reviews routes
     app.register_blueprint(contact_bp, url_prefix="/api")  # Contact form routes
+    app.register_blueprint(clerk_sync_bp, url_prefix="/api")   # Clerk sync + webhook
+    app.register_blueprint(analytics_bp, url_prefix="/api")    # Analytics
+    app.register_blueprint(tracking_bp, url_prefix="/api")     # Tracking
+    app.register_blueprint(saved_itineraries_bp, url_prefix="/api")  # Saved itineraries
     # Removed place_details_bp registration - using places_bp instead
     app.register_blueprint(admin_bp, url_prefix="/api")  # Admin login/dashboard routes
 
