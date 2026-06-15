@@ -1,34 +1,32 @@
-"""
-Database configuration — single Flask-SQLAlchemy instance.
-All models use db.Model; no dual-ORM setup.
-"""
-
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 from flask_sqlalchemy import SQLAlchemy
 
+# -----------------------------
+# SQLAlchemy setup
+# -----------------------------
+engine = create_engine("sqlite:///tourism.db", connect_args={"check_same_thread": False})
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+# -----------------------------
+# Flask-SQLAlchemy setup
+# -----------------------------
 db = SQLAlchemy()
 
+def init_db():
+    """Initialize database with all models"""
+    # Import all models to ensure they're registered with Base
+    from . import models
+    
+    # Create all tables for SQLAlchemy models
+    Base.metadata.create_all(bind=engine)
+    
+    print("✅ Database initialized successfully")
 
-def init_db(app):
-    """
-    Bind db to the Flask app and create all tables.
-    Call once inside create_app().
-    """
-    db.init_app(app)
+def init_flask_db(app):
+    """Initialize Flask-SQLAlchemy tables (Chat, Message, SearchHistory)"""
     with app.app_context():
-        # Import models so SQLAlchemy registers them before create_all
-        from . import models  # noqa: F401
         db.create_all()
-        print("✅ Database initialized — all tables created.")
-
-
-def get_db():
-    """
-    Yield a scoped session for use in route handlers.
-    Usage:
-        session = get_db()
-        try:
-            ...
-        finally:
-            session.close()
-    """
-    return db.session
+        print("✅ Flask-SQLAlchemy tables created successfully")

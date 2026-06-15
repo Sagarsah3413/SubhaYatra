@@ -1,23 +1,26 @@
 # ------------------ AI REPLY FUNCTION ------------------
 
-from .database import db
+from .database import SessionLocal
 from .models import Place, Hotel, Restaurant
 from sqlalchemy import or_
 
 def search_place_in_database(query: str):
     """Search for a place in the database"""
+    session = SessionLocal()
     try:
-        places = db.session.query(Place).filter(
+        # Search for places matching the query
+        places = session.query(Place).filter(
             or_(
                 Place.name.ilike(f'%{query}%'),
                 Place.location.ilike(f'%{query}%'),
                 Place.tags.ilike(f'%{query}%')
             ),
-            Place.status == 'approved'
+            Place.status == 'approved'  # Only show approved places
         ).limit(3).all()
+        
         return places
-    except Exception:
-        return []
+    finally:
+        session.close()
 
 def generate_place_response(place):
     """Generate a comprehensive response for a specific place (500-1000 words)"""

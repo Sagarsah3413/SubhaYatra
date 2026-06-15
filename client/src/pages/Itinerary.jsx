@@ -4,8 +4,8 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useToast } from '../contexts/ToastContext';
 import { Header } from '../components/header/Header';
 import Footer from '../components/footer/Footer';
-import { 
-  FaRoute, FaPlus, FaSave, FaInfoCircle, 
+import {
+  FaRoute, FaPlus, FaSave, FaInfoCircle,
   FaCalendarAlt, FaMapMarkerAlt,
   FaHotel, FaUtensils, FaMoneyBillWave, FaDownload,
   FaShare, FaSpinner, FaCheckCircle, FaMountain,
@@ -13,152 +13,152 @@ import {
 } from 'react-icons/fa';
 
 // Enhanced Nepal destinations data with more comprehensive information
-const nepalDestinations = {
-  kathmandu: {
-    name: 'Kathmandu',
-    days: 3,
-    attractions: [
-      'Kathmandu Durbar Square', 'Swayambhunath Temple (Monkey Temple)', 
-      'Boudhanath Stupa', 'Pashupatinath Temple', 'Thamel District',
-      'Garden of Dreams', 'Patan Durbar Square', 'Bhaktapur Durbar Square'
-    ],
-    activities: [
-      'Heritage site exploration', 'Cultural tours', 'Traditional shopping', 
-      'Local food tours', 'Photography walks', 'Rickshaw rides',
-      'Pottery workshops', 'Temple ceremonies'
-    ],
-    accommodation: {
-      budget: 'Guesthouse in Thamel',
-      mid: 'Heritage Boutique Hotel',
-      luxury: '5-Star Heritage Resort'
-    },
-    dailyCost: { budget: 35, mid: 65, luxury: 120 },
-    transportation: 'Walking, taxi, rickshaw',
-    highlights: 'UNESCO World Heritage Sites, vibrant culture, ancient architecture'
-  },
-  pokhara: {
-    name: 'Pokhara',
-    days: 4,
-    attractions: [
-      'Phewa Lake', 'Sarangkot Sunrise Point', 'World Peace Pagoda', 
-      'Devi\'s Fall', 'Gupteshwor Cave', 'International Mountain Museum',
-      'Begnas Lake', 'Mahendra Cave', 'Bindabasini Temple'
-    ],
-    activities: [
-      'Paragliding', 'Boating on Phewa Lake', 'Sunrise viewing', 
-      'Cave exploration', 'Mountain biking', 'Zip-lining',
-      'Ultralight flights', 'Yoga sessions', 'Lakeside walks'
-    ],
-    accommodation: {
-      budget: 'Lakeside Guesthouse',
-      mid: 'Lake View Resort',
-      luxury: 'Luxury Mountain Resort'
-    },
-    dailyCost: { budget: 40, mid: 75, luxury: 140 },
-    transportation: 'Walking, boat, taxi',
-    highlights: 'Adventure sports, stunning lake views, Himalayan panorama'
-  },
-  chitwan: {
-    name: 'Chitwan National Park',
-    days: 3,
-    attractions: [
-      'Jungle Safari', 'Elephant Breeding Center', 'Tharu Cultural Program', 
-      'Rapti River', 'Bis Hazari Tal', 'Crocodile Breeding Center',
-      'Tharu Village', 'Sunset Point'
-    ],
-    activities: [
-      'Jeep safari', 'Elephant safari', 'Bird watching', 
-      'Cultural shows', 'Canoe rides', 'Nature walks',
-      'Village tours', 'Wildlife photography'
-    ],
-    accommodation: {
-      budget: 'Jungle Lodge',
-      mid: 'Safari Resort',
-      luxury: 'Luxury Jungle Resort'
-    },
-    dailyCost: { budget: 50, mid: 85, luxury: 160 },
-    transportation: 'Jeep, elephant, canoe',
-    highlights: 'Wildlife encounters, cultural immersion, pristine nature'
-  },
-  everest: {
-    name: 'Everest Region',
-    days: 14,
-    attractions: [
-      'Everest Base Camp', 'Kala Patthar', 'Namche Bazaar', 
-      'Tengboche Monastery', 'Sagarmatha National Park', 'Sherpa Museum',
-      'Everest View Hotel', 'Gokyo Lakes', 'Cho La Pass'
-    ],
-    activities: [
-      'High-altitude trekking', 'Mountain photography', 'Cultural immersion', 
-      'Monastery visits', 'Acclimatization hikes', 'Sherpa interactions',
-      'Sunrise viewing', 'Alpine lake visits'
-    ],
-    accommodation: {
-      budget: 'Tea House Lodge',
-      mid: 'Mountain Lodge',
-      luxury: 'Premium Mountain Resort'
-    },
-    dailyCost: { budget: 45, mid: 70, luxury: 120 },
-    transportation: 'Trekking, domestic flights',
-    highlights: 'World\'s highest peak, Sherpa culture, breathtaking landscapes'
-  },
-  annapurna: {
-    name: 'Annapurna Region',
-    days: 12,
-    attractions: [
-      'Annapurna Base Camp', 'Poon Hill', 'Thorong La Pass', 
-      'Muktinath Temple', 'Ghandruk Village', 'Tatopani Hot Springs',
-      'Jomsom', 'Kagbeni', 'Marpha Village'
-    ],
-    activities: [
-      'Circuit trekking', 'Sunrise viewing', 'Cultural visits', 
-      'Hot spring relaxation', 'Apple brandy tasting', 'Monastery visits',
-      'Village homestays', 'Photography expeditions'
-    ],
-    accommodation: {
-      budget: 'Tea House',
-      mid: 'Mountain Lodge',
-      luxury: 'Premium Trek Lodge'
-    },
-    dailyCost: { budget: 40, mid: 65, luxury: 110 },
-    transportation: 'Trekking, jeep, domestic flights',
-    highlights: 'Diverse landscapes, cultural diversity, mountain panoramas'
-  },
-  lumbini: {
-    name: 'Lumbini',
-    days: 2,
-    attractions: [
-      'Maya Devi Temple', 'Ashoka Pillar', 'World Peace Pagoda',
-      'Lumbini Museum', 'Sacred Garden', 'Monasteries Zone',
-      'Kapilvastu', 'Tilaurakot'
-    ],
-    activities: [
-      'Pilgrimage tours', 'Meditation sessions', 'Cultural exploration',
-      'Archaeological site visits', 'Peaceful walks', 'Spiritual ceremonies'
-    ],
-    accommodation: {
-      budget: 'Pilgrim Guesthouse',
-      mid: 'Heritage Hotel',
-      luxury: 'Luxury Pilgrimage Resort'
-    },
-    dailyCost: { budget: 30, mid: 55, luxury: 100 },
-    transportation: 'Walking, bicycle, rickshaw',
-    highlights: 'Birthplace of Buddha, spiritual significance, peaceful atmosphere'
-  }
-};
+// const nepalDestinations = {
+//   kathmandu: {
+//     name: 'Kathmandu',
+//     days: 3,
+//     attractions: [
+//       'Kathmandu Durbar Square', 'Swayambhunath Temple (Monkey Temple)',
+//       'Boudhanath Stupa', 'Pashupatinath Temple', 'Thamel District',
+//       'Garden of Dreams', 'Patan Durbar Square', 'Bhaktapur Durbar Square'
+//     ],
+//     activities: [
+//       'Heritage site exploration', 'Cultural tours', 'Traditional shopping',
+//       'Local food tours', 'Photography walks', 'Rickshaw rides',
+//       'Pottery workshops', 'Temple ceremonies'
+//     ],
+//     accommodation: {
+//       budget: 'Guesthouse in Thamel',
+//       mid: 'Heritage Boutique Hotel',
+//       luxury: '5-Star Heritage Resort'
+//     },
+//     dailyCost: { budget: 35, mid: 65, luxury: 120 },
+//     transportation: 'Walking, taxi, rickshaw',
+//     highlights: 'UNESCO World Heritage Sites, vibrant culture, ancient architecture'
+//   },
+//   pokhara: {
+//     name: 'Pokhara',
+//     days: 4,
+//     attractions: [
+//       'Phewa Lake', 'Sarangkot Sunrise Point', 'World Peace Pagoda',
+//       'Devi\'s Fall', 'Gupteshwor Cave', 'International Mountain Museum',
+//       'Begnas Lake', 'Mahendra Cave', 'Bindabasini Temple'
+//     ],
+//     activities: [
+//       'Paragliding', 'Boating on Phewa Lake', 'Sunrise viewing',
+//       'Cave exploration', 'Mountain biking', 'Zip-lining',
+//       'Ultralight flights', 'Yoga sessions', 'Lakeside walks'
+//     ],
+//     accommodation: {
+//       budget: 'Lakeside Guesthouse',
+//       mid: 'Lake View Resort',
+//       luxury: 'Luxury Mountain Resort'
+//     },
+//     dailyCost: { budget: 40, mid: 75, luxury: 140 },
+//     transportation: 'Walking, boat, taxi',
+//     highlights: 'Adventure sports, stunning lake views, Himalayan panorama'
+//   },
+//   chitwan: {
+//     name: 'Chitwan National Park',
+//     days: 3,
+//     attractions: [
+//       'Jungle Safari', 'Elephant Breeding Center', 'Tharu Cultural Program',
+//       'Rapti River', 'Bis Hazari Tal', 'Crocodile Breeding Center',
+//       'Tharu Village', 'Sunset Point'
+//     ],
+//     activities: [
+//       'Jeep safari', 'Elephant safari', 'Bird watching',
+//       'Cultural shows', 'Canoe rides', 'Nature walks',
+//       'Village tours', 'Wildlife photography'
+//     ],
+//     accommodation: {
+//       budget: 'Jungle Lodge',
+//       mid: 'Safari Resort',
+//       luxury: 'Luxury Jungle Resort'
+//     },
+//     dailyCost: { budget: 50, mid: 85, luxury: 160 },
+//     transportation: 'Jeep, elephant, canoe',
+//     highlights: 'Wildlife encounters, cultural immersion, pristine nature'
+//   },
+//   everest: {
+//     name: 'Everest Region',
+//     days: 14,
+//     attractions: [
+//       'Everest Base Camp', 'Kala Patthar', 'Namche Bazaar',
+//       'Tengboche Monastery', 'Sagarmatha National Park', 'Sherpa Museum',
+//       'Everest View Hotel', 'Gokyo Lakes', 'Cho La Pass'
+//     ],
+//     activities: [
+//       'High-altitude trekking', 'Mountain photography', 'Cultural immersion',
+//       'Monastery visits', 'Acclimatization hikes', 'Sherpa interactions',
+//       'Sunrise viewing', 'Alpine lake visits'
+//     ],
+//     accommodation: {
+//       budget: 'Tea House Lodge',
+//       mid: 'Mountain Lodge',
+//       luxury: 'Premium Mountain Resort'
+//     },
+//     dailyCost: { budget: 45, mid: 70, luxury: 120 },
+//     transportation: 'Trekking, domestic flights',
+//     highlights: 'World\'s highest peak, Sherpa culture, breathtaking landscapes'
+//   },
+//   annapurna: {
+//     name: 'Annapurna Region',
+//     days: 12,
+//     attractions: [
+//       'Annapurna Base Camp', 'Poon Hill', 'Thorong La Pass',
+//       'Muktinath Temple', 'Ghandruk Village', 'Tatopani Hot Springs',
+//       'Jomsom', 'Kagbeni', 'Marpha Village'
+//     ],
+//     activities: [
+//       'Circuit trekking', 'Sunrise viewing', 'Cultural visits',
+//       'Hot spring relaxation', 'Apple brandy tasting', 'Monastery visits',
+//       'Village homestays', 'Photography expeditions'
+//     ],
+//     accommodation: {
+//       budget: 'Tea House',
+//       mid: 'Mountain Lodge',
+//       luxury: 'Premium Trek Lodge'
+//     },
+//     dailyCost: { budget: 40, mid: 65, luxury: 110 },
+//     transportation: 'Trekking, jeep, domestic flights',
+//     highlights: 'Diverse landscapes, cultural diversity, mountain panoramas'
+//   },
+//   lumbini: {
+//     name: 'Lumbini',
+//     days: 2,
+//     attractions: [
+//       'Maya Devi Temple', 'Ashoka Pillar', 'World Peace Pagoda',
+//       'Lumbini Museum', 'Sacred Garden', 'Monasteries Zone',
+//       'Kapilvastu', 'Tilaurakot'
+//     ],
+//     activities: [
+//       'Pilgrimage tours', 'Meditation sessions', 'Cultural exploration',
+//       'Archaeological site visits', 'Peaceful walks', 'Spiritual ceremonies'
+//     ],
+//     accommodation: {
+//       budget: 'Pilgrim Guesthouse',
+//       mid: 'Heritage Hotel',
+//       luxury: 'Luxury Pilgrimage Resort'
+//     },
+//     dailyCost: { budget: 30, mid: 55, luxury: 100 },
+//     transportation: 'Walking, bicycle, rickshaw',
+//     highlights: 'Birthplace of Buddha, spiritual significance, peaceful atmosphere'
+//   }
+// };
 
 // Enhanced itinerary generator with comprehensive planning using database places
 const generateItinerary = (formData) => {
   try {
     const { duration, selectedPlaces, budget = 'mid' } = formData;
-    
+
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log('🎯 GENERATING ITINERARY');
     console.log('📅 Requested Duration:', duration, 'days');
     console.log('📍 Selected Places:', selectedPlaces.length);
     console.log('💰 Budget Level:', budget);
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    
+
     if (!selectedPlaces || selectedPlaces.length === 0) {
       console.error('No valid destinations selected');
       return null;
@@ -168,7 +168,7 @@ const generateItinerary = (formData) => {
     const estimateDays = (place) => {
       const type = (place.type || '').toLowerCase();
       const activities = (place.activities || '').toLowerCase();
-      
+
       // Trekking destinations need more days
       if (type.includes('trek') || activities.includes('trek')) return 7;
       // Adventure/nature destinations
@@ -210,26 +210,26 @@ const generateItinerary = (formData) => {
 
     selectedPlaces.forEach((place, destIndex) => {
       const daysInDest = destinationDays[destIndex];
-      
+
       // Parse activities and attractions
       const activities = place.activities ? place.activities.split(',').map(a => a.trim()).filter(a => a) : [];
       const tags = place.tags ? place.tags.split(',').map(t => t.trim()).filter(t => t) : [];
-      
+
       // Determine accommodation based on place type and budget
       const getAccommodation = () => {
         const type = (place.type || '').toLowerCase();
         if (type.includes('trek')) {
           return budget === 'budget' ? 'Tea House Lodge' :
-                 budget === 'luxury' ? 'Premium Mountain Lodge' : 'Mountain Lodge';
+            budget === 'luxury' ? 'Premium Mountain Lodge' : 'Mountain Lodge';
         }
         return budget === 'budget' ? 'Guesthouse' :
-               budget === 'luxury' ? 'Luxury Resort' : 'Mid-range Hotel';
+          budget === 'luxury' ? 'Luxury Resort' : 'Mid-range Hotel';
       };
-      
+
       // STRICT CHECK: Stop if we've reached the duration limit
       for (let dayInDest = 0; dayInDest < daysInDest && currentDay <= duration; dayInDest++) {
         const dayActivities = [];
-        
+
         if (dayInDest === 0) {
           // Arrival day
           dayActivities.push({
@@ -238,14 +238,14 @@ const generateItinerary = (formData) => {
             type: 'logistics',
             description: `Settle into your ${getAccommodation()} and get oriented`
           });
-          
+
           dayActivities.push({
             time: '14:00 - 17:00',
             activity: tags[0] ? `Explore ${tags[0]}` : `${place.name} orientation walk`,
             type: 'sightseeing',
             description: place.description || 'Get your first taste of the local culture and atmosphere'
           });
-          
+
           dayActivities.push({
             time: '18:00 - 20:00',
             activity: 'Welcome dinner and local cuisine',
@@ -260,7 +260,7 @@ const generateItinerary = (formData) => {
             type: 'activity',
             description: 'Last chance to experience the highlights'
           });
-          
+
           dayActivities.push({
             time: '11:30 - 13:00',
             activity: 'Check-out and departure preparations',
@@ -275,21 +275,21 @@ const generateItinerary = (formData) => {
             type: 'sightseeing',
             description: 'Start the day with the most popular attractions'
           });
-          
+
           dayActivities.push({
             time: '13:00 - 17:00',
             activity: activities[dayInDest % activities.length] || 'Cultural activities',
             type: 'activity',
             description: place.description || 'Immerse yourself in local experiences and adventures'
           });
-          
+
           dayActivities.push({
             time: '17:30 - 19:00',
             activity: tags[(dayInDest + 1) % tags.length] || 'Evening exploration',
             type: 'sightseeing',
             description: 'Discover more attractions in the golden hour'
           });
-          
+
           dayActivities.push({
             time: '19:30 - 21:00',
             activity: 'Dinner and cultural experience',
@@ -300,8 +300,8 @@ const generateItinerary = (formData) => {
 
         // Calculate costs based on budget
         const baseCost = budget === 'budget' ? 35 : budget === 'luxury' ? 120 : 65;
-        const mealCosts = budget === 'budget' ? [6, 10, 12] : 
-                         budget === 'luxury' ? [15, 25, 35] : [8, 15, 20];
+        const mealCosts = budget === 'budget' ? [6, 10, 12] :
+          budget === 'luxury' ? [15, 25, 35] : [8, 15, 20];
 
         dailyPlan.push({
           day: currentDay,
@@ -326,12 +326,12 @@ const generateItinerary = (formData) => {
     });
 
     const accommodationCost = dailyPlan.reduce((sum, day) => sum + day.dailyCost, 0);
-    const mealCost = dailyPlan.reduce((sum, day) => 
+    const mealCost = dailyPlan.reduce((sum, day) =>
       sum + day.meals.reduce((mealSum, meal) => mealSum + (meal.included ? meal.cost : 0), 0), 0
     );
     const transportationCost = Math.round(duration * (budget === 'budget' ? 15 : budget === 'luxury' ? 40 : 25));
     const activitiesCost = Math.round(duration * (budget === 'budget' ? 20 : budget === 'luxury' ? 60 : 35));
-    
+
     const totalCost = accommodationCost + mealCost + transportationCost + activitiesCost;
 
     // VALIDATION: Ensure we generated exactly the requested number of days
@@ -377,25 +377,25 @@ const generateDayTips = (place, dayIndex, budget) => {
     `Respect local customs and dress modestly when visiting religious sites`,
     `Stay hydrated and use sunscreen, especially at higher altitudes`
   ];
-  
+
   if (place.difficulty_level) {
     tips.push(`Difficulty level: ${place.difficulty_level} - plan accordingly`);
   }
-  
+
   if (budget === 'budget') {
     tips.push('Look for local eateries and guesthouses for authentic experiences at lower costs');
   } else if (budget === 'luxury') {
     tips.push('Consider hiring a private guide for personalized experiences');
   }
-  
+
   return tips[dayIndex % tips.length];
 };
 
 const generateItinerarySummary = (places, duration, budget) => {
   const destNames = places.map(p => p.name).join(', ');
-  const budgetDesc = budget === 'budget' ? 'budget-friendly' : 
-                    budget === 'luxury' ? 'luxury' : 'mid-range';
-  
+  const budgetDesc = budget === 'budget' ? 'budget-friendly' :
+    budget === 'luxury' ? 'luxury' : 'mid-range';
+
   return `A ${duration}-day ${budgetDesc} adventure through ${destNames}, featuring cultural immersion, natural beauty, and authentic Nepalese experiences.`;
 };
 
@@ -410,18 +410,18 @@ const Itinerary = () => {
   const [loadingPlaces, setLoadingPlaces] = useState(true);
   const [hasShownPreselectedToast, setHasShownPreselectedToast] = useState(false);
   const [hasShownTipsToast, setHasShownTipsToast] = useState(false);
-  
+
   const preselectedDestination = location.state?.preselectedDestination;
   const openTab = location.state?.openTab; // Check if a specific tab should be opened
   const userPreferences = location.state?.userPreferences; // Get user preferences from recommendations
-  
+
   // Initialize form data with user preferences if available
   const [formData, setFormData] = useState({
-    duration: userPreferences?.tripDuration ? 
+    duration: userPreferences?.tripDuration ?
       (userPreferences.tripDuration === '1-3' ? 3 :
-       userPreferences.tripDuration === '4-7' ? 7 :
-       userPreferences.tripDuration === '8-14' ? 10 :
-       userPreferences.tripDuration === '15+' ? 14 : 7) : 7,
+        userPreferences.tripDuration === '4-7' ? 7 :
+          userPreferences.tripDuration === '8-14' ? 10 :
+            userPreferences.tripDuration === '15+' ? 14 : 7) : 7,
     destinations: [],
     activities: [],
     budget: 'mid'
@@ -448,7 +448,7 @@ const Itinerary = () => {
         setActiveTab(openTab);
         console.log('✅ Active tab set to:', openTab);
       }, 100);
-      
+
       // Show success message if coming from detail page (only once)
       if (location.state?.fromDetailPage) {
         setTimeout(() => {
@@ -472,20 +472,20 @@ const Itinerary = () => {
     try {
       // Get existing saved itineraries
       const savedItineraries = JSON.parse(localStorage.getItem('savedItineraries') || '[]');
-      
+
       // Add timestamp and unique ID
       const itineraryToSave = {
         ...generatedItinerary,
         id: Date.now(),
         savedAt: new Date().toISOString()
       };
-      
+
       // Add to saved itineraries
       savedItineraries.push(itineraryToSave);
-      
+
       // Save back to localStorage
       localStorage.setItem('savedItineraries', JSON.stringify(savedItineraries));
-      
+
       showSuccess(
         'Itinerary Saved!',
         'Your itinerary has been saved successfully. You can access it anytime from your saved itineraries.'
@@ -569,7 +569,7 @@ Average per day: $${Math.round(generatedItinerary.totalCost / parseInt(generated
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Generated by Roamio Wanderly - Your Nepal Travel Companion
+Generated by Subha Yatra - Your Nepal Travel Companion
 Visit: http://localhost:5173
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -666,7 +666,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
     document.body.appendChild(textArea);
     textArea.focus();
     textArea.select();
-    
+
     try {
       document.execCommand('copy');
       showSuccess(
@@ -677,7 +677,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
       console.error('Fallback copy failed:', error);
       alert('Failed to copy to clipboard. Please copy manually.');
     }
-    
+
     document.body.removeChild(textArea);
   };
 
@@ -690,20 +690,20 @@ Plan your own trip at: http://localhost:5173/itinerary`;
         // Fetch ALL places using 'all' parameter
         const response = await fetch('http://localhost:8000/api/places?limit=all');
         if (!response.ok) throw new Error('Failed to fetch places');
-        
+
         const data = await response.json();
         console.log('✅ Successfully fetched places from database!');
         console.log('📊 Total places in database:', data.total);
         console.log('📦 Places loaded:', data.places.length);
         console.log('📋 First 5 places:', data.places.slice(0, 5).map(p => ({ id: p.id, name: p.name })));
-        
+
         if (data.places.length === 0) {
           console.warn('⚠️ No places found in database!');
           showSuccess('Warning', 'No destinations found in database. Please check your backend.');
         } else if (data.places.length < data.total) {
           console.warn(`⚠️ Only loaded ${data.places.length} out of ${data.total} places`);
         }
-        
+
         setAvailablePlaces(data.places || []);
       } catch (error) {
         console.error('❌ Error fetching places:', error);
@@ -721,13 +721,13 @@ Plan your own trip at: http://localhost:5173/itinerary`;
     console.log('Itinerary component mounted');
     console.log('Preselected destination:', preselectedDestination);
     console.log('Available places loaded:', availablePlaces.length);
-    
+
     // Only run once when both conditions are met and toast hasn't been shown
     if (preselectedDestination && availablePlaces.length > 0 && !hasShownPreselectedToast) {
       // Improved matching logic - try multiple strategies
       const findMatchingPlace = () => {
         const preselectedName = preselectedDestination.name.toLowerCase().trim();
-        
+
         // Strategy 1: Exact ID match
         if (preselectedDestination.id) {
           const exactIdMatch = availablePlaces.find(p => p.id === preselectedDestination.id);
@@ -736,18 +736,18 @@ Plan your own trip at: http://localhost:5173/itinerary`;
             return exactIdMatch;
           }
         }
-        
+
         // Strategy 2: Exact name match
-        const exactNameMatch = availablePlaces.find(p => 
+        const exactNameMatch = availablePlaces.find(p =>
           p.name.toLowerCase().trim() === preselectedName
         );
         if (exactNameMatch) {
           console.log('✅ Found by exact name match:', exactNameMatch.name);
           return exactNameMatch;
         }
-        
+
         // Strategy 3: Partial name match (contains)
-        const partialMatch = availablePlaces.find(p => 
+        const partialMatch = availablePlaces.find(p =>
           p.name.toLowerCase().includes(preselectedName) ||
           preselectedName.includes(p.name.toLowerCase())
         );
@@ -755,11 +755,11 @@ Plan your own trip at: http://localhost:5173/itinerary`;
           console.log('✅ Found by partial match:', partialMatch.name);
           return partialMatch;
         }
-        
+
         // Strategy 4: Match by first significant word
-        const firstWord = preselectedName.split(/[\s,\-\(\)]+/)[0];
+        const firstWord = preselectedName.split(/[\s,\-()]+/)[0];
         if (firstWord && firstWord.length > 3) {
-          const wordMatch = availablePlaces.find(p => 
+          const wordMatch = availablePlaces.find(p =>
             p.name.toLowerCase().includes(firstWord)
           );
           if (wordMatch) {
@@ -767,20 +767,20 @@ Plan your own trip at: http://localhost:5173/itinerary`;
             return wordMatch;
           }
         }
-        
+
         console.warn('❌ No match found for:', preselectedDestination.name);
         console.log('Available place names:', availablePlaces.slice(0, 10).map(p => p.name));
         return null;
       };
-      
+
       const matchedPlace = findMatchingPlace();
-      
+
       if (matchedPlace) {
         setFormData(prev => ({
           ...prev,
           destinations: [matchedPlace.id]
         }));
-        
+
         showSuccess(
           "Destination Added",
           `${matchedPlace.name} has been added to your itinerary planner!`
@@ -791,7 +791,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
           `"${preselectedDestination.name}" was not found in the database. Please select from available destinations.`
         );
       }
-      
+
       // Mark that we've shown the toast
       setHasShownPreselectedToast(true);
     }
@@ -827,22 +827,22 @@ Plan your own trip at: http://localhost:5173/itinerary`;
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
     setIsGenerating(true);
-    
+
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       // Get selected places from availablePlaces
       const selectedPlaces = formData.destinations
         .map(id => availablePlaces.find(p => p.id === id))
         .filter(Boolean);
-      
+
       console.log('📍 Selected places:', selectedPlaces.map(p => p.name));
-      
+
       const itinerary = generateItinerary({
         ...formData,
         selectedPlaces
       });
-      
+
       if (itinerary) {
         setGeneratedItinerary(itinerary);
         setActiveTab('generated');
@@ -862,11 +862,11 @@ Plan your own trip at: http://localhost:5173/itinerary`;
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <Header />
-      
+
       {/* Professional Hero Section with Animations */}
       <section className="relative py-24 pt-32 overflow-hidden">
         {/* Animated Background */}
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             background: 'linear-gradient(135deg, #0f766e 0%, #0891b2 50%, #1e40af 100%)',
@@ -874,7 +874,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
             backgroundSize: '200% 200%'
           }}
         />
-        
+
         {/* Floating Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {[...Array(20)].map((_, i) => (
@@ -890,15 +890,15 @@ Plan your own trip at: http://localhost:5173/itinerary`;
               }}
             >
               {i % 4 === 0 ? <FaMountain className="text-white text-4xl" /> :
-               i % 4 === 1 ? <FaCompass className="text-white text-3xl" /> :
-               i % 4 === 2 ? <FaGlobeAsia className="text-white text-3xl" /> :
-               <FaStar className="text-white text-2xl" />}
+                i % 4 === 1 ? <FaCompass className="text-white text-3xl" /> :
+                  i % 4 === 2 ? <FaGlobeAsia className="text-white text-3xl" /> :
+                    <FaStar className="text-white text-2xl" />}
             </div>
           ))}
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center text-white">
-          <div 
+          <div
             className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-8 py-4 mb-8 shadow-2xl"
             style={{
               animation: 'slideDown 0.8s ease-out'
@@ -907,8 +907,8 @@ Plan your own trip at: http://localhost:5173/itinerary`;
             <FaRoute className="text-teal-300 text-xl" />
             <span className="font-bold text-lg">Itinerary Generator</span>
           </div>
-          
-          <h1 
+
+          <h1
             className="text-6xl md:text-7xl font-black mb-6 leading-tight"
             style={{
               animation: 'fadeInUp 1s ease-out',
@@ -921,8 +921,8 @@ Plan your own trip at: http://localhost:5173/itinerary`;
               Nepal Adventure
             </span>
           </h1>
-          
-          <p 
+
+          <p
             className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto leading-relaxed"
             style={{
               animation: 'fadeInUp 1.2s ease-out',
@@ -931,8 +931,8 @@ Plan your own trip at: http://localhost:5173/itinerary`;
           >
             Generate detailed, day-by-day travel plans with real costs, activities, and insider tips
           </p>
-          
-          <div 
+
+          <div
             className="flex flex-wrap justify-center gap-6"
             style={{
               animation: 'fadeInUp 1.4s ease-out'
@@ -965,20 +965,18 @@ Plan your own trip at: http://localhost:5173/itinerary`;
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative p-8 rounded-3xl font-bold text-lg transition-all duration-300 ${
-                  activeTab === tab.id
-                    ? `bg-gradient-to-br ${tab.color} text-white shadow-2xl`
-                    : theme === 'dark'
-                      ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                      : 'bg-white text-gray-600 hover:bg-gray-100 shadow-lg'
-                }`}
+                className={`relative p-8 rounded-3xl font-bold text-lg transition-all duration-300 ${activeTab === tab.id
+                  ? `bg-gradient-to-br ${tab.color} text-white shadow-2xl`
+                  : theme === 'dark'
+                    ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                    : 'bg-white text-gray-600 hover:bg-gray-100 shadow-lg'
+                  }`}
               >
                 <div className="flex flex-col items-center gap-4">
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${
-                    activeTab === tab.id
-                      ? 'bg-white/20'
-                      : `bg-gradient-to-br ${tab.color}`
-                  }`}>
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${activeTab === tab.id
+                    ? 'bg-white/20'
+                    : `bg-gradient-to-br ${tab.color}`
+                    }`}>
                     <tab.icon className={`text-3xl ${activeTab === tab.id ? 'text-white' : 'text-white'}`} />
                   </div>
                   <span className="text-center">{tab.label}</span>
@@ -995,7 +993,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
       {/* Content */}
       <main className="pb-20">
         <div className="max-w-7xl mx-auto px-6 py-16">
-          
+
           {/* Create Itinerary Tab */}
           {activeTab === 'create' && (
             <div className="space-y-12">
@@ -1006,15 +1004,14 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                 <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                   Build a personalized travel plan with detailed activities, costs, and recommendations
                 </p>
-                
+
                 {/* User Preferences Applied Banner */}
                 {userPreferences && (
-                  <div 
-                    className={`mt-8 p-6 rounded-2xl max-w-3xl mx-auto ${
-                      theme === 'dark' 
-                        ? 'bg-gradient-to-r from-teal-900/30 to-cyan-900/30 border border-teal-500/30' 
-                        : 'bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200'
-                    }`}
+                  <div
+                    className={`mt-8 p-6 rounded-2xl max-w-3xl mx-auto ${theme === 'dark'
+                      ? 'bg-gradient-to-r from-teal-900/30 to-cyan-900/30 border border-teal-500/30'
+                      : 'bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200'
+                      }`}
                     style={{
                       animation: 'slideDown 0.6s ease-out'
                     }}
@@ -1028,26 +1025,22 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                       </h3>
                     </div>
                     <div className="flex flex-wrap gap-3 justify-center">
-                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                        theme === 'dark' ? 'bg-slate-800 text-teal-400' : 'bg-white text-teal-600'
-                      }`}>
+                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${theme === 'dark' ? 'bg-slate-800 text-teal-400' : 'bg-white text-teal-600'
+                        }`}>
                         👥 {userPreferences.travellers} Traveller{userPreferences.travellers !== '1' ? 's' : ''}
                       </span>
-                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                        theme === 'dark' ? 'bg-slate-800 text-cyan-400' : 'bg-white text-cyan-600'
-                      }`}>
+                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${theme === 'dark' ? 'bg-slate-800 text-cyan-400' : 'bg-white text-cyan-600'
+                        }`}>
                         📅 {userPreferences.tripDuration} Days
                       </span>
                       {userPreferences.travelMonth && (
-                        <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                          theme === 'dark' ? 'bg-slate-800 text-blue-400' : 'bg-white text-blue-600'
-                        }`}>
+                        <span className={`px-4 py-2 rounded-full text-sm font-semibold ${theme === 'dark' ? 'bg-slate-800 text-blue-400' : 'bg-white text-blue-600'
+                          }`}>
                           🗓️ {userPreferences.travelMonth}
                         </span>
                       )}
-                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                        theme === 'dark' ? 'bg-slate-800 text-purple-400' : 'bg-white text-purple-600'
-                      }`}>
+                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${theme === 'dark' ? 'bg-slate-800 text-purple-400' : 'bg-white text-purple-600'
+                        }`}>
                         🎯 {userPreferences.age} years old
                       </span>
                     </div>
@@ -1057,12 +1050,11 @@ Plan your own trip at: http://localhost:5173/itinerary`;
 
               {/* Preselected Destination Info */}
               {preselectedDestination && (
-                <div 
-                  className={`p-8 rounded-3xl mb-12 border-2 border-dashed shadow-2xl ${
-                    theme === 'dark' 
-                      ? 'bg-gradient-to-br from-purple-900/30 to-pink-900/30 border-purple-500/40' 
-                      : 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-300/60'
-                  }`}
+                <div
+                  className={`p-8 rounded-3xl mb-12 border-2 border-dashed shadow-2xl ${theme === 'dark'
+                    ? 'bg-gradient-to-br from-purple-900/30 to-pink-900/30 border-purple-500/40'
+                    : 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-300/60'
+                    }`}
                   style={{
                     animation: 'slideDown 0.6s ease-out'
                   }}
@@ -1080,7 +1072,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-slate-800/60' : 'bg-white/80'} backdrop-blur-sm shadow-lg`}>
                     <div className="flex items-start gap-4">
                       <FaMapMarkerAlt className="text-purple-500 text-2xl mt-1" />
@@ -1097,7 +1089,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className={`mt-6 p-5 rounded-xl ${theme === 'dark' ? 'bg-blue-900/30' : 'bg-blue-50'} border ${theme === 'dark' ? 'border-blue-700/30' : 'border-blue-200'}`}>
                     <div className="flex items-center justify-between">
                       <p className={`text-sm ${theme === 'dark' ? 'text-blue-200' : 'text-blue-800'}`}>
@@ -1113,7 +1105,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                           console.log('📅 Current form duration:', formData.duration, 'days');
                           console.log('👤 User preferences:', userPreferences);
                           console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-                          
+
                           // Check if destination is already selected in form
                           if (formData.destinations.length > 0) {
                             console.log('✅ Using already selected destinations from form');
@@ -1125,9 +1117,9 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                 return place;
                               })
                               .filter(Boolean);
-                            
+
                             console.log('📍 Selected places:', selectedPlaces.map(p => p.name));
-                            
+
                             if (selectedPlaces.length > 0) {
                               setIsGenerating(true);
                               setTimeout(() => {
@@ -1136,7 +1128,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                   // Use the duration from formData (which includes user preferences)
                                   selectedPlaces
                                 });
-                                
+
                                 if (itinerary) {
                                   setGeneratedItinerary(itinerary);
                                   setActiveTab('generated');
@@ -1155,12 +1147,12 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                             console.log('🔍 Trying to find preselected destination...');
                             console.log('   Looking for:', preselectedDestination.name);
                             console.log('   With ID:', preselectedDestination.id);
-                            
+
                             // Enhanced matching function
                             const findMatch = () => {
                               const searchName = preselectedDestination.name.toLowerCase().trim();
                               console.log('   Search name:', searchName);
-                              
+
                               // Try exact ID match first
                               if (preselectedDestination.id) {
                                 const idMatch = availablePlaces.find(p => p.id === preselectedDestination.id);
@@ -1169,16 +1161,16 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                   return idMatch;
                                 }
                               }
-                              
+
                               // Try exact name match
-                              const exactMatch = availablePlaces.find(p => 
+                              const exactMatch = availablePlaces.find(p =>
                                 p.name.toLowerCase().trim() === searchName
                               );
                               if (exactMatch) {
                                 console.log('✅ Found by exact name:', exactMatch.name);
                                 return exactMatch;
                               }
-                              
+
                               // Try contains match (both directions)
                               const containsMatch = availablePlaces.find(p => {
                                 const placeName = p.name.toLowerCase().trim();
@@ -1188,11 +1180,11 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                 console.log('✅ Found by contains:', containsMatch.name);
                                 return containsMatch;
                               }
-                              
+
                               // Try first word match
-                              const firstWord = searchName.split(/[\s,\-\(\)]+/)[0];
+                              const firstWord = searchName.split(/[\s,\-()]+/)[0];
                               if (firstWord && firstWord.length > 3) {
-                                const wordMatch = availablePlaces.find(p => 
+                                const wordMatch = availablePlaces.find(p =>
                                   p.name.toLowerCase().includes(firstWord)
                                 );
                                 if (wordMatch) {
@@ -1200,13 +1192,13 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                   return wordMatch;
                                 }
                               }
-                              
+
                               // Try fuzzy match - remove common words and match
                               const cleanName = searchName
                                 .replace(/\(.*?\)/g, '') // Remove parentheses content
                                 .replace(/national park|temple|stupa|monastery|lake|mountain|mount|peak/gi, '')
                                 .trim();
-                              
+
                               if (cleanName.length > 3) {
                                 const fuzzyMatch = availablePlaces.find(p => {
                                   const cleanPlaceName = p.name.toLowerCase()
@@ -1220,7 +1212,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                   return fuzzyMatch;
                                 }
                               }
-                              
+
                               console.error('❌ No match found!');
                               console.log('   Available place names (first 20):');
                               availablePlaces.slice(0, 20).forEach((p, i) => {
@@ -1228,9 +1220,9 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                               });
                               return null;
                             };
-                            
+
                             const matchedPlace = findMatch();
-                            
+
                             if (matchedPlace) {
                               console.log('✅ Match found! Generating itinerary...');
                               // Update form data and generate (keep existing duration from formData)
@@ -1240,7 +1232,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                 // duration is already in formData from user preferences
                               };
                               setFormData(updatedFormData);
-                              
+
                               setIsGenerating(true);
                               setTimeout(() => {
                                 const selectedPlaces = [matchedPlace];
@@ -1248,7 +1240,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                   ...updatedFormData,
                                   selectedPlaces
                                 });
-                                
+
                                 if (itinerary) {
                                   setGeneratedItinerary(itinerary);
                                   setActiveTab('generated');
@@ -1281,7 +1273,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
 
               <div className="grid lg:grid-cols-3 gap-8">
                 {/* Duration Selection Card */}
-                <div 
+                <div
                   className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
                   style={{
                     animation: 'fadeInUp 0.6s ease-out'
@@ -1294,15 +1286,14 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     <h3 className="text-2xl font-black mb-2">Trip Duration</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">How long will you explore?</p>
                     {userPreferences && (
-                      <div className={`mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ${
-                        theme === 'dark' ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-100 text-teal-700'
-                      }`}>
+                      <div className={`mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ${theme === 'dark' ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-100 text-teal-700'
+                        }`}>
                         <FaCheckCircle />
                         <span>Pre-filled from your preferences</span>
                       </div>
                     )}
                   </div>
-                  <select 
+                  <select
                     value={formData.duration}
                     onChange={(e) => handleInputChange('duration', parseInt(e.target.value))}
                     className={`w-full p-4 rounded-xl border-2 font-semibold text-lg ${theme === 'dark' ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300'} focus:ring-4 focus:ring-teal-500/30 transition-all`}
@@ -1316,7 +1307,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                 </div>
 
                 {/* Destination Selection Card */}
-                <div 
+                <div
                   className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
                   style={{
                     animation: 'fadeInUp 0.8s ease-out'
@@ -1342,65 +1333,63 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                       </div>
                     ) : (
                       <>
-                        <div className={`text-center py-2 px-4 rounded-lg mb-4 ${
-                          theme === 'dark' ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-50 text-teal-700'
-                        }`}>
+                        <div className={`text-center py-2 px-4 rounded-lg mb-4 ${theme === 'dark' ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-50 text-teal-700'
+                          }`}>
                           <p className="text-sm font-bold">
                             ✅ {availablePlaces.length} destinations loaded from database
                           </p>
                         </div>
                         {availablePlaces.map((place) => {
-                        const isPreselected = preselectedDestination && 
-                          (place.id === preselectedDestination.id || 
-                           place.name.toLowerCase() === preselectedDestination.name.toLowerCase());
-                        
-                        return (
-                          <label 
-                            key={place.id} 
-                            className={`flex items-center space-x-4 p-4 rounded-xl cursor-pointer transition-all duration-300 ${
-                              formData.destinations.includes(place.id)
+                          const isPreselected = preselectedDestination &&
+                            (place.id === preselectedDestination.id ||
+                              place.name.toLowerCase() === preselectedDestination.name.toLowerCase());
+
+                          return (
+                            <label
+                              key={place.id}
+                              className={`flex items-center space-x-4 p-4 rounded-xl cursor-pointer transition-all duration-300 ${formData.destinations.includes(place.id)
                                 ? 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border-2 border-teal-500 shadow-lg'
                                 : isPreselected
                                   ? 'bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-2 border-purple-400 shadow-md'
                                   : theme === 'dark'
                                     ? 'bg-slate-700/50 hover:bg-slate-700 border-2 border-transparent'
                                     : 'bg-gray-100 hover:bg-gray-200 border-2 border-transparent'
-                            }`}
-                          >
-                            <input 
-                              type="checkbox" 
-                              checked={formData.destinations.includes(place.id)}
-                              onChange={() => toggleDestination(place.id)}
-                              className="w-5 h-5 text-teal-600 rounded-lg focus:ring-2 focus:ring-teal-500" 
-                            />
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2">
-                                <span className="font-bold text-lg">{place.name}</span>
-                                {isPreselected && (
-                                  <span className="px-2 py-0.5 bg-purple-500 text-white text-xs rounded-full font-bold">
-                                    From Details
-                                  </span>
+                                }`}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={formData.destinations.includes(place.id)}
+                                onChange={() => toggleDestination(place.id)}
+                                className="w-5 h-5 text-teal-600 rounded-lg focus:ring-2 focus:ring-teal-500"
+                              />
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-bold text-lg">{place.name}</span>
+                                  {isPreselected && (
+                                    <span className="px-2 py-0.5 bg-purple-500 text-white text-xs rounded-full font-bold">
+                                      From Details
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="text-sm text-gray-500 dark:text-gray-400">
+                                  {place.location} • {place.type || 'Destination'}
+                                </div>
+                                {place.best_season && (
+                                  <div className="text-xs text-teal-600 dark:text-teal-400 mt-1">
+                                    Best: {place.best_season}
+                                  </div>
                                 )}
                               </div>
-                              <div className="text-sm text-gray-500 dark:text-gray-400">
-                                {place.location} • {place.type || 'Destination'}
-                              </div>
-                              {place.best_season && (
-                                <div className="text-xs text-teal-600 dark:text-teal-400 mt-1">
-                                  Best: {place.best_season}
-                                </div>
-                              )}
-                            </div>
-                          </label>
-                        );
-                      })}
+                            </label>
+                          );
+                        })}
                       </>
                     )}
                   </div>
                 </div>
 
                 {/* Budget Selection Card */}
-                <div 
+                <div
                   className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
                   style={{
                     animation: 'fadeInUp 1s ease-out'
@@ -1413,7 +1402,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     <h3 className="text-2xl font-black mb-2">Budget Level</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">Choose your comfort level</p>
                   </div>
-                  <select 
+                  <select
                     value={formData.budget}
                     onChange={(e) => handleInputChange('budget', e.target.value)}
                     className={`w-full p-4 rounded-xl border-2 font-semibold text-base ${theme === 'dark' ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300'} focus:ring-4 focus:ring-orange-500/30 transition-all`}
@@ -1434,14 +1423,13 @@ Plan your own trip at: http://localhost:5173/itinerary`;
 
               {/* Generate Button */}
               <div className="text-center mt-16">
-                <button 
+                <button
                   onClick={handleGenerateItinerary}
                   disabled={isGenerating || formData.destinations.length === 0}
-                  className={`px-16 py-6 rounded-3xl font-black text-xl transition-all duration-500 flex items-center gap-4 mx-auto shadow-2xl ${
-                    isGenerating || formData.destinations.length === 0
-                      ? 'bg-gray-400 cursor-not-allowed opacity-60'
-                      : 'bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 hover:from-teal-700 hover:via-cyan-700 hover:to-blue-700 text-white transform hover:scale-110 hover:shadow-3xl'
-                  }`}
+                  className={`px-16 py-6 rounded-3xl font-black text-xl transition-all duration-500 flex items-center gap-4 mx-auto shadow-2xl ${isGenerating || formData.destinations.length === 0
+                    ? 'bg-gray-400 cursor-not-allowed opacity-60'
+                    : 'bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 hover:from-teal-700 hover:via-cyan-700 hover:to-blue-700 text-white transform hover:scale-110 hover:shadow-3xl'
+                    }`}
                   style={{
                     animation: isGenerating ? 'pulse 2s ease-in-out infinite' : 'none'
                   }}
@@ -1458,13 +1446,13 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     </>
                   )}
                 </button>
-                
+
                 {formData.destinations.length === 0 && (
                   <p className="text-red-500 font-semibold text-base mt-4 animate-pulse">
                     ⚠️ Please select at least one destination
                   </p>
                 )}
-                
+
                 <div className={`mt-8 p-6 rounded-2xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-gray-100'} max-w-2xl mx-auto`}>
                   <p className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2">Current Selection:</p>
                   <div className="flex flex-wrap gap-2 justify-center">
@@ -1512,23 +1500,23 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                         💰 ${generatedItinerary.totalCost} Total
                       </span>
                     </div>
-                    
+
                     <div className="flex flex-wrap justify-center gap-4">
-                      <button 
+                      <button
                         onClick={handleSaveItinerary}
                         className="px-8 py-4 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-2xl font-bold flex items-center gap-3 hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
                       >
                         <FaSave className="text-lg" />
                         Save Itinerary
                       </button>
-                      <button 
+                      <button
                         onClick={handleDownloadPDF}
                         className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                       >
                         <FaDownload className="text-lg" />
                         Download PDF
                       </button>
-                      <button 
+                      <button
                         onClick={handleShareItinerary}
                         className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                       >
@@ -1541,10 +1529,10 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   {/* Daily Itinerary */}
                   <div className="space-y-8">
                     <h3 className="text-4xl font-black mb-10 text-center">Daily Itinerary</h3>
-                    
+
                     {generatedItinerary.dailyPlan.map((day, index) => (
-                      <div 
-                        key={day.day} 
+                      <div
+                        key={day.day}
                         className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300`}
                         style={{
                           animation: `fadeInUp ${0.3 + index * 0.1}s ease-out`
@@ -1573,11 +1561,10 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                         {/* Activities */}
                         <div className="space-y-5 mb-8">
                           {day.activities.map((activity, actIndex) => (
-                            <div 
-                              key={actIndex} 
-                              className={`flex items-start gap-5 p-6 rounded-2xl ${
-                                theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'
-                              } hover:shadow-lg transition-all duration-300`}
+                            <div
+                              key={actIndex}
+                              className={`flex items-start gap-5 p-6 rounded-2xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'
+                                } hover:shadow-lg transition-all duration-300`}
                             >
                               <div className="w-28 text-sm font-bold text-gray-600 dark:text-gray-400 flex-shrink-0 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg">
                                 {activity.time}
@@ -1587,13 +1574,12 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                 {activity.description && (
                                   <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{activity.description}</p>
                                 )}
-                                <span className={`inline-block px-4 py-2 rounded-xl text-xs font-bold ${
-                                  activity.type === 'sightseeing' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
+                                <span className={`inline-block px-4 py-2 rounded-xl text-xs font-bold ${activity.type === 'sightseeing' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
                                   activity.type === 'activity' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
-                                  activity.type === 'logistics' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
-                                  activity.type === 'dining' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' :
-                                  'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'
-                                }`}>
+                                    activity.type === 'logistics' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
+                                      activity.type === 'dining' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' :
+                                        'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'
+                                  }`}>
                                   {activity.type.toUpperCase()}
                                 </span>
                               </div>
@@ -1622,7 +1608,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                             <p className="text-gray-700 dark:text-gray-300 font-semibold mb-2">{day.accommodation}</p>
                             <p className="text-sm text-gray-500 font-bold">${day.dailyCost}/night</p>
                           </div>
-                          
+
                           <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'}`}>
                             <h5 className="font-black mb-4 flex items-center gap-3 text-lg">
                               <FaUtensils className="text-orange-500 text-xl" />
@@ -1662,7 +1648,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                       <FaMoneyBillWave className="text-green-500 text-4xl" />
                       Cost Breakdown
                     </h3>
-                    
+
                     {generatedItinerary.costBreakdown && (
                       <div className="grid md:grid-cols-2 gap-8 mb-8">
                         <div className="space-y-5">
@@ -1687,7 +1673,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                         </div>
                       </div>
                     )}
-                    
+
                     <div className="border-t-2 border-gray-200 dark:border-gray-600 pt-8">
                       <div className="flex justify-between items-center mb-4">
                         <span className="text-3xl font-black">Total Trip Cost</span>
@@ -1696,7 +1682,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                         </span>
                       </div>
                       <p className="text-gray-600 dark:text-gray-400 font-semibold text-lg">
-                        Complete {generatedItinerary.budgetLevel} package for {generatedItinerary.duration.toLowerCase()} • 
+                        Complete {generatedItinerary.budgetLevel} package for {generatedItinerary.duration.toLowerCase()} •
                         Average ${Math.round(generatedItinerary.totalCost / parseInt(generatedItinerary.duration))}/day per person
                       </p>
                     </div>
@@ -1711,7 +1697,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   <p className="text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto">
                     Create your first itinerary using the form in the "Create Plan" tab and start planning your dream Nepal adventure.
                   </p>
-                  <button 
+                  <button
                     onClick={() => setActiveTab('create')}
                     className="px-12 py-5 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-2xl font-black text-lg hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
                   >
@@ -1728,7 +1714,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
               {console.log('🎨 Rendering Travel Tips tab')}
               {console.log('Available places:', availablePlaces.length)}
               {console.log('Loading places:', loadingPlaces)}
-              
+
               <div className="text-center mb-16">
                 <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
                   Nepal Travel Tips
@@ -1752,7 +1738,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     { icon: '🏥', title: 'Health & Safety', desc: 'Carry basic medicines, drink bottled water, and have travel insurance.' },
                     { icon: '🙏', title: 'Cultural Respect', desc: 'Dress modestly at temples, remove shoes before entering, and ask before photographing people.' }
                   ].map((tip, index) => (
-                    <div 
+                    <div
                       key={index}
                       className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
                       style={{
@@ -1770,7 +1756,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
           )}
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );

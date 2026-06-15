@@ -22,8 +22,7 @@ const DevelopmentTeam = () => {
                         </h2>
 
                         {/* <p className="hidden md:block text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-                            The talented team behind Roamio Wanderly innovative platform, bringing together expertise in
-                            technology, design, and user experience to create seamless travel planning.
+                            Subha Yatra, an innovative platform, brings together expertise in technology, design, and user experience to create seamless travel planning.
                         </p> */}
                     </div>
                 </div>

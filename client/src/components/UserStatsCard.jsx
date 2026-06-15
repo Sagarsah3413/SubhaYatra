@@ -1,74 +1,67 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
-
-function getAuthHeaders() {
-  try {
-    const admin = JSON.parse(localStorage.getItem("admin") || "{}");
-    return admin.access_token
-      ? { Authorization: `Bearer ${admin.access_token}` }
-      : {};
-  } catch {
-    return {};
-  }
-}
-
 export default function UserStatsCard() {
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [newUsers, setNewUsers] = useState(0);
+  const [loadingTotal, setLoadingTotal] = useState(true);
+  const [loadingNew, setLoadingNew] = useState(true);
 
   useEffect(() => {
+    // Fetch total users
     axios
-      .get(`${API}/api/admin/dashboard`, { headers: getAuthHeaders() })
-      .then((res) => setStats(res.data))
-      .catch((err) => console.error("Dashboard stats error:", err))
-      .finally(() => setLoading(false));
+      .get("http://localhost:8000/admin/dashboard/user-count")
+      .then((res) => {
+        console.log("Total users:", res.data);
+        setTotalUsers(res.data.totalUsers);
+        setLoadingTotal(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching total users:", err);
+        setLoadingTotal(false);
+      });
+
+    // Fetch new users this month
+    axios
+      .get("http://localhost:8000/admin/dashboard/new-users")
+      .then((res) => {
+        console.log("New users this month:", res.data);
+        setNewUsers(res.data.newUsersThisMonth);
+        setLoadingNew(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching new users:", err);
+        setLoadingNew(false);
+      });
   }, []);
 
-  const cards = [
-    {
-      label: "Total Users (Clerk)",
-      value: stats?.total_users ?? "—",
-      sub: "All registered via Clerk",
-      color: "teal",
-    },
-    {
-      label: "Synced to DB",
-      value: stats?.total_users_local ?? "—",
-      sub: "Users who have logged in",
-      color: "blue",
-    },
-    {
-      label: "Active Users",
-      value: stats?.active_users ?? "—",
-      sub: "Accounts not deactivated",
-      color: "emerald",
-    },
-    {
-      label: "New This Month",
-      value: stats?.new_users_this_month ?? "—",
-      sub: "Joined in current month",
-      color: "amber",
-    },
-  ];
-
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {cards.map((c) => (
-        <div
-          key={c.label}
-          className="p-5 bg-white shadow rounded-xl border border-slate-100"
-        >
-          <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-            {c.label}
-          </p>
-          <p className="text-3xl font-black text-slate-800 mt-1">
-            {loading ? "…" : c.value}
-          </p>
-          <p className="text-xs text-slate-400 mt-1">{c.sub}</p>
-        </div>
-      ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* Total Users Card */}
+      <div className="p-6 bg-white shadow rounded-lg w-full">
+        <h3 className="text-gray-600 text-sm font-medium">
+          Total Registered Users
+        </h3>
+        <p className="text-3xl font-bold text-gray-800 mt-2">
+          {loadingTotal ? "Loading..." : totalUsers}
+        </p>
+        <p className="text-xs text-gray-500 mt-2">
+          Data fetched securely from Clerk API
+        </p>
+      </div>
+
+      {/* New Users This Month Card */}
+      <div className="p-6 bg-white shadow rounded-lg w-full">
+        <h3 className="text-gray-600 text-sm font-medium">
+          New Users This Month
+        </h3>
+        <p className="text-3xl font-bold text-gray-800 mt-2">
+          {loadingNew ? "Loading..." : newUsers}
+        </p>
+        <p className="text-xs text-gray-500 mt-2">
+          Data fetched securely from Clerk API
+        </p>
+      </div>
     </div>
   );
 }

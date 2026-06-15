@@ -1739,11 +1739,11 @@ const Logo = ({ onClick, theme }) => (
             ? "group-hover:from-teal-200 group-hover:via-emerald-200 group-hover:to-cyan-200"
             : "group-hover:from-teal-700 group-hover:via-emerald-700 group-hover:to-cyan-700"
           } transition-all duration-500`}>
-          Roamio
+          Subha
         </span>
         <span className={`text-xl font-light ml-3 tracking-wider ${theme === "dark" ? "text-slate-300 group-hover:text-slate-100" : "text-slate-500 group-hover:text-slate-700"
           } transition-all duration-500 whitespace-nowrap`}>
-          Wanderly
+          Yatra
         </span>
       </div>
       <div className={`h-1 w-0 group-hover:w-full transition-all duration-700 ${theme === "dark"
@@ -2913,7 +2913,7 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
             }`}>
             <p className={`text-xs font-medium ${theme === "dark" ? "text-slate-400" : "text-slate-500"
               }`}>
-              Roamio Wanderly © 2024
+              Subha Yatra © 2024
             </p>
           </div>
         </div>
@@ -2924,12 +2924,12 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
 
 /**
  * Ultra-Professional Features Box Component
- * Comprehensive dropdown showcasing all Roamio Wanderly features
+ * Comprehensive dropdown showcasing all Subha Yatra features
  */
 const FeaturesBox = ({ theme, onNavigation }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   // Close dropdown when clicking outside
   useEffect(() => {

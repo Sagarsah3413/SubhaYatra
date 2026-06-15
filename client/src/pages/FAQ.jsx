@@ -26,7 +26,7 @@ const FAQ = () => {
     {
       id: 1,
       category: 'account',
-      question: 'How do I create an account on Roamio Wanderly?',
+      question: 'How do I create an account on Subha Yatra?',
       answer: 'Creating an account is simple! Click the "Sign Up" button in the top right corner of any page. You can register using your email address or sign up with Google/Facebook. Fill in your basic information, verify your email, and you\'re ready to start exploring Nepal\'s amazing destinations.',
       helpful: 0,
       notHelpful: 0
@@ -52,7 +52,7 @@ const FAQ = () => {
     {
       id: 4,
       category: 'booking',
-      question: 'How do I book hotels through Roamio Wanderly?',
+      question: 'How do I book hotels through Subha Yatra?',
       answer: 'We partner with trusted booking platforms to help you find the best accommodations. When you find a hotel you like, click "Book Now" and you\'ll be redirected to our partner\'s secure booking system. We don\'t handle payments directly but help you compare prices and read reviews.',
       helpful: 0,
       notHelpful: 0
@@ -120,7 +120,7 @@ const FAQ = () => {
     {
       id: 12,
       category: 'technical',
-      question: 'Is there a mobile app for Roamio Wanderly?',
+      question: 'Is there a mobile app for Subha Yatra?',
       answer: 'Currently, we offer a mobile-optimized website that works great on smartphones and tablets. We\'re developing native mobile apps for iOS and Android, which will be available in 2025. The mobile website includes all features: browsing destinations, reading reviews, and accessing your account.',
       helpful: 0,
       notHelpful: 0
@@ -174,7 +174,7 @@ const FAQ = () => {
   const filteredFAQs = faqData.filter(faq => {
     const matchesCategory = selectedCategory === 'all' || faq.category === selectedCategory;
     const matchesSearch = faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
+      faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -198,7 +198,7 @@ const FAQ = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <Header />
-      
+
       <div className="max-w-6xl mx-auto px-6 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">
@@ -211,7 +211,7 @@ const FAQ = () => {
             Frequently Asked Questions
           </h1>
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-            Find quick answers to common questions about using Roamio Wanderly
+            Find quick answers to common questions about using Subha Yatra
           </p>
         </div>
 
@@ -226,11 +226,10 @@ const FAQ = () => {
                 placeholder="Search questions..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`w-full pl-10 pr-4 py-3 rounded-xl border ${
-                  theme === 'dark' 
-                    ? 'bg-slate-800 border-slate-700 text-white placeholder-gray-400' 
+                className={`w-full pl-10 pr-4 py-3 rounded-xl border ${theme === 'dark'
+                    ? 'bg-slate-800 border-slate-700 text-white placeholder-gray-400'
                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                } focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent`}
+                  } focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent`}
               />
             </div>
           </div>
@@ -241,13 +240,12 @@ const FAQ = () => {
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  selectedCategory === category.id
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${selectedCategory === category.id
                     ? 'bg-teal-600 text-white shadow-lg'
                     : theme === 'dark'
                       ? 'bg-slate-800 text-gray-300 hover:bg-slate-700'
                       : 'bg-white text-gray-700 hover:bg-gray-100'
-                } border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'}`}
+                  } border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'}`}
               >
                 <span className="mr-2">{category.icon}</span>
                 {category.name}
@@ -279,11 +277,10 @@ const FAQ = () => {
             filteredFAQs.map(faq => (
               <div
                 key={faq.id}
-                className={`rounded-xl border ${
-                  theme === 'dark' 
-                    ? 'bg-slate-800/50 border-slate-700' 
+                className={`rounded-xl border ${theme === 'dark'
+                    ? 'bg-slate-800/50 border-slate-700'
                     : 'bg-white border-gray-200'
-                } shadow-sm hover:shadow-md transition-all duration-200`}
+                  } shadow-sm hover:shadow-md transition-all duration-200`}
               >
                 <button
                   onClick={() => toggleExpanded(faq.id)}
@@ -296,14 +293,14 @@ const FAQ = () => {
                     <FaChevronDown className="text-teal-600 flex-shrink-0" />
                   )}
                 </button>
-                
+
                 {expandedItems.has(faq.id) && (
                   <div className="px-6 pb-6">
                     <div className={`border-t pt-4 ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'}`}>
                       <p className={`mb-4 leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                         {faq.answer}
                       </p>
-                      
+
                       {/* Helpful Voting */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
@@ -313,31 +310,29 @@ const FAQ = () => {
                           <div className="flex items-center space-x-2">
                             <button
                               onClick={() => handleHelpfulVote(faq.id, true)}
-                              className={`p-2 rounded-lg transition-colors duration-200 ${
-                                helpfulVotes[faq.id] === true
+                              className={`p-2 rounded-lg transition-colors duration-200 ${helpfulVotes[faq.id] === true
                                   ? 'bg-green-100 text-green-600'
                                   : theme === 'dark'
                                     ? 'hover:bg-slate-700 text-gray-400 hover:text-green-400'
                                     : 'hover:bg-gray-100 text-gray-500 hover:text-green-600'
-                              }`}
+                                }`}
                             >
                               <FaThumbsUp className="text-sm" />
                             </button>
                             <button
                               onClick={() => handleHelpfulVote(faq.id, false)}
-                              className={`p-2 rounded-lg transition-colors duration-200 ${
-                                helpfulVotes[faq.id] === false
+                              className={`p-2 rounded-lg transition-colors duration-200 ${helpfulVotes[faq.id] === false
                                   ? 'bg-red-100 text-red-600'
                                   : theme === 'dark'
                                     ? 'hover:bg-slate-700 text-gray-400 hover:text-red-400'
                                     : 'hover:bg-gray-100 text-gray-500 hover:text-red-600'
-                              }`}
+                                }`}
                             >
                               <FaThumbsDown className="text-sm" />
                             </button>
                           </div>
                         </div>
-                        
+
                         <div className={`text-xs ${theme === 'dark' ? 'text-gray-500' : 'text-gray-400'}`}>
                           Category: {categories.find(c => c.id === faq.category)?.name}
                         </div>
@@ -366,11 +361,10 @@ const FAQ = () => {
             </a>
             <a
               href="/help"
-              className={`px-6 py-3 border font-medium rounded-lg transition-colors duration-200 ${
-                theme === 'dark'
+              className={`px-6 py-3 border font-medium rounded-lg transition-colors duration-200 ${theme === 'dark'
                   ? 'border-slate-600 text-gray-300 hover:bg-slate-700'
                   : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-              }`}
+                }`}
             >
               Browse Help Center
             </a>

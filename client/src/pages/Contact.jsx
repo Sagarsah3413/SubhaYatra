@@ -3,11 +3,11 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import Footer from "../components/footer/Footer";
 import { Header } from '../components/header/Header';
 import { useTheme } from '../contexts/ThemeContext';
-import { 
-  FaPhone, 
-  FaEnvelope, 
-  FaMapMarkerAlt, 
-  FaClock, 
+import {
+  FaPhone,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaClock,
   FaPaperPlane,
   FaCheckCircle,
   FaGlobe,
@@ -90,9 +90,9 @@ export default function Contact() {
       alert('Please fill in all required fields.');
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     try {
       // Send form data to backend
       const response = await fetch('http://localhost:8000/api/contact', {
@@ -102,21 +102,21 @@ export default function Contact() {
         },
         body: JSON.stringify(formData),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
         setSubmitted(true);
-        setFormData({ 
-          name: '', 
-          email: '', 
+        setFormData({
+          name: '',
+          email: '',
           phone: '',
-          subject: '', 
+          subject: '',
           travelType: '',
           budget: '',
-          message: '' 
+          message: ''
         });
-        
+
         setTimeout(() => setSubmitted(false), 5000);
       } else {
         alert(data.error || 'Failed to send message. Please try again.');
@@ -167,7 +167,7 @@ export default function Contact() {
     },
     {
       category: 'general',
-      question: "What makes Roamio Wanderly different from other travel platforms?",
+      question: "What makes Subha Yatra different from other travel platforms?",
       answer: "We combine local expertise with advanced AI technology to provide authentic, personalized experiences. Our team of local guides and travel experts ensure every recommendation is current, safe, and culturally respectful."
     },
     {
@@ -214,19 +214,19 @@ export default function Contact() {
   return (
     <div className={`min-h-screen ${bgClass} ${textClass} flex flex-col overflow-hidden`}>
       <Header />
-      
+
       {/* Ultra-Premium Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         {/* Dynamic Background */}
-        <div 
+        <div
           className="absolute inset-0"
           style={{
-            background: theme === 'dark' 
+            background: theme === 'dark'
               ? 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%)'
               : 'linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 25%, #99f6e4 50%, #5eead4 75%, #2dd4bf 100%)'
           }}
         />
-        
+
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           {/* Floating Contact Icons */}
@@ -244,7 +244,7 @@ export default function Contact() {
               {[FaPhone, FaEnvelope, FaComments, FaHeadset][i % 4]({ size: 40 + Math.random() * 20 })}
             </div>
           ))}
-          
+
           {/* Geometric Patterns */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute top-20 left-20 w-32 h-32 border-2 border-teal-500 rotate-45 animate-spin-slow"></div>
@@ -254,10 +254,9 @@ export default function Contact() {
 
         {/* Hero Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
-          <div 
-            className={`transform transition-all duration-1000 ${
-              isVisible.hero ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-            }`}
+          <div
+            className={`transform transition-all duration-1000 ${isVisible.hero ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+              }`}
             id="hero"
             data-animate
           >
@@ -285,7 +284,7 @@ export default function Contact() {
             </p>
 
             <p className="text-lg md:text-xl text-white/70 dark:text-slate-300 mb-12 max-w-3xl mx-auto">
-              Our travel experts are here to help you create unforgettable experiences. 
+              Our travel experts are here to help you create unforgettable experiences.
               Reach out anytime for personalized assistance and expert guidance.
             </p>
 
@@ -311,10 +310,9 @@ export default function Contact() {
       {/* Contact Methods Section */}
       <section className="py-20 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4">
-          <div 
-            className={`text-center mb-16 transform transition-all duration-1000 ${
-              isVisible.methods ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-            }`}
+          <div
+            className={`text-center mb-16 transform transition-all duration-1000 ${isVisible.methods ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+              }`}
             id="methods"
             data-animate
           >
@@ -322,7 +320,7 @@ export default function Contact() {
               <FaComments className="text-teal-600 dark:text-teal-400" />
               <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Multiple Ways to Connect</span>
             </div>
-            
+
             <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
               <span className="bg-gradient-to-r from-gray-900 via-teal-700 to-cyan-800 dark:from-white dark:via-teal-200 dark:to-cyan-200 bg-clip-text text-transparent">
                 Choose Your Preferred
@@ -336,29 +334,28 @@ export default function Contact() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {contactMethods.map((method, index) => (
-              <div 
+              <div
                 key={index}
-                className={`group relative bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50 dark:border-slate-700/50 overflow-hidden transform hover:scale-105 ${
-                  isVisible.methods ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                }`}
+                className={`group relative bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50 dark:border-slate-700/50 overflow-hidden transform hover:scale-105 ${isVisible.methods ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                  }`}
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Background Gradient */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${method.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-                
+
                 {/* Icon Container */}
                 <div className={`relative w-16 h-16 bg-gradient-to-br ${method.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-xl`}>
                   <method.icon className="text-2xl text-white" />
                 </div>
-                
+
                 <h3 className="font-black text-xl text-gray-900 dark:text-white mb-2 text-center">
                   {method.title}
                 </h3>
-                
+
                 <p className="text-gray-600 dark:text-gray-300 text-center mb-4 text-sm">
                   {method.subtitle}
                 </p>
-                
+
                 <p className={`text-${method.color}-600 dark:text-${method.color}-400 text-center font-semibold mb-6`}>
                   {method.info}
                 </p>
@@ -372,13 +369,12 @@ export default function Contact() {
       <section className="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-slate-800 dark:to-slate-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            
+
             {/* Ultra-Premium Contact Form */}
-            <div 
+            <div
               ref={formRef}
-              className={`transform transition-all duration-1000 ${
-                isVisible.form ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-              }`}
+              className={`transform transition-all duration-1000 ${isVisible.form ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                }`}
               id="form"
               data-animate
             >
@@ -397,13 +393,13 @@ export default function Contact() {
                       <FaPaperPlane className="text-teal-600 dark:text-teal-400" />
                       <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Send Us a Message</span>
                     </div>
-                    
+
                     <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4">
                       <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
                         Let's Plan Your Adventure
                       </span>
                     </h2>
-                    
+
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                       Fill out the form below and our travel experts will get back to you within 24 hours with personalized recommendations.
                     </p>
@@ -576,7 +572,7 @@ export default function Contact() {
                           </>
                         )}
                       </span>
-                      
+
                       {/* Button shine effect */}
                       {!isSubmitting && (
                         <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
@@ -590,10 +586,9 @@ export default function Contact() {
             {/* Contact Information & Map */}
             <div className="space-y-8">
               {/* Office Information */}
-              <div 
-                className={`bg-white/80 dark:bg-slate-800/80 backdrop-blur-2xl rounded-4xl shadow-2xl p-10 border border-gray-200/50 dark:border-slate-700/50 transform transition-all duration-1000 ${
-                  isVisible.info ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                }`}
+              <div
+                className={`bg-white/80 dark:bg-slate-800/80 backdrop-blur-2xl rounded-4xl shadow-2xl p-10 border border-gray-200/50 dark:border-slate-700/50 transform transition-all duration-1000 ${isVisible.info ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                  }`}
                 id="info"
                 data-animate
               >
@@ -602,7 +597,7 @@ export default function Contact() {
                     <FaMapMarkerAlt className="text-teal-600 dark:text-teal-400" />
                     <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Visit Our Office</span>
                   </div>
-                  
+
                   <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-4">
                     <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
                       Office Information
@@ -643,10 +638,9 @@ export default function Contact() {
               </div>
 
               {/* Interactive Map */}
-              <div 
-                className={`bg-white dark:bg-slate-800 rounded-4xl shadow-2xl p-8 border border-gray-200/50 dark:border-slate-700/50 transform transition-all duration-1000 ${
-                  isVisible.map ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                }`}
+              <div
+                className={`bg-white dark:bg-slate-800 rounded-4xl shadow-2xl p-8 border border-gray-200/50 dark:border-slate-700/50 transform transition-all duration-1000 ${isVisible.map ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                  }`}
                 id="map"
                 data-animate
               >
@@ -662,12 +656,12 @@ export default function Contact() {
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     />
-                    
+
                     {/* Office Location Marker */}
                     <Marker position={[27.7172, 85.3240]}>
                       <Popup>
                         <div className="text-center p-2">
-                          <strong className="text-lg text-teal-600">Roamio Wanderly Office</strong><br />
+                          <strong className="text-lg text-teal-600">Subha Yatra Office</strong><br />
                           <span className="text-gray-600">Chaksibari Marg, Thamel-26</span><br />
                           <span className="text-gray-600">Kathmandu, Nepal</span><br />
                           <span className="text-sm text-teal-600">Your Gateway to Nepal 🏔️</span>
@@ -677,9 +671,9 @@ export default function Contact() {
                   </MapContainer>
                 </div>
                 <div className="mt-4 text-center">
-                  <a 
+                  <a
                     href="https://www.google.com/maps/search/?api=1&query=27.7172,85.3240"
-                    target="_blank" 
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 font-semibold transition-colors duration-300"
                   >
@@ -697,10 +691,9 @@ export default function Contact() {
       {/* Ultra-Premium FAQ Section */}
       <section className="py-24 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-slate-900 dark:to-slate-800">
         <div className="max-w-6xl mx-auto px-4">
-          <div 
-            className={`text-center mb-16 transform transition-all duration-1000 ${
-              isVisible.faq ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-            }`}
+          <div
+            className={`text-center mb-16 transform transition-all duration-1000 ${isVisible.faq ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+              }`}
             id="faq"
             data-animate
           >
@@ -708,7 +701,7 @@ export default function Contact() {
               <FaQuestionCircle className="text-teal-600 dark:text-teal-400" />
               <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Frequently Asked Questions</span>
             </div>
-            
+
             <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
               <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
                 Got Questions?
@@ -728,11 +721,10 @@ export default function Contact() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
-                    activeTab === tab.id
+                  className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${activeTab === tab.id
                       ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg'
                       : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700'
-                  }`}
+                    }`}
                 >
                   <tab.icon />
                   {tab.label}
@@ -744,7 +736,7 @@ export default function Contact() {
           {/* FAQ Items */}
           <div className="space-y-4">
             {filteredFAQs.map((faq, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 dark:border-slate-700/50 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
               >
@@ -759,7 +751,7 @@ export default function Contact() {
                     <FaChevronDown className="text-teal-600 dark:text-teal-400" />
                   </div>
                 </button>
-                
+
                 {expandedFAQ === idx && (
                   <div className="px-8 pb-6 animate-fade-in">
                     <p className="text-gray-600 dark:text-gray-300 leading-relaxed">

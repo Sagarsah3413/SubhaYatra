@@ -1,93 +1,126 @@
-"""
-Flask application factory.
-"""
-
-import os
-from flask import Flask, jsonify
+from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
-from dotenv import load_dotenv
+import os
+import sys
+from dotenv import load_dotenv  # ✅ Load .env
 
-# Load .env from client-server/
-load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
+# Add the app directory to Python path for imports
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+from .database import init_db, db, init_flask_db
+from .routes.search import search_blueprint
+from .routes.users import users_blueprint
+from .routes.rooms import rooms_blueprint
+from .routes.chat_routes import chat_bp
+from .routes.admin import admin_bp   # ⭐ Admin routes (login + dashboard)
+from .routes.places import places_bp
+from .routes.wishlist import wishlist_bp
+from .routes.hotels import hotels_bp
+from .routes.restaurants import restaurants_bp
+from .routes.images import images_bp
+from .routes.recommendations import recommendations_bp  # ⭐ Recommendations routes
+from .routes.reviews import reviews_bp  # ⭐ Reviews routes
+from .routes.contact import contact_bp  # ⭐ Contact form routes
+# Removed place_details_bp - using places_bp instead which has events support
+
+# -----------------------------
+# Load .env from backend folder
+# -----------------------------
+env_path = os.path.join(os.path.dirname(__file__), "..", ".env")
+load_dotenv(env_path)
+
+# -----------------------------
+# Ensure Clerk server API key exists
+# -----------------------------
+CLERK_API_KEY = os.environ.get("CLERK_API_KEY")
+if not CLERK_API_KEY:
+    print("⚠️ CLERK_API_KEY not found. Add it to client-server/.env")
 
 def create_app():
-    app = Flask(__name__, instance_relative_config=False)
+    # Disable instance folder creation by setting instance_relative_config=False
+    # and explicitly setting instance_path to None
+    app = Flask(__name__, static_folder=None, instance_relative_config=False)
 
-    # ── Database ──────────────────────────────────────────────────────────────
-    # Place tourism.db at client-server/tourism.db (not inside instance/)
-    db_path = os.path.join(os.path.dirname(__file__), '..', 'tourism.db')
-    db_path = os.path.abspath(db_path)
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
+    # -----------------------------
+    # Database configuration
+    # -----------------------------
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///tourism.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.init_app(app)
 
-    # ── CORS ──────────────────────────────────────────────────────────────────
+    # -----------------------------
+    # CORS setup
+    # -----------------------------
     CORS(app, origins=[
-        "http://localhost:5173", "http://localhost:5174", "http://localhost:5175",
-        "http://127.0.0.1:5173", "http://127.0.0.1:5174",
-        "https://roamiowanderly-eyk8dfgy6-sagar-kumar-sahs-projects.vercel.app",
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+        "http://127.0.0.1:5175",
+        "http://127.0.0.1:3000",
+        "https://roamiowanderly-eyk8dfgy6-sagar-kumar-sahs-projects.vercel.app/"
     ], supports_credentials=True)
 
-    # ── Init DB (creates all tables) ──────────────────────────────────────────
-    from .database import init_db
-    init_db(app)
+    # -----------------------------
+    # Initialize DB
+    # -----------------------------
+    init_db()
+    init_flask_db(app)  # Create Flask-SQLAlchemy tables
 
-    # ── Register blueprints ───────────────────────────────────────────────────
-    from .routes.users        import users_bp
-    from .routes.places       import places_bp
-    from .routes.hotels       import hotels_bp
-    from .routes.restaurants  import restaurants_bp
-    from .routes.reviews      import reviews_bp
-    from .routes.wishlist     import wishlist_bp
-    from .routes.search       import search_bp
-    from .routes.recommendations import recommendations_bp
-    from .routes.admin        import admin_bp
-    from .routes.chat_routes  import chat_bp
-    from .routes.contact      import contact_bp
-    from .routes.itinerary    import itinerary_bp
+    # -----------------------------
+    # Register blueprints/routes
+    # -----------------------------
+    app.register_blueprint(search_blueprint, url_prefix="/api")
+    app.register_blueprint(users_blueprint, url_prefix="/users")
+    app.register_blueprint(rooms_blueprint, url_prefix="/rooms")
+    app.register_blueprint(chat_bp, url_prefix="/api/chat")
+    app.register_blueprint(places_bp, url_prefix="/api")  # ⭐ Main places routes with events support
+    app.register_blueprint(wishlist_bp, url_prefix="/api")
+    app.register_blueprint(hotels_bp, url_prefix="/api")
+    app.register_blueprint(restaurants_bp, url_prefix="/api")
+    app.register_blueprint(images_bp, url_prefix="/api")
+    app.register_blueprint(recommendations_bp, url_prefix="/api")  # Recommendations routes
+    app.register_blueprint(reviews_bp, url_prefix="/api")  # Reviews routes
+    app.register_blueprint(contact_bp, url_prefix="/api")  # Contact form routes
+    # Removed place_details_bp registration - using places_bp instead
+    app.register_blueprint(admin_bp, url_prefix="/api")  # Admin login/dashboard routes
 
-    app.register_blueprint(users_bp,           url_prefix="/api")
-    app.register_blueprint(places_bp,          url_prefix="/api")
-    app.register_blueprint(hotels_bp,          url_prefix="/api")
-    app.register_blueprint(restaurants_bp,     url_prefix="/api")
-    app.register_blueprint(reviews_bp,         url_prefix="/api")
-    app.register_blueprint(wishlist_bp,        url_prefix="/api")
-    app.register_blueprint(search_bp,          url_prefix="/api")
-    app.register_blueprint(recommendations_bp, url_prefix="/api")
-    app.register_blueprint(admin_bp,           url_prefix="/api")
-    app.register_blueprint(chat_bp,            url_prefix="/api/chat")
-    app.register_blueprint(contact_bp,         url_prefix="/api")
-    app.register_blueprint(itinerary_bp,       url_prefix="/api")
-
+    # -----------------------------
+    # Root route
+    # -----------------------------
     @app.route("/")
     def index():
-        return jsonify({"message": "Tourism API is running."})
+        return jsonify({"message": "Backend is running successfully!"})
 
-    # ── Serve dataset images as static files ──────────────────────────────────
-    import os as _os
-    from flask import send_from_directory
+    # -----------------------------
+    # Serve datasets files
+    # -----------------------------
+    @app.route("/datasets/<path:filename>")
+    def datasets_files(filename):
+        datasets_dir = os.path.join(os.getcwd(), "datasets")
+        return send_from_directory(datasets_dir, filename)
 
-    datasets_path = _os.path.abspath(_os.path.join(_os.path.dirname(__file__), '..', 'datasets'))
-
-    @app.route('/api/images/destinations/<path:filename>')
-    def serve_destination_image(filename):
-        from urllib.parse import unquote
-        filename = unquote(filename)
-        folder = _os.path.join(datasets_path, 'destination_images')
-        return send_from_directory(folder, filename)
-
-    @app.route('/api/images/hotels/<path:filename>')
-    def serve_hotel_image(filename):
-        from urllib.parse import unquote
-        filename = unquote(filename)
-        folder = _os.path.join(datasets_path, 'hotel_images')
-        return send_from_directory(folder, filename)
-
-    @app.route('/api/images/restaurants/<path:filename>')
-    def serve_restaurant_image(filename):
-        from urllib.parse import unquote
-        filename = unquote(filename)
-        folder = _os.path.join(datasets_path, 'restaurant_images')
-        return send_from_directory(folder, filename)
+    # -----------------------------
+    # Serve uploaded review images
+    # -----------------------------
+    @app.route("/uploads/reviews/<path:filename>")
+    def review_images(filename):
+        uploads_dir = os.path.join(os.getcwd(), "uploads", "reviews")
+        return send_from_directory(uploads_dir, filename)
 
     return app
+
+# -----------------------------
+# Run the Flask app
+# -----------------------------
+if __name__ == "__main__":
+    app = create_app()
+    print("🚀 Starting Tourism Recommendation System Backend Server...")
+    print("📍 Server running at: http://localhost:8000")
+    print("🌐 CORS enabled for frontend at: http://localhost:5173")
+    print("📊 Database: SQLite (tourism.db)")
+    print("=" * 50)
+    
+    app.run(debug=True, host="0.0.0.0", port=10000)

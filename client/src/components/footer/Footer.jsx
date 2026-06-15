@@ -85,23 +85,23 @@ export default function Footer() {
       setIsSubscribing(true);
       try {
         const response = await axios.post('http://localhost:8000/users/subscribe', { email });
-        
+
         // Show professional success notification
         setNotification({
           type: 'success',
           title: 'Subscription Confirmed',
-          message: 'Welcome to Roamio Wanderly! Your subscription is now active.',
+          message: 'Welcome to Subha Yatra! Your subscription is now active.',
           details: `Thank you for joining our community of travelers. You'll receive curated Nepal travel insights, exclusive destination guides, and expert recommendations delivered to your inbox.`,
           timestamp: new Date().toLocaleTimeString()
         });
-        
+
         setEmail("");
-        
+
         // Auto-hide notification after 8 seconds
         setTimeout(() => {
           setNotification(null);
         }, 8000);
-        
+
       } catch (error) {
         // Show professional error notification
         setNotification({
@@ -111,9 +111,9 @@ export default function Footer() {
           details: error.response?.data?.message || 'Please verify your email address and try again. If the issue persists, our support team is here to assist you.',
           timestamp: new Date().toLocaleTimeString()
         });
-        
+
         console.error('Subscription error:', error);
-        
+
         // Auto-hide error notification after 6 seconds
         setTimeout(() => {
           setNotification(null);
@@ -130,7 +130,7 @@ export default function Footer() {
         details: 'Enter a valid email address to subscribe to our newsletter and receive exclusive travel content and updates.',
         timestamp: new Date().toLocaleTimeString()
       });
-      
+
       // Auto-hide validation notification after 4 seconds
       setTimeout(() => {
         setNotification(null);
@@ -140,47 +140,47 @@ export default function Footer() {
 
   return (
     <footer className="bg-gradient-to-b from-slate-900/95 via-slate-800/95 to-slate-900/95 text-white mt-20 relative backdrop-blur-sm">
-      
+
       {/* Ultra-Professional Notification System */}
       {notification && (
         <div className="fixed top-6 right-6 z-[9999] max-w-md w-full">
           <div className={`
             relative overflow-hidden rounded-2xl backdrop-blur-2xl border shadow-2xl transform transition-all duration-700 ease-out
-            ${notification.type === 'success' 
-              ? 'bg-gradient-to-br from-emerald-50/95 via-teal-50/95 to-cyan-50/95 border-emerald-200/50 shadow-emerald-500/20' 
+            ${notification.type === 'success'
+              ? 'bg-gradient-to-br from-emerald-50/95 via-teal-50/95 to-cyan-50/95 border-emerald-200/50 shadow-emerald-500/20'
               : notification.type === 'error'
-              ? 'bg-gradient-to-br from-red-50/95 via-rose-50/95 to-pink-50/95 border-red-200/50 shadow-red-500/20'
-              : 'bg-gradient-to-br from-amber-50/95 via-yellow-50/95 to-orange-50/95 border-amber-200/50 shadow-amber-500/20'
+                ? 'bg-gradient-to-br from-red-50/95 via-rose-50/95 to-pink-50/95 border-red-200/50 shadow-red-500/20'
+                : 'bg-gradient-to-br from-amber-50/95 via-yellow-50/95 to-orange-50/95 border-amber-200/50 shadow-amber-500/20'
             }
             animate-in slide-in-from-right-full fade-in duration-700
           `}>
-            
+
             {/* Premium Background Effects */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-white/20 to-transparent pointer-events-none"></div>
             <div className={`
               absolute top-0 left-0 right-0 h-1 
-              ${notification.type === 'success' 
-                ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500' 
+              ${notification.type === 'success'
+                ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500'
                 : notification.type === 'error'
-                ? 'bg-gradient-to-r from-red-500 via-rose-500 to-pink-500'
-                : 'bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500'
+                  ? 'bg-gradient-to-r from-red-500 via-rose-500 to-pink-500'
+                  : 'bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500'
               }
             `}></div>
-            
+
             {/* Content Container */}
             <div className="relative p-6">
-              
+
               {/* Header Section */}
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
                   {/* Status Icon */}
                   <div className={`
                     flex items-center justify-center w-10 h-10 rounded-xl shadow-lg
-                    ${notification.type === 'success' 
-                      ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white' 
+                    ${notification.type === 'success'
+                      ? 'bg-gradient-to-br from-emerald-500 to-teal-600 text-white'
                       : notification.type === 'error'
-                      ? 'bg-gradient-to-br from-red-500 to-rose-600 text-white'
-                      : 'bg-gradient-to-br from-amber-500 to-orange-600 text-white'
+                        ? 'bg-gradient-to-br from-red-500 to-rose-600 text-white'
+                        : 'bg-gradient-to-br from-amber-500 to-orange-600 text-white'
                     }
                   `}>
                     {notification.type === 'success' && (
@@ -199,16 +199,16 @@ export default function Footer() {
                       </svg>
                     )}
                   </div>
-                  
+
                   {/* Title and Timestamp */}
                   <div>
                     <h3 className={`
                       font-bold text-lg leading-tight
-                      ${notification.type === 'success' 
-                        ? 'text-emerald-900' 
+                      ${notification.type === 'success'
+                        ? 'text-emerald-900'
                         : notification.type === 'error'
-                        ? 'text-red-900'
-                        : 'text-amber-900'
+                          ? 'text-red-900'
+                          : 'text-amber-900'
                       }
                     `}>
                       {notification.title}
@@ -218,17 +218,17 @@ export default function Footer() {
                     </p>
                   </div>
                 </div>
-                
+
                 {/* Close Button */}
                 <button
                   onClick={() => setNotification(null)}
                   className={`
                     group flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200 hover:scale-110 active:scale-95
-                    ${notification.type === 'success' 
-                      ? 'hover:bg-emerald-100 text-emerald-600 hover:text-emerald-800' 
+                    ${notification.type === 'success'
+                      ? 'hover:bg-emerald-100 text-emerald-600 hover:text-emerald-800'
                       : notification.type === 'error'
-                      ? 'hover:bg-red-100 text-red-600 hover:text-red-800'
-                      : 'hover:bg-amber-100 text-amber-600 hover:text-amber-800'
+                        ? 'hover:bg-red-100 text-red-600 hover:text-red-800'
+                        : 'hover:bg-amber-100 text-amber-600 hover:text-amber-800'
                     }
                   `}
                   aria-label="Close notification"
@@ -238,26 +238,26 @@ export default function Footer() {
                   </svg>
                 </button>
               </div>
-              
+
               {/* Message Section */}
               <div className="space-y-3">
                 <p className={`
                   font-semibold text-base leading-relaxed
-                  ${notification.type === 'success' 
-                    ? 'text-emerald-800' 
+                  ${notification.type === 'success'
+                    ? 'text-emerald-800'
                     : notification.type === 'error'
-                    ? 'text-red-800'
-                    : 'text-amber-800'
+                      ? 'text-red-800'
+                      : 'text-amber-800'
                   }
                 `}>
                   {notification.message}
                 </p>
-                
+
                 <p className="text-sm leading-relaxed text-slate-700">
                   {notification.details}
                 </p>
               </div>
-              
+
               {/* Action Section for Success */}
               {notification.type === 'success' && (
                 <div className="mt-4 pt-4 border-t border-emerald-200/50">
@@ -277,15 +277,15 @@ export default function Footer() {
                   </div>
                 </div>
               )}
-              
+
               {/* Progress Bar */}
               <div className={`
                 absolute bottom-0 left-0 h-1 rounded-b-2xl transition-all duration-100 ease-linear
-                ${notification.type === 'success' 
-                  ? 'bg-gradient-to-r from-emerald-400 to-teal-500' 
+                ${notification.type === 'success'
+                  ? 'bg-gradient-to-r from-emerald-400 to-teal-500'
                   : notification.type === 'error'
-                  ? 'bg-gradient-to-r from-red-400 to-rose-500'
-                  : 'bg-gradient-to-r from-amber-400 to-orange-500'
+                    ? 'bg-gradient-to-r from-red-400 to-rose-500'
+                    : 'bg-gradient-to-r from-amber-400 to-orange-500'
                 }
               `}
                 style={{
@@ -314,7 +314,7 @@ export default function Footer() {
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-400/15 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex flex-col lg:flex-row justify-center items-center gap-6">
-            
+
             {/* Smart Weather Widget */}
             <div className="group bg-gradient-to-r from-amber-500/8 to-orange-500/8 border border-amber-400/20 rounded-xl px-4 py-3 backdrop-blur-sm hover:border-amber-400/30 transition-all duration-300 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-white/3 to-transparent rounded-xl pointer-events-none"></div>
@@ -389,7 +389,7 @@ export default function Footer() {
       {/* Smart Professional Main Footer Content */}
       <div className="relative max-w-7xl mx-auto py-8 px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-          
+
           {/* Professional Company Info Container */}
           <div className="lg:col-span-2 group bg-slate-800/50 rounded-xl p-6 border border-slate-600/30 backdrop-blur-sm hover:bg-slate-800/60 transition-all duration-300 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-white/4 to-transparent rounded-xl pointer-events-none"></div>
@@ -400,7 +400,7 @@ export default function Footer() {
                 </div>
                 <div className="flex-1">
                   <h2 className="text-lg font-black text-white tracking-wide mb-1 animate-fade-in-up text-glow-hover">
-                    <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Roamio</span> 
+                    <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Roamio</span>
                     <span className="text-teal-400 hover:text-teal-300 transition-all duration-500 hover:scale-105 inline-block">Wanderly</span>
                   </h2>
                   <p className="text-xs text-gray-300 font-semibold tracking-wider animate-fade-in-up animation-delay-200 hover:text-white transition-colors duration-300 uppercase">
@@ -410,9 +410,9 @@ export default function Footer() {
               </div>
               <div className="mb-4">
                 <p className="text-sm text-gray-200 leading-relaxed font-semibold tracking-wide animate-fade-in-up animation-delay-400 hover:text-gray-100 transition-all duration-500 hover:translate-x-1">
-                  {showFullAbout 
-                    ? (aboutText || "Roamio Wanderly is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.")
-                    : `${(aboutText || "Roamio Wanderly is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.").substring(0, 120)}...`
+                  {showFullAbout
+                    ? (aboutText || "Subha Yatra is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.")
+                    : `${(aboutText || "Subha Yatra is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.").substring(0, 120)}...`
                   }
                 </p>
               </div>
@@ -427,7 +427,7 @@ export default function Footer() {
                   </svg>
                 </button>
               </div>
-              
+
               {/* Professional Social Links */}
               <div className="flex items-center space-x-4">
                 <a
@@ -471,7 +471,7 @@ export default function Footer() {
                   <span className="font-semibold tracking-wide">{t('footer.contact')}</span>
                 </Link>
               </div>
-              
+
               <h3 className="text-sm font-black mb-4 mt-6 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full mr-2"></span>
                 <span className="tracking-wide">
@@ -517,7 +517,7 @@ export default function Footer() {
                   <span className="font-semibold tracking-wide">Wishlist</span>
                 </Link>
               </div>
-              
+
               <h3 className="text-sm font-black mb-4 mt-6 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <span className="w-2 h-2 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full mr-2"></span>
                 <span className="tracking-wide">
@@ -550,10 +550,10 @@ export default function Footer() {
           <div className="lg:col-span-2 group bg-gradient-to-br from-slate-800/45 via-slate-700/35 to-slate-800/45 rounded-2xl p-8 border border-slate-600/30 backdrop-blur-sm hover:bg-gradient-to-br hover:from-slate-800/55 hover:via-slate-700/45 hover:to-slate-800/55 transition-all duration-300 relative overflow-hidden">
             {/* Smart Glass Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/4 via-transparent to-white/2 rounded-2xl pointer-events-none"></div>
-            
+
             {/* Smart Background Pattern */}
             <div className="absolute inset-0 bg-gradient-to-br from-teal-500/4 via-transparent to-amber-500/4 pointer-events-none"></div>
-            
+
             {/* Clean Professional Newsletter Section */}
             <div className="relative">
               <div className="flex items-center mb-6">
@@ -571,7 +571,7 @@ export default function Footer() {
                   <p className="text-sm text-gray-400 mt-1 font-semibold">Curated travel insights delivered weekly</p>
                 </div>
               </div>
-              
+
               {/* Clean Newsletter Form */}
               <form onSubmit={handleSubscribe} className="mb-6">
                 <div className="relative">
@@ -587,11 +587,10 @@ export default function Footer() {
                     <button
                       type="submit"
                       disabled={isSubscribing}
-                      className={`px-6 py-3 text-white text-sm font-bold transition-all duration-200 flex items-center justify-center min-w-[100px] ${
-                        isSubscribing 
-                          ? 'bg-teal-500 cursor-not-allowed' 
-                          : 'bg-teal-600 hover:bg-teal-500'
-                      }`}
+                      className={`px-6 py-3 text-white text-sm font-bold transition-all duration-200 flex items-center justify-center min-w-[100px] ${isSubscribing
+                        ? 'bg-teal-500 cursor-not-allowed'
+                        : 'bg-teal-600 hover:bg-teal-500'
+                        }`}
                     >
                       {isSubscribing ? (
                         <>
@@ -607,7 +606,7 @@ export default function Footer() {
                     </button>
                   </div>
                 </div>
-                
+
                 {/* Clean Trust Indicators */}
                 <div className="flex items-center justify-center mt-4 space-x-6 text-xs text-gray-500">
                   <div className="flex items-center space-x-1.5">
@@ -633,7 +632,7 @@ export default function Footer() {
                 </div>
               </form>
             </div>
-            
+
             {/* Smart Legal Section */}
             <div className="relative border-t border-slate-600/30 pt-6">
               <h4 className="text-sm font-semibold mb-4 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
@@ -646,26 +645,24 @@ export default function Footer() {
                 </span>
               </h4>
               <div className="flex flex-wrap gap-3">
-                <Link 
-                  to="/privacy-policy" 
-                  className={`inline-flex items-center px-4 py-2 text-sm rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
-                    location.pathname === "/privacy-policy" 
-                      ? "bg-teal-500/20 border-teal-500/40 text-teal-300" 
-                      : "bg-slate-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
-                  }`}
+                <Link
+                  to="/privacy-policy"
+                  className={`inline-flex items-center px-4 py-2 text-sm rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${location.pathname === "/privacy-policy"
+                    ? "bg-teal-500/20 border-teal-500/40 text-teal-300"
+                    : "bg-slate-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
+                    }`}
                 >
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                   </svg>
                   <span className="font-medium tracking-wide">Privacy Policy</span>
                 </Link>
-                <Link 
-                  to="/terms-of-service" 
-                  className={`inline-flex items-center px-4 py-2 text-sm rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
-                    location.pathname === "/terms-of-service" 
-                      ? "bg-teal-500/20 border-teal-500/40 text-teal-300" 
-                      : "bg-slate-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
-                  }`}
+                <Link
+                  to="/terms-of-service"
+                  className={`inline-flex items-center px-4 py-2 text-sm rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${location.pathname === "/terms-of-service"
+                    ? "bg-teal-500/20 border-teal-500/40 text-teal-300"
+                    : "bg-slate-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
+                    }`}
                 >
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clipRule="evenodd" />
@@ -681,19 +678,19 @@ export default function Footer() {
       {/* Smart Professional Bottom Bar */}
       <div className="relative border-t border-slate-600/30 bg-slate-800/60 backdrop-blur-md">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-400/15 to-transparent"></div>
-        
+
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-2">
             <div className="flex items-center space-x-3">
               <p className="text-xs text-gray-400 font-light tracking-wide">
-                © {new Date().getFullYear()} <span className="font-medium text-gray-300">Roamio Wanderly</span>. {t('footer.allRightsReserved')}.
+                © {new Date().getFullYear()} <span className="font-medium text-gray-300">Subha Yatra</span>. {t('footer.allRightsReserved')}.
               </p>
               <div className="hidden md:flex items-center space-x-1">
                 <div className="w-1 h-1 bg-teal-500/60 rounded-full"></div>
                 <div className="w-0.5 h-0.5 bg-emerald-500/60 rounded-full animate-pulse"></div>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-4 text-xs text-gray-400 font-light">
               <div className="flex items-center space-x-1">
                 <svg className="w-3 h-3 text-teal-400" fill="currentColor" viewBox="0 0 20 20">

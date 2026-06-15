@@ -265,7 +265,7 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
                     <div className={`px-5 py-3 border-t text-center ${theme === 'dark' ? 'bg-slate-800/40 border-slate-700/50' : 'bg-slate-50/60 border-slate-200/50'
                         }`}>
                         <p className={`text-xs font-medium ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>
-                            Roamio Wanderly © 2024
+                            Subha Yatra © 2024
                         </p>
                     </div>
                 </div>

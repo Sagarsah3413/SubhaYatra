@@ -99,7 +99,7 @@ const NewsletterArchive = () => {
       tags: ["trekking", "winter", "safety", "gear"],
       featured: true,
       image: LangtangImage,
-      author: "Roamio Wanderly Team",
+      author: "Subha Yatra Team",
       content: `
         <h2>Winter Trekking in Nepal: A Complete Safety Guide</h2>
         
@@ -491,12 +491,12 @@ const NewsletterArchive = () => {
   // Filter newsletters based on search and category
   const filteredNewsletters = newsletters.filter(newsletter => {
     const matchesSearch = newsletter.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         newsletter.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         newsletter.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+      newsletter.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      newsletter.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+
     const matchesCategory = selectedCategory === "all" || newsletter.category === selectedCategory;
     const matchesYear = selectedYear === "all" || newsletter.date.startsWith(selectedYear);
-    
+
     return matchesSearch && matchesCategory && matchesYear;
   });
 
@@ -534,12 +534,11 @@ const NewsletterArchive = () => {
     setExpandedCards(newExpanded);
   };
   const NewsletterCard = ({ newsletter, featured = false }) => (
-    <article className={`group relative overflow-hidden transition-all duration-700 transform-gpu hover:scale-[1.02] ${
-      featured 
-        ? 'bg-gradient-to-br from-white via-teal-50/30 to-cyan-50/30 dark:from-slate-800 dark:via-teal-900/20 dark:to-cyan-900/20 border-2 border-teal-200 dark:border-teal-700 shadow-2xl hover:shadow-3xl' 
+    <article className={`group relative overflow-hidden transition-all duration-700 transform-gpu hover:scale-[1.02] ${featured
+        ? 'bg-gradient-to-br from-white via-teal-50/30 to-cyan-50/30 dark:from-slate-800 dark:via-teal-900/20 dark:to-cyan-900/20 border-2 border-teal-200 dark:border-teal-700 shadow-2xl hover:shadow-3xl'
         : 'bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-xl hover:shadow-2xl'
-    } rounded-3xl`}>
-      
+      } rounded-3xl`}>
+
       {/* Premium Background Effects */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
         <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 rounded-full blur-2xl"></div>
@@ -555,7 +554,7 @@ const NewsletterArchive = () => {
           </div>
         </div>
       )}
-      
+
       {/* Ultra Premium Image Section */}
       <div className="relative overflow-hidden rounded-t-3xl">
         {imageLoadingStates.has(newsletter.id) && (
@@ -563,8 +562,8 @@ const NewsletterArchive = () => {
             <div className="text-gray-400 dark:text-slate-400 text-sm font-medium">Loading...</div>
           </div>
         )}
-        <img 
-          src={newsletter.image} 
+        <img
+          src={newsletter.image}
           alt={newsletter.title}
           className="w-full h-64 object-cover transition-all duration-1000 group-hover:scale-110 group-hover:brightness-110"
           onLoadStart={() => handleImageLoadStart(newsletter.id)}
@@ -575,7 +574,7 @@ const NewsletterArchive = () => {
             e.target.onerror = null;
           }}
         />
-        
+
         {/* Premium Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"></div>
         {/* Ultra Premium Action Buttons */}
@@ -586,23 +585,22 @@ const NewsletterArchive = () => {
               e.stopPropagation();
               toggleBookmark(newsletter.id);
             }}
-            className={`w-12 h-12 rounded-2xl transition-all duration-300 backdrop-blur-2xl shadow-2xl border border-white/20 flex items-center justify-center transform hover:scale-110 hover:rotate-12 ${
-              bookmarkedItems.has(newsletter.id)
+            className={`w-12 h-12 rounded-2xl transition-all duration-300 backdrop-blur-2xl shadow-2xl border border-white/20 flex items-center justify-center transform hover:scale-110 hover:rotate-12 ${bookmarkedItems.has(newsletter.id)
                 ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white'
                 : 'bg-white/90 dark:bg-slate-800/90 text-gray-700 dark:text-slate-300 hover:text-amber-500'
-            }`}
+              }`}
             title={bookmarkedItems.has(newsletter.id) ? 'Remove bookmark' : 'Add bookmark'}
           >
             <FaBookmark className="text-lg" />
           </button>
-          <button 
+          <button
             className="w-12 h-12 bg-white/90 dark:bg-slate-800/90 text-gray-700 dark:text-slate-300 rounded-2xl hover:text-teal-600 dark:hover:text-teal-400 transition-all duration-300 backdrop-blur-2xl shadow-2xl border border-white/20 flex items-center justify-center transform hover:scale-110 hover:rotate-12"
             title="Share article"
           >
             <FaShare className="text-lg" />
           </button>
         </div>
-        
+
         {/* Premium Reading Time Badge */}
         <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
           <div className="flex items-center gap-2 px-4 py-2 bg-black/80 text-white text-sm font-bold rounded-full backdrop-blur-xl border border-white/20">
@@ -621,10 +619,10 @@ const NewsletterArchive = () => {
               <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
                 <FaCalendarAlt className="text-white text-xs" />
               </div>
-              <span className="font-medium">{new Date(newsletter.date).toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
+              <span className="font-medium">{new Date(newsletter.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
               })}</span>
             </div>
             <div className="flex items-center gap-2">
@@ -634,7 +632,7 @@ const NewsletterArchive = () => {
               <span className="font-medium">{newsletter.views.toLocaleString()}</span>
             </div>
           </div>
-          
+
           {/* Category Badge */}
           <div className="px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-slate-700 dark:to-slate-600 text-gray-700 dark:text-slate-300 text-xs font-black rounded-full capitalize border border-gray-200 dark:border-slate-600">
             {newsletter.category.replace('-', ' ')}
@@ -649,11 +647,10 @@ const NewsletterArchive = () => {
         <div className="text-gray-600 dark:text-slate-300 mb-6 leading-relaxed text-base">
           {newsletter.content ? (
             <div className="relative">
-              <div 
-                className={`prose prose-sm max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-600 dark:prose-p:text-slate-300 prose-ul:text-gray-600 dark:prose-ul:text-slate-300 prose-li:text-gray-600 dark:prose-li:text-slate-300 overflow-hidden transition-all duration-500 ${
-                  expandedCards.has(newsletter.id) ? 'max-h-none' : 'max-h-20'
-                }`}
-                dangerouslySetInnerHTML={{ __html: newsletter.content }} 
+              <div
+                className={`prose prose-sm max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-600 dark:prose-p:text-slate-300 prose-ul:text-gray-600 dark:prose-ul:text-slate-300 prose-li:text-gray-600 dark:prose-li:text-slate-300 overflow-hidden transition-all duration-500 ${expandedCards.has(newsletter.id) ? 'max-h-none' : 'max-h-20'
+                  }`}
+                dangerouslySetInnerHTML={{ __html: newsletter.content }}
               />
               {!expandedCards.has(newsletter.id) && (
                 <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white dark:from-slate-800 to-transparent pointer-events-none"></div>
@@ -664,10 +661,10 @@ const NewsletterArchive = () => {
                 className="mt-4 inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
                 <span>{expandedCards.has(newsletter.id) ? 'Show Less' : 'Read More'}</span>
-                <svg 
+                <svg
                   className={`w-5 h-5 transition-transform duration-300 ${expandedCards.has(newsletter.id) ? 'rotate-180' : ''}`}
-                  fill="none" 
-                  stroke="currentColor" 
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                   strokeWidth={2.5}
                 >
@@ -683,7 +680,7 @@ const NewsletterArchive = () => {
         {/* Ultra Premium Tags */}
         <div className="flex flex-wrap gap-2 mb-8">
           {newsletter.tags.slice(0, 3).map((tag, index) => (
-            <span 
+            <span
               key={index}
               className="px-3 py-2 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 text-teal-700 dark:text-teal-300 text-sm font-bold rounded-xl hover:from-teal-100 hover:to-cyan-100 dark:hover:from-teal-800/50 dark:hover:to-cyan-800/50 transition-all duration-300 cursor-pointer border border-teal-200 dark:border-teal-700 transform hover:scale-105"
             >
@@ -699,7 +696,7 @@ const NewsletterArchive = () => {
 
         {/* Ultra Premium CTA Section */}
         <div className="flex items-center justify-between relative z-10">
-          
+
           {/* Author Info */}
           {newsletter.author && (
             <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400">
@@ -716,19 +713,19 @@ const NewsletterArchive = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'} transition-colors duration-300`}>
       <Header />
-      
-      {/* Ultra Premium Hero Section */}    
+
+      {/* Ultra Premium Hero Section */}
       <div className="relative overflow-hidden pt-20">
         {/* Premium Background with Gradient */}
         <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'}`}></div>
-        
+
         {/* Premium Floating Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute -top-40 -right-40 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
-        
+
         {/* Ultra Premium Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
           <div className="text-center">
@@ -739,7 +736,7 @@ const NewsletterArchive = () => {
               </div>
               <span className="text-teal-300 font-black text-lg">Knowledge Hub</span>
             </div>
-            
+
             {/* Massive Typography */}
             <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black text-white mb-8 tracking-tight leading-none">
               Newsletter
@@ -747,14 +744,14 @@ const NewsletterArchive = () => {
                 Archive
               </span>
             </h1>
-            
+
             {/* Premium Description */}
             <p className="text-xl lg:text-2xl text-gray-300 max-w-5xl mx-auto leading-relaxed mb-12 font-medium">
-              Discover our curated collection of travel insights, cultural deep-dives, and expert guides. 
-              <span className="text-teal-300 font-black"> 10+ premium newsletters</span> covering Nepal's hidden gems, 
+              Discover our curated collection of travel insights, cultural deep-dives, and expert guides.
+              <span className="text-teal-300 font-black"> 10+ premium newsletters</span> covering Nepal's hidden gems,
               trekking wisdom, and authentic experiences that transform ordinary trips into extraordinary adventures.
             </p>
-            
+
             {/* Ultra Premium Stats */}
             <div className="flex flex-wrap justify-center gap-12 text-lg">
               <div className="flex items-center gap-3 text-gray-300">
@@ -791,7 +788,7 @@ const NewsletterArchive = () => {
       {/* Ultra Premium Search and Filters Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-20">
         <div className={`${theme === 'dark' ? 'bg-slate-800/95' : 'bg-white/95'} rounded-3xl shadow-2xl border-2 ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} backdrop-blur-2xl p-8 lg:p-12 relative overflow-hidden`}>
-          
+
           {/* Premium Background Pattern */}
           <div className="absolute inset-0 opacity-5">
             <div className="absolute inset-0" style={{
@@ -799,7 +796,7 @@ const NewsletterArchive = () => {
               backgroundSize: '30px 30px'
             }}></div>
           </div>
-          
+
           {/* Ultra Premium Search Header */}
           <div className="relative z-10 mb-8">
             <div className="text-center mb-8">
@@ -812,7 +809,7 @@ const NewsletterArchive = () => {
               <p className="text-xl text-gray-600 dark:text-slate-300 font-medium">Find the perfect guide for your Nepal adventure</p>
             </div>
           </div>
-          
+
           {/* Ultra Premium Search and Filters Grid */}
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
             {/* Enhanced Search */}
@@ -883,21 +880,19 @@ const NewsletterArchive = () => {
             <div className="lg:col-span-2 flex gap-2">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`flex-1 py-5 px-4 rounded-2xl font-black text-lg transition-all duration-300 ${
-                  viewMode === "grid"
+                className={`flex-1 py-5 px-4 rounded-2xl font-black text-lg transition-all duration-300 ${viewMode === "grid"
                     ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-2xl'
                     : `${theme === 'dark' ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`
-                }`}
+                  }`}
               >
                 Grid
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`flex-1 py-5 px-4 rounded-2xl font-black text-lg transition-all duration-300 ${
-                  viewMode === "list"
+                className={`flex-1 py-5 px-4 rounded-2xl font-black text-lg transition-all duration-300 ${viewMode === "list"
                     ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-2xl'
                     : `${theme === 'dark' ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`
-                }`}
+                  }`}
               >
                 List
               </button>
@@ -907,7 +902,7 @@ const NewsletterArchive = () => {
           {/* Ultra Premium Results Summary */}
           <div className="relative z-10 flex items-center justify-between pt-6 border-t-2 border-gray-200 dark:border-slate-700">
             <div className="text-lg text-gray-600 dark:text-slate-300">
-              <span className="font-black text-2xl text-gray-900 dark:text-white">{filteredNewsletters.length}</span> 
+              <span className="font-black text-2xl text-gray-900 dark:text-white">{filteredNewsletters.length}</span>
               <span className="ml-2 font-medium">newsletter{filteredNewsletters.length !== 1 ? 's' : ''} found</span>
               {searchTerm && (
                 <span className="ml-3 px-4 py-2 bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50 text-teal-700 dark:text-teal-300 rounded-full text-sm font-black">
@@ -915,12 +910,12 @@ const NewsletterArchive = () => {
                 </span>
               )}
             </div>
-            
+
             {/* Premium Quick Filters */}
             <div className="hidden lg:flex items-center gap-3">
               <span className="text-sm text-gray-500 dark:text-slate-400 font-medium">Quick:</span>
               {['destinations', 'safety', 'culture'].map((cat) => (
-                <button 
+                <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className="px-4 py-2 text-sm bg-gradient-to-r from-gray-100 to-gray-200 dark:from-slate-700 dark:to-slate-600 hover:from-teal-100 hover:to-cyan-100 dark:hover:from-teal-900/50 dark:hover:to-cyan-900/50 text-gray-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-teal-300 rounded-xl transition-all duration-300 font-bold capitalize transform hover:scale-105"
@@ -934,7 +929,7 @@ const NewsletterArchive = () => {
       </div>
       {/* Ultra Premium Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        
+
         {/* Ultra Premium Featured Newsletters Section */}
         {featuredNewsletters.length > 0 && (
           <section className="mb-20">
@@ -955,12 +950,11 @@ const NewsletterArchive = () => {
                 <span className="font-bold">{featuredNewsletters.length} featured articles</span>
               </div>
             </div>
-            
-            <div className={`grid gap-8 ${
-              viewMode === "grid" 
-                ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3" 
+
+            <div className={`grid gap-8 ${viewMode === "grid"
+                ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
                 : "grid-cols-1 max-w-4xl mx-auto"
-            }`}>
+              }`}>
               {featuredNewsletters.map(newsletter => (
                 <NewsletterCard key={newsletter.id} newsletter={newsletter} featured={true} />
               ))}
@@ -982,7 +976,7 @@ const NewsletterArchive = () => {
               </span>
             </h2>
             <p className="text-xl text-gray-600 dark:text-slate-300 max-w-3xl mx-auto font-medium">Browse our complete collection of travel insights and expert guides</p>
-            
+
             {/* Premium Sort Options */}
             <div className="flex items-center justify-center gap-4 mt-8">
               <span className="text-lg text-gray-500 dark:text-slate-400 font-medium">Sort by:</span>
@@ -995,11 +989,10 @@ const NewsletterArchive = () => {
                   <button
                     key={option.value}
                     onClick={() => setSortBy(option.value)}
-                    className={`px-4 py-2 rounded-xl font-bold transition-all duration-300 ${
-                      sortBy === option.value
+                    className={`px-4 py-2 rounded-xl font-bold transition-all duration-300 ${sortBy === option.value
                         ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-2xl'
                         : `${theme === 'dark' ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`
-                    }`}
+                      }`}
                   >
                     {option.label}
                   </button>
@@ -1008,11 +1001,10 @@ const NewsletterArchive = () => {
             </div>
           </div>
           {filteredNewsletters.length > 0 ? (
-            <div className={`grid gap-8 ${
-              viewMode === "grid" 
-                ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3" 
+            <div className={`grid gap-8 ${viewMode === "grid"
+                ? "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
                 : "grid-cols-1 max-w-4xl mx-auto"
-            }`}>
+              }`}>
               {filteredNewsletters.map(newsletter => (
                 <NewsletterCard key={newsletter.id} newsletter={newsletter} />
               ))}
@@ -1026,7 +1018,7 @@ const NewsletterArchive = () => {
               <p className="text-xl text-gray-600 dark:text-slate-300 mb-8 max-w-md mx-auto leading-relaxed">
                 We couldn't find any articles matching your search criteria. Try adjusting your filters or search terms.
               </p>
-              <button 
+              <button
                 onClick={() => {
                   setSearchTerm("");
                   setSelectedCategory("all");
@@ -1048,7 +1040,7 @@ const NewsletterArchive = () => {
       {/* Ultra Premium Newsletter Subscription CTA */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-4xl p-12 lg:p-16 shadow-2xl">
-          
+
           {/* Ultra Premium Background Pattern */}
           <div className="absolute inset-0 opacity-10">
             <div className="absolute inset-0" style={{
@@ -1056,14 +1048,14 @@ const NewsletterArchive = () => {
               backgroundSize: '400px 400px, 600px 600px'
             }}></div>
           </div>
-          
+
           {/* Premium Floating Elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-10 left-10 w-40 h-40 bg-teal-400/20 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-10 right-10 w-48 h-48 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl animate-pulse opacity-50" style={{ animationDelay: '2s' }}></div>
           </div>
-          
+
           {/* Ultra Premium Content */}
           <div className="relative z-10 text-center">
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border border-teal-400/30 backdrop-blur-xl mb-8 shadow-2xl">
@@ -1074,19 +1066,19 @@ const NewsletterArchive = () => {
               </div>
               <span className="text-teal-300 font-black text-xl">Stay Connected</span>
             </div>
-            
+
             <h3 className="text-4xl lg:text-7xl font-black text-white mb-6 leading-tight">
               Never Miss an
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 animate-pulse">
                 Adventure Story
               </span>
             </h3>
-            
+
             <p className="text-2xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed font-medium">
-              Join thousands of travelers getting exclusive insights, hidden gems, and expert tips 
+              Join thousands of travelers getting exclusive insights, hidden gems, and expert tips
               delivered straight to their inbox every week. Transform your Nepal journey with insider knowledge.
             </p>
-            
+
             {/* Ultra Premium Stats */}
             <div className="flex flex-wrap justify-center gap-12 mb-12">
               <div className="flex flex-col items-center group">
@@ -1113,11 +1105,11 @@ const NewsletterArchive = () => {
             </div>
             {/* Ultra Premium CTA Button */}
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-              <button 
+              <button
                 onClick={() => {
                   const footer = document.querySelector('footer');
                   if (footer) {
-                    footer.scrollIntoView({ 
+                    footer.scrollIntoView({
                       behavior: 'smooth',
                       block: 'start'
                     });
@@ -1131,12 +1123,12 @@ const NewsletterArchive = () => {
                   </svg>
                 </div>
                 <span>Subscribe to Newsletter</span>
-                
+
                 {/* Premium Shine Effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               </button>
-              
-              <Link 
+
+              <Link
                 to="/newsletter-archive"
                 className="inline-flex items-center gap-3 text-gray-300 hover:text-white font-bold text-xl transition-colors duration-300"
               >
@@ -1223,11 +1215,10 @@ const NewsletterArchive = () => {
                       e.stopPropagation();
                       toggleBookmark(selectedNewsletter.id);
                     }}
-                    className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-300 font-bold ${
-                      bookmarkedItems.has(selectedNewsletter.id)
+                    className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-300 font-bold ${bookmarkedItems.has(selectedNewsletter.id)
                         ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-2xl'
                         : 'bg-white dark:bg-slate-600 border border-gray-300 dark:border-slate-500 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-500'
-                    }`}
+                      }`}
                   >
                     <FaBookmark />
                     <span>{bookmarkedItems.has(selectedNewsletter.id) ? 'Bookmarked' : 'Bookmark'}</span>

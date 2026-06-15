@@ -18,14 +18,14 @@ const Logo = ({ onClick, theme }) => (
         {/* Wordmark */}
         <div className="hidden sm:flex flex-col leading-none">
             <span className={`text-lg font-black tracking-tight bg-linear-to-r bg-clip-text text-transparent ${theme === 'dark'
-                    ? 'from-teal-300 to-emerald-300'
-                    : 'from-teal-600 to-emerald-600'
+                ? 'from-teal-300 to-emerald-300'
+                : 'from-teal-600 to-emerald-600'
                 }`}>
-                Roamio
+                Subha
             </span>
             <span className={`text-[11px] font-medium tracking-widest uppercase ${theme === 'dark' ? 'text-slate-400' : 'text-slate-500'
                 }`}>
-                Wanderly
+                Yatra
             </span>
         </div>
     </button>

@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <Header />
-      
+
       <div className="max-w-4xl mx-auto px-6 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">
@@ -32,7 +32,7 @@ const PrivacyPolicy = () => {
 
         {/* Content Sections */}
         <div className="space-y-8">
-          
+
           {/* Information We Collect */}
           <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
             <div className="flex items-center mb-4">
@@ -191,7 +191,7 @@ const PrivacyPolicy = () => {
             <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 <strong>Email:</strong> privacy@roamiowanderly.com<br />
-                <strong>Address:</strong> Roamio Wanderly, Kathmandu, Nepal<br />
+                <strong>Address:</strong> Subha Yatra, Kathmandu, Nepal<br />
                 <strong>Response Time:</strong> We aim to respond within 30 days
               </p>
             </div>

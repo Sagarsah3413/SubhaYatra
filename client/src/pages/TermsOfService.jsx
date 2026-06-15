@@ -10,7 +10,7 @@ const TermsOfService = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <Header />
-      
+
       <div className="max-w-4xl mx-auto px-6 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">
@@ -32,7 +32,7 @@ const TermsOfService = () => {
 
         {/* Content Sections */}
         <div className="space-y-8">
-          
+
           {/* Acceptance of Terms */}
           <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
             <div className="flex items-center mb-4">
@@ -40,7 +40,7 @@ const TermsOfService = () => {
               <h2 className="text-2xl font-semibold">1. Acceptance of Terms</h2>
             </div>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-              By accessing and using Roamio Wanderly ("the Service"), you accept and agree to be bound by the terms and provision of this agreement.
+              By accessing and using Subha Yatra ("the Service"), you accept and agree to be bound by the terms and provision of this agreement.
             </p>
             <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
               <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -53,7 +53,7 @@ const TermsOfService = () => {
           <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">2. Service Description</h2>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-              Roamio Wanderly is a travel recommendation platform that provides:
+              Subha Yatra is a travel recommendation platform that provides:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
@@ -199,7 +199,7 @@ const TermsOfService = () => {
           <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">8. Limitation of Liability</h2>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-              To the maximum extent permitted by law, Roamio Wanderly shall not be liable for:
+              To the maximum extent permitted by law, Subha Yatra shall not be liable for:
             </p>
             <ul className={`list-disc list-inside space-y-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               <li>Indirect, incidental, or consequential damages</li>
@@ -274,7 +274,7 @@ const TermsOfService = () => {
             <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 <strong>Email:</strong> legal@roamiowanderly.com<br />
-                <strong>Address:</strong> Roamio Wanderly, Kathmandu, Nepal<br />
+                <strong>Address:</strong> Subha Yatra, Kathmandu, Nepal<br />
                 <strong>Business Hours:</strong> Sunday - Friday, 9:00 AM - 6:00 PM (NPT)
               </p>
             </div>

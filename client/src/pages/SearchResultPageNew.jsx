@@ -1,292 +1,289 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
-import { useUser } from "@clerk/clerk-react";
-import {
-  FaArrowLeft, FaSearch, FaSpinner, FaMapMarkerAlt,
-  FaStar, FaHotel, FaUtensils, FaMountain, FaChevronRight
-} from "react-icons/fa";
+import SmartImage from "../components/SmartImage";
+import { FaArrowLeft, FaSearch, FaSpinner, FaMapMarkerAlt } from "react-icons/fa";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
-
-// ── Single card ───────────────────────────────────────────────────────────────
-function Card({ item, type, theme, navigate }) {
-  const [imgIdx, setImgIdx] = useState(0);
-  const [err, setErr]       = useState({});
-
-  // Build all image URLs
-  const allImgs = (() => {
-    const paths = item.all_images && Array.isArray(item.all_images) && item.all_images.length
-      ? item.all_images
-      : item.image_url ? [item.image_url] : [];
-    return paths.map(p => {
-      if (!p || p === 'null') return null;
-      if (p.startsWith('http')) return p;
-      const parts = p.split('/');
-      const prefix = parts.slice(0, 4).join('/');
-      const rest   = parts.slice(4).map(encodeURIComponent).join('/');
-      return `${API}${prefix}/${rest}`;
-    }).filter(Boolean);
-  })();
-
-  const src = !err[imgIdx] && allImgs[imgIdx] ? allImgs[imgIdx] : null;
-
-  const accent = type === "place" ? "teal" : type === "hotel" ? "blue" : "orange";
-  const Icon   = type === "place" ? FaMountain : type === "hotel" ? FaHotel : FaUtensils;
-
-  return (
-    <div
-      onClick={() => navigate(`/details?type=${type}&name=${encodeURIComponent(item.name)}`)}
-      className={`group cursor-pointer rounded-2xl overflow-hidden border transition-all duration-300
-        hover:-translate-y-1 hover:shadow-2xl
-        ${theme === "dark"
-          ? "bg-slate-800 border-slate-700 hover:border-slate-500"
-          : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"}`}
-    >
-      {/* Image area */}
-      <div className="relative h-44 overflow-hidden bg-slate-200 dark:bg-slate-700">
-        {src ? (
-          <img src={src} alt={item.name}
-            onError={() => setErr(e => ({ ...e, [imgIdx]: true }))}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <Icon className="text-5xl text-slate-400" />
-          </div>
-        )}
-
-        {/* Rating */}
-        {item.rating && (
-          <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 text-white text-xs font-bold">
-            <FaStar className="text-amber-400 text-[10px]" />
-            {Number(item.rating).toFixed(1)}
-          </div>
-        )}
-
-        {/* Image dots — only if multiple images */}
-        {allImgs.length > 1 && (
-          <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
-            {allImgs.slice(0, 5).map((_, i) => (
-              <button
-                key={i}
-                onClick={e => { e.stopPropagation(); setImgIdx(i); }}
-                className={`w-1.5 h-1.5 rounded-full transition-all ${
-                  i === imgIdx ? 'bg-white scale-125' : 'bg-white/50'
-                }`}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Image count badge */}
-        {allImgs.length > 1 && (
-          <div className="absolute top-2 left-2 px-1.5 py-0.5 rounded-full bg-black/50 text-white text-[10px] font-semibold">
-            {allImgs.length} photos
-          </div>
-        )}
-      </div>
-
-      {/* Body */}
-      <div className="p-3 space-y-1.5">
-        <h3 className={`font-bold text-sm leading-tight line-clamp-1 group-hover:text-${accent}-500 transition-colors
-          ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
-          {item.name}
-        </h3>
-        {item.location && (
-          <div className="flex items-center gap-1 text-xs text-slate-500">
-            <FaMapMarkerAlt className={`text-${accent}-500 flex-shrink-0`} />
-            <span className="line-clamp-1">{item.location}</span>
-          </div>
-        )}
-        {item.description && (
-          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
-            {item.description}
-          </p>
-        )}
-        {item.price_range && (
-          <p className={`text-xs font-semibold text-${accent}-600 dark:text-${accent}-400`}>
-            {item.price_range}
-          </p>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ── Section block ─────────────────────────────────────────────────────────────
-function Section({ title, icon: Icon, accent, items, type, theme, navigate, query }) {
-  if (!items.length) return null;
-  return (
-    <div className="mb-10">
-      {/* Section header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-xl bg-${accent}-100 dark:bg-${accent}-900/40 flex items-center justify-center`}>
-            <Icon className={`text-${accent}-600 dark:text-${accent}-400 text-lg`} />
-          </div>
-          <div>
-            <h2 className={`text-xl font-black ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
-              {title}
-            </h2>
-            <p className="text-xs text-slate-500">
-              {items.length} result{items.length !== 1 ? "s" : ""} for "{query}"
-            </p>
-          </div>
-        </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-bold bg-${accent}-100 dark:bg-${accent}-900/40 text-${accent}-700 dark:text-${accent}-300`}>
-          {items.length}
-        </span>
-      </div>
-
-      {/* Divider */}
-      <div className={`h-0.5 w-full mb-5 bg-gradient-to-r from-${accent}-500/60 via-${accent}-300/30 to-transparent rounded-full`} />
-
-      {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {items.map((item, i) => (
-          <Card key={`${type}-${item.id || i}`} item={item} type={type} theme={theme} navigate={navigate} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ── Main page ─────────────────────────────────────────────────────────────────
 export default function SearchResultPage() {
   const { theme } = useTheme();
-  const navigate  = useNavigate();
-  const location  = useLocation();
-  const { user, isSignedIn, isLoaded } = useUser();
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const [results, setResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [searchStats, setSearchStats] = useState(null);
+  
+  // Get query and category from URL
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get("q") || "";
+  const category = searchParams.get("category") || "all";
+  
+  console.log('SearchResultPage loaded');
+  console.log('Query:', query);
+  console.log('Category:', category);
 
-  const [places,      setPlaces]      = useState([]);
-  const [hotels,      setHotels]      = useState([]);
-  const [restaurants, setRestaurants] = useState([]);
-  const [isLoading,   setIsLoading]   = useState(false);
-  const [error,       setError]       = useState(null);
-
-  const params   = new URLSearchParams(location.search);
-  const query    = params.get("q") || "";
-  const category = params.get("category") || "all";
-
-  const total = places.length + hotels.length + restaurants.length;
-
-  useEffect(() => {
-    if (!isLoaded || !query) return;
-    if (!isSignedIn || !user) {
-      setError("Please sign in to search.");
+  const performSearch = async (searchQuery, searchCategory) => {
+    if (!searchQuery) {
+      setError("No search query provided");
       return;
     }
 
-    let cancelled = false;
     setIsLoading(true);
     setError(null);
 
-    fetch(
-      `${API}/api/search?q=${encodeURIComponent(query)}&category=${category}`,
-      { headers: { "X-Clerk-User-Id": user.id, "X-Clerk-User-Name": user.fullName || "" } }
-    )
-      .then(res => {
-        if (res.status === 401) throw new Error("Please sign in to search.");
-        if (!res.ok) throw new Error(`Server error ${res.status}`);
-        return res.json();
-      })
-      .then(data => {
-        if (cancelled) return;
-        setPlaces(data.results?.places || []);
-        setHotels(data.results?.hotels || []);
-        setRestaurants(data.results?.restaurants || []);
-      })
-      .catch(e => { if (!cancelled) setError(e.message); })
-      .finally(() => { if (!cancelled) setIsLoading(false); });
+    try {
+      console.log('Calling API for:', searchQuery, 'Category:', searchCategory, '(unlimited results)');
+      
+      // Call the unified search API with category filter
+      const response = await fetch(
+        `http://localhost:8000/api/search?q=${encodeURIComponent(searchQuery)}&category=${searchCategory}`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('API Response:', data);
+      
+      if (data.results && Array.isArray(data.results)) {
+        // Normalize image data for each result
+        const normalizedResults = data.results.map(item => {
+          // Ensure the item has proper image data structure
+          if (!item.all_images || !Array.isArray(item.all_images)) {
+            item.all_images = [];
+          }
+          
+          // If image_url is null or empty, ensure it's properly set
+          if (!item.image_url || item.image_url === 'null' || item.image_url.trim() === '') {
+            item.image_url = null;
+          }
+          
+          return item;
+        });
+        
+        setResults(normalizedResults);
+        setSearchStats({
+          query: searchQuery,
+          category: searchCategory,
+          count: data.count,
+          unlimited: data.unlimited || false
+        });
+        console.log('Set results:', normalizedResults.length, 'items (unlimited)');
+        
+        // Log items that need AI images
+        const needsAI = normalizedResults.filter(item => 
+          (!item.all_images || item.all_images.length === 0) && 
+          (!item.image_url || item.image_url === null)
+        );
+        console.log(`Items needing AI images: ${needsAI.length}/${normalizedResults.length}`, 
+          needsAI.map(item => `${item.name} (${item.type})`));
+        
+        // Log breakdown by type
+        const typeBreakdown = needsAI.reduce((acc, item) => {
+          const type = item.type || 'unknown';
+          acc[type] = (acc[type] || 0) + 1;
+          return acc;
+        }, {});
+        console.log('AI image needs by type:', typeBreakdown);
+      } else {
+        setResults([]);
+        setSearchStats(null);
+        console.log('No results found');
+      }
+    } catch (err) {
+      console.error('Search error:', err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    return () => { cancelled = true; };
-  }, [query, category, isLoaded, isSignedIn, user]);
+  useEffect(() => {
+    console.log('useEffect triggered, query:', query, 'category:', category);
+    if (query) {
+      performSearch(query, category);
+    }
+  }, [query, category]);
 
   return (
-    <div className={`min-h-screen ${theme === "dark" ? "bg-slate-900 text-white" : "bg-slate-50 text-slate-900"}`}>
-
-      {/* ── Sticky header ── */}
-      <div className={`sticky top-0 z-40 border-b backdrop-blur-xl shadow-sm
-        ${theme === "dark" ? "bg-slate-900/95 border-slate-700" : "bg-white/95 border-slate-200"}`}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
-          <button onClick={() => navigate(-1)}
-            className={`p-2 rounded-xl transition-colors ${theme === "dark" ? "hover:bg-slate-800 text-slate-400" : "hover:bg-slate-100 text-slate-600"}`}>
-            <FaArrowLeft />
-          </button>
-          <FaSearch className="text-teal-500" />
-          <div className="flex-1">
-            <span className={`font-black text-lg ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
-              {isLoading ? "Searching…" : `${total} result${total !== 1 ? "s" : ""} for `}
-            </span>
-            {!isLoading && (
-              <span className="text-teal-500 font-black text-lg">"{query}"</span>
-            )}
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+      {/* Enhanced Header */}
+      <div className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} shadow-lg p-4`}>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-4">
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
+              <FaArrowLeft />
+              Back
+            </button>
+            
+            <div className="flex items-center gap-3">
+              <FaSearch className="text-blue-500 text-xl" />
+              <h1 className="text-2xl font-bold">Search Results</h1>
+              {query && <span className="text-lg text-gray-500">for "{query}"</span>}
+              {category !== "all" && (
+                <span className="px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-sm rounded-full font-medium">
+                  {category === 'hotel' ? '🏨 Hotels' :
+                   category === 'place' ? '🗺️ Places' :
+                   category === 'restaurant' ? '🍴 Restaurants' :
+                   '🌍 All'}
+                </span>
+              )}
+            </div>
+            
+            <div className="text-right">
+              <div className="text-sm text-gray-500">Unlimited Search</div>
+              <div className="text-xs text-green-600">All matching results shown</div>
+            </div>
           </div>
+          
+          {/* Search Stats */}
+          {searchStats && (
+            <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
+              <div className="flex items-center gap-4">
+                <span>
+                  Found <span className="font-bold text-blue-600 text-lg">{searchStats.count}</span> results
+                  {searchStats.category !== 'all' && (
+                    <span className="ml-2 text-xs">
+                      in {
+                        searchStats.category === 'hotel' ? 'Hotels' :
+                        searchStats.category === 'place' ? 'Places' :
+                        searchStats.category === 'restaurant' ? 'Restaurants' :
+                        'All Categories'
+                      }
+                    </span>
+                  )}
+                </span>
+                {searchStats.unlimited && (
+                  <span className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs rounded-full font-medium">
+                    ✓ All Results Shown
+                  </span>
+                )}
+              </div>
+              <div className="text-xs">
+                Sorted by relevance • No limits applied
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* ── Content ── */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      {/* Content */}
+      <div className="max-w-7xl mx-auto p-6">
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-32 gap-4">
-            <FaSpinner className="text-5xl text-teal-500 animate-spin" />
-            <p className="text-slate-500 font-semibold">Searching destinations…</p>
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center">
+              <FaSpinner className="text-5xl text-blue-500 animate-spin mx-auto mb-6" />
+              <p className="text-xl">Searching through all destinations...</p>
+              <p className="text-sm text-gray-500 mt-2">Finding every match for "{query}"</p>
+            </div>
           </div>
         ) : error ? (
-          <div className="text-center py-32">
-            <p className="text-red-500 text-lg font-semibold mb-4">{error}</p>
-            <button onClick={() => window.location.reload()}
-              className="px-6 py-3 bg-teal-600 text-white rounded-xl font-semibold hover:bg-teal-700">
+          <div className="text-center py-20">
+            <p className="text-red-500 text-xl mb-4">Error: {error}</p>
+            <button
+              onClick={() => performSearch(query, category)}
+              className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            >
               Try Again
             </button>
           </div>
-        ) : total === 0 ? (
-          <div className="text-center py-32">
-            <FaSearch className="text-6xl text-slate-300 mx-auto mb-4" />
-            <p className="text-2xl font-bold mb-2">No results for "{query}"</p>
-            <p className="text-slate-500">Try different keywords</p>
+        ) : results.length === 0 ? (
+          <div className="text-center py-20">
+            <FaSearch className="text-6xl text-gray-400 mx-auto mb-4" />
+            <p className="text-2xl mb-4">No results found for "{query}"</p>
+            <p className="text-gray-500">Try a different search term or check your spelling</p>
           </div>
         ) : (
           <>
-            {/* Destinations */}
-            <Section
-              title="Destinations"
-              icon={FaMountain}
-              accent="teal"
-              items={places}
-              type="place"
-              theme={theme}
-              navigate={navigate}
-              query={query}
-            />
-
-            {/* Hotels */}
-            <Section
-              title="Hotels & Stays"
-              icon={FaHotel}
-              accent="blue"
-              items={hotels}
-              type="hotel"
-              theme={theme}
-              navigate={navigate}
-              query={query}
-            />
-
-            {/* Restaurants */}
-            <Section
-              title="Restaurants & Dining"
-              icon={FaUtensils}
-              accent="orange"
-              items={restaurants}
-              type="restaurant"
-              theme={theme}
-              navigate={navigate}
-              query={query}
-            />
+            {/* Results Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {results.map((item, index) => (
+                <ResultCard 
+                  key={index} 
+                  item={item} 
+                  index={index}
+                  theme={theme}
+                  navigate={navigate}
+                />
+              ))}
+            </div>
+            
+            {/* Results Summary */}
+            <div className="mt-12 text-center p-6 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              <h3 className="text-lg font-bold mb-2">Search Complete</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Showing all <span className="font-bold text-blue-600">{results.length}</span> results 
+                matching "{query}" • No results hidden or limited
+              </p>
+            </div>
           </>
         )}
       </div>
     </div>
   );
 }
+
+// Enhanced Result Card Component with SmartImage
+const ResultCard = ({ item, index, theme, navigate }) => {
+  return (
+    <div
+      className={`group p-6 rounded-xl border ${
+        theme === 'dark' ? 'bg-gray-800 border-gray-700 hover:border-gray-600' : 'bg-white border-gray-200 hover:border-gray-300'
+      } hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 relative`}
+      onClick={() => navigate(`/details?type=${item.type}&name=${encodeURIComponent(item.name)}`)}
+    >
+      {/* Relevance Score Badge */}
+      {item.relevance_score && (
+        <div className="absolute top-3 right-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg z-10">
+          {item.relevance_score}% match
+        </div>
+      )}
+      
+      {/* Smart Image with automatic fallbacks */}
+      <div className="relative w-full h-48 mb-4 rounded-lg overflow-hidden">
+        <SmartImage
+          item={item}
+          className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
+          style={{ width: '100%', height: '100%' }}
+          showLoader={true}
+          eager={true}
+        />
+      </div>
+      
+      {/* Content */}
+      <div className="space-y-3">
+        <h3 className="text-lg font-bold line-clamp-2 group-hover:text-blue-600 transition-colors">
+          {item.name}
+        </h3>
+        
+        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <FaMapMarkerAlt className="text-red-500 flex-shrink-0" />
+          <span className="line-clamp-1">{item.location}</span>
+        </div>
+        
+        <p className="text-sm line-clamp-3 text-gray-700 dark:text-gray-300 leading-relaxed">
+          {item.description || 'Discover this amazing destination in Nepal.'}
+        </p>
+        
+        <div className="flex items-center justify-between pt-2">
+          {item.type && (
+            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs rounded-full font-medium">
+              {item.type.replace(/_/g, ' ')}
+            </span>
+          )}
+          
+          {item.province && (
+            <span className="text-xs text-gray-500 font-medium">
+              Province {item.province}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

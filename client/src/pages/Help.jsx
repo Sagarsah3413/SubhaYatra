@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Header } from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import { useTheme } from '../contexts/ThemeContext';
-import { 
-  FaLifeRing, 
-  FaSearch, 
-  FaRocket, 
-  FaMap, 
-  FaHeart, 
-  FaCog, 
-  FaBug, 
+import {
+  FaLifeRing,
+  FaSearch,
+  FaRocket,
+  FaMap,
+  FaHeart,
+  FaCog,
+  FaBug,
   FaEnvelope,
   FaChevronRight,
   FaPlay,
@@ -29,7 +29,7 @@ const Help = () => {
       id: 'getting-started',
       title: 'Getting Started',
       icon: <FaRocket className="text-xl" />,
-      description: 'Learn the basics of using Roamio Wanderly',
+      description: 'Learn the basics of using Subha Yatra',
       articles: [
         {
           title: 'Creating Your Account',
@@ -248,7 +248,7 @@ const Help = () => {
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <Header />
-      
+
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">
@@ -261,7 +261,7 @@ const Help = () => {
             Help Center
           </h1>
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-            Everything you need to know about using Roamio Wanderly
+            Everything you need to know about using Subha Yatra
           </p>
         </div>
 
@@ -274,11 +274,10 @@ const Help = () => {
               placeholder="Search help articles..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className={`w-full pl-12 pr-4 py-4 rounded-xl border ${
-                theme === 'dark' 
-                  ? 'bg-slate-800 border-slate-700 text-white placeholder-gray-400' 
+              className={`w-full pl-12 pr-4 py-4 rounded-xl border ${theme === 'dark'
+                  ? 'bg-slate-800 border-slate-700 text-white placeholder-gray-400'
                   : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-              } focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-lg`}
+                } focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-lg`}
             />
           </div>
         </div>
@@ -289,11 +288,10 @@ const Help = () => {
             <a
               key={index}
               href={link.link}
-              className={`p-4 rounded-xl border transition-all duration-200 hover:scale-105 ${
-                theme === 'dark'
+              className={`p-4 rounded-xl border transition-all duration-200 hover:scale-105 ${theme === 'dark'
                   ? 'bg-slate-800/50 border-slate-700 hover:bg-slate-800'
                   : 'bg-white border-gray-200 hover:bg-gray-50'
-              } shadow-sm hover:shadow-md`}
+                } shadow-sm hover:shadow-md`}
             >
               <div className="flex items-center mb-2">
                 <div className="text-teal-600 mr-3">{link.icon}</div>
@@ -316,23 +314,21 @@ const Help = () => {
                   <button
                     key={section.id}
                     onClick={() => setSelectedSection(section.id)}
-                    className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${
-                      selectedSection === section.id
+                    className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${selectedSection === section.id
                         ? 'bg-teal-600 text-white'
                         : theme === 'dark'
                           ? 'hover:bg-slate-700 text-gray-300'
                           : 'hover:bg-gray-100 text-gray-700'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center">
                       <div className="mr-3">{section.icon}</div>
                       <div>
                         <div className="font-medium">{section.title}</div>
-                        <div className={`text-xs ${
-                          selectedSection === section.id 
-                            ? 'text-teal-100' 
+                        <div className={`text-xs ${selectedSection === section.id
+                            ? 'text-teal-100'
                             : theme === 'dark' ? 'text-gray-500' : 'text-gray-500'
-                        }`}>
+                          }`}>
                           {section.description}
                         </div>
                       </div>
@@ -367,9 +363,8 @@ const Help = () => {
                   filteredArticles.map((article, index) => (
                     <div
                       key={index}
-                      className={`p-6 rounded-lg border ${
-                        theme === 'dark' ? 'bg-slate-700/50 border-slate-600' : 'bg-gray-50 border-gray-200'
-                      }`}
+                      className={`p-6 rounded-lg border ${theme === 'dark' ? 'bg-slate-700/50 border-slate-600' : 'bg-gray-50 border-gray-200'
+                        }`}
                     >
                       <h3 className="text-xl font-semibold mb-3 flex items-center">
                         <FaPlay className="text-teal-600 mr-3 text-sm" />
@@ -378,7 +373,7 @@ const Help = () => {
                       <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                         {article.content}
                       </p>
-                      
+
                       {article.steps && (
                         <div>
                           <h4 className="font-medium mb-3 text-teal-600">Step-by-step guide:</h4>
@@ -423,11 +418,10 @@ const Help = () => {
               </a>
               <a
                 href="/faq"
-                className={`px-8 py-3 border font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center ${
-                  theme === 'dark'
+                className={`px-8 py-3 border font-semibold rounded-lg transition-colors duration-200 flex items-center justify-center ${theme === 'dark'
                     ? 'border-slate-600 text-gray-300 hover:bg-slate-700'
                     : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-                }`}
+                  }`}
               >
                 <FaQuestionCircle className="mr-2" />
                 Browse FAQ

@@ -53,12 +53,12 @@ const UltraPremiumHero = () => {
                 {/* Text Overlay */}
                 <div className="bg-black/50 dark:bg-black/70 backdrop-blur-sm rounded-3xl p-6 md:p-8 mb-8 max-w-5xl mx-auto">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
-                        <span className="bg-gradient-to-r from-white via-teal-200 to-cyan-200 dark:from-teal-200 dark:via-cyan-200 dark:to-white bg-clip-text text-transparent">
+                        <span className="bg-linear-to-r from-white via-teal-200 to-cyan-200 dark:from-teal-200 dark:via-cyan-200 dark:to-white bg-clip-text text-transparent">
                             About
                         </span>
                         <br />
-                        <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                            Roamio Wanderly
+                        <span className="bg-linear-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
+                            Subha Yatra
                         </span>
                     </h1>
 
@@ -76,12 +76,18 @@ const UltraPremiumHero = () => {
 
                 {/* Trust Indicators */}
                 <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-white/80">
-                    {trustIndicators.map(({ icon: Icon, label }, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                            <Icon className="text-sm md:text-base" />
-                            <span className="text-xs md:text-sm font-medium">{label}</span>
-                        </div>
-                    ))}
+                    {trustIndicators.map((item, index) => {
+                        const IconComponent = item.icon;
+
+                        return (
+                            <div key={index} className="flex items-center gap-2">
+                                <IconComponent className="text-sm md:text-base" />
+                                <span className="text-xs md:text-sm font-medium">
+                                    {item.label}
+                                </span>
+                            </div>
+                        );
+                    })}
                 </div>
 
             </div>
