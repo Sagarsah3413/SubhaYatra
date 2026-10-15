@@ -190,8 +190,8 @@ const PrivacyPolicy = () => {
             </p>
             <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                <strong>Email:</strong> privacy@roamiowanderly.com<br />
-                <strong>Address:</strong> Roamio Wanderly, Kathmandu, Nepal<br />
+                <strong>Email:</strong> privacy@subhayatra.com<br />
+                <strong>Address:</strong> SubhaYatra, Kathmandu, Nepal<br />
                 <strong>Response Time:</strong> We aim to respond within 30 days
               </p>
             </div>

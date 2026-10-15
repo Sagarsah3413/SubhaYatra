@@ -291,7 +291,7 @@ I can help you with:
     const isGreeting = greetings.some(greeting => input.includes(greeting));
     
     if (isGreeting) {
-      return `Hello! 👋 Welcome to Roamio Wanderly!
+      return `Hello! 👋 Welcome to SubhaYatra!
 
 **📊 Our Database Coverage:**
 • **1,057 Destinations** - Verified places across Nepal
@@ -315,7 +315,7 @@ How can I assist you today?`;
     const isStatsQuery = statsKeywords.some(keyword => input.includes(keyword));
     
     if (isStatsQuery) {
-      return `**📊 Roamio Wanderly Database Statistics:**
+      return `**📊 SubhaYatra Database Statistics:**
 
 **Destinations:**
 • Total Places: 1,057 verified locations

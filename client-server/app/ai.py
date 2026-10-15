@@ -100,7 +100,7 @@ def get_ai_reply(message: str) -> str:
     message_lower = message.lower()
     
     if "hello" in message_lower or "hi" in message_lower or "hey" in message_lower:
-        return """Hello! Welcome to Roamio Wanderly! 🌏
+        return """Hello! Welcome to SubhaYatra! 🌏
 
 I'm your AI travel assistant with access to comprehensive Nepal tourism data:
 
@@ -816,7 +816,7 @@ I can provide detailed guidance on:
 I'm here to help you plan an unforgettable Nepal adventure! What specific aspect would you like to know more about?"""
         
         # Default help message for non-place queries
-        return """**Welcome to Roamio Wanderly AI Assistant!** 🌏
+        return """**Welcome to SubhaYatra AI Assistant!** 🌏
 
 I have access to comprehensive Nepal tourism data:
 

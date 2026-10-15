@@ -18,7 +18,7 @@ Complete documentation of the client (frontend) and client-server (backend) arch
 
 ## 🎯 Project Overview
 
-**Project Name:** Roamio Wanderly - Tourism Recommendation System for Nepal
+**Project Name:** SubhaYatra - Tourism Recommendation System for Nepal
 
 **Tech Stack:**
 - **Frontend:** React.js + Vite + TailwindCSS
@@ -700,13 +700,13 @@ pip install -r requirements.txt
 
 ## 👥 Team
 
-**Roamio Wanderly Development Team**
+**SubhaYatra Development Team**
 
 ---
 
 ## 📄 License
 
-All rights reserved © 2026 Roamio Wanderly
+All rights reserved © 2026 SubhaYatra
 
 ---
 

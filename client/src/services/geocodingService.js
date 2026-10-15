@@ -225,7 +225,7 @@ export const reverseGeocodeWithMaxAccuracy = async (
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
-                    'User-Agent': 'RoamioWanderly/2.0 (Neighborhood Detection Mode)',
+                    'User-Agent': 'SubhaYatra/2.0 (Neighborhood Detection Mode)',
                 },
             });
 

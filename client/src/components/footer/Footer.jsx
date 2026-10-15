@@ -90,7 +90,7 @@ export default function Footer() {
         setNotification({
           type: 'success',
           title: 'Subscription Confirmed',
-          message: 'Welcome to Roamio Wanderly! Your subscription is now active.',
+          message: 'Welcome to SubhaYatra! Your subscription is now active.',
           details: `Thank you for joining our community of travelers. You'll receive curated Nepal travel insights, exclusive destination guides, and expert recommendations delivered to your inbox.`,
           timestamp: new Date().toLocaleTimeString()
         });
@@ -400,8 +400,7 @@ export default function Footer() {
                 </div>
                 <div className="flex-1">
                   <h2 className="text-lg font-black text-white tracking-wide mb-1 animate-fade-in-up text-glow-hover">
-                    <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Roamio</span> 
-                    <span className="text-teal-400 hover:text-teal-300 transition-all duration-500 hover:scale-105 inline-block">Wanderly</span>
+                    <span className="text-teal-400 hover:text-teal-300 transition-all duration-500 hover:scale-105 inline-block">SubhaYatra</span>
                   </h2>
                   <p className="text-xs text-gray-300 font-semibold tracking-wider animate-fade-in-up animation-delay-200 hover:text-white transition-colors duration-300 uppercase">
                     Your Premium Nepal Travel Companion
@@ -411,8 +410,8 @@ export default function Footer() {
               <div className="mb-4">
                 <p className="text-sm text-gray-200 leading-relaxed font-semibold tracking-wide animate-fade-in-up animation-delay-400 hover:text-gray-100 transition-all duration-500 hover:translate-x-1">
                   {showFullAbout 
-                    ? (aboutText || "Roamio Wanderly is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.")
-                    : `${(aboutText || "Roamio Wanderly is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.").substring(0, 120)}...`
+                    ? (aboutText || "SubhaYatra is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.")
+                    : `${(aboutText || "SubhaYatra is your trusted travel recommendation system. It helps you plan personalized trips and discover destinations across Nepal with AI-powered insights and local expertise.").substring(0, 120)}...`
                   }
                 </p>
               </div>
@@ -686,7 +685,7 @@ export default function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-2">
             <div className="flex items-center space-x-3">
               <p className="text-xs text-gray-400 font-light tracking-wide">
-                © {new Date().getFullYear()} <span className="font-medium text-gray-300">Roamio Wanderly</span>. {t('footer.allRightsReserved')}.
+                © {new Date().getFullYear()} <span className="font-medium text-gray-300">SubhaYatra</span>. {t('footer.allRightsReserved')}.
               </p>
               <div className="hidden md:flex items-center space-x-1">
                 <div className="w-1 h-1 bg-teal-500/60 rounded-full"></div>

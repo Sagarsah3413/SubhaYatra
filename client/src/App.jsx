@@ -4,7 +4,7 @@ import { Header } from "./components/header/Header";
 import "./App.css";
 import { SignedIn, useUser } from "@clerk/clerk-react";
 import SplashScreen from "./pages/SplashScreen";
-import { FaSearch, FaHotel, FaUtensils, FaMapMarkedAlt, FaCamera, FaRobot } from "react-icons/fa";
+import { FaSearch, FaHotel, FaUtensils, FaMapMarkedAlt, FaCompass, FaRobot } from "react-icons/fa";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { useTranslation } from 'react-i18next';
@@ -86,82 +86,44 @@ const InspireButton = memo(({ isSignedIn, onClick, theme }) => {
   }`}>
     <div className="relative group">
       {/* Enhanced Premium Background Glow - More Visible */}
-      <div className={`absolute -inset-6 rounded-full opacity-60 group-hover:opacity-100 transition-all duration-700 animate-pulse ${
-        theme === "dark" 
-          ? "bg-gradient-to-r from-teal-500/40 via-emerald-500/30 to-cyan-500/40" 
-          : "bg-gradient-to-r from-teal-400/30 via-emerald-400/25 to-cyan-400/30"
-      } blur-2xl`} />
-      
-      {/* Rotating Ring Animation */}
-      <div className="absolute inset-0 rounded-full">
-        <div className={`absolute inset-0 rounded-full border-2 border-dashed animate-spin-slow ${
-          theme === "dark" ? "border-teal-400/30" : "border-teal-500/40"
-        }`} style={{ animationDuration: '8s' }} />
-      </div>
-      
       <button
         onClick={onClick}
-        className={`relative w-18 h-18 md:w-22 md:h-22 rounded-full backdrop-blur-2xl border-2 transition-all duration-500 transform-gpu will-change-transform group-hover:scale-110 animate-bounce-slow ${
-          theme === "dark" 
-            ? "bg-gradient-to-br from-slate-900/95 to-slate-800/95 border-teal-500/60 hover:border-teal-400/80 shadow-2xl shadow-teal-500/30 hover:shadow-teal-400/50" 
-            : "bg-gradient-to-br from-white/98 to-teal-50/98 border-teal-400/60 hover:border-teal-500/80 shadow-2xl shadow-teal-400/40 hover:shadow-teal-500/60"
+        className={`relative w-12 h-12 md:w-14 md:h-14 rounded-full border transition-all duration-300 hover:scale-105 active:scale-95 ${
+          theme === "dark"
+            ? "bg-slate-800 border-slate-700 hover:border-teal-500/60 hover:bg-slate-750 shadow-lg shadow-black/20"
+            : "bg-white border-slate-200 hover:border-teal-400/60 shadow-md shadow-black/8"
         }`}
         title={isSignedIn ? "Inspire My Journey" : "Sign in for personalized recommendations"}
       >
-        {/* Premium Glass Effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-white/10 dark:from-teal-400/20 dark:via-transparent dark:to-emerald-400/10 rounded-full pointer-events-none"></div>
-        
-        {/* Executive Icon Container - Larger & More Vibrant */}
-        <div className={`absolute inset-3 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-12 ${
-          theme === "dark" 
-            ? "bg-gradient-to-br from-teal-500 via-emerald-500 to-cyan-500" 
-            : "bg-gradient-to-br from-teal-400 via-emerald-400 to-cyan-400"
-        } shadow-2xl shadow-teal-500/50`}>
-          <FaCamera className="text-white text-xl md:text-2xl group-hover:scale-125 transition-transform duration-500 drop-shadow-lg animate-pulse" />
-          
-          {/* Premium Lock overlay */}
-          {!isSignedIn && (
-            <div className="absolute inset-0 bg-slate-900/60 rounded-full flex items-center justify-center backdrop-blur-sm">
-              <svg className="w-6 h-6 text-white drop-shadow-lg" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-              </svg>
-            </div>
-          )}
+        {/* Icon */}
+        <div className={`absolute inset-0 rounded-full flex items-center justify-center ${
+          theme === "dark" ? "text-teal-400" : "text-teal-500"
+        }`}>
+          <FaCompass className="text-lg md:text-xl" />
         </div>
-        
-        {/* Enhanced Premium Sparkle - Bigger & More Animated */}
-        <div className="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-br from-yellow-400 via-amber-400 to-orange-500 rounded-full flex items-center justify-center shadow-xl shadow-yellow-500/50 animate-bounce">
-          <span className="text-white text-base font-bold drop-shadow-lg animate-pulse">✨</span>
-        </div>
-        
-        {/* Pulsing Ring Effect - More Visible */}
-        <div className={`absolute -inset-1 rounded-full border-3 opacity-70 group-hover:opacity-100 transition-all duration-500 ${
-          theme === "dark" 
-            ? "border-teal-400/60 shadow-lg shadow-teal-400/30" 
-            : "border-teal-500/60 shadow-lg shadow-teal-500/30"
-        } animate-ping`} style={{ animationDuration: '2s' }}></div>
-        
-        {/* Premium Shine Effect */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-shimmer" />
-      </button>
-      
-      {/* Executive Tooltip - More Prominent */}
-      <div className={`absolute top-full left-1/2 transform -translate-x-1/2 mt-4 px-5 py-3 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500 whitespace-nowrap ${
-        theme === "dark" 
-          ? "bg-gradient-to-br from-slate-900/98 to-slate-800/98 text-white border-2 border-teal-500/50 shadow-xl shadow-teal-500/30" 
-          : "bg-gradient-to-br from-white/98 to-teal-50/98 text-slate-800 border-2 border-teal-400/50 shadow-xl shadow-teal-400/30"
-      } backdrop-blur-xl`}>
-        <span className="text-base font-bold tracking-wide bg-gradient-to-r from-teal-500 to-emerald-500 bg-clip-text text-transparent">
-          {isSignedIn ? "Inspire My Journey" : "Premium Access Required"}
-        </span>
+
+        {/* Lock badge — only when signed out */}
         {!isSignedIn && (
-          <div className="text-xs text-slate-500 dark:text-slate-400 mt-1 font-medium">
-            Personalized travel recommendations
+          <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center ${
+            theme === "dark" ? "bg-slate-700 border border-slate-600" : "bg-white border border-slate-200 shadow-sm"
+          }`}>
+            <svg className={`w-2.5 h-2.5 ${theme === "dark" ? "text-slate-400" : "text-slate-500"}`} fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+            </svg>
           </div>
         )}
-        <div className={`absolute -top-2 left-1/2 transform -translate-x-1/2 w-4 h-4 rotate-45 ${
-          theme === "dark" ? "bg-slate-900 border-l-2 border-t-2 border-teal-500/50" : "bg-white border-l-2 border-t-2 border-teal-400/50"
-        }`}></div>
+      </button>
+
+      {/* Tooltip */}
+      <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 px-3 py-1.5 rounded-lg text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none ${
+        theme === "dark"
+          ? "bg-slate-800 text-slate-200 border border-slate-700"
+          : "bg-white text-slate-700 border border-slate-200 shadow-sm"
+      }`}>
+        {isSignedIn ? "Inspire My Journey" : "Sign in for recommendations"}
+        <div className={`absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 ${
+          theme === "dark" ? "bg-slate-800 border-l border-t border-slate-700" : "bg-white border-l border-t border-slate-200"
+        }`} />
       </div>
     </div>
   </div>
@@ -593,26 +555,16 @@ MainApp.displayName = 'MainApp';
 // Optimized ChatButton component
 const ChatButton = memo(({ onClick, theme }) => (
   <div className="fixed bottom-6 right-6 z-50">
-    <button onClick={onClick} className="group block">
-      <div className="relative">
-        {/* Pulsing Ring */}
-        <div className="absolute inset-0 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-full animate-ping opacity-75"></div>
-        
-        {/* Main Button - Increased Size */}
-        <div className="relative w-20 h-20 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 group-hover:rotate-12">
-          <FaRobot className="text-white text-3xl" />
-        </div>
-        
-        {/* Tooltip */}
-        <div className={`absolute bottom-full right-0 mb-2 px-4 py-2.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap text-base font-semibold ${
-          theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-800 text-white"
-        }`}>
-          Chat with Travel Expert
-          <div className={`absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent ${
-            theme === "dark" ? "border-t-gray-900" : "border-t-gray-800"
-          }`}></div>
-        </div>
-      </div>
+    <button
+      onClick={onClick}
+      className={`group flex items-center gap-2.5 px-4 py-2.5 rounded-full border transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm ${
+        theme === "dark"
+          ? "bg-slate-800 border-slate-700 hover:border-teal-500/50 text-slate-300 hover:text-teal-400"
+          : "bg-white border-slate-200 hover:border-teal-400/60 text-slate-600 hover:text-teal-600 shadow-md"
+      }`}
+    >
+      <FaRobot className="text-sm shrink-0" />
+      <span className="text-xs font-medium whitespace-nowrap">Travel Expert</span>
     </button>
   </div>
 ));

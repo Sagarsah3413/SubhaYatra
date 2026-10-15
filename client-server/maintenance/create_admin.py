@@ -13,7 +13,7 @@ from app.auth import hash_password
 
 USERNAME = "admin"
 PASSWORD = "admin123"
-EMAIL    = "admin@roamiowanderly.com"
+EMAIL    = "admin@subhayatra.com"
 ROLE     = "superadmin"
 
 app = create_app()

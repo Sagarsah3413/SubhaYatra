@@ -99,7 +99,7 @@ const NewsletterArchive = () => {
       tags: ["trekking", "winter", "safety", "gear"],
       featured: true,
       image: LangtangImage,
-      author: "Roamio Wanderly Team",
+      author: "SubhaYatra Team",
       content: `
         <h2>Winter Trekking in Nepal: A Complete Safety Guide</h2>
         

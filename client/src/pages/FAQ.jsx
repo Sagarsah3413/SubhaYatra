@@ -26,7 +26,7 @@ const FAQ = () => {
     {
       id: 1,
       category: 'account',
-      question: 'How do I create an account on Roamio Wanderly?',
+      question: 'How do I create an account on SubhaYatra?',
       answer: 'Creating an account is simple! Click the "Sign Up" button in the top right corner of any page. You can register using your email address or sign up with Google/Facebook. Fill in your basic information, verify your email, and you\'re ready to start exploring Nepal\'s amazing destinations.',
       helpful: 0,
       notHelpful: 0
@@ -52,7 +52,7 @@ const FAQ = () => {
     {
       id: 4,
       category: 'booking',
-      question: 'How do I book hotels through Roamio Wanderly?',
+      question: 'How do I book hotels through SubhaYatra?',
       answer: 'We partner with trusted booking platforms to help you find the best accommodations. When you find a hotel you like, click "Book Now" and you\'ll be redirected to our partner\'s secure booking system. We don\'t handle payments directly but help you compare prices and read reviews.',
       helpful: 0,
       notHelpful: 0
@@ -120,7 +120,7 @@ const FAQ = () => {
     {
       id: 12,
       category: 'technical',
-      question: 'Is there a mobile app for Roamio Wanderly?',
+      question: 'Is there a mobile app for SubhaYatra?',
       answer: 'Currently, we offer a mobile-optimized website that works great on smartphones and tablets. We\'re developing native mobile apps for iOS and Android, which will be available in 2025. The mobile website includes all features: browsing destinations, reading reviews, and accessing your account.',
       helpful: 0,
       notHelpful: 0
@@ -211,7 +211,7 @@ const FAQ = () => {
             Frequently Asked Questions
           </h1>
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-            Find quick answers to common questions about using Roamio Wanderly
+            Find quick answers to common questions about using SubhaYatra
           </p>
         </div>
 

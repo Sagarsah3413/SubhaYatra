@@ -29,7 +29,7 @@ const Help = () => {
       id: 'getting-started',
       title: 'Getting Started',
       icon: <FaRocket className="text-xl" />,
-      description: 'Learn the basics of using Roamio Wanderly',
+      description: 'Learn the basics of using SubhaYatra',
       articles: [
         {
           title: 'Creating Your Account',
@@ -261,7 +261,7 @@ const Help = () => {
             Help Center
           </h1>
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
-            Everything you need to know about using Roamio Wanderly
+            Everything you need to know about using SubhaYatra
           </p>
         </div>
 

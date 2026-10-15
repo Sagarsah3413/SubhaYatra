@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Quick Gmail Setup Script for Roamio Wanderly Newsletter
+Quick Gmail Setup Script for SubhaYatra Newsletter
 
 This script helps you configure Gmail SMTP settings interactively.
 """
@@ -11,7 +11,7 @@ import re
 def setup_gmail_config():
     """Interactive Gmail configuration setup"""
     
-    print("🌄 Roamio Wanderly - Gmail SMTP Setup")
+    print("🌄 SubhaYatra - Gmail SMTP Setup")
     print("=" * 50)
     print()
     print("This script will help you configure Gmail for sending newsletter emails.")
@@ -31,7 +31,7 @@ def setup_gmail_config():
     print("3. Click '2-Step Verification' and set it up")
     print("4. Then click 'App passwords'")
     print("5. Select 'Mail' and 'Other (custom name)'")
-    print("6. Enter 'Roamio Wanderly' as the app name")
+    print("6. Enter 'SubhaYatra' as the app name")
     print("7. Copy the 16-character password Google generates")
     print()
     

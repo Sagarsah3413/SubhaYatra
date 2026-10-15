@@ -8,7 +8,7 @@ from email.mime.multipart import MIMEMultipart
 
 def send_contact_form_email(name, email, phone, subject, travel_type, budget, message):
     """
-    Send contact form submission to wanderlyroamio@gmail.com
+    Send contact form submission to contact@subhayatra.com
     
     Args:
         name: Sender's name
@@ -26,11 +26,11 @@ def send_contact_form_email(name, email, phone, subject, travel_type, budget, me
         # Email configuration
         smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
         smtp_port = int(os.getenv('SMTP_PORT', '587'))
-        sender_email = os.getenv('SENDER_EMAIL', 'wanderlyroamio@gmail.com')
+        sender_email = os.getenv('SENDER_EMAIL', 'contact@subhayatra.com')
         sender_password = os.getenv('SENDER_PASSWORD', '')
         
         # Recipient email (where contact form submissions go)
-        recipient_email = 'wanderlyroamio@gmail.com'
+        recipient_email = 'contact@subhayatra.com'
         
         if not sender_password:
             print("⚠️ SENDER_PASSWORD not configured in .env file")
@@ -39,7 +39,7 @@ def send_contact_form_email(name, email, phone, subject, travel_type, budget, me
         # Create message
         msg = MIMEMultipart("alternative")
         msg["Subject"] = f"Contact Form: {subject}"
-        msg["From"] = f"Roamio Wanderly Contact Form <{sender_email}>"
+        msg["From"] = f"SubhaYatra Contact Form <{sender_email}>"
         msg["To"] = recipient_email
         msg["Reply-To"] = email
         
@@ -59,7 +59,7 @@ def send_contact_form_email(name, email, phone, subject, travel_type, budget, me
                         📧 New Contact Form Submission
                     </h1>
                     <p style="color: #e0f2fe; margin: 10px 0 0 0; font-size: 14px;">
-                        From Roamio Wanderly Website
+                        From SubhaYatra Website
                     </p>
                 </div>
                 
@@ -129,10 +129,10 @@ def send_contact_form_email(name, email, phone, subject, travel_type, budget, me
                 <!-- Footer -->
                 <div style="background-color: #f9fafb; padding: 30px; text-align: center; border-top: 1px solid #e5e7eb;">
                     <p style="color: #6b7280; margin: 0 0 10px 0; font-size: 14px;">
-                        This email was sent from the Roamio Wanderly contact form
+                        This email was sent from the SubhaYatra contact form
                     </p>
                     <p style="color: #9ca3af; margin: 0; font-size: 12px;">
-                        Roamio Wanderly • Chaksibari Marg, Thamel-26 • Kathmandu, Nepal
+                        SubhaYatra • Chaksibari Marg, Thamel-26 • Kathmandu, Nepal
                     </p>
                 </div>
             </div>

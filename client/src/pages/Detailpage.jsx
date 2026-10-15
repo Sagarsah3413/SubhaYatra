@@ -569,14 +569,14 @@ export default function DetailPage() {
                   </div>
                 </div>
 
-                {/* Roamio Wanderly Contact */}
+                {/* SubhaYatra Contact */}
                 <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-gradient-to-r from-blue-900/30 to-purple-900/30' : 'bg-gradient-to-r from-blue-50 to-purple-50'} border-2 border-blue-200 dark:border-blue-700`}>
                   <div className="flex items-center gap-2 mb-3">
                     <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
                       <FaCompass className="text-white text-sm" />
                     </div>
                     <h3 className={`font-bold text-lg ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                      Roamio Wanderly
+                      SubhaYatra
                     </h3>
                     <span className="px-2 py-1 bg-blue-500 text-white rounded-full text-xs font-medium">
                       Travel Partner
@@ -597,15 +597,15 @@ export default function DetailPage() {
                     
                     <div className="flex items-center gap-3">
                       <FaEnvelope className="text-blue-500" />
-                      <a href="mailto:info@roamiowanderly.com" className="hover:text-blue-500 text-gray-700 dark:text-gray-300">
-                        info@roamiowanderly.com
+                      <a href="mailto:contact@subhayatra.com" className="hover:text-blue-500 text-gray-700 dark:text-gray-300">
+                        contact@subhayatra.com
                       </a>
                     </div>
                     
                     <div className="flex items-center gap-3">
                       <FaGlobe className="text-blue-500" />
-                      <a href="https://roamiowanderly.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 text-gray-700 dark:text-gray-300">
-                        www.roamiowanderly.com
+                      <a href="https://subhayatra.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 text-gray-700 dark:text-gray-300">
+                        www.subhayatra.com
                       </a>
                     </div>
                     

@@ -25,7 +25,7 @@ def submit_contact_form():
         budget = data.get('budget', 'Not specified')
         message = data.get('message')
         
-        # Send email to wanderlyroamio@gmail.com
+        # Send email to contact@subhayatra.com
         success = send_contact_form_email(
             name=name,
             email=email,

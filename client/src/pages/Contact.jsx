@@ -123,7 +123,7 @@ export default function Contact() {
       }
     } catch (error) {
       console.error('Error submitting contact form:', error);
-      alert('An error occurred. Please try again or contact us directly at wanderlyroamio@gmail.com');
+      alert('An error occurred. Please try again or contact us directly at contact@subhayatra.com');
     } finally {
       setIsSubmitting(false);
     }
@@ -144,11 +144,11 @@ export default function Contact() {
       icon: FaEnvelope,
       title: 'Email Us',
       subtitle: 'Get detailed responses',
-      info: 'wanderlyroamio@gmail.com',
+      info: 'contact@subhayatra.com',
       action: 'Send Email',
       color: 'blue',
       gradient: 'from-blue-500 to-cyan-600',
-      link: 'mailto:wanderlyroamio@gmail.com'
+      link: 'mailto:contact@subhayatra.com'
     }
   ];
 
@@ -167,7 +167,7 @@ export default function Contact() {
     },
     {
       category: 'general',
-      question: "What makes Roamio Wanderly different from other travel platforms?",
+      question: "What makes SubhaYatra different from other travel platforms?",
       answer: "We combine local expertise with advanced AI technology to provide authentic, personalized experiences. Our team of local guides and travel experts ensure every recommendation is current, safe, and culturally respectful."
     },
     {
@@ -667,7 +667,7 @@ export default function Contact() {
                     <Marker position={[27.7172, 85.3240]}>
                       <Popup>
                         <div className="text-center p-2">
-                          <strong className="text-lg text-teal-600">Roamio Wanderly Office</strong><br />
+                          <strong className="text-lg text-teal-600">SubhaYatra Office</strong><br />
                           <span className="text-gray-600">Chaksibari Marg, Thamel-26</span><br />
                           <span className="text-gray-600">Kathmandu, Nepal</span><br />
                           <span className="text-sm text-teal-600">Your Gateway to Nepal 🏔️</span>

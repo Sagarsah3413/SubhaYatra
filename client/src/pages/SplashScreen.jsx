@@ -10,7 +10,7 @@ const SplashScreen = memo(({ onStart }) => {
 
   // Professional loading phases with realistic messages
   const loadingPhases = [
-    { phase: 'initializing', message: 'Initializing Roamio Wanderly...', progress: 15 },
+    { phase: 'initializing', message: 'Initializing SubhaYatra...', progress: 15 },
     { phase: 'connecting', message: 'Connecting to Nepal travel network...', progress: 35 },
     { phase: 'loading', message: 'Loading destination database...', progress: 60 },
     { phase: 'optimizing', message: 'Optimizing your experience...', progress: 85 },
@@ -197,13 +197,13 @@ const SplashScreen = memo(({ onStart }) => {
                       : 'from-slate-900 via-teal-800 to-emerald-800'
                     }
                   `}>
-                    Roamio
+                    SubhaYatra
                   </h1>
                   <div className={`
                     text-lg sm:text-xl md:text-2xl font-light tracking-[0.2em] uppercase
                     ${theme === 'dark' ? 'text-teal-300' : 'text-teal-700'}
                   `}>
-                    Wanderly
+                    Nepal Travel
                   </div>
                 </div>
                 
@@ -340,13 +340,13 @@ const SplashScreen = memo(({ onStart }) => {
                       : 'from-slate-900 via-teal-800 to-emerald-800'
                     }
                   `}>
-                    Roamio
+                    SubhaYatra
                   </h1>
                   <div className={`
                     text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.3em] uppercase
                     ${theme === 'dark' ? 'text-teal-300' : 'text-teal-700'}
                   `}>
-                    Wanderly
+                    Nepal Travel
                   </div>
                 </div>
                 

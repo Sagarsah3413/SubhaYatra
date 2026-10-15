@@ -115,10 +115,10 @@ def _send_welcome_email(to_email):
         return
     try:
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = 'Welcome to Roamio Wanderly!'
-        msg['From']    = f'Roamio Wanderly <{sender}>'
+        msg['Subject'] = 'Welcome to SubhaYatra!'
+        msg['From']    = f'SubhaYatra <{sender}>'
         msg['To']      = to_email
-        msg.attach(MIMEText('Thank you for subscribing to Roamio Wanderly!', 'plain'))
+        msg.attach(MIMEText('Thank you for subscribing to SubhaYatra!', 'plain'))
         with smtplib.SMTP(os.getenv('SMTP_SERVER', 'smtp.gmail.com'),
                           int(os.getenv('SMTP_PORT', '587'))) as s:
             s.starttls()
