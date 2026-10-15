@@ -77,8 +77,8 @@ def load_data():
                     name, location, type, description, tags, image_url,
                     latitude, longitude, best_season, activities,
                     difficulty_level, accessibility, transportation,
-                    province, rating, all_images
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    province, rating, all_images, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             """, (
                 destination_name,
                 row.get('district', ''),
@@ -132,8 +132,8 @@ def load_data():
                     cursor.execute("""
                         INSERT INTO hotels (
                             name, location, description, rating, price_range,
-                            place_id, image_url, all_images
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                            place_id, image_url, all_images, created_at
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                     """, (
                         hotel_name,
                         hotel_location,
@@ -176,8 +176,8 @@ def load_data():
                     cursor.execute("""
                         INSERT INTO restaurants (
                             name, location, rating, price_range,
-                            place_id, image_url, all_images
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                            place_id, image_url, all_images, created_at
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                     """, (
                         restaurant_name,
                         restaurant_location,
@@ -199,8 +199,8 @@ def load_data():
                 
                 cursor.execute("""
                     INSERT INTO events (
-                        name, venue, month_season, event_type, description, place_id
-                    ) VALUES (?, ?, ?, ?, ?, ?)
+                        name, venue, month_season, event_type, description, place_id, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
                 """, (
                     event_name,
                     event_venue,
