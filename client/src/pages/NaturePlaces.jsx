@@ -120,27 +120,27 @@ export default function NaturePlaces() {
   }, [paused]);
 
   return (
-    <section className="py-20 bg-gradient-to-br from-[#15803D] via-white to-green-50 dark:from-[#0F1B2D] dark:via-[#15803D]/10 dark:to-slate-800 relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-br from-success via-white to-green-50 dark:from-navy-900 dark:via-success/10 dark:to-slate-800 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#15803D]/10 to-green-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-[#2356A0]/10 to-[#1A2E4A]/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-success/10 to-green-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-amber-400/10 to-navy-700/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-10 max-w-8xl mx-auto px-6">
         {/* Premium Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#15803D] to-green-50 dark:from-[#15803D]/20 dark:to-green-900/20 rounded-full px-8 py-4 mb-8 border border-[#15803D] dark:border-[#15803D]">
-            <FaLeaf className="text-[#15803D] dark:text-[#22c55e]" />
-            <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">Natural Wonders</span>
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-success to-green-50 dark:from-success/20 dark:to-green-900/20 rounded-full px-8 py-4 mb-8 border border-success dark:border-success">
+            <FaLeaf className="text-success dark:text-success" />
+            <span className="text-sm font-semibold text-success dark:text-success">Natural Wonders</span>
           </div>
           
           <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-gray-900 via-[#15803D] to-green-800 dark:from-white dark:via-[#15803D] dark:to-green-200 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-gray-900 via-success to-green-800 dark:from-white dark:via-success dark:to-green-200 bg-clip-text text-transparent">
               Famous Natural Spots
             </span>
             <br />
-            <span className="bg-gradient-to-r from-[#15803D] via-green-600 to-[#1A2E4A] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-success via-green-600 to-navy-700 bg-clip-text text-transparent">
               in Nepal
             </span>
           </h2>
@@ -161,7 +161,7 @@ export default function NaturePlaces() {
             {places.concat(places).map((place, index) => (
               <div key={index} className="min-w-[350px] flex-shrink-0 group">
                 <Link to="/all-nature-places" className="block">
-                  <div className="relative bg-white dark:bg-[#1A2E4A] rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-[#2E4A6B]">
+                  <div className="relative bg-white dark:bg-navy-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-navy-700">
                     {/* Image Container */}
                     <div className="relative h-72 overflow-hidden">
                       <img
@@ -174,23 +174,23 @@ export default function NaturePlaces() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                       
                       {/* Category Badge */}
-                      <div className="absolute top-4 left-4 bg-white/95 dark:bg-[#1A2E4A]/95 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                      <div className="absolute top-4 left-4 bg-white/95 dark:bg-navy-800/95 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
                         <span className="text-xs font-bold text-gray-900 dark:text-white">{place.category}</span>
                       </div>
                       
                       {/* Rating Badge */}
-                      <div className="absolute top-4 right-4 bg-white/95 dark:bg-[#1A2E4A]/95 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1 border border-white/20">
+                      <div className="absolute top-4 right-4 bg-white/95 dark:bg-navy-800/95 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1 border border-white/20">
                         <FaStar className="text-yellow-500 text-sm" />
                         <span className="text-sm font-bold text-gray-900 dark:text-white">{place.rating}</span>
                       </div>
                       
                       {/* Elevation Badge */}
-                      <div className="absolute top-16 left-4 bg-[#15803D]/90 backdrop-blur-sm text-white px-3 py-1 rounded-full">
+                      <div className="absolute top-16 left-4 bg-success/90 backdrop-blur-sm text-white px-3 py-1 rounded-full">
                         <span className="text-xs font-bold">{place.elevation}</span>
                       </div>
                       
                       {/* Highlight Badge */}
-                      <div className="absolute bottom-4 left-4 bg-gradient-to-r from-[#15803D] to-green-600 text-white px-4 py-2 rounded-full">
+                      <div className="absolute bottom-4 left-4 bg-gradient-to-r from-success to-green-600 text-white px-4 py-2 rounded-full">
                         <span className="text-xs font-bold">{place.highlight}</span>
                       </div>
                       
@@ -221,7 +221,7 @@ export default function NaturePlaces() {
                       {/* Stats and Action */}
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex flex-col gap-1">
-                          <div className="flex items-center gap-2 text-[#15803D] dark:text-[#22c55e]">
+                          <div className="flex items-center gap-2 text-success dark:text-success">
                             <FaMapMarkerAlt className="text-sm" />
                             <span className="text-sm font-medium">Nepal</span>
                           </div>
@@ -229,7 +229,7 @@ export default function NaturePlaces() {
                             Elevation: {place.elevation}
                           </div>
                         </div>
-                        <div className="text-[#15803D] dark:text-[#22c55e] font-semibold text-sm group-hover:text-emerald-700 dark:group-hover:text-emerald-300 transition-colors duration-200">
+                        <div className="text-success dark:text-success font-semibold text-sm group-hover:text-success dark:group-hover:text-success transition-colors duration-200">
                           Explore →
                         </div>
                       </div>
@@ -250,7 +250,7 @@ export default function NaturePlaces() {
                             }
                           });
                         }}
-                        className="w-full bg-gradient-to-r from-[#15803D] to-green-600 hover:from-[#15803D] hover:to-green-700 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                        className="w-full bg-gradient-to-r from-success to-green-600 hover:from-success hover:to-green-700 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                       >
                         <FaRoute />
                         Plan to Visit
@@ -266,7 +266,7 @@ export default function NaturePlaces() {
           <div className="text-center mt-12">
             <Link 
               to="/all-nature-places"
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-[#15803D] to-green-600 hover:from-[#15803D] hover:to-green-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-success to-green-600 hover:from-success hover:to-green-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
             >
               <span>View All Natural Spots</span>
               <FaArrowRight />

@@ -28,7 +28,7 @@ const DesktopNavigation = ({
         <div className={`
       flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-xl
       ${theme === 'dark'
-                ? 'bg-[#1A2E4A]/40 border-[#2E4A6B]/40 hover:bg-[#1E3A5F]/50'
+                ? 'bg-navy-800/40 border-navy-700/40 hover:bg-navy-700/50'
                 : 'bg-white/40 border-slate-200/40 hover:bg-white/60'
             }
       transition-all duration-300 hover:shadow-lg hover:scale-[1.02] transform-gpu
@@ -48,7 +48,7 @@ const DesktopNavigation = ({
         <div className={`
       flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-xl
       ${theme === 'dark'
-                ? 'bg-[#1A2E4A]/40 border-[#2E4A6B]/40'
+                ? 'bg-navy-800/40 border-navy-700/40'
                 : 'bg-white/40 border-slate-200/40'
             }
       transition-all duration-300 hover:shadow-lg hover:scale-[1.02] transform-gpu

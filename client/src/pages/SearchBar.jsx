@@ -189,23 +189,23 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
       {/* Search bar */}
       <div className={`relative flex items-center rounded-2xl shadow-2xl border-2 overflow-hidden transition-all duration-300 z-[99998] backdrop-blur-sm ${
         isLocked
-          ? 'border-clay/40 bg-parchment/80 dark:bg-soil-mid/60 opacity-80'
+          ? 'border-slate-400/40 bg-slate-100/80 dark:bg-navy-800/60 opacity-80'
           : isFocused
-            ? 'border-forest-mid shadow-forest-mid/30 bg-white/95 dark:bg-soil-mid/95 scale-[1.02]'
+            ? 'border-amber-400 shadow-teal-500/30 bg-white/95 dark:bg-navy-800/95 scale-[1.02]'
             : theme === 'dark'
-              ? 'border-forest-deep/50 bg-soil-mid/90 hover:border-forest-deep'
+              ? 'border-navy-700/50 bg-navy-800/90 hover:border-slate-600'
               : 'border-gray-300/50 bg-white/90 hover:border-gray-400'
       }`}>
 
         <div className="pl-5 pr-2">
           <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ${
-            isLocked ? 'bg-parchment dark:bg-forest-deep' :
-            isFocused ? 'bg-gradient-to-br from-forest-mid to-gold shadow-lg' :
-            theme === 'dark' ? 'bg-forest-deep/80' : 'bg-gray-100'
+            isLocked ? 'bg-slate-200 dark:bg-navy-700' :
+            isFocused ? 'bg-gradient-to-br from-navy-600 to-navy-700 shadow-lg' :
+            theme === 'dark' ? 'bg-navy-700/80' : 'bg-surface-100'
           }`}>
             {isLocked
-              ? <FaLock className="text-clay text-lg" />
-              : <FaSearch className={`text-lg ${isFocused ? 'text-white' : theme === 'dark' ? 'text-sand' : 'text-gray-500'}`} />
+              ? <FaLock className="text-slate-400 text-lg" />
+              : <FaSearch className={`text-lg ${isFocused ? 'text-white' : theme === 'dark' ? 'text-slate-400' : 'text-gray-500'}`} />
             }
           </div>
         </div>
@@ -224,25 +224,25 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
           }
           readOnly={isLocked}
           className={`flex-grow px-4 py-5 outline-none text-base bg-transparent font-medium ${
-            isLocked ? 'text-clay dark:text-sand cursor-not-allowed' :
-            theme === 'dark' ? 'text-white placeholder-sand' : 'text-gray-800 placeholder-gray-500'
+            isLocked ? 'text-slate-400 dark:text-slate-500 cursor-not-allowed' :
+            theme === 'dark' ? 'text-white placeholder-slate-400' : 'text-gray-800 placeholder-gray-500'
           }`}
           autoComplete="off"
           spellCheck="false"
         />
 
-        {isLoading && <div className="px-3"><FaSpinner className="text-forest-mid animate-spin text-xl" /></div>}
+        {isLoading && <div className="px-3"><FaSpinner className="text-navy-500 animate-spin text-xl" /></div>}
 
         {query && !isLoading && isSignedIn && (
           <button onClick={clearSearch} className={`w-10 h-10 mx-2 rounded-xl flex items-center justify-center ${
-            theme === 'dark' ? 'text-sand hover:text-white hover:bg-forest-deep' : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100'
+            theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-navy-700' : 'text-gray-400 hover:text-gray-700 hover:bg-surface-100'
           }`}><FaTimes /></button>
         )}
 
         {speechSupported && isSignedIn && (
           <button onClick={handleVoiceSearch} className={`w-10 h-10 mx-2 rounded-xl flex items-center justify-center ${
-            isListening ? 'bg-vermillion text-white animate-pulse' :
-            theme === 'dark' ? 'text-sand hover:text-forest-light hover:bg-forest-deep' : 'text-gray-400 hover:text-forest-mid hover:bg-gray-100'
+            isListening ? 'bg-red-500 text-white animate-pulse' :
+            theme === 'dark' ? 'text-slate-400 hover:text-amber-400 hover:bg-navy-700' : 'text-gray-400 hover:text-navy-500 hover:bg-surface-100'
           }`}><FaMicrophone /></button>
         )}
 
@@ -250,9 +250,9 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
           onClick={isLocked ? () => navigate('/sign-in') : handleSearch}
           disabled={!isLocked && (!query.trim() || isLoading)}
           className={`px-8 py-5 font-semibold text-base transition-all duration-300 flex items-center gap-2 rounded-r-2xl ${
-            isLocked ? 'bg-gradient-to-r from-clay to-forest-deep hover:from-forest-mid hover:to-gold text-white cursor-pointer' :
-            query.trim() && !isLoading ? 'bg-gradient-to-r from-forest-mid to-gold hover:from-forest-deep hover:to-gold-dark text-white' :
-            theme === 'dark' ? 'bg-forest-deep/50 text-sand cursor-not-allowed' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+            isLocked ? 'bg-gradient-to-r from-slate-500 to-slate-600 hover:from-navy-600 hover:to-navy-700 text-white cursor-pointer' :
+            query.trim() && !isLoading ? 'bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white' :
+            theme === 'dark' ? 'bg-navy-700/50 text-slate-500 cursor-not-allowed' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
           }`}
         >
           {isLocked ? <><FaLock /><span className="hidden sm:inline">Sign In</span></> : <><FaSearch /><span className="hidden sm:inline">Search</span></>}
@@ -262,16 +262,16 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
       {/* Login prompt */}
       {showLoginPrompt && isLocked && (
         <div className="absolute top-full left-0 right-0 mt-1 z-[99999]">
-          <div className={`rounded-xl border border-forest-mid p-3 flex items-center justify-between gap-3 shadow-xl ${
-            theme === 'dark' ? 'bg-soil-dark text-white' : 'bg-white text-soil-dark'
+          <div className={`rounded-xl border border-amber-400 p-3 flex items-center justify-between gap-3 shadow-xl ${
+            theme === 'dark' ? 'bg-navy-900 text-white' : 'bg-white text-slate-800'
           }`}>
             <div className="flex items-center gap-2">
-              <FaLock className="text-forest-mid text-xs" />
+              <FaLock className="text-navy-500 text-xs" />
               <p className="text-xs font-semibold">Sign in to search destinations</p>
             </div>
             <div className="flex gap-1.5">
-              <button onClick={() => navigate('/sign-in')} className="px-3 py-1 bg-forest-mid hover:bg-forest-deep text-white rounded-lg text-xs font-semibold">Sign In</button>
-              <button onClick={() => navigate('/sign-up')} className="px-3 py-1 border border-forest-mid text-forest-mid dark:text-forest-light rounded-lg text-xs font-semibold">Sign Up</button>
+              <button onClick={() => navigate('/sign-in')} className="px-3 py-1 bg-crimson-500 hover:bg-crimson-600 text-white rounded-lg text-xs font-semibold">Sign In</button>
+              <button onClick={() => navigate('/sign-up')} className="px-3 py-1 border border-navy-500 text-navy-600 dark:text-amber-400 rounded-lg text-xs font-semibold">Sign Up</button>
             </div>
           </div>
         </div>
@@ -282,17 +282,17 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
         <div
           ref={dropdownRef}
           className={`absolute top-full left-0 right-0 mt-1 z-[99999] rounded-xl border shadow-xl overflow-hidden ${
-            theme === 'dark' ? 'bg-soil-dark border-forest-deep' : 'bg-white border-slate-200'
+            theme === 'dark' ? 'bg-navy-900 border-navy-700' : 'bg-white border-slate-200'
           }`}
         >
           <div className={`px-3 py-1 border-b flex items-center justify-between ${
-            theme === 'dark' ? 'border-forest-deep' : 'border-slate-100'
+            theme === 'dark' ? 'border-navy-800' : 'border-slate-100'
           }`}>
             <span className={`text-[10px] font-semibold uppercase tracking-wide ${
-              theme === 'dark' ? 'text-clay' : 'text-slate-400'
+              theme === 'dark' ? 'text-slate-500' : 'text-slate-400'
             }`}>{results.length} match{results.length !== 1 ? 'es' : ''}</span>
             <button onClick={() => { setShowSuggestions(false); handleSearch(); }}
-              className="text-[10px] text-forest-mid hover:text-forest-light font-semibold">
+              className="text-[10px] text-navy-500 hover:text-amber-400 font-semibold">
               See all →
             </button>
           </div>

@@ -24,7 +24,7 @@ export default function ImageGallery({ item, className = '', showThumbnails = tr
   const Icon = TYPE_ICON[item?.type] || FaMapMarkerAlt;
 
   const Fallback = () => (
-    <div className="w-full h-full flex items-center justify-center bg-slate-200 dark:bg-[#1E3A5F]">
+    <div className="w-full h-full flex items-center justify-center bg-slate-200 dark:bg-navy-700">
       <Icon className="text-6xl text-slate-400" />
     </div>
   );
@@ -86,13 +86,13 @@ export default function ImageGallery({ item, className = '', showThumbnails = tr
           {images.map((url, i) => (
             <button key={i} onClick={() => setCurrent(i)}
               className={`flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all ${
-                i === current ? 'border-[#2356A0] scale-105' : 'border-slate-300 dark:border-[#2E4A6B]'
+                i === current ? 'border-navy-500 scale-105' : 'border-slate-300 dark:border-navy-700'
               }`}>
               {!imgErrors[i] ? (
                 <img src={url} alt="" className="w-full h-full object-cover"
                   onError={() => setImgErrors(e => ({ ...e, [i]: true }))} />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-slate-200 dark:bg-[#1E3A5F]">
+                <div className="w-full h-full flex items-center justify-center bg-slate-200 dark:bg-navy-700">
                   <Icon className="text-slate-400 text-lg" />
                 </div>
               )}

@@ -282,7 +282,7 @@ export default function DetailPage() {
 
   if (isLoading) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-gray-900' : 'bg-surface-50'}`}>
         <div className="text-center">
           <FaSpinner className="text-4xl text-blue-500 animate-spin mx-auto mb-4" />
           <h2 className={`text-xl font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
@@ -295,7 +295,7 @@ export default function DetailPage() {
 
   if (error || !data) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-gray-900' : 'bg-surface-50'}`}>
         <div className="text-center max-w-md mx-auto p-8">
           <FaExclamationTriangle className="text-5xl text-red-500 mx-auto mb-4" />
           <h2 className={`text-2xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
@@ -320,7 +320,7 @@ export default function DetailPage() {
   const typeColor = getTypeColor(data.type);
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-surface-50'}`}>
       {/* Header */}
       <div className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} shadow-lg sticky top-0 z-10`}>
         <div className="max-w-7xl mx-auto px-4 py-4">
@@ -330,7 +330,7 @@ export default function DetailPage() {
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 theme === 'dark' 
                   ? 'text-gray-300 hover:bg-gray-700' 
-                  : 'text-gray-600 hover:bg-gray-100'
+                  : 'text-gray-600 hover:bg-surface-100'
               }`}
             >
               <FaArrowLeft />
@@ -345,7 +345,7 @@ export default function DetailPage() {
                     ? 'bg-red-500 text-white' 
                     : theme === 'dark' 
                     ? 'bg-gray-700 text-gray-300 hover:bg-red-500 hover:text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-red-500 hover:text-white'
+                    : 'bg-surface-100 text-gray-600 hover:bg-red-500 hover:text-white'
                 }`}
               >
                 <FaHeart />
@@ -358,7 +358,7 @@ export default function DetailPage() {
                     ? 'bg-yellow-500 text-white' 
                     : theme === 'dark' 
                     ? 'bg-gray-700 text-gray-300 hover:bg-yellow-500 hover:text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-yellow-500 hover:text-white'
+                    : 'bg-surface-100 text-gray-600 hover:bg-yellow-500 hover:text-white'
                 }`}
               >
                 <FaBookmark />
@@ -369,7 +369,7 @@ export default function DetailPage() {
                 className={`p-2 rounded-lg transition-colors ${
                   theme === 'dark' 
                     ? 'bg-gray-700 text-gray-300 hover:bg-blue-500 hover:text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-blue-500 hover:text-white'
+                    : 'bg-surface-100 text-gray-600 hover:bg-blue-500 hover:text-white'
                 }`}
               >
                 <FaShare />
@@ -709,7 +709,7 @@ export default function DetailPage() {
                 className={`flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold border-2 transition-all duration-300 hover:scale-105 shadow-lg ${
                   theme === 'dark' 
                     ? 'border-gray-600 text-white hover:bg-gray-700 hover:shadow-gray-500/25' 
-                    : 'border-gray-300 text-gray-900 hover:bg-gray-100 hover:shadow-gray-500/25'
+                    : 'border-gray-300 text-gray-900 hover:bg-surface-100 hover:shadow-gray-500/25'
                 }`}
               >
                 <FaDirections />

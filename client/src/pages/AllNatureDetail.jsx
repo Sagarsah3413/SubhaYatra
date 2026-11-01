@@ -138,11 +138,11 @@ export default function AllNatureDetail() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-parchment via-white to-forest-light/20 dark:from-soil-dark dark:via-soil-mid dark:to-forest-deep">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-green-50 dark:from-navy-900 dark:via-navy-800 dark:to-navy-900">
       <Header />
       
       {/* Hero Section */}
-      <div className="relative h-[60vh] overflow-hidden bg-gradient-to-br from-forest-deep via-meadow to-forest-mid dark:from-soil-dark dark:via-forest-deep dark:to-forest-mid pt-20">
+      <div className="relative h-[60vh] overflow-hidden bg-gradient-to-br from-blue-600 via-green-600 to-navy-700 dark:from-blue-900 dark:via-green-900 dark:to-navy-800 pt-20">
         <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
@@ -170,7 +170,7 @@ export default function AllNatureDetail() {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {places.map((place) => (
-            <div key={place.id} className="group bg-white dark:bg-soil-mid rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-forest-deep">
+            <div key={place.id} className="group bg-white dark:bg-navy-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-navy-700">
               {/* Image */}
               <div className="relative h-64 overflow-hidden">
                 <img 
@@ -182,15 +182,15 @@ export default function AllNatureDetail() {
                 
                 {/* Category Badge */}
                 <div className="absolute top-4 left-4">
-                  <span className="bg-white/90 dark:bg-soil-mid/90 backdrop-blur-sm text-gray-800 dark:text-white px-3 py-1 rounded-full text-sm font-semibold">
+                  <span className="bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm text-gray-800 dark:text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {place.category}
                   </span>
                 </div>
 
                 {/* Rating Badge */}
                 <div className="absolute top-4 right-4">
-                  <div className="bg-white/90 dark:bg-soil-mid/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
-                    <span className="text-gold text-sm">★</span>
+                  <div className="bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                    <span className="text-yellow-500 text-sm">★</span>
                     <span className="text-gray-800 dark:text-white text-sm font-semibold">{place.rating}</span>
                   </div>
                 </div>
@@ -211,26 +211,26 @@ export default function AllNatureDetail() {
                 {/* Quick Info */}
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div>
-                    <div className="text-xs text-clay dark:text-sand uppercase tracking-wide">Best Time</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Best Time</div>
                     <div className="text-sm font-semibold text-gray-800 dark:text-white">{place.bestTime}</div>
                   </div>
                   <div>
-                    <div className="text-xs text-clay dark:text-sand uppercase tracking-wide">Duration</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Duration</div>
                     <div className="text-sm font-semibold text-gray-800 dark:text-white">{place.duration}</div>
                   </div>
                 </div>
 
                 {/* Highlights */}
                 <div className="mb-4">
-                  <div className="text-xs text-clay dark:text-sand uppercase tracking-wide mb-2">Highlights</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Highlights</div>
                   <div className="flex flex-wrap gap-1">
                     {place.highlights.slice(0, 3).map((highlight, index) => (
-                      <span key={index} className="bg-forest-deep/10 dark:bg-forest-deep/30 text-forest-mid dark:text-forest-light px-2 py-1 rounded-md text-xs font-medium">
+                      <span key={index} className="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 px-2 py-1 rounded-md text-xs font-medium">
                         {highlight}
                       </span>
                     ))}
                     {place.highlights.length > 3 && (
-                      <span className="bg-parchment dark:bg-soil-dark text-clay dark:text-sand px-2 py-1 rounded-md text-xs font-medium">
+                      <span className="bg-surface-100 dark:bg-navy-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-md text-xs font-medium">
                         +{place.highlights.length - 3} more
                       </span>
                     )}
@@ -238,23 +238,23 @@ export default function AllNatureDetail() {
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-600 dark:text-sand text-sm leading-relaxed mb-4 line-clamp-3">
+                <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
                   {place.description}
                 </p>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-forest-deep">
-                  <div className="flex items-center gap-4 text-sm text-clay dark:text-sand">
+                <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-navy-700">
+                  <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                     <div className="flex items-center gap-1">
-                      <span className="text-gold">★</span>
+                      <span className="text-yellow-500">★</span>
                       <span>{place.rating}</span>
                     </div>
                     <div>({place.reviews} reviews)</div>
                     <div className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      place.difficulty === 'Easy' ? 'bg-meadow/10 dark:bg-meadow/20 text-meadow' :
-                      place.difficulty === 'Easy-Moderate' ? 'bg-himalayan-sky/10 dark:bg-himalayan-sky/20 text-himalayan-sky' :
-                      place.difficulty === 'Moderate' ? 'bg-gold/10 dark:bg-gold/20 text-gold-dark dark:text-gold' :
-                      'bg-vermillion/10 dark:bg-vermillion/20 text-vermillion'
+                      place.difficulty === 'Easy' ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400' :
+                      place.difficulty === 'Easy-Moderate' ? 'bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400' :
+                      place.difficulty === 'Moderate' ? 'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-400' :
+                      'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400'
                     }`}>
                       {place.difficulty}
                     </div>
@@ -273,7 +273,7 @@ export default function AllNatureDetail() {
                         }
                       });
                     }}
-                    className="bg-gradient-to-r from-forest-mid to-gold text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-forest-deep hover:to-gold-dark transition-all duration-200 transform hover:scale-105"
+                    className="bg-gradient-to-r from-blue-600 to-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
                   >
                     Plan Your Visit
                   </button>

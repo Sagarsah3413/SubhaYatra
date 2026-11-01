@@ -2,16 +2,16 @@ import values from "../../../data/values"
 import { FaChartLine, FaHeart } from "react-icons/fa"
 const CoreValues = () => {
     return (
-        <section className="py-24 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] dark:from-[#0F1B2D] dark:to-slate-800">
+        <section className="py-24 bg-gradient-to-br from-navy-700 to-navy-700 dark:from-navy-900 dark:to-slate-800">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="text-center mb-16">
-                    <div className="inline-flex items-center gap-3 bg-white/80 dark:bg-[#1A2E4A]/30 backdrop-blur-xl rounded-full px-8 py-4 mb-8 border border-teal-200/50 dark:border-[#2E4A6B]/50">
-                        <FaHeart className="text-[#2356A0] dark:text-[#D97706]" />
-                        <span className="text-sm font-semibold text-[#2356A0] dark:text-[#F59E0B]">Our Core Values</span>
+                    <div className="inline-flex items-center gap-3 bg-white/80 dark:bg-navy-800/30 backdrop-blur-xl rounded-full px-8 py-4 mb-8 border border-navy-500/50 dark:border-navy-700/50">
+                        <FaHeart className="text-navy-600 dark:text-amber-400" />
+                        <span className="text-sm font-semibold text-navy-500 dark:text-amber-300">Our Core Values</span>
                     </div>
 
                     <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
-                        <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-navy-700 via-navy-600 to-blue-600 bg-clip-text text-transparent">
                             What Drives Us Forward
                         </span>
                     </h2>
@@ -26,7 +26,7 @@ const CoreValues = () => {
                     {values.map((value, index) => (
                         <div
                             key={index}
-                            className="group bg-white/80 dark:bg-[#1A2E4A]/80 backdrop-blur-2xl rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50 dark:border-[#2E4A6B]/50 overflow-hidden transform hover:scale-105"
+                            className="group bg-white/80 dark:bg-navy-800/80 backdrop-blur-2xl rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50 dark:border-navy-700/50 overflow-hidden transform hover:scale-105"
                         >
                             <div className={`absolute inset-0 bg-gradient-to-br ${value.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
 

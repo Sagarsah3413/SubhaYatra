@@ -777,7 +777,7 @@ export const Header = () => {
     <header className={`
       fixed top-0 left-0 right-0 z-50 transition-all duration-700 ease-out transform-gpu will-change-transform
       ${theme === 'dark'
-        ? 'bg-gradient-to-r from-slate-950/99 via-slate-900/97 to-slate-950/99 border-[#2E4A6B]/30'
+        ? 'bg-gradient-to-r from-slate-950/99 via-slate-900/97 to-slate-950/99 border-navy-700/30'
         : 'bg-gradient-to-r from-white/99 via-slate-50/97 to-white/99 border-slate-200/30'
       }
       backdrop-blur-3xl border-b shadow-2xl
@@ -786,12 +786,12 @@ export const Header = () => {
       flex items-center justify-between
       before:absolute before:inset-0 before:bg-gradient-to-r
       ${theme === 'dark'
-        ? 'before:from-[#2356A0]/4 before:via-[#2356A0]/2 before:to-[#166534]/4'
-        : 'before:from-[#2356A0]/3 before:via-[#2356A0]/1 before:to-[#166534]/3'
+        ? 'before:from-navy-700/4 before:via-navy-600/2 before:to-success/4'
+        : 'before:from-navy-600/3 before:via-navy-600/1 before:to-success/3'
       }
       before:opacity-0 hover:before:opacity-100 before:transition-all before:duration-1000
       after:absolute after:bottom-0 after:left-0 after:right-0 after:h-px
-      after:bg-gradient-to-r after:from-transparent after:via-[#2356A0]/30 after:to-transparent
+      after:bg-gradient-to-r after:from-transparent after:via-navy-600/30 after:to-transparent
       after:opacity-0 hover:after:opacity-100 after:transition-all after:duration-700
     `}>
 
@@ -800,7 +800,7 @@ export const Header = () => {
         {/* Primary gradient layer */}
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            radial-gradient(circle at 10% 20%, rgba(35, 86, 160, 0.6) 0%, transparent 70%),
+            radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.6) 0%, transparent 70%),
             radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.4) 0%, transparent 70%),
             radial-gradient(circle at 50% 5%, rgba(16, 185, 129, 0.35) 0%, transparent 80%),
             radial-gradient(circle at 20% 90%, rgba(139, 92, 246, 0.3) 0%, transparent 60%),
@@ -813,7 +813,7 @@ export const Header = () => {
         {/* Secondary geometric pattern */}
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(45deg, transparent 47%, rgba(35, 86, 160, 0.03) 48%, rgba(35, 86, 160, 0.03) 52%, transparent 53%),
+            linear-gradient(45deg, transparent 47%, rgba(6, 182, 212, 0.03) 48%, rgba(6, 182, 212, 0.03) 52%, transparent 53%),
             linear-gradient(-45deg, transparent 47%, rgba(16, 185, 129, 0.02) 48%, rgba(16, 185, 129, 0.02) 52%, transparent 53%),
             linear-gradient(90deg, transparent 47%, rgba(59, 130, 246, 0.015) 48%, rgba(59, 130, 246, 0.015) 52%, transparent 53%)
           `,
@@ -822,7 +822,7 @@ export const Header = () => {
 
         {/* Tertiary dot pattern */}
         <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at center, rgba(35, 86, 160, 0.08) 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 1px, transparent 1px)`,
           backgroundSize: '40px 40px',
           opacity: 0.3
         }}></div>
@@ -850,7 +850,7 @@ export const Header = () => {
           <div className="relative">
             <div className={`
               w-16 h-16 rounded-3xl flex items-center justify-center font-black text-2xl
-              bg-gradient-to-br from-[#2356A0] via-[#2356A0] to-[#166534] text-white
+              bg-gradient-to-br from-navy-600 via-navy-600 to-success text-white
               shadow-2xl shadow-teal-500/30 group-hover:shadow-3xl group-hover:shadow-teal-500/50
               transition-all duration-500 group-hover:scale-110 transform-gpu
               relative overflow-hidden border border-white/20
@@ -861,14 +861,14 @@ export const Header = () => {
               <div className="absolute inset-2 rounded-2xl bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
 
               {/* Rotating border effect */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-[#166534] opacity-0 group-hover:opacity-20 animate-spin-slow"></div>
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-400 via-navy-600 to-success opacity-0 group-hover:opacity-20 animate-spin-slow"></div>
             </div>
 
             {/* Outer glow effect */}
-            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#2356A0] via-[#2356A0] to-[#166534] opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-700 -z-10 scale-150"></div>
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-navy-600 via-navy-600 to-success opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-700 -z-10 scale-150"></div>
 
             {/* Pulsing ring */}
-            <div className="absolute inset-0 rounded-3xl border-2 border-[#D97706]/0 group-hover:border-[#D97706]/40 transition-all duration-500 animate-pulse-ring"></div>
+            <div className="absolute inset-0 rounded-3xl border-2 border-amber-400/0 group-hover:border-amber-400/40 transition-all duration-500 animate-pulse-ring"></div>
           </div>
 
           {/* Enhanced Brand Text */}
@@ -877,13 +877,13 @@ export const Header = () => {
               <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Roamio</span>
             </h1>
             <p className="text-base font-bold tracking-widest uppercase">
-              <span className="text-[#D97706] hover:text-[#F59E0B] transition-all duration-500 hover:scale-105 inline-block">Wanderly</span>
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-[#1A2E4A] group-hover:w-full transition-all duration-700"></span>
+              <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Wanderly</span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-amber-500 to-navy-600 group-hover:w-full transition-all duration-700"></span>
             </p>
           </div>
 
           {/* Hover background effect */}
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#2356A0]/5 via-[#2356A0]/5 to-[#166534]/5 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-navy-600/5 via-navy-600/5 to-success/5 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
         </div>
 
         {/* Enhanced Location Indicator with Improved Accuracy & Layout */}
@@ -892,14 +892,14 @@ export const Header = () => {
             hidden lg:flex items-center gap-3 px-5 py-3 rounded-2xl border backdrop-blur-xl
             cursor-pointer transition-all duration-500 group relative overflow-hidden
             ${theme === 'dark'
-              ? 'bg-gradient-to-br from-[#1A2E4A]/90 via-[#1A2E4A]/80 to-slate-700/70 border-slate-600/50 hover:from-slate-700/95 hover:to-slate-600/80 hover:border-[#2356A0]/60'
-              : 'bg-gradient-to-br from-white/95 via-white/90 to-slate-50/80 border-slate-300/50 hover:from-white hover:to-slate-100/90 hover:border-[#D97706]/60'
+              ? 'bg-gradient-to-br from-navy-800/90 via-navy-800/80 to-slate-700/70 border-slate-600/50 hover:from-slate-700/95 hover:to-slate-600/80 hover:border-navy-500/60'
+              : 'bg-gradient-to-br from-white/95 via-white/90 to-slate-50/80 border-slate-300/50 hover:from-white hover:to-slate-100/90 hover:border-amber-400/60'
             }
             hover:shadow-2xl hover:shadow-teal-500/30 hover:scale-[1.03] transform-gpu
             before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-br
             ${theme === 'dark'
-              ? 'before:from-[#2356A0]/15 before:via-[#2356A0]/8 before:to-[#166534]/15'
-              : 'before:from-[#2356A0]/12 before:via-[#2356A0]/6 before:to-[#166534]/12'
+              ? 'before:from-navy-600/15 before:via-navy-600/8 before:to-success/15'
+              : 'before:from-amber-400/12 before:via-navy-600/6 before:to-success/12'
             }
             before:opacity-0 hover:before:opacity-100 before:transition-all before:duration-500
             animate-slide-in-left shadow-lg
@@ -913,7 +913,7 @@ export const Header = () => {
             text-sm font-medium pointer-events-none z-50 min-w-[280px]
             opacity-0 group-hover:opacity-100 transition-all duration-300 delay-500
             ${theme === 'dark'
-              ? 'bg-[#0F1B2D]/98 text-slate-100 border border-[#2E4A6B]/60'
+              ? 'bg-navy-900/98 text-slate-100 border border-navy-700/60'
               : 'bg-white/98 text-slate-800 border border-slate-200/60'
             }
             backdrop-blur-2xl shadow-2xl
@@ -926,7 +926,7 @@ export const Header = () => {
           `}>
             <div className="space-y-2">
               <div className="flex items-center gap-2 pb-2 border-b border-slate-600/30">
-                <FaMapMarkerAlt className="text-[#2356A0]" />
+                <FaMapMarkerAlt className="text-navy-500" />
                 <span className="font-bold">Your Location</span>
               </div>
 
@@ -938,7 +938,7 @@ export const Header = () => {
                   </div>
                 ) : (
                   <>
-                    <div className="font-semibold text-[#2356A0]">{currentLocation}</div>
+                    <div className="font-semibold text-navy-500">{currentLocation}</div>
                     <div className={`text-xs mt-1 ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
                       Click to refresh • High accuracy mode
                     </div>
@@ -960,8 +960,8 @@ export const Header = () => {
             <div className={`
               w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 relative
               ${theme === 'dark'
-                ? 'bg-gradient-to-br from-[#2356A0]/40 to-[#1A2E4A]/30 group-hover:from-[#2356A0]/50 group-hover:to-[#1A2E4A]/40'
-                : 'bg-gradient-to-br from-[#2356A0]/30 to-[#1A2E4A]/20 group-hover:from-[#2356A0]/40 group-hover:to-[#1A2E4A]/30'
+                ? 'bg-gradient-to-br from-navy-700/40 to-navy-700/30 group-hover:from-navy-600/50 group-hover:to-navy-700/40'
+                : 'bg-gradient-to-br from-navy-600/30 to-navy-700/20 group-hover:from-navy-600/40 group-hover:to-navy-700/30'
               }
               ${isLocationLoading ? 'animate-pulse' : ''}
               shadow-inner
@@ -972,7 +972,7 @@ export const Header = () => {
                   ? 'text-amber-500 animate-bounce'
                   : locationError
                     ? 'text-red-500'
-                    : 'text-[#2356A0] group-hover:text-[#D97706]'
+                    : 'text-navy-600 group-hover:text-amber-400'
                 }
               `} />
 
@@ -981,7 +981,7 @@ export const Header = () => {
                 absolute inset-0 rounded-xl border-2 transition-all duration-500
                 ${isLocationLoading
                   ? 'border-amber-400/60 animate-ping'
-                  : 'border-[#2356A0]/0 group-hover:border-[#2356A0]/40'
+                  : 'border-navy-500/0 group-hover:border-navy-500/40'
                 }
               `}></div>
             </div>
@@ -990,8 +990,8 @@ export const Header = () => {
             {!isLocationLoading && !locationError && (
               <div className="absolute -top-1 -right-1 flex items-center justify-center">
                 <div className="relative w-4 h-4">
-                  <div className="absolute inset-0 bg-[#16a34a] rounded-full animate-pulse"></div>
-                  <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+                  <div className="absolute inset-0 bg-success rounded-full animate-pulse"></div>
+                  <div className="absolute inset-0 bg-success-bg rounded-full animate-ping opacity-75"></div>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
                   </div>
@@ -1017,7 +1017,7 @@ export const Header = () => {
                 <span className={`
                   text-sm font-bold leading-tight whitespace-nowrap inline-block
                   ${theme === 'dark' ? 'text-slate-50' : 'text-slate-900'}
-                  group-hover:text-[#2356A0] dark:group-hover:text-[#F59E0B] transition-colors duration-500
+                  group-hover:text-navy-600 dark:group-hover:text-amber-300 transition-colors duration-500
                   ${isLocationLoading ? 'animate-pulse' : 'location-scroll-text'}
                 `}>
                   {isLocationLoading
@@ -1030,14 +1030,14 @@ export const Header = () => {
               <div className={`
                 absolute left-0 top-0 bottom-0 w-4 pointer-events-none z-10
                 bg-gradient-to-r ${theme === 'dark'
-                  ? 'from-[#1A2E4A] to-transparent'
+                  ? 'from-navy-800 to-transparent'
                   : 'from-white to-transparent'
                 }
               `}></div>
               <div className={`
                 absolute right-0 top-0 bottom-0 w-4 pointer-events-none z-10
                 bg-gradient-to-l ${theme === 'dark'
-                  ? 'from-[#1A2E4A] to-transparent'
+                  ? 'from-navy-800 to-transparent'
                   : 'from-white to-transparent'
                 }
               `}></div>
@@ -1052,13 +1052,13 @@ export const Header = () => {
                     ? 'bg-amber-400 animate-pulse'
                     : locationError
                       ? 'bg-red-400'
-                      : 'bg-emerald-400 group-hover:bg-[#E8EFF8]'
+                      : 'bg-success-bg group-hover:bg-navy-500'
                   }
                 `}></div>
                 <span className={`
                   text-xs font-semibold uppercase tracking-wider
                   ${theme === 'dark' ? 'text-slate-400' : 'text-slate-600'}
-                  opacity-80 group-hover:opacity-100 group-hover:text-[#2356A0] transition-all duration-500
+                  opacity-80 group-hover:opacity-100 group-hover:text-navy-500 transition-all duration-500
                 `}>
                   {isLocationLoading ? 'Locating' : locationError ? 'Error' : 'Live GPS'}
                 </span>
@@ -1072,13 +1072,13 @@ export const Header = () => {
               <div className={`
                 w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-500
                 ${theme === 'dark'
-                  ? 'bg-[#1E3A5F]/60 group-hover:bg-[#C0392B]/40'
-                  : 'bg-slate-200/60 group-hover:bg-[#2356A0]/30'
+                  ? 'bg-navy-700/60 group-hover:bg-crimson-500/40'
+                  : 'bg-slate-200/60 group-hover:bg-navy-600/30'
                 }
                 opacity-70 group-hover:opacity-100 transform scale-90 group-hover:scale-100
                 shadow-sm group-hover:shadow-md
               `}>
-                <svg className="w-4 h-4 text-slate-400 group-hover:text-[#2356A0] transition-all duration-500 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-4 h-4 text-slate-400 group-hover:text-navy-500 transition-all duration-500 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -1093,8 +1093,8 @@ export const Header = () => {
           <div className={`
             absolute inset-0 rounded-2xl border-2 transition-all duration-500 pointer-events-none
             ${theme === 'dark'
-              ? 'border-[#2356A0]/0 group-hover:border-[#2356A0]/40'
-              : 'border-[#D97706]/0 group-hover:border-[#D97706]/50'
+              ? 'border-navy-500/0 group-hover:border-navy-500/40'
+              : 'border-amber-400/0 group-hover:border-amber-400/50'
             }
           `}></div>
 
@@ -1102,8 +1102,8 @@ export const Header = () => {
           <div className={`
             absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700
             bg-gradient-to-br ${theme === 'dark'
-              ? 'from-[#2356A0]/8 via-[#2356A0]/5 to-[#166534]/8'
-              : 'from-[#2356A0]/8 via-[#2356A0]/5 to-[#166534]/8'
+              ? 'from-navy-700/8 via-navy-600/5 to-success/8'
+              : 'from-navy-600/8 via-navy-600/5 to-success/8'
             }
           `}></div>
         </div>
@@ -1151,7 +1151,7 @@ export const Header = () => {
             <div className="text-yellow-400">
               <strong>Current Status:</strong> {isLocationLoading ? 'Loading...' : 'Complete'}
             </div>
-            <div className="text-[#2356A0]">
+            <div className="text-navy-400">
               <strong>Location:</strong> {currentLocation}
             </div>
             {locationError && (
@@ -1335,7 +1335,7 @@ export const Header = () => {
       {/* Search Modal */}
       {showSearchModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm" onClick={() => setShowSearchModal(false)}>
-          <div className={`w-full max-w-2xl mx-4 rounded-2xl shadow-2xl ${theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-white'}`} onClick={(e) => e.stopPropagation()}>
+          <div className={`w-full max-w-2xl mx-4 rounded-2xl shadow-2xl ${theme === 'dark' ? 'bg-navy-800' : 'bg-white'}`} onClick={(e) => e.stopPropagation()}>
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h3 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
@@ -1343,7 +1343,7 @@ export const Header = () => {
                 </h3>
                 <button
                   onClick={() => setShowSearchModal(false)}
-                  className={`p-2 rounded-lg transition-colors ${theme === 'dark' ? 'hover:bg-[#1E3A5F] text-gray-400' : 'hover:bg-gray-100 text-gray-600'}`}
+                  className={`p-2 rounded-lg transition-colors ${theme === 'dark' ? 'hover:bg-navy-700 text-gray-400' : 'hover:bg-surface-100 text-gray-600'}`}
                 >
                   ✕
                 </button>
@@ -1362,8 +1362,8 @@ export const Header = () => {
                     }
                   }}
                   placeholder="Search for destinations, hotels, restaurants..."
-                  className={`w-full px-4 py-3 pr-12 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-[#2356A0] ${theme === 'dark'
-                    ? 'bg-[#1E3A5F] border-slate-600 text-white placeholder-gray-400'
+                  className={`w-full px-4 py-3 pr-12 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-navy-500 ${theme === 'dark'
+                    ? 'bg-navy-700 border-slate-600 text-white placeholder-gray-400'
                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                     }`}
                   autoFocus
@@ -1376,7 +1376,7 @@ export const Header = () => {
                       setSearchQuery('');
                     }
                   }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] text-white rounded-lg hover:from-[#2356A0] hover:to-[#1A2E4A] transition-all"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-gradient-to-r from-navy-700 to-navy-700 text-white rounded-lg hover:from-navy-700 hover:to-navy-700 transition-all"
                 >
                   <FaSearch />
                 </button>
@@ -1412,11 +1412,11 @@ const useClerkSafely = () => {
  */
 const getHeaderClasses = (theme) => {
   return `sticky top-0 z-50 w-full px-4 py-3 ${theme === "dark"
-    ? "bg-gradient-to-r from-slate-950/95 via-slate-900/90 to-slate-950/95 backdrop-blur-2xl border-[#2E4A6B]/40 shadow-2xl shadow-slate-900/50"
+    ? "bg-gradient-to-r from-slate-950/95 via-slate-900/90 to-slate-950/95 backdrop-blur-2xl border-navy-700/40 shadow-2xl shadow-slate-900/50"
     : "bg-gradient-to-r from-white/98 via-slate-50/95 to-white/98 backdrop-blur-2xl border-slate-200/40 shadow-2xl shadow-slate-200/30"
     } border-b flex justify-between items-center relative transition-all duration-300 will-change-transform transform-gpu min-h-[72px] max-h-[72px] before:absolute before:inset-0 before:bg-gradient-to-r ${theme === "dark"
-      ? "before:from-[#2356A0]/5 before:via-transparent before:to-[#1A2E4A]/5"
-      : "before:from-[#2356A0]/3 before:via-transparent before:to-[#1A2E4A]/3"
+      ? "before:from-navy-700/5 before:via-transparent before:to-navy-700/5"
+      : "before:from-navy-600/3 before:via-transparent before:to-navy-700/3"
     } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500`;
 };
 
@@ -1425,8 +1425,8 @@ const getHeaderClasses = (theme) => {
  */
 const getThemeClasses = (theme) => {
   return theme === "dark"
-    ? "text-[#2356A0] hover:text-white hover:bg-gradient-to-r hover:from-[#2356A0]/60 hover:to-[#1A2E4A]/60"
-    : "text-[#2356A0] hover:text-[#D97706] hover:bg-gradient-to-r hover:from-[#2356A0]/60 hover:to-[#1A2E4A]/60";
+    ? "text-navy-500 hover:text-white hover:bg-gradient-to-r hover:from-navy-700/60 hover:to-navy-700/60"
+    : "text-navy-500 hover:text-navy-500 hover:bg-gradient-to-r hover:from-navy-700/60 hover:to-navy-700/60";
 };
 
 /**
@@ -1434,11 +1434,11 @@ const getThemeClasses = (theme) => {
  */
 const getNavButtonClasses = (theme) => {
   return `px-4 py-2 rounded-xl font-medium transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${theme === "dark"
-    ? "border-teal-700/40 hover:border-[#2356A0]/70 hover:bg-gradient-to-r hover:from-[#2356A0]/50 hover:to-[#1A2E4A]/50 hover:shadow-xl hover:shadow-teal-900/30 hover:scale-105"
-    : "border-teal-200/40 hover:border-[#D97706]/70 hover:bg-gradient-to-r hover:from-[#2356A0]/50 hover:to-[#1A2E4A]/50 hover:shadow-xl hover:shadow-teal-200/30 hover:scale-105"
+    ? "border-navy-500/40 hover:border-navy-600/70 hover:bg-gradient-to-r hover:from-navy-700/50 hover:to-navy-700/50 hover:shadow-xl hover:shadow-teal-900/30 hover:scale-105"
+    : "border-navy-500/40 hover:border-navy-500/70 hover:bg-gradient-to-r hover:from-navy-700/50 hover:to-navy-700/50 hover:shadow-xl hover:shadow-teal-200/30 hover:scale-105"
     } before:absolute before:inset-0 before:bg-gradient-to-r ${theme === "dark"
-      ? "before:from-[#2356A0]/10 before:to-[#1A2E4A]/10"
-      : "before:from-[#2356A0]/5 before:to-[#1A2E4A]/5"
+      ? "before:from-navy-700/10 before:to-navy-700/10"
+      : "before:from-navy-600/5 before:to-navy-700/5"
     } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300`;
 };
 
@@ -1625,7 +1625,7 @@ const CustomLanguageDropdown = ({ selectedLanguage, onLanguageChange, theme }) =
         <span>{selectedLang.flag}</span>
         <span>{selectedLang.code.toUpperCase()}</span>
         <svg
-          className={`w-3 h-3 text-slate-500 transition-all duration-300 ${isOpen ? 'rotate-180 text-[#2356A0]' : 'text-slate-500 hover:text-[#2356A0]'
+          className={`w-3 h-3 text-slate-500 transition-all duration-300 ${isOpen ? 'rotate-180 text-navy-500' : 'text-slate-500 hover:text-navy-500'
             }`}
           fill="none"
           stroke="currentColor"
@@ -1638,16 +1638,16 @@ const CustomLanguageDropdown = ({ selectedLanguage, onLanguageChange, theme }) =
       {/* Professional Dropdown Menu */}
       {isOpen && (
         <div className={`absolute top-full right-0 mt-2 w-64 rounded-2xl backdrop-blur-2xl border shadow-2xl z-50 overflow-hidden ${theme === "dark"
-          ? "bg-[#0F1B2D]/95 border-[#2E4A6B]/50 shadow-slate-900/50"
+          ? "bg-navy-900/95 border-navy-700/50 shadow-slate-900/50"
           : "bg-white/95 border-slate-200/50 shadow-slate-200/50"
           }`}>
           {/* Premium Header */}
           <div className={`px-4 py-3 border-b ${theme === "dark"
-            ? "bg-gradient-to-r from-[#1A2E4A]/60 to-slate-700/60 border-[#2E4A6B]/50"
+            ? "bg-gradient-to-r from-navy-800/60 to-slate-700/60 border-navy-700/50"
             : "bg-gradient-to-r from-slate-50/80 to-gray-50/80 border-slate-200/50"
             }`}>
             <div className="flex items-center space-x-2">
-              <FaGlobe className="text-[#2356A0] text-sm" />
+              <FaGlobe className="text-navy-500 text-sm" />
               <span className={`text-sm font-semibold ${theme === "dark" ? "text-slate-200" : "text-slate-700"
                 }`}>
                 Choose Language
@@ -1663,10 +1663,10 @@ const CustomLanguageDropdown = ({ selectedLanguage, onLanguageChange, theme }) =
                 onClick={() => handleLanguageSelect(language.code)}
                 className={`w-full px-4 py-3 text-left transition-all duration-200 flex items-center space-x-3 group ${selectedLanguage === language.code
                   ? theme === "dark"
-                    ? "bg-gradient-to-r from-[#2356A0]/50 to-[#1A2E4A]/50 text-white border-l-4 border-[#D97706]"
-                    : "bg-gradient-to-r from-[#2356A0]/80 to-[#1A2E4A]/80 text-[#2356A0] border-l-4 border-[#2356A0]"
+                    ? "bg-gradient-to-r from-navy-700/50 to-navy-700/50 text-white border-l-4 border-amber-400"
+                    : "bg-gradient-to-r from-navy-700/80 to-navy-700/80 text-navy-500 border-l-4 border-navy-500"
                   : theme === "dark"
-                    ? "text-slate-300 hover:bg-[#1A2E4A]/60 hover:text-white"
+                    ? "text-slate-300 hover:bg-navy-800/60 hover:text-white"
                     : "text-slate-700 hover:bg-slate-50/80 hover:text-slate-900"
                   }`}
               >
@@ -1680,7 +1680,7 @@ const CustomLanguageDropdown = ({ selectedLanguage, onLanguageChange, theme }) =
                     <span className="text-xs font-medium opacity-75">{language.code.toUpperCase()}</span>
                   </div>
                   <div className={`text-xs mt-0.5 ${selectedLanguage === language.code
-                    ? theme === "dark" ? "text-[#2356A0]" : "text-[#2356A0]"
+                    ? theme === "dark" ? "text-amber-200" : "text-navy-500"
                     : theme === "dark" ? "text-slate-400" : "text-slate-500"
                     }`}>
                     {language.nativeName}
@@ -1689,7 +1689,7 @@ const CustomLanguageDropdown = ({ selectedLanguage, onLanguageChange, theme }) =
 
                 {/* Selection Indicator */}
                 {selectedLanguage === language.code && (
-                  <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[#2356A0] text-white">
+                  <div className="flex items-center justify-center w-6 h-6 rounded-full bg-navy-600 text-white">
                     <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
@@ -1701,7 +1701,7 @@ const CustomLanguageDropdown = ({ selectedLanguage, onLanguageChange, theme }) =
 
           {/* Premium Footer */}
           <div className={`px-4 py-2 border-t text-center ${theme === "dark"
-            ? "bg-[#1A2E4A]/40 border-[#2E4A6B]/50"
+            ? "bg-navy-800/40 border-navy-700/50"
             : "bg-slate-50/60 border-slate-200/50"
             }`}>
             <span className={`text-xs ${theme === "dark" ? "text-slate-400" : "text-slate-500"
@@ -1722,8 +1722,8 @@ const Logo = ({ onClick, theme }) => (
   <div className="flex items-center cursor-pointer group transform-gpu will-change-transform" onClick={onClick}>
     <div className="relative mr-5">
       <div className={`absolute -inset-3 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-700 ${theme === "dark"
-        ? "bg-gradient-to-r from-[#2356A0]/30 via-[#2356A0]/20 to-[#166534]/30"
-        : "bg-gradient-to-r from-[#2356A0]/20 via-[#2356A0]/15 to-[#166534]/20"
+        ? "bg-gradient-to-r from-navy-700/30 via-navy-600/20 to-success/30"
+        : "bg-gradient-to-r from-navy-600/20 via-navy-600/15 to-success/20"
         } blur-2xl animate-pulse`} />
       <span className="relative text-5xl font-bold transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-700 filter drop-shadow-2xl min-w-[56px] flex items-center justify-center">
         🌄
@@ -1733,11 +1733,11 @@ const Logo = ({ onClick, theme }) => (
     <div className="hidden md:flex flex-col min-w-0">
       <div className="flex items-baseline">
         <span className={`text-3xl font-black tracking-tight bg-gradient-to-r ${theme === "dark"
-          ? "from-[#2356A0] via-[#15803D] to-[#1A2E4A]"
-          : "from-[#2356A0] via-[#15803D] to-[#1A2E4A]"
+          ? "from-navy-700 via-success to-navy-700"
+          : "from-navy-700 via-success to-navy-700"
           } text-transparent bg-clip-text font-sans whitespace-nowrap group-hover:bg-gradient-to-r ${theme === "dark"
-            ? "group-hover:from-[#2356A0] group-hover:via-[#15803D] group-hover:to-[#1A2E4A]"
-            : "group-hover:from-[#2356A0] group-hover:via-[#15803D] group-hover:to-[#1A2E4A]"
+            ? "group-hover:from-navy-700 group-hover:via-success group-hover:to-navy-700"
+            : "group-hover:from-navy-700 group-hover:via-success group-hover:to-navy-700"
           } transition-all duration-500`}>
           Roamio
         </span>
@@ -1747,8 +1747,8 @@ const Logo = ({ onClick, theme }) => (
         </span>
       </div>
       <div className={`h-1 w-0 group-hover:w-full transition-all duration-700 ${theme === "dark"
-        ? "bg-gradient-to-r from-[#2356A0] via-[#15803D] to-[#1A2E4A]"
-        : "bg-gradient-to-r from-[#2356A0] via-[#15803D] to-[#1A2E4A]"
+        ? "bg-gradient-to-r from-amber-400 via-success to-navy-700"
+        : "bg-gradient-to-r from-navy-700 via-success to-navy-700"
         } rounded-full shadow-lg`} />
     </div>
   </div>
@@ -1777,7 +1777,7 @@ const DesktopNavigation = ({
     <div className={`
       flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-xl
       ${theme === 'dark'
-        ? 'bg-[#1A2E4A]/40 border-[#2E4A6B]/40 hover:bg-[#1E3A5F]/50'
+        ? 'bg-navy-800/40 border-navy-700/40 hover:bg-navy-700/50'
         : 'bg-white/40 border-slate-200/40 hover:bg-white/60'
       }
       transition-all duration-300 hover:shadow-lg hover:scale-[1.02] transform-gpu
@@ -1797,7 +1797,7 @@ const DesktopNavigation = ({
     <div className={`
       flex items-center gap-3 px-4 py-2 rounded-2xl border backdrop-blur-xl
       ${theme === 'dark'
-        ? 'bg-[#1A2E4A]/40 border-[#2E4A6B]/40'
+        ? 'bg-navy-800/40 border-navy-700/40'
         : 'bg-white/40 border-slate-200/40'
       }
       transition-all duration-300 hover:shadow-lg hover:scale-[1.02] transform-gpu
@@ -1841,8 +1841,8 @@ const NavigationItems = ({
         <div className={`
           absolute inset-0 w-px
           ${theme === 'dark'
-            ? 'bg-gradient-to-b from-transparent via-[#2356A0]/30 to-transparent'
-            : 'bg-gradient-to-b from-transparent via-[#2356A0]/30 to-transparent'
+            ? 'bg-gradient-to-b from-transparent via-navy-700/30 to-transparent'
+            : 'bg-gradient-to-b from-transparent via-navy-600/30 to-transparent'
           }
         `}></div>
       </div>
@@ -1861,11 +1861,11 @@ const NavigationItems = ({
           group relative px-4 py-2.5 rounded-xl font-medium transition-all duration-300 
           border backdrop-blur-xl transform-gpu will-change-transform overflow-hidden
           ${theme === 'dark'
-            ? 'border-teal-700/40 hover:border-[#2356A0]/70 text-[#2356A0] hover:text-white hover:bg-gradient-to-r hover:from-[#2356A0]/50 hover:to-[#1A2E4A]/50'
-            : 'border-teal-200/40 hover:border-[#D97706]/70 text-[#2356A0] hover:text-[#D97706] hover:bg-gradient-to-r hover:from-[#2356A0]/50 hover:to-[#1A2E4A]/50'
+            ? 'border-navy-500/40 hover:border-navy-600/70 text-navy-500 hover:text-white hover:bg-gradient-to-r hover:from-navy-700/50 hover:to-navy-700/50'
+            : 'border-navy-500/40 hover:border-navy-500/70 text-navy-500 hover:text-navy-500 hover:bg-gradient-to-r hover:from-navy-700/50 hover:to-navy-700/50'
           }
           hover:shadow-xl hover:scale-105 btn-professional
-          ${showCalendar ? 'ring-2 ring-[#2356A0]/50 bg-[#2356A0]/10' : ''}
+          ${showCalendar ? 'ring-2 ring-navy-500/50 bg-navy-600/10' : ''}
         `}
         aria-expanded={showCalendar}
         aria-haspopup="dialog"
@@ -1876,8 +1876,8 @@ const NavigationItems = ({
           <div className={`
             p-1.5 rounded-lg transition-all duration-300
             ${theme === 'dark'
-              ? 'bg-[#E8EFF8] group-hover:bg-[#A93226]/50'
-              : 'bg-[#E8EFF8] group-hover:bg-[#E8EFF8]'
+              ? 'bg-navy-100/30 group-hover:bg-crimson-600/50'
+              : 'bg-navy-100/50 group-hover:bg-navy-100/70'
             }
           `}>
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -1891,8 +1891,8 @@ const NavigationItems = ({
         <div className={`
           absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
           bg-gradient-to-r ${theme === 'dark'
-            ? 'from-[#2356A0]/10 to-[#1A2E4A]/10'
-            : 'from-[#2356A0]/5 to-[#1A2E4A]/5'
+            ? 'from-navy-700/10 to-navy-700/10'
+            : 'from-navy-600/5 to-navy-700/5'
           }
         `}></div>
       </button>
@@ -1905,7 +1905,7 @@ const NavigationItems = ({
           group relative px-4 py-2.5 rounded-xl font-medium transition-all duration-300 
           border backdrop-blur-xl transform-gpu will-change-transform overflow-hidden
           ${theme === 'dark'
-            ? 'border-[#2E4A6B]/40 hover:border-slate-600/70 text-slate-200 hover:text-white hover:bg-gradient-to-r hover:from-[#1A2E4A]/50 hover:to-slate-700/50'
+            ? 'border-navy-700/40 hover:border-slate-600/70 text-slate-200 hover:text-white hover:bg-gradient-to-r hover:from-navy-800/50 hover:to-slate-700/50'
             : 'border-slate-200/40 hover:border-slate-300/70 text-slate-700 hover:text-slate-900 hover:bg-gradient-to-r hover:from-slate-50/50 hover:to-slate-100/50'
           }
           hover:shadow-xl hover:scale-105 btn-professional
@@ -1916,7 +1916,7 @@ const NavigationItems = ({
           <div className={`
             p-1.5 rounded-lg transition-all duration-300
             ${theme === 'dark'
-              ? 'bg-[#1E3A5F]/30 group-hover:bg-slate-600/50'
+              ? 'bg-navy-700/30 group-hover:bg-slate-600/50'
               : 'bg-slate-100/50 group-hover:bg-slate-200/70'
             }
           `}>
@@ -1957,7 +1957,7 @@ const MobileNavigationItems = ({
       label: "Search",
       action: () => setShowSearchModal(true),
       description: "Find destinations",
-      color: "bg-[#16a34a]"
+      color: "bg-success"
     },
     {
       icon: FaCompass,
@@ -1995,7 +1995,7 @@ const MobileNavigationItems = ({
       label: "Weather",
       path: "/weather",
       description: "Current conditions",
-      color: "bg-[#E8EFF8]"
+      color: "bg-navy-100"
     },
     {
       icon: FaPlusCircle,
@@ -2059,7 +2059,7 @@ const MobileNavigationItems = ({
               className={`
                 w-full p-3 text-left rounded-xl transition-all duration-200 
                 ${theme === "dark"
-                  ? "hover:bg-[#1A2E4A]/50 text-slate-300 hover:text-white"
+                  ? "hover:bg-navy-800/50 text-slate-300 hover:text-white"
                   : "hover:bg-slate-100/70 text-slate-600 hover:text-slate-900"
                 } 
                 flex items-center space-x-3 group hover:scale-[1.01]
@@ -2109,14 +2109,14 @@ const MobileNavigationItems = ({
             className={`
               w-full p-3 text-left rounded-xl transition-all duration-200 
               ${theme === "dark"
-                ? "hover:bg-[#1A2E4A]/50 text-slate-300 hover:text-white"
+                ? "hover:bg-navy-800/50 text-slate-300 hover:text-white"
                 : "hover:bg-slate-100/70 text-slate-600 hover:text-slate-900"
               } 
               flex items-center space-x-3 group hover:scale-[1.01]
             `}
           >
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#2356A0]/20 group-hover:scale-105 transition-transform duration-200">
-              <svg className="w-4 h-4 text-[#2356A0]" fill="currentColor" viewBox="0 0 20 20">
+            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-navy-600/20 group-hover:scale-105 transition-transform duration-200">
+              <svg className="w-4 h-4 text-navy-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
               </svg>
             </div>
@@ -2156,10 +2156,10 @@ const AuthenticationButtons = ({ clerkAvailable, onNavigation, theme }) => {
           className={`
             group relative px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 
             transform-gpu will-change-transform overflow-hidden btn-professional
-            bg-gradient-to-r from-[#2356A0] via-[#15803D] to-[#1A2E4A] 
-            hover:from-[#2356A0] hover:via-[#15803D] hover:to-[#1A2E4A]
+            bg-gradient-to-r from-navy-700 via-success to-navy-700 
+            hover:from-navy-700 hover:via-success hover:to-navy-700
             text-white shadow-lg hover:shadow-xl hover:scale-105
-            border border-[#2356A0]/30 backdrop-blur-sm
+            border border-navy-500/30 backdrop-blur-sm
             cursor-pointer z-10
           `}
         >
@@ -2176,7 +2176,7 @@ const AuthenticationButtons = ({ clerkAvailable, onNavigation, theme }) => {
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
 
           {/* Glow effect */}
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500 -z-10 pointer-events-none"></div>
+          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-navy-700 to-navy-700 opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500 -z-10 pointer-events-none"></div>
         </button>
       </SignedOut>
 
@@ -2186,8 +2186,8 @@ const AuthenticationButtons = ({ clerkAvailable, onNavigation, theme }) => {
           flex items-center p-2 rounded-xl border backdrop-blur-xl transition-all duration-300
           hover:shadow-lg hover:scale-105 transform-gpu
           ${theme === 'dark'
-            ? 'border-teal-700/50 bg-[#E8EFF8] hover:bg-[#E8EFF8]'
-            : 'border-teal-200/50 bg-[#E8EFF8] hover:bg-[#E8EFF8]'
+            ? 'border-navy-500/50 bg-navy-100/30 hover:bg-crimson-700/40'
+            : 'border-navy-500/50 bg-navy-50/30 hover:bg-navy-100/40'
           }
           relative
         `}
@@ -2198,8 +2198,8 @@ const AuthenticationButtons = ({ clerkAvailable, onNavigation, theme }) => {
             appearance={{
               elements: {
                 avatarBox: "w-8 h-8 rounded-lg",
-                userButtonPopoverCard: "shadow-2xl border-0 bg-white/95 dark:bg-[#1A2E4A]/95 backdrop-blur-xl !fixed !top-16 !right-4 z-[9999]",
-                userButtonPopoverActionButton: "hover:bg-[#E8EFF8] dark:hover:bg-[#E8EFF8] cursor-pointer",
+                userButtonPopoverCard: "shadow-2xl border-0 bg-white/95 dark:bg-navy-800/95 backdrop-blur-xl !fixed !top-16 !right-4 z-[9999]",
+                userButtonPopoverActionButton: "hover:bg-navy-50 dark:hover:bg-navy-900/50 cursor-pointer",
                 userButtonPopoverActionButtonText: "text-slate-700 dark:text-slate-200",
                 userButtonPopoverActionButtonIcon: "text-slate-600 dark:text-slate-300",
                 userButtonPopoverFooter: "hidden"
@@ -2426,7 +2426,7 @@ const CalendarModals = ({
                 <div className="flex items-center space-x-3">
                   {/* Ultra-compact icon container */}
                   <div className="relative group">
-                    <div className="w-8 h-8 bg-gradient-to-br from-slate-600 via-slate-700 to-[#0F1B2D] rounded-xl flex items-center justify-center shadow-lg ring-1 ring-slate-900/20 transform transition-transform duration-300 group-hover:scale-105">
+                    <div className="w-8 h-8 bg-gradient-to-br from-slate-600 via-slate-700 to-navy-900 rounded-xl flex items-center justify-center shadow-lg ring-1 ring-slate-900/20 transform transition-transform duration-300 group-hover:scale-105">
                       <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                       </svg>
@@ -2447,7 +2447,7 @@ const CalendarModals = ({
                   {/* Ultra-compact status indicators */}
                   <div className="flex items-center space-x-1.5">
                     <div className="flex items-center space-x-1 px-2 py-0.5 bg-slate-100/60 rounded">
-                      <div className="w-1.5 h-1.5 bg-[#16a34a] rounded-full animate-pulse"></div>
+                      <div className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></div>
                       <span className="text-xs font-medium text-slate-500">Live</span>
                     </div>
                     {/* Ultra-compact real-time clock */}
@@ -2531,7 +2531,7 @@ const CalendarModals = ({
                     disabled={isJumping}
                     className={`px-2 py-0.5 text-white text-xs font-medium rounded transition-colors duration-200 ${isJumping
                       ? 'bg-slate-400 cursor-not-allowed'
-                      : 'bg-slate-600 hover:bg-[#1E3A5F]'
+                      : 'bg-slate-600 hover:bg-navy-700'
                       }`}
                     aria-label="Jump to selected date"
                   >
@@ -2658,16 +2658,16 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center justify-center w-11 h-11 rounded-xl font-semibold text-sm transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${theme === "dark"
-          ? "border-[#2E4A6B]/40 hover:border-[#2356A0]/60 hover:bg-gradient-to-br hover:from-[#1A2E4A]/60 hover:to-slate-700/60 hover:shadow-xl hover:shadow-teal-900/20 hover:scale-105 text-slate-200 hover:text-white"
-          : "border-slate-200/40 hover:border-[#2356A0]/60 hover:bg-gradient-to-br hover:from-white/60 hover:to-slate-50/60 hover:shadow-xl hover:shadow-teal-500/20 hover:scale-105 text-slate-700 hover:text-slate-900"
-          } ${isOpen ? 'border-[#2356A0]/60 bg-[#2356A0]/10' : ''}`}
+          ? "border-navy-700/40 hover:border-navy-600/60 hover:bg-gradient-to-br hover:from-navy-800/60 hover:to-slate-700/60 hover:shadow-xl hover:shadow-teal-900/20 hover:scale-105 text-slate-200 hover:text-white"
+          : "border-slate-200/40 hover:border-navy-500/60 hover:bg-gradient-to-br hover:from-white/60 hover:to-slate-50/60 hover:shadow-xl hover:shadow-teal-500/20 hover:scale-105 text-slate-700 hover:text-slate-900"
+          } ${isOpen ? 'border-navy-500/60 bg-navy-600/10' : ''}`}
         title="Navigation Menu"
       >
-        <FaBars className={`text-lg transition-all duration-300 ${isOpen ? 'text-[#2356A0] rotate-90' : ''}`} />
+        <FaBars className={`text-lg transition-all duration-300 ${isOpen ? 'text-navy-500 rotate-90' : ''}`} />
 
         {/* Active indicator */}
         {isOpen && (
-          <div className="absolute inset-0 bg-gradient-to-br from-[#2356A0]/10 to-[#1A2E4A]/10 rounded-xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-navy-600/10 to-navy-700/10 rounded-xl"></div>
         )}
       </button>
 
@@ -2675,7 +2675,7 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
       {isOpen && (
         <div
           className={`fixed left-4 top-32 w-80 rounded-2xl backdrop-blur-2xl border shadow-2xl z-[60] overflow-hidden ${theme === "dark"
-            ? "bg-[#0F1B2D]/98 border-[#2E4A6B]/50 shadow-slate-900/60"
+            ? "bg-navy-900/98 border-navy-700/50 shadow-slate-900/60"
             : "bg-white/98 border-slate-200/50 shadow-slate-900/20"
             }`}
           style={{ maxHeight: "calc(100vh - 140px)" }}
@@ -2683,15 +2683,15 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
 
           {/* Header Section */}
           <div className={`px-5 py-4 border-b ${theme === "dark"
-            ? "bg-gradient-to-br from-[#1A2E4A]/60 to-slate-800/40 border-[#2E4A6B]/50"
+            ? "bg-gradient-to-br from-navy-800/60 to-slate-800/40 border-navy-700/50"
             : "bg-gradient-to-br from-slate-50/80 to-white/80 border-slate-200/50"
             }`}>
             <div className="flex items-center gap-3 mb-1">
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${theme === 'dark'
-                ? 'bg-gradient-to-br from-[#2356A0]/30 to-[#1A2E4A]/20'
-                : 'bg-gradient-to-br from-[#2356A0]/20 to-[#1A2E4A]/15'
+                ? 'bg-gradient-to-br from-navy-700/30 to-navy-700/20'
+                : 'bg-gradient-to-br from-navy-600/20 to-navy-700/15'
                 }`}>
-                <FaBars className="text-lg text-[#2356A0] dark:text-[#D97706]" />
+                <FaBars className="text-lg text-navy-600 dark:text-amber-400" />
               </div>
               <div>
                 <h3 className={`text-base font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-slate-900'
@@ -2710,7 +2710,7 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
           <div className="overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 dark:scrollbar-thumb-slate-400 scrollbar-track-transparent" style={{ maxHeight: "calc(100vh - 240px)" }}>
 
             {/* Location & Language Section */}
-            <div className={`px-5 py-4 border-b ${theme === "dark" ? "border-[#2E4A6B]/50 bg-[#1A2E4A]/20" : "border-slate-200/50 bg-slate-50/30"
+            <div className={`px-5 py-4 border-b ${theme === "dark" ? "border-navy-700/50 bg-navy-800/20" : "border-slate-200/50 bg-slate-50/30"
               }`}>
 
               {/* Location Card */}
@@ -2719,8 +2719,8 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
                 flex items-center gap-3 px-4 py-3 rounded-xl border mb-3
                 cursor-pointer transition-all duration-300 group
                 ${theme === 'dark'
-                    ? 'bg-gradient-to-br from-[#1A2E4A]/60 to-slate-800/40 border-[#2E4A6B]/50 hover:border-[#2356A0]/50 hover:shadow-lg hover:shadow-teal-900/20'
-                    : 'bg-gradient-to-br from-white/80 to-slate-50/60 border-slate-200/50 hover:border-[#2356A0]/50 hover:shadow-lg hover:shadow-teal-500/20'
+                    ? 'bg-gradient-to-br from-navy-800/60 to-slate-800/40 border-navy-700/50 hover:border-navy-600/50 hover:shadow-lg hover:shadow-teal-900/20'
+                    : 'bg-gradient-to-br from-white/80 to-slate-50/60 border-slate-200/50 hover:border-navy-500/50 hover:shadow-lg hover:shadow-teal-500/20'
                   }
                 hover:scale-[1.02] transform-gpu
               `}
@@ -2735,11 +2735,11 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
                 <div className={`
                 w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner
                 ${theme === 'dark'
-                    ? 'bg-gradient-to-br from-[#2356A0]/30 to-[#1A2E4A]/20'
-                    : 'bg-gradient-to-br from-[#2356A0]/20 to-[#1A2E4A]/15'
+                    ? 'bg-gradient-to-br from-navy-700/30 to-navy-700/20'
+                    : 'bg-gradient-to-br from-navy-600/20 to-navy-700/15'
                   }
               `}>
-                  <FaMapMarkerAlt className="text-base text-[#2356A0] dark:text-[#D97706]" />
+                  <FaMapMarkerAlt className="text-base text-navy-600 dark:text-amber-400" />
                 </div>
 
                 {/* Text */}
@@ -2756,9 +2756,9 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
 
                 {/* Refresh Icon */}
                 <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${theme === 'dark' ? 'bg-[#1E3A5F]/50' : 'bg-slate-100/50'
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-slate-100/50'
                     }`}>
-                    <svg className="w-4 h-4 text-slate-400 group-hover:text-[#2356A0] transition-all duration-300 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-slate-400 group-hover:text-navy-500 transition-all duration-300 group-hover:rotate-180 transform-gpu" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
                     </svg>
                   </div>
@@ -2769,21 +2769,21 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
               <div className={`
               rounded-xl border overflow-hidden
               ${theme === 'dark'
-                  ? 'bg-gradient-to-br from-[#1A2E4A]/60 to-slate-800/40 border-[#2E4A6B]/50'
+                  ? 'bg-gradient-to-br from-navy-800/60 to-slate-800/40 border-navy-700/50'
                   : 'bg-gradient-to-br from-white/80 to-slate-50/60 border-slate-200/50'
                 }
             `}>
                 {/* Header */}
-                <div className={`flex items-center gap-3 px-4 py-3 border-b ${theme === 'dark' ? 'border-[#2E4A6B]/50' : 'border-slate-200/50'
+                <div className={`flex items-center gap-3 px-4 py-3 border-b ${theme === 'dark' ? 'border-navy-700/50' : 'border-slate-200/50'
                   }`}>
                   <div className={`
                   w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-inner
                   ${theme === 'dark'
-                      ? 'bg-gradient-to-br from-[#2356A0]/30 to-blue-600/20'
-                      : 'bg-gradient-to-br from-[#2356A0]/20 to-blue-500/15'
+                      ? 'bg-gradient-to-br from-navy-600/30 to-blue-600/20'
+                      : 'bg-gradient-to-br from-navy-600/20 to-blue-500/15'
                     }
                 `}>
-                    <FaGlobe className="text-base text-[#2356A0] dark:text-[#2356A0]" />
+                    <FaGlobe className="text-base text-navy-400 dark:text-navy-400" />
                   </div>
                   <div className="flex-1">
                     <div className={`text-xs font-bold ${theme === 'dark' ? 'text-slate-300' : 'text-slate-700'
@@ -2819,10 +2819,10 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
                       flex items-center justify-center gap-2 border
                       ${selectedLanguage === lang.code
                           ? theme === 'dark'
-                            ? 'bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] text-white shadow-lg border-[#2356A0]/50'
-                            : 'bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] text-white shadow-lg border-[#D97706]/50'
+                            ? 'bg-gradient-to-br from-navy-700 to-navy-700 text-white shadow-lg border-navy-500/50'
+                            : 'bg-gradient-to-br from-navy-600 to-navy-700 text-white shadow-lg border-amber-400/50'
                           : theme === 'dark'
-                            ? 'bg-[#1E3A5F]/40 text-slate-300 hover:bg-[#1E3A5F]/60 border-slate-600/40 hover:border-slate-500/60'
+                            ? 'bg-navy-700/40 text-slate-300 hover:bg-navy-700/60 border-slate-600/40 hover:border-slate-500/60'
                             : 'bg-slate-50/40 text-slate-600 hover:bg-slate-100/60 border-slate-200/40 hover:border-slate-300/60'
                         }
                       hover:scale-105 transform-gpu
@@ -2845,17 +2845,17 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
                     <div className={`
                     w-8 h-8 rounded-lg flex items-center justify-center
                     ${category.color === 'teal'
-                        ? theme === 'dark' ? 'bg-[#C0392B]/20' : 'bg-[#2356A0]/15'
+                        ? theme === 'dark' ? 'bg-crimson-500/20' : 'bg-navy-600/15'
                         : category.color === 'purple'
                           ? theme === 'dark' ? 'bg-purple-600/20' : 'bg-purple-500/15'
-                          : theme === 'dark' ? 'bg-[#E8EFF8]/20' : 'bg-[#E8EFF8]/15'
+                          : theme === 'dark' ? 'bg-navy-100/20' : 'bg-navy-100/15'
                       }
                   `}>
                       <category.icon className={`text-sm ${category.color === 'teal'
-                        ? 'text-[#2356A0] dark:text-[#D97706]'
+                        ? 'text-navy-600 dark:text-amber-400'
                         : category.color === 'purple'
                           ? 'text-purple-600 dark:text-purple-400'
-                          : 'text-[#2356A0] dark:text-[#2356A0]'
+                          : 'text-navy-400 dark:text-navy-400'
                         }`} />
                     </div>
                     <div className={`text-xs font-black uppercase tracking-wider ${theme === "dark" ? "text-slate-300" : "text-slate-700"
@@ -2871,13 +2871,13 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
                         key={item.path || item.name}
                         onClick={() => handleMenuClick(item)}
                         className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 text-left group border ${theme === "dark"
-                          ? "hover:bg-[#1A2E4A]/60 text-slate-200 hover:text-white border-transparent hover:border-[#2E4A6B]/50 hover:shadow-lg"
+                          ? "hover:bg-navy-800/60 text-slate-200 hover:text-white border-transparent hover:border-navy-700/50 hover:shadow-lg"
                           : "hover:bg-slate-50/60 text-slate-700 hover:text-slate-900 border-transparent hover:border-slate-200/50 hover:shadow-md"
                           }`}
                       >
                         <div className={`
                         w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-xl
-                        ${theme === 'dark' ? 'bg-[#1A2E4A]/60 group-hover:bg-[#1E3A5F]/60' : 'bg-slate-100/60 group-hover:bg-slate-200/60'}
+                        ${theme === 'dark' ? 'bg-navy-800/60 group-hover:bg-navy-700/60' : 'bg-slate-100/60 group-hover:bg-slate-200/60'}
                         transition-all duration-200
                       `}>
                           {item.icon}
@@ -2890,7 +2890,7 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
                           </div>
                         </div>
                         <svg
-                          className={`w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 flex-shrink-0 ${theme === "dark" ? "text-[#D97706]" : "text-[#2356A0]"
+                          className={`w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200 flex-shrink-0 ${theme === "dark" ? "text-amber-400" : "text-navy-600"
                             }`}
                           fill="none"
                           stroke="currentColor"
@@ -2908,7 +2908,7 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
 
           {/* Footer */}
           <div className={`px-5 py-3 border-t text-center ${theme === "dark"
-            ? "bg-[#1A2E4A]/40 border-[#2E4A6B]/50"
+            ? "bg-navy-800/40 border-navy-700/50"
             : "bg-slate-50/60 border-slate-200/50"
             }`}>
             <p className={`text-xs font-medium ${theme === "dark" ? "text-slate-400" : "text-slate-500"
@@ -2957,7 +2957,7 @@ const FeaturesBox = ({ theme, onNavigation }) => {
     {
       title: "Core Features",
       icon: "🎯",
-      color: "from-[#2356A0] to-[#1A2E4A]",
+      color: "from-navy-600 to-navy-700",
       features: [
         { name: "Add Place", path: "/add-place", icon: "➕", description: "Share your discovery" },
         { name: "My Wishlist", path: "/wishlist", icon: "❤️", description: "Saved places" }
@@ -2971,18 +2971,18 @@ const FeaturesBox = ({ theme, onNavigation }) => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`flex items-center space-x-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 border backdrop-blur-xl transform-gpu will-change-transform relative overflow-hidden group ${theme === "dark"
-          ? "border-teal-700/40 hover:border-[#2356A0]/70 hover:bg-gradient-to-r hover:from-[#2356A0]/50 hover:to-[#1A2E4A]/50 hover:shadow-xl hover:shadow-teal-900/30 hover:scale-105 text-[#2356A0] hover:text-white"
-          : "border-teal-200/40 hover:border-[#D97706]/70 hover:bg-gradient-to-r hover:from-[#2356A0]/50 hover:to-[#1A2E4A]/50 hover:shadow-xl hover:shadow-teal-200/30 hover:scale-105 text-[#2356A0] hover:text-[#D97706]"
+          ? "border-navy-500/40 hover:border-navy-600/70 hover:bg-gradient-to-r hover:from-navy-700/50 hover:to-navy-700/50 hover:shadow-xl hover:shadow-teal-900/30 hover:scale-105 text-navy-500 hover:text-white"
+          : "border-navy-500/40 hover:border-navy-500/70 hover:bg-gradient-to-r hover:from-navy-700/50 hover:to-navy-700/50 hover:shadow-xl hover:shadow-teal-200/30 hover:scale-105 text-navy-500 hover:text-navy-500"
           } before:absolute before:inset-0 before:bg-gradient-to-r ${theme === "dark"
-            ? "before:from-[#2356A0]/10 before:to-[#1A2E4A]/10"
-            : "before:from-[#2356A0]/5 before:to-[#1A2E4A]/5"
+            ? "before:from-navy-700/10 before:to-navy-700/10"
+            : "before:from-navy-600/5 before:to-navy-700/5"
           } before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300`}
         title="Explore All Features"
       >
         <span className="text-lg">🌟</span>
         <span>Features</span>
         <svg
-          className={`w-4 h-4 transition-all duration-300 ${isOpen ? 'rotate-180 text-[#2356A0]' : 'text-slate-500 hover:text-[#2356A0]'
+          className={`w-4 h-4 transition-all duration-300 ${isOpen ? 'rotate-180 text-navy-500' : 'text-slate-500 hover:text-navy-500'
             }`}
           fill="none"
           stroke="currentColor"
@@ -2995,17 +2995,17 @@ const FeaturesBox = ({ theme, onNavigation }) => {
       {/* Ultra-Professional Features Dropdown */}
       {isOpen && (
         <div className={`absolute top-full right-0 mt-2 w-[400px] max-w-[90vw] rounded-2xl backdrop-blur-2xl border shadow-2xl z-50 overflow-hidden ${theme === "dark"
-          ? "bg-[#0F1B2D]/95 border-[#2E4A6B]/50 shadow-slate-900/50"
+          ? "bg-navy-900/95 border-navy-700/50 shadow-slate-900/50"
           : "bg-white/95 border-slate-200/50 shadow-slate-200/50"
           }`}>
           {/* Premium Header */}
           <div className={`px-6 py-4 border-b ${theme === "dark"
-            ? "bg-gradient-to-r from-[#1A2E4A]/60 to-slate-700/60 border-[#2E4A6B]/50"
+            ? "bg-gradient-to-r from-navy-800/60 to-slate-700/60 border-navy-700/50"
             : "bg-gradient-to-r from-slate-50/80 to-gray-50/80 border-slate-200/50"
             }`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="p-2 bg-gradient-to-br from-[#2356A0]/20 to-[#1A2E4A]/20 rounded-xl">
+                <div className="p-2 bg-gradient-to-br from-navy-600/20 to-navy-700/20 rounded-xl">
                   <span className="text-2xl">🌟</span>
                 </div>
                 <div>
@@ -3020,8 +3020,8 @@ const FeaturesBox = ({ theme, onNavigation }) => {
                 </div>
               </div>
               <div className={`px-3 py-1 rounded-full text-xs font-semibold ${theme === "dark"
-                ? "bg-[#E8EFF8] text-[#F59E0B] border border-teal-700/50"
-                : "bg-[#E8EFF8] text-[#2356A0] border border-teal-200/50"
+                ? "bg-navy-900/50 text-amber-300 border border-navy-500/50"
+                : "bg-navy-50/80 text-navy-500 border border-navy-500/50"
                 }`}>
                 {featureCategories.reduce((total, category) => total + category.features.length, 0)} Features
               </div>
@@ -3052,7 +3052,7 @@ const FeaturesBox = ({ theme, onNavigation }) => {
                       key={featureIndex}
                       onClick={() => handleFeatureClick(feature)}
                       className={`w-full p-4 text-left rounded-xl transition-all duration-200 flex items-center space-x-4 group hover:scale-[1.02] ${theme === "dark"
-                        ? "hover:bg-[#1A2E4A]/50 text-slate-300 hover:text-white border border-[#2E4A6B]/30 hover:border-slate-600/50"
+                        ? "hover:bg-navy-800/50 text-slate-300 hover:text-white border border-navy-700/30 hover:border-slate-600/50"
                         : "hover:bg-slate-50/70 text-slate-600 hover:text-slate-900 border border-slate-200/30 hover:border-slate-300/50"
                         }`}
                     >
@@ -3074,7 +3074,7 @@ const FeaturesBox = ({ theme, onNavigation }) => {
 
                       {/* Arrow Icon */}
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                        <svg className="w-5 h-5 text-[#2356A0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5 text-navy-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
@@ -3087,12 +3087,12 @@ const FeaturesBox = ({ theme, onNavigation }) => {
 
           {/* Premium Footer */}
           <div className={`px-6 py-4 border-t text-center ${theme === "dark"
-            ? "bg-[#1A2E4A]/40 border-[#2E4A6B]/50"
+            ? "bg-navy-800/40 border-navy-700/50"
             : "bg-slate-50/60 border-slate-200/50"
             }`}>
             <div className="flex items-center justify-center space-x-4 text-sm">
               <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-[#16a34a] rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
                 <span className={theme === "dark" ? "text-slate-400" : "text-slate-500"}>
                   Core features active
                 </span>

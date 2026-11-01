@@ -53,7 +53,7 @@ export const Header = () => {
       flex items-center justify-between gap-4
       border-b backdrop-blur-xl transition-colors duration-300
       ${theme === 'dark'
-                ? 'bg-[#0F1B2D]/95 border-[#2E4A6B]'
+                ? 'bg-navy-900/95 border-navy-800'
                 : 'bg-white/95 border-slate-200'
             }
     `}>
@@ -81,9 +81,10 @@ export const Header = () => {
                     onLanguageChange={handleLanguageChange}
                     currentLocation={currentLocation}
                     isLocationLoading={isLocationLoading}
-                    onLocationRefresh={refreshLocation}
+                    onLocationRefresh={refreshLocation}s
                 />
-            )}
+            )
+            }
 
             {/* RIGHT ── Auth */}
             <AuthSection

@@ -25,10 +25,10 @@ const AuthenticationButtons = ({ onNavigation, theme }) => {
                     className={`
             group relative px-6 py-2.5 rounded-xl font-semibold transition-all duration-300
             transform-gpu will-change-transform overflow-hidden btn-professional
-            bg-linear-to-r from-[#2356A0] via-[#15803D] to-[#1A2E4A]
-            hover:from-[#2356A0] hover:via-[#15803D] hover:to-[#1A2E4A]
+            bg-linear-to-r from-navy-700 via-success to-navy-700
+            hover:from-navy-700 hover:via-success hover:to-navy-700
             text-white shadow-lg hover:shadow-xl hover:scale-105
-            border border-[#2356A0]/30 backdrop-blur-sm cursor-pointer z-10
+            border border-navy-500/30 backdrop-blur-sm cursor-pointer z-10
           `}
                 >
                     <span className="relative z-10 flex items-center gap-2.5 pointer-events-none">
@@ -50,8 +50,8 @@ const AuthenticationButtons = ({ onNavigation, theme }) => {
             flex items-center p-2 rounded-xl border backdrop-blur-xl transition-all duration-300
             hover:shadow-lg hover:scale-105 transform-gpu
             ${theme === 'dark'
-                            ? 'border-teal-700/50 bg-[#E8EFF8] hover:bg-[#E8EFF8]'
-                            : 'border-teal-200/50 bg-[#E8EFF8] hover:bg-[#E8EFF8]'
+                            ? 'border-navy-500/50 bg-navy-100/30 hover:bg-crimson-700/40'
+                            : 'border-navy-500/50 bg-navy-50/30 hover:bg-navy-100/40'
                         }
           `}
                     style={{ zIndex: 9999 }}
@@ -61,8 +61,8 @@ const AuthenticationButtons = ({ onNavigation, theme }) => {
                         appearance={{
                             elements: {
                                 avatarBox: 'w-8 h-8 rounded-lg',
-                                userButtonPopoverCard: 'shadow-2xl border-0 bg-white/95 dark:bg-[#1A2E4A]/95 backdrop-blur-xl !fixed !top-16 !right-4 z-[9999]',
-                                userButtonPopoverActionButton: 'hover:bg-[#E8EFF8] dark:hover:bg-[#E8EFF8] cursor-pointer',
+                                userButtonPopoverCard: 'shadow-2xl border-0 bg-white/95 dark:bg-navy-800/95 backdrop-blur-xl !fixed !top-16 !right-4 z-[9999]',
+                                userButtonPopoverActionButton: 'hover:bg-navy-50 dark:hover:bg-navy-900/50 cursor-pointer',
                                 userButtonPopoverActionButtonText: 'text-slate-700 dark:text-slate-200',
                                 userButtonPopoverActionButtonIcon: 'text-slate-600 dark:text-slate-300',
                                 userButtonPopoverFooter: 'hidden',

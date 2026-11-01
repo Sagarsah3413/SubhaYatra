@@ -119,7 +119,7 @@ const CalendarModal = ({ showCalendar, mobileAnimating, calendarRef, onClose }) 
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center space-x-3">
                                     <div className="relative group">
-                                        <div className="w-8 h-8 bg-linear-to-br from-slate-600 via-slate-700 to-[#0F1B2D] rounded-xl flex items-center justify-center shadow-lg ring-1 ring-slate-900/20">
+                                        <div className="w-8 h-8 bg-linear-to-br from-slate-600 via-slate-700 to-navy-900 rounded-xl flex items-center justify-center shadow-lg ring-1 ring-slate-900/20">
                                             <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                                             </svg>
@@ -136,7 +136,7 @@ const CalendarModal = ({ showCalendar, mobileAnimating, calendarRef, onClose }) 
                                 <div className="flex items-center space-x-2">
                                     <div className="flex items-center space-x-1.5">
                                         <div className="flex items-center space-x-1 px-2 py-0.5 bg-slate-100/60 rounded">
-                                            <div className="w-1.5 h-1.5 bg-[#16a34a] rounded-full animate-pulse" />
+                                            <div className="w-1.5 h-1.5 bg-success rounded-full animate-pulse" />
                                             <span className="text-xs font-medium text-slate-500">Live</span>
                                         </div>
                                         <div className="flex items-center space-x-1 px-2 py-0.5 bg-slate-100/60 rounded">
@@ -199,7 +199,7 @@ const CalendarModal = ({ showCalendar, mobileAnimating, calendarRef, onClose }) 
                                     <button
                                         onClick={handleQuickDateJump}
                                         disabled={isJumping}
-                                        className={`px-2 py-0.5 text-white text-xs font-medium rounded transition-colors duration-200 ${isJumping ? 'bg-slate-400 cursor-not-allowed' : 'bg-slate-600 hover:bg-[#1E3A5F]'
+                                        className={`px-2 py-0.5 text-white text-xs font-medium rounded transition-colors duration-200 ${isJumping ? 'bg-slate-400 cursor-not-allowed' : 'bg-slate-600 hover:bg-navy-700'
                                             }`}
                                         aria-label="Jump to selected date"
                                     >

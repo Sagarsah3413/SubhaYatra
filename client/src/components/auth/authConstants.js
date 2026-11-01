@@ -11,9 +11,9 @@ import {
 
 // Decorative blobs — fixed positions, no Math.random()
 export const ORBS = [
-    { w: 320, h: 320, top: '-80px', left: '-80px', color: 'from-[#2356A0]/20 to-[#1A2E4A]/10', delay: '0s', dur: '8s' },
-    { w: 240, h: 240, top: '60%', right: '-60px', color: 'from-[#15803D]/15 to-[#1A2E4A]/10', delay: '2s', dur: '10s' },
-    { w: 180, h: 180, bottom: '10%', left: '30%', color: 'from-[#2356A0]/10 to-blue-500/10', delay: '1.5s', dur: '12s' },
+    { w: 320, h: 320, top: '-80px', left: '-80px', color: 'from-navy-600/20 to-navy-700/10', delay: '0s', dur: '8s' },
+    { w: 240, h: 240, top: '60%', right: '-60px', color: 'from-success/15 to-navy-600/10', delay: '2s', dur: '10s' },
+    { w: 180, h: 180, bottom: '10%', left: '30%', color: 'from-navy-600/10 to-blue-500/10', delay: '1.5s', dur: '12s' },
 ];
 
 // Floating background icons — fixed positions, no Math.random()

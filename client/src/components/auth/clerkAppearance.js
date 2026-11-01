@@ -17,45 +17,45 @@ export const getClerkAppearance = (dark = false) => ({
         headerSubtitle: `${dark ? 'text-slate-400' : 'text-slate-500'} text-sm`,
 
         formButtonPrimary: [
-            'w-full bg-linear-to-r from-[#2356A0] to-[#1A2E4A]',
-            'hover:from-[#2356A0] hover:to-[#1A2E4A]',
+            'w-full bg-linear-to-r from-navy-700 to-navy-700',
+            'hover:from-navy-700 hover:to-navy-700',
             'text-white font-semibold py-3 px-6 rounded-xl',
             'shadow-lg hover:shadow-xl transition-all duration-200 border-0',
         ].join(' '),
 
         formFieldInput: [
             'w-full rounded-xl py-3 px-4 text-sm transition-all duration-200',
-            'border focus:outline-none focus:ring-2 focus:ring-[#2356A0]/50',
+            'border focus:outline-none focus:ring-2 focus:ring-navy-500/50',
             dark
-                ? 'bg-[#1A2E4A] border-[#2E4A6B] text-white placeholder-slate-500 focus:border-[#2356A0]'
-                : 'bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-[#D97706]',
+                ? 'bg-navy-800 border-navy-700 text-white placeholder-slate-500 focus:border-navy-500'
+                : 'bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-amber-400',
         ].join(' '),
 
         formFieldLabel: `${dark ? 'text-slate-300' : 'text-slate-700'} text-sm font-medium`,
 
-        dividerLine: dark ? 'bg-[#1E3A5F]' : 'bg-slate-200',
+        dividerLine: dark ? 'bg-navy-700' : 'bg-slate-200',
         dividerText: `${dark ? 'text-slate-500' : 'text-slate-400'} text-xs`,
 
         socialButtonsBlockButton: [
             'w-full rounded-xl py-3 px-4 border text-sm font-medium transition-all duration-200',
             dark
-                ? 'bg-[#1A2E4A] border-[#2E4A6B] text-white hover:bg-[#1E3A5F]'
+                ? 'bg-navy-800 border-navy-700 text-white hover:bg-navy-700'
                 : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50',
         ].join(' '),
 
-        footerActionLink: 'text-[#2356A0] hover:text-[#D97706] font-semibold transition-colors duration-200',
+        footerActionLink: 'text-navy-500 hover:text-amber-400 font-semibold transition-colors duration-200',
         identityPreviewText: dark ? 'text-slate-300' : 'text-slate-700',
-        identityPreviewEditButton: 'text-[#2356A0] hover:text-[#D97706]',
-        formResendCodeLink: 'text-[#2356A0] hover:text-[#D97706]',
+        identityPreviewEditButton: 'text-navy-500 hover:text-amber-400',
+        formResendCodeLink: 'text-navy-500 hover:text-amber-400',
 
         otpCodeFieldInput: [
-            'rounded-xl text-center border focus:ring-2 focus:ring-[#2356A0]/50',
+            'rounded-xl text-center border focus:ring-2 focus:ring-navy-500/50',
             dark
-                ? 'bg-[#1A2E4A] border-[#2E4A6B] text-white'
+                ? 'bg-navy-800 border-navy-700 text-white'
                 : 'bg-white border-slate-200 text-slate-900',
         ].join(' '),
 
-        formFieldSuccessText: 'text-[#15803D] text-xs',
+        formFieldSuccessText: 'text-success text-xs',
         formFieldErrorText: 'text-red-400 text-xs',
 
         alertClerkAPIResponseError: [

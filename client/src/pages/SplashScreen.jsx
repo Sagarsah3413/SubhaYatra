@@ -94,8 +94,8 @@ const SplashScreen = memo(({ onStart }) => {
           className={`
             absolute inset-0 opacity-30 transition-opacity duration-2000
             ${theme === 'dark'
-              ? 'bg-gradient-to-br from-[#2356A0]/20 via-[#15803D]/15 to-[#1A2E4A]/20'
-              : 'bg-gradient-to-br from-[#2356A0]/60 via-[#15803D]/40 to-[#1A2E4A]/60'
+              ? 'bg-gradient-to-br from-navy-700/20 via-success/15 to-navy-700/20'
+              : 'bg-gradient-to-br from-navy-700/60 via-success/40 to-navy-700/60'
             }
           `}
           style={{
@@ -111,7 +111,7 @@ const SplashScreen = memo(({ onStart }) => {
               key={i}
               className={`
                 absolute rounded-full opacity-10 animate-float
-                ${theme === 'dark' ? 'bg-[#E8EFF8]' : 'bg-[#C0392B]'}
+                ${theme === 'dark' ? 'bg-navy-500' : 'bg-crimson-500'}
               `}
               style={{
                 width: `${60 + i * 20}px`,
@@ -130,8 +130,8 @@ const SplashScreen = memo(({ onStart }) => {
           className={`
             absolute inset-0 opacity-20
             ${theme === 'dark'
-              ? 'bg-gradient-to-tr from-[#2356A0]/10 via-transparent to-[#166534]/10'
-              : 'bg-gradient-to-tr from-[#2356A0]/8 via-transparent to-[#166534]/8'
+              ? 'bg-gradient-to-tr from-navy-700/10 via-transparent to-success/10'
+              : 'bg-gradient-to-tr from-navy-600/8 via-transparent to-success/8'
             }
           `}
         />
@@ -153,26 +153,26 @@ const SplashScreen = memo(({ onStart }) => {
                 {/* Outer rotating ring */}
                 <div className={`
                   absolute inset-0 rounded-full border-2 opacity-30 animate-spin-slow
-                  ${theme === 'dark' ? 'border-[#D97706]' : 'border-[#2356A0]'}
+                  ${theme === 'dark' ? 'border-amber-400' : 'border-navy-600'}
                 `} style={{ animationDuration: '8s' }} />
                 
                 {/* Inner pulsing ring */}
                 <div className={`
                   absolute inset-2 rounded-full border opacity-60 animate-pulse
-                  ${theme === 'dark' ? 'border-[#15803D]' : 'border-[#15803D]'}
+                  ${theme === 'dark' ? 'border-success' : 'border-success'}
                 `} />
                 
                 {/* Logo container */}
                 <div className={`
                   absolute inset-3 rounded-full flex items-center justify-center backdrop-blur-xl border shadow-2xl
                   ${theme === 'dark' 
-                    ? 'bg-[#1A2E4A]/80 border-[#2E4A6B]/50' 
+                    ? 'bg-navy-800/80 border-navy-700/50' 
                     : 'bg-white/80 border-slate-200/50'
                   }
                 `}>
                   <div className={`
                     w-12 h-12 rounded-xl flex items-center justify-center font-black text-xl text-white shadow-xl
-                    bg-gradient-to-br from-[#2356A0] via-[#15803D] to-[#1A2E4A]
+                    bg-gradient-to-br from-navy-600 via-success to-navy-700
                     transform transition-transform duration-500 group-hover:scale-110
                   `}>
                     R
@@ -182,7 +182,7 @@ const SplashScreen = memo(({ onStart }) => {
                 {/* Glow effect */}
                 <div className={`
                   absolute inset-0 rounded-full blur-2xl opacity-20 animate-pulse
-                  ${theme === 'dark' ? 'bg-[#E8EFF8]' : 'bg-[#2356A0]'}
+                  ${theme === 'dark' ? 'bg-navy-500' : 'bg-navy-600'}
                 `} />
               </div>
 
@@ -193,15 +193,15 @@ const SplashScreen = memo(({ onStart }) => {
                     text-4xl sm:text-5xl md:text-6xl font-black leading-none tracking-tight
                     bg-gradient-to-r bg-clip-text text-transparent
                     ${theme === 'dark'
-                      ? 'from-white via-[#2356A0] to-[#166534]'
-                      : 'from-[#0F1B2D] via-[#2356A0] to-[#166534]'
+                      ? 'from-white via-navy-700 to-success'
+                      : 'from-navy-900 via-navy-700 to-success'
                     }
                   `}>
                     SubhaYatra
                   </h1>
                   <div className={`
                     text-lg sm:text-xl md:text-2xl font-light tracking-[0.2em] uppercase
-                    ${theme === 'dark' ? 'text-[#F59E0B]' : 'text-[#2356A0]'}
+                    ${theme === 'dark' ? 'text-amber-300' : 'text-navy-500'}
                   `}>
                     Nepal Travel
                   </div>
@@ -231,7 +231,7 @@ const SplashScreen = memo(({ onStart }) => {
                 <div className={`
                   px-6 py-3 rounded-2xl backdrop-blur-xl border
                   ${theme === 'dark' 
-                    ? 'bg-[#1A2E4A]/60 border-[#2E4A6B]/50' 
+                    ? 'bg-navy-800/60 border-navy-700/50' 
                     : 'bg-white/60 border-slate-200/50'
                   }
                 `}>
@@ -245,7 +245,7 @@ const SplashScreen = memo(({ onStart }) => {
                     <div className="flex items-center space-x-2">
                       <div className={`
                         w-2 h-2 rounded-full animate-pulse
-                        ${theme === 'dark' ? 'bg-[#E8EFF8]' : 'bg-[#2356A0]'}
+                        ${theme === 'dark' ? 'bg-navy-500' : 'bg-navy-600'}
                       `} />
                       <span className={`
                         text-xs font-mono
@@ -261,12 +261,12 @@ const SplashScreen = memo(({ onStart }) => {
                 <div className="space-y-3">
                   <div className={`
                     w-full h-3 rounded-full overflow-hidden backdrop-blur-sm
-                    ${theme === 'dark' ? 'bg-[#1A2E4A]/40' : 'bg-slate-200/40'}
+                    ${theme === 'dark' ? 'bg-navy-800/40' : 'bg-slate-200/40'}
                   `}>
                     <div 
                       className={`
                         h-full rounded-full transition-all duration-700 ease-out relative overflow-hidden
-                        bg-gradient-to-r from-[#2356A0] via-[#15803D] to-[#1A2E4A]
+                        bg-gradient-to-r from-navy-600 via-success to-navy-700
                       `}
                       style={{ width: `${progress}%` }}
                       role="progressbar"
@@ -287,8 +287,8 @@ const SplashScreen = memo(({ onStart }) => {
                         className={`
                           w-3 h-3 rounded-full transition-all duration-500
                           ${progress >= phase.progress
-                            ? theme === 'dark' ? 'bg-[#E8EFF8]' : 'bg-[#2356A0]'
-                            : theme === 'dark' ? 'bg-[#1E3A5F]' : 'bg-slate-300'
+                            ? theme === 'dark' ? 'bg-navy-500' : 'bg-navy-600'
+                            : theme === 'dark' ? 'bg-navy-700' : 'bg-slate-300'
                           }
                         `}
                       />
@@ -306,18 +306,18 @@ const SplashScreen = memo(({ onStart }) => {
                 {/* Outer glow */}
                 <div className={`
                   absolute inset-0 rounded-full blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-500
-                  ${theme === 'dark' ? 'bg-[#E8EFF8]' : 'bg-[#2356A0]'}
+                  ${theme === 'dark' ? 'bg-navy-500' : 'bg-navy-600'}
                 `} />
                 
                 {/* Main container */}
                 <div className={`
                   absolute inset-0 rounded-full backdrop-blur-2xl border-2 shadow-2xl transition-all duration-500 group-hover:scale-105
                   ${theme === 'dark' 
-                    ? 'bg-[#1A2E4A]/90 border-[#2E4A6B]/50 hover:border-[#2356A0]/50' 
-                    : 'bg-white/90 border-slate-200/50 hover:border-[#2356A0]/50'
+                    ? 'bg-navy-800/90 border-navy-700/50 hover:border-navy-500/50' 
+                    : 'bg-white/90 border-slate-200/50 hover:border-navy-500/50'
                   }
                 `}>
-                  <div className="absolute inset-4 rounded-xl bg-gradient-to-br from-[#2356A0] via-[#15803D] to-[#1A2E4A] flex items-center justify-center text-white font-black text-2xl shadow-xl">
+                  <div className="absolute inset-4 rounded-xl bg-gradient-to-br from-navy-600 via-success to-navy-700 flex items-center justify-center text-white font-black text-2xl shadow-xl">
                     R
                   </div>
                 </div>
@@ -325,7 +325,7 @@ const SplashScreen = memo(({ onStart }) => {
                 {/* Rotating ring */}
                 <div className={`
                   absolute inset-0 rounded-full border-2 opacity-0 group-hover:opacity-100 transition-all duration-500 animate-spin-slow
-                  ${theme === 'dark' ? 'border-[#D97706]/50' : 'border-[#2356A0]/50'}
+                  ${theme === 'dark' ? 'border-amber-400/50' : 'border-navy-500/50'}
                 `} />
               </div>
 
@@ -336,15 +336,15 @@ const SplashScreen = memo(({ onStart }) => {
                     text-5xl sm:text-6xl md:text-7xl font-black leading-none tracking-tight
                     bg-gradient-to-r bg-clip-text text-transparent
                     ${theme === 'dark'
-                      ? 'from-white via-[#2356A0] to-[#166534]'
-                      : 'from-[#0F1B2D] via-[#2356A0] to-[#166534]'
+                      ? 'from-white via-navy-700 to-success'
+                      : 'from-navy-900 via-navy-700 to-success'
                     }
                   `}>
                     SubhaYatra
                   </h1>
                   <div className={`
                     text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.3em] uppercase
-                    ${theme === 'dark' ? 'text-[#F59E0B]' : 'text-[#2356A0]'}
+                    ${theme === 'dark' ? 'text-amber-300' : 'text-navy-500'}
                   `}>
                     Nepal Travel
                   </div>
@@ -373,10 +373,10 @@ const SplashScreen = memo(({ onStart }) => {
                   onClick={handleStart}
                   className={`
                     group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-lg
-                    bg-gradient-to-r from-[#2356A0] via-[#15803D] to-[#1A2E4A] text-white
-                    hover:from-[#2356A0] hover:via-[#15803D] hover:to-[#1A2E4A]
+                    bg-gradient-to-r from-navy-700 via-success to-navy-700 text-white
+                    hover:from-navy-600 hover:via-success hover:to-navy-700
                     shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105
-                    focus:outline-none focus:ring-4 focus:ring-[#2356A0]/50 focus:ring-offset-4
+                    focus:outline-none focus:ring-4 focus:ring-navy-500/50 focus:ring-offset-4
                     ${theme === 'dark' ? 'focus:ring-offset-slate-900' : 'focus:ring-offset-white'}
                     overflow-hidden
                   `}
@@ -409,14 +409,14 @@ const SplashScreen = memo(({ onStart }) => {
                   <div className="flex items-center justify-center space-x-4 text-xs">
                     <div className={`
                       flex items-center space-x-1 px-2 py-1 rounded
-                      ${theme === 'dark' ? 'bg-[#1A2E4A]/50 text-slate-400' : 'bg-slate-100/50 text-slate-600'}
+                      ${theme === 'dark' ? 'bg-navy-800/50 text-slate-400' : 'bg-slate-100/50 text-slate-600'}
                     `}>
                       <kbd className="px-1 py-0.5 bg-white/10 rounded text-xs font-mono">Enter</kbd>
                       <span>Start</span>
                     </div>
                     <div className={`
                       flex items-center space-x-1 px-2 py-1 rounded
-                      ${theme === 'dark' ? 'bg-[#1A2E4A]/50 text-slate-400' : 'bg-slate-100/50 text-slate-600'}
+                      ${theme === 'dark' ? 'bg-navy-800/50 text-slate-400' : 'bg-slate-100/50 text-slate-600'}
                     `}>
                       <kbd className="px-1 py-0.5 bg-white/10 rounded text-xs font-mono">Esc</kbd>
                       <span>Skip</span>

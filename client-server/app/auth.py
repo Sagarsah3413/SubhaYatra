@@ -157,7 +157,7 @@ def admin_required(f):
             }), 401
         
         # Check if user is admin
-        if payload.get('role') != 'admin':
+        if payload.get('role') not in ['admin', 'superadmin']:
             return jsonify({
                 'error': 'Access denied',
                 'message': 'Admin privileges required'

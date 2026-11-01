@@ -160,7 +160,7 @@ export default function AllPlacesDetail() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-forest-deep via-forest-mid to-himalayan-sky text-white overflow-hidden">
+      <section className="relative py-20 bg-gradient-to-br from-navy-700 via-navy-600 to-blue-600 text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
@@ -178,13 +178,13 @@ export default function AllPlacesDetail() {
           
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-white via-forest-light to-gold bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-navy-600 to-navy-800 bg-clip-text text-transparent">
                 Explore Experiences
               </span>
               <br />
               <span className="text-white">Near Capital</span>
             </h1>
-            <p className="text-xl md:text-2xl text-forest-light max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-navy-400 max-w-3xl mx-auto leading-relaxed">
               Discover the rich cultural heritage and ancient wonders surrounding Nepal's historic capital
             </p>
             
@@ -207,7 +207,7 @@ export default function AllPlacesDetail() {
       </section>
 
       {/* Filters Section */}
-      <section className="py-8 bg-white dark:bg-soil-dark border-b border-gray-200 dark:border-forest-deep">
+      <section className="py-8 bg-white dark:bg-navy-900 border-b border-gray-200 dark:border-navy-700">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
             {/* Category Filters */}
@@ -218,8 +218,8 @@ export default function AllPlacesDetail() {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-xl font-medium transition-all duration-200 ${
                     selectedCategory === category
-                      ? "bg-forest-mid text-white shadow-lg"
-                      : "bg-gray-100 dark:bg-soil-mid text-gray-700 dark:text-sand hover:bg-forest-deep/10 dark:hover:bg-forest-deep"
+                      ? "bg-crimson-500 text-white shadow-lg"
+                      : "bg-surface-100 dark:bg-navy-800 text-gray-700 dark:text-gray-300 hover:bg-navy-50 dark:hover:bg-navy-700"
                   }`}
                 >
                   {category}
@@ -229,11 +229,11 @@ export default function AllPlacesDetail() {
             
             {/* Sort Options */}
             <div className="flex items-center gap-4">
-              <span className="text-gray-600 dark:text-sand">Sort by:</span>
+              <span className="text-gray-600 dark:text-gray-400">Sort by:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 rounded-xl border border-gray-200 dark:border-forest-deep bg-white dark:bg-soil-mid text-gray-700 dark:text-sand focus:ring-2 focus:ring-forest-mid"
+                className="px-4 py-2 rounded-xl border border-gray-200 dark:border-navy-700 bg-white dark:bg-navy-800 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-navy-500"
               >
                 <option value="rating">Rating</option>
                 <option value="name">Name</option>
@@ -244,7 +244,7 @@ export default function AllPlacesDetail() {
       </section>
 
       {/* Places Grid */}
-      <section className="py-16 bg-parchment dark:bg-soil-mid">
+      <section className="py-16 bg-surface-50 dark:bg-navy-800">
         <div className="max-w-7xl mx-auto px-6">
           <div className="space-y-16">
             {filteredSpots.map((spot, index) => (
@@ -252,7 +252,7 @@ export default function AllPlacesDetail() {
                 key={spot.id}
                 className={`group flex flex-col ${
                   index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"
-                } items-center gap-12 bg-white dark:bg-soil-dark rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-forest-deep`}
+                } items-center gap-12 bg-white dark:bg-navy-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-navy-700`}
               >
                 {/* Image Section */}
                 <div className="w-full lg:w-1/2 relative">
@@ -265,13 +265,13 @@ export default function AllPlacesDetail() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     
                     {/* Category Badge */}
-                    <div className="absolute top-4 left-4 bg-white/90 dark:bg-soil-mid/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <div className="absolute top-4 left-4 bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-4 py-2 rounded-full">
                       <span className="text-sm font-bold text-gray-900 dark:text-white">{spot.category}</span>
                     </div>
                     
                     {/* Rating Badge */}
-                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-soil-mid/90 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1">
-                      <FaStar className="text-gold text-sm" />
+                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1">
+                      <FaStar className="text-yellow-500 text-sm" />
                       <span className="text-sm font-bold text-gray-900 dark:text-white">{spot.rating}</span>
                     </div>
                     
@@ -281,7 +281,7 @@ export default function AllPlacesDetail() {
                         onClick={() => toggleFavorite(spot.id)}
                         className={`w-12 h-12 rounded-full backdrop-blur-sm border border-white/30 flex items-center justify-center transition-colors duration-200 ${
                           favorites.has(spot.id)
-                            ? "bg-vermillion text-white"
+                            ? "bg-red-500 text-white"
                             : "bg-white/20 text-white hover:bg-white/30"
                         }`}
                       >
@@ -303,13 +303,13 @@ export default function AllPlacesDetail() {
                     <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
                       {spot.name}
                     </h2>
-                    <div className="flex items-center gap-2 text-gray-600 dark:text-sand mb-4">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-4">
                       <FaMapMarkerAlt />
                       <span>{spot.location}</span>
                     </div>
                   </div>
                   
-                  <p className="text-gray-700 dark:text-sand leading-relaxed text-lg">
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
                     {spot.description}
                   </p>
                   
@@ -320,7 +320,7 @@ export default function AllPlacesDetail() {
                       {spot.highlights.map((highlight, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1 bg-forest-deep/10 dark:bg-forest-deep/40 text-forest-mid dark:text-forest-light rounded-full text-sm font-medium"
+                          className="px-3 py-1 bg-navy-100 dark:bg-navy-100/30 text-navy-500 dark:text-amber-300 rounded-full text-sm font-medium"
                         >
                           {highlight}
                         </span>
@@ -330,29 +330,29 @@ export default function AllPlacesDetail() {
                   
                   {/* Details Grid */}
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-parchment dark:bg-soil-mid p-4 rounded-xl">
-                      <div className="flex items-center gap-2 text-gray-600 dark:text-sand mb-1">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
+                      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaClock />
                         <span className="text-sm">Visit Duration</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">{spot.visitTime}</span>
                     </div>
-                    <div className="bg-parchment dark:bg-soil-mid p-4 rounded-xl">
-                      <div className="flex items-center gap-2 text-gray-600 dark:text-sand mb-1">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
+                      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaCalendarAlt />
                         <span className="text-sm">Best Time</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">{spot.bestTime}</span>
                     </div>
-                    <div className="bg-parchment dark:bg-soil-mid p-4 rounded-xl">
-                      <div className="flex items-center gap-2 text-gray-600 dark:text-sand mb-1">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
+                      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaUsers />
                         <span className="text-sm">Entry Fee</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">{spot.entryFee}</span>
                     </div>
-                    <div className="bg-parchment dark:bg-soil-mid p-4 rounded-xl">
-                      <div className="flex items-center gap-2 text-gray-600 dark:text-sand mb-1">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
+                      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaRoute />
                         <span className="text-sm">Established</span>
                       </div>
@@ -372,7 +372,7 @@ export default function AllPlacesDetail() {
                         }
                       }
                     })}
-                    className="w-full bg-gradient-to-r from-forest-mid to-gold hover:from-forest-deep hover:to-gold-dark text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    className="w-full bg-gradient-to-r from-navy-700 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   >
                     Plan Your Visit
                   </button>

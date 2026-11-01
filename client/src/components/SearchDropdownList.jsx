@@ -3,7 +3,7 @@ import { FaMapMarkerAlt, FaHotel, FaUtensils, FaMountain, FaStar } from "react-i
 const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const TYPE_CONFIG = {
-  place:      { icon: FaMountain, label: "Place",      color: "text-[#22c55e]", badge: "bg-emerald-900/50 text-emerald-300" },
+  place:      { icon: FaMountain, label: "Place",      color: "text-success", badge: "bg-success-bg/50 text-success" },
   hotel:      { icon: FaHotel,    label: "Hotel",      color: "text-blue-400",    badge: "bg-blue-900/50 text-blue-300" },
   restaurant: { icon: FaUtensils, label: "Restaurant", color: "text-orange-400",  badge: "bg-orange-900/50 text-orange-300" },
 };
@@ -42,14 +42,14 @@ export default function SearchDropdownList({ results, onSelect, selectedIndex = 
             onClick={() => onSelect(item)}
             className={`w-full text-left transition-all duration-150 ${
               isSelected
-                ? "bg-[#E8EFF8]"
-                : theme === "dark" ? "hover:bg-[#1A2E4A]" : "hover:bg-slate-50"
+                ? "bg-navy-100/60"
+                : theme === "dark" ? "hover:bg-navy-800" : "hover:bg-slate-50"
             }`}
           >
             <div className="px-3 py-2 flex items-center gap-2">
               {/* Thumbnail */}
               <div className={`flex-shrink-0 w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center ${
-                theme === "dark" ? "bg-[#1E3A5F]" : "bg-slate-100"
+                theme === "dark" ? "bg-navy-700" : "bg-slate-100"
               }`}>
                 {imgSrc ? (
                   <img

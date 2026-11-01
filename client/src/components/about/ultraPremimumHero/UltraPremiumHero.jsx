@@ -53,11 +53,11 @@ const UltraPremiumHero = () => {
                 {/* Text Overlay */}
                 <div className="bg-black/50 dark:bg-black/70 backdrop-blur-sm rounded-3xl p-6 md:p-8 mb-8 max-w-5xl mx-auto">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">
-                        <span className="bg-gradient-to-r from-white via-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0] dark:via-[#2356A0] dark:to-white bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-white via-navy-700 to-navy-700 dark:from-navy-700 dark:via-navy-600 dark:to-white bg-clip-text text-transparent">
                             About
                         </span>
                         <br />
-                        <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-400 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-amber-400 via-navy-600 to-blue-400 bg-clip-text text-transparent">
                             SubhaYatra
                         </span>
                     </h1>

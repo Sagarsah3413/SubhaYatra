@@ -139,38 +139,38 @@ export default function ExploreSection() {
     <section className="py-20 relative overflow-hidden">
       {/* Static Gradient Background */}
       <div className="absolute inset-0 w-full h-full z-0">
-        {/* Nepal palette gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-soil-dark via-soil-mid to-soil-dark"></div>
+        {/* Beautiful gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900"></div>
         
         {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-soil-dark/70 via-soil-dark/50 to-soil-dark/70"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-900/70 via-slate-900/50 to-navy-900/70"></div>
       </div>
 
       {/* Background Elements */}
       <div className="absolute inset-0 z-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-forest-mid/10 to-gold/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-himalayan-sky/10 to-forest-deep/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-amber-400/10 to-navy-700/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-indigo-600/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-20 max-w-8xl mx-auto px-6">
         {/* Premium Section Header */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-xl rounded-full px-8 py-4 mb-8 border border-white/30">
-            <FaMapMarkerAlt className="text-gold" />
+            <FaMapMarkerAlt className="text-white" />
             <span className="text-sm font-semibold text-white">Kathmandu Valley Experiences</span>
           </div>
           
           <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-white via-forest-light to-gold bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-navy-700 to-navy-700 bg-clip-text text-transparent">
               Explore Experiences
             </span>
             <br />
-            <span className="bg-gradient-to-r from-[#315C43] via-[#8B762F] to-[#A17B25] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-navy-700 via-navy-600 to-blue-300 bg-clip-text text-transparent">
               Near Capital
             </span>
           </h2>
           
-          <p className="text-xl text-sand max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed">
             Discover the rich cultural heritage and ancient wonders surrounding Nepal's historic capital
           </p>
         </div>
@@ -186,7 +186,7 @@ export default function ExploreSection() {
             {spots.concat(spots).map((place, index) => (
               <div key={index} className="min-w-[320px] flex-shrink-0 group">
                 <Link to="/all-places-detail" className="block">
-                  <div className="relative bg-white dark:bg-soil-mid rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-forest-deep">
+                  <div className="relative bg-white dark:bg-navy-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-navy-700">
                     {/* Image Container */}
                     <div className="relative h-64 overflow-hidden">
                       <img
@@ -199,18 +199,18 @@ export default function ExploreSection() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                       
                       {/* Category Badge */}
-                      <div className="absolute top-4 left-4 bg-white/90 dark:bg-soil-mid/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                      <div className="absolute top-4 left-4 bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-4 py-2 rounded-full">
                         <span className="text-xs font-bold text-gray-900 dark:text-white">{place.category}</span>
                       </div>
                       
                       {/* Rating Badge */}
-                      <div className="absolute top-4 right-4 bg-white/90 dark:bg-soil-mid/90 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1">
-                        <FaStar className="text-gold text-sm" />
+                      <div className="absolute top-4 right-4 bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1">
+                        <FaStar className="text-yellow-500 text-sm" />
                         <span className="text-sm font-bold text-gray-900 dark:text-white">{place.rating}</span>
                       </div>
                       
                       {/* Hover Arrow */}
-                      <div className="absolute bottom-4 right-4 w-12 h-12 bg-forest-mid rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                      <div className="absolute bottom-4 right-4 w-12 h-12 bg-crimson-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                         <FaArrowRight className="text-white" />
                       </div>
                     </div>
@@ -220,17 +220,17 @@ export default function ExploreSection() {
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
                         {place.name}
                       </h3>
-                      <p className="text-gray-600 dark:text-sand text-sm leading-relaxed mb-4">
+                      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
                         {place.description}
                       </p>
                       
                       {/* Action Button */}
                       <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2 text-forest-mid dark:text-forest-light">
+                        <div className="flex items-center gap-2 text-navy-600 dark:text-amber-400">
                           <FaMapMarkerAlt className="text-sm" />
                           <span className="text-sm font-medium">Kathmandu Valley</span>
                         </div>
-                        <div className="text-forest-mid dark:text-forest-light font-semibold text-sm group-hover:text-forest-deep dark:group-hover:text-gold transition-colors duration-200">
+                        <div className="text-navy-600 dark:text-amber-400 font-semibold text-sm group-hover:text-navy-500 dark:group-hover:text-amber-300 transition-colors duration-200">
                           Explore →
                         </div>
                       </div>
@@ -251,7 +251,7 @@ export default function ExploreSection() {
                             }
                           });
                         }}
-                        className="w-full bg-gradient-to-r from-forest-mid to-gold hover:from-forest-deep hover:to-gold-dark text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                        className="w-full bg-gradient-to-r from-navy-700 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                       >
                         <FaRoute />
                         Plan to Visit
@@ -267,7 +267,7 @@ export default function ExploreSection() {
           <div className="text-center mt-12">
             <Link 
               to="/all-places-detail"
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-forest-mid to-gold hover:from-forest-deep hover:to-gold-dark text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+              className="inline-flex items-center gap-3 bg-gradient-to-r from-navy-700 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
             >
               <span>View All Experiences</span>
               <FaArrowRight />

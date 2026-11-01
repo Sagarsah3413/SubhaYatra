@@ -31,9 +31,12 @@ function Card({ item, type, theme, navigate }) {
 
   const src = !err[imgIdx] && allImgs[imgIdx] ? allImgs[imgIdx] : null;
 
-  // Map types to Nepal palette accent tokens
-  const accentClass = type === "place" ? "forest-mid" : type === "hotel" ? "himalayan-sky" : "gold";
-  const Icon        = type === "place" ? FaMountain : type === "hotel" ? FaHotel : FaUtensils;
+  const accent = type === "place" ? "navy" : type === "hotel" ? "amber" : "crimson";
+  const Icon   = type === "place" ? FaMountain : type === "hotel" ? FaHotel : FaUtensils;
+  const accentText  = type === "place" ? "text-navy-500"    : type === "hotel" ? "text-amber-500"   : "text-crimson-500";
+  const accentBg    = type === "place" ? "bg-navy-100"      : type === "hotel" ? "bg-amber-100"     : "bg-crimson-100";
+  const accentDark  = type === "place" ? "dark:bg-navy-900/40"  : type === "hotel" ? "dark:bg-amber-900/40"  : "dark:bg-crimson-900/40";
+  const accentBadge = type === "place" ? "text-navy-700 dark:text-navy-300"   : type === "hotel" ? "text-amber-700 dark:text-amber-300"  : "text-crimson-700 dark:text-crimson-300";
 
   return (
     <div
@@ -41,11 +44,11 @@ function Card({ item, type, theme, navigate }) {
       className={`group cursor-pointer rounded-2xl overflow-hidden border transition-all duration-300
         hover:-translate-y-1 hover:shadow-2xl
         ${theme === "dark"
-          ? "bg-soil-mid border-forest-deep hover:border-forest-mid"
+          ? "bg-navy-800 border-navy-700 hover:border-slate-500"
           : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"}`}
     >
       {/* Image area */}
-      <div className="relative h-44 overflow-hidden bg-parchment dark:bg-forest-deep">
+      <div className="relative h-44 overflow-hidden bg-slate-200 dark:bg-navy-700">
         {src ? (
           <img src={src} alt={item.name}
             onError={() => setErr(e => ({ ...e, [imgIdx]: true }))}
@@ -53,14 +56,14 @@ function Card({ item, type, theme, navigate }) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <Icon className="text-5xl text-clay" />
+            <Icon className="text-5xl text-slate-400" />
           </div>
         )}
 
         {/* Rating */}
         {item.rating && (
           <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 text-white text-xs font-bold">
-            <FaStar className="text-gold text-[10px]" />
+            <FaStar className="text-amber-400 text-[10px]" />
             {Number(item.rating).toFixed(1)}
           </div>
         )}
@@ -90,23 +93,23 @@ function Card({ item, type, theme, navigate }) {
 
       {/* Body */}
       <div className="p-3 space-y-1.5">
-        <h3 className={`font-bold text-sm leading-tight line-clamp-1 transition-colors
-          ${theme === "dark" ? "text-white group-hover:text-forest-light" : "text-slate-900 group-hover:text-forest-mid"}`}>
+        <h3 className={`font-bold text-sm leading-tight line-clamp-1 ${accentText} transition-colors
+          ${theme === "dark" ? "text-white group-hover:text-amber-400" : "text-slate-900 group-hover:text-navy-600"}`}>
           {item.name}
         </h3>
         {item.location && (
-          <div className="flex items-center gap-1 text-xs text-clay">
-            <FaMapMarkerAlt className="text-forest-mid flex-shrink-0" />
+          <div className="flex items-center gap-1 text-xs text-slate-500">
+            <FaMapMarkerAlt className={`${accentText} flex-shrink-0`} />
             <span className="line-clamp-1">{item.location}</span>
           </div>
         )}
         {item.description && (
-          <p className="text-xs text-clay dark:text-sand line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
             {item.description}
           </p>
         )}
         {item.price_range && (
-          <p className="text-xs font-semibold text-gold dark:text-gold-light">
+          <p className={`text-xs font-semibold ${accentText}`}>
             {item.price_range}
           </p>
         )}
@@ -115,35 +118,35 @@ function Card({ item, type, theme, navigate }) {
   );
 }
 
-// ── Section block ─────────────────────────────────────────────────────────────
-function Section({ title, icon: Icon, accentBg, accentText, items, type, theme, navigate, query }) {
+function Section({ title, icon: Icon, accent, items, type, theme, navigate, query }) {
   if (!items.length) return null;
+  const accentClasses = {
+    navy:    { icon: "bg-navy-100 dark:bg-navy-900/40",    iconText: "text-navy-600 dark:text-navy-300",    badge: "bg-navy-100 dark:bg-navy-900/40 text-navy-700 dark:text-navy-300",    bar: "from-navy-500/60 via-navy-300/30" },
+    amber:   { icon: "bg-amber-100 dark:bg-amber-900/40",  iconText: "text-amber-600 dark:text-amber-300",  badge: "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300",  bar: "from-amber-500/60 via-amber-300/30" },
+    crimson: { icon: "bg-crimson-100 dark:bg-crimson-900/40", iconText: "text-crimson-600 dark:text-crimson-300", badge: "bg-crimson-100 dark:bg-crimson-900/40 text-crimson-700 dark:text-crimson-300", bar: "from-crimson-500/60 via-crimson-300/30" },
+  };
+  const ac = accentClasses[accent] || accentClasses.navy;
   return (
     <div className="mb-10">
-      {/* Section header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-xl ${accentBg} flex items-center justify-center`}>
-            <Icon className={`${accentText} text-lg`} />
+          <div className={`w-10 h-10 rounded-xl ${ac.icon} flex items-center justify-center`}>
+            <Icon className={`${ac.iconText} text-lg`} />
           </div>
           <div>
             <h2 className={`text-xl font-black ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
               {title}
             </h2>
-            <p className="text-xs text-clay">
+            <p className="text-xs text-slate-500">
               {items.length} result{items.length !== 1 ? "s" : ""} for "{query}"
             </p>
           </div>
         </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-bold ${accentBg} ${accentText}`}>
+        <span className={`px-3 py-1 rounded-full text-xs font-bold ${ac.badge}`}>
           {items.length}
         </span>
       </div>
-
-      {/* Divider */}
-      <div className={`h-0.5 w-full mb-5 bg-gradient-to-r ${accentBg} via-transparent to-transparent rounded-full opacity-60`} />
-
-      {/* Grid */}
+      <div className={`h-0.5 w-full mb-5 bg-gradient-to-r ${ac.bar} to-transparent rounded-full`} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {items.map((item, i) => (
           <Card key={`${type}-${item.id || i}`} item={item} type={type} theme={theme} navigate={navigate} />
@@ -205,23 +208,23 @@ export default function SearchResultPage() {
   }, [query, category, isLoaded, isSignedIn, user]);
 
   return (
-    <div className={`min-h-screen ${theme === "dark" ? "bg-soil-dark text-white" : "bg-parchment text-soil-dark"}`}>
+    <div className={`min-h-screen ${theme === "dark" ? "bg-navy-900 text-white" : "bg-slate-50 text-slate-900"}`}>
 
       {/* ── Sticky header ── */}
       <div className={`sticky top-0 z-40 border-b backdrop-blur-xl shadow-sm
-        ${theme === "dark" ? "bg-soil-dark/95 border-forest-deep" : "bg-white/95 border-slate-200"}`}>
+        ${theme === "dark" ? "bg-navy-900/95 border-navy-700" : "bg-white/95 border-slate-200"}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
           <button onClick={() => navigate(-1)}
-            className={`p-2 rounded-xl transition-colors ${theme === "dark" ? "hover:bg-soil-mid text-sand" : "hover:bg-slate-100 text-slate-600"}`}>
+            className={`p-2 rounded-xl transition-colors ${theme === "dark" ? "hover:bg-navy-800 text-slate-400" : "hover:bg-slate-100 text-slate-600"}`}>
             <FaArrowLeft />
           </button>
-          <FaSearch className="text-forest-mid" />
+          <FaSearch className="text-navy-500" />
           <div className="flex-1">
             <span className={`font-black text-lg ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
               {isLoading ? "Searching…" : `${total} result${total !== 1 ? "s" : ""} for `}
             </span>
             {!isLoading && (
-              <span className="text-forest-mid font-black text-lg">"{query}"</span>
+              <span className="text-navy-500 font-black text-lg">"{query}"</span>
             )}
           </div>
         </div>
@@ -231,22 +234,22 @@ export default function SearchResultPage() {
       <div className="max-w-7xl mx-auto px-6 py-8">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
-            <FaSpinner className="text-5xl text-forest-mid animate-spin" />
-            <p className="text-clay font-semibold">Searching destinations…</p>
+            <FaSpinner className="text-5xl text-navy-500 animate-spin" />
+            <p className="text-slate-500 font-semibold">Searching destinations…</p>
           </div>
         ) : error ? (
           <div className="text-center py-32">
-            <p className="text-vermillion text-lg font-semibold mb-4">{error}</p>
+            <p className="text-red-500 text-lg font-semibold mb-4">{error}</p>
             <button onClick={() => window.location.reload()}
-              className="px-6 py-3 bg-forest-mid text-white rounded-xl font-semibold hover:bg-forest-deep">
+              className="px-6 py-3 bg-crimson-500 text-white rounded-xl font-semibold hover:bg-crimson-600">
               Try Again
             </button>
           </div>
         ) : total === 0 ? (
           <div className="text-center py-32">
-            <FaSearch className="text-6xl text-clay mx-auto mb-4" />
+            <FaSearch className="text-6xl text-slate-300 mx-auto mb-4" />
             <p className="text-2xl font-bold mb-2">No results for "{query}"</p>
-            <p className="text-clay">Try different keywords</p>
+            <p className="text-slate-500">Try different keywords</p>
           </div>
         ) : (
           <>
@@ -254,8 +257,7 @@ export default function SearchResultPage() {
             <Section
               title="Destinations"
               icon={FaMountain}
-              accentBg="bg-forest-deep/20 dark:bg-forest-deep/40"
-              accentText="text-forest-mid dark:text-forest-light"
+              accent="navy"
               items={places}
               type="place"
               theme={theme}
@@ -267,8 +269,7 @@ export default function SearchResultPage() {
             <Section
               title="Hotels & Stays"
               icon={FaHotel}
-              accentBg="bg-himalayan-sky/10 dark:bg-himalayan-sky/20"
-              accentText="text-himalayan-sky"
+              accent="amber"
               items={hotels}
               type="hotel"
               theme={theme}
@@ -280,8 +281,7 @@ export default function SearchResultPage() {
             <Section
               title="Restaurants & Dining"
               icon={FaUtensils}
-              accentBg="bg-gold/10 dark:bg-gold/20"
-              accentText="text-gold dark:text-gold-light"
+              accent="crimson"
               items={restaurants}
               type="restaurant"
               theme={theme}

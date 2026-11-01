@@ -39,7 +39,7 @@ const NavigationItems = ({
 
             {/* Separator */}
             <div className={`w-px h-6 relative ${theme === 'dark' ? 'bg-slate-600/50' : 'bg-slate-300/50'}`}>
-                <div className={`absolute inset-0 w-px bg-linear-to-b from-transparent ${theme === 'dark' ? 'via-[#2356A0]/30' : 'via-[#2356A0]/30'
+                <div className={`absolute inset-0 w-px bg-linear-to-b from-transparent ${theme === 'dark' ? 'via-navy-700/30' : 'via-navy-600/30'
                     } to-transparent`} />
             </div>
 
@@ -57,11 +57,11 @@ const NavigationItems = ({
           group relative px-4 py-2.5 rounded-xl font-medium transition-all duration-300
           border backdrop-blur-xl transform-gpu will-change-transform overflow-hidden
           ${theme === 'dark'
-                        ? 'border-teal-700/40 hover:border-[#2356A0]/70 text-[#2356A0] hover:text-white hover:bg-linear-to-r hover:from-[#2356A0]/50 hover:to-[#1A2E4A]/50'
-                        : 'border-teal-200/40 hover:border-[#D97706]/70 text-[#2356A0] hover:text-[#D97706] hover:bg-linear-to-r hover:from-[#2356A0]/50 hover:to-[#1A2E4A]/50'
+                        ? 'border-navy-500/40 hover:border-navy-600/70 text-navy-500 hover:text-white hover:bg-linear-to-r hover:from-navy-700/50 hover:to-navy-700/50'
+                        : 'border-navy-500/40 hover:border-navy-500/70 text-navy-500 hover:text-navy-500 hover:bg-linear-to-r hover:from-navy-700/50 hover:to-navy-700/50'
                     }
           hover:shadow-xl hover:scale-105 btn-professional
-          ${showCalendar ? 'ring-2 ring-[#2356A0]/50 bg-[#2356A0]/10' : ''}
+          ${showCalendar ? 'ring-2 ring-navy-500/50 bg-navy-600/10' : ''}
         `}
                 aria-expanded={showCalendar}
                 aria-haspopup="dialog"
@@ -69,7 +69,7 @@ const NavigationItems = ({
                 title="Nepali Calendar"
             >
                 <span className="flex items-center gap-2.5 relative z-10">
-                    <div className={`p-1.5 rounded-lg transition-all duration-300 ${theme === 'dark' ? 'bg-[#E8EFF8] group-hover:bg-[#A93226]/50' : 'bg-[#E8EFF8] group-hover:bg-[#E8EFF8]'
+                    <div className={`p-1.5 rounded-lg transition-all duration-300 ${theme === 'dark' ? 'bg-navy-100/30 group-hover:bg-crimson-600/50' : 'bg-navy-100/50 group-hover:bg-navy-100/70'
                         }`}>
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
@@ -77,7 +77,7 @@ const NavigationItems = ({
                     </div>
                     <span className="font-semibold">{t('header.calendar')}</span>
                 </span>
-                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-linear-to-r ${theme === 'dark' ? 'from-[#2356A0]/10 to-[#1A2E4A]/10' : 'from-[#2356A0]/5 to-[#1A2E4A]/5'
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-linear-to-r ${theme === 'dark' ? 'from-navy-700/10 to-navy-700/10' : 'from-navy-600/5 to-navy-700/5'
                     }`} />
             </button>
 
@@ -89,7 +89,7 @@ const NavigationItems = ({
           group relative px-4 py-2.5 rounded-xl font-medium transition-all duration-300
           border backdrop-blur-xl transform-gpu will-change-transform overflow-hidden
           ${theme === 'dark'
-                        ? 'border-[#2E4A6B]/40 hover:border-slate-600/70 text-slate-200 hover:text-white hover:bg-linear-to-r hover:from-[#1A2E4A]/50 hover:to-slate-700/50'
+                        ? 'border-navy-700/40 hover:border-slate-600/70 text-slate-200 hover:text-white hover:bg-linear-to-r hover:from-navy-800/50 hover:to-slate-700/50'
                         : 'border-slate-200/40 hover:border-slate-300/70 text-slate-700 hover:text-slate-900 hover:bg-linear-to-r hover:from-slate-50/50 hover:to-slate-100/50'
                     }
           hover:shadow-xl hover:scale-105 btn-professional
@@ -97,7 +97,7 @@ const NavigationItems = ({
                 title="About Us"
             >
                 <span className="flex items-center gap-2.5 relative z-10">
-                    <div className={`p-1.5 rounded-lg transition-all duration-300 ${theme === 'dark' ? 'bg-[#1E3A5F]/30 group-hover:bg-slate-600/50' : 'bg-slate-100/50 group-hover:bg-slate-200/70'
+                    <div className={`p-1.5 rounded-lg transition-all duration-300 ${theme === 'dark' ? 'bg-navy-700/30 group-hover:bg-slate-600/50' : 'bg-slate-100/50 group-hover:bg-slate-200/70'
                         }`}>
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />

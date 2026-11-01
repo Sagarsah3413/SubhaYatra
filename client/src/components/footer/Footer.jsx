@@ -139,7 +139,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-b from-[#0F1B2D]/98 via-[#1A2E4A]/98 to-[#0F1B2D]/98 text-white mt-20 relative backdrop-blur-sm">
+    <footer className="bg-gradient-to-b from-navy-900/95 via-navy-800/95 to-navy-900/95 text-white mt-20 relative backdrop-blur-sm">
       
       {/* Ultra-Professional Notification System */}
       {notification && (
@@ -147,7 +147,7 @@ export default function Footer() {
           <div className={`
             relative overflow-hidden rounded-2xl backdrop-blur-2xl border shadow-2xl transform transition-all duration-700 ease-out
             ${notification.type === 'success' 
-              ? 'bg-gradient-to-br from-green-50/95 via-green-50/95 to-[#166534]/95 border-green-200/50 shadow-green-500/20' 
+              ? 'bg-gradient-to-br from-success/95 via-navy-700/95 to-navy-700/95 border-success/50 shadow-emerald-500/20' 
               : notification.type === 'error'
               ? 'bg-gradient-to-br from-red-50/95 via-rose-50/95 to-pink-50/95 border-red-200/50 shadow-red-500/20'
               : 'bg-gradient-to-br from-amber-50/95 via-yellow-50/95 to-orange-50/95 border-amber-200/50 shadow-amber-500/20'
@@ -160,7 +160,7 @@ export default function Footer() {
             <div className={`
               absolute top-0 left-0 right-0 h-1 
               ${notification.type === 'success' 
-                ? 'bg-gradient-to-r from-[#15803D] via-[#16a34a] to-[#22c55e]' 
+                ? 'bg-gradient-to-r from-success via-navy-600 to-navy-700' 
                 : notification.type === 'error'
                 ? 'bg-gradient-to-r from-red-500 via-rose-500 to-pink-500'
                 : 'bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500'
@@ -177,7 +177,7 @@ export default function Footer() {
                   <div className={`
                     flex items-center justify-center w-10 h-10 rounded-xl shadow-lg
                     ${notification.type === 'success' 
-                      ? 'bg-gradient-to-br from-[#15803D] to-[#166534] text-white' 
+                      ? 'bg-gradient-to-br from-success to-navy-700 text-white' 
                       : notification.type === 'error'
                       ? 'bg-gradient-to-br from-red-500 to-rose-600 text-white'
                       : 'bg-gradient-to-br from-amber-500 to-orange-600 text-white'
@@ -205,7 +205,7 @@ export default function Footer() {
                     <h3 className={`
                       font-bold text-lg leading-tight
                       ${notification.type === 'success' 
-                        ? 'text-green-900' 
+                        ? 'text-success' 
                         : notification.type === 'error'
                         ? 'text-red-900'
                         : 'text-amber-900'
@@ -225,7 +225,7 @@ export default function Footer() {
                   className={`
                     group flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200 hover:scale-110 active:scale-95
                     ${notification.type === 'success' 
-                      ? 'hover:bg-green-100 text-[#15803D] hover:text-green-800' 
+                      ? 'hover:bg-success-bg text-success hover:text-success' 
                       : notification.type === 'error'
                       ? 'hover:bg-red-100 text-red-600 hover:text-red-800'
                       : 'hover:bg-amber-100 text-amber-600 hover:text-amber-800'
@@ -244,7 +244,7 @@ export default function Footer() {
                 <p className={`
                   font-semibold text-base leading-relaxed
                   ${notification.type === 'success' 
-                    ? 'text-green-800' 
+                    ? 'text-success' 
                     : notification.type === 'error'
                     ? 'text-red-800'
                     : 'text-amber-800'
@@ -260,17 +260,17 @@ export default function Footer() {
               
               {/* Action Section for Success */}
               {notification.type === 'success' && (
-                <div className="mt-4 pt-4 border-t border-green-200/50">
+                <div className="mt-4 pt-4 border-t border-success/50">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-xs font-medium text-green-700">
+                      <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                      <span className="text-xs font-medium text-success">
                         Subscription Active
                       </span>
                     </div>
                     <button
                       onClick={() => setNotification(null)}
-                      className="px-3 py-1.5 bg-gradient-to-r from-[#15803D] to-[#0F5F2E] text-white text-xs font-semibold rounded-lg hover:from-[#166534] hover:to-[#0A4A24] transition-all duration-200 shadow-sm hover:shadow-md"
+                      className="px-3 py-1.5 bg-gradient-to-r from-success to-navy-700 text-white text-xs font-semibold rounded-lg hover:from-success hover:to-navy-800 transition-all duration-200 shadow-sm hover:shadow-md"
                     >
                       Got it!
                     </button>
@@ -282,7 +282,7 @@ export default function Footer() {
               <div className={`
                 absolute bottom-0 left-0 h-1 rounded-b-2xl transition-all duration-100 ease-linear
                 ${notification.type === 'success' 
-                  ? 'bg-gradient-to-r from-green-400 to-green-500' 
+                  ? 'bg-gradient-to-r from-success to-navy-600' 
                   : notification.type === 'error'
                   ? 'bg-gradient-to-r from-red-400 to-rose-500'
                   : 'bg-gradient-to-r from-amber-400 to-orange-500'
@@ -302,7 +302,7 @@ export default function Footer() {
       <div className="absolute inset-0 opacity-4">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            radial-gradient(circle at 25% 50%, rgba(35, 86, 160, 0.06) 0%, transparent 50%),
+            radial-gradient(circle at 25% 50%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
             radial-gradient(circle at 75% 50%, rgba(16, 185, 129, 0.06) 0%, transparent 50%)
           `,
           backgroundSize: '600px 600px'
@@ -310,8 +310,8 @@ export default function Footer() {
       </div>
 
       {/* Smart Professional Live Information Bar */}
-      <div className="relative bg-[#1A2E4A]/85 border-b border-[#2E4A6B]/25 backdrop-blur-md">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D97706]/15 to-transparent"></div>
+      <div className="relative bg-navy-800/85 border-b border-slate-600/25 backdrop-blur-md">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy-700/15 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex flex-col lg:flex-row justify-center items-center gap-6">
             
@@ -327,20 +327,20 @@ export default function Footer() {
                 </div>
                 {weatherLoading ? (
                   <div className="flex items-center space-x-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-[#D97706] border-t-transparent"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-amber-400 border-t-transparent"></div>
                     <span className="text-xs text-gray-300 font-medium">{t('footer.loading')}</span>
                   </div>
                 ) : weather ? (
                   <div className="flex flex-wrap items-center gap-3">
-                    <div className="flex items-center space-x-1 bg-[#1E3A5F]/60 px-2 py-1 rounded-md border border-[#2E4A6B]/30">
-                      <FaMapMarkerAlt className="text-[#D97706] text-xs" />
+                    <div className="flex items-center space-x-1 bg-navy-700/60 px-2 py-1 rounded-md border border-slate-600/30">
+                      <FaMapMarkerAlt className="text-amber-400 text-xs" />
                       <span className="text-xs text-gray-200 font-medium tracking-wide">{weather.location}</span>
                     </div>
-                    <div className="flex items-center space-x-1 bg-[#1E3A5F]/60 px-2 py-1 rounded-md border border-[#2E4A6B]/30">
+                    <div className="flex items-center space-x-1 bg-navy-700/60 px-2 py-1 rounded-md border border-slate-600/30">
                       <FaThermometerHalf className="text-red-400 text-xs" />
                       <span className="text-sm font-bold text-white tracking-wide">{weather.temperature}°C</span>
                     </div>
-                    <div className="flex items-center space-x-2 bg-[#1E3A5F]/60 px-2 py-1 rounded-md border border-[#2E4A6B]/30">
+                    <div className="flex items-center space-x-2 bg-navy-700/60 px-2 py-1 rounded-md border border-slate-600/30">
                       <span className="text-xs text-gray-200 font-medium">{weather.condition}</span>
                       <span className="text-lg">{weather.icon}</span>
                     </div>
@@ -352,30 +352,30 @@ export default function Footer() {
             </div>
 
             {/* Smart Currency Widget */}
-            <div className="group bg-gradient-to-r from-[#15803D]/8 to-[#1A2E4A]/8 border border-green-400/20 rounded-xl px-4 py-3 backdrop-blur-sm hover:border-green-400/30 transition-all duration-300 relative">
+            <div className="group bg-gradient-to-r from-success/8 to-navy-600/8 border border-success/20 rounded-xl px-4 py-3 backdrop-blur-sm hover:border-success/30 transition-all duration-300 relative">
               <div className="absolute inset-0 bg-gradient-to-br from-white/3 to-transparent rounded-xl pointer-events-none"></div>
               <div className="relative flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <div className="p-2 bg-green-500/20 rounded-lg border border-green-400/25">
-                    <FaDollarSign className="text-green-400 text-lg" />
+                  <div className="p-2 bg-success/20 rounded-lg border border-success/25">
+                    <FaDollarSign className="text-success text-lg" />
                   </div>
-                  <span className="text-sm font-black text-green-300 tracking-wide">{t('footer.exchangeRates')}</span>
+                  <span className="text-sm font-black text-success tracking-wide">{t('footer.exchangeRates')}</span>
                 </div>
                 {currencyLoading ? (
                   <div className="flex items-center space-x-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-green-400 border-t-transparent"></div>
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-success border-t-transparent"></div>
                     <span className="text-xs text-gray-300 font-medium">{t('footer.loadingRates')}</span>
                   </div>
                 ) : currency ? (
                   <div className="flex flex-col lg:flex-row items-center gap-3">
                     <div className="flex flex-wrap items-center gap-2 text-xs">
                       <span className="text-gray-300 font-medium tracking-wide">1 NPR =</span>
-                      <span className="bg-[#1E3A5F]/60 px-2 py-1 rounded text-white font-bold border border-[#2E4A6B]/30">{getCurrencySymbol('USD')}{currency.rates.USD}</span>
-                      <span className="bg-[#1E3A5F]/60 px-2 py-1 rounded text-white font-bold border border-[#2E4A6B]/30">{getCurrencySymbol('EUR')}{currency.rates.EUR}</span>
-                      <span className="bg-[#1E3A5F]/60 px-2 py-1 rounded text-white font-bold border border-[#2E4A6B]/30">{getCurrencySymbol('GBP')}{currency.rates.GBP}</span>
-                      <span className="bg-[#1E3A5F]/60 px-2 py-1 rounded text-white font-bold border border-[#2E4A6B]/30">{getCurrencySymbol('INR')}{currency.rates.INR}</span>
+                      <span className="bg-navy-700/60 px-2 py-1 rounded text-white font-bold border border-slate-600/30">{getCurrencySymbol('USD')}{currency.rates.USD}</span>
+                      <span className="bg-navy-700/60 px-2 py-1 rounded text-white font-bold border border-slate-600/30">{getCurrencySymbol('EUR')}{currency.rates.EUR}</span>
+                      <span className="bg-navy-700/60 px-2 py-1 rounded text-white font-bold border border-slate-600/30">{getCurrencySymbol('GBP')}{currency.rates.GBP}</span>
+                      <span className="bg-navy-700/60 px-2 py-1 rounded text-white font-bold border border-slate-600/30">{getCurrencySymbol('INR')}{currency.rates.INR}</span>
                     </div>
-                    <span className="text-xs text-gray-400 bg-[#1E3A5F]/40 px-2 py-1 rounded border border-[#2E4A6B]/25 font-medium">{t('footer.updated')}: {currency.lastUpdated}</span>
+                    <span className="text-xs text-gray-400 bg-navy-700/40 px-2 py-1 rounded border border-slate-600/25 font-medium">{t('footer.updated')}: {currency.lastUpdated}</span>
                   </div>
                 ) : (
                   <span className="text-xs text-gray-400 font-medium">{t('footer.ratesUnavailable')}</span>
@@ -391,16 +391,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
           
           {/* Professional Company Info Container */}
-          <div className="lg:col-span-2 group bg-[#1A2E4A]/50 rounded-xl p-6 border border-[#2E4A6B]/30 backdrop-blur-sm hover:bg-[#1A2E4A]/60 transition-all duration-300 relative">
+          <div className="lg:col-span-2 group bg-navy-800/50 rounded-xl p-6 border border-slate-600/30 backdrop-blur-sm hover:bg-navy-800/60 transition-all duration-300 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-white/4 to-transparent rounded-xl pointer-events-none"></div>
             <div className="relative">
               <div className="flex items-center mb-4 group-hover:scale-[1.02] transition-transform duration-300">
-                <div className="p-3 bg-gradient-to-br from-[#2356A0]/20 to-amber-500/20 rounded-xl mr-3 border border-[#D97706]/25">
+                <div className="p-3 bg-gradient-to-br from-navy-600/20 to-amber-500/20 rounded-xl mr-3 border border-navy-500/25">
                   <span className="text-3xl">🌄</span>
                 </div>
                 <div className="flex-1">
                   <h2 className="text-lg font-black text-white tracking-wide mb-1 animate-fade-in-up text-glow-hover">
-                    <span className="text-[#D97706] hover:text-[#F59E0B] transition-all duration-500 hover:scale-105 inline-block">SubhaYatra</span>
+                    <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">SubhaYatra</span>
                   </h2>
                   <p className="text-xs text-gray-300 font-semibold tracking-wider animate-fade-in-up animation-delay-200 hover:text-white transition-colors duration-300 uppercase">
                     Your Premium Nepal Travel Companion
@@ -417,7 +417,7 @@ export default function Footer() {
               </div>
               <div className="mb-4">
                 <button
-                  className="group/btn inline-flex items-center gap-2 text-[#D97706] hover:text-[#F59E0B] text-xs font-black transition-all duration-300 hover:translate-x-1 animate-fade-in-up animation-delay-600 hover:scale-105 tracking-wider uppercase"
+                  className="group/btn inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-xs font-black transition-all duration-300 hover:translate-x-1 animate-fade-in-up animation-delay-600 hover:scale-105 tracking-wider uppercase"
                   onClick={() => setShowFullAbout(!showFullAbout)}
                 >
                   <span className="tracking-wide">{showFullAbout ? t('footer.showLess') : t('footer.readMore')}</span>
@@ -450,40 +450,40 @@ export default function Footer() {
           </div>
 
           {/* Smart Company Links Container */}
-          <div className="group bg-[#1A2E4A]/30 rounded-xl p-6 border border-[#2E4A6B]/25 backdrop-blur-sm hover:bg-[#1A2E4A]/40 transition-all duration-300 relative">
+          <div className="group bg-navy-800/30 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-navy-800/40 transition-all duration-300 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-white/2 to-transparent rounded-xl pointer-events-none"></div>
             <div className="relative">
               <h3 className="text-sm font-black mb-4 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
-                <span className="w-2 h-2 bg-gradient-to-r from-[#D97706] to-[#F59E0B] rounded-full mr-2"></span>
+                <span className="w-2 h-2 bg-gradient-to-r from-amber-400 to-amber-400 rounded-full mr-2"></span>
                 <span className="tracking-wide">
                   <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Com</span>
-                  <span className="text-[#D97706] hover:text-[#F59E0B] transition-colors duration-300">pany</span>
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">pany</span>
                 </span>
               </h3>
               <div className="space-y-3">
-                <Link to="/about" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/about" ? "text-[#D97706]" : "text-gray-300 hover:text-white"}`}>
+                <Link to="/about" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/about" ? "text-amber-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
                   <span className="font-semibold tracking-wide">{t('footer.aboutUs')}</span>
                 </Link>
-                <Link to="/contact" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/contact" ? "text-[#D97706]" : "text-gray-300 hover:text-white"}`}>
+                <Link to="/contact" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/contact" ? "text-amber-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
                   <span className="font-semibold tracking-wide">{t('footer.contact')}</span>
                 </Link>
               </div>
               
               <h3 className="text-sm font-black mb-4 mt-6 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
-                <span className="w-2 h-2 bg-gradient-to-r from-[#D97706] to-[#F59E0B] rounded-full mr-2"></span>
+                <span className="w-2 h-2 bg-gradient-to-r from-success to-navy-700 rounded-full mr-2"></span>
                 <span className="tracking-wide">
                   <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Sup</span>
-                  <span className="text-[#D97706] hover:text-[#F59E0B] transition-colors duration-300">port</span>
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">port</span>
                 </span>
               </h3>
               <div className="space-y-3">
-                <Link to="/help" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/help" ? "text-[#D97706]" : "text-gray-300 hover:text-white"}`}>
+                <Link to="/help" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/help" ? "text-amber-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
                   <span className="font-semibold tracking-wide">{t('footer.helpCenter')}</span>
                 </Link>
-                <Link to="/faq" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/faq" ? "text-[#D97706]" : "text-gray-300 hover:text-white"}`}>
+                <Link to="/faq" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/faq" ? "text-amber-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
                   <span className="font-semibold tracking-wide">{t('footer.faq')}</span>
                 </Link>
@@ -492,18 +492,18 @@ export default function Footer() {
           </div>
 
           {/* Smart Community & Resources Container */}
-          <div className="group bg-[#1A2E4A]/30 rounded-xl p-6 border border-[#2E4A6B]/25 backdrop-blur-sm hover:bg-[#1A2E4A]/40 transition-all duration-300 relative">
+          <div className="group bg-navy-800/30 rounded-xl p-6 border border-slate-600/25 backdrop-blur-sm hover:bg-navy-800/40 transition-all duration-300 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-white/2 to-transparent rounded-xl pointer-events-none"></div>
             <div className="relative">
               <h3 className="text-sm font-black mb-4 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
-                <span className="w-2 h-2 bg-gradient-to-r from-[#2356A0] to-[#5B8DC9] rounded-full mr-2"></span>
+                <span className="w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mr-2"></span>
                 <span className="tracking-wide">
                   <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Commu</span>
-                  <span className="text-[#D97706] hover:text-[#F59E0B] transition-colors duration-300">nity</span>
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">nity</span>
                 </span>
               </h3>
               <div className="space-y-3">
-                <NavLink to="/write-review" className={({ isActive }) => `group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${isActive ? "text-[#D97706]" : "text-gray-300 hover:text-white"}`}>
+                <NavLink to="/write-review" className={({ isActive }) => `group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${isActive ? "text-amber-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
                   <span className="font-semibold tracking-wide">{t('footer.writeReview')}</span>
                 </NavLink>
@@ -521,11 +521,11 @@ export default function Footer() {
                 <span className="w-2 h-2 bg-gradient-to-r from-amber-400 to-orange-400 rounded-full mr-2"></span>
                 <span className="tracking-wide">
                   <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Resour</span>
-                  <span className="text-[#D97706] hover:text-[#F59E0B] transition-colors duration-300">ces</span>
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">ces</span>
                 </span>
               </h3>
               <div className="space-y-3">
-                <Link to="/newsletter-archive" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/newsletter-archive" ? "text-[#D97706]" : "text-gray-300 hover:text-white"}`}>
+                <Link to="/newsletter-archive" className={`group/link flex items-center text-sm transition-all duration-300 hover:translate-x-1 ${location.pathname === "/newsletter-archive" ? "text-amber-400" : "text-gray-300 hover:text-white"}`}>
                   <div className="w-1 h-1 bg-current rounded-full mr-2 opacity-60 group-hover/link:opacity-100"></div>
                   <span className="font-semibold tracking-wide">{t('footer.newsletter')}</span>
                 </Link>
@@ -546,18 +546,18 @@ export default function Footer() {
           </div>
 
           {/* Smart Newsletter & Legal Container - LARGER */}
-          <div className="lg:col-span-2 group bg-gradient-to-br from-[#1A2E4A]/45 via-slate-700/35 to-slate-800/45 rounded-2xl p-8 border border-[#2E4A6B]/30 backdrop-blur-sm hover:bg-gradient-to-br hover:from-[#1A2E4A]/55 hover:via-slate-700/45 hover:to-slate-800/55 transition-all duration-300 relative overflow-hidden">
+          <div className="lg:col-span-2 group bg-gradient-to-br from-navy-800/45 via-slate-700/35 to-slate-800/45 rounded-2xl p-8 border border-slate-600/30 backdrop-blur-sm hover:bg-gradient-to-br hover:from-navy-800/55 hover:via-slate-700/45 hover:to-slate-800/55 transition-all duration-300 relative overflow-hidden">
             {/* Smart Glass Effect */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/4 via-transparent to-white/2 rounded-2xl pointer-events-none"></div>
             
             {/* Smart Background Pattern */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#2356A0]/4 via-transparent to-amber-500/4 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-navy-600/4 via-transparent to-amber-500/4 pointer-events-none"></div>
             
             {/* Clean Professional Newsletter Section */}
             <div className="relative">
               <div className="flex items-center mb-6">
-                <div className="flex items-center justify-center w-12 h-12 bg-[#2356A0]/15 rounded-xl mr-4 border border-[#D97706]/25">
-                  <svg className="w-6 h-6 text-[#D97706]" fill="currentColor" viewBox="0 0 20 20">
+                <div className="flex items-center justify-center w-12 h-12 bg-navy-600/15 rounded-xl mr-4 border border-navy-500/25">
+                  <svg className="w-6 h-6 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
@@ -565,7 +565,7 @@ export default function Footer() {
                 <div>
                   <h3 className="text-lg font-black tracking-wide">
                     <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Stay</span>{' '}
-                    <span className="text-[#D97706] hover:text-[#F59E0B] transition-all duration-500 hover:scale-105 inline-block">Updated</span>
+                    <span className="text-amber-400 hover:text-amber-300 transition-all duration-500 hover:scale-105 inline-block">Updated</span>
                   </h3>
                   <p className="text-sm text-gray-400 mt-1 font-semibold">Curated travel insights delivered weekly</p>
                 </div>
@@ -574,7 +574,7 @@ export default function Footer() {
               {/* Clean Newsletter Form */}
               <form onSubmit={handleSubscribe} className="mb-6">
                 <div className="relative">
-                  <div className="flex bg-[#1E3A5F]/60 rounded-xl border border-slate-600/50 overflow-hidden">
+                  <div className="flex bg-navy-700/60 rounded-xl border border-slate-600/50 overflow-hidden">
                     <input
                       type="email"
                       value={email}
@@ -588,8 +588,8 @@ export default function Footer() {
                       disabled={isSubscribing}
                       className={`px-6 py-3 text-white text-sm font-bold transition-all duration-200 flex items-center justify-center min-w-[100px] ${
                         isSubscribing 
-                          ? 'bg-[#2356A0] cursor-not-allowed' 
-                          : 'bg-[#C0392B] hover:bg-[#2356A0]'
+                          ? 'bg-navy-600 cursor-not-allowed' 
+                          : 'bg-crimson-500 hover:bg-navy-600'
                       }`}
                     >
                       {isSubscribing ? (
@@ -634,14 +634,14 @@ export default function Footer() {
             </div>
             
             {/* Smart Legal Section */}
-            <div className="relative border-t border-[#2E4A6B]/30 pt-6">
+            <div className="relative border-t border-slate-600/30 pt-6">
               <h4 className="text-sm font-semibold mb-4 flex items-center group-hover:scale-[1.02] transition-transform duration-300">
                 <svg className="w-4 h-4 text-amber-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 2L3 7v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V7l-7-5zM10 4.5L15 8v9H5V8l5-3.5z" clipRule="evenodd" />
                 </svg>
                 <span className="font-black tracking-wide">
                   <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">Le</span>
-                  <span className="text-[#D97706] hover:text-[#F59E0B] transition-colors duration-300">gal</span>
+                  <span className="text-amber-400 hover:text-amber-300 transition-colors duration-300">gal</span>
                 </span>
               </h4>
               <div className="flex flex-wrap gap-3">
@@ -649,8 +649,8 @@ export default function Footer() {
                   to="/privacy-policy" 
                   className={`inline-flex items-center px-4 py-2 text-sm rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
                     location.pathname === "/privacy-policy" 
-                      ? "bg-[#1E3A5F]/30 border-[#2356A0]/40 text-[#F59E0B]" 
-                      : "bg-[#1E3A5F]/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
+                      ? "bg-navy-600/20 border-navy-500/40 text-amber-300" 
+                      : "bg-navy-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
                   }`}
                 >
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -662,8 +662,8 @@ export default function Footer() {
                   to="/terms-of-service" 
                   className={`inline-flex items-center px-4 py-2 text-sm rounded-lg border transition-all duration-300 hover:scale-105 backdrop-blur-sm ${
                     location.pathname === "/terms-of-service" 
-                      ? "bg-[#1E3A5F]/30 border-[#2356A0]/40 text-[#F59E0B]" 
-                      : "bg-[#1E3A5F]/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
+                      ? "bg-navy-600/20 border-navy-500/40 text-amber-300" 
+                      : "bg-navy-700/60 border-slate-600/50 text-gray-300 hover:bg-slate-600/60 hover:border-slate-500/50 hover:text-white"
                   }`}
                 >
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -678,8 +678,8 @@ export default function Footer() {
       </div>
 
       {/* Smart Professional Bottom Bar */}
-      <div className="relative border-t border-[#2E4A6B]/30 bg-[#1A2E4A]/60 backdrop-blur-md">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D97706]/15 to-transparent"></div>
+      <div className="relative border-t border-slate-600/30 bg-navy-800/60 backdrop-blur-md">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy-700/15 to-transparent"></div>
         
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-2">
@@ -688,14 +688,14 @@ export default function Footer() {
                 © {new Date().getFullYear()} <span className="font-medium text-gray-300">SubhaYatra</span>. {t('footer.allRightsReserved')}.
               </p>
               <div className="hidden md:flex items-center space-x-1">
-                <div className="w-1 h-1 bg-[#2356A0]/60 rounded-full"></div>
-                <div className="w-0.5 h-0.5 bg-green-500/60 rounded-full animate-pulse"></div>
+                <div className="w-1 h-1 bg-navy-600/60 rounded-full"></div>
+                <div className="w-0.5 h-0.5 bg-success/60 rounded-full animate-pulse"></div>
               </div>
             </div>
             
             <div className="flex items-center space-x-4 text-xs text-gray-400 font-light">
               <div className="flex items-center space-x-1">
-                <svg className="w-3 h-3 text-[#D97706]" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-3 h-3 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                 </svg>
                 <span className="tracking-wide">{t('footer.madeWithLove')}</span>

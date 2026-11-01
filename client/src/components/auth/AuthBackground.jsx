@@ -26,7 +26,7 @@ const AuthBackground = ({ dark }) => (
         <div
             className={`absolute inset-0 ${dark
                 ? 'bg-linear-to-br from-slate-950 via-slate-900 to-slate-950'
-                : 'bg-linear-to-br from-[#2356A0] via-white to-[#1A2E4A]'
+                : 'bg-linear-to-br from-navy-700 via-white to-navy-700'
                 }`}
         />
 
@@ -62,7 +62,7 @@ const AuthBackground = ({ dark }) => (
         {FLOAT_ICONS.map(({ Icon, top, left, size, delay, dur }, i) => (
             <div
                 key={i}
-                className={`absolute pointer-events-none ${dark ? 'text-[#2356A0]/20' : 'text-[#2356A0]/15'}`}
+                className={`absolute pointer-events-none ${dark ? 'text-navy-500/20' : 'text-navy-600/15'}`}
                 style={{
                     top,
                     left,

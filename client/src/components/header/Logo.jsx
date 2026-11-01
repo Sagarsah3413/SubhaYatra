@@ -18,8 +18,8 @@ const Logo = ({ onClick, theme }) => (
         {/* Wordmark */}
         <div className="hidden sm:flex flex-col leading-none">
             <span className={`text-lg font-black tracking-tight bg-linear-to-r bg-clip-text text-transparent ${theme === 'dark'
-                    ? 'from-[#93B8DC] to-[#F59E0B]'
-                    : 'from-[#1A2E4A] to-[#2356A0]'
+                    ? 'from-navy-700 to-success'
+                    : 'from-navy-700 to-success'
                 }`}>
                 SubhaYatra
             </span>
