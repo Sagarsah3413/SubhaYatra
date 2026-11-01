@@ -132,36 +132,31 @@ const InspireButton = memo(({ isSignedIn, onClick, theme }) => {
 
 InspireButton.displayName = 'InspireButton';
 
-// Clean CategoryButton component without background
-const CategoryButton = memo(({ isActive, onClick, icon: Icon, title, description, gradient, bgGradient, borderColor }) => (
-  <button 
-    className={`group relative backdrop-blur-xl rounded-xl p-4 transition-all duration-500 hover:scale-105 transform-gpu border overflow-hidden ${
-      isActive 
-        ? `border-${borderColor}-400/50 scale-105` 
-        : `border-slate-200/40 dark:border-navy-700/40 hover:border-${borderColor}-300/60 dark:hover:border-${borderColor}-600/60`
-    }`}
+// Restrained editorial CategoryButton — solid tokens, no decorative gradients
+const CategoryButton = memo(({ isActive, onClick, icon: Icon, title, description }) => (
+  <button
+    type="button"
     onClick={onClick}
+    aria-pressed={isActive}
+    className={`group flex items-start gap-3 text-left rounded-xl border px-4 py-3 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 ${
+      isActive
+        ? "border-amber-500 bg-amber-50 dark:bg-navy-800 dark:border-amber-400"
+        : "border-surface-300 bg-white hover:border-navy-400 dark:border-navy-700 dark:bg-navy-900 dark:hover:border-navy-500"
+    }`}
   >
-    <div className="relative z-10 text-center">
-      {/* Icon Container */}
-      <div className={`w-10 h-10 bg-gradient-to-br ${gradient} rounded-xl flex items-center justify-center mx-auto mb-2 shadow-lg group-hover:scale-110 group-hover:rotate-1 transition-all duration-500`}>
-        <Icon className="text-base text-white drop-shadow-sm" />
-      </div>
-      
-      <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1 tracking-wide">{title}</h3>
-      <p className="text-slate-600 dark:text-slate-400 text-xs font-medium leading-relaxed">{description}</p>
-      
-      {/* Active Indicator */}
-      {isActive && (
-        <div className="absolute top-2 right-2 flex items-center gap-1">
-          <div className={`w-1.5 h-1.5 bg-gradient-to-r from-${borderColor}-500 to-${borderColor === 'teal' ? 'emerald' : borderColor === 'amber' ? 'orange' : borderColor === 'purple' ? 'pink' : 'green'}-500 rounded-full shadow-sm`}></div>
-          <div className={`w-1 h-1 bg-gradient-to-r from-${borderColor === 'teal' ? 'emerald' : borderColor === 'amber' ? 'orange' : borderColor === 'purple' ? 'pink' : 'green'}-500 to-${borderColor}-500 rounded-full shadow-sm animate-pulse`}></div>
-        </div>
-      )}
-      
-      {/* Bottom Accent */}
-      <div className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-px bg-gradient-to-r from-transparent via-${borderColor}-400/30 to-transparent transition-all duration-300 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}></div>
-    </div>
+    <span
+      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
+        isActive
+          ? "bg-amber-500 text-white"
+          : "bg-surface-100 text-navy-600 dark:bg-navy-800 dark:text-amber-400"
+      }`}
+    >
+      <Icon className="text-base" />
+    </span>
+    <span className="min-w-0">
+      <span className="block text-sm font-semibold text-navy-900 dark:text-white">{title}</span>
+      <span className="block text-xs text-surface-600 dark:text-slate-400">{description}</span>
+    </span>
   </button>
 ));
 
@@ -274,15 +269,9 @@ const MainApp = memo(() => {
   }
 
   return (
-    <div className="min-h-screen text-white flex flex-col relative overflow-hidden">
-      {/* Static Gradient Background */}
-      <div className="fixed inset-0 w-full h-full z-0">
-        {/* Beautiful gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900"></div>
-        
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-900/50 via-navy-900/30 to-navy-900/50"></div>
-      </div>
+    <div className="min-h-screen flex flex-col relative overflow-hidden bg-surface-50 text-navy-900 dark:bg-navy-950 dark:text-white">
+      {/* Clean solid page background */}
+      <div className="fixed inset-0 w-full h-full z-0 bg-surface-50 dark:bg-navy-950"></div>
 
       {/* Content Container - Above Background */}
       <div className="relative z-10 flex flex-col min-h-screen">
@@ -295,240 +284,107 @@ const MainApp = memo(() => {
 
       <HeaderWithNav />
       
-      {/* Welcome Back Explorer Section - Ultra Professional Tourism Design */}
+      {/* Welcome Back — full-bleed editorial Himalayan hero */}
       <SignedIn>
-        <div className="mx-auto mt-20 mb-6 max-w-6xl relative px-4">
-          {/* Ultra Professional Container */}
-          <div className="relative bg-white/98 dark:bg-navy-900/98 backdrop-blur-2xl rounded-3xl border border-slate-200/30 dark:border-navy-700/30 shadow-2xl hover:shadow-3xl transition-all duration-700 overflow-hidden group">
-            
-            {/* Premium Glass Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-white/20 dark:from-navy-800/40 dark:via-transparent dark:to-slate-800/20 pointer-events-none"></div>
-            
-            {/* Nepal Background Video - Beautiful Nature */}
-            <div className="absolute inset-0 opacity-60 dark:opacity-50 transition-opacity duration-700 group-hover:opacity-70 dark:group-hover:opacity-60 overflow-hidden">
-              <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="w-full h-full object-cover"
-                style={{
-                  filter: 'brightness(1) contrast(1.05) saturate(1.1)'
-                }}
-              >
-                <source src="/IMG_8851.MP4" type="video/mp4" />
-                {/* Fallback to image if video doesn't load */}
-                <img 
-                  src={nepalImage} 
-                  alt="Nepal" 
-                  className="w-full h-full object-cover"
-                />
-              </video>
-            </div>
-            
-            {/* Professional Gradient Overlay - Lighter for better video visibility */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/60 to-white/70 dark:from-navy-900/70 dark:via-slate-900/60 dark:to-navy-900/70"></div>
-            
-            {/* Premium Top Border */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy-600/40 to-transparent"></div>
-            
-            {/* Ultra Professional Content */}
-            <div className="relative p-12 md:p-16 text-center z-10">
-              
-              {/* Executive Header */}
-              <div className="mb-10">
-                {/* Premium Status Badge */}
-                <div className="inline-flex items-center gap-3 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-navy-800/60 dark:to-slate-700/60 rounded-full px-6 py-3 mb-6 border border-slate-200/50 dark:border-navy-700/50 shadow-lg backdrop-blur-sm">
-                  <div className="w-2 h-2 bg-gradient-to-r from-navy-600 to-success rounded-full shadow-sm"></div>
-                  <span className="text-slate-700 dark:text-slate-300 font-semibold text-sm tracking-wider uppercase">Premium Experience</span>
-                  <div className="w-2 h-2 bg-gradient-to-r from-success to-navy-600 rounded-full shadow-sm"></div>
-                </div>
-                
-                {/* Executive Welcome Message */}
-                <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
-                  <span className="bg-gradient-to-r from-navy-900 via-navy-700 to-success dark:from-white dark:via-navy-700 dark:to-success bg-clip-text text-transparent">
-                    Welcome Back, Explorer
-                  </span>
-                </h2>
-                
-                {/* Professional Subtitle */}
-                <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed font-light tracking-wide">
-                  Curated journeys through the heart of the Himalayas
+        <section className="relative mx-auto mt-20 mb-10 w-full max-w-6xl px-4">
+          <div className="relative overflow-hidden rounded-2xl">
+            {/* Himalayan heritage backdrop */}
+            <img
+              src={nepalImage}
+              alt="The Himalayas of Nepal"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            {/* Scrim for legible contrast in both themes */}
+            <div className="absolute inset-0 bg-navy-950/70" aria-hidden="true"></div>
+
+            <div className="relative z-10 px-8 py-16 md:px-14 md:py-24 max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
+                SubhaYatra
+              </p>
+              <h2 className="mt-4 text-4xl md:text-5xl font-semibold leading-tight text-white">
+                Welcome back, explorer
+              </h2>
+              <p className="mt-5 max-w-lg text-base md:text-lg leading-relaxed text-slate-200">
+                Curated journeys through the heart of the Himalayas — heritage
+                squares, mountain trails, and the living culture of Nepal.
+              </p>
+
+              {hotelCount > 0 && (
+                <p className="mt-6 text-sm text-slate-300">
+                  <span className="font-semibold text-white">{hotelCount}</span>{" "}
+                  stays ready to explore
                 </p>
-              </div>
-              
-              {/* Executive Stats Section */}
-              <div className="grid grid-cols-3 gap-8 mb-12 max-w-2xl mx-auto">
-                <div className="text-center group">
-                  <div className="text-3xl md:text-4xl font-black text-navy-600 dark:text-amber-400 mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-black uppercase tracking-wider">Destinations</div>
-                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-navy-600/30 to-transparent mx-auto mt-2"></div>
-                </div>
-                <div className="text-center group border-x border-slate-200/40 dark:border-navy-700/40">
-                  <div className="text-3xl md:text-4xl font-black text-success dark:text-success mb-2 group-hover:scale-105 transition-transform duration-300">500<span className="text-2xl md:text-3xl">+</span></div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-black uppercase tracking-wider">Accommodations</div>
-                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-success/30 to-transparent mx-auto mt-2"></div>
-                </div>
-                <div className="text-center group">
-                  <div className="text-3xl md:text-4xl font-black text-navy-400 dark:text-navy-400 mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 font-black uppercase tracking-wider">Experiences</div>
-                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-navy-600/30 to-transparent mx-auto mt-2"></div>
-                </div>
-              </div>
-              
-              {/* Executive Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                {/* Primary Executive Button */}
-                <button 
+              )}
+
+              <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
                   onClick={() => navigate('/explore-nepal')}
-                  className="group relative px-10 py-4 bg-gradient-to-r from-navy-700 via-success to-navy-700 hover:from-navy-700 hover:via-success hover:to-navy-700 text-white rounded-2xl font-medium text-base transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-2xl flex items-center gap-4 min-w-[220px] justify-center overflow-hidden"
+                  className="inline-flex items-center justify-center rounded-lg bg-amber-500 px-6 py-3 text-sm font-semibold text-navy-950 transition-colors duration-200 hover:bg-amber-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950"
                 >
-                  {/* Premium Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  
-                  {/* Executive Icon */}
-                  <div className="relative z-10 p-2 bg-white/20 rounded-xl backdrop-blur-sm">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012-2v-1a2 2 0 012-2h1.945M15 8a3 3 0 11-6 0 3 3 0 016 0zm-3 7h.01M9 5a2 2 0 012-2h.01a2 2 0 012 2H9z" />
-                    </svg>
-                  </div>
-                  
-                  <span className="relative z-10 font-medium tracking-wide">Explore Nepal</span>
-                  
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300 relative z-10" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
+                  Explore Nepal
                 </button>
-                
-                {/* Secondary Executive Button */}
-                <button 
+                <button
+                  type="button"
                   onClick={() => navigate('/guide')}
-                  className="group relative px-10 py-4 bg-white/95 dark:bg-navy-800/95 hover:bg-white dark:hover:bg-navy-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white rounded-2xl font-medium text-base transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-4 border border-slate-200/50 dark:border-navy-700/50 hover:border-slate-300/70 dark:hover:border-slate-500/70 min-w-[220px] justify-center backdrop-blur-sm"
+                  className="inline-flex items-center justify-center rounded-lg border border-white/40 px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-navy-950"
                 >
-                  <svg className="w-5 h-5 text-navy-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                  </svg>
-                  <span className="tracking-wide">Plan Journey</span>
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                  </svg>
+                  Plan Journey
                 </button>
               </div>
             </div>
-            
-            {/* Subtle Corner Accents */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-navy-600/5 to-transparent rounded-br-3xl"></div>
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-success/5 to-transparent rounded-tl-3xl"></div>
           </div>
-        </div>
+        </section>
       </SignedIn>
 
-      {/* Ultra Professional Adventure Message */}
-      <div className="relative mt-8 mb-10 overflow-hidden">
-        <div className="relative z-10 text-center">
-          <div className="inline-flex items-center gap-4 bg-gradient-to-r from-surface-100/95 via-white/95 to-surface-100/95 dark:from-navy-800/95 dark:via-navy-900/95 dark:to-navy-800/95 rounded-full px-8 py-4 mb-6 backdrop-blur-xl border border-slate-200/40 dark:border-navy-700/40 shadow-xl">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-gradient-to-r from-navy-600 to-success rounded-full shadow-sm"></div>
-              <div className="w-1.5 h-1.5 bg-gradient-to-r from-success to-navy-700 rounded-full shadow-sm animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-              <div className="w-1 h-1 bg-gradient-to-r from-navy-600 to-navy-600 rounded-full shadow-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
-            </div>
-            <span className="text-slate-700 dark:text-slate-300 font-medium text-base tracking-wider">{t('homepage.adventureAwaits')}</span>
-            <div className="flex items-center gap-2">
-              <div className="w-1 h-1 bg-gradient-to-r from-navy-600 to-navy-600 rounded-full shadow-sm animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-              <div className="w-1.5 h-1.5 bg-gradient-to-r from-success to-navy-700 rounded-full shadow-sm animate-pulse" style={{ animationDelay: '2s' }}></div>
-              <div className="w-2 h-2 bg-gradient-to-r from-navy-600 to-success rounded-full shadow-sm"></div>
-            </div>
-          </div>
-          
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-light mb-4 leading-tight tracking-tight">
-            <span className="bg-gradient-to-r from-navy-800 via-slate-700 to-slate-800 dark:from-slate-200 dark:via-white dark:to-slate-200 bg-clip-text text-transparent">
-              {message}
-            </span>
-          </h1>
-        </div>
+      {/* Adventure prompt — simple editorial heading */}
+      <div className="mt-10 mb-10 px-4 text-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-600 dark:text-amber-400">
+          {t('homepage.adventureAwaits')}
+        </p>
+        <h1 className="mt-3 text-2xl md:text-4xl font-semibold leading-tight tracking-tight text-navy-900 dark:text-white">
+          {message}
+        </h1>
       </div>
 
-      {/* Ultra Professional Category Navigation */}
-      <div className="relative mb-12 overflow-hidden">
-        {/* Premium Background Pattern */}
-        <div className="absolute inset-0 opacity-5 dark:opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `
-              radial-gradient(circle at 25% 50%, rgba(6, 182, 212, 0.2) 0%, transparent 60%),
-              radial-gradient(circle at 75% 50%, rgba(16, 185, 129, 0.2) 0%, transparent 60%)
-            `,
-            backgroundSize: '1000px 1000px, 800px 800px'
-          }}></div>
-        </div>
-
-        <div className="relative z-10 flex flex-wrap justify-center gap-6 max-w-6xl mx-auto px-4">
-          
-          {/* Search All - Ultra Premium */}
+      {/* Category navigation — restrained, consistent */}
+      <div className="mb-10 px-4">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <CategoryButton
             isActive={message === t('homepage.welcome')}
             onClick={categoryHandlers.searchAll}
             icon={FaSearch}
             title={t('homepage.searchAll')}
             description={t('homepage.everythingNepal')}
-            gradient="from-navy-600 to-navy-700"
-            bgGradient="from-white via-navy-700 to-navy-700 dark:from-navy-800 dark:via-navy-700/20 dark:to-navy-700/20"
-            borderColor="teal"
           />
-
-          {/* Hotels - Ultra Premium */}
           <CategoryButton
             isActive={message === t('homepage.welcomeMessage')}
             onClick={categoryHandlers.hotels}
             icon={FaHotel}
             title={t('homepage.hotels')}
             description={t('homepage.cozyStays')}
-            gradient="from-amber-500 to-orange-600"
-            bgGradient="from-white via-amber-50 to-orange-50 dark:from-navy-800 dark:via-amber-900/20 dark:to-orange-900/20"
-            borderColor="amber"
           />
-
-          {/* Things To Do - Ultra Premium */}
           <CategoryButton
             isActive={message === t('homepage.experienceMessage')}
             onClick={categoryHandlers.activities}
             icon={FaMapMarkedAlt}
             title={t('homepage.thingsToDo')}
             description={t('homepage.excitingExperiences')}
-            gradient="from-purple-500 to-pink-600"
-            bgGradient="from-white via-purple-50 to-pink-50 dark:from-navy-800 dark:via-purple-900/20 dark:to-pink-900/20"
-            borderColor="purple"
           />
-
-          {/* Restaurants - Ultra Premium */}
           <CategoryButton
             isActive={message === t('homepage.foodMessage')}
             onClick={categoryHandlers.restaurants}
             icon={FaUtensils}
             title={t('homepage.restaurants')}
             description={t('homepage.tasteAdventures')}
-            gradient="from-success to-green-600"
-            bgGradient="from-white via-success to-green-50 dark:from-navy-800 dark:via-success/20 dark:to-green-900/20"
-            borderColor="emerald"
           />
         </div>
       </div>
 
-      {/* Ultra Premium Search Bar Container */}
-      <div className="relative mb-16 overflow-visible">
-        {/* Premium Background Pattern */}
-        <div className="absolute inset-0 opacity-5 dark:opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `
-              radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.3) 0%, transparent 50%)
-            `,
-            backgroundSize: '600px 600px'
-          }}></div>
-        </div>
-
-        <div className="relative z-10 flex justify-center max-w-4xl mx-auto px-4">
-          <div className="w-full bg-gradient-to-r from-white/95 to-gray-50/95 dark:from-navy-800/95 dark:to-slate-700/95 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border-2 border-gray-200 dark:border-navy-700 overflow-visible">
-            <SearchBar placeholder={searchPlaceholder} category={activeCategory} />
-          </div>
+      {/* Search bar container — restrained card */}
+      <div className="mb-16 px-4">
+        <div className="mx-auto w-full max-w-4xl rounded-2xl border border-surface-300 bg-white p-6 shadow-sm dark:border-navy-700 dark:bg-navy-900">
+          <SearchBar placeholder={searchPlaceholder} category={activeCategory} />
         </div>
       </div>
 
