@@ -480,225 +480,7 @@ export default function ExploreNepal() {
                       <p className="text-gray-600 dark:text-gray-400 font-medium">Click any province to explore detailed information</p>
                     </div>
                     
-                    {/* Premium SVG Map of Nepal */}
-                    <div className="relative bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 mb-8 border-2 border-gray-200 dark:border-navy-700 shadow-inner">
-                      <svg viewBox="0 0 800 400" className="w-full h-auto rounded-xl overflow-hidden">
-                        {/* Premium Background with Gradient */}
-                        <defs>
-                          <linearGradient id="mapBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor={theme === 'dark' ? '#1e293b' : '#f8fafc'} />
-                            <stop offset="50%" stopColor={theme === 'dark' ? '#334155' : '#e2e8f0'} />
-                            <stop offset="100%" stopColor={theme === 'dark' ? '#1e293b' : '#f8fafc'} />
-                          </linearGradient>
-                          
-                          {/* Glow Effects for Selected Province */}
-                          <filter id="glow">
-                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                            <feMerge> 
-                              <feMergeNode in="coloredBlur"/>
-                              <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                          </filter>
-                          
-                          {/* Drop Shadow */}
-                          <filter id="dropshadow" x="-20%" y="-20%" width="140%" height="140%">
-                            <feDropShadow dx="2" dy="2" stdDeviation="2" floodOpacity="0.3"/>
-                          </filter>
-                        </defs>
-                        
-                        <rect width="800" height="400" fill="url(#mapBg)" />
-                        
-                        {/* Province 1 - Koshi (Far East) */}
-                        <path
-                          d="M600 100 L750 120 L780 180 L750 220 L680 200 L620 160 Z"
-                          fill={selectedProvince === 'koshi' ? '#059669' : (theme === 'dark' ? '#475569' : '#e2e8f0')}
-                          stroke={selectedProvince === 'koshi' ? '#10b981' : (theme === 'dark' ? '#64748b' : '#374151')}
-                          strokeWidth={selectedProvince === 'koshi' ? "3" : "2"}
-                          className="cursor-pointer transition-all duration-500 hover:opacity-80 transform-gpu"
-                          style={{
-                            filter: selectedProvince === 'koshi' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)',
-                            transformOrigin: 'center'
-                          }}
-                          onClick={() => setSelectedProvince(selectedProvince === 'koshi' ? null : 'koshi')}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'scale(1.05)';
-                            e.target.style.filter = 'url(#glow) url(#dropshadow)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'scale(1)';
-                            e.target.style.filter = selectedProvince === 'koshi' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)';
-                          }}
-                        />
-                        <text x="680" y="160" textAnchor="middle" className="text-sm font-bold pointer-events-none" fill={theme === 'dark' ? '#f1f5f9' : '#1e293b'}>
-                          Koshi
-                        </text>
-                        
-                        {/* Province 2 - Madhesh (South) */}
-                        <path
-                          d="M400 250 L620 260 L680 300 L650 340 L400 330 Z"
-                          fill={selectedProvince === 'madhesh' ? '#0891b2' : (theme === 'dark' ? '#475569' : '#e2e8f0')}
-                          stroke={selectedProvince === 'madhesh' ? '#06b6d4' : (theme === 'dark' ? '#64748b' : '#374151')}
-                          strokeWidth={selectedProvince === 'madhesh' ? "3" : "2"}
-                          className="cursor-pointer transition-all duration-500 hover:opacity-80 transform-gpu"
-                          style={{
-                            filter: selectedProvince === 'madhesh' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)',
-                            transformOrigin: 'center'
-                          }}
-                          onClick={() => setSelectedProvince(selectedProvince === 'madhesh' ? null : 'madhesh')}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'scale(1.05)';
-                            e.target.style.filter = 'url(#glow) url(#dropshadow)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'scale(1)';
-                            e.target.style.filter = selectedProvince === 'madhesh' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)';
-                          }}
-                        />
-                        <text x="540" y="300" textAnchor="middle" className="text-sm font-bold pointer-events-none" fill={theme === 'dark' ? '#f1f5f9' : '#1e293b'}>
-                          Madhesh
-                        </text>
-                        
-                        {/* Province 3 - Bagmati (Central) */}
-                        <path
-                          d="M400 150 L550 140 L600 180 L580 220 L450 230 L400 200 Z"
-                          fill={selectedProvince === 'bagmati' ? '#7c3aed' : (theme === 'dark' ? '#475569' : '#e2e8f0')}
-                          stroke={selectedProvince === 'bagmati' ? '#8b5cf6' : (theme === 'dark' ? '#64748b' : '#374151')}
-                          strokeWidth={selectedProvince === 'bagmati' ? "3" : "2"}
-                          className="cursor-pointer transition-all duration-500 hover:opacity-80 transform-gpu"
-                          style={{
-                            filter: selectedProvince === 'bagmati' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)',
-                            transformOrigin: 'center'
-                          }}
-                          onClick={() => setSelectedProvince(selectedProvince === 'bagmati' ? null : 'bagmati')}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'scale(1.05)';
-                            e.target.style.filter = 'url(#glow) url(#dropshadow)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'scale(1)';
-                            e.target.style.filter = selectedProvince === 'bagmati' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)';
-                          }}
-                        />
-                        <text x="500" y="185" textAnchor="middle" className="text-sm font-bold pointer-events-none" fill={theme === 'dark' ? '#f1f5f9' : '#1e293b'}>
-                          Bagmati
-                        </text>
-                        
-                        {/* Province 4 - Gandaki (Central-West) */}
-                        <path
-                          d="M250 120 L400 130 L420 180 L380 220 L280 210 L230 160 Z"
-                          fill={selectedProvince === 'gandaki' ? '#dc2626' : (theme === 'dark' ? '#475569' : '#e2e8f0')}
-                          stroke={selectedProvince === 'gandaki' ? '#ef4444' : (theme === 'dark' ? '#64748b' : '#374151')}
-                          strokeWidth={selectedProvince === 'gandaki' ? "3" : "2"}
-                          className="cursor-pointer transition-all duration-500 hover:opacity-80 transform-gpu"
-                          style={{
-                            filter: selectedProvince === 'gandaki' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)',
-                            transformOrigin: 'center'
-                          }}
-                          onClick={() => setSelectedProvince(selectedProvince === 'gandaki' ? null : 'gandaki')}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'scale(1.05)';
-                            e.target.style.filter = 'url(#glow) url(#dropshadow)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'scale(1)';
-                            e.target.style.filter = selectedProvince === 'gandaki' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)';
-                          }}
-                        />
-                        <text x="325" y="170" textAnchor="middle" className="text-sm font-bold pointer-events-none" fill={theme === 'dark' ? '#f1f5f9' : '#1e293b'}>
-                          Gandaki
-                        </text>
-                        
-                        {/* Province 5 - Lumbini (South-West) */}
-                        <path
-                          d="M150 200 L350 210 L380 260 L350 300 L150 290 Z"
-                          fill={selectedProvince === 'lumbini' ? '#059669' : (theme === 'dark' ? '#475569' : '#e2e8f0')}
-                          stroke={selectedProvince === 'lumbini' ? '#10b981' : (theme === 'dark' ? '#64748b' : '#374151')}
-                          strokeWidth={selectedProvince === 'lumbini' ? "3" : "2"}
-                          className="cursor-pointer transition-all duration-500 hover:opacity-80 transform-gpu"
-                          style={{
-                            filter: selectedProvince === 'lumbini' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)',
-                            transformOrigin: 'center'
-                          }}
-                          onClick={() => setSelectedProvince(selectedProvince === 'lumbini' ? null : 'lumbini')}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'scale(1.05)';
-                            e.target.style.filter = 'url(#glow) url(#dropshadow)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'scale(1)';
-                            e.target.style.filter = selectedProvince === 'lumbini' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)';
-                          }}
-                        />
-                        <text x="265" y="255" textAnchor="middle" className="text-sm font-bold pointer-events-none" fill={theme === 'dark' ? '#f1f5f9' : '#1e293b'}>
-                          Lumbini
-                        </text>
-                        
-                        {/* Province 6 - Karnali (Mid-West) */}
-                        <path
-                          d="M50 80 L220 90 L250 140 L220 180 L80 170 L30 120 Z"
-                          fill={selectedProvince === 'karnali' ? '#ea580c' : (theme === 'dark' ? '#475569' : '#e2e8f0')}
-                          stroke={selectedProvince === 'karnali' ? '#f97316' : (theme === 'dark' ? '#64748b' : '#374151')}
-                          strokeWidth={selectedProvince === 'karnali' ? "3" : "2"}
-                          className="cursor-pointer transition-all duration-500 hover:opacity-80 transform-gpu"
-                          style={{
-                            filter: selectedProvince === 'karnali' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)',
-                            transformOrigin: 'center'
-                          }}
-                          onClick={() => setSelectedProvince(selectedProvince === 'karnali' ? null : 'karnali')}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'scale(1.05)';
-                            e.target.style.filter = 'url(#glow) url(#dropshadow)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'scale(1)';
-                            e.target.style.filter = selectedProvince === 'karnali' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)';
-                          }}
-                        />
-                        <text x="140" y="135" textAnchor="middle" className="text-sm font-bold pointer-events-none" fill={theme === 'dark' ? '#f1f5f9' : '#1e293b'}>
-                          Karnali
-                        </text>
-                        
-                        {/* Province 7 - Sudurpashchim (Far West) */}
-                        <path
-                          d="M20 150 L150 160 L180 200 L150 240 L50 230 L20 190 Z"
-                          fill={selectedProvince === 'sudurpashchim' ? '#7c2d12' : (theme === 'dark' ? '#475569' : '#e2e8f0')}
-                          stroke={selectedProvince === 'sudurpashchim' ? '#a3472a' : (theme === 'dark' ? '#64748b' : '#374151')}
-                          strokeWidth={selectedProvince === 'sudurpashchim' ? "3" : "2"}
-                          className="cursor-pointer transition-all duration-500 hover:opacity-80 transform-gpu"
-                          style={{
-                            filter: selectedProvince === 'sudurpashchim' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)',
-                            transformOrigin: 'center'
-                          }}
-                          onClick={() => setSelectedProvince(selectedProvince === 'sudurpashchim' ? null : 'sudurpashchim')}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = 'scale(1.05)';
-                            e.target.style.filter = 'url(#glow) url(#dropshadow)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = 'scale(1)';
-                            e.target.style.filter = selectedProvince === 'sudurpashchim' ? 'url(#glow) url(#dropshadow)' : 'url(#dropshadow)';
-                          }}
-                        />
-                        <text x="100" y="200" textAnchor="middle" className="text-sm font-bold pointer-events-none" fill={theme === 'dark' ? '#f1f5f9' : '#1e293b'}>
-                          Sudurpashchim
-                        </text>
-                        
-                        {/* Premium Compass Rose */}
-                        <g transform="translate(60, 350)">
-                          <circle cx="0" cy="0" r="30" fill="none" stroke={theme === 'dark' ? '#64748b' : '#374151'} strokeWidth="2"/>
-                          <circle cx="0" cy="0" r="25" fill="rgba(6, 182, 212, 0.1)" stroke="rgba(6, 182, 212, 0.3)" strokeWidth="1"/>
-                          <path d="M0,-22 L6,0 L0,22 L-6,0 Z" fill="url(#compassGradient)"/>
-                          <defs>
-                            <linearGradient id="compassGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                              <stop offset="0%" stopColor="#0891b2" />
-                              <stop offset="100%" stopColor="#0e7490" />
-                            </linearGradient>
-                          </defs>
-                          <text x="0" y="-35" textAnchor="middle" className="text-sm font-bold" fill={theme === 'dark' ? '#f1f5f9' : '#1e293b'}>N</text>
-                          <text x="0" y="45" textAnchor="middle" className="text-xs font-medium" fill={theme === 'dark' ? '#94a3b8' : '#64748b'}>Compass</text>
-                        </g>
-                      </svg>
-                    </div>
+
 
                     {/* Premium Alternative Grid Map */}
                     <div className="mb-8">
@@ -752,8 +534,8 @@ export default function ExploreNepal() {
                     </div>
                     
                     {/* Premium Map Legend */}
-                    <div className="bg-gradient-to-r from-gray-50 to-white dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 border border-gray-200 dark:border-navy-700">
-                      <h4 className="text-lg font-bold mb-4 text-center text-gray-900 dark:text-white">Province Legend</h4>
+                    {/* <div className="bg-gradient-to-r from-gray-50 to-white dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 border border-gray-200 dark:border-navy-700">
+                      <h4 className="text-lg font-bold mb-4 text-center text-gray-900 dark:text-white">Province Legend </h4>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {Object.entries(nepalProvinces).map(([key, province]) => (
                           <button
@@ -779,7 +561,7 @@ export default function ExploreNepal() {
                           </button>
                         ))}
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
 

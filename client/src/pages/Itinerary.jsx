@@ -408,6 +408,9 @@ const Itinerary = () => {
   const [generatedItinerary, setGeneratedItinerary] = useState(null);
   const [availablePlaces, setAvailablePlaces] = useState([]);
   const [loadingPlaces, setLoadingPlaces] = useState(true);
+  const [destinationSearch, setDestinationSearch] = useState('');
+  const [destinationPage, setDestinationPage] = useState(1);
+  const DESTINATIONS_PER_PAGE = 6;
   const [hasShownPreselectedToast, setHasShownPreselectedToast] = useState(false);
   const [hasShownTipsToast, setHasShownTipsToast] = useState(false);
   
@@ -1329,7 +1332,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     <h3 className="text-2xl font-black mb-2">Destinations</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">Select places to visit</p>
                   </div>
-                  <div className="space-y-4 max-h-80 overflow-y-auto custom-scrollbar">
+                  <div className="space-y-4">
                     {loadingPlaces ? (
                       <div className="text-center py-8">
                         <FaSpinner className="animate-spin text-4xl mx-auto mb-4 text-navy-500" />
@@ -1342,58 +1345,154 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                       </div>
                     ) : (
                       <>
-                        <div className={`text-center py-2 px-4 rounded-lg mb-4 ${
+                        {/* Search bar */}
+                        <div className="relative">
+                          <FaMapMarkerAlt className={`absolute left-3 top-1/2 -translate-y-1/2 text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-400'}`} />
+                          <input
+                            type="text"
+                            value={destinationSearch}
+                            onChange={(e) => { setDestinationSearch(e.target.value); setDestinationPage(1); }}
+                            placeholder="Search destinations..."
+                            className={`w-full pl-9 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-navy-500 transition-all ${
+                              theme === 'dark'
+                                ? 'bg-navy-700/60 border-navy-600 text-white placeholder-gray-400'
+                                : 'bg-white border-gray-200 text-gray-800 placeholder-gray-400'
+                            }`}
+                          />
+                          {destinationSearch && (
+                            <button
+                              onClick={() => { setDestinationSearch(''); setDestinationPage(1); }}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 text-xs"
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Count badge */}
+                        <div className={`text-center py-2 px-4 rounded-lg ${
                           theme === 'dark' ? 'bg-navy-100/30 text-amber-400' : 'bg-navy-50 text-navy-500'
                         }`}>
                           <p className="text-sm font-bold">
-                            ✅ {availablePlaces.length} destinations loaded from database
+                            {(() => {
+                              const filtered = availablePlaces.filter(p =>
+                                !destinationSearch ||
+                                p.name.toLowerCase().includes(destinationSearch.toLowerCase()) ||
+                                (p.location && p.location.toLowerCase().includes(destinationSearch.toLowerCase())) ||
+                                (p.type && p.type.toLowerCase().includes(destinationSearch.toLowerCase()))
+                              );
+                              return destinationSearch
+                                ? `🔍 ${filtered.length} of ${availablePlaces.length} destinations`
+                                : `✅ ${availablePlaces.length} destinations loaded`;
+                            })()}
                           </p>
                         </div>
-                        {availablePlaces.map((place) => {
-                        const isPreselected = preselectedDestination && 
-                          (place.id === preselectedDestination.id || 
-                           place.name.toLowerCase() === preselectedDestination.name.toLowerCase());
-                        
-                        return (
-                          <label 
-                            key={place.id} 
-                            className={`flex items-center space-x-4 p-4 rounded-xl cursor-pointer transition-all duration-300 ${
-                              formData.destinations.includes(place.id)
-                                ? 'bg-gradient-to-r from-navy-600/20 to-navy-700/20 border-2 border-navy-500 shadow-lg'
-                                : isPreselected
-                                  ? 'bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-2 border-purple-400 shadow-md'
-                                  : theme === 'dark'
-                                    ? 'bg-navy-700/50 hover:bg-navy-700 border-2 border-transparent'
-                                    : 'bg-surface-100 hover:bg-gray-200 border-2 border-transparent'
-                            }`}
-                          >
-                            <input 
-                              type="checkbox" 
-                              checked={formData.destinations.includes(place.id)}
-                              onChange={() => toggleDestination(place.id)}
-                              className="w-5 h-5 text-navy-600 rounded-lg focus:ring-2 focus:ring-navy-500" 
-                            />
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2">
-                                <span className="font-bold text-lg">{place.name}</span>
-                                {isPreselected && (
-                                  <span className="px-2 py-0.5 bg-purple-500 text-white text-xs rounded-full font-bold">
-                                    From Details
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-sm text-gray-500 dark:text-gray-400">
-                                {place.location} • {place.type || 'Destination'}
-                              </div>
-                              {place.best_season && (
-                                <div className="text-xs text-navy-600 dark:text-amber-400 mt-1">
-                                  Best: {place.best_season}
+
+                        {/* Paginated list */}
+                        <div className="space-y-3 max-h-80 overflow-y-auto custom-scrollbar pr-1">
+                          {(() => {
+                            const filtered = availablePlaces.filter(p =>
+                              !destinationSearch ||
+                              p.name.toLowerCase().includes(destinationSearch.toLowerCase()) ||
+                              (p.location && p.location.toLowerCase().includes(destinationSearch.toLowerCase())) ||
+                              (p.type && p.type.toLowerCase().includes(destinationSearch.toLowerCase()))
+                            );
+                            const totalPages = Math.ceil(filtered.length / DESTINATIONS_PER_PAGE);
+                            const paginated = filtered.slice(
+                              (destinationPage - 1) * DESTINATIONS_PER_PAGE,
+                              destinationPage * DESTINATIONS_PER_PAGE
+                            );
+
+                            if (filtered.length === 0) {
+                              return (
+                                <div className="text-center py-6">
+                                  <p className="text-gray-500 dark:text-gray-400 text-sm">No destinations match &quot;{destinationSearch}&quot;</p>
                                 </div>
-                              )}
-                            </div>
-                          </label>
-                        );
-                      })}
+                              );
+                            }
+
+                            return (
+                              <>
+                                {paginated.map((place) => {
+                                  const isPreselected = preselectedDestination &&
+                                    (place.id === preselectedDestination.id ||
+                                     place.name.toLowerCase() === preselectedDestination.name.toLowerCase());
+
+                                  return (
+                                    <label
+                                      key={place.id}
+                                      className={`flex items-center space-x-4 p-4 rounded-xl cursor-pointer transition-all duration-300 ${
+                                        formData.destinations.includes(place.id)
+                                          ? 'bg-gradient-to-r from-navy-600/20 to-navy-700/20 border-2 border-navy-500 shadow-lg'
+                                          : isPreselected
+                                            ? 'bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-2 border-purple-400 shadow-md'
+                                            : theme === 'dark'
+                                              ? 'bg-navy-700/50 hover:bg-navy-700 border-2 border-transparent'
+                                              : 'bg-surface-100 hover:bg-gray-200 border-2 border-transparent'
+                                      }`}
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={formData.destinations.includes(place.id)}
+                                        onChange={() => toggleDestination(place.id)}
+                                        className="w-5 h-5 text-navy-600 rounded-lg focus:ring-2 focus:ring-navy-500"
+                                      />
+                                      <div className="flex-1">
+                                        <div className="flex items-center gap-2">
+                                          <span className="font-bold text-lg">{place.name}</span>
+                                          {isPreselected && (
+                                            <span className="px-2 py-0.5 bg-purple-500 text-white text-xs rounded-full font-bold">
+                                              From Details
+                                            </span>
+                                          )}
+                                        </div>
+                                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                                          {place.location} • {place.type || 'Destination'}
+                                        </div>
+                                        {place.best_season && (
+                                          <div className="text-xs text-navy-600 dark:text-amber-400 mt-1">
+                                            Best: {place.best_season}
+                                          </div>
+                                        )}
+                                      </div>
+                                    </label>
+                                  );
+                                })}
+
+                                {/* Pagination controls */}
+                                {totalPages > 1 && (
+                                  <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-navy-700">
+                                    <button
+                                      onClick={() => setDestinationPage(p => Math.max(1, p - 1))}
+                                      disabled={destinationPage === 1}
+                                      className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+                                        destinationPage === 1
+                                          ? 'opacity-40 cursor-not-allowed'
+                                          : 'hover:bg-navy-500/20'
+                                      } ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}
+                                    >
+                                      ← Prev
+                                    </button>
+                                    <span className={`text-sm font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                                      Page {destinationPage} / {totalPages}
+                                    </span>
+                                    <button
+                                      onClick={() => setDestinationPage(p => Math.min(totalPages, p + 1))}
+                                      disabled={destinationPage === totalPages}
+                                      className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+                                        destinationPage === totalPages
+                                          ? 'opacity-40 cursor-not-allowed'
+                                          : 'hover:bg-navy-500/20'
+                                      } ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}
+                                    >
+                                      Next →
+                                    </button>
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })()}
+                        </div>
                       </>
                     )}
                   </div>

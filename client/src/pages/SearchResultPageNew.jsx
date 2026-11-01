@@ -31,8 +31,12 @@ function Card({ item, type, theme, navigate }) {
 
   const src = !err[imgIdx] && allImgs[imgIdx] ? allImgs[imgIdx] : null;
 
-  const accent = type === "place" ? "teal" : type === "hotel" ? "blue" : "orange";
+  const accent = type === "place" ? "navy" : type === "hotel" ? "amber" : "crimson";
   const Icon   = type === "place" ? FaMountain : type === "hotel" ? FaHotel : FaUtensils;
+  const accentText  = type === "place" ? "text-navy-500"    : type === "hotel" ? "text-amber-500"   : "text-crimson-500";
+  const accentBg    = type === "place" ? "bg-navy-100"      : type === "hotel" ? "bg-amber-100"     : "bg-crimson-100";
+  const accentDark  = type === "place" ? "dark:bg-navy-900/40"  : type === "hotel" ? "dark:bg-amber-900/40"  : "dark:bg-crimson-900/40";
+  const accentBadge = type === "place" ? "text-navy-700 dark:text-navy-300"   : type === "hotel" ? "text-amber-700 dark:text-amber-300"  : "text-crimson-700 dark:text-crimson-300";
 
   return (
     <div
@@ -89,13 +93,13 @@ function Card({ item, type, theme, navigate }) {
 
       {/* Body */}
       <div className="p-3 space-y-1.5">
-        <h3 className={`font-bold text-sm leading-tight line-clamp-1 group-hover:text-${accent}-500 transition-colors
-          ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
+        <h3 className={`font-bold text-sm leading-tight line-clamp-1 ${accentText} transition-colors
+          ${theme === "dark" ? "text-white group-hover:text-amber-400" : "text-slate-900 group-hover:text-navy-600"}`}>
           {item.name}
         </h3>
         {item.location && (
           <div className="flex items-center gap-1 text-xs text-slate-500">
-            <FaMapMarkerAlt className={`text-${accent}-500 flex-shrink-0`} />
+            <FaMapMarkerAlt className={`${accentText} flex-shrink-0`} />
             <span className="line-clamp-1">{item.location}</span>
           </div>
         )}
@@ -105,7 +109,7 @@ function Card({ item, type, theme, navigate }) {
           </p>
         )}
         {item.price_range && (
-          <p className={`text-xs font-semibold text-${accent}-600 dark:text-${accent}-400`}>
+          <p className={`text-xs font-semibold ${accentText}`}>
             {item.price_range}
           </p>
         )}
@@ -114,16 +118,20 @@ function Card({ item, type, theme, navigate }) {
   );
 }
 
-// ── Section block ─────────────────────────────────────────────────────────────
 function Section({ title, icon: Icon, accent, items, type, theme, navigate, query }) {
   if (!items.length) return null;
+  const accentClasses = {
+    navy:    { icon: "bg-navy-100 dark:bg-navy-900/40",    iconText: "text-navy-600 dark:text-navy-300",    badge: "bg-navy-100 dark:bg-navy-900/40 text-navy-700 dark:text-navy-300",    bar: "from-navy-500/60 via-navy-300/30" },
+    amber:   { icon: "bg-amber-100 dark:bg-amber-900/40",  iconText: "text-amber-600 dark:text-amber-300",  badge: "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300",  bar: "from-amber-500/60 via-amber-300/30" },
+    crimson: { icon: "bg-crimson-100 dark:bg-crimson-900/40", iconText: "text-crimson-600 dark:text-crimson-300", badge: "bg-crimson-100 dark:bg-crimson-900/40 text-crimson-700 dark:text-crimson-300", bar: "from-crimson-500/60 via-crimson-300/30" },
+  };
+  const ac = accentClasses[accent] || accentClasses.navy;
   return (
     <div className="mb-10">
-      {/* Section header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-xl bg-${accent}-100 dark:bg-${accent}-900/40 flex items-center justify-center`}>
-            <Icon className={`text-${accent}-600 dark:text-${accent}-400 text-lg`} />
+          <div className={`w-10 h-10 rounded-xl ${ac.icon} flex items-center justify-center`}>
+            <Icon className={`${ac.iconText} text-lg`} />
           </div>
           <div>
             <h2 className={`text-xl font-black ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
@@ -134,15 +142,11 @@ function Section({ title, icon: Icon, accent, items, type, theme, navigate, quer
             </p>
           </div>
         </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-bold bg-${accent}-100 dark:bg-${accent}-900/40 text-${accent}-700 dark:text-${accent}-300`}>
+        <span className={`px-3 py-1 rounded-full text-xs font-bold ${ac.badge}`}>
           {items.length}
         </span>
       </div>
-
-      {/* Divider */}
-      <div className={`h-0.5 w-full mb-5 bg-gradient-to-r from-${accent}-500/60 via-${accent}-300/30 to-transparent rounded-full`} />
-
-      {/* Grid */}
+      <div className={`h-0.5 w-full mb-5 bg-gradient-to-r ${ac.bar} to-transparent rounded-full`} />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {items.map((item, i) => (
           <Card key={`${type}-${item.id || i}`} item={item} type={type} theme={theme} navigate={navigate} />
@@ -253,7 +257,7 @@ export default function SearchResultPage() {
             <Section
               title="Destinations"
               icon={FaMountain}
-              accent="teal"
+              accent="navy"
               items={places}
               type="place"
               theme={theme}
@@ -265,7 +269,7 @@ export default function SearchResultPage() {
             <Section
               title="Hotels & Stays"
               icon={FaHotel}
-              accent="blue"
+              accent="amber"
               items={hotels}
               type="hotel"
               theme={theme}
@@ -277,7 +281,7 @@ export default function SearchResultPage() {
             <Section
               title="Restaurants & Dining"
               icon={FaUtensils}
-              accent="orange"
+              accent="crimson"
               items={restaurants}
               type="restaurant"
               theme={theme}

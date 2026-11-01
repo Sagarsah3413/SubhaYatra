@@ -81,9 +81,10 @@ export const Header = () => {
                     onLanguageChange={handleLanguageChange}
                     currentLocation={currentLocation}
                     isLocationLoading={isLocationLoading}
-                    onLocationRefresh={refreshLocation}
+                    onLocationRefresh={refreshLocation}s
                 />
-            )}
+            )
+            }
 
             {/* RIGHT ── Auth */}
             <AuthSection
