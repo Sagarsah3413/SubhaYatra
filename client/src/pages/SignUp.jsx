@@ -42,7 +42,7 @@ export default function SignUpPage() {
                 <>
                   <span className={dark ? 'text-white' : 'text-slate-900'}>Start your</span>
                   <br />
-                  <span className="bg-linear-to-r from-teal-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                  <span className="bg-linear-to-r from-amber-400 via-navy-600 to-success bg-clip-text text-transparent">
                     journey
                   </span>
                 </>

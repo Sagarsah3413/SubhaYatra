@@ -536,20 +536,20 @@ const NewsletterArchive = () => {
   const NewsletterCard = ({ newsletter, featured = false }) => (
     <article className={`group relative overflow-hidden transition-all duration-700 transform-gpu hover:scale-[1.02] ${
       featured 
-        ? 'bg-gradient-to-br from-white via-teal-50/30 to-cyan-50/30 dark:from-slate-800 dark:via-teal-900/20 dark:to-cyan-900/20 border-2 border-teal-200 dark:border-teal-700 shadow-2xl hover:shadow-3xl' 
-        : 'bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-xl hover:shadow-2xl'
+        ? 'bg-gradient-to-br from-white via-navy-700/30 to-navy-700/30 dark:from-navy-800 dark:via-navy-700/20 dark:to-navy-700/20 border-2 border-navy-500 dark:border-navy-500 shadow-2xl hover:shadow-3xl' 
+        : 'bg-white dark:bg-navy-800 border border-gray-200 dark:border-navy-700 shadow-xl hover:shadow-2xl'
     } rounded-3xl`}>
       
       {/* Premium Background Effects */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
-        <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 rounded-full blur-2xl"></div>
+        <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-amber-400/20 to-navy-700/20 rounded-full blur-2xl"></div>
         <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-xl"></div>
       </div>
 
       {/* Featured Badge */}
       {featured && (
         <div className="absolute top-6 left-6 z-20">
-          <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-teal-500 to-cyan-600 text-white text-sm font-black rounded-full shadow-2xl backdrop-blur-xl border border-white/20">
+          <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-navy-600 to-navy-700 text-white text-sm font-black rounded-full shadow-2xl backdrop-blur-xl border border-white/20">
             <FaStar className="text-yellow-300 animate-pulse" />
             <span>FEATURED</span>
           </div>
@@ -589,14 +589,14 @@ const NewsletterArchive = () => {
             className={`w-12 h-12 rounded-2xl transition-all duration-300 backdrop-blur-2xl shadow-2xl border border-white/20 flex items-center justify-center transform hover:scale-110 hover:rotate-12 ${
               bookmarkedItems.has(newsletter.id)
                 ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white'
-                : 'bg-white/90 dark:bg-slate-800/90 text-gray-700 dark:text-slate-300 hover:text-amber-500'
+                : 'bg-white/90 dark:bg-navy-800/90 text-gray-700 dark:text-slate-300 hover:text-amber-500'
             }`}
             title={bookmarkedItems.has(newsletter.id) ? 'Remove bookmark' : 'Add bookmark'}
           >
             <FaBookmark className="text-lg" />
           </button>
           <button 
-            className="w-12 h-12 bg-white/90 dark:bg-slate-800/90 text-gray-700 dark:text-slate-300 rounded-2xl hover:text-teal-600 dark:hover:text-teal-400 transition-all duration-300 backdrop-blur-2xl shadow-2xl border border-white/20 flex items-center justify-center transform hover:scale-110 hover:rotate-12"
+            className="w-12 h-12 bg-white/90 dark:bg-navy-800/90 text-gray-700 dark:text-slate-300 rounded-2xl hover:text-navy-600 dark:hover:text-amber-400 transition-all duration-300 backdrop-blur-2xl shadow-2xl border border-white/20 flex items-center justify-center transform hover:scale-110 hover:rotate-12"
             title="Share article"
           >
             <FaShare className="text-lg" />
@@ -606,7 +606,7 @@ const NewsletterArchive = () => {
         {/* Premium Reading Time Badge */}
         <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
           <div className="flex items-center gap-2 px-4 py-2 bg-black/80 text-white text-sm font-bold rounded-full backdrop-blur-xl border border-white/20">
-            <FaClock className="text-teal-400" />
+            <FaClock className="text-amber-400" />
             <span>{newsletter.readTime}</span>
           </div>
         </div>
@@ -618,7 +618,7 @@ const NewsletterArchive = () => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-slate-400">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-navy-600 to-navy-700 rounded-xl flex items-center justify-center">
                 <FaCalendarAlt className="text-white text-xs" />
               </div>
               <span className="font-medium">{new Date(newsletter.date).toLocaleDateString('en-US', { 
@@ -636,12 +636,12 @@ const NewsletterArchive = () => {
           </div>
           
           {/* Category Badge */}
-          <div className="px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-slate-700 dark:to-slate-600 text-gray-700 dark:text-slate-300 text-xs font-black rounded-full capitalize border border-gray-200 dark:border-slate-600">
+          <div className="px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-slate-700 dark:to-slate-600 text-gray-700 dark:text-slate-300 text-xs font-black rounded-full capitalize border border-gray-200 dark:border-navy-700">
             {newsletter.category.replace('-', ' ')}
           </div>
         </div>
         {/* Ultra Premium Title */}
-        <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-4 leading-tight group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors duration-300 line-clamp-2">
+        <h3 className="text-2xl font-black text-gray-900 dark:text-white mb-4 leading-tight group-hover:text-navy-600 dark:group-hover:text-amber-400 transition-colors duration-300 line-clamp-2">
           {newsletter.title}
         </h3>
 
@@ -656,12 +656,12 @@ const NewsletterArchive = () => {
                 dangerouslySetInnerHTML={{ __html: newsletter.content }} 
               />
               {!expandedCards.has(newsletter.id) && (
-                <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white dark:from-slate-800 to-transparent pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white dark:from-navy-800 to-transparent pointer-events-none"></div>
               )}
               <button
                 type="button"
                 onClick={() => toggleExpanded(newsletter.id)}
-                className="mt-4 inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-bold text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                className="mt-4 inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white font-bold text-base rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
               >
                 <span>{expandedCards.has(newsletter.id) ? 'Show Less' : 'Read More'}</span>
                 <svg 
@@ -685,13 +685,13 @@ const NewsletterArchive = () => {
           {newsletter.tags.slice(0, 3).map((tag, index) => (
             <span 
               key={index}
-              className="px-3 py-2 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 text-teal-700 dark:text-teal-300 text-sm font-bold rounded-xl hover:from-teal-100 hover:to-cyan-100 dark:hover:from-teal-800/50 dark:hover:to-cyan-800/50 transition-all duration-300 cursor-pointer border border-teal-200 dark:border-teal-700 transform hover:scale-105"
+              className="px-3 py-2 bg-gradient-to-r from-navy-700 to-navy-700 dark:from-navy-700/30 dark:to-navy-700/30 text-navy-500 dark:text-amber-300 text-sm font-bold rounded-xl hover:from-navy-700 hover:to-navy-700 dark:hover:from-navy-700/50 dark:hover:to-navy-700/50 transition-all duration-300 cursor-pointer border border-navy-500 dark:border-navy-500 transform hover:scale-105"
             >
               #{tag}
             </span>
           ))}
           {newsletter.tags.length > 3 && (
-            <span className="px-3 py-2 bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-400 text-sm font-bold rounded-xl border border-gray-200 dark:border-slate-600">
+            <span className="px-3 py-2 bg-surface-100 dark:bg-navy-700 text-gray-600 dark:text-slate-400 text-sm font-bold rounded-xl border border-gray-200 dark:border-navy-700">
               +{newsletter.tags.length - 3} more
             </span>
           )}
@@ -714,18 +714,18 @@ const NewsletterArchive = () => {
     </article>
   );
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'} transition-colors duration-300`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-navy-900' : 'bg-surface-50'} transition-colors duration-300`}>
       <Header />
       
       {/* Ultra Premium Hero Section */}    
       <div className="relative overflow-hidden pt-20">
         {/* Premium Background with Gradient */}
-        <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900' : 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900'}`}></div>
+        <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900' : 'bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900'}`}></div>
         
         {/* Premium Floating Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute -top-40 -right-40 w-96 h-96 bg-navy-600/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-navy-100/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
         
@@ -733,17 +733,17 @@ const NewsletterArchive = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 lg:py-40">
           <div className="text-center">
             {/* Premium Badge */}
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border border-teal-400/30 backdrop-blur-xl mb-8 shadow-2xl">
-              <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-navy-600/20 to-navy-700/20 border border-amber-400/30 backdrop-blur-xl mb-8 shadow-2xl">
+              <div className="w-8 h-8 bg-gradient-to-r from-navy-600 to-navy-700 rounded-xl flex items-center justify-center">
                 <FaNewspaper className="text-white text-sm" />
               </div>
-              <span className="text-teal-300 font-black text-lg">Knowledge Hub</span>
+              <span className="text-amber-300 font-black text-lg">Knowledge Hub</span>
             </div>
             
             {/* Massive Typography */}
             <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black text-white mb-8 tracking-tight leading-none">
               Newsletter
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 animate-pulse">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-navy-600 to-blue-400 animate-pulse">
                 Archive
               </span>
             </h1>
@@ -751,14 +751,14 @@ const NewsletterArchive = () => {
             {/* Premium Description */}
             <p className="text-xl lg:text-2xl text-gray-300 max-w-5xl mx-auto leading-relaxed mb-12 font-medium">
               Discover our curated collection of travel insights, cultural deep-dives, and expert guides. 
-              <span className="text-teal-300 font-black"> 10+ premium newsletters</span> covering Nepal's hidden gems, 
+              <span className="text-amber-300 font-black"> 10+ premium newsletters</span> covering Nepal's hidden gems, 
               trekking wisdom, and authentic experiences that transform ordinary trips into extraordinary adventures.
             </p>
             
             {/* Ultra Premium Stats */}
             <div className="flex flex-wrap justify-center gap-12 text-lg">
               <div className="flex items-center gap-3 text-gray-300">
-                <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-2xl">
+                <div className="w-12 h-12 bg-gradient-to-r from-navy-600 to-navy-700 rounded-2xl flex items-center justify-center shadow-2xl">
                   <FaNewspaper className="text-white text-lg" />
                 </div>
                 <div>
@@ -767,7 +767,7 @@ const NewsletterArchive = () => {
                 </div>
               </div>
               <div className="flex items-center gap-3 text-gray-300">
-                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-2xl">
+                <div className="w-12 h-12 bg-gradient-to-r from-navy-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-2xl">
                   <FaTag className="text-white text-lg" />
                 </div>
                 <div>
@@ -790,7 +790,7 @@ const NewsletterArchive = () => {
       </div>
       {/* Ultra Premium Search and Filters Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-20 relative z-20">
-        <div className={`${theme === 'dark' ? 'bg-slate-800/95' : 'bg-white/95'} rounded-3xl shadow-2xl border-2 ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} backdrop-blur-2xl p-8 lg:p-12 relative overflow-hidden`}>
+        <div className={`${theme === 'dark' ? 'bg-navy-800/95' : 'bg-white/95'} rounded-3xl shadow-2xl border-2 ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'} backdrop-blur-2xl p-8 lg:p-12 relative overflow-hidden`}>
           
           {/* Premium Background Pattern */}
           <div className="absolute inset-0 opacity-5">
@@ -805,7 +805,7 @@ const NewsletterArchive = () => {
             <div className="text-center mb-8">
               <h2 className="text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-4 leading-tight">
                 Explore Our
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-navy-700 via-navy-600 to-blue-600">
                   Archive
                 </span>
               </h2>
@@ -817,10 +817,10 @@ const NewsletterArchive = () => {
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
             {/* Enhanced Search */}
             <div className="lg:col-span-5 relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-navy-600/20 to-navy-700/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative">
                 <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
-                  <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
+                  <div className="w-10 h-10 bg-gradient-to-r from-navy-600 to-navy-700 rounded-xl flex items-center justify-center">
                     <FaSearch className="text-white text-sm" />
                   </div>
                 </div>
@@ -829,7 +829,7 @@ const NewsletterArchive = () => {
                   placeholder="Search by title, topic, or tags..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className={`w-full pl-16 pr-6 py-5 border-2 ${theme === 'dark' ? 'border-slate-600 bg-slate-700/50 text-white placeholder-slate-400' : 'border-gray-200 bg-gray-50/50 text-gray-900 placeholder-gray-500'} rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 text-lg font-medium`}
+                  className={`w-full pl-16 pr-6 py-5 border-2 ${theme === 'dark' ? 'border-slate-600 bg-navy-700/50 text-white placeholder-slate-400' : 'border-gray-200 bg-surface-50/50 text-gray-900 placeholder-gray-500'} rounded-2xl focus:outline-none focus:ring-4 focus:ring-navy-500/20 focus:border-navy-500 transition-all duration-300 text-lg font-medium`}
                 />
               </div>
             </div>
@@ -841,7 +841,7 @@ const NewsletterArchive = () => {
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className={`w-full px-6 py-5 border-2 ${theme === 'dark' ? 'border-slate-600 bg-slate-700/50 text-white' : 'border-gray-200 bg-gray-50/50 text-gray-900'} rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 appearance-none cursor-pointer text-lg font-medium`}
+                  className={`w-full px-6 py-5 border-2 ${theme === 'dark' ? 'border-slate-600 bg-navy-700/50 text-white' : 'border-gray-200 bg-surface-50/50 text-gray-900'} rounded-2xl focus:outline-none focus:ring-4 focus:ring-navy-500/20 focus:border-navy-500 transition-all duration-300 appearance-none cursor-pointer text-lg font-medium`}
                 >
                   {categories.map(category => (
                     <option key={category.value} value={category.value}>
@@ -863,7 +863,7 @@ const NewsletterArchive = () => {
                 <select
                   value={selectedYear}
                   onChange={(e) => setSelectedYear(e.target.value)}
-                  className={`w-full px-6 py-5 border-2 ${theme === 'dark' ? 'border-slate-600 bg-slate-700/50 text-white' : 'border-gray-200 bg-gray-50/50 text-gray-900'} rounded-2xl focus:outline-none focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 appearance-none cursor-pointer text-lg font-medium`}
+                  className={`w-full px-6 py-5 border-2 ${theme === 'dark' ? 'border-slate-600 bg-navy-700/50 text-white' : 'border-gray-200 bg-surface-50/50 text-gray-900'} rounded-2xl focus:outline-none focus:ring-4 focus:ring-navy-500/20 focus:border-navy-500 transition-all duration-300 appearance-none cursor-pointer text-lg font-medium`}
                 >
                   {years.map(year => (
                     <option key={year.value} value={year.value}>
@@ -885,8 +885,8 @@ const NewsletterArchive = () => {
                 onClick={() => setViewMode("grid")}
                 className={`flex-1 py-5 px-4 rounded-2xl font-black text-lg transition-all duration-300 ${
                   viewMode === "grid"
-                    ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-2xl'
-                    : `${theme === 'dark' ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`
+                    ? 'bg-gradient-to-r from-navy-600 to-navy-700 text-white shadow-2xl'
+                    : `${theme === 'dark' ? 'bg-navy-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-surface-100 text-gray-600 hover:bg-gray-200'}`
                 }`}
               >
                 Grid
@@ -895,8 +895,8 @@ const NewsletterArchive = () => {
                 onClick={() => setViewMode("list")}
                 className={`flex-1 py-5 px-4 rounded-2xl font-black text-lg transition-all duration-300 ${
                   viewMode === "list"
-                    ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white shadow-2xl'
-                    : `${theme === 'dark' ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`
+                    ? 'bg-gradient-to-r from-navy-600 to-navy-700 text-white shadow-2xl'
+                    : `${theme === 'dark' ? 'bg-navy-700/50 text-slate-300 hover:bg-slate-600/50' : 'bg-surface-100 text-gray-600 hover:bg-gray-200'}`
                 }`}
               >
                 List
@@ -905,12 +905,12 @@ const NewsletterArchive = () => {
           </div>
 
           {/* Ultra Premium Results Summary */}
-          <div className="relative z-10 flex items-center justify-between pt-6 border-t-2 border-gray-200 dark:border-slate-700">
+          <div className="relative z-10 flex items-center justify-between pt-6 border-t-2 border-gray-200 dark:border-navy-700">
             <div className="text-lg text-gray-600 dark:text-slate-300">
               <span className="font-black text-2xl text-gray-900 dark:text-white">{filteredNewsletters.length}</span> 
               <span className="ml-2 font-medium">newsletter{filteredNewsletters.length !== 1 ? 's' : ''} found</span>
               {searchTerm && (
-                <span className="ml-3 px-4 py-2 bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50 text-teal-700 dark:text-teal-300 rounded-full text-sm font-black">
+                <span className="ml-3 px-4 py-2 bg-gradient-to-r from-navy-700 to-navy-700 dark:from-navy-700/50 dark:to-navy-700/50 text-navy-500 dark:text-amber-300 rounded-full text-sm font-black">
                   "{searchTerm}"
                 </span>
               )}
@@ -923,7 +923,7 @@ const NewsletterArchive = () => {
                 <button 
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className="px-4 py-2 text-sm bg-gradient-to-r from-gray-100 to-gray-200 dark:from-slate-700 dark:to-slate-600 hover:from-teal-100 hover:to-cyan-100 dark:hover:from-teal-900/50 dark:hover:to-cyan-900/50 text-gray-700 dark:text-slate-300 hover:text-teal-700 dark:hover:text-teal-300 rounded-xl transition-all duration-300 font-bold capitalize transform hover:scale-105"
+                  className="px-4 py-2 text-sm bg-gradient-to-r from-gray-100 to-gray-200 dark:from-slate-700 dark:to-slate-600 hover:from-navy-700 hover:to-navy-700 dark:hover:from-navy-700/50 dark:hover:to-navy-700/50 text-gray-700 dark:text-slate-300 hover:text-navy-500 dark:hover:text-amber-300 rounded-xl transition-all duration-300 font-bold capitalize transform hover:scale-105"
                 >
                   {cat}
                 </button>
@@ -939,19 +939,19 @@ const NewsletterArchive = () => {
         {featuredNewsletters.length > 0 && (
           <section className="mb-20">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50 border border-teal-200 dark:border-teal-700 mb-6">
-                <FaStar className="text-teal-600 dark:text-teal-400 text-lg" />
-                <span className="text-teal-700 dark:text-teal-300 font-black text-lg">Featured Stories</span>
+              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-navy-700 to-navy-700 dark:from-navy-700/50 dark:to-navy-700/50 border border-navy-500 dark:border-navy-500 mb-6">
+                <FaStar className="text-navy-600 dark:text-amber-400 text-lg" />
+                <span className="text-navy-500 dark:text-amber-300 font-black text-lg">Featured Stories</span>
               </div>
               <h2 className="text-4xl lg:text-6xl font-black text-gray-900 dark:text-white mb-4 leading-tight">
                 Editor's
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-navy-700 via-navy-600 to-blue-600">
                   Choice
                 </span>
               </h2>
               <p className="text-xl text-gray-600 dark:text-slate-300 max-w-3xl mx-auto font-medium">Hand-picked stories from our editorial team showcasing the best of Nepal</p>
               <div className="flex items-center justify-center gap-2 mt-4 text-lg text-gray-500 dark:text-slate-400">
-                <div className="w-3 h-3 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-pulse"></div>
+                <div className="w-3 h-3 bg-gradient-to-r from-navy-600 to-navy-700 rounded-full animate-pulse"></div>
                 <span className="font-bold">{featuredNewsletters.length} featured articles</span>
               </div>
             </div>
@@ -998,7 +998,7 @@ const NewsletterArchive = () => {
                     className={`px-4 py-2 rounded-xl font-bold transition-all duration-300 ${
                       sortBy === option.value
                         ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-2xl'
-                        : `${theme === 'dark' ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`
+                        : `${theme === 'dark' ? 'bg-navy-700 text-slate-300 hover:bg-slate-600' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`
                     }`}
                   >
                     {option.label}
@@ -1032,7 +1032,7 @@ const NewsletterArchive = () => {
                   setSelectedCategory("all");
                   setSelectedYear("all");
                 }}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-2xl hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 font-black text-lg shadow-2xl transform hover:scale-105"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-navy-700 to-navy-700 text-white rounded-2xl hover:from-navy-700 hover:to-navy-700 transition-all duration-300 font-black text-lg shadow-2xl transform hover:scale-105"
               >
                 <div className="w-8 h-8 bg-white/20 rounded-xl flex items-center justify-center">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1047,7 +1047,7 @@ const NewsletterArchive = () => {
       </div>
       {/* Ultra Premium Newsletter Subscription CTA */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
-        <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-4xl p-12 lg:p-16 shadow-2xl">
+        <div className="relative overflow-hidden bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 rounded-4xl p-12 lg:p-16 shadow-2xl">
           
           {/* Ultra Premium Background Pattern */}
           <div className="absolute inset-0 opacity-10">
@@ -1059,25 +1059,25 @@ const NewsletterArchive = () => {
           
           {/* Premium Floating Elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-10 left-10 w-40 h-40 bg-teal-400/20 rounded-full blur-3xl animate-pulse"></div>
-            <div className="absolute bottom-10 right-10 w-48 h-48 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+            <div className="absolute top-10 left-10 w-40 h-40 bg-navy-500/20 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute bottom-10 right-10 w-48 h-48 bg-navy-100/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl animate-pulse opacity-50" style={{ animationDelay: '2s' }}></div>
           </div>
           
           {/* Ultra Premium Content */}
           <div className="relative z-10 text-center">
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border border-teal-400/30 backdrop-blur-xl mb-8 shadow-2xl">
-              <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center">
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-navy-600/20 to-navy-700/20 border border-amber-400/30 backdrop-blur-xl mb-8 shadow-2xl">
+              <div className="w-10 h-10 bg-gradient-to-r from-navy-600 to-navy-700 rounded-2xl flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <span className="text-teal-300 font-black text-xl">Stay Connected</span>
+              <span className="text-amber-300 font-black text-xl">Stay Connected</span>
             </div>
             
             <h3 className="text-4xl lg:text-7xl font-black text-white mb-6 leading-tight">
               Never Miss an
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 animate-pulse">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-navy-600 to-blue-400 animate-pulse">
                 Adventure Story
               </span>
             </h3>
@@ -1090,14 +1090,14 @@ const NewsletterArchive = () => {
             {/* Ultra Premium Stats */}
             <div className="flex flex-wrap justify-center gap-12 mb-12">
               <div className="flex flex-col items-center group">
-                <div className="w-20 h-20 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-3xl flex items-center justify-center mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                <div className="w-20 h-20 bg-gradient-to-r from-navy-600 to-navy-700 rounded-3xl flex items-center justify-center mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
                   <FaNewspaper className="text-white text-2xl" />
                 </div>
                 <span className="text-4xl font-black text-white mb-2">10+</span>
                 <span className="text-gray-400 font-medium text-lg">Expert Articles</span>
               </div>
               <div className="flex flex-col items-center group">
-                <div className="w-20 h-20 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                <div className="w-20 h-20 bg-gradient-to-r from-navy-600 to-blue-600 rounded-3xl flex items-center justify-center mb-4 shadow-2xl group-hover:scale-110 transition-transform duration-300">
                   <FaTag className="text-white text-2xl" />
                 </div>
                 <span className="text-4xl font-black text-white mb-2">10</span>
@@ -1123,7 +1123,7 @@ const NewsletterArchive = () => {
                     });
                   }
                 }}
-                className="group inline-flex items-center gap-4 bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 text-white font-black px-12 py-6 rounded-2xl hover:from-teal-600 hover:via-cyan-600 hover:to-blue-600 transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 cursor-pointer text-xl relative overflow-hidden"
+                className="group inline-flex items-center gap-4 bg-gradient-to-r from-navy-600 via-navy-600 to-blue-500 text-white font-black px-12 py-6 rounded-2xl hover:from-navy-700 hover:via-navy-600 hover:to-blue-600 transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:-translate-y-1 cursor-pointer text-xl relative overflow-hidden"
               >
                 <div className="w-10 h-10 bg-white/20 rounded-2xl flex items-center justify-center">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1152,12 +1152,12 @@ const NewsletterArchive = () => {
       {/* Ultra Premium Full Content Modal */}
       {showFullContent && selectedNewsletter && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white dark:bg-slate-800 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200 dark:border-slate-700">
+          <div className="bg-white dark:bg-navy-800 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200 dark:border-navy-700">
             {/* Header */}
-            <div className="sticky top-0 bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 p-6 rounded-t-3xl z-10">
+            <div className="sticky top-0 bg-white dark:bg-navy-800 border-b border-gray-200 dark:border-navy-700 p-6 rounded-t-3xl z-10">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gradient-to-r from-navy-600 to-navy-700 rounded-2xl flex items-center justify-center">
                     <FaNewspaper className="text-white text-lg" />
                   </div>
                   <div>
@@ -1173,7 +1173,7 @@ const NewsletterArchive = () => {
                 </div>
                 <button
                   onClick={() => setShowFullContent(false)}
-                  className="w-12 h-12 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-2xl flex items-center justify-center transition-colors"
+                  className="w-12 h-12 bg-surface-100 dark:bg-navy-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-2xl flex items-center justify-center transition-colors"
                 >
                   <FaTimes className="text-gray-600 dark:text-slate-300" />
                 </button>
@@ -1200,9 +1200,9 @@ const NewsletterArchive = () => {
             </div>
             {/* Footer */}
             {selectedNewsletter.authorBio && (
-              <div className="border-t border-gray-200 dark:border-slate-700 p-6 bg-gray-50 dark:bg-slate-700/50">
+              <div className="border-t border-gray-200 dark:border-navy-700 p-6 bg-surface-50 dark:bg-navy-700/50">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center text-white font-black text-xl">
+                  <div className="w-12 h-12 bg-gradient-to-br from-navy-600 to-navy-700 rounded-2xl flex items-center justify-center text-white font-black text-xl">
                     {selectedNewsletter.author.charAt(0)}
                   </div>
                   <div className="flex-1">
@@ -1214,7 +1214,7 @@ const NewsletterArchive = () => {
             )}
 
             {/* Actions */}
-            <div className="border-t border-gray-200 dark:border-slate-700 p-6 bg-gray-50 dark:bg-slate-700/50 rounded-b-3xl">
+            <div className="border-t border-gray-200 dark:border-navy-700 p-6 bg-surface-50 dark:bg-navy-700/50 rounded-b-3xl">
               <div className="flex justify-between items-center">
                 <div className="flex gap-3">
                   <button
@@ -1226,19 +1226,19 @@ const NewsletterArchive = () => {
                     className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all duration-300 font-bold ${
                       bookmarkedItems.has(selectedNewsletter.id)
                         ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-2xl'
-                        : 'bg-white dark:bg-slate-600 border border-gray-300 dark:border-slate-500 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-500'
+                        : 'bg-white dark:bg-slate-600 border border-gray-300 dark:border-slate-500 text-gray-700 dark:text-slate-300 hover:bg-surface-50 dark:hover:bg-slate-500'
                     }`}
                   >
                     <FaBookmark />
                     <span>{bookmarkedItems.has(selectedNewsletter.id) ? 'Bookmarked' : 'Bookmark'}</span>
                   </button>
-                  <button className="flex items-center gap-3 px-6 py-3 bg-white dark:bg-slate-600 border border-gray-300 dark:border-slate-500 text-gray-700 dark:text-slate-300 rounded-2xl hover:bg-gray-50 dark:hover:bg-slate-500 transition-all duration-300 font-bold">
+                  <button className="flex items-center gap-3 px-6 py-3 bg-white dark:bg-slate-600 border border-gray-300 dark:border-slate-500 text-gray-700 dark:text-slate-300 rounded-2xl hover:bg-surface-50 dark:hover:bg-slate-500 transition-all duration-300 font-bold">
                     <FaShare />
                     <span>Share</span>
                   </button>
                 </div>
                 <div className="flex gap-3">
-                  <button className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-2xl hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 font-bold shadow-2xl">
+                  <button className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-navy-700 to-navy-700 text-white rounded-2xl hover:from-navy-700 hover:to-navy-700 transition-all duration-300 font-bold shadow-2xl">
                     <FaDownload />
                     <span>Download PDF</span>
                   </button>

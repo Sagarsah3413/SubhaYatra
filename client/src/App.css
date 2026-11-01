@@ -49,7 +49,7 @@
 
 /* Gradient Text */
 .gradient-text {
-  background: linear-gradient(135deg, #14b8a6, #06b6d4, #0ea5e9);
+  background: linear-gradient(135deg, #D97706, #1A4B8C, #1A4B8C);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -68,7 +68,7 @@
 /* Animated Gradient Border */
 .gradient-border {
   position: relative;
-  background: linear-gradient(135deg, #14b8a6, #06b6d4);
+  background: linear-gradient(135deg, #D97706, #1A4B8C);
   padding: 2px;
   border-radius: 1rem;
 }
@@ -79,7 +79,7 @@
   inset: 0;
   border-radius: inherit;
   padding: 2px;
-  background: linear-gradient(135deg, #14b8a6, #06b6d4, #0ea5e9);
+  background: linear-gradient(135deg, #D97706, #1A4B8C, #1A4B8C);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -158,12 +158,12 @@
 
 /* Glow Effect */
 .glow-effect {
-  box-shadow: 0 0 20px rgba(20, 184, 166, 0.5);
+  box-shadow: 0 0 20px rgba(217, 119, 6, 0.5);
   transition: box-shadow 0.3s ease;
 }
 
 .glow-effect:hover {
-  box-shadow: 0 0 30px rgba(20, 184, 166, 0.8);
+  box-shadow: 0 0 30px rgba(217, 119, 6, 0.8);
 }
 
 /* Slide In Animations */
@@ -233,14 +233,14 @@ html {
 
 /* Focus Styles for Accessibility */
 *:focus-visible {
-  outline: 2px solid #14b8a6;
+  outline: 2px solid #D97706;
   outline-offset: 2px;
 }
 
 /* Loading Spinner */
 .spinner {
   border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top: 3px solid #14b8a6;
+  border-top: 3px solid #D97706;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -296,9 +296,9 @@ html {
 /* Pulsing glow effect for button */
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(20, 184, 166, 0.4);
+    box-shadow: 0 0 20px rgba(217, 119, 6, 0.4);
   }
   50% {
-    box-shadow: 0 0 40px rgba(20, 184, 166, 0.8);
+    box-shadow: 0 0 40px rgba(217, 119, 6, 0.8);
   }
 }

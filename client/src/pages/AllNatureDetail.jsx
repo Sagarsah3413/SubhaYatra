@@ -138,11 +138,11 @@ export default function AllNatureDetail() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-green-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-green-50 dark:from-navy-900 dark:via-navy-800 dark:to-navy-900">
       <Header />
       
       {/* Hero Section */}
-      <div className="relative h-[60vh] overflow-hidden bg-gradient-to-br from-blue-600 via-green-600 to-teal-600 dark:from-blue-900 dark:via-green-900 dark:to-teal-900 pt-20">
+      <div className="relative h-[60vh] overflow-hidden bg-gradient-to-br from-blue-600 via-green-600 to-navy-700 dark:from-blue-900 dark:via-green-900 dark:to-navy-800 pt-20">
         <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
@@ -170,7 +170,7 @@ export default function AllNatureDetail() {
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {places.map((place) => (
-            <div key={place.id} className="group bg-white dark:bg-slate-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-slate-700">
+            <div key={place.id} className="group bg-white dark:bg-navy-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-navy-700">
               {/* Image */}
               <div className="relative h-64 overflow-hidden">
                 <img 
@@ -182,14 +182,14 @@ export default function AllNatureDetail() {
                 
                 {/* Category Badge */}
                 <div className="absolute top-4 left-4">
-                  <span className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm text-gray-800 dark:text-white px-3 py-1 rounded-full text-sm font-semibold">
+                  <span className="bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm text-gray-800 dark:text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {place.category}
                   </span>
                 </div>
 
                 {/* Rating Badge */}
                 <div className="absolute top-4 right-4">
-                  <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                  <div className="bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
                     <span className="text-yellow-500 text-sm">★</span>
                     <span className="text-gray-800 dark:text-white text-sm font-semibold">{place.rating}</span>
                   </div>
@@ -230,7 +230,7 @@ export default function AllNatureDetail() {
                       </span>
                     ))}
                     {place.highlights.length > 3 && (
-                      <span className="bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-md text-xs font-medium">
+                      <span className="bg-surface-100 dark:bg-navy-700 text-gray-600 dark:text-gray-400 px-2 py-1 rounded-md text-xs font-medium">
                         +{place.highlights.length - 3} more
                       </span>
                     )}
@@ -243,7 +243,7 @@ export default function AllNatureDetail() {
                 </p>
 
                 {/* Footer */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-slate-700">
+                <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-navy-700">
                   <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
                     <div className="flex items-center gap-1">
                       <span className="text-yellow-500">★</span>

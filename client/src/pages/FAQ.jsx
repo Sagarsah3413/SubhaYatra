@@ -196,18 +196,18 @@ const FAQ = () => {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-navy-900 text-white' : 'bg-surface-50 text-gray-900'}`}>
       <Header />
       
       <div className="max-w-6xl mx-auto px-6 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
-            <div className={`p-4 rounded-full ${theme === 'dark' ? 'bg-teal-900/50' : 'bg-teal-100'}`}>
-              <FaQuestionCircle className="text-4xl text-teal-600" />
+            <div className={`p-4 rounded-full ${theme === 'dark' ? 'bg-navy-900/50' : 'bg-navy-100'}`}>
+              <FaQuestionCircle className="text-4xl text-navy-600" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-navy-700 to-navy-700 bg-clip-text text-transparent">
             Frequently Asked Questions
           </h1>
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -228,9 +228,9 @@ const FAQ = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={`w-full pl-10 pr-4 py-3 rounded-xl border ${
                   theme === 'dark' 
-                    ? 'bg-slate-800 border-slate-700 text-white placeholder-gray-400' 
+                    ? 'bg-navy-800 border-navy-700 text-white placeholder-gray-400' 
                     : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
-                } focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent`}
+                } focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-transparent`}
               />
             </div>
           </div>
@@ -243,11 +243,11 @@ const FAQ = () => {
                 onClick={() => setSelectedCategory(category.id)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   selectedCategory === category.id
-                    ? 'bg-teal-600 text-white shadow-lg'
+                    ? 'bg-crimson-500 text-white shadow-lg'
                     : theme === 'dark'
-                      ? 'bg-slate-800 text-gray-300 hover:bg-slate-700'
-                      : 'bg-white text-gray-700 hover:bg-gray-100'
-                } border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'}`}
+                      ? 'bg-navy-800 text-gray-300 hover:bg-navy-700'
+                      : 'bg-white text-gray-700 hover:bg-surface-100'
+                } border ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'}`}
               >
                 <span className="mr-2">{category.icon}</span>
                 {category.name}
@@ -268,7 +268,7 @@ const FAQ = () => {
         {/* FAQ Items */}
         <div className="space-y-4">
           {filteredFAQs.length === 0 ? (
-            <div className={`text-center py-12 ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} rounded-xl`}>
+            <div className={`text-center py-12 ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} rounded-xl`}>
               <FaQuestionCircle className={`text-4xl mx-auto mb-4 ${theme === 'dark' ? 'text-gray-600' : 'text-gray-400'}`} />
               <h3 className="text-xl font-semibold mb-2">No questions found</h3>
               <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -281,7 +281,7 @@ const FAQ = () => {
                 key={faq.id}
                 className={`rounded-xl border ${
                   theme === 'dark' 
-                    ? 'bg-slate-800/50 border-slate-700' 
+                    ? 'bg-navy-800/50 border-navy-700' 
                     : 'bg-white border-gray-200'
                 } shadow-sm hover:shadow-md transition-all duration-200`}
               >
@@ -291,15 +291,15 @@ const FAQ = () => {
                 >
                   <h3 className="text-lg font-medium pr-4">{faq.question}</h3>
                   {expandedItems.has(faq.id) ? (
-                    <FaChevronUp className="text-teal-600 flex-shrink-0" />
+                    <FaChevronUp className="text-navy-600 flex-shrink-0" />
                   ) : (
-                    <FaChevronDown className="text-teal-600 flex-shrink-0" />
+                    <FaChevronDown className="text-navy-600 flex-shrink-0" />
                   )}
                 </button>
                 
                 {expandedItems.has(faq.id) && (
                   <div className="px-6 pb-6">
-                    <div className={`border-t pt-4 ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'}`}>
+                    <div className={`border-t pt-4 ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'}`}>
                       <p className={`mb-4 leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                         {faq.answer}
                       </p>
@@ -317,8 +317,8 @@ const FAQ = () => {
                                 helpfulVotes[faq.id] === true
                                   ? 'bg-green-100 text-green-600'
                                   : theme === 'dark'
-                                    ? 'hover:bg-slate-700 text-gray-400 hover:text-green-400'
-                                    : 'hover:bg-gray-100 text-gray-500 hover:text-green-600'
+                                    ? 'hover:bg-navy-700 text-gray-400 hover:text-green-400'
+                                    : 'hover:bg-surface-100 text-gray-500 hover:text-green-600'
                               }`}
                             >
                               <FaThumbsUp className="text-sm" />
@@ -329,8 +329,8 @@ const FAQ = () => {
                                 helpfulVotes[faq.id] === false
                                   ? 'bg-red-100 text-red-600'
                                   : theme === 'dark'
-                                    ? 'hover:bg-slate-700 text-gray-400 hover:text-red-400'
-                                    : 'hover:bg-gray-100 text-gray-500 hover:text-red-600'
+                                    ? 'hover:bg-navy-700 text-gray-400 hover:text-red-400'
+                                    : 'hover:bg-surface-100 text-gray-500 hover:text-red-600'
                               }`}
                             >
                               <FaThumbsDown className="text-sm" />
@@ -351,8 +351,8 @@ const FAQ = () => {
         </div>
 
         {/* Contact Support Section */}
-        <div className={`mt-12 p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg text-center`}>
-          <FaEnvelope className="text-3xl text-teal-600 mx-auto mb-4" />
+        <div className={`mt-12 p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg text-center`}>
+          <FaEnvelope className="text-3xl text-navy-600 mx-auto mb-4" />
           <h3 className="text-xl font-semibold mb-2">Still need help?</h3>
           <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
             Can't find the answer you're looking for? Our support team is here to help.
@@ -360,7 +360,7 @@ const FAQ = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/contact"
-              className="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg transition-colors duration-200"
+              className="px-6 py-3 bg-crimson-500 hover:bg-crimson-600 text-white font-medium rounded-lg transition-colors duration-200"
             >
               Contact Support
             </a>
@@ -368,8 +368,8 @@ const FAQ = () => {
               href="/help"
               className={`px-6 py-3 border font-medium rounded-lg transition-colors duration-200 ${
                 theme === 'dark'
-                  ? 'border-slate-600 text-gray-300 hover:bg-slate-700'
-                  : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                  ? 'border-slate-600 text-gray-300 hover:bg-navy-700'
+                  : 'border-gray-300 text-gray-700 hover:bg-surface-50'
               }`}
             >
               Browse Help Center

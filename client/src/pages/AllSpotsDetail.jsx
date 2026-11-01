@@ -234,7 +234,7 @@ export default function AllSpotsDetails() {
       </section>
 
       {/* Filters Section */}
-      <section className="py-8 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
+      <section className="py-8 bg-white dark:bg-navy-900 border-b border-gray-200 dark:border-navy-700">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
             {/* Category Filters */}
@@ -246,7 +246,7 @@ export default function AllSpotsDetails() {
                   className={`px-4 py-2 rounded-xl font-medium transition-all duration-200 text-sm ${
                     selectedCategory === category
                       ? "bg-purple-600 text-white shadow-lg"
-                      : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-slate-700"
+                      : "bg-surface-100 dark:bg-navy-800 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-navy-700"
                   }`}
                 >
                   {category}
@@ -260,7 +260,7 @@ export default function AllSpotsDetails() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-purple-500"
+                className="px-4 py-2 rounded-xl border border-gray-200 dark:border-navy-700 bg-white dark:bg-navy-800 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-purple-500"
               >
                 <option value="rating">Rating</option>
                 <option value="name">Name</option>
@@ -272,7 +272,7 @@ export default function AllSpotsDetails() {
       </section>
 
       {/* Places Grid */}
-      <section className="py-16 bg-gray-50 dark:bg-slate-800">
+      <section className="py-16 bg-surface-50 dark:bg-navy-800">
         <div className="max-w-7xl mx-auto px-6">
           <div className="space-y-16">
             {filteredSpots.map((spot, index) => (
@@ -280,7 +280,7 @@ export default function AllSpotsDetails() {
                 key={spot.id}
                 className={`group flex flex-col ${
                   index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"
-                } items-center gap-12 bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700`}
+                } items-center gap-12 bg-white dark:bg-navy-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-navy-700`}
               >
                 {/* Image Section */}
                 <div className="w-full lg:w-1/2 relative">
@@ -293,12 +293,12 @@ export default function AllSpotsDetails() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     
                     {/* Category Badge */}
-                    <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <div className="absolute top-4 left-4 bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-4 py-2 rounded-full">
                       <span className="text-sm font-bold text-gray-900 dark:text-white">{spot.category}</span>
                     </div>
                     
                     {/* Rating Badge */}
-                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1">
+                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1">
                       <FaStar className="text-yellow-500 text-sm" />
                       <span className="text-sm font-bold text-gray-900 dark:text-white">{spot.rating}</span>
                     </div>
@@ -378,28 +378,28 @@ export default function AllSpotsDetails() {
                   
                   {/* Details Grid */}
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
                       <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaClock />
                         <span className="text-sm">Visit Duration</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">{spot.visitTime}</span>
                     </div>
-                    <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
                       <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaCalendarAlt />
                         <span className="text-sm">Best Time</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">{spot.bestTime}</span>
                     </div>
-                    <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
                       <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaUsers />
                         <span className="text-sm">Entry Fee</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">{spot.entryFee}</span>
                     </div>
-                    <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
                       <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaTemperatureHigh />
                         <span className="text-sm">Temperature</span>

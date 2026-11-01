@@ -46,7 +46,7 @@ export default function SignInPage() {
                 <>
                   <span className={dark ? 'text-white' : 'text-slate-900'}>Continue your</span>
                   <br />
-                  <span className="bg-linear-to-r from-teal-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                  <span className="bg-linear-to-r from-amber-400 via-navy-600 to-success bg-clip-text text-transparent">
                     adventure
                   </span>
                 </>

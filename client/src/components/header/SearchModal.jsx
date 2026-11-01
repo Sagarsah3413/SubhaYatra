@@ -25,7 +25,7 @@ const SearchModal = ({ isOpen, onClose, searchQuery, setSearchQuery, onSearch, t
             onClick={onClose}
         >
             <div
-                className={`w-full max-w-2xl mx-4 rounded-2xl shadow-2xl ${theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+                className={`w-full max-w-2xl mx-4 rounded-2xl shadow-2xl ${theme === 'dark' ? 'bg-navy-800' : 'bg-white'
                     }`}
                 onClick={(e) => e.stopPropagation()}
             >
@@ -36,7 +36,7 @@ const SearchModal = ({ isOpen, onClose, searchQuery, setSearchQuery, onSearch, t
                         </h3>
                         <button
                             onClick={onClose}
-                            className={`p-2 rounded-lg transition-colors ${theme === 'dark' ? 'hover:bg-slate-700 text-gray-400' : 'hover:bg-gray-100 text-gray-600'
+                            className={`p-2 rounded-lg transition-colors ${theme === 'dark' ? 'hover:bg-navy-700 text-gray-400' : 'hover:bg-surface-100 text-gray-600'
                                 }`}
                         >
                             ✕
@@ -50,15 +50,15 @@ const SearchModal = ({ isOpen, onClose, searchQuery, setSearchQuery, onSearch, t
                             onChange={(e) => setSearchQuery(e.target.value)}
                             onKeyPress={handleKeyPress}
                             placeholder="Search for destinations, hotels, restaurants..."
-                            className={`w-full px-4 py-3 pr-12 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-teal-500 ${theme === 'dark'
-                                ? 'bg-slate-700 border-slate-600 text-white placeholder-gray-400'
+                            className={`w-full px-4 py-3 pr-12 rounded-xl border-2 focus:outline-none focus:ring-2 focus:ring-navy-500 ${theme === 'dark'
+                                ? 'bg-navy-700 border-slate-600 text-white placeholder-gray-400'
                                 : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
                                 }`}
                             autoFocus
                         />
                         <button
                             onClick={onSearch}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-linear-to-r from-teal-600 to-cyan-600 text-white rounded-lg hover:from-teal-700 hover:to-cyan-700 transition-all"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-linear-to-r from-navy-700 to-navy-700 text-white rounded-lg hover:from-navy-700 hover:to-navy-700 transition-all"
                         >
                             <FaSearch />
                         </button>

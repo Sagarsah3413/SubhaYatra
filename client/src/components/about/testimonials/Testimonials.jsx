@@ -13,7 +13,7 @@ const Testimonials = () => {
     }, []);
 
     return (
-        <section className="py-12 md:py-24 bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-600 text-white relative overflow-hidden">
+        <section className="py-12 md:py-24 bg-gradient-to-br from-navy-700 via-navy-600 to-blue-600 text-white relative overflow-hidden">
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{
                     backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px)`,

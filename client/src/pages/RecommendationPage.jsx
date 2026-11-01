@@ -108,10 +108,10 @@ export default function RecommendationPage() {
   if (!isLoaded) {
     return (
       <div className={`min-h-screen flex items-center justify-center ${
-        theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+        theme === 'dark' ? 'bg-navy-900' : 'bg-surface-50'
       }`}>
         <div className="text-center">
-          <div className="animate-spin h-12 w-12 rounded-full border-4 border-teal-500 border-t-transparent mx-auto mb-4" />
+          <div className="animate-spin h-12 w-12 rounded-full border-4 border-navy-500 border-t-transparent mx-auto mb-4" />
           <p className={theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}>Loading...</p>
         </div>
       </div>
@@ -122,7 +122,7 @@ export default function RecommendationPage() {
 
   return (
     <div className={`min-h-screen flex flex-col ${
-      theme === 'dark' ? 'bg-slate-900' : 'bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100'
+      theme === 'dark' ? 'bg-navy-900' : 'bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100'
     }`}>
       <Header onHomeClick={handleHomeClick} />
 
@@ -139,14 +139,14 @@ export default function RecommendationPage() {
 
         <div className={`relative py-12 px-4 text-center ${
           theme === 'dark' 
-            ? 'bg-gradient-to-r from-slate-800/50 via-slate-900/50 to-slate-800/50' 
-            : 'bg-gradient-to-r from-teal-500/10 via-cyan-500/10 to-emerald-500/10'
+            ? 'bg-gradient-to-r from-navy-800/50 via-slate-900/50 to-slate-800/50' 
+            : 'bg-gradient-to-r from-navy-600/10 via-navy-600/10 to-success/10'
         }`}>
           <div className="max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-navy-600/10 border border-navy-500/20 mb-4">
               <span className="text-2xl">✨</span>
               <span className={`text-sm font-semibold ${
-                theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
+                theme === 'dark' ? 'text-amber-400' : 'text-navy-600'
               }`}>
                 Personalized Recommendations
               </span>
@@ -156,7 +156,7 @@ export default function RecommendationPage() {
               theme === 'dark' ? 'text-white' : 'text-gray-900'
             }`}>
               Plan Your Perfect
-              <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-600 bg-clip-text text-transparent"> Nepal Journey</span>
+              <span className="bg-gradient-to-r from-navy-700 via-navy-600 to-success bg-clip-text text-transparent"> Nepal Journey</span>
             </h1>
             
             <p className={`text-lg ${
@@ -173,13 +173,13 @@ export default function RecommendationPage() {
         <div className="max-w-2xl mx-auto">
           <div className={`rounded-3xl shadow-2xl overflow-hidden ${
             theme === 'dark' 
-              ? 'bg-slate-800/50 border border-slate-700/50' 
+              ? 'bg-navy-800/50 border border-navy-700/50' 
               : 'bg-white/80 border border-white/50'
           } backdrop-blur-xl`}>
             
             {/* Form Header */}
             <div className={`px-8 py-6 border-b ${
-              theme === 'dark' ? 'border-slate-700/50' : 'border-gray-200/50'
+              theme === 'dark' ? 'border-navy-700/50' : 'border-gray-200/50'
             }`}>
               <h2 className={`text-2xl font-bold ${
                 theme === 'dark' ? 'text-white' : 'text-gray-900'
@@ -210,8 +210,8 @@ export default function RecommendationPage() {
                     errors.name
                       ? 'border-red-500 ring-2 ring-red-500/20'
                       : theme === 'dark'
-                      ? 'bg-slate-900/50 border-slate-600 text-white placeholder-slate-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
-                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                      ? 'bg-navy-900/50 border-slate-600 text-white placeholder-slate-500 focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20'
+                      : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20'
                   } outline-none`}
                   value={formData.name}
                   onChange={(e) =>
@@ -237,8 +237,8 @@ export default function RecommendationPage() {
                   <select
                     className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 ${
                       theme === 'dark'
-                        ? 'bg-slate-900/50 border-slate-600 text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
-                        : 'bg-white border-gray-300 text-gray-900 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                        ? 'bg-navy-900/50 border-slate-600 text-white focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20'
+                        : 'bg-white border-gray-300 text-gray-900 focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20'
                     } outline-none`}
                     value={formData.age}
                     onChange={(e) =>
@@ -269,8 +269,8 @@ export default function RecommendationPage() {
                   <select
                     className={`w-full px-4 py-3 rounded-xl border transition-all duration-200 ${
                       theme === 'dark'
-                        ? 'bg-slate-900/50 border-slate-600 text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
-                        : 'bg-white border-gray-300 text-gray-900 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                        ? 'bg-navy-900/50 border-slate-600 text-white focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20'
+                        : 'bg-white border-gray-300 text-gray-900 focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20'
                     } outline-none`}
                     value={formData.travellers}
                     onChange={(e) =>
@@ -319,18 +319,18 @@ export default function RecommendationPage() {
                         }
                         className={`p-4 rounded-xl border-2 transition-all duration-200 text-center ${
                           selected
-                            ? 'border-teal-500 bg-teal-500/10 shadow-lg shadow-teal-500/20'
+                            ? 'border-navy-500 bg-navy-600/10 shadow-lg shadow-teal-500/20'
                             : errors.tripDuration
                               ? 'border-red-500/50 bg-red-500/5'
                               : theme === 'dark'
-                              ? 'border-slate-600 bg-slate-900/30 hover:border-slate-500 hover:bg-slate-900/50'
-                              : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100'
+                              ? 'border-slate-600 bg-navy-900/30 hover:border-slate-500 hover:bg-navy-900/50'
+                              : 'border-gray-200 bg-surface-50 hover:border-gray-300 hover:bg-surface-100'
                         }`}
                       >
                         <div className="text-2xl mb-1">{duration.icon}</div>
                         <div className={`text-sm font-semibold ${
                           selected
-                            ? 'text-teal-600 dark:text-teal-400'
+                            ? 'text-navy-600 dark:text-amber-400'
                             : theme === 'dark'
                               ? 'text-slate-200'
                               : 'text-gray-900'
@@ -339,7 +339,7 @@ export default function RecommendationPage() {
                         </div>
                         {selected && (
                           <div className="mt-2 flex justify-center">
-                            <div className="w-4 h-4 rounded-full bg-teal-500 flex items-center justify-center">
+                            <div className="w-4 h-4 rounded-full bg-navy-600 flex items-center justify-center">
                               <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                               </svg>
@@ -373,8 +373,8 @@ export default function RecommendationPage() {
                     errors.travelMonth
                       ? 'border-red-500 ring-2 ring-red-500/20'
                       : theme === 'dark'
-                      ? 'bg-slate-900/50 border-slate-600 text-white focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
-                      : 'bg-white border-gray-300 text-gray-900 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20'
+                      ? 'bg-navy-900/50 border-slate-600 text-white focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20'
+                      : 'bg-white border-gray-300 text-gray-900 focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20'
                   } outline-none`}
                   value={formData.travelMonth}
                   onChange={(e) =>
@@ -402,7 +402,7 @@ export default function RecommendationPage() {
                 )}
                 {formData.travelMonth && !errors.travelMonth && (
                   <p className={`text-sm mt-2 flex items-center gap-2 ${
-                    theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
+                    theme === 'dark' ? 'text-amber-400' : 'text-navy-600'
                   }`}>
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -458,10 +458,10 @@ export default function RecommendationPage() {
                     </span>
                     <span className={`text-xs font-normal px-3 py-1 rounded-full ${
                       formData.tripTypes.length === 0
-                        ? theme === 'dark' ? 'bg-slate-700 text-slate-400' : 'bg-gray-200 text-gray-500'
+                        ? theme === 'dark' ? 'bg-navy-700 text-slate-400' : 'bg-gray-200 text-gray-500'
                         : formData.tripTypes.length === 2
-                          ? 'bg-teal-500/20 text-teal-600 dark:text-teal-400'
-                          : 'bg-cyan-500/20 text-cyan-600 dark:text-cyan-400'
+                          ? 'bg-navy-600/20 text-navy-600 dark:text-amber-400'
+                          : 'bg-navy-100/20 text-navy-400 dark:text-navy-400'
                     }`}>
                       {formData.tripTypes.length}/2 selected
                     </span>
@@ -499,14 +499,14 @@ export default function RecommendationPage() {
                         }}
                         className={`p-4 rounded-xl border-2 transition-all duration-200 text-left group relative ${
                           selected
-                            ? 'border-teal-500 bg-teal-500/10 shadow-lg shadow-teal-500/20'
+                            ? 'border-navy-500 bg-navy-600/10 shadow-lg shadow-teal-500/20'
                             : isDisabled
                               ? theme === 'dark'
-                                ? 'border-slate-700 bg-slate-900/20 opacity-50 cursor-not-allowed'
-                                : 'border-gray-200 bg-gray-50 opacity-50 cursor-not-allowed'
+                                ? 'border-navy-700 bg-navy-900/20 opacity-50 cursor-not-allowed'
+                                : 'border-gray-200 bg-surface-50 opacity-50 cursor-not-allowed'
                               : theme === 'dark'
-                                ? 'border-slate-600 bg-slate-900/30 hover:border-slate-500 hover:bg-slate-900/50'
-                                : 'border-gray-200 bg-gray-50 hover:border-gray-300 hover:bg-gray-100'
+                                ? 'border-slate-600 bg-navy-900/30 hover:border-slate-500 hover:bg-navy-900/50'
+                                : 'border-gray-200 bg-surface-50 hover:border-gray-300 hover:bg-surface-100'
                         }`}
                       >
                         <div className="flex items-start gap-3">
@@ -514,7 +514,7 @@ export default function RecommendationPage() {
                           <div className="flex-1">
                             <div className={`font-semibold text-sm mb-0.5 ${
                               selected
-                                ? 'text-teal-600 dark:text-teal-400'
+                                ? 'text-navy-600 dark:text-amber-400'
                                 : theme === 'dark'
                                   ? 'text-slate-200'
                                   : 'text-gray-900'
@@ -534,8 +534,8 @@ export default function RecommendationPage() {
                           <div className="absolute top-2 right-2">
                             <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
                               selectionIndex === 0
-                                ? 'bg-gradient-to-br from-teal-500 to-cyan-500'
-                                : 'bg-gradient-to-br from-cyan-500 to-emerald-500'
+                                ? 'bg-gradient-to-br from-navy-600 to-navy-700'
+                                : 'bg-gradient-to-br from-navy-600 to-success'
                             } shadow-lg`}>
                               <span className="text-white text-xs font-bold">
                                 {selectionIndex + 1}
@@ -549,7 +549,7 @@ export default function RecommendationPage() {
                 </div>
                 {formData.tripTypes.length > 0 && (
                   <div className={`mt-3 text-sm flex items-center gap-2 ${
-                    theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
+                    theme === 'dark' ? 'text-amber-400' : 'text-navy-600'
                   }`}>
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -564,10 +564,10 @@ export default function RecommendationPage() {
                 )}
                 {formData.tripTypes.length > 0 && !errors.tripTypes && (
                   <div className={`mt-3 p-3 rounded-lg ${
-                    theme === 'dark' ? 'bg-teal-500/10 border border-teal-500/20' : 'bg-teal-50 border border-teal-200'
+                    theme === 'dark' ? 'bg-navy-600/10 border border-navy-500/20' : 'bg-navy-50 border border-navy-500'
                   }`}>
                     <p className={`text-xs font-medium ${
-                      theme === 'dark' ? 'text-teal-400' : 'text-teal-700'
+                      theme === 'dark' ? 'text-amber-400' : 'text-navy-500'
                     }`}>
                       ✨ Selected: {formData.tripTypes.map((type, idx) => (
                         <span key={idx}>
@@ -613,7 +613,7 @@ export default function RecommendationPage() {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-teal-600 via-cyan-600 to-emerald-600 hover:from-teal-700 hover:via-cyan-700 hover:to-emerald-700 text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 hover:scale-[1.02] flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-navy-700 via-navy-600 to-success hover:from-navy-700 hover:via-navy-600 hover:to-success text-white font-semibold py-4 rounded-xl transition-all duration-300 shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 hover:scale-[1.02] flex items-center justify-center gap-2"
               >
                 <span>Get My Recommendations</span>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -48,7 +48,7 @@ const LocationDebugPanel = ({
 
             <div className="space-y-2">
                 <div className="text-yellow-400"><strong>Status:</strong> {isLocationLoading ? 'Loading...' : 'Complete'}</div>
-                <div className="text-cyan-400"><strong>Location:</strong> {currentLocation}</div>
+                <div className="text-navy-400"><strong>Location:</strong> {currentLocation}</div>
                 {locationError && <div className="text-red-400"><strong>Error:</strong> {locationError}</div>}
                 <div className="text-purple-400"><strong>Retry Count:</strong> {locationRetryCount}</div>
 

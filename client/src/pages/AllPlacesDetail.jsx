@@ -160,7 +160,7 @@ export default function AllPlacesDetail() {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-600 text-white overflow-hidden">
+      <section className="relative py-20 bg-gradient-to-br from-navy-700 via-navy-600 to-blue-600 text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="absolute inset-0">
           <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
@@ -178,13 +178,13 @@ export default function AllPlacesDetail() {
           
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-white via-cyan-100 to-teal-100 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-navy-600 to-navy-800 bg-clip-text text-transparent">
                 Explore Experiences
               </span>
               <br />
               <span className="text-white">Near Capital</span>
             </h1>
-            <p className="text-xl md:text-2xl text-cyan-100 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-navy-400 max-w-3xl mx-auto leading-relaxed">
               Discover the rich cultural heritage and ancient wonders surrounding Nepal's historic capital
             </p>
             
@@ -207,7 +207,7 @@ export default function AllPlacesDetail() {
       </section>
 
       {/* Filters Section */}
-      <section className="py-8 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
+      <section className="py-8 bg-white dark:bg-navy-900 border-b border-gray-200 dark:border-navy-700">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
             {/* Category Filters */}
@@ -218,8 +218,8 @@ export default function AllPlacesDetail() {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-xl font-medium transition-all duration-200 ${
                     selectedCategory === category
-                      ? "bg-teal-600 text-white shadow-lg"
-                      : "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-teal-50 dark:hover:bg-slate-700"
+                      ? "bg-crimson-500 text-white shadow-lg"
+                      : "bg-surface-100 dark:bg-navy-800 text-gray-700 dark:text-gray-300 hover:bg-navy-50 dark:hover:bg-navy-700"
                   }`}
                 >
                   {category}
@@ -233,7 +233,7 @@ export default function AllPlacesDetail() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 rounded-xl border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-teal-500"
+                className="px-4 py-2 rounded-xl border border-gray-200 dark:border-navy-700 bg-white dark:bg-navy-800 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-navy-500"
               >
                 <option value="rating">Rating</option>
                 <option value="name">Name</option>
@@ -244,7 +244,7 @@ export default function AllPlacesDetail() {
       </section>
 
       {/* Places Grid */}
-      <section className="py-16 bg-gray-50 dark:bg-slate-800">
+      <section className="py-16 bg-surface-50 dark:bg-navy-800">
         <div className="max-w-7xl mx-auto px-6">
           <div className="space-y-16">
             {filteredSpots.map((spot, index) => (
@@ -252,7 +252,7 @@ export default function AllPlacesDetail() {
                 key={spot.id}
                 className={`group flex flex-col ${
                   index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"
-                } items-center gap-12 bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-slate-700`}
+                } items-center gap-12 bg-white dark:bg-navy-900 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-navy-700`}
               >
                 {/* Image Section */}
                 <div className="w-full lg:w-1/2 relative">
@@ -265,12 +265,12 @@ export default function AllPlacesDetail() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                     
                     {/* Category Badge */}
-                    <div className="absolute top-4 left-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <div className="absolute top-4 left-4 bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-4 py-2 rounded-full">
                       <span className="text-sm font-bold text-gray-900 dark:text-white">{spot.category}</span>
                     </div>
                     
                     {/* Rating Badge */}
-                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1">
+                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1">
                       <FaStar className="text-yellow-500 text-sm" />
                       <span className="text-sm font-bold text-gray-900 dark:text-white">{spot.rating}</span>
                     </div>
@@ -320,7 +320,7 @@ export default function AllPlacesDetail() {
                       {spot.highlights.map((highlight, idx) => (
                         <span
                           key={idx}
-                          className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 rounded-full text-sm font-medium"
+                          className="px-3 py-1 bg-navy-100 dark:bg-navy-100/30 text-navy-500 dark:text-amber-300 rounded-full text-sm font-medium"
                         >
                           {highlight}
                         </span>
@@ -330,28 +330,28 @@ export default function AllPlacesDetail() {
                   
                   {/* Details Grid */}
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
                       <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaClock />
                         <span className="text-sm">Visit Duration</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">{spot.visitTime}</span>
                     </div>
-                    <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
                       <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaCalendarAlt />
                         <span className="text-sm">Best Time</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">{spot.bestTime}</span>
                     </div>
-                    <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
                       <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaUsers />
                         <span className="text-sm">Entry Fee</span>
                       </div>
                       <span className="font-semibold text-gray-900 dark:text-white">{spot.entryFee}</span>
                     </div>
-                    <div className="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+                    <div className="bg-surface-50 dark:bg-navy-800 p-4 rounded-xl">
                       <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-1">
                         <FaRoute />
                         <span className="text-sm">Established</span>
@@ -372,7 +372,7 @@ export default function AllPlacesDetail() {
                         }
                       }
                     })}
-                    className="w-full bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    className="w-full bg-gradient-to-r from-navy-700 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   >
                     Plan Your Visit
                   </button>

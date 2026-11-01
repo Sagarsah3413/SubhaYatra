@@ -360,24 +360,24 @@ export default function AddPlace() {
       {/* Professional Hero Section */}
       <div className="relative h-96 overflow-hidden mt-16">
         {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-800/90 to-teal-900/85"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-navy-900/95 via-navy-800/90 to-navy-800/85"></div>
         
         {/* Decorative Elements */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-teal-400 rounded-full blur-3xl"></div>
+          <div className="absolute top-10 left-10 w-32 h-32 bg-navy-500 rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-40 h-40 bg-blue-400 rounded-full blur-3xl"></div>
         </div>
 
         <div className="relative h-full max-w-7xl mx-auto flex flex-col items-start justify-center text-left px-6 lg:px-8 py-8">
-          <div className="inline-flex items-center gap-2 bg-teal-500/20 backdrop-blur-sm border border-teal-400/30 rounded-full px-4 py-2 mb-4">
-            <svg className="w-4 h-4 text-teal-300" fill="currentColor" viewBox="0 0 20 20">
+          <div className="inline-flex items-center gap-2 bg-navy-600/20 backdrop-blur-sm border border-amber-400/30 rounded-full px-4 py-2 mb-4">
+            <svg className="w-4 h-4 text-amber-300" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
-            <span className="text-teal-200 text-sm font-semibold tracking-wide">Community Contribution</span>
+            <span className="text-amber-200 text-sm font-semibold tracking-wide">Community Contribution</span>
           </div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-white mb-4 tracking-tight">
-            Share Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-blue-300">Discovery</span>
+            Share Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-navy-700 to-blue-300">Discovery</span>
           </h1>
           <p className="text-base sm:text-lg lg:text-xl text-slate-200 max-w-3xl leading-relaxed font-light">
             Help fellow travelers discover Nepal's hidden gems. Share places, hotels, or restaurants and contribute to our growing community of explorers.
@@ -401,21 +401,21 @@ export default function AddPlace() {
                 {/* Backend Status Indicator */}
                 <div className={`flex items-center gap-2 rounded-lg px-4 py-2 border shadow-sm ${
                   backendStatus === "online" 
-                    ? "bg-emerald-50 border-emerald-200" 
+                    ? "bg-success-bg border-success" 
                     : backendStatus === "offline"
                     ? "bg-rose-50 border-rose-200"
                     : "bg-slate-50 border-slate-200"
                 }`}>
                   <div className={`w-2 h-2 rounded-full ${
                     backendStatus === "online" 
-                      ? "bg-emerald-500 animate-pulse" 
+                      ? "bg-success animate-pulse" 
                       : backendStatus === "offline"
                       ? "bg-rose-500"
                       : "bg-slate-400 animate-pulse"
                   }`}></div>
                   <span className={`text-xs font-semibold ${
                     backendStatus === "online" 
-                      ? "text-emerald-700" 
+                      ? "text-success" 
                       : backendStatus === "offline"
                       ? "text-rose-700"
                       : "text-slate-600"
@@ -469,10 +469,10 @@ export default function AddPlace() {
 
           {/* Success/Error Message */}
           {message && (
-            <div role="status" className={`mx-8 mt-6 p-4 rounded-xl border-l-4 shadow-sm ${message.startsWith('✓') ? 'bg-gradient-to-r from-emerald-50 to-green-50 border-emerald-500' : 'bg-gradient-to-r from-rose-50 to-red-50 border-rose-500'}`}>
+            <div role="status" className={`mx-8 mt-6 p-4 rounded-xl border-l-4 shadow-sm ${message.startsWith('✓') ? 'bg-gradient-to-r from-success to-green-50 border-success' : 'bg-gradient-to-r from-rose-50 to-red-50 border-rose-500'}`}>
               <div className="flex items-start gap-3">
                 {message.startsWith('✓') ? (
-                  <svg className="w-5 h-5 text-emerald-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-success mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 ) : (
@@ -480,7 +480,7 @@ export default function AddPlace() {
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
                   </svg>
                 )}
-                <p className={`text-sm font-medium ${message.startsWith('✓') ? 'text-emerald-800' : 'text-rose-800'}`}>{message}</p>
+                <p className={`text-sm font-medium ${message.startsWith('✓') ? 'text-success' : 'text-rose-800'}`}>{message}</p>
               </div>
             </div>
           )}
@@ -504,31 +504,31 @@ export default function AddPlace() {
                   onClick={() => setField("submissionType", "place")}
                   className={`group relative p-6 rounded-xl border-2 transition-all duration-300 ${
                     form.submissionType === "place"
-                      ? "border-teal-500 bg-teal-50 shadow-lg scale-105"
-                      : "border-slate-300 bg-white hover:border-teal-300 hover:shadow-md"
+                      ? "border-navy-500 bg-navy-50 shadow-lg scale-105"
+                      : "border-slate-300 bg-white hover:border-navy-500 hover:shadow-md"
                   }`}
                 >
                   <div className="flex flex-col items-center text-center space-y-3">
                     <div className={`p-4 rounded-full transition-colors duration-300 ${
                       form.submissionType === "place"
-                        ? "bg-teal-500"
-                        : "bg-slate-100 group-hover:bg-teal-100"
+                        ? "bg-navy-600"
+                        : "bg-slate-100 group-hover:bg-navy-100"
                     }`}>
                       <svg className={`w-8 h-8 ${
-                        form.submissionType === "place" ? "text-white" : "text-slate-600 group-hover:text-teal-600"
+                        form.submissionType === "place" ? "text-white" : "text-slate-600 group-hover:text-navy-600"
                       }`} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                       </svg>
                     </div>
                     <div>
                       <h3 className={`font-bold text-lg ${
-                        form.submissionType === "place" ? "text-teal-700" : "text-slate-800"
+                        form.submissionType === "place" ? "text-navy-500" : "text-slate-800"
                       }`}>Place / Destination</h3>
                       <p className="text-xs text-slate-600 mt-1">Tourist spots, landmarks, attractions</p>
                     </div>
                     {form.submissionType === "place" && (
                       <div className="absolute top-3 right-3">
-                        <svg className="w-6 h-6 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-6 h-6 text-navy-600" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                         </svg>
                       </div>
@@ -620,7 +620,7 @@ export default function AddPlace() {
                 {/* Dynamic Name Field */}
                 <div className="group">
                   <label htmlFor="place-name" className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
-                    <svg className="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-navy-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
                     {form.submissionType === 'hotel' ? 'Hotel Name' : form.submissionType === 'restaurant' ? 'Restaurant Name' : 'Place Name'} <span className="text-rose-500">*</span>
@@ -632,7 +632,7 @@ export default function AddPlace() {
                     onChange={handleChange} 
                     aria-required="true" 
                     aria-invalid={errors.name ? "true" : "false"} 
-                    className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-teal-500/20 transition-all duration-200 text-slate-900 ${errors.name ? 'border-rose-400 bg-rose-50 focus:border-rose-500' : 'border-slate-200 focus:border-teal-500 bg-white'}`} 
+                    className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-navy-500/20 transition-all duration-200 text-slate-900 ${errors.name ? 'border-rose-400 bg-rose-50 focus:border-rose-500' : 'border-slate-200 focus:border-navy-500 bg-white'}`} 
                     placeholder={
                       form.submissionType === 'hotel' 
                         ? 'e.g., Hotel Everest View, Yak & Yeti Hotel' 
@@ -844,7 +844,7 @@ export default function AddPlace() {
                 {/* Description */}
                 <div className="group">
                   <label htmlFor="place-description" className="flex items-center gap-2 text-sm font-bold text-slate-700 mb-3">
-                    <svg className="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-4 h-4 text-success" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clipRule="evenodd" />
                     </svg>
                     Description <span className="text-rose-500">*</span>
@@ -855,7 +855,7 @@ export default function AddPlace() {
                     value={form.description} 
                     onChange={handleChange} 
                     rows={7} 
-                    className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-emerald-500/20 resize-none transition-all duration-200 text-slate-900 ${errors.description ? 'border-rose-400 bg-rose-50 focus:border-rose-500' : 'border-slate-200 focus:border-emerald-500 bg-white'}`} 
+                    className={`w-full px-4 py-3.5 border-2 rounded-xl focus:ring-4 focus:ring-emerald-500/20 resize-none transition-all duration-200 text-slate-900 ${errors.description ? 'border-rose-400 bg-rose-50 focus:border-rose-500' : 'border-slate-200 focus:border-success bg-white'}`} 
                     placeholder="Share what makes this place special. Include tips for visitors, best time to visit, what to expect, and any insider knowledge that would help fellow travelers..."
                   ></textarea>
                   <div className="flex justify-between items-center mt-3">
@@ -871,7 +871,7 @@ export default function AddPlace() {
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                         </svg>
-                        <span className={form.description.length >= 20 ? 'text-emerald-600 font-semibold' : form.description.length >= 10 ? 'text-amber-600' : ''}>
+                        <span className={form.description.length >= 20 ? 'text-success font-semibold' : form.description.length >= 10 ? 'text-amber-600' : ''}>
                           {form.description.length} / 2000 characters
                           {form.description.length < 20 && ` (${20 - form.description.length} more needed)`}
                         </span>
@@ -917,7 +917,7 @@ export default function AddPlace() {
                     <button 
                       type="button"
                       onClick={handleAddTag} 
-                      className="px-6 py-3 bg-slate-700 text-white rounded-xl font-semibold hover:bg-slate-800 transition-all duration-200 shadow-md hover:shadow-lg"
+                      className="px-6 py-3 bg-navy-700 text-white rounded-xl font-semibold hover:bg-navy-800 transition-all duration-200 shadow-md hover:shadow-lg"
                     >
                       Add
                     </button>
@@ -999,14 +999,14 @@ export default function AddPlace() {
                     onDragLeave={onDragLeave} 
                     className={`relative border-3 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all duration-300 ${
                       isDragging 
-                        ? 'border-teal-500 bg-gradient-to-br from-teal-50 to-blue-50 shadow-lg scale-105' 
-                        : 'border-slate-300 bg-gradient-to-br from-slate-50 to-white hover:border-teal-400 hover:bg-teal-50/30'
+                        ? 'border-navy-500 bg-gradient-to-br from-navy-700 to-blue-50 shadow-lg scale-105' 
+                        : 'border-slate-300 bg-gradient-to-br from-slate-50 to-white hover:border-amber-400 hover:bg-navy-50/30'
                     }`}
                   >
                     <div className="space-y-3">
                       <div className="flex justify-center">
-                        <div className={`p-4 rounded-full ${isDragging ? 'bg-teal-100' : 'bg-slate-100'} transition-colors duration-300`}>
-                          <svg className={`w-8 h-8 ${isDragging ? 'text-teal-600' : 'text-slate-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className={`p-4 rounded-full ${isDragging ? 'bg-navy-100' : 'bg-slate-100'} transition-colors duration-300`}>
+                          <svg className={`w-8 h-8 ${isDragging ? 'text-navy-600' : 'text-slate-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                           </svg>
                         </div>
@@ -1020,7 +1020,7 @@ export default function AddPlace() {
                         <button 
                           type="button" 
                           onClick={() => fileInputRef.current.click()} 
-                          className="mt-2 px-4 py-2 bg-slate-700 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-all duration-200 shadow-md hover:shadow-lg"
+                          className="mt-2 px-4 py-2 bg-navy-700 text-white text-sm font-semibold rounded-lg hover:bg-navy-800 transition-all duration-200 shadow-md hover:shadow-lg"
                         >
                           Browse Files
                         </button>
@@ -1045,14 +1045,14 @@ export default function AddPlace() {
                   {previews.length > 0 && (
                     <div className="mt-6 space-y-4">
                       {/* Cover Image */}
-                      <div className="relative rounded-xl overflow-hidden shadow-lg border-2 border-teal-500">
+                      <div className="relative rounded-xl overflow-hidden shadow-lg border-2 border-navy-500">
                         <img 
                           src={previews[coverIndex]} 
                           alt="cover-preview" 
                           className="w-full h-48 object-cover" 
                         />
                         <div className="absolute top-3 left-3">
-                          <span className="inline-flex items-center gap-1 bg-teal-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                          <span className="inline-flex items-center gap-1 bg-navy-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
                             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
@@ -1082,7 +1082,7 @@ export default function AddPlace() {
                               key={idx} 
                               className={`group relative rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer ${
                                 coverIndex === idx 
-                                  ? 'border-teal-500 shadow-lg scale-105' 
+                                  ? 'border-navy-500 shadow-lg scale-105' 
                                   : 'border-slate-200 hover:border-indigo-400 hover:shadow-md'
                               }`}
                             >
@@ -1098,7 +1098,7 @@ export default function AddPlace() {
                                   <button 
                                     type="button" 
                                     onClick={() => setCoverIndex(idx)} 
-                                    className="bg-white text-slate-700 px-2 py-1 text-xs font-semibold rounded shadow-lg hover:bg-slate-700 hover:text-white transition-colors duration-200"
+                                    className="bg-white text-slate-700 px-2 py-1 text-xs font-semibold rounded shadow-lg hover:bg-navy-700 hover:text-white transition-colors duration-200"
                                   >
                                     {coverIndex === idx ? '✓ Cover' : 'Set Cover'}
                                   </button>
@@ -1118,7 +1118,7 @@ export default function AddPlace() {
                               {/* Cover Badge */}
                               {coverIndex === idx && (
                                 <div className="absolute top-1 left-1">
-                                  <span className="inline-flex items-center bg-teal-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
+                                  <span className="inline-flex items-center bg-navy-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">
                                     ★
                                   </span>
                                 </div>
@@ -1182,7 +1182,7 @@ export default function AddPlace() {
                 <button 
                   type="submit" 
                   disabled={submitting || Object.keys(errors).filter(key => errors[key]).length > 0 || backendStatus === "offline"} 
-                  className="group relative px-8 py-4 bg-slate-800 text-white rounded-xl font-bold text-lg hover:bg-slate-900 transition-all duration-300 shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
+                  className="group relative px-8 py-4 bg-navy-800 text-white rounded-xl font-bold text-lg hover:bg-navy-900 transition-all duration-300 shadow-xl hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     {submitting ? (
@@ -1237,8 +1237,8 @@ export default function AddPlace() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
           <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300">
             <div className="flex items-center gap-3 mb-3">
-              <div className="p-3 bg-teal-100 rounded-lg">
-                <svg className="w-6 h-6 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
+              <div className="p-3 bg-navy-100 rounded-lg">
+                <svg className="w-6 h-6 text-navy-600" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -1340,28 +1340,28 @@ export default function AddPlace() {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-300">
           <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl transform animate-in zoom-in-95 duration-300">
             {/* Modal Header */}
-            <div className="bg-gradient-to-r from-teal-500 to-emerald-500 p-6 rounded-t-2xl">
+            <div className="bg-gradient-to-r from-navy-600 to-success p-6 rounded-t-2xl">
               <div className="flex items-center justify-center mb-4">
                 <div className="p-4 bg-white rounded-full shadow-lg">
-                  <svg className="w-12 h-12 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-12 h-12 text-navy-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 </div>
               </div>
               <h3 className="text-2xl font-black text-white text-center">Submission Successful!</h3>
-              <p className="text-teal-50 text-center mt-2 text-sm">Your place has been received</p>
+              <p className="text-navy-500 text-center mt-2 text-sm">Your place has been received</p>
             </div>
 
             {/* Modal Body */}
             <div className="p-6 space-y-4">
               <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-xl p-4 border border-slate-200">
                 <div className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-teal-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-navy-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                   </svg>
                   <div>
                     <p className="text-sm font-semibold text-slate-800 mb-1">
-                      Thank you for contributing <span className="text-teal-600">"{successModal.name}"</span>
+                      Thank you for contributing <span className="text-navy-600">"{successModal.name}"</span>
                     </p>
                     <p className="text-xs text-slate-600 leading-relaxed">
                       Your submission is now under review. Our team will verify the information and publish it within 24 hours. You'll receive a notification once it's live.
@@ -1372,9 +1372,9 @@ export default function AddPlace() {
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-3">
-                <div className="text-center p-3 bg-teal-50 rounded-lg border border-teal-200">
-                  <div className="text-xl font-bold text-teal-600">24h</div>
-                  <div className="text-xs text-teal-700">Review Time</div>
+                <div className="text-center p-3 bg-navy-50 rounded-lg border border-navy-500">
+                  <div className="text-xl font-bold text-navy-600">24h</div>
+                  <div className="text-xs text-navy-500">Review Time</div>
                 </div>
                 <div className="text-center p-3 bg-blue-50 rounded-lg border border-blue-200">
                   <div className="text-xl font-bold text-blue-600">✓</div>
@@ -1397,7 +1397,7 @@ export default function AddPlace() {
               </button>
               <button 
                 onClick={() => { setSuccessModal(null); window.location.href = '/'; }} 
-                className="flex-1 px-4 py-3 bg-slate-800 text-white rounded-xl font-semibold hover:bg-slate-900 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="flex-1 px-4 py-3 bg-navy-800 text-white rounded-xl font-semibold hover:bg-navy-900 transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 Back to Home
               </button>

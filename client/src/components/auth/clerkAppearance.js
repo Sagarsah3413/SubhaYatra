@@ -17,45 +17,45 @@ export const getClerkAppearance = (dark = false) => ({
         headerSubtitle: `${dark ? 'text-slate-400' : 'text-slate-500'} text-sm`,
 
         formButtonPrimary: [
-            'w-full bg-linear-to-r from-teal-600 to-cyan-600',
-            'hover:from-teal-700 hover:to-cyan-700',
+            'w-full bg-linear-to-r from-navy-700 to-navy-700',
+            'hover:from-navy-700 hover:to-navy-700',
             'text-white font-semibold py-3 px-6 rounded-xl',
             'shadow-lg hover:shadow-xl transition-all duration-200 border-0',
         ].join(' '),
 
         formFieldInput: [
             'w-full rounded-xl py-3 px-4 text-sm transition-all duration-200',
-            'border focus:outline-none focus:ring-2 focus:ring-teal-500/50',
+            'border focus:outline-none focus:ring-2 focus:ring-navy-500/50',
             dark
-                ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-500 focus:border-teal-500'
-                : 'bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-teal-400',
+                ? 'bg-navy-800 border-navy-700 text-white placeholder-slate-500 focus:border-navy-500'
+                : 'bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-amber-400',
         ].join(' '),
 
         formFieldLabel: `${dark ? 'text-slate-300' : 'text-slate-700'} text-sm font-medium`,
 
-        dividerLine: dark ? 'bg-slate-700' : 'bg-slate-200',
+        dividerLine: dark ? 'bg-navy-700' : 'bg-slate-200',
         dividerText: `${dark ? 'text-slate-500' : 'text-slate-400'} text-xs`,
 
         socialButtonsBlockButton: [
             'w-full rounded-xl py-3 px-4 border text-sm font-medium transition-all duration-200',
             dark
-                ? 'bg-slate-800 border-slate-700 text-white hover:bg-slate-700'
+                ? 'bg-navy-800 border-navy-700 text-white hover:bg-navy-700'
                 : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50',
         ].join(' '),
 
-        footerActionLink: 'text-teal-500 hover:text-teal-400 font-semibold transition-colors duration-200',
+        footerActionLink: 'text-navy-500 hover:text-amber-400 font-semibold transition-colors duration-200',
         identityPreviewText: dark ? 'text-slate-300' : 'text-slate-700',
-        identityPreviewEditButton: 'text-teal-500 hover:text-teal-400',
-        formResendCodeLink: 'text-teal-500 hover:text-teal-400',
+        identityPreviewEditButton: 'text-navy-500 hover:text-amber-400',
+        formResendCodeLink: 'text-navy-500 hover:text-amber-400',
 
         otpCodeFieldInput: [
-            'rounded-xl text-center border focus:ring-2 focus:ring-teal-500/50',
+            'rounded-xl text-center border focus:ring-2 focus:ring-navy-500/50',
             dark
-                ? 'bg-slate-800 border-slate-700 text-white'
+                ? 'bg-navy-800 border-navy-700 text-white'
                 : 'bg-white border-slate-200 text-slate-900',
         ].join(' '),
 
-        formFieldSuccessText: 'text-emerald-500 text-xs',
+        formFieldSuccessText: 'text-success text-xs',
         formFieldErrorText: 'text-red-400 text-xs',
 
         alertClerkAPIResponseError: [

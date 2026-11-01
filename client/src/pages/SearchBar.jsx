@@ -189,19 +189,19 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
       {/* Search bar */}
       <div className={`relative flex items-center rounded-2xl shadow-2xl border-2 overflow-hidden transition-all duration-300 z-[99998] backdrop-blur-sm ${
         isLocked
-          ? 'border-slate-400/40 bg-slate-100/80 dark:bg-slate-800/60 opacity-80'
+          ? 'border-slate-400/40 bg-slate-100/80 dark:bg-navy-800/60 opacity-80'
           : isFocused
-            ? 'border-teal-400 shadow-teal-500/30 bg-white/95 dark:bg-slate-800/95 scale-[1.02]'
+            ? 'border-amber-400 shadow-teal-500/30 bg-white/95 dark:bg-navy-800/95 scale-[1.02]'
             : theme === 'dark'
-              ? 'border-slate-700/50 bg-slate-800/90 hover:border-slate-600'
+              ? 'border-navy-700/50 bg-navy-800/90 hover:border-slate-600'
               : 'border-gray-300/50 bg-white/90 hover:border-gray-400'
       }`}>
 
         <div className="pl-5 pr-2">
           <div className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 ${
-            isLocked ? 'bg-slate-200 dark:bg-slate-700' :
-            isFocused ? 'bg-gradient-to-br from-teal-500 to-cyan-500 shadow-lg' :
-            theme === 'dark' ? 'bg-slate-700/80' : 'bg-gray-100'
+            isLocked ? 'bg-slate-200 dark:bg-navy-700' :
+            isFocused ? 'bg-gradient-to-br from-navy-600 to-navy-700 shadow-lg' :
+            theme === 'dark' ? 'bg-navy-700/80' : 'bg-surface-100'
           }`}>
             {isLocked
               ? <FaLock className="text-slate-400 text-lg" />
@@ -231,18 +231,18 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
           spellCheck="false"
         />
 
-        {isLoading && <div className="px-3"><FaSpinner className="text-teal-500 animate-spin text-xl" /></div>}
+        {isLoading && <div className="px-3"><FaSpinner className="text-navy-500 animate-spin text-xl" /></div>}
 
         {query && !isLoading && isSignedIn && (
           <button onClick={clearSearch} className={`w-10 h-10 mx-2 rounded-xl flex items-center justify-center ${
-            theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-slate-700' : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100'
+            theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-navy-700' : 'text-gray-400 hover:text-gray-700 hover:bg-surface-100'
           }`}><FaTimes /></button>
         )}
 
         {speechSupported && isSignedIn && (
           <button onClick={handleVoiceSearch} className={`w-10 h-10 mx-2 rounded-xl flex items-center justify-center ${
             isListening ? 'bg-red-500 text-white animate-pulse' :
-            theme === 'dark' ? 'text-slate-400 hover:text-teal-400 hover:bg-slate-700' : 'text-gray-400 hover:text-teal-500 hover:bg-gray-100'
+            theme === 'dark' ? 'text-slate-400 hover:text-amber-400 hover:bg-navy-700' : 'text-gray-400 hover:text-navy-500 hover:bg-surface-100'
           }`}><FaMicrophone /></button>
         )}
 
@@ -250,9 +250,9 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
           onClick={isLocked ? () => navigate('/sign-in') : handleSearch}
           disabled={!isLocked && (!query.trim() || isLoading)}
           className={`px-8 py-5 font-semibold text-base transition-all duration-300 flex items-center gap-2 rounded-r-2xl ${
-            isLocked ? 'bg-gradient-to-r from-slate-500 to-slate-600 hover:from-teal-500 hover:to-cyan-600 text-white cursor-pointer' :
-            query.trim() && !isLoading ? 'bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white' :
-            theme === 'dark' ? 'bg-slate-700/50 text-slate-500 cursor-not-allowed' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+            isLocked ? 'bg-gradient-to-r from-slate-500 to-slate-600 hover:from-navy-600 hover:to-navy-700 text-white cursor-pointer' :
+            query.trim() && !isLoading ? 'bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white' :
+            theme === 'dark' ? 'bg-navy-700/50 text-slate-500 cursor-not-allowed' : 'bg-gray-200 text-gray-400 cursor-not-allowed'
           }`}
         >
           {isLocked ? <><FaLock /><span className="hidden sm:inline">Sign In</span></> : <><FaSearch /><span className="hidden sm:inline">Search</span></>}
@@ -262,16 +262,16 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
       {/* Login prompt */}
       {showLoginPrompt && isLocked && (
         <div className="absolute top-full left-0 right-0 mt-1 z-[99999]">
-          <div className={`rounded-xl border border-teal-400 p-3 flex items-center justify-between gap-3 shadow-xl ${
-            theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-white text-slate-800'
+          <div className={`rounded-xl border border-amber-400 p-3 flex items-center justify-between gap-3 shadow-xl ${
+            theme === 'dark' ? 'bg-navy-900 text-white' : 'bg-white text-slate-800'
           }`}>
             <div className="flex items-center gap-2">
-              <FaLock className="text-teal-500 text-xs" />
+              <FaLock className="text-navy-500 text-xs" />
               <p className="text-xs font-semibold">Sign in to search destinations</p>
             </div>
             <div className="flex gap-1.5">
-              <button onClick={() => navigate('/sign-in')} className="px-3 py-1 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-xs font-semibold">Sign In</button>
-              <button onClick={() => navigate('/sign-up')} className="px-3 py-1 border border-teal-500 text-teal-600 dark:text-teal-400 rounded-lg text-xs font-semibold">Sign Up</button>
+              <button onClick={() => navigate('/sign-in')} className="px-3 py-1 bg-crimson-500 hover:bg-crimson-600 text-white rounded-lg text-xs font-semibold">Sign In</button>
+              <button onClick={() => navigate('/sign-up')} className="px-3 py-1 border border-navy-500 text-navy-600 dark:text-amber-400 rounded-lg text-xs font-semibold">Sign Up</button>
             </div>
           </div>
         </div>
@@ -282,17 +282,17 @@ export default function SearchBar({ placeholder, className = "", onSearch = null
         <div
           ref={dropdownRef}
           className={`absolute top-full left-0 right-0 mt-1 z-[99999] rounded-xl border shadow-xl overflow-hidden ${
-            theme === 'dark' ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'
+            theme === 'dark' ? 'bg-navy-900 border-navy-700' : 'bg-white border-slate-200'
           }`}
         >
           <div className={`px-3 py-1 border-b flex items-center justify-between ${
-            theme === 'dark' ? 'border-slate-800' : 'border-slate-100'
+            theme === 'dark' ? 'border-navy-800' : 'border-slate-100'
           }`}>
             <span className={`text-[10px] font-semibold uppercase tracking-wide ${
               theme === 'dark' ? 'text-slate-500' : 'text-slate-400'
             }`}>{results.length} match{results.length !== 1 ? 'es' : ''}</span>
             <button onClick={() => { setShowSuggestions(false); handleSearch(); }}
-              className="text-[10px] text-teal-500 hover:text-teal-400 font-semibold">
+              className="text-[10px] text-navy-500 hover:text-amber-400 font-semibold">
               See all →
             </button>
           </div>

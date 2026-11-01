@@ -8,18 +8,18 @@ const TermsOfService = () => {
   const { theme } = useTheme();
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-navy-900 text-white' : 'bg-surface-50 text-gray-900'}`}>
       <Header />
       
       <div className="max-w-4xl mx-auto px-6 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
-            <div className={`p-4 rounded-full ${theme === 'dark' ? 'bg-teal-900/50' : 'bg-teal-100'}`}>
-              <FaGavel className="text-4xl text-teal-600" />
+            <div className={`p-4 rounded-full ${theme === 'dark' ? 'bg-navy-900/50' : 'bg-navy-100'}`}>
+              <FaGavel className="text-4xl text-navy-600" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-navy-700 to-navy-700 bg-clip-text text-transparent">
             Terms of Service
           </h1>
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -34,15 +34,15 @@ const TermsOfService = () => {
         <div className="space-y-8">
           
           {/* Acceptance of Terms */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <div className="flex items-center mb-4">
-              <FaUserCheck className="text-2xl text-teal-600 mr-3" />
+              <FaUserCheck className="text-2xl text-navy-600 mr-3" />
               <h2 className="text-2xl font-semibold">1. Acceptance of Terms</h2>
             </div>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               By accessing and using SubhaYatra ("the Service"), you accept and agree to be bound by the terms and provision of this agreement.
             </p>
-            <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
+            <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-50'}`}>
               <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                 <strong>Important:</strong> If you do not agree to abide by the above, please do not use this service.
               </p>
@@ -50,14 +50,14 @@ const TermsOfService = () => {
           </section>
 
           {/* Service Description */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">2. Service Description</h2>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               SubhaYatra is a travel recommendation platform that provides:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
-                <h3 className="font-medium mb-2 text-teal-600">Core Services</h3>
+              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-50'}`}>
+                <h3 className="font-medium mb-2 text-navy-600">Core Services</h3>
                 <ul className={`text-sm space-y-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   <li>• Travel destination recommendations</li>
                   <li>• Hotel and accommodation listings</li>
@@ -65,8 +65,8 @@ const TermsOfService = () => {
                   <li>• Activity and attraction information</li>
                 </ul>
               </div>
-              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
-                <h3 className="font-medium mb-2 text-teal-600">Additional Features</h3>
+              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-50'}`}>
+                <h3 className="font-medium mb-2 text-navy-600">Additional Features</h3>
                 <ul className={`text-sm space-y-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   <li>• User reviews and ratings</li>
                   <li>• Personalized recommendations</li>
@@ -78,11 +78,11 @@ const TermsOfService = () => {
           </section>
 
           {/* User Accounts */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">3. User Accounts</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-medium mb-2 text-teal-600">Account Registration</h3>
+                <h3 className="text-lg font-medium mb-2 text-navy-600">Account Registration</h3>
                 <ul className={`list-disc list-inside space-y-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   <li>You must provide accurate and complete information when creating an account</li>
                   <li>You are responsible for maintaining the confidentiality of your account credentials</li>
@@ -91,7 +91,7 @@ const TermsOfService = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2 text-teal-600">Account Responsibilities</h3>
+                <h3 className="text-lg font-medium mb-2 text-navy-600">Account Responsibilities</h3>
                 <ul className={`list-disc list-inside space-y-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   <li>You are responsible for all activities that occur under your account</li>
                   <li>Notify us immediately of any unauthorized use of your account</li>
@@ -103,7 +103,7 @@ const TermsOfService = () => {
           </section>
 
           {/* Acceptable Use */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <div className="flex items-center mb-4">
               <FaExclamationTriangle className="text-2xl text-amber-500 mr-3" />
               <h2 className="text-2xl font-semibold">4. Acceptable Use Policy</h2>
@@ -136,17 +136,17 @@ const TermsOfService = () => {
           </section>
 
           {/* Content and Reviews */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">5. User Content and Reviews</h2>
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-medium mb-2 text-teal-600">Content Ownership</h3>
+                <h3 className="text-lg font-medium mb-2 text-navy-600">Content Ownership</h3>
                 <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   You retain ownership of content you submit, but grant us a license to use, display, and distribute it on our platform.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2 text-teal-600">Review Guidelines</h3>
+                <h3 className="text-lg font-medium mb-2 text-navy-600">Review Guidelines</h3>
                 <ul className={`list-disc list-inside space-y-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   <li>Reviews must be based on genuine experiences</li>
                   <li>No fake or incentivized reviews</li>
@@ -158,17 +158,17 @@ const TermsOfService = () => {
           </section>
 
           {/* Booking and Payments */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">6. Booking and Payments</h2>
             <div className="space-y-4">
-              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
-                <h3 className="font-medium mb-2 text-teal-600">Third-Party Services</h3>
+              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-50'}`}>
+                <h3 className="font-medium mb-2 text-navy-600">Third-Party Services</h3>
                 <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   Bookings are processed through third-party providers. We are not responsible for the quality, availability, or pricing of third-party services.
                 </p>
               </div>
-              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
-                <h3 className="font-medium mb-2 text-teal-600">Payment Terms</h3>
+              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-50'}`}>
+                <h3 className="font-medium mb-2 text-navy-600">Payment Terms</h3>
                 <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   All payments are subject to the terms and conditions of the respective service providers. Refunds and cancellations are governed by provider policies.
                 </p>
@@ -177,7 +177,7 @@ const TermsOfService = () => {
           </section>
 
           {/* Disclaimers */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">7. Disclaimers and Limitations</h2>
             <div className="space-y-4">
               <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-amber-900/20' : 'bg-amber-50'} border border-amber-200`}>
@@ -196,7 +196,7 @@ const TermsOfService = () => {
           </section>
 
           {/* Liability */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">8. Limitation of Liability</h2>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               To the maximum extent permitted by law, SubhaYatra shall not be liable for:
@@ -211,17 +211,17 @@ const TermsOfService = () => {
           </section>
 
           {/* Termination */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">9. Termination</h2>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <h3 className="text-lg font-medium mb-2 text-teal-600">By You</h3>
+                <h3 className="text-lg font-medium mb-2 text-navy-600">By You</h3>
                 <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   You may terminate your account at any time by contacting us or using account settings. Some information may be retained as required by law.
                 </p>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2 text-teal-600">By Us</h3>
+                <h3 className="text-lg font-medium mb-2 text-navy-600">By Us</h3>
                 <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   We may suspend or terminate accounts for violations of these terms, illegal activity, or at our discretion with reasonable notice.
                 </p>
@@ -230,9 +230,9 @@ const TermsOfService = () => {
           </section>
 
           {/* Governing Law */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <div className="flex items-center mb-4">
-              <FaHandshake className="text-2xl text-teal-600 mr-3" />
+              <FaHandshake className="text-2xl text-navy-600 mr-3" />
               <h2 className="text-2xl font-semibold">10. Governing Law and Disputes</h2>
             </div>
             <div className="space-y-4">
@@ -248,7 +248,7 @@ const TermsOfService = () => {
           </section>
 
           {/* Changes to Terms */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">11. Changes to Terms</h2>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               We may update these Terms of Service from time to time. We will notify users of material changes by:
@@ -258,7 +258,7 @@ const TermsOfService = () => {
               <li>Sending email notifications to registered users</li>
               <li>Displaying prominent notices on our platform</li>
             </ul>
-            <div className={`mt-4 p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
+            <div className={`mt-4 p-4 rounded-lg ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-50'}`}>
               <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                 <strong>Effective Date:</strong> Changes become effective 30 days after notification. Continued use constitutes acceptance of new terms.
               </p>
@@ -266,12 +266,12 @@ const TermsOfService = () => {
           </section>
 
           {/* Contact Information */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">12. Contact Information</h2>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               For questions about these Terms of Service, please contact us:
             </p>
-            <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
+            <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-50'}`}>
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 <strong>Email:</strong> legal@subhayatra.com<br />
                 <strong>Address:</strong> SubhaYatra, Kathmandu, Nepal<br />

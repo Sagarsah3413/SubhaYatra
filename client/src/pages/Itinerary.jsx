@@ -860,7 +860,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-navy-900 text-white' : 'bg-surface-50 text-gray-900'}`}>
       <Header />
       
       {/* Professional Hero Section with Animations */}
@@ -904,7 +904,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
               animation: 'slideDown 0.8s ease-out'
             }}
           >
-            <FaRoute className="text-teal-300 text-xl" />
+            <FaRoute className="text-amber-300 text-xl" />
             <span className="font-bold text-lg">Itinerary Generator</span>
           </div>
           
@@ -917,7 +917,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
           >
             Plan Your Perfect
             <br />
-            <span className="bg-gradient-to-r from-teal-200 via-cyan-200 to-blue-200 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-navy-700 via-navy-600 to-blue-200 bg-clip-text text-transparent">
               Nepal Adventure
             </span>
           </h1>
@@ -945,7 +945,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
               { icon: FaRoute, text: 'Day-by-Day Plans' }
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3">
-                <item.icon className="text-teal-300" />
+                <item.icon className="text-amber-300" />
                 <span className="font-semibold">{item.text}</span>
               </div>
             ))}
@@ -954,11 +954,11 @@ Plan your own trip at: http://localhost:5173/itinerary`;
       </section>
 
       {/* Static Navigation Tabs - New Style */}
-      <section className={`${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'} py-8`}>
+      <section className={`${theme === 'dark' ? 'bg-navy-900' : 'bg-surface-50'} py-8`}>
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-3 gap-6">
             {[
-              { id: 'create', label: 'Create Plan', icon: FaPlus, color: 'from-teal-500 to-cyan-500' },
+              { id: 'create', label: 'Create Plan', icon: FaPlus, color: 'from-navy-600 to-navy-700' },
               { id: 'generated', label: 'Your Itinerary', icon: FaRoute, show: generatedItinerary, color: 'from-purple-500 to-pink-500' },
               { id: 'tips', label: 'Travel Tips', icon: FaInfoCircle, color: 'from-orange-500 to-red-500' }
             ].filter(tab => tab.show !== false).map((tab) => (
@@ -969,8 +969,8 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   activeTab === tab.id
                     ? `bg-gradient-to-br ${tab.color} text-white shadow-2xl`
                     : theme === 'dark'
-                      ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                      : 'bg-white text-gray-600 hover:bg-gray-100 shadow-lg'
+                      ? 'bg-navy-800 text-slate-300 hover:bg-navy-700'
+                      : 'bg-white text-gray-600 hover:bg-surface-100 shadow-lg'
                 }`}
               >
                 <div className="flex flex-col items-center gap-4">
@@ -1000,7 +1000,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
           {activeTab === 'create' && (
             <div className="space-y-12">
               <div className="text-center mb-16">
-                <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-navy-700 via-navy-600 to-blue-600 bg-clip-text text-transparent">
                   Create Your Nepal Itinerary
                 </h2>
                 <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
@@ -1012,15 +1012,15 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   <div 
                     className={`mt-8 p-6 rounded-2xl max-w-3xl mx-auto ${
                       theme === 'dark' 
-                        ? 'bg-gradient-to-r from-teal-900/30 to-cyan-900/30 border border-teal-500/30' 
-                        : 'bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200'
+                        ? 'bg-gradient-to-r from-navy-700/30 to-navy-700/30 border border-navy-500/30' 
+                        : 'bg-gradient-to-r from-navy-700 to-navy-700 border border-navy-500'
                     }`}
                     style={{
                       animation: 'slideDown 0.6s ease-out'
                     }}
                   >
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gradient-to-br from-navy-600 to-navy-700 rounded-full flex items-center justify-center">
                         <FaCheckCircle className="text-white text-lg" />
                       </div>
                       <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
@@ -1029,24 +1029,24 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     </div>
                     <div className="flex flex-wrap gap-3 justify-center">
                       <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                        theme === 'dark' ? 'bg-slate-800 text-teal-400' : 'bg-white text-teal-600'
+                        theme === 'dark' ? 'bg-navy-800 text-amber-400' : 'bg-white text-navy-600'
                       }`}>
                         👥 {userPreferences.travellers} Traveller{userPreferences.travellers !== '1' ? 's' : ''}
                       </span>
                       <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                        theme === 'dark' ? 'bg-slate-800 text-cyan-400' : 'bg-white text-cyan-600'
+                        theme === 'dark' ? 'bg-navy-800 text-navy-400' : 'bg-white text-navy-400'
                       }`}>
                         📅 {userPreferences.tripDuration} Days
                       </span>
                       {userPreferences.travelMonth && (
                         <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                          theme === 'dark' ? 'bg-slate-800 text-blue-400' : 'bg-white text-blue-600'
+                          theme === 'dark' ? 'bg-navy-800 text-blue-400' : 'bg-white text-blue-600'
                         }`}>
                           🗓️ {userPreferences.travelMonth}
                         </span>
                       )}
                       <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                        theme === 'dark' ? 'bg-slate-800 text-purple-400' : 'bg-white text-purple-600'
+                        theme === 'dark' ? 'bg-navy-800 text-purple-400' : 'bg-white text-purple-600'
                       }`}>
                         🎯 {userPreferences.age} years old
                       </span>
@@ -1081,7 +1081,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     </div>
                   </div>
                   
-                  <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-slate-800/60' : 'bg-white/80'} backdrop-blur-sm shadow-lg`}>
+                  <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-navy-800/60' : 'bg-white/80'} backdrop-blur-sm shadow-lg`}>
                     <div className="flex items-start gap-4">
                       <FaMapMarkerAlt className="text-purple-500 text-2xl mt-1" />
                       <div className="flex-1">
@@ -1282,20 +1282,20 @@ Plan your own trip at: http://localhost:5173/itinerary`;
               <div className="grid lg:grid-cols-3 gap-8">
                 {/* Duration Selection Card */}
                 <div 
-                  className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
+                  className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-navy-800 to-navy-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
                   style={{
                     animation: 'fadeInUp 0.6s ease-out'
                   }}
                 >
                   <div className="text-center mb-8">
-                    <div className="w-20 h-20 bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-xl">
+                    <div className="w-20 h-20 bg-gradient-to-br from-navy-600 via-navy-600 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-5 shadow-xl">
                       <FaCalendarAlt className="text-3xl text-white" />
                     </div>
                     <h3 className="text-2xl font-black mb-2">Trip Duration</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400">How long will you explore?</p>
                     {userPreferences && (
                       <div className={`mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ${
-                        theme === 'dark' ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-100 text-teal-700'
+                        theme === 'dark' ? 'bg-navy-100/30 text-amber-400' : 'bg-navy-100 text-navy-500'
                       }`}>
                         <FaCheckCircle />
                         <span>Pre-filled from your preferences</span>
@@ -1305,7 +1305,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   <select 
                     value={formData.duration}
                     onChange={(e) => handleInputChange('duration', parseInt(e.target.value))}
-                    className={`w-full p-4 rounded-xl border-2 font-semibold text-lg ${theme === 'dark' ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300'} focus:ring-4 focus:ring-teal-500/30 transition-all`}
+                    className={`w-full p-4 rounded-xl border-2 font-semibold text-lg ${theme === 'dark' ? 'bg-navy-700 border-slate-600 text-white' : 'bg-white border-gray-300'} focus:ring-4 focus:ring-navy-500/30 transition-all`}
                   >
                     <option value={3}>3 Days - Quick Escape</option>
                     <option value={5}>5 Days - Short Adventure</option>
@@ -1317,7 +1317,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
 
                 {/* Destination Selection Card */}
                 <div 
-                  className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
+                  className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-navy-800 to-navy-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
                   style={{
                     animation: 'fadeInUp 0.8s ease-out'
                   }}
@@ -1332,7 +1332,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   <div className="space-y-4 max-h-80 overflow-y-auto custom-scrollbar">
                     {loadingPlaces ? (
                       <div className="text-center py-8">
-                        <FaSpinner className="animate-spin text-4xl mx-auto mb-4 text-teal-500" />
+                        <FaSpinner className="animate-spin text-4xl mx-auto mb-4 text-navy-500" />
                         <p className="text-gray-600 dark:text-gray-400">Loading destinations from database...</p>
                       </div>
                     ) : availablePlaces.length === 0 ? (
@@ -1343,7 +1343,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     ) : (
                       <>
                         <div className={`text-center py-2 px-4 rounded-lg mb-4 ${
-                          theme === 'dark' ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-50 text-teal-700'
+                          theme === 'dark' ? 'bg-navy-100/30 text-amber-400' : 'bg-navy-50 text-navy-500'
                         }`}>
                           <p className="text-sm font-bold">
                             ✅ {availablePlaces.length} destinations loaded from database
@@ -1359,19 +1359,19 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                             key={place.id} 
                             className={`flex items-center space-x-4 p-4 rounded-xl cursor-pointer transition-all duration-300 ${
                               formData.destinations.includes(place.id)
-                                ? 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 border-2 border-teal-500 shadow-lg'
+                                ? 'bg-gradient-to-r from-navy-600/20 to-navy-700/20 border-2 border-navy-500 shadow-lg'
                                 : isPreselected
                                   ? 'bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-2 border-purple-400 shadow-md'
                                   : theme === 'dark'
-                                    ? 'bg-slate-700/50 hover:bg-slate-700 border-2 border-transparent'
-                                    : 'bg-gray-100 hover:bg-gray-200 border-2 border-transparent'
+                                    ? 'bg-navy-700/50 hover:bg-navy-700 border-2 border-transparent'
+                                    : 'bg-surface-100 hover:bg-gray-200 border-2 border-transparent'
                             }`}
                           >
                             <input 
                               type="checkbox" 
                               checked={formData.destinations.includes(place.id)}
                               onChange={() => toggleDestination(place.id)}
-                              className="w-5 h-5 text-teal-600 rounded-lg focus:ring-2 focus:ring-teal-500" 
+                              className="w-5 h-5 text-navy-600 rounded-lg focus:ring-2 focus:ring-navy-500" 
                             />
                             <div className="flex-1">
                               <div className="flex items-center gap-2">
@@ -1386,7 +1386,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                 {place.location} • {place.type || 'Destination'}
                               </div>
                               {place.best_season && (
-                                <div className="text-xs text-teal-600 dark:text-teal-400 mt-1">
+                                <div className="text-xs text-navy-600 dark:text-amber-400 mt-1">
                                   Best: {place.best_season}
                                 </div>
                               )}
@@ -1401,7 +1401,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
 
                 {/* Budget Selection Card */}
                 <div 
-                  className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
+                  className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-navy-800 to-navy-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
                   style={{
                     animation: 'fadeInUp 1s ease-out'
                   }}
@@ -1416,13 +1416,13 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   <select 
                     value={formData.budget}
                     onChange={(e) => handleInputChange('budget', e.target.value)}
-                    className={`w-full p-4 rounded-xl border-2 font-semibold text-base ${theme === 'dark' ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-gray-300'} focus:ring-4 focus:ring-orange-500/30 transition-all`}
+                    className={`w-full p-4 rounded-xl border-2 font-semibold text-base ${theme === 'dark' ? 'bg-navy-700 border-slate-600 text-white' : 'bg-white border-gray-300'} focus:ring-4 focus:ring-orange-500/30 transition-all`}
                   >
                     <option value="budget">💰 Budget ($30-60/day)</option>
                     <option value="mid">🏨 Mid-range ($70-120/day)</option>
                     <option value="luxury">✨ Luxury ($130-250/day)</option>
                   </select>
-                  <div className={`mt-6 p-4 rounded-xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'}`}>
+                  <div className={`mt-6 p-4 rounded-xl ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-100'}`}>
                     <p className="text-sm text-gray-600 dark:text-gray-300">
                       {formData.budget === 'budget' && '🎒 Guesthouses, local transport, street food'}
                       {formData.budget === 'mid' && '🏨 Hotels, private transport, restaurant meals'}
@@ -1440,7 +1440,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   className={`px-16 py-6 rounded-3xl font-black text-xl transition-all duration-500 flex items-center gap-4 mx-auto shadow-2xl ${
                     isGenerating || formData.destinations.length === 0
                       ? 'bg-gray-400 cursor-not-allowed opacity-60'
-                      : 'bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 hover:from-teal-700 hover:via-cyan-700 hover:to-blue-700 text-white transform hover:scale-110 hover:shadow-3xl'
+                      : 'bg-gradient-to-r from-navy-700 via-navy-600 to-blue-600 hover:from-navy-700 hover:via-navy-600 hover:to-blue-700 text-white transform hover:scale-110 hover:shadow-3xl'
                   }`}
                   style={{
                     animation: isGenerating ? 'pulse 2s ease-in-out infinite' : 'none'
@@ -1465,10 +1465,10 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   </p>
                 )}
                 
-                <div className={`mt-8 p-6 rounded-2xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-gray-100'} max-w-2xl mx-auto`}>
+                <div className={`mt-8 p-6 rounded-2xl ${theme === 'dark' ? 'bg-navy-800/50' : 'bg-surface-100'} max-w-2xl mx-auto`}>
                   <p className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-2">Current Selection:</p>
                   <div className="flex flex-wrap gap-2 justify-center">
-                    <span className="px-4 py-2 bg-teal-500/20 text-teal-600 dark:text-teal-400 rounded-full text-sm font-bold">
+                    <span className="px-4 py-2 bg-navy-600/20 text-navy-600 dark:text-amber-400 rounded-full text-sm font-bold">
                       {formData.duration} Days
                     </span>
                     <span className="px-4 py-2 bg-purple-500/20 text-purple-600 dark:text-purple-400 rounded-full text-sm font-bold">
@@ -1491,18 +1491,18 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   {/* Header */}
                   <div className="text-center mb-16">
                     <div className="inline-block mb-6">
-                      <div className="w-24 h-24 bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto shadow-2xl">
+                      <div className="w-24 h-24 bg-gradient-to-br from-navy-600 via-navy-600 to-blue-500 rounded-full flex items-center justify-center mx-auto shadow-2xl">
                         <FaCheckCircle className="text-4xl text-white" />
                       </div>
                     </div>
-                    <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                    <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-navy-700 via-navy-600 to-blue-600 bg-clip-text text-transparent">
                       {generatedItinerary.title}
                     </h2>
                     <p className="text-xl text-gray-600 dark:text-gray-300 mb-4 max-w-4xl mx-auto leading-relaxed">
                       {generatedItinerary.summary}
                     </p>
                     <div className="flex flex-wrap justify-center gap-4 mb-8">
-                      <span className="px-5 py-2 bg-teal-500/20 text-teal-600 dark:text-teal-400 rounded-full text-sm font-bold">
+                      <span className="px-5 py-2 bg-navy-600/20 text-navy-600 dark:text-amber-400 rounded-full text-sm font-bold">
                         📅 {generatedItinerary.createdAt}
                       </span>
                       <span className="px-5 py-2 bg-purple-500/20 text-purple-600 dark:text-purple-400 rounded-full text-sm font-bold">
@@ -1516,21 +1516,21 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     <div className="flex flex-wrap justify-center gap-4">
                       <button 
                         onClick={handleSaveItinerary}
-                        className="px-8 py-4 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-2xl font-bold flex items-center gap-3 hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                        className="px-8 py-4 bg-gradient-to-r from-navy-700 to-navy-700 text-white rounded-2xl font-bold flex items-center gap-3 hover:from-navy-700 hover:to-navy-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
                       >
                         <FaSave className="text-lg" />
                         Save Itinerary
                       </button>
                       <button 
                         onClick={handleDownloadPDF}
-                        className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                        className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-surface-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                       >
                         <FaDownload className="text-lg" />
                         Download PDF
                       </button>
                       <button 
                         onClick={handleShareItinerary}
-                        className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                        className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 rounded-2xl font-bold flex items-center gap-3 hover:bg-surface-50 dark:hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                       >
                         <FaShare className="text-lg" />
                         Share
@@ -1545,7 +1545,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     {generatedItinerary.dailyPlan.map((day, index) => (
                       <div 
                         key={day.day} 
-                        className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300`}
+                        className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-navy-800 to-navy-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300`}
                         style={{
                           animation: `fadeInUp ${0.3 + index * 0.1}s ease-out`
                         }}
@@ -1553,7 +1553,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                         {/* Day Header */}
                         <div className="flex items-center justify-between mb-8 pb-6 border-b-2 border-gray-200 dark:border-gray-700">
                           <div className="flex items-center gap-5">
-                            <div className="w-16 h-16 bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-xl">
+                            <div className="w-16 h-16 bg-gradient-to-br from-navy-700 via-navy-600 to-blue-600 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-xl">
                               {day.day}
                             </div>
                             <div>
@@ -1576,10 +1576,10 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                             <div 
                               key={actIndex} 
                               className={`flex items-start gap-5 p-6 rounded-2xl ${
-                                theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'
+                                theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-100'
                               } hover:shadow-lg transition-all duration-300`}
                             >
-                              <div className="w-28 text-sm font-bold text-gray-600 dark:text-gray-400 flex-shrink-0 bg-white dark:bg-slate-800 px-3 py-2 rounded-lg">
+                              <div className="w-28 text-sm font-bold text-gray-600 dark:text-gray-400 flex-shrink-0 bg-white dark:bg-navy-800 px-3 py-2 rounded-lg">
                                 {activity.time}
                               </div>
                               <div className="flex-1">
@@ -1590,7 +1590,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                                 <span className={`inline-block px-4 py-2 rounded-xl text-xs font-bold ${
                                   activity.type === 'sightseeing' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' :
                                   activity.type === 'activity' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
-                                  activity.type === 'logistics' ? 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
+                                  activity.type === 'logistics' ? 'bg-surface-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' :
                                   activity.type === 'dining' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300' :
                                   'bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300'
                                 }`}>
@@ -1603,7 +1603,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
 
                         {/* Tips */}
                         {day.tips && (
-                          <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border-l-4 border-blue-500 shadow-lg">
+                          <div className="mb-8 p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-navy-700 dark:from-blue-900/20 dark:to-navy-700/20 border-l-4 border-blue-500 shadow-lg">
                             <h5 className="font-black text-blue-900 dark:text-blue-300 mb-3 flex items-center gap-3 text-lg">
                               <FaInfoCircle className="text-xl" />
                               Daily Tip
@@ -1614,7 +1614,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
 
                         {/* Accommodation, Meals & Transportation */}
                         <div className="grid md:grid-cols-3 gap-6">
-                          <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'}`}>
+                          <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-100'}`}>
                             <h5 className="font-black mb-4 flex items-center gap-3 text-lg">
                               <FaHotel className="text-blue-500 text-xl" />
                               Accommodation
@@ -1623,7 +1623,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                             <p className="text-sm text-gray-500 font-bold">${day.dailyCost}/night</p>
                           </div>
                           
-                          <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'}`}>
+                          <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-100'}`}>
                             <h5 className="font-black mb-4 flex items-center gap-3 text-lg">
                               <FaUtensils className="text-orange-500 text-xl" />
                               Meals
@@ -1643,7 +1643,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                           </div>
 
                           {day.transportation && (
-                            <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'}`}>
+                            <div className={`p-6 rounded-2xl ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-100'}`}>
                               <h5 className="font-black mb-4 flex items-center gap-3 text-lg">
                                 <FaRoute className="text-green-500 text-xl" />
                                 Transportation
@@ -1657,7 +1657,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   </div>
 
                   {/* Cost Summary */}
-                  <div className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'}`}>
+                  <div className={`p-10 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-navy-800 to-navy-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'}`}>
                     <h3 className="text-3xl font-black mb-8 flex items-center gap-3">
                       <FaMoneyBillWave className="text-green-500 text-4xl" />
                       Cost Breakdown
@@ -1666,21 +1666,21 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     {generatedItinerary.costBreakdown && (
                       <div className="grid md:grid-cols-2 gap-8 mb-8">
                         <div className="space-y-5">
-                          <div className={`flex justify-between p-5 rounded-2xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'}`}>
+                          <div className={`flex justify-between p-5 rounded-2xl ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-100'}`}>
                             <span className="text-gray-600 dark:text-gray-400 font-bold text-lg">🏨 Accommodation</span>
                             <span className="font-black text-xl">${generatedItinerary.costBreakdown.accommodation}</span>
                           </div>
-                          <div className={`flex justify-between p-5 rounded-2xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'}`}>
+                          <div className={`flex justify-between p-5 rounded-2xl ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-100'}`}>
                             <span className="text-gray-600 dark:text-gray-400 font-bold text-lg">🍽️ Meals</span>
                             <span className="font-black text-xl">${generatedItinerary.costBreakdown.meals}</span>
                           </div>
                         </div>
                         <div className="space-y-5">
-                          <div className={`flex justify-between p-5 rounded-2xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'}`}>
+                          <div className={`flex justify-between p-5 rounded-2xl ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-100'}`}>
                             <span className="text-gray-600 dark:text-gray-400 font-bold text-lg">🚗 Transportation</span>
                             <span className="font-black text-xl">${generatedItinerary.costBreakdown.transportation}</span>
                           </div>
-                          <div className={`flex justify-between p-5 rounded-2xl ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-100'}`}>
+                          <div className={`flex justify-between p-5 rounded-2xl ${theme === 'dark' ? 'bg-navy-700/50' : 'bg-surface-100'}`}>
                             <span className="text-gray-600 dark:text-gray-400 font-bold text-lg">🎯 Activities & Tours</span>
                             <span className="font-black text-xl">${generatedItinerary.costBreakdown.activities}</span>
                           </div>
@@ -1691,7 +1691,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     <div className="border-t-2 border-gray-200 dark:border-gray-600 pt-8">
                       <div className="flex justify-between items-center mb-4">
                         <span className="text-3xl font-black">Total Trip Cost</span>
-                        <span className="text-4xl font-black bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                        <span className="text-4xl font-black bg-gradient-to-r from-navy-700 to-navy-700 bg-clip-text text-transparent">
                           ${generatedItinerary.totalCost}
                         </span>
                       </div>
@@ -1704,7 +1704,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                 </>
               ) : (
                 <div className="text-center py-20">
-                  <div className="w-32 h-32 bg-gradient-to-br from-teal-500 via-cyan-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                  <div className="w-32 h-32 bg-gradient-to-br from-navy-600 via-navy-600 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
                     <FaRoute className="text-5xl text-white" />
                   </div>
                   <h3 className="text-4xl font-black mb-6">No Itinerary Generated Yet</h3>
@@ -1713,7 +1713,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   </p>
                   <button 
                     onClick={() => setActiveTab('create')}
-                    className="px-12 py-5 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-2xl font-black text-lg hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                    className="px-12 py-5 bg-gradient-to-r from-navy-700 to-navy-700 text-white rounded-2xl font-black text-lg hover:from-navy-700 hover:to-navy-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
                   >
                     Create Itinerary Now
                   </button>
@@ -1730,7 +1730,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
               {console.log('Loading places:', loadingPlaces)}
               
               <div className="text-center mb-16">
-                <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-navy-700 via-navy-600 to-blue-600 bg-clip-text text-transparent">
                   Nepal Travel Tips
                 </h2>
                 <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
@@ -1754,7 +1754,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   ].map((tip, index) => (
                     <div 
                       key={index}
-                      className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-slate-800 to-slate-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
+                      className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-navy-800 to-navy-900' : 'bg-gradient-to-br from-white to-gray-50'} shadow-2xl border ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'} hover:shadow-3xl transition-all duration-300 transform hover:scale-105`}
                       style={{
                         animation: `fadeInUp ${0.3 + index * 0.1}s ease-out`
                       }}

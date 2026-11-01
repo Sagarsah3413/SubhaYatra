@@ -19,7 +19,7 @@ const values = [
         title: 'Sustainability',
         description: 'We promote eco-friendly and responsible tourism practices.',
         icon: FaLeaf,
-        gradient: 'from-green-500 to-emerald-500',
+        gradient: 'from-green-500 to-success',
         color: 'green',
         stats: '100% Carbon Neutral'
     },
@@ -27,7 +27,7 @@ const values = [
         title: 'Community',
         description: 'We empower local communities and support their economic growth.',
         icon: FaUsers,
-        gradient: 'from-blue-500 to-cyan-500',
+        gradient: 'from-blue-500 to-navy-700',
         color: 'blue',
         stats: '500+ Local Partners'
     },

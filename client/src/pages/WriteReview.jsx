@@ -142,35 +142,35 @@ export default function WriteReview() {
   };
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'} transition-colors duration-300`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-navy-900' : 'bg-surface-50'} transition-colors duration-300`}>
       <Header />
 
       {/* Professional Hero Section */}
       <div className="relative overflow-hidden">
         {/* Clean Gradient Background */}
-        <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-br from-slate-900 via-teal-900/20 to-slate-900' : 'bg-gradient-to-br from-teal-50 via-cyan-50 to-blue-50'}`}></div>
+        <div className={`absolute inset-0 ${theme === 'dark' ? 'bg-gradient-to-br from-navy-900 via-navy-700/20 to-navy-900' : 'bg-gradient-to-br from-navy-700 via-navy-600 to-blue-50'}`}></div>
         
         {/* Subtle Floating Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute -top-40 -right-40 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute -top-40 -right-40 w-96 h-96 bg-navy-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-navy-100/10 rounded-full blur-3xl"></div>
         </div>
         
         {/* Hero Content */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <div className="text-center">
             {/* Badge */}
-            <div className={`inline-flex items-center gap-3 px-6 py-3 rounded-full ${theme === 'dark' ? 'bg-teal-500/20 border-teal-400/30' : 'bg-white/80 border-teal-200'} border backdrop-blur-xl mb-8 shadow-lg`}>
-              <div className="w-8 h-8 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center">
+            <div className={`inline-flex items-center gap-3 px-6 py-3 rounded-full ${theme === 'dark' ? 'bg-navy-600/20 border-amber-400/30' : 'bg-white/80 border-navy-500'} border backdrop-blur-xl mb-8 shadow-lg`}>
+              <div className="w-8 h-8 bg-gradient-to-r from-navy-600 to-navy-700 rounded-xl flex items-center justify-center">
                 <FaEdit className="text-white text-sm" />
               </div>
-              <span className={`${theme === 'dark' ? 'text-teal-300' : 'text-teal-700'} font-bold text-lg`}>Share Your Experience</span>
+              <span className={`${theme === 'dark' ? 'text-amber-300' : 'text-navy-500'} font-bold text-lg`}>Share Your Experience</span>
             </div>
             
             {/* Title */}
             <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-black ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-6 tracking-tight leading-tight`}>
               Write a
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 mt-2">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-navy-600 via-navy-600 to-blue-500 mt-2">
                 Review
               </span>
             </h1>
@@ -183,7 +183,7 @@ export default function WriteReview() {
             {/* Stats */}
             <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-r from-navy-600 to-navy-700 rounded-xl flex items-center justify-center shadow-lg">
                   <FaEdit className="text-white text-lg" />
                 </div>
                 <div className="text-left">
@@ -192,7 +192,7 @@ export default function WriteReview() {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-r from-navy-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                   <FaMapMarkerAlt className="text-white text-lg" />
                 </div>
                 <div className="text-left">
@@ -217,13 +217,13 @@ export default function WriteReview() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 relative z-20 pb-20">
         
         {/* Professional Form Container */}
-        <div className={`${theme === 'dark' ? 'bg-slate-800' : 'bg-white'} rounded-3xl shadow-xl border ${theme === 'dark' ? 'border-slate-700' : 'border-gray-200'} p-8 lg:p-12`}>
+        <div className={`${theme === 'dark' ? 'bg-navy-800' : 'bg-white'} rounded-3xl shadow-xl border ${theme === 'dark' ? 'border-navy-700' : 'border-gray-200'} p-8 lg:p-12`}>
           
           {/* Form Header */}
           <div className="text-center mb-10">
-            <div className={`inline-flex items-center gap-3 px-5 py-2 rounded-full ${theme === 'dark' ? 'bg-teal-900/30 border-teal-700' : 'bg-teal-50 border-teal-200'} border mb-6`}>
-              <FaEdit className={`${theme === 'dark' ? 'text-teal-400' : 'text-teal-600'} text-lg`} />
-              <span className={`${theme === 'dark' ? 'text-teal-300' : 'text-teal-700'} font-bold text-lg`}>Review Form</span>
+            <div className={`inline-flex items-center gap-3 px-5 py-2 rounded-full ${theme === 'dark' ? 'bg-navy-100/30 border-navy-500' : 'bg-navy-50 border-navy-500'} border mb-6`}>
+              <FaEdit className={`${theme === 'dark' ? 'text-amber-400' : 'text-navy-600'} text-lg`} />
+              <span className={`${theme === 'dark' ? 'text-amber-300' : 'text-navy-500'} font-bold text-lg`}>Review Form</span>
             </div>
             <h2 className={`text-4xl lg:text-5xl font-black ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-4`}>
               Tell Us About Your Journey
@@ -237,7 +237,7 @@ export default function WriteReview() {
           {submitted && (
             <div className={`mb-8 p-6 ${theme === 'dark' ? 'bg-green-900/20 border-green-700' : 'bg-green-50 border-green-200'} border-2 rounded-2xl`}>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-success rounded-xl flex items-center justify-center">
                   <FaCheck className="text-white text-xl" />
                 </div>
                 <div>
@@ -272,7 +272,7 @@ export default function WriteReview() {
                 <h3 className={`text-3xl font-black ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-2`}>
                   Personal Information
                 </h3>
-                <div className="w-20 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full mx-auto"></div>
+                <div className="w-20 h-1 bg-gradient-to-r from-navy-600 to-navy-700 rounded-full mx-auto"></div>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -280,7 +280,7 @@ export default function WriteReview() {
                 <div>
                   <label className={`block text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-3`}>
                     <div className="flex items-center gap-2">
-                      <FaUser className="text-teal-500" />
+                      <FaUser className="text-navy-500" />
                       <span>Full Name</span>
                     </div>
                   </label>
@@ -288,7 +288,7 @@ export default function WriteReview() {
                     name="name" 
                     value={form.name} 
                     onChange={handleChange} 
-                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-slate-700 text-white placeholder-slate-400' : 'border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500'} rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all text-lg`}
+                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-navy-700 text-white placeholder-slate-400' : 'border-gray-300 bg-surface-50 text-gray-900 placeholder-gray-500'} rounded-xl focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-all text-lg`}
                     placeholder="Enter your full name" 
                   />
                 </div>
@@ -306,7 +306,7 @@ export default function WriteReview() {
                     value={form.email} 
                     onChange={handleChange} 
                     type="email"
-                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-slate-700 text-white placeholder-slate-400' : 'border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500'} rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all text-lg`}
+                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-navy-700 text-white placeholder-slate-400' : 'border-gray-300 bg-surface-50 text-gray-900 placeholder-gray-500'} rounded-xl focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-all text-lg`}
                     placeholder="your.email@example.com" 
                   />
                 </div>
@@ -318,7 +318,7 @@ export default function WriteReview() {
                 <h3 className={`text-3xl font-black ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-2`}>
                   Trip Details
                 </h3>
-                <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full mx-auto"></div>
+                <div className="w-20 h-1 bg-gradient-to-r from-navy-600 to-blue-500 rounded-full mx-auto"></div>
               </div>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -326,7 +326,7 @@ export default function WriteReview() {
                 <div className="lg:col-span-2">
                   <label className={`block text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-3`}>
                     <div className="flex items-center gap-2">
-                      <FaMapMarkerAlt className="text-cyan-500" />
+                      <FaMapMarkerAlt className="text-navy-400" />
                       <span>Place Visited</span>
                     </div>
                   </label>
@@ -334,7 +334,7 @@ export default function WriteReview() {
                     name="place" 
                     value={form.place} 
                     onChange={handleChange} 
-                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-slate-700 text-white placeholder-slate-400' : 'border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500'} rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all text-lg`}
+                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-navy-700 text-white placeholder-slate-400' : 'border-gray-300 bg-surface-50 text-gray-900 placeholder-gray-500'} rounded-xl focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-all text-lg`}
                     placeholder="Name of attraction, hotel, or restaurant" 
                   />
                 </div>
@@ -352,7 +352,7 @@ export default function WriteReview() {
                     value={form.visitDate} 
                     onChange={handleChange} 
                     type="date"
-                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-slate-700 text-white' : 'border-gray-300 bg-gray-50 text-gray-900'} rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all text-lg`}
+                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-navy-700 text-white' : 'border-gray-300 bg-surface-50 text-gray-900'} rounded-xl focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-all text-lg`}
                   />
                 </div>
               </div>
@@ -366,7 +366,7 @@ export default function WriteReview() {
                     name="type" 
                     value={form.type} 
                     onChange={handleChange} 
-                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-slate-700 text-white' : 'border-gray-300 bg-gray-50 text-gray-900'} rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all appearance-none cursor-pointer text-lg`}
+                    className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-navy-700 text-white' : 'border-gray-300 bg-surface-50 text-gray-900'} rounded-xl focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-all appearance-none cursor-pointer text-lg`}
                   >
                     <option value="Nature">🌿 Nature & Wildlife</option>
                     <option value="Cultural">🏛️ Cultural & Heritage</option>
@@ -410,7 +410,7 @@ export default function WriteReview() {
                   value={form.review} 
                   onChange={handleChange} 
                   rows={8}
-                  className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-slate-700 text-white placeholder-slate-400' : 'border-gray-300 bg-gray-50 text-gray-900 placeholder-gray-500'} rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-all resize-none text-lg leading-relaxed`}
+                  className={`w-full px-5 py-4 border-2 ${theme === 'dark' ? 'border-slate-600 bg-navy-700 text-white placeholder-slate-400' : 'border-gray-300 bg-surface-50 text-gray-900 placeholder-gray-500'} rounded-xl focus:outline-none focus:ring-2 focus:ring-navy-500 focus:border-navy-500 transition-all resize-none text-lg leading-relaxed`}
                   placeholder="Share what made this place special, tips for other travelers, highlights of your visit, and anything others should know. Be detailed and honest - your insights help fellow travelers make informed decisions."
                 />
                 <div className="flex items-center justify-between mt-3">
@@ -434,8 +434,8 @@ export default function WriteReview() {
                       onClick={() => setForm((s) => ({ ...s, recommend: "yes" }))} 
                       className={`flex-1 flex items-center justify-center gap-3 py-4 px-6 rounded-xl font-bold text-lg transition-all ${
                         form.recommend === "yes" 
-                          ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg' 
-                          : `${theme === 'dark' ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`
+                          ? 'bg-gradient-to-r from-green-500 to-success text-white shadow-lg' 
+                          : `${theme === 'dark' ? 'bg-navy-700 text-slate-300 hover:bg-slate-600' : 'bg-surface-100 text-gray-700 hover:bg-gray-200'}`
                       }`}
                     >
                       <FaThumbsUp />
@@ -447,7 +447,7 @@ export default function WriteReview() {
                       className={`flex-1 flex items-center justify-center gap-3 py-4 px-6 rounded-xl font-bold text-lg transition-all ${
                         form.recommend === "no" 
                           ? 'bg-gradient-to-r from-red-500 to-rose-600 text-white shadow-lg' 
-                          : `${theme === 'dark' ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`
+                          : `${theme === 'dark' ? 'bg-navy-700 text-slate-300 hover:bg-slate-600' : 'bg-surface-100 text-gray-700 hover:bg-gray-200'}`
                       }`}
                     >
                       <FaThumbsDown />
@@ -469,8 +469,8 @@ export default function WriteReview() {
                   <div 
                     className={`relative border-2 border-dashed rounded-xl p-6 transition-all ${
                       dragActive 
-                        ? `${theme === 'dark' ? 'border-teal-500 bg-teal-900/20' : 'border-teal-500 bg-teal-50'}` 
-                        : `${theme === 'dark' ? 'border-slate-600 bg-slate-700/30 hover:border-teal-400 hover:bg-teal-900/20' : 'border-gray-300 bg-gray-50 hover:border-teal-400 hover:bg-teal-50'}`
+                        ? `${theme === 'dark' ? 'border-navy-500 bg-navy-100/20' : 'border-navy-500 bg-navy-50'}` 
+                        : `${theme === 'dark' ? 'border-slate-600 bg-navy-700/30 hover:border-amber-400 hover:bg-navy-100/20' : 'border-gray-300 bg-surface-50 hover:border-amber-400 hover:bg-navy-50'}`
                     }`}
                     onDragEnter={handleDrag}
                     onDragLeave={handleDrag}
@@ -525,7 +525,7 @@ export default function WriteReview() {
               <button 
                 type="submit" 
                 disabled={submitting} 
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 text-white font-bold px-10 py-4 rounded-xl hover:from-teal-600 hover:via-cyan-600 hover:to-blue-600 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed text-lg"
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-navy-600 via-navy-600 to-blue-500 text-white font-bold px-10 py-4 rounded-xl hover:from-navy-700 hover:via-navy-600 hover:to-blue-600 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed text-lg"
               >
                 {submitting ? (
                   <>
@@ -543,7 +543,7 @@ export default function WriteReview() {
               <button 
                 type="button" 
                 onClick={clearDraft}
-                className={`inline-flex items-center gap-2 ${theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-slate-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'} font-bold text-lg transition-colors px-6 py-3 rounded-xl`}
+                className={`inline-flex items-center gap-2 ${theme === 'dark' ? 'text-slate-400 hover:text-white hover:bg-navy-700' : 'text-gray-600 hover:text-gray-900 hover:bg-surface-100'} font-bold text-lg transition-colors px-6 py-3 rounded-xl`}
               >
                 <FaTrash className="text-sm" />
                 <span>Clear Draft</span>
@@ -554,7 +554,7 @@ export default function WriteReview() {
 
         {/* Disclaimer */}
         <div className="mt-10 text-center">
-          <div className={`max-w-4xl mx-auto p-6 ${theme === 'dark' ? 'bg-slate-800/50 border-slate-700' : 'bg-white/50 border-gray-200'} rounded-2xl backdrop-blur-xl border`}>
+          <div className={`max-w-4xl mx-auto p-6 ${theme === 'dark' ? 'bg-navy-800/50 border-navy-700' : 'bg-white/50 border-gray-200'} rounded-2xl backdrop-blur-xl border`}>
             <div className="flex items-center justify-center gap-2 mb-3">
               <FaHeart className="text-blue-500" />
               <h4 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Community Guidelines</h4>

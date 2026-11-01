@@ -464,7 +464,7 @@ export default function AdminDashboard() {
         <div className="fixed top-6 right-6 z-50 animate-in slide-in-from-right duration-300">
           <div className={`px-6 py-4 rounded-xl shadow-2xl border-l-4 ${
             toast.type === 'success' 
-              ? 'bg-emerald-50 border-emerald-500 text-emerald-800' 
+              ? 'bg-success-bg border-success text-success' 
               : 'bg-rose-50 border-rose-500 text-rose-800'
           }`}>
             <div className="flex items-center gap-3">
@@ -484,17 +484,17 @@ export default function AdminDashboard() {
       )}
 
       {/* Professional Header */}
-      <header className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white shadow-2xl overflow-hidden">
+      <header className="relative bg-gradient-to-r from-navy-900 via-navy-800 to-navy-900 text-white shadow-2xl overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal-500 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-navy-600 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div className="flex items-center gap-4">
-              <div className="p-4 bg-gradient-to-br from-teal-500 to-blue-600 rounded-2xl shadow-xl">
+              <div className="p-4 bg-gradient-to-br from-navy-600 to-blue-600 rounded-2xl shadow-xl">
                 <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
                 </svg>
@@ -509,7 +509,7 @@ export default function AdminDashboard() {
             
             <div className="flex items-center gap-4">
               <div className="hidden md:flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/20">
-                <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-success-bg rounded-full animate-pulse"></div>
                 <span className="text-sm font-semibold text-slate-200">System Online</span>
               </div>
               
@@ -538,7 +538,7 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab('overview')}
               className={`relative px-8 py-4 font-bold transition-all duration-300 ${
                 activeTab === 'overview'
-                  ? 'text-teal-600'
+                  ? 'text-navy-600'
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
@@ -549,7 +549,7 @@ export default function AdminDashboard() {
                 <span>Overview</span>
               </div>
               {activeTab === 'overview' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-navy-600 to-blue-500 rounded-t-full"></div>
               )}
             </button>
             
@@ -557,7 +557,7 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab('places')}
               className={`relative px-8 py-4 font-bold transition-all duration-300 ${
                 activeTab === 'places'
-                  ? 'text-teal-600'
+                  ? 'text-navy-600'
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
@@ -567,13 +567,13 @@ export default function AdminDashboard() {
                 </svg>
                 <span>All Submissions</span>
                 {(submittedPlaces.length + submittedHotels.length + submittedRestaurants.length) > 0 && (
-                  <span className="px-2.5 py-0.5 bg-gradient-to-r from-teal-500 to-blue-500 text-white text-xs font-black rounded-full shadow-lg">
+                  <span className="px-2.5 py-0.5 bg-gradient-to-r from-navy-600 to-blue-500 text-white text-xs font-black rounded-full shadow-lg">
                     {submittedPlaces.length + submittedHotels.length + submittedRestaurants.length}
                   </span>
                 )}
               </div>
               {activeTab === 'places' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-navy-600 to-blue-500 rounded-t-full"></div>
               )}
             </button>
 
@@ -581,7 +581,7 @@ export default function AdminDashboard() {
               onClick={() => setActiveTab('reviews')}
               className={`relative px-8 py-4 font-bold transition-all duration-300 ${
                 activeTab === 'reviews'
-                  ? 'text-teal-600'
+                  ? 'text-navy-600'
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
@@ -597,7 +597,7 @@ export default function AdminDashboard() {
                 )}
               </div>
               {activeTab === 'reviews' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-navy-600 to-blue-500 rounded-t-full"></div>
               )}
             </button>
 
@@ -605,7 +605,7 @@ export default function AdminDashboard() {
               onClick={() => { setActiveTab('users'); fetchUsers(); }}
               className={`relative px-8 py-4 font-bold transition-all duration-300 ${
                 activeTab === 'users'
-                  ? 'text-teal-600'
+                  ? 'text-navy-600'
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
@@ -616,7 +616,7 @@ export default function AdminDashboard() {
                 <span>Users</span>
               </div>
               {activeTab === 'users' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-navy-600 to-blue-500 rounded-t-full"></div>
               )}
             </button>
 
@@ -624,7 +624,7 @@ export default function AdminDashboard() {
               onClick={() => { setActiveTab('searches'); fetchSearchHistory(); }}
               className={`relative px-8 py-4 font-bold transition-all duration-300 ${
                 activeTab === 'searches'
-                  ? 'text-teal-600'
+                  ? 'text-navy-600'
                   : 'text-slate-600 hover:text-slate-800'
               }`}
             >
@@ -635,7 +635,7 @@ export default function AdminDashboard() {
                 <span>Search History</span>
               </div>
               {activeTab === 'searches' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-500 to-blue-500 rounded-t-full"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-navy-600 to-blue-500 rounded-t-full"></div>
               )}
             </button>
           </div>
@@ -659,9 +659,9 @@ export default function AdminDashboard() {
                 <h3 className="text-lg font-bold text-slate-800">Admin Activity</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg border border-emerald-200">
-                  <p className="text-sm text-emerald-700 font-semibold mb-1">Last Login</p>
-                  <p className="text-lg font-bold text-emerald-900">{lastLoginTime || "N/A"}</p>
+                <div className="p-4 bg-gradient-to-br from-success to-navy-800 rounded-lg border border-success">
+                  <p className="text-sm text-success font-semibold mb-1">Last Login</p>
+                  <p className="text-lg font-bold text-success">{lastLoginTime || "N/A"}</p>
                 </div>
                 <div className="p-4 bg-gradient-to-br from-rose-50 to-red-50 rounded-lg border border-rose-200">
                   <p className="text-sm text-rose-700 font-semibold mb-1">Last Logout</p>
@@ -675,17 +675,17 @@ export default function AdminDashboard() {
               {/* Place Submissions Stats */}
               <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-teal-100 rounded-lg">
-                    <svg className="w-6 h-6 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
+                  <div className="p-3 bg-navy-100 rounded-lg">
+                    <svg className="w-6 h-6 text-navy-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <h3 className="text-lg font-bold text-slate-800">Place Submissions</h3>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg">
-                    <span className="text-sm font-semibold text-emerald-700">Approved</span>
-                    <span className="text-lg font-black text-emerald-900">{submittedPlaces.filter(p => p.status === 'approved').length || 0}</span>
+                  <div className="flex items-center justify-between p-3 bg-success-bg rounded-lg">
+                    <span className="text-sm font-semibold text-success">Approved</span>
+                    <span className="text-lg font-black text-success">{submittedPlaces.filter(p => p.status === 'approved').length || 0}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
                     <span className="text-sm font-semibold text-amber-700">Pending</span>
@@ -709,9 +709,9 @@ export default function AdminDashboard() {
                   <h3 className="text-lg font-bold text-slate-800">Hotel Submissions</h3>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg">
-                    <span className="text-sm font-semibold text-emerald-700">Approved</span>
-                    <span className="text-lg font-black text-emerald-900">{submittedHotels.filter(h => h.status === 'approved').length || 0}</span>
+                  <div className="flex items-center justify-between p-3 bg-success-bg rounded-lg">
+                    <span className="text-sm font-semibold text-success">Approved</span>
+                    <span className="text-lg font-black text-success">{submittedHotels.filter(h => h.status === 'approved').length || 0}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
                     <span className="text-sm font-semibold text-amber-700">Pending</span>
@@ -735,9 +735,9 @@ export default function AdminDashboard() {
                   <h3 className="text-lg font-bold text-slate-800">Restaurant Submissions</h3>
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 bg-emerald-50 rounded-lg">
-                    <span className="text-sm font-semibold text-emerald-700">Approved</span>
-                    <span className="text-lg font-black text-emerald-900">{submittedRestaurants.filter(r => r.status === 'approved').length || 0}</span>
+                  <div className="flex items-center justify-between p-3 bg-success-bg rounded-lg">
+                    <span className="text-sm font-semibold text-success">Approved</span>
+                    <span className="text-lg font-black text-success">{submittedRestaurants.filter(r => r.status === 'approved').length || 0}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 bg-amber-50 rounded-lg">
                     <span className="text-sm font-semibold text-amber-700">Pending</span>
@@ -755,7 +755,7 @@ export default function AdminDashboard() {
           <div className="space-y-6">
             {/* All Submissions Section */}
             <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
-              <div className="bg-gradient-to-r from-teal-50 to-blue-50 border-b border-slate-200 px-6 py-4">
+              <div className="bg-gradient-to-r from-navy-700 to-blue-50 border-b border-slate-200 px-6 py-4">
                 <div className="flex items-center justify-between flex-wrap gap-4">
                   <div>
                     <h2 className="text-2xl font-black text-slate-800">All Submissions</h2>
@@ -768,7 +768,7 @@ export default function AdminDashboard() {
                     <select
                       value={submissionTypeFilter}
                       onChange={(e) => setSubmissionTypeFilter(e.target.value)}
-                      className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white hover:border-teal-500 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all"
+                      className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm font-semibold text-slate-700 bg-white hover:border-navy-500 focus:border-navy-500 focus:ring-2 focus:ring-navy-500 transition-all"
                     >
                       <option value="all">All Types ({submittedPlaces.length + submittedHotels.length + submittedRestaurants.length})</option>
                       <option value="place">Places Only ({submittedPlaces.length})</option>
@@ -839,7 +839,7 @@ export default function AdminDashboard() {
                             </div>
                           </td>
                           <td className="px-6 py-4">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-teal-100 text-teal-700">
+                            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-navy-100 text-navy-500">
                               <svg className="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                               </svg>
@@ -857,7 +857,7 @@ export default function AdminDashboard() {
                               place.status === 'pending' 
                                 ? 'bg-amber-100 text-amber-700' 
                                 : place.status === 'approved'
-                                ? 'bg-emerald-100 text-emerald-700'
+                                ? 'bg-success-bg text-success'
                                 : 'bg-rose-100 text-rose-700'
                             }`}>
                               {place.status === 'pending' && (
@@ -890,7 +890,7 @@ export default function AdminDashboard() {
                                 <>
                                   <button
                                     onClick={() => handleApprovePlace(place.id)}
-                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
+                                    className="px-3 py-1.5 bg-success-bg text-success rounded-lg text-xs font-semibold hover:bg-success-bg transition-colors duration-200"
                                   >
                                     Approve
                                   </button>
@@ -962,7 +962,7 @@ export default function AdminDashboard() {
                               hotel.status === 'pending' 
                                 ? 'bg-amber-100 text-amber-700' 
                                 : hotel.status === 'approved'
-                                ? 'bg-emerald-100 text-emerald-700'
+                                ? 'bg-success-bg text-success'
                                 : 'bg-rose-100 text-rose-700'
                             }`}>
                               {hotel.status === 'pending' && (
@@ -995,7 +995,7 @@ export default function AdminDashboard() {
                                 <>
                                   <button
                                     onClick={() => handleApproveHotel(hotel.id)}
-                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
+                                    className="px-3 py-1.5 bg-success-bg text-success rounded-lg text-xs font-semibold hover:bg-success-bg transition-colors duration-200"
                                   >
                                     Approve
                                   </button>
@@ -1072,7 +1072,7 @@ export default function AdminDashboard() {
                               restaurant.status === 'pending' 
                                 ? 'bg-amber-100 text-amber-700' 
                                 : restaurant.status === 'approved'
-                                ? 'bg-emerald-100 text-emerald-700'
+                                ? 'bg-success-bg text-success'
                                 : 'bg-rose-100 text-rose-700'
                             }`}>
                               {restaurant.status === 'pending' && (
@@ -1105,7 +1105,7 @@ export default function AdminDashboard() {
                                 <>
                                   <button
                                     onClick={() => handleApproveRestaurant(restaurant.id)}
-                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
+                                    className="px-3 py-1.5 bg-success-bg text-success rounded-lg text-xs font-semibold hover:bg-success-bg transition-colors duration-200"
                                   >
                                     Approve
                                   </button>
@@ -1215,7 +1215,7 @@ export default function AdminDashboard() {
                               review.status === 'pending' 
                                 ? 'bg-orange-100 text-orange-700' 
                                 : review.status === 'approved'
-                                ? 'bg-emerald-100 text-emerald-700'
+                                ? 'bg-success-bg text-success'
                                 : 'bg-rose-100 text-rose-700'
                             }`}>
                               {review.status === 'pending' && '⏳ '}
@@ -1236,7 +1236,7 @@ export default function AdminDashboard() {
                                 <>
                                   <button
                                     onClick={() => handleApproveReview(review.id)}
-                                    className="px-3 py-1.5 bg-emerald-100 text-emerald-700 rounded-lg text-xs font-semibold hover:bg-emerald-200 transition-colors duration-200"
+                                    className="px-3 py-1.5 bg-success-bg text-success rounded-lg text-xs font-semibold hover:bg-success-bg transition-colors duration-200"
                                   >
                                     Approve
                                   </button>
@@ -1267,7 +1267,7 @@ export default function AdminDashboard() {
         ) : activeTab === 'users' ? (
           <div className="space-y-6">
             <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
-              <div className="bg-gradient-to-r from-teal-50 to-blue-50 border-b border-slate-200 px-6 py-4 flex items-center justify-between flex-wrap gap-4">
+              <div className="bg-gradient-to-r from-navy-700 to-blue-50 border-b border-slate-200 px-6 py-4 flex items-center justify-between flex-wrap gap-4">
                 <div>
                   <h2 className="text-2xl font-black text-slate-800">All Users</h2>
                   <p className="text-sm text-slate-600 mt-1">Every user who has logged in — with full session history</p>
@@ -1278,11 +1278,11 @@ export default function AdminDashboard() {
                     placeholder="Search by name or email…"
                     value={userSearch}
                     onChange={(e) => setUserSearch(e.target.value)}
-                    className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none"
+                    className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm focus:border-navy-500 focus:ring-2 focus:ring-navy-500 outline-none"
                   />
                   <button
                     onClick={fetchUsers}
-                    className="px-4 py-2 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700 transition-colors"
+                    className="px-4 py-2 bg-crimson-500 text-white rounded-lg text-sm font-semibold hover:bg-crimson-600 transition-colors"
                   >
                     Refresh
                   </button>
@@ -1330,14 +1330,14 @@ export default function AdminDashboard() {
                               <div className="flex items-center gap-3">
                                 {u.avatar_url
                                   ? <img src={u.avatar_url} alt="" className="w-8 h-8 rounded-full object-cover" />
-                                  : <div className="w-8 h-8 rounded-full bg-teal-100 flex items-center justify-center text-teal-700 font-bold text-sm">{(u.name || u.email || '?')[0].toUpperCase()}</div>
+                                  : <div className="w-8 h-8 rounded-full bg-navy-100 flex items-center justify-center text-navy-500 font-bold text-sm">{(u.name || u.email || '?')[0].toUpperCase()}</div>
                                 }
                                 <span className="font-semibold text-slate-800">{u.name || '—'}</span>
                               </div>
                             </td>
                             <td className="px-5 py-4 text-slate-600">{u.email}</td>
                             <td className="px-5 py-4">
-                              <span className={`px-2 py-1 rounded-full text-xs font-bold ${u.is_active ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}`}>
+                              <span className={`px-2 py-1 rounded-full text-xs font-bold ${u.is_active ? 'bg-success-bg text-success' : 'bg-rose-100 text-rose-700'}`}>
                                 {u.is_active ? 'Active' : 'Inactive'}
                               </span>
                             </td>
@@ -1381,10 +1381,10 @@ export default function AdminDashboard() {
                     placeholder="Filter by query or user…"
                     value={searchHistoryFilter}
                     onChange={e => { setSearchHistoryFilter(e.target.value); fetchSearchHistory(e.target.value); }}
-                    className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm focus:border-teal-500 outline-none"
+                    className="px-4 py-2 border-2 border-slate-300 rounded-lg text-sm focus:border-navy-500 outline-none"
                   />
                   <button onClick={() => fetchSearchHistory(searchHistoryFilter)}
-                    className="px-4 py-2 bg-teal-600 text-white rounded-lg text-sm font-semibold hover:bg-teal-700">
+                    className="px-4 py-2 bg-crimson-500 text-white rounded-lg text-sm font-semibold hover:bg-crimson-600">
                     Refresh
                   </button>
                 </div>
@@ -1408,7 +1408,7 @@ export default function AdminDashboard() {
                         <tr key={h.id} className="hover:bg-slate-50 transition-colors">
                           <td className="px-5 py-3 font-semibold text-slate-700">{h.user}</td>
                           <td className="px-5 py-3">
-                            <span className="px-2 py-1 bg-teal-50 text-teal-700 rounded font-semibold">{h.query}</span>
+                            <span className="px-2 py-1 bg-navy-50 text-navy-500 rounded font-semibold">{h.query}</span>
                           </td>
                           <td className="px-5 py-3 text-slate-500 capitalize">{h.type || 'all'}</td>
                           <td className="px-5 py-3 text-slate-500">{h.results}</td>
@@ -1430,10 +1430,10 @@ export default function AdminDashboard() {
       {selectedUser && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-gradient-to-r from-teal-500 to-blue-500 p-6 rounded-t-2xl flex items-center justify-between">
+            <div className="sticky top-0 bg-gradient-to-r from-navy-600 to-blue-500 p-6 rounded-t-2xl flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-black text-white">{selectedUser.name || selectedUser.email}</h3>
-                <p className="text-teal-100 text-sm mt-0.5">{selectedUser.email} · {selectedUser.total_logins} total logins</p>
+                <p className="text-navy-500 text-sm mt-0.5">{selectedUser.email} · {selectedUser.total_logins} total logins</p>
               </div>
               <button onClick={() => setSelectedUser(null)} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
                 <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -1472,7 +1472,7 @@ export default function AdminDashboard() {
                           {s.ip && <p className="text-slate-400 mt-0.5">IP: {s.ip}</p>}
                         </div>
                         {s.duration_seconds != null && (
-                          <span className="px-2 py-1 bg-teal-100 text-teal-700 rounded font-bold whitespace-nowrap">
+                          <span className="px-2 py-1 bg-navy-100 text-navy-500 rounded font-bold whitespace-nowrap">
                             {Math.round(s.duration_seconds / 60)}m
                           </span>
                         )}
@@ -1492,7 +1492,7 @@ export default function AdminDashboard() {
       {selectedPlace && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-gradient-to-r from-teal-500 to-blue-500 p-6 rounded-t-2xl">
+            <div className="sticky top-0 bg-gradient-to-r from-navy-600 to-blue-500 p-6 rounded-t-2xl">
               <div className="flex items-center justify-between">
                 <h3 className="text-2xl font-black text-white">Place Details</h3>
                 <button
@@ -1540,7 +1540,7 @@ export default function AdminDashboard() {
                       selectedPlace.status === 'pending' 
                         ? 'bg-amber-100 text-amber-700' 
                         : selectedPlace.status === 'approved'
-                        ? 'bg-emerald-100 text-emerald-700'
+                        ? 'bg-success-bg text-success'
                         : 'bg-rose-100 text-rose-700'
                     }`}>
                       {selectedPlace.status === 'pending' && (
@@ -1572,7 +1572,7 @@ export default function AdminDashboard() {
                   <label className="text-sm font-bold text-slate-600 uppercase tracking-wide">Tags</label>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {selectedPlace.tags ? selectedPlace.tags.split(',').map((tag, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold">
+                      <span key={idx} className="px-3 py-1 bg-navy-100 text-navy-500 rounded-full text-sm font-semibold">
                         #{tag.trim()}
                       </span>
                     )) : <span className="text-slate-500">No tags</span>}
@@ -1593,7 +1593,7 @@ export default function AdminDashboard() {
                       onClick={() => {
                         handleApprovePlace(selectedPlace.id);
                       }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-success to-green-600 text-white rounded-xl font-semibold hover:from-success hover:to-green-700 transition-all duration-200 shadow-lg"
                     >
                       Approve
                     </button>
@@ -1700,7 +1700,7 @@ export default function AdminDashboard() {
                 <p className="mt-2">
                   <span className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-bold ${
                     selectedReview.recommend === 'yes' 
-                      ? 'bg-emerald-100 text-emerald-700' 
+                      ? 'bg-success-bg text-success' 
                       : 'bg-rose-100 text-rose-700'
                   }`}>
                     {selectedReview.recommend === 'yes' ? '👍 Yes' : '👎 No'}
@@ -1742,7 +1742,7 @@ export default function AdminDashboard() {
                     selectedReview.status === 'pending' 
                       ? 'bg-orange-100 text-orange-700' 
                       : selectedReview.status === 'approved'
-                      ? 'bg-emerald-100 text-emerald-700'
+                      ? 'bg-success-bg text-success'
                       : 'bg-rose-100 text-rose-700'
                   }`}>
                     {selectedReview.status === 'pending' && '⏳ '}
@@ -1767,7 +1767,7 @@ export default function AdminDashboard() {
                       onClick={() => {
                         handleApproveReview(selectedReview.id);
                       }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-success to-green-600 text-white rounded-xl font-semibold hover:from-success hover:to-green-700 transition-all duration-200 shadow-lg"
                     >
                       Approve
                     </button>
@@ -1854,7 +1854,7 @@ export default function AdminDashboard() {
                         selectedHotel.status === 'pending' 
                           ? 'bg-amber-100 text-amber-700' 
                           : selectedHotel.status === 'approved'
-                          ? 'bg-emerald-100 text-emerald-700'
+                          ? 'bg-success-bg text-success'
                           : 'bg-rose-100 text-rose-700'
                       }`}>
                         {selectedHotel.status === 'pending' && '⏳ '}
@@ -1896,7 +1896,7 @@ export default function AdminDashboard() {
                       onClick={() => {
                         handleApproveHotel(selectedHotel.id);
                       }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-success to-green-600 text-white rounded-xl font-semibold hover:from-success hover:to-green-700 transition-all duration-200 shadow-lg"
                     >
                       Approve
                     </button>
@@ -1989,7 +1989,7 @@ export default function AdminDashboard() {
                       selectedRestaurant.status === 'pending' 
                         ? 'bg-amber-100 text-amber-700' 
                         : selectedRestaurant.status === 'approved'
-                        ? 'bg-emerald-100 text-emerald-700'
+                        ? 'bg-success-bg text-success'
                         : 'bg-rose-100 text-rose-700'
                     }`}>
                       {selectedRestaurant.status === 'pending' && '⏳ '}
@@ -2030,7 +2030,7 @@ export default function AdminDashboard() {
                       onClick={() => {
                         handleApproveRestaurant(selectedRestaurant.id);
                       }}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-xl font-semibold hover:from-emerald-600 hover:to-green-700 transition-all duration-200 shadow-lg"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-success to-green-600 text-white rounded-xl font-semibold hover:from-success hover:to-green-700 transition-all duration-200 shadow-lg"
                     >
                       Approve
                     </button>

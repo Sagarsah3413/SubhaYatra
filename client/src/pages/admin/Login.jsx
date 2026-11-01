@@ -44,7 +44,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
+    <div className="min-h-screen bg-surface-100 flex flex-col">
       {/* Navbar */}
       <nav className="bg-gray-800 text-white py-4 shadow-md">
         <div className="max-w-6xl mx-auto px-4 flex justify-between items-center">

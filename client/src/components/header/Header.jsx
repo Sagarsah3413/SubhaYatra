@@ -53,7 +53,7 @@ export const Header = () => {
       flex items-center justify-between gap-4
       border-b backdrop-blur-xl transition-colors duration-300
       ${theme === 'dark'
-                ? 'bg-slate-900/95 border-slate-800'
+                ? 'bg-navy-900/95 border-navy-800'
                 : 'bg-white/95 border-slate-200'
             }
     `}>

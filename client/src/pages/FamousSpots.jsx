@@ -125,16 +125,16 @@ export default function FamousSpots() {
     <section className="py-20 relative overflow-hidden">
       {/* Static Gradient Background */}
       <div className="absolute inset-0 w-full h-full z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900"></div>
         
         {/* Enhanced Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-900/80 via-slate-900/60 to-navy-900/80"></div>
       </div>
 
       {/* Background Elements */}
       <div className="absolute inset-0 z-10">
         <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-emerald-400/10 to-teal-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-success/10 to-navy-700/10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative z-20 max-w-8xl mx-auto px-6">
@@ -171,7 +171,7 @@ export default function FamousSpots() {
             {spots.concat(spots).map((spot, index) => (
               <div key={index} className="min-w-[350px] flex-shrink-0 group">
                 <div className="block">
-                  <div className="relative bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-slate-700">
+                  <div className="relative bg-white dark:bg-navy-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:-translate-y-3 hover:scale-105 border border-gray-100 dark:border-navy-700">
                     {/* Image Container */}
                     <Link to="/all-famous-spots">
                       <div className="relative h-72 overflow-hidden">
@@ -185,12 +185,12 @@ export default function FamousSpots() {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                       
                       {/* Category Badge */}
-                      <div className="absolute top-4 left-4 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+                      <div className="absolute top-4 left-4 bg-white/95 dark:bg-navy-800/95 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
                         <span className="text-xs font-bold text-gray-900 dark:text-white">{spot.category}</span>
                       </div>
                       
                       {/* Rating Badge */}
-                      <div className="absolute top-4 right-4 bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1 border border-white/20">
+                      <div className="absolute top-4 right-4 bg-white/95 dark:bg-navy-800/95 backdrop-blur-sm px-3 py-2 rounded-full flex items-center gap-1 border border-white/20">
                         <FaStar className="text-yellow-500 text-sm" />
                         <span className="text-sm font-bold text-gray-900 dark:text-white">{spot.rating}</span>
                       </div>

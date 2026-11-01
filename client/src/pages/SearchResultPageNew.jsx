@@ -40,11 +40,11 @@ function Card({ item, type, theme, navigate }) {
       className={`group cursor-pointer rounded-2xl overflow-hidden border transition-all duration-300
         hover:-translate-y-1 hover:shadow-2xl
         ${theme === "dark"
-          ? "bg-slate-800 border-slate-700 hover:border-slate-500"
+          ? "bg-navy-800 border-navy-700 hover:border-slate-500"
           : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"}`}
     >
       {/* Image area */}
-      <div className="relative h-44 overflow-hidden bg-slate-200 dark:bg-slate-700">
+      <div className="relative h-44 overflow-hidden bg-slate-200 dark:bg-navy-700">
         {src ? (
           <img src={src} alt={item.name}
             onError={() => setErr(e => ({ ...e, [imgIdx]: true }))}
@@ -204,23 +204,23 @@ export default function SearchResultPage() {
   }, [query, category, isLoaded, isSignedIn, user]);
 
   return (
-    <div className={`min-h-screen ${theme === "dark" ? "bg-slate-900 text-white" : "bg-slate-50 text-slate-900"}`}>
+    <div className={`min-h-screen ${theme === "dark" ? "bg-navy-900 text-white" : "bg-slate-50 text-slate-900"}`}>
 
       {/* ── Sticky header ── */}
       <div className={`sticky top-0 z-40 border-b backdrop-blur-xl shadow-sm
-        ${theme === "dark" ? "bg-slate-900/95 border-slate-700" : "bg-white/95 border-slate-200"}`}>
+        ${theme === "dark" ? "bg-navy-900/95 border-navy-700" : "bg-white/95 border-slate-200"}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-4">
           <button onClick={() => navigate(-1)}
-            className={`p-2 rounded-xl transition-colors ${theme === "dark" ? "hover:bg-slate-800 text-slate-400" : "hover:bg-slate-100 text-slate-600"}`}>
+            className={`p-2 rounded-xl transition-colors ${theme === "dark" ? "hover:bg-navy-800 text-slate-400" : "hover:bg-slate-100 text-slate-600"}`}>
             <FaArrowLeft />
           </button>
-          <FaSearch className="text-teal-500" />
+          <FaSearch className="text-navy-500" />
           <div className="flex-1">
             <span className={`font-black text-lg ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
               {isLoading ? "Searching…" : `${total} result${total !== 1 ? "s" : ""} for `}
             </span>
             {!isLoading && (
-              <span className="text-teal-500 font-black text-lg">"{query}"</span>
+              <span className="text-navy-500 font-black text-lg">"{query}"</span>
             )}
           </div>
         </div>
@@ -230,14 +230,14 @@ export default function SearchResultPage() {
       <div className="max-w-7xl mx-auto px-6 py-8">
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-32 gap-4">
-            <FaSpinner className="text-5xl text-teal-500 animate-spin" />
+            <FaSpinner className="text-5xl text-navy-500 animate-spin" />
             <p className="text-slate-500 font-semibold">Searching destinations…</p>
           </div>
         ) : error ? (
           <div className="text-center py-32">
             <p className="text-red-500 text-lg font-semibold mb-4">{error}</p>
             <button onClick={() => window.location.reload()}
-              className="px-6 py-3 bg-teal-600 text-white rounded-xl font-semibold hover:bg-teal-700">
+              className="px-6 py-3 bg-crimson-500 text-white rounded-xl font-semibold hover:bg-crimson-600">
               Try Again
             </button>
           </div>

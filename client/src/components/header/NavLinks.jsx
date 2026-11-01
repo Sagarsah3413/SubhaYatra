@@ -47,10 +47,10 @@ const NavLinks = ({
     transition-all duration-200 whitespace-nowrap
     ${active
             ? theme === 'dark'
-                ? 'bg-slate-700 text-white'
+                ? 'bg-navy-700 text-white'
                 : 'bg-slate-100 text-slate-900'
             : theme === 'dark'
-                ? 'text-slate-300 hover:text-white hover:bg-slate-800'
+                ? 'text-slate-300 hover:text-white hover:bg-navy-800'
                 : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
         }
   `;
@@ -66,15 +66,15 @@ const NavLinks = ({
           flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm
           transition-all duration-200 max-w-[200px] group
           ${theme === 'dark'
-                        ? 'text-slate-300 hover:text-white hover:bg-slate-800'
+                        ? 'text-slate-300 hover:text-white hover:bg-navy-800'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }
         `}
             >
                 {isLocationLoading ? (
-                    <span className="w-3 h-3 border-2 border-teal-500 border-t-transparent rounded-full animate-spin shrink-0" />
+                    <span className="w-3 h-3 border-2 border-navy-500 border-t-transparent rounded-full animate-spin shrink-0" />
                 ) : (
-                    <FaMapMarkerAlt className="text-teal-500 shrink-0 text-xs" />
+                    <FaMapMarkerAlt className="text-navy-500 shrink-0 text-xs" />
                 )}
                 <span className="truncate text-xs font-medium">
                     {isLocationLoading ? 'Locating…' : currentLocation}
@@ -82,7 +82,7 @@ const NavLinks = ({
             </button>
 
             {/* Divider */}
-            <span className={`w-px h-4 mx-1 ${theme === 'dark' ? 'bg-slate-700' : 'bg-slate-200'}`} />
+            <span className={`w-px h-4 mx-1 ${theme === 'dark' ? 'bg-navy-700' : 'bg-slate-200'}`} />
 
             {/* ── Language dropdown ──────────────────────────────────── */}
             <div className="relative" ref={langRef}>
@@ -100,7 +100,7 @@ const NavLinks = ({
                     <div className={`
             absolute top-full left-0 mt-2 w-48 rounded-xl border shadow-xl z-50 overflow-hidden
             ${theme === 'dark'
-                            ? 'bg-slate-900 border-slate-700'
+                            ? 'bg-navy-900 border-navy-700'
                             : 'bg-white border-slate-200'
                         }
           `}>
@@ -112,10 +112,10 @@ const NavLinks = ({
                   w-full flex items-center gap-3 px-4 py-2.5 text-sm text-left transition-colors duration-150
                   ${selectedLanguage === lang.code
                                         ? theme === 'dark'
-                                            ? 'bg-teal-900/50 text-teal-300'
-                                            : 'bg-teal-50 text-teal-700'
+                                            ? 'bg-navy-900/50 text-amber-300'
+                                            : 'bg-navy-50 text-navy-500'
                                         : theme === 'dark'
-                                            ? 'text-slate-300 hover:bg-slate-800'
+                                            ? 'text-slate-300 hover:bg-navy-800'
                                             : 'text-slate-700 hover:bg-slate-50'
                                     }
                 `}
@@ -123,7 +123,7 @@ const NavLinks = ({
                                 <span className="text-base">{lang.flag}</span>
                                 <span className="font-medium">{lang.name}</span>
                                 <span className={`ml-auto text-xs ${selectedLanguage === lang.code
-                                        ? theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
+                                        ? theme === 'dark' ? 'text-amber-400' : 'text-navy-600'
                                         : theme === 'dark' ? 'text-slate-500' : 'text-slate-400'
                                     }`}>
                                     {lang.nativeName}
@@ -135,7 +135,7 @@ const NavLinks = ({
             </div>
 
             {/* Divider */}
-            <span className={`w-px h-4 mx-1 ${theme === 'dark' ? 'bg-slate-700' : 'bg-slate-200'}`} />
+            <span className={`w-px h-4 mx-1 ${theme === 'dark' ? 'bg-navy-700' : 'bg-slate-200'}`} />
 
             {/* ── Calendar ───────────────────────────────────────────── */}
             <button

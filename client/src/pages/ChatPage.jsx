@@ -614,11 +614,11 @@ Would you like some general travel advice about Nepal?`;
       {/* Homepage-style Background */}
       <div className="fixed inset-0 w-full h-full z-0">
         {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900"></div>
         
         {/* Animated gradient overlays */}
-        <div className="absolute inset-0 bg-gradient-to-tr from-teal-900/30 via-transparent to-cyan-900/30 animate-pulse"></div>
-        <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-emerald-900/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-tr from-navy-700/30 via-transparent to-navy-700/30 animate-pulse"></div>
+        <div className="absolute inset-0 bg-gradient-to-bl from-transparent via-success/20 to-transparent"></div>
         
         {/* Nepal map background */}
         <div 
@@ -631,9 +631,9 @@ Would you like some general travel advice about Nepal?`;
         
         {/* Animated particles/dots */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-teal-400/30 rounded-full animate-ping"></div>
-          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-cyan-400/40 rounded-full animate-pulse"></div>
-          <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-emerald-400/20 rounded-full animate-bounce"></div>
+          <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-navy-500/30 rounded-full animate-ping"></div>
+          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-navy-100/40 rounded-full animate-pulse"></div>
+          <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-success-bg/20 rounded-full animate-bounce"></div>
         </div>
       </div>
 
@@ -646,14 +646,14 @@ Would you like some general travel advice about Nepal?`;
           {/* Sidebar */}
           <div className={`${
             sidebarCollapsed ? 'w-20' : 'w-80'
-          } transition-all duration-300 bg-slate-900/80 backdrop-blur-2xl border-r border-slate-700/30 flex flex-col shadow-2xl`}>
+          } transition-all duration-300 bg-navy-900/80 backdrop-blur-2xl border-r border-navy-700/30 flex flex-col shadow-2xl`}>
             
             {/* Sidebar Header */}
-            <div className="p-5 border-b border-slate-700/30 bg-gradient-to-br from-slate-800/50 to-slate-900/50">
+            <div className="p-5 border-b border-navy-700/30 bg-gradient-to-br from-navy-800/50 to-navy-900/50">
               <div className="flex items-center justify-between">
                 {!sidebarCollapsed && (
                   <div className="flex items-center space-x-3">
-                    <div className="p-2.5 bg-gradient-to-br from-teal-500/20 to-cyan-500/20 rounded-xl backdrop-blur-sm border border-teal-500/20 shadow-lg">
+                    <div className="p-2.5 bg-gradient-to-br from-navy-600/20 to-navy-700/20 rounded-xl backdrop-blur-sm border border-navy-500/20 shadow-lg">
                       <span className="text-2xl">🤖</span>
                     </div>
                     <div>
@@ -664,7 +664,7 @@ Would you like some general travel advice about Nepal?`;
                 )}
                 <button
                   onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                  className="p-2.5 rounded-xl hover:bg-slate-700/50 text-slate-400 hover:text-white transition-all duration-200 hover:scale-105"
+                  className="p-2.5 rounded-xl hover:bg-navy-700/50 text-slate-400 hover:text-white transition-all duration-200 hover:scale-105"
                   title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
                 >
                   <svg className={`w-5 h-5 transition-transform duration-300 ${
@@ -679,10 +679,10 @@ Would you like some general travel advice about Nepal?`;
             {!sidebarCollapsed && (
               <div className="flex-1 flex flex-col overflow-hidden">
                 {/* Action Buttons */}
-                <div className="p-4 space-y-3 border-b border-slate-700/30">
+                <div className="p-4 space-y-3 border-b border-navy-700/30">
                   <button
                     onClick={createNewChat}
-                    className="w-full p-4 rounded-xl font-semibold bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-xl hover:shadow-2xl hover:shadow-teal-500/20 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center space-x-3"
+                    className="w-full p-4 rounded-xl font-semibold bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white shadow-xl hover:shadow-2xl hover:shadow-teal-500/20 transform hover:scale-[1.02] transition-all duration-300 flex items-center justify-center space-x-3"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -691,7 +691,7 @@ Would you like some general travel advice about Nepal?`;
                   </button>
 
                   {/* AI Status Indicator */}
-                  <div className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/40 backdrop-blur-sm shadow-lg">
+                  <div className="p-3.5 rounded-xl bg-navy-800/60 border border-navy-700/40 backdrop-blur-sm shadow-lg">
                     <div className="flex items-center space-x-3">
                       <div className={`w-2.5 h-2.5 rounded-full ${
                         aiStatus === 'ready' ? 'bg-green-500 animate-pulse shadow-lg shadow-green-500/50' :
@@ -721,8 +721,8 @@ Would you like some general travel advice about Nepal?`;
                       onClick={() => setShowSearchHistory(false)}
                       className={`flex-1 p-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                         !showSearchHistory 
-                          ? 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 border border-teal-500/40 shadow-lg' 
-                          : 'bg-slate-800/40 text-slate-400 hover:bg-slate-700/40 hover:text-slate-300 border border-slate-700/30'
+                          ? 'bg-gradient-to-r from-navy-600/20 to-navy-700/20 text-amber-300 border border-navy-500/40 shadow-lg' 
+                          : 'bg-navy-800/40 text-slate-400 hover:bg-navy-700/40 hover:text-slate-300 border border-navy-700/30'
                       }`}
                     >
                       💬 Chats
@@ -731,8 +731,8 @@ Would you like some general travel advice about Nepal?`;
                       onClick={() => setShowSearchHistory(true)}
                       className={`flex-1 p-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
                         showSearchHistory 
-                          ? 'bg-gradient-to-r from-teal-500/20 to-cyan-500/20 text-teal-300 border border-teal-500/40 shadow-lg' 
-                          : 'bg-slate-800/40 text-slate-400 hover:bg-slate-700/40 hover:text-slate-300 border border-slate-700/30'
+                          ? 'bg-gradient-to-r from-navy-600/20 to-navy-700/20 text-amber-300 border border-navy-500/40 shadow-lg' 
+                          : 'bg-navy-800/40 text-slate-400 hover:bg-navy-700/40 hover:text-slate-300 border border-navy-700/30'
                       }`}
                     >
                       🔍 History
@@ -741,7 +741,7 @@ Would you like some general travel advice about Nepal?`;
                 </div>
 
                 {/* Search Bar */}
-                <div className="p-4 border-b border-slate-700/30">
+                <div className="p-4 border-b border-navy-700/30">
                   <div className="relative">
                     <input
                       type="text"
@@ -753,7 +753,7 @@ Would you like some general travel advice about Nepal?`;
                           searchChats(e.target.value);
                         }
                       }}
-                      className="w-full p-3 pl-10 rounded-xl bg-slate-800/60 border border-slate-700/40 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500/50 transition-all duration-200 shadow-inner"
+                      className="w-full p-3 pl-10 rounded-xl bg-navy-800/60 border border-navy-700/40 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-navy-500/30 focus:border-navy-500/50 transition-all duration-200 shadow-inner"
                     />
                     <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -783,12 +783,12 @@ Would you like some general travel advice about Nepal?`;
                       
                       {loadingHistory ? (
                         <div className="text-center py-8">
-                          <div className="animate-spin w-6 h-6 border-2 border-teal-500 border-t-transparent rounded-full mx-auto mb-2"></div>
+                          <div className="animate-spin w-6 h-6 border-2 border-navy-500 border-t-transparent rounded-full mx-auto mb-2"></div>
                           <p className="text-sm text-slate-400">Loading chats...</p>
                         </div>
                       ) : chatHistory.length === 0 ? (
                         <div className="text-center py-8">
-                          <div className="w-12 h-12 bg-slate-700/50 rounded-xl flex items-center justify-center mx-auto mb-3">
+                          <div className="w-12 h-12 bg-navy-700/50 rounded-xl flex items-center justify-center mx-auto mb-3">
                             <span className="text-2xl">💬</span>
                           </div>
                           <p className="text-sm text-slate-400">No chat history yet</p>
@@ -802,7 +802,7 @@ Would you like some general travel advice about Nepal?`;
                               onClick={() => loadChatMessages(chat.id)}
                               className={`w-full p-3 rounded-lg text-left transition-all duration-200 group ${
                                 currentChatId === chat.id
-                                  ? 'bg-teal-500/20 border border-teal-500/30 text-teal-200'
+                                  ? 'bg-navy-600/20 border border-navy-500/30 text-amber-200'
                                   : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-transparent hover:border-slate-200/20'
                               }`}
                             >
@@ -857,7 +857,7 @@ Would you like some general travel advice about Nepal?`;
                       
                       {searchHistory.length === 0 ? (
                         <div className="text-center py-8">
-                          <div className="w-12 h-12 bg-slate-700/50 rounded-xl flex items-center justify-center mx-auto mb-3">
+                          <div className="w-12 h-12 bg-navy-700/50 rounded-xl flex items-center justify-center mx-auto mb-3">
                             <span className="text-2xl">🔍</span>
                           </div>
                           <p className="text-sm text-slate-400">No search history yet</p>
@@ -879,7 +879,7 @@ Would you like some general travel advice about Nepal?`;
                               <div className="flex items-start justify-between mb-2">
                                 <div className="flex items-center space-x-2">
                                   <span className="text-lg">{search.icon}</span>
-                                  <span className="text-xs px-2 py-1 rounded-full bg-slate-700/50 text-slate-300 capitalize">
+                                  <span className="text-xs px-2 py-1 rounded-full bg-navy-700/50 text-slate-300 capitalize">
                                     {search.query_type}
                                   </span>
                                 </div>
@@ -911,7 +911,7 @@ Would you like some general travel advice about Nepal?`;
                                 onClick={() => setInput(search.query)}
                                 className="w-full text-left"
                               >
-                                <p className="text-sm text-white font-medium mb-1 hover:text-teal-300 transition-colors">
+                                <p className="text-sm text-white font-medium mb-1 hover:text-amber-300 transition-colors">
                                   {search.shortQuery}
                                 </p>
                                 {search.shortSummary && (
@@ -964,16 +964,16 @@ Would you like some general travel advice about Nepal?`;
           </div>
 
           {/* Main Chat Area */}
-          <div className="flex-1 flex flex-col min-w-0 bg-slate-900/30 backdrop-blur-sm">
+          <div className="flex-1 flex flex-col min-w-0 bg-navy-900/30 backdrop-blur-sm">
             {/* Chat Header */}
-            <div className="p-6 border-b border-slate-700/50 bg-slate-800/30">
+            <div className="p-6 border-b border-navy-700/50 bg-navy-800/30">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="relative">
-                    <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div className="w-12 h-12 bg-gradient-to-br from-navy-600 to-navy-700 rounded-xl flex items-center justify-center shadow-lg">
                       <span className="text-white text-xl">🤖</span>
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-slate-900 animate-pulse"></div>
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-success rounded-full border-2 border-slate-900 animate-pulse"></div>
                   </div>
                   <div>
                     <h1 className="text-2xl font-black text-white">Nepal Travel Assistant</h1>
@@ -1014,7 +1014,7 @@ Would you like some general travel advice about Nepal?`;
               <div className="max-w-5xl mx-auto space-y-6">
                 {messages.length === 0 ? (
                   <div className="text-center py-16">
-                    <div className="w-24 h-24 bg-gradient-to-br from-teal-500/30 to-cyan-500/30 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
+                    <div className="w-24 h-24 bg-gradient-to-br from-navy-600/30 to-navy-700/30 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl">
                       <span className="text-5xl">🗺️</span>
                     </div>
                     <h3 className="text-4xl font-black mb-4 text-white">Welcome to Nepal Travel Assistant</h3>
@@ -1034,7 +1034,7 @@ Would you like some general travel advice about Nepal?`;
                         <button
                           key={index}
                           onClick={() => setInput(suggestion.text)}
-                          className="p-6 rounded-2xl text-center bg-slate-800/50 hover:bg-slate-700/50 text-slate-300 hover:text-white border border-slate-700/50 hover:border-slate-600 transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                          className="p-6 rounded-2xl text-center bg-navy-800/50 hover:bg-navy-700/50 text-slate-300 hover:text-white border border-navy-700/50 hover:border-slate-600 transition-all duration-300 hover:scale-105 hover:shadow-xl"
                         >
                           <div className="text-4xl mb-3">{suggestion.icon}</div>
                           <span className="text-sm font-semibold">{suggestion.text}</span>
@@ -1058,7 +1058,7 @@ Would you like some general travel advice about Nepal?`;
                               ? 'bg-gradient-to-br from-blue-500 to-purple-500'
                               : message.isError
                                 ? 'bg-gradient-to-br from-red-500 to-pink-500'
-                                : 'bg-gradient-to-br from-teal-500 to-cyan-500'
+                                : 'bg-gradient-to-br from-navy-600 to-navy-700'
                           }`}>
                             <span className="text-white text-sm">
                               {message.sender === 'user' ? '👤' : message.isError ? '⚠️' : '🤖'}
@@ -1083,7 +1083,7 @@ Would you like some general travel advice about Nepal?`;
                                       <div key={index} className="mb-1">
                                         {parts.map((part, partIndex) => 
                                           partIndex % 2 === 1 ? (
-                                            <strong key={partIndex} className="font-black text-teal-300">{part}</strong>
+                                            <strong key={partIndex} className="font-black text-amber-300">{part}</strong>
                                           ) : (
                                             <span key={partIndex}>{part}</span>
                                           )
@@ -1095,7 +1095,7 @@ Would you like some general travel advice about Nepal?`;
                                   else if (line.startsWith('• ')) {
                                     return (
                                       <div key={index} className="mb-1 ml-4 flex items-start">
-                                        <span className="text-teal-400 mr-2">•</span>
+                                        <span className="text-amber-400 mr-2">•</span>
                                         <span>{line.substring(2)}</span>
                                       </div>
                                     );
@@ -1103,7 +1103,7 @@ Would you like some general travel advice about Nepal?`;
                                   // Handle emoji lines (topics)
                                   else if (line.includes('🏔️') || line.includes('🏛️') || line.includes('🍜') || line.includes('🎒') || line.includes('🏨') || line.includes('🎭') || line.includes('🌤️') || line.includes('🗺️')) {
                                     return (
-                                      <div key={index} className="font-bold text-teal-200 mb-2 text-lg">{line}</div>
+                                      <div key={index} className="font-bold text-amber-200 mb-2 text-lg">{line}</div>
                                     );
                                   }
                                   // Regular lines
@@ -1133,14 +1133,14 @@ Would you like some general travel advice about Nepal?`;
                 {isTyping && (
                   <div className="flex justify-start">
                     <div className="flex items-start space-x-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gradient-to-br from-navy-600 to-navy-700 rounded-xl flex items-center justify-center">
                         <span className="text-white text-sm">🤖</span>
                       </div>
                       <div className="rounded-2xl px-6 py-4 bg-white/10 border border-slate-200/20 backdrop-blur-sm shadow-lg">
                         <div className="flex space-x-1">
-                          <div className="w-2 h-2 bg-teal-500 rounded-full animate-bounce"></div>
-                          <div className="w-2 h-2 bg-teal-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                          <div className="w-2 h-2 bg-teal-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                          <div className="w-2 h-2 bg-navy-600 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-navy-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                          <div className="w-2 h-2 bg-navy-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                         </div>
                       </div>
                     </div>
@@ -1152,18 +1152,18 @@ Would you like some general travel advice about Nepal?`;
             </div>
 
             {/* Input Area */}
-            <div className="p-6 border-t border-slate-700/50 bg-slate-800/30">
+            <div className="p-6 border-t border-navy-700/50 bg-navy-800/30">
               <div className="max-w-5xl mx-auto">
                 <SignedOut>
-                  <div className="text-center p-8 rounded-2xl bg-slate-800/50 border border-slate-700/50">
-                    <div className="w-16 h-16 bg-gradient-to-br from-teal-500/30 to-cyan-500/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <div className="text-center p-8 rounded-2xl bg-navy-800/50 border border-navy-700/50">
+                    <div className="w-16 h-16 bg-gradient-to-br from-navy-600/30 to-navy-700/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
                       <span className="text-3xl">🔐</span>
                     </div>
                     <h3 className="text-2xl font-black mb-3 text-white">Sign in to start chatting</h3>
                     <p className="text-sm mb-6 text-slate-400">Create an account or sign in to access the AI travel assistant</p>
                     <div className="flex justify-center space-x-4">
                       <SignInButton>
-                        <button className="px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
+                        <button className="px-6 py-3 bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all">
                           Sign In
                         </button>
                       </SignInButton>
@@ -1192,7 +1192,7 @@ Would you like some general travel advice about Nepal?`;
                         }}
                         placeholder="Ask me anything about Nepal..."
                         rows={1}
-                        className="w-full p-4 rounded-xl border-0 resize-none focus:outline-none bg-slate-800/50 text-white placeholder-slate-400 focus:ring-2 focus:ring-teal-500/30 backdrop-blur-sm"
+                        className="w-full p-4 rounded-xl border-0 resize-none focus:outline-none bg-navy-800/50 text-white placeholder-slate-400 focus:ring-2 focus:ring-navy-500/30 backdrop-blur-sm"
                         style={{ minHeight: '56px', maxHeight: '120px' }}
                         onInput={(e) => {
                           e.target.style.height = 'auto';
@@ -1205,8 +1205,8 @@ Would you like some general travel advice about Nepal?`;
                       disabled={!input.trim() || isTyping}
                       className={`p-4 rounded-xl font-semibold transition-all duration-300 ${
                         !input.trim() || isTyping
-                          ? 'bg-slate-700/50 text-slate-500 cursor-not-allowed'
-                          : 'bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
+                          ? 'bg-navy-700/50 text-slate-500 cursor-not-allowed'
+                          : 'bg-gradient-to-r from-navy-600 to-navy-700 hover:from-navy-700 hover:to-navy-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
                       }`}
                     >
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
