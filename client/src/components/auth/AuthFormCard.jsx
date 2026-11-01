@@ -17,7 +17,7 @@ const AuthFormCard = ({ dark, mounted, clerkForm, nudgeText, nudgeAction, onNudg
         <div className={`
       rounded-3xl border p-10 backdrop-blur-xl shadow-2xl
       ${dark
-                ? 'bg-slate-900/80 border-slate-700/60 shadow-slate-950/60'
+                ? 'bg-[#0F1B2D]/80 border-[#2E4A6B]/60 shadow-slate-950/60'
                 : 'bg-white/90 border-slate-200 shadow-slate-200/80'
             }
     `}>
@@ -32,7 +32,7 @@ const AuthFormCard = ({ dark, mounted, clerkForm, nudgeText, nudgeAction, onNudg
             {nudgeText}{' '}
             <button
                 onClick={onNudge}
-                className="text-teal-500 hover:text-teal-400 font-semibold transition-colors duration-200"
+                className="text-[#2356A0] hover:text-[#D97706] font-semibold transition-colors duration-200"
             >
                 {nudgeAction}
             </button>

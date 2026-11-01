@@ -12,7 +12,7 @@ const tech = [
 
 const TechStack = () => {
     return (
-        <div className="hidden md:block bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-600 rounded-3xl p-6 md:p-12 text-white relative overflow-hidden shadow-2xl w-full">
+        <div className="hidden md:block bg-gradient-to-br from-[#2356A0] via-[#2356A0] to-blue-600 rounded-3xl p-6 md:p-12 text-white relative overflow-hidden shadow-2xl w-full">
 
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-10">

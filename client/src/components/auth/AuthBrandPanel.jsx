@@ -21,11 +21,11 @@ const AuthBrandPanel = ({ dark, mounted, badge, headline, tagline, subtext }) =>
       inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-sm font-semibold
       border backdrop-blur-sm
       ${dark
-                ? 'bg-teal-900/30 border-teal-700/50 text-teal-300'
-                : 'bg-teal-50 border-teal-200 text-teal-700'
+                ? 'bg-[#E8EFF8] border-teal-700/50 text-[#F59E0B]'
+                : 'bg-[#E8EFF8] border-teal-200 text-[#2356A0]'
             }
     `}>
-            <FaCompass className="text-teal-500 text-xs" />
+            <FaCompass className="text-[#2356A0] text-xs" />
             {badge}
         </div>
 
@@ -35,7 +35,7 @@ const AuthBrandPanel = ({ dark, mounted, badge, headline, tagline, subtext }) =>
                 {headline}
             </h1>
             {tagline && (
-                <h2 className={`mt-8 text-lg italic font-medium ${dark ? 'text-teal-300/90' : 'text-teal-600/90'
+                <h2 className={`mt-8 text-lg italic font-medium ${dark ? 'text-[#F59E0B]/90' : 'text-[#2356A0]/90'
                     }`}>
                     {tagline}
                 </h2>

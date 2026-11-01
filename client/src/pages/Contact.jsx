@@ -137,7 +137,7 @@ export default function Contact() {
       info: '+977-9861402251',
       action: 'Call Now',
       color: 'emerald',
-      gradient: 'from-emerald-500 to-green-600',
+      gradient: 'from-[#15803D] to-green-600',
       link: 'tel:+9779861402251'
     },
     {
@@ -147,7 +147,7 @@ export default function Contact() {
       info: 'contact@subhayatra.com',
       action: 'Send Email',
       color: 'blue',
-      gradient: 'from-blue-500 to-cyan-600',
+      gradient: 'from-blue-500 to-[#1A2E4A]',
       link: 'mailto:contact@subhayatra.com'
     }
   ];
@@ -247,8 +247,8 @@ export default function Contact() {
           
           {/* Geometric Patterns */}
           <div className="absolute inset-0 opacity-5">
-            <div className="absolute top-20 left-20 w-32 h-32 border-2 border-teal-500 rotate-45 animate-spin-slow"></div>
-            <div className="absolute bottom-32 right-32 w-24 h-24 border-2 border-cyan-500 rotate-12 animate-pulse"></div>
+            <div className="absolute top-20 left-20 w-32 h-32 border-2 border-[#2356A0] rotate-45 animate-spin-slow"></div>
+            <div className="absolute bottom-32 right-32 w-24 h-24 border-2 border-[#2356A0] rotate-12 animate-pulse"></div>
           </div>
         </div>
 
@@ -262,9 +262,9 @@ export default function Contact() {
             data-animate
           >
             {/* Premium Badge */}
-            <div className="inline-flex items-center gap-3 bg-white/10 dark:bg-slate-800/30 backdrop-blur-xl rounded-full px-8 py-4 mb-8 border border-white/20 dark:border-slate-700/50">
-              <FaHeadset className="text-teal-400" />
-              <span className="text-sm font-semibold text-white dark:text-teal-200">24/7 Expert Support Available</span>
+            <div className="inline-flex items-center gap-3 bg-white/10 dark:bg-[#1A2E4A]/30 backdrop-blur-xl rounded-full px-8 py-4 mb-8 border border-white/20 dark:border-[#2E4A6B]/50">
+              <FaHeadset className="text-[#D97706]" />
+              <span className="text-sm font-semibold text-white dark:text-[#2356A0]">24/7 Expert Support Available</span>
             </div>
 
             {/* Main Heading */}
@@ -273,7 +273,7 @@ export default function Contact() {
                 Get In
               </span>
               <br />
-              <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-400 bg-clip-text text-transparent">
                 Touch
               </span>
             </h1>
@@ -281,7 +281,7 @@ export default function Contact() {
             {/* Subtitle */}
             <p className="text-xl md:text-3xl text-white/90 dark:text-slate-200 mb-6 max-w-4xl mx-auto leading-relaxed font-light">
               Ready to plan your
-              <span className="font-bold bg-gradient-to-r from-teal-300 to-cyan-300 bg-clip-text text-transparent"> dream adventure?</span>
+              <span className="font-bold bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] bg-clip-text text-transparent"> dream adventure?</span>
             </p>
 
             <p className="text-lg md:text-xl text-white/70 dark:text-slate-300 mb-12 max-w-3xl mx-auto">
@@ -309,7 +309,7 @@ export default function Contact() {
       </section>
 
       {/* Contact Methods Section */}
-      <section className="py-20 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl">
+      <section className="py-20 bg-white/95 dark:bg-[#0F1B2D]/95 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4">
           <div 
             className={`text-center mb-16 transform transition-all duration-1000 ${
@@ -318,17 +318,17 @@ export default function Contact() {
             id="methods"
             data-animate
           >
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-full px-8 py-4 mb-8 border border-teal-200/50 dark:border-teal-700/50">
-              <FaComments className="text-teal-600 dark:text-teal-400" />
-              <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Multiple Ways to Connect</span>
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 rounded-full px-8 py-4 mb-8 border border-teal-200/50 dark:border-teal-700/50">
+              <FaComments className="text-[#2356A0] dark:text-[#D97706]" />
+              <span className="text-sm font-semibold text-[#2356A0] dark:text-[#F59E0B]">Multiple Ways to Connect</span>
             </div>
             
             <h2 className="text-3xl md:text-5xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-gray-900 via-teal-700 to-cyan-800 dark:from-white dark:via-teal-200 dark:to-cyan-200 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-gray-900 via-[#2356A0] to-[#1A2E4A] dark:from-white dark:via-[#2356A0] dark:to-[#1A2E4A] bg-clip-text text-transparent">
                 Choose Your Preferred
               </span>
               <br />
-              <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
                 Communication Method
               </span>
             </h2>
@@ -338,7 +338,7 @@ export default function Contact() {
             {contactMethods.map((method, index) => (
               <div 
                 key={index}
-                className={`group relative bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50 dark:border-slate-700/50 overflow-hidden transform hover:scale-105 ${
+                className={`group relative bg-white dark:bg-[#1A2E4A] rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-200/50 dark:border-[#2E4A6B]/50 overflow-hidden transform hover:scale-105 ${
                   isVisible.methods ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
                 }`}
                 style={{ animationDelay: `${index * 0.1}s` }}
@@ -369,7 +369,7 @@ export default function Contact() {
       </section>
 
       {/* Main Content Section */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-slate-800 dark:to-slate-900">
+      <section className="py-20 bg-gradient-to-br from-gray-50 to-white dark:from-[#1A2E4A] dark:to-[#0F1B2D]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             
@@ -382,7 +382,7 @@ export default function Contact() {
               id="form"
               data-animate
             >
-              <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-2xl rounded-4xl shadow-2xl p-12 border border-gray-200/50 dark:border-slate-700/50 relative overflow-hidden">
+              <div className="bg-white/80 dark:bg-[#1A2E4A]/80 backdrop-blur-2xl rounded-4xl shadow-2xl p-12 border border-gray-200/50 dark:border-[#2E4A6B]/50 relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-5">
                   <div className="absolute inset-0" style={{
@@ -393,13 +393,13 @@ export default function Contact() {
 
                 <div className="relative z-10">
                   <div className="text-center mb-10">
-                    <div className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-full px-6 py-3 mb-6 border border-teal-200/50 dark:border-teal-700/50">
-                      <FaPaperPlane className="text-teal-600 dark:text-teal-400" />
-                      <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Send Us a Message</span>
+                    <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 rounded-full px-6 py-3 mb-6 border border-teal-200/50 dark:border-teal-700/50">
+                      <FaPaperPlane className="text-[#2356A0] dark:text-[#D97706]" />
+                      <span className="text-sm font-semibold text-[#2356A0] dark:text-[#F59E0B]">Send Us a Message</span>
                     </div>
                     
                     <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4">
-                      <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                      <span className="bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] bg-clip-text text-transparent">
                         Let's Plan Your Adventure
                       </span>
                     </h2>
@@ -411,7 +411,7 @@ export default function Contact() {
 
                   {/* Success Message */}
                   {submitted && (
-                    <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-700 rounded-2xl animate-fade-in">
+                    <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-[#166534] dark:from-green-900/20 dark:to-[#166534]/20 border border-green-200 dark:border-green-700 rounded-2xl animate-fade-in">
                       <div className="flex items-center gap-3">
                         <FaCheckCircle className="text-green-600 text-2xl" />
                         <div>
@@ -437,7 +437,7 @@ export default function Contact() {
                             value={formData.name}
                             onChange={handleChange}
                             required
-                            className="w-full px-6 py-4 bg-white dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 rounded-2xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-teal-300 dark:group-hover:border-teal-600"
+                            className="w-full px-6 py-4 bg-white dark:bg-[#1E3A5F] border-2 border-gray-200 dark:border-[#2E4A6B] rounded-2xl focus:ring-4 focus:ring-[#2356A0]/20 focus:border-[#2356A0] transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-[#D97706] dark:group-hover:border-[#2356A0]"
                             placeholder="Your full name"
                           />
                         </div>
@@ -455,7 +455,7 @@ export default function Contact() {
                             value={formData.email}
                             onChange={handleChange}
                             required
-                            className="w-full px-6 py-4 bg-white dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 rounded-2xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-teal-300 dark:group-hover:border-teal-600"
+                            className="w-full px-6 py-4 bg-white dark:bg-[#1E3A5F] border-2 border-gray-200 dark:border-[#2E4A6B] rounded-2xl focus:ring-4 focus:ring-[#2356A0]/20 focus:border-[#2356A0] transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-[#D97706] dark:group-hover:border-[#2356A0]"
                             placeholder="your.email@example.com"
                           />
                         </div>
@@ -474,7 +474,7 @@ export default function Contact() {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          className="w-full px-6 py-4 bg-white dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 rounded-2xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-teal-300 dark:group-hover:border-teal-600"
+                          className="w-full px-6 py-4 bg-white dark:bg-[#1E3A5F] border-2 border-gray-200 dark:border-[#2E4A6B] rounded-2xl focus:ring-4 focus:ring-[#2356A0]/20 focus:border-[#2356A0] transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-[#D97706] dark:group-hover:border-[#2356A0]"
                           placeholder="+1 (555) 123-4567"
                         />
                       </div>
@@ -488,7 +488,7 @@ export default function Contact() {
                           name="travelType"
                           value={formData.travelType}
                           onChange={handleChange}
-                          className="w-full px-6 py-4 bg-white dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 rounded-2xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 text-gray-900 dark:text-white group-hover:border-teal-300 dark:group-hover:border-teal-600"
+                          className="w-full px-6 py-4 bg-white dark:bg-[#1E3A5F] border-2 border-gray-200 dark:border-[#2E4A6B] rounded-2xl focus:ring-4 focus:ring-[#2356A0]/20 focus:border-[#2356A0] transition-all duration-300 text-gray-900 dark:text-white group-hover:border-[#D97706] dark:group-hover:border-[#2356A0]"
                         >
                           <option value="">Select travel type</option>
                           <option value="adventure">Adventure & Trekking</option>
@@ -514,7 +514,7 @@ export default function Contact() {
                           value={formData.subject}
                           onChange={handleChange}
                           required
-                          className="w-full px-6 py-4 bg-white dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 rounded-2xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-teal-300 dark:group-hover:border-teal-600"
+                          className="w-full px-6 py-4 bg-white dark:bg-[#1E3A5F] border-2 border-gray-200 dark:border-[#2E4A6B] rounded-2xl focus:ring-4 focus:ring-[#2356A0]/20 focus:border-[#2356A0] transition-all duration-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-[#D97706] dark:group-hover:border-[#2356A0]"
                           placeholder="How can we help you?"
                         />
                       </div>
@@ -528,7 +528,7 @@ export default function Contact() {
                           name="budget"
                           value={formData.budget}
                           onChange={handleChange}
-                          className="w-full px-6 py-4 bg-white dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 rounded-2xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 text-gray-900 dark:text-white group-hover:border-teal-300 dark:group-hover:border-teal-600"
+                          className="w-full px-6 py-4 bg-white dark:bg-[#1E3A5F] border-2 border-gray-200 dark:border-[#2E4A6B] rounded-2xl focus:ring-4 focus:ring-[#2356A0]/20 focus:border-[#2356A0] transition-all duration-300 text-gray-900 dark:text-white group-hover:border-[#D97706] dark:group-hover:border-[#2356A0]"
                         >
                           <option value="">Select budget range</option>
                           <option value="budget">Budget ($500 - $1,500)</option>
@@ -551,7 +551,7 @@ export default function Contact() {
                         onChange={handleChange}
                         required
                         rows="6"
-                        className="w-full px-6 py-4 bg-white dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-600 rounded-2xl focus:ring-4 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-300 resize-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-teal-300 dark:group-hover:border-teal-600"
+                        className="w-full px-6 py-4 bg-white dark:bg-[#1E3A5F] border-2 border-gray-200 dark:border-[#2E4A6B] rounded-2xl focus:ring-4 focus:ring-[#2356A0]/20 focus:border-[#2356A0] transition-all duration-300 resize-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 group-hover:border-[#D97706] dark:group-hover:border-[#2356A0]"
                         placeholder="Tell us about your dream trip, travel dates, group size, special interests, or any specific questions you have..."
                       ></textarea>
                     </div>
@@ -560,7 +560,7 @@ export default function Contact() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="group relative w-full bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 disabled:from-gray-400 disabled:to-gray-500 text-white py-5 px-8 rounded-2xl transition-all duration-300 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed overflow-hidden"
+                      className="group relative w-full bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] hover:from-[#2356A0] hover:to-[#1A2E4A] disabled:from-gray-400 disabled:to-gray-500 text-white py-5 px-8 rounded-2xl transition-all duration-300 font-bold text-lg shadow-xl hover:shadow-2xl transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed overflow-hidden"
                     >
                       <span className="relative z-10 flex items-center justify-center gap-3">
                         {isSubmitting ? (
@@ -591,20 +591,20 @@ export default function Contact() {
             <div className="space-y-8">
               {/* Office Information */}
               <div 
-                className={`bg-white/80 dark:bg-slate-800/80 backdrop-blur-2xl rounded-4xl shadow-2xl p-10 border border-gray-200/50 dark:border-slate-700/50 transform transition-all duration-1000 ${
+                className={`bg-white/80 dark:bg-[#1A2E4A]/80 backdrop-blur-2xl rounded-4xl shadow-2xl p-10 border border-gray-200/50 dark:border-[#2E4A6B]/50 transform transition-all duration-1000 ${
                   isVisible.info ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
                 }`}
                 id="info"
                 data-animate
               >
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-full px-6 py-3 mb-6 border border-teal-200/50 dark:border-teal-700/50">
-                    <FaMapMarkerAlt className="text-teal-600 dark:text-teal-400" />
-                    <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Visit Our Office</span>
+                  <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 rounded-full px-6 py-3 mb-6 border border-teal-200/50 dark:border-teal-700/50">
+                    <FaMapMarkerAlt className="text-[#2356A0] dark:text-[#D97706]" />
+                    <span className="text-sm font-semibold text-[#2356A0] dark:text-[#F59E0B]">Visit Our Office</span>
                   </div>
                   
                   <h2 className="text-3xl font-black text-gray-900 dark:text-white mb-4">
-                    <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] bg-clip-text text-transparent">
                       Office Information
                     </span>
                   </h2>
@@ -612,8 +612,8 @@ export default function Contact() {
 
                 <div className="space-y-6">
                   {officeInfo.map((item, idx) => (
-                    <div key={idx} className="group flex items-start space-x-4 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-all duration-300 cursor-pointer">
-                      <div className={`w-12 h-12 ${item.color} bg-gray-100 dark:bg-slate-700 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                    <div key={idx} className="group flex items-start space-x-4 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-[#1E3A5F]/50 transition-all duration-300 cursor-pointer">
+                      <div className={`w-12 h-12 ${item.color} bg-gray-100 dark:bg-[#1E3A5F] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
                         <item.icon className="text-xl" />
                       </div>
                       <div className="flex-1">
@@ -625,14 +625,14 @@ export default function Contact() {
                 </div>
 
                 {/* Social Media Links */}
-                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-slate-700">
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-[#2E4A6B]">
                   <h3 className="font-bold text-gray-900 dark:text-white mb-4 text-center">Follow Us</h3>
                   <div className="flex justify-center space-x-4">
                     {socialLinks.map((social, idx) => (
                       <a
                         key={idx}
                         href={social.url}
-                        className={`w-12 h-12 ${social.color} bg-gray-100 dark:bg-slate-700 rounded-2xl flex items-center justify-center hover:scale-110 transition-all duration-300 hover:shadow-lg`}
+                        className={`w-12 h-12 ${social.color} bg-gray-100 dark:bg-[#1E3A5F] rounded-2xl flex items-center justify-center hover:scale-110 transition-all duration-300 hover:shadow-lg`}
                         title={social.name}
                       >
                         <social.icon className="text-xl" />
@@ -644,7 +644,7 @@ export default function Contact() {
 
               {/* Interactive Map */}
               <div 
-                className={`bg-white dark:bg-slate-800 rounded-4xl shadow-2xl p-8 border border-gray-200/50 dark:border-slate-700/50 transform transition-all duration-1000 ${
+                className={`bg-white dark:bg-[#1A2E4A] rounded-4xl shadow-2xl p-8 border border-gray-200/50 dark:border-[#2E4A6B]/50 transform transition-all duration-1000 ${
                   isVisible.map ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
                 }`}
                 id="map"
@@ -667,10 +667,10 @@ export default function Contact() {
                     <Marker position={[27.7172, 85.3240]}>
                       <Popup>
                         <div className="text-center p-2">
-                          <strong className="text-lg text-teal-600">SubhaYatra Office</strong><br />
+                          <strong className="text-lg text-[#2356A0]">SubhaYatra Office</strong><br />
                           <span className="text-gray-600">Chaksibari Marg, Thamel-26</span><br />
                           <span className="text-gray-600">Kathmandu, Nepal</span><br />
-                          <span className="text-sm text-teal-600">Your Gateway to Nepal 🏔️</span>
+                          <span className="text-sm text-[#2356A0]">Your Gateway to Nepal 🏔️</span>
                         </div>
                       </Popup>
                     </Marker>
@@ -681,7 +681,7 @@ export default function Contact() {
                     href="https://www.google.com/maps/search/?api=1&query=27.7172,85.3240"
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 font-semibold transition-colors duration-300"
+                    className="inline-flex items-center gap-2 text-[#2356A0] dark:text-[#D97706] hover:text-[#D97706] dark:hover:text-[#F59E0B] font-semibold transition-colors duration-300"
                   >
                     <FaMapMarkerAlt />
                     Get Directions
@@ -695,7 +695,7 @@ export default function Contact() {
       </section>
 
       {/* Ultra-Premium FAQ Section */}
-      <section className="py-24 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-slate-900 dark:to-slate-800">
+      <section className="py-24 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] dark:from-[#0F1B2D] dark:to-slate-800">
         <div className="max-w-6xl mx-auto px-4">
           <div 
             className={`text-center mb-16 transform transition-all duration-1000 ${
@@ -704,13 +704,13 @@ export default function Contact() {
             id="faq"
             data-animate
           >
-            <div className="inline-flex items-center gap-3 bg-white/80 dark:bg-slate-800/30 backdrop-blur-xl rounded-full px-8 py-4 mb-8 border border-teal-200/50 dark:border-slate-700/50">
-              <FaQuestionCircle className="text-teal-600 dark:text-teal-400" />
-              <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Frequently Asked Questions</span>
+            <div className="inline-flex items-center gap-3 bg-white/80 dark:bg-[#1A2E4A]/30 backdrop-blur-xl rounded-full px-8 py-4 mb-8 border border-teal-200/50 dark:border-[#2E4A6B]/50">
+              <FaQuestionCircle className="text-[#2356A0] dark:text-[#D97706]" />
+              <span className="text-sm font-semibold text-[#2356A0] dark:text-[#F59E0B]">Frequently Asked Questions</span>
             </div>
             
             <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
                 Got Questions?
               </span>
               <br />
@@ -720,7 +720,7 @@ export default function Contact() {
 
           {/* FAQ Categories */}
           <div className="flex justify-center mb-12">
-            <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl p-2 border border-gray-200/50 dark:border-slate-700/50">
+            <div className="bg-white/80 dark:bg-[#1A2E4A]/80 backdrop-blur-xl rounded-2xl p-2 border border-gray-200/50 dark:border-[#2E4A6B]/50">
               {[
                 { id: 'general', label: 'General', icon: FaLightbulb },
                 { id: 'support', label: 'Support', icon: FaHeadset }
@@ -730,8 +730,8 @@ export default function Contact() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 ${
                     activeTab === tab.id
-                      ? 'bg-gradient-to-r from-teal-600 to-cyan-600 text-white shadow-lg'
-                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700'
+                      ? 'bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] text-white shadow-lg'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#1E3A5F]'
                   }`}
                 >
                   <tab.icon />
@@ -746,17 +746,17 @@ export default function Contact() {
             {filteredFAQs.map((faq, idx) => (
               <div 
                 key={idx}
-                className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 dark:border-slate-700/50 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-white/80 dark:bg-[#1A2E4A]/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 dark:border-[#2E4A6B]/50 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <button
                   onClick={() => setExpandedFAQ(expandedFAQ === idx ? null : idx)}
-                  className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors duration-300"
+                  className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50 dark:hover:bg-[#1E3A5F]/50 transition-colors duration-300"
                 >
                   <h3 className="font-bold text-lg text-gray-900 dark:text-white pr-4">
                     {faq.question}
                   </h3>
                   <div className={`transform transition-transform duration-300 ${expandedFAQ === idx ? 'rotate-180' : ''}`}>
-                    <FaChevronDown className="text-teal-600 dark:text-teal-400" />
+                    <FaChevronDown className="text-[#2356A0] dark:text-[#D97706]" />
                   </div>
                 </button>
                 

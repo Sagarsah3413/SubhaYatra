@@ -7,16 +7,16 @@ import { FaCode } from 'react-icons/fa'
 const DevelopmentTeam = () => {
     return (
         <>
-            <section className="py-4 md:py-16 bg-white dark:bg-slate-900">
+            <section className="py-4 md:py-16 bg-white dark:bg-[#0F1B2D]">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="text-center mb-16">
-                        {/* <div className="  inline-flex items-center gap-3 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-full px-8 py-4 mb-2 border border-teal-200/50 dark:border-teal-700/50">
-                            <FaCode className="text-teal-600 dark:text-teal-400" />
-                            <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Development Team</span>
+                        {/* <div className="  inline-flex items-center gap-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 rounded-full px-8 py-4 mb-2 border border-teal-200/50 dark:border-teal-700/50">
+                            <FaCode className="text-[#2356A0] dark:text-[#D97706]" />
+                            <span className="text-sm font-semibold text-[#2356A0] dark:text-[#F59E0B]">Development Team</span>
                         </div> */}
 
                         <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
-                            <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
                                 Meet the Developer
                             </span>
                         </h2>

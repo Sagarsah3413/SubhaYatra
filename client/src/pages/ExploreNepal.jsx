@@ -310,7 +310,7 @@ export default function ExploreNepal() {
   };
 
   return (
-    <div className={theme === 'dark' ? 'bg-slate-900 text-white min-h-screen' : 'bg-gray-50 text-gray-900 min-h-screen'}>
+    <div className={theme === 'dark' ? 'bg-[#0F1B2D] text-white min-h-screen' : 'bg-gray-50 text-gray-900 min-h-screen'}>
       <Header />
       
       {/* Hero Section with Static Background */}
@@ -318,10 +318,10 @@ export default function ExploreNepal() {
         {/* Static Gradient Background */}
         <div className="absolute inset-0 w-full h-full">
           {/* Beautiful gradient background */}
-          <div className="w-full h-full bg-gradient-to-br from-teal-500 via-cyan-600 to-blue-700"
+          <div className="w-full h-full bg-gradient-to-br from-[#2356A0] via-[#2356A0] to-blue-700"
             style={{
               backgroundImage: `
-                linear-gradient(135deg, rgba(6, 182, 212, 0.8) 0%, rgba(59, 130, 246, 0.8) 50%, rgba(147, 51, 234, 0.8) 100%),
+                linear-gradient(135deg, rgba(35, 86, 160, 0.8) 0%, rgba(59, 130, 246, 0.8) 50%, rgba(147, 51, 234, 0.8) 100%),
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20 20h60v60H20z' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.1'/%3E%3Cpath d='M30 30l40 20-40 20z' fill='%23ffffff' opacity='0.2'/%3E%3C/svg%3E")
               `,
               backgroundSize: 'cover, 100px 100px',
@@ -344,7 +344,7 @@ export default function ExploreNepal() {
           </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
-            <span className="bg-gradient-to-r from-white via-teal-200 to-cyan-200 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-[#2356A0] to-[#1A2E4A] bg-clip-text text-transparent">
               Explore
             </span>
             <br />
@@ -418,14 +418,14 @@ export default function ExploreNepal() {
           {/* Interactive Nepal Map Section */}
           <div className="mb-20">
             <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50 rounded-full px-8 py-4 mb-8 backdrop-blur-sm border border-teal-200 dark:border-teal-700">
-                <div className="w-3 h-3 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-pulse"></div>
-                <span className="text-teal-700 dark:text-teal-300 font-bold text-lg">Explore by Region</span>
-                <div className="w-3 h-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full animate-pulse"></div>
+              <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/50 dark:to-[#1A2E4A]/50 rounded-full px-8 py-4 mb-8 backdrop-blur-sm border border-teal-200 dark:border-teal-700">
+                <div className="w-3 h-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse"></div>
+                <span className="text-[#2356A0] dark:text-[#F59E0B] font-bold text-lg">Explore by Region</span>
+                <div className="w-3 h-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse"></div>
               </div>
               
               <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight">
-                <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
                   Interactive
                 </span>
                 <br />
@@ -440,12 +440,12 @@ export default function ExploreNepal() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <div className="w-2 h-2 bg-teal-500 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-[#2356A0] rounded-full animate-pulse"></div>
                   <span className="text-sm font-medium">From Himalayas to Terai Plains</span>
                 </div>
                 <div className="hidden sm:block w-1 h-1 bg-gray-400 rounded-full"></div>
                 <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                  <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-[#E8EFF8] rounded-full animate-pulse"></div>
                   <span className="text-sm font-medium">7 Provinces • 77 Districts</span>
                 </div>
               </div>
@@ -455,15 +455,15 @@ export default function ExploreNepal() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 {/* Premium Nepal Map Container */}
                 <div className="lg:col-span-2">
-                  <div className="relative bg-gradient-to-br from-white via-gray-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-10 shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden">
+                  <div className="relative bg-gradient-to-br from-white via-gray-50 to-white dark:from-[#1A2E4A] dark:via-slate-900 dark:to-slate-800 rounded-3xl p-10 shadow-2xl border border-gray-200 dark:border-[#2E4A6B] overflow-hidden">
                     
                     {/* Premium Background Pattern */}
                     <div className="absolute inset-0 opacity-5 dark:opacity-10">
                       <div className="absolute inset-0" style={{
                         backgroundImage: `
-                          radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
+                          radial-gradient(circle at 25% 25%, rgba(35, 86, 160, 0.3) 0%, transparent 50%),
                           radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-                          linear-gradient(45deg, transparent 49%, rgba(6, 182, 212, 0.1) 50%, transparent 51%)
+                          linear-gradient(45deg, transparent 49%, rgba(35, 86, 160, 0.1) 50%, transparent 51%)
                         `,
                         backgroundSize: '100px 100px, 150px 150px, 20px 20px'
                       }}></div>
@@ -471,17 +471,17 @@ export default function ExploreNepal() {
 
                     {/* Header with Premium Styling */}
                     <div className="relative z-10 text-center mb-8">
-                      <div className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-2xl px-6 py-3 mb-4 backdrop-blur-sm border border-teal-200 dark:border-teal-700">
-                        <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full"></div>
-                        <span className="text-teal-700 dark:text-teal-300 font-bold">Federal Democratic Republic</span>
-                        <div className="w-2 h-2 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full"></div>
+                      <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 rounded-2xl px-6 py-3 mb-4 backdrop-blur-sm border border-teal-200 dark:border-teal-700">
+                        <div className="w-2 h-2 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full"></div>
+                        <span className="text-[#2356A0] dark:text-[#F59E0B] font-bold">Federal Democratic Republic</span>
+                        <div className="w-2 h-2 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full"></div>
                       </div>
                       <h3 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white mb-2">Seven Provinces of Nepal</h3>
                       <p className="text-gray-600 dark:text-gray-400 font-medium">Click any province to explore detailed information</p>
                     </div>
                     
                     {/* Premium SVG Map of Nepal */}
-                    <div className="relative bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 mb-8 border-2 border-gray-200 dark:border-slate-600 shadow-inner">
+                    <div className="relative bg-gradient-to-br from-slate-50 to-gray-100 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 mb-8 border-2 border-gray-200 dark:border-[#2E4A6B] shadow-inner">
                       <svg viewBox="0 0 800 400" className="w-full h-auto rounded-xl overflow-hidden">
                         {/* Premium Background with Gradient */}
                         <defs>
@@ -686,7 +686,7 @@ export default function ExploreNepal() {
                         {/* Premium Compass Rose */}
                         <g transform="translate(60, 350)">
                           <circle cx="0" cy="0" r="30" fill="none" stroke={theme === 'dark' ? '#64748b' : '#374151'} strokeWidth="2"/>
-                          <circle cx="0" cy="0" r="25" fill="rgba(6, 182, 212, 0.1)" stroke="rgba(6, 182, 212, 0.3)" strokeWidth="1"/>
+                          <circle cx="0" cy="0" r="25" fill="rgba(35, 86, 160, 0.1)" stroke="rgba(35, 86, 160, 0.3)" strokeWidth="1"/>
                           <path d="M0,-22 L6,0 L0,22 L-6,0 Z" fill="url(#compassGradient)"/>
                           <defs>
                             <linearGradient id="compassGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -713,8 +713,8 @@ export default function ExploreNepal() {
                             onClick={() => setSelectedProvince(selectedProvince === key ? null : key)}
                             className={`group relative p-5 rounded-2xl text-left transition-all duration-500 border-2 transform hover:scale-105 ${
                               selectedProvince === key 
-                                ? 'border-teal-500 bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 text-teal-800 dark:text-teal-200 shadow-xl scale-105' 
-                                : 'border-gray-200 dark:border-slate-600 bg-gradient-to-br from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 hover:border-teal-300 dark:hover:border-teal-600 hover:shadow-lg'
+                                ? 'border-[#2356A0] bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 text-[#2356A0] dark:text-[#2356A0] shadow-xl scale-105' 
+                                : 'border-gray-200 dark:border-[#2E4A6B] bg-gradient-to-br from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 hover:border-[#D97706] dark:hover:border-[#2356A0] hover:shadow-lg'
                             }`}
                           >
                             {/* Premium Background Effect */}
@@ -723,7 +723,7 @@ export default function ExploreNepal() {
                             <div className="relative z-10">
                               <div className="flex items-center gap-3 mb-3">
                                 <div 
-                                  className="w-5 h-5 rounded-full shadow-lg border-2 border-white dark:border-slate-600"
+                                  className="w-5 h-5 rounded-full shadow-lg border-2 border-white dark:border-[#2E4A6B]"
                                   style={{ backgroundColor: province.color }}
                                 ></div>
                                 <span className="font-bold text-sm">{province.name}</span>
@@ -740,7 +740,7 @@ export default function ExploreNepal() {
                             
                             {/* Selection Indicator */}
                             {selectedProvince === key && (
-                              <div className="absolute top-2 right-2 w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center">
+                              <div className="absolute top-2 right-2 w-6 h-6 bg-[#2356A0] rounded-full flex items-center justify-center">
                                 <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                 </svg>
@@ -752,7 +752,7 @@ export default function ExploreNepal() {
                     </div>
                     
                     {/* Premium Map Legend */}
-                    <div className="bg-gradient-to-r from-gray-50 to-white dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 border border-gray-200 dark:border-slate-600">
+                    <div className="bg-gradient-to-r from-gray-50 to-white dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 border border-gray-200 dark:border-[#2E4A6B]">
                       <h4 className="text-lg font-bold mb-4 text-center text-gray-900 dark:text-white">Province Legend</h4>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {Object.entries(nepalProvinces).map(([key, province]) => (
@@ -761,18 +761,18 @@ export default function ExploreNepal() {
                             onClick={() => setSelectedProvince(selectedProvince === key ? null : key)}
                             className={`group flex items-center gap-3 p-3 rounded-xl text-sm transition-all duration-300 ${
                               selectedProvince === key 
-                                ? 'bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50 text-teal-800 dark:text-teal-200 shadow-lg transform scale-105' 
-                                : 'bg-white dark:bg-slate-700 hover:bg-gray-100 dark:hover:bg-slate-600 hover:shadow-md hover:scale-102'
+                                ? 'bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/50 dark:to-[#1A2E4A]/50 text-[#2356A0] dark:text-[#2356A0] shadow-lg transform scale-105' 
+                                : 'bg-white dark:bg-[#1E3A5F] hover:bg-gray-100 dark:hover:bg-slate-600 hover:shadow-md hover:scale-102'
                             }`}
                           >
                             <div 
-                              className="w-4 h-4 rounded-full shadow-md border-2 border-white dark:border-slate-600 group-hover:scale-110 transition-transform duration-300"
+                              className="w-4 h-4 rounded-full shadow-md border-2 border-white dark:border-[#2E4A6B] group-hover:scale-110 transition-transform duration-300"
                               style={{ backgroundColor: province.color }}
                             ></div>
                             <span className="font-semibold truncate">{province.name}</span>
                             
                             {selectedProvince === key && (
-                              <div className="ml-auto w-4 h-4 bg-teal-500 rounded-full flex items-center justify-center">
+                              <div className="ml-auto w-4 h-4 bg-[#2356A0] rounded-full flex items-center justify-center">
                                 <div className="w-2 h-2 bg-white rounded-full"></div>
                               </div>
                             )}
@@ -785,13 +785,13 @@ export default function ExploreNepal() {
 
                 {/* Premium Province Information Panel */}
                 <div className="lg:col-span-1">
-                  <div className="sticky top-8 bg-gradient-to-br from-white via-gray-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-8 shadow-2xl border border-gray-200 dark:border-slate-700 h-full min-h-[600px] overflow-hidden">
+                  <div className="sticky top-8 bg-gradient-to-br from-white via-gray-50 to-white dark:from-[#1A2E4A] dark:via-slate-900 dark:to-slate-800 rounded-3xl p-8 shadow-2xl border border-gray-200 dark:border-[#2E4A6B] h-full min-h-[600px] overflow-hidden">
                     
                     {/* Premium Background Pattern */}
                     <div className="absolute inset-0 opacity-5 dark:opacity-10">
                       <div className="absolute inset-0" style={{
                         backgroundImage: `
-                          radial-gradient(circle at 75% 25%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
+                          radial-gradient(circle at 75% 25%, rgba(35, 86, 160, 0.3) 0%, transparent 50%),
                           radial-gradient(circle at 25% 75%, rgba(59, 130, 246, 0.3) 0%, transparent 50%)
                         `,
                         backgroundSize: '150px 150px, 100px 100px'
@@ -803,12 +803,12 @@ export default function ExploreNepal() {
                         <div className="flex-1">
                           {/* Province Header */}
                           <div className="text-center mb-8">
-                            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-2xl px-6 py-3 mb-4 backdrop-blur-sm border border-teal-200 dark:border-teal-700">
+                            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 rounded-2xl px-6 py-3 mb-4 backdrop-blur-sm border border-teal-200 dark:border-teal-700">
                               <div 
-                                className="w-4 h-4 rounded-full shadow-lg border-2 border-white dark:border-slate-600 animate-pulse"
+                                className="w-4 h-4 rounded-full shadow-lg border-2 border-white dark:border-[#2E4A6B] animate-pulse"
                                 style={{ backgroundColor: nepalProvinces[selectedProvince].color }}
                               ></div>
-                              <span className="text-teal-700 dark:text-teal-300 font-bold">Selected Province</span>
+                              <span className="text-[#2356A0] dark:text-[#F59E0B] font-bold">Selected Province</span>
                             </div>
                             
                             <h3 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white mb-2">
@@ -821,10 +821,10 @@ export default function ExploreNepal() {
                           
                           {/* Province Stats */}
                           <div className="space-y-4 mb-8">
-                            <div className="bg-gradient-to-r from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-4 border border-gray-200 dark:border-slate-600 shadow-lg">
+                            <div className="bg-gradient-to-r from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-4 border border-gray-200 dark:border-[#2E4A6B] shadow-lg">
                               <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-3">
-                                  <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                                  <div className="w-10 h-10 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] rounded-xl flex items-center justify-center">
                                     <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                                     </svg>
@@ -837,7 +837,7 @@ export default function ExploreNepal() {
                               </div>
                             </div>
                             
-                            <div className="bg-gradient-to-r from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-4 border border-gray-200 dark:border-slate-600 shadow-lg">
+                            <div className="bg-gradient-to-r from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-4 border border-gray-200 dark:border-[#2E4A6B] shadow-lg">
                               <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
@@ -853,7 +853,7 @@ export default function ExploreNepal() {
                               </div>
                             </div>
                             
-                            <div className="bg-gradient-to-r from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-4 border border-gray-200 dark:border-slate-600 shadow-lg">
+                            <div className="bg-gradient-to-r from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 rounded-2xl p-4 border border-gray-200 dark:border-[#2E4A6B] shadow-lg">
                               <div className="flex justify-between items-center">
                                 <div className="flex items-center gap-3">
                                   <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
@@ -871,16 +871,16 @@ export default function ExploreNepal() {
                           </div>
                           
                           {/* Province Description */}
-                          <div className="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-2xl p-6 border border-teal-200 dark:border-teal-700 mb-8">
-                            <h4 className="text-lg font-bold text-teal-800 dark:text-teal-300 mb-3">About This Province</h4>
+                          <div className="bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/20 dark:to-[#1A2E4A]/20 rounded-2xl p-6 border border-teal-200 dark:border-teal-700 mb-8">
+                            <h4 className="text-lg font-bold text-[#2356A0] dark:text-[#F59E0B] mb-3">About This Province</h4>
                             <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                               {nepalProvinces[selectedProvince].description}
                             </p>
                           </div>
                           
                           {/* Call to Action */}
-                          <div className="text-center bg-gradient-to-r from-gray-50 to-white dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 border border-gray-200 dark:border-slate-600">
-                            <div className="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                          <div className="text-center bg-gradient-to-r from-gray-50 to-white dark:from-slate-700 dark:to-slate-800 rounded-2xl p-6 border border-gray-200 dark:border-[#2E4A6B]">
+                            <div className="w-12 h-12 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] rounded-2xl flex items-center justify-center mx-auto mb-4">
                               <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                               </svg>
@@ -894,8 +894,8 @@ export default function ExploreNepal() {
                       ) : (
                         <div className="flex-1 flex items-center justify-center">
                           <div className="text-center py-12">
-                            <div className="w-20 h-20 bg-gradient-to-br from-teal-100 to-cyan-100 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                              <svg className="w-10 h-10 text-teal-600 dark:text-teal-400" fill="currentColor" viewBox="0 0 20 20">
+                            <div className="w-20 h-20 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                              <svg className="w-10 h-10 text-[#2356A0] dark:text-[#D97706]" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                               </svg>
                             </div>
@@ -906,8 +906,8 @@ export default function ExploreNepal() {
                             
                             {/* Quick Stats */}
                             <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
-                              <div className="bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-xl p-3 border border-teal-200 dark:border-teal-700">
-                                <div className="text-2xl font-bold text-teal-600 dark:text-teal-400">7</div>
+                              <div className="bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/20 dark:to-[#1A2E4A]/20 rounded-xl p-3 border border-teal-200 dark:border-teal-700">
+                                <div className="text-2xl font-bold text-[#2356A0] dark:text-[#D97706]">7</div>
                                 <div className="text-xs text-gray-600 dark:text-gray-400">Provinces</div>
                               </div>
                               <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-3 border border-blue-200 dark:border-blue-700">
@@ -932,7 +932,7 @@ export default function ExploreNepal() {
               <div className="absolute inset-0 opacity-5 dark:opacity-10">
                 <div className="absolute inset-0" style={{
                   backgroundImage: `
-                    radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.4) 0%, transparent 50%),
+                    radial-gradient(circle at 25% 25%, rgba(35, 86, 160, 0.4) 0%, transparent 50%),
                     radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.4) 0%, transparent 50%),
                     radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.3) 0%, transparent 50%)
                   `,
@@ -941,26 +941,26 @@ export default function ExploreNepal() {
               </div>
 
               <div className="relative z-10 max-w-7xl mx-auto">
-                <div className="bg-gradient-to-br from-white via-gray-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-12 shadow-2xl border-2 border-gray-200 dark:border-slate-700 overflow-hidden">
+                <div className="bg-gradient-to-br from-white via-gray-50 to-white dark:from-[#1A2E4A] dark:via-slate-900 dark:to-slate-800 rounded-3xl p-12 shadow-2xl border-2 border-gray-200 dark:border-[#2E4A6B] overflow-hidden">
                   
                   {/* Premium Floating Elements */}
-                  <div className="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse"></div>
+                  <div className="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-br from-[#2356A0]/20 to-[#1A2E4A]/20 rounded-full blur-3xl animate-pulse"></div>
                   <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-gradient-to-br from-blue-400/15 to-indigo-400/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-                  <div className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-br from-cyan-400/10 to-teal-400/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '4s' }}></div>
+                  <div className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-br from-[#2356A0]/10 to-[#1A2E4A]/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '4s' }}></div>
 
                   <div className="relative z-10">
                     {/* Ultra Premium Header */}
                     <div className="text-center mb-16">
-                      <div className="inline-flex items-center gap-4 bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50 rounded-full px-10 py-5 mb-8 backdrop-blur-sm border-2 border-teal-200 dark:border-teal-700 shadow-2xl">
-                        <div className="w-4 h-4 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-pulse"></div>
-                        <span className="text-teal-700 dark:text-teal-300 font-black text-xl">Province Guide</span>
-                        <div className="w-4 h-4 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                      <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/50 dark:to-[#1A2E4A]/50 rounded-full px-10 py-5 mb-8 backdrop-blur-sm border-2 border-teal-200 dark:border-teal-700 shadow-2xl">
+                        <div className="w-4 h-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse"></div>
+                        <span className="text-[#2356A0] dark:text-[#F59E0B] font-black text-xl">Province Guide</span>
+                        <div className="w-4 h-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                       </div>
                       
                       <h3 className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight">
                         <span className="text-gray-900 dark:text-white">Complete Guide to</span>
                         <br />
-                        <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
                           {nepalProvinces[selectedProvince].name}
                         </span>
                       </h3>
@@ -975,31 +975,31 @@ export default function ExploreNepal() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
                       
                       {/* Province Overview Card */}
-                      <div className="group relative bg-gradient-to-br from-white to-teal-50 dark:from-slate-700 dark:to-teal-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-teal-200 dark:border-teal-700 overflow-hidden">
+                      <div className="group relative bg-gradient-to-br from-white to-[#1A2E4A] dark:from-slate-700 dark:to-[#1A2E4A]/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-teal-200 dark:border-teal-700 overflow-hidden">
                         
                         {/* Premium Background Effects */}
-                        <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000"></div>
-                        <div className="absolute -bottom-5 -left-5 w-24 h-24 bg-gradient-to-br from-cyan-400/15 to-teal-400/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-1000"></div>
+                        <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-[#2356A0]/20 to-[#1A2E4A]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000"></div>
+                        <div className="absolute -bottom-5 -left-5 w-24 h-24 bg-gradient-to-br from-[#2356A0]/15 to-[#1A2E4A]/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-1000"></div>
                         
                         <div className="relative z-10">
                           {/* Premium Header */}
                           <div className="flex items-center gap-4 mb-8">
-                            <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-3xl flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                            <div className="w-16 h-16 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] rounded-3xl flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
                               <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                               </svg>
                             </div>
                             <div>
                               <h4 className="text-2xl font-black text-gray-900 dark:text-white">Province Overview</h4>
-                              <p className="text-teal-600 dark:text-teal-400 font-semibold">Essential Information</p>
+                              <p className="text-[#2356A0] dark:text-[#D97706] font-semibold">Essential Information</p>
                             </div>
                           </div>
                           
                           {/* Premium Stats Grid */}
                           <div className="space-y-6">
-                            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-2xl border border-teal-200 dark:border-teal-700">
+                            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 rounded-2xl border border-teal-200 dark:border-teal-700">
                               <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                                <div className="w-10 h-10 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] rounded-xl flex items-center justify-center">
                                   <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                                   </svg>
@@ -1040,7 +1040,7 @@ export default function ExploreNepal() {
                               <h5 className="font-bold text-gray-900 dark:text-white mb-4 text-lg">Districts</h5>
                               <div className="flex flex-wrap gap-2">
                                 {nepalProvinces[selectedProvince].districts.map((district, idx) => (
-                                  <span key={idx} className="px-4 py-2 bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50 text-teal-700 dark:text-teal-300 rounded-full text-sm font-semibold border border-teal-200 dark:border-teal-700 hover:scale-105 transition-transform duration-300">
+                                  <span key={idx} className="px-4 py-2 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/50 dark:to-[#1A2E4A]/50 text-[#2356A0] dark:text-[#F59E0B] rounded-full text-sm font-semibold border border-teal-200 dark:border-teal-700 hover:scale-105 transition-transform duration-300">
                                     {district}
                                   </span>
                                 ))}
@@ -1090,9 +1090,9 @@ export default function ExploreNepal() {
                             )}
                             
                             {nepalProvinces[selectedProvince].climate && (
-                              <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/30 dark:to-emerald-900/30 rounded-2xl border border-green-200 dark:border-green-700">
+                              <div className="p-4 bg-gradient-to-r from-green-50 to-[#166534] dark:from-green-900/30 dark:to-[#166534]/30 rounded-2xl border border-green-200 dark:border-green-700">
                                 <div className="flex items-center gap-3 mb-2">
-                                  <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                                  <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-[#166534] rounded-lg flex items-center justify-center">
                                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" />
                                     </svg>
@@ -1142,7 +1142,7 @@ export default function ExploreNepal() {
                     </div>
 
                     {/* Ultra Premium About Section */}
-                    <div className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 border-2 border-gray-200 dark:border-slate-600 mb-16 overflow-hidden">
+                    <div className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-slate-700 dark:to-slate-800 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 border-2 border-gray-200 dark:border-[#2E4A6B] mb-16 overflow-hidden">
                       
                       {/* Premium Background Effects */}
                       <div className="absolute -top-10 -right-10 w-40 h-40 bg-gradient-to-br from-gray-400/10 to-slate-400/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
@@ -1162,15 +1162,15 @@ export default function ExploreNepal() {
                           </div>
                         </div>
                         
-                        <div className="bg-gradient-to-r from-gray-50 to-slate-50 dark:from-slate-600 dark:to-slate-700 rounded-2xl p-8 border border-gray-200 dark:border-slate-600">
+                        <div className="bg-gradient-to-r from-gray-50 to-slate-50 dark:from-slate-600 dark:to-slate-700 rounded-2xl p-8 border border-gray-200 dark:border-[#2E4A6B]">
                           <p className="text-gray-800 dark:text-gray-200 text-lg leading-relaxed mb-6">
                             {nepalProvinces[selectedProvince].description}
                           </p>
                           
                           {nepalProvinces[selectedProvince].culture && (
-                            <div className="border-t border-gray-200 dark:border-slate-600 pt-6">
+                            <div className="border-t border-gray-200 dark:border-[#2E4A6B] pt-6">
                               <h5 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-3">
-                                <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                                <div className="w-8 h-8 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] rounded-lg flex items-center justify-center">
                                   <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clipRule="evenodd" />
                                   </svg>
@@ -1187,19 +1187,19 @@ export default function ExploreNepal() {
                     </div>
 
                     {/* Ultra Premium Major Destinations Section */}
-                    <div className="group relative bg-gradient-to-br from-white to-teal-50 dark:from-slate-700 dark:to-teal-900/20 rounded-3xl p-10 shadow-2xl border-2 border-teal-200 dark:border-teal-700 overflow-hidden">
+                    <div className="group relative bg-gradient-to-br from-white to-[#1A2E4A] dark:from-slate-700 dark:to-[#1A2E4A]/20 rounded-3xl p-10 shadow-2xl border-2 border-teal-200 dark:border-teal-700 overflow-hidden">
                       
                       {/* Premium Background Effects */}
-                      <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse"></div>
-                      <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-cyan-400/15 to-teal-400/15 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+                      <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-[#2356A0]/20 to-[#1A2E4A]/20 rounded-full blur-3xl animate-pulse"></div>
+                      <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-[#2356A0]/15 to-[#1A2E4A]/15 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }}></div>
                       
                       <div className="relative z-10">
                         {/* Premium Header */}
                         <div className="text-center mb-12">
-                          <div className="inline-flex items-center gap-4 bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50 rounded-full px-8 py-4 mb-6 backdrop-blur-sm border border-teal-200 dark:border-teal-700 shadow-xl">
-                            <div className="w-3 h-3 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-pulse"></div>
-                            <span className="text-teal-700 dark:text-teal-300 font-bold">Major Destinations</span>
-                            <div className="w-3 h-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                          <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/50 dark:to-[#1A2E4A]/50 rounded-full px-8 py-4 mb-6 backdrop-blur-sm border border-teal-200 dark:border-teal-700 shadow-xl">
+                            <div className="w-3 h-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse"></div>
+                            <span className="text-[#2356A0] dark:text-[#F59E0B] font-bold">Major Destinations</span>
+                            <div className="w-3 h-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                           </div>
                           
                           <h4 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white mb-4">
@@ -1216,7 +1216,7 @@ export default function ExploreNepal() {
                             <div key={index} className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-slate-600 dark:to-slate-700 rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 transform-gpu border-2 border-gray-200 dark:border-slate-500 overflow-hidden">
                               
                               {/* Premium Background Effects */}
-                              <div className="absolute -top-5 -right-5 w-20 h-20 bg-gradient-to-br from-teal-400/10 to-cyan-400/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-1000"></div>
+                              <div className="absolute -top-5 -right-5 w-20 h-20 bg-gradient-to-br from-[#2356A0]/10 to-[#1A2E4A]/10 rounded-full blur-xl group-hover:scale-150 transition-transform duration-1000"></div>
                               
                               <div className="relative z-10">
                                 {/* Destination Header */}
@@ -1224,7 +1224,7 @@ export default function ExploreNepal() {
                                   <div className="flex-1">
                                     <h5 className="text-2xl font-black text-gray-900 dark:text-white mb-2">{destination.name}</h5>
                                     <div className="flex items-center gap-3 mb-3">
-                                      <span className="px-4 py-2 bg-gradient-to-r from-teal-100 to-cyan-100 dark:from-teal-900/50 dark:to-cyan-900/50 text-teal-700 dark:text-teal-300 rounded-full text-sm font-bold border border-teal-200 dark:border-teal-700">
+                                      <span className="px-4 py-2 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/50 dark:to-[#1A2E4A]/50 text-[#2356A0] dark:text-[#F59E0B] rounded-full text-sm font-bold border border-teal-200 dark:border-teal-700">
                                         {destination.type}
                                       </span>
                                       <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
@@ -1245,7 +1245,7 @@ export default function ExploreNepal() {
                                 {/* Key Highlights */}
                                 <div className="bg-gradient-to-r from-gray-50 to-slate-50 dark:from-slate-500 dark:to-slate-600 rounded-2xl p-6 border border-gray-200 dark:border-slate-500">
                                   <h6 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                    <div className="w-6 h-6 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                                    <div className="w-6 h-6 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] rounded-lg flex items-center justify-center">
                                       <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                                       </svg>
@@ -1255,7 +1255,7 @@ export default function ExploreNepal() {
                                   <div className="grid grid-cols-2 gap-3">
                                     {destination.highlights.map((highlight, idx) => (
                                       <div key={idx} className="flex items-center gap-3 text-sm">
-                                        <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full"></div>
+                                        <div className="w-2 h-2 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full"></div>
                                         <span className="text-gray-700 dark:text-gray-300 font-medium">{highlight}</span>
                                       </div>
                                     ))}
@@ -1279,7 +1279,7 @@ export default function ExploreNepal() {
             <div className="absolute inset-0 opacity-5 dark:opacity-10">
               <div className="absolute inset-0" style={{
                 backgroundImage: `
-                  radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.4) 0%, transparent 50%),
+                  radial-gradient(circle at 20% 20%, rgba(35, 86, 160, 0.4) 0%, transparent 50%),
                   radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.4) 0%, transparent 50%),
                   radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.3) 0%, transparent 50%)
                 `,
@@ -1290,22 +1290,22 @@ export default function ExploreNepal() {
             <div className="relative z-10">
               {/* Ultra Premium Header */}
               <div className="text-center mb-20">
-                <div className="inline-flex items-center gap-4 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 dark:from-teal-900/50 dark:via-cyan-900/50 dark:to-blue-900/50 rounded-full px-10 py-5 mb-10 backdrop-blur-sm border-2 border-teal-200 dark:border-teal-700 shadow-2xl">
+                <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-100 dark:from-[#2356A0]/50 dark:via-[#2356A0]/50 dark:to-blue-900/50 rounded-full px-10 py-5 mb-10 backdrop-blur-sm border-2 border-teal-200 dark:border-teal-700 shadow-2xl">
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-pulse"></div>
-                    <div className="w-3 h-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-                    <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-gradient-to-r from-[#2356A0] to-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                    <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-[#1A2E4A] rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                   </div>
-                  <span className="text-teal-700 dark:text-teal-300 font-black text-xl">Nepal's Geography</span>
+                  <span className="text-[#2356A0] dark:text-[#F59E0B] font-black text-xl">Nepal's Geography</span>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-                    <div className="w-3 h-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-                    <div className="w-4 h-4 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-pulse" style={{ animationDelay: '2.5s' }}></div>
+                    <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-[#1A2E4A] rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                    <div className="w-3 h-3 bg-gradient-to-r from-[#2356A0] to-blue-500 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse" style={{ animationDelay: '2.5s' }}></div>
                   </div>
                 </div>
                 
                 <h2 className="text-5xl md:text-7xl lg:text-8xl font-black mb-10 leading-tight">
-                  <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
                     Three Distinct
                   </span>
                   <br />
@@ -1325,8 +1325,8 @@ export default function ExploreNepal() {
                     <span className="text-blue-700 dark:text-blue-300 font-bold text-sm">8,848m - 60m Elevation Range</span>
                   </div>
                   <div className="hidden sm:block w-2 h-2 bg-gray-400 rounded-full"></div>
-                  <div className="flex items-center gap-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl px-6 py-3 border border-green-200 dark:border-green-700">
-                    <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse"></div>
+                  <div className="flex items-center gap-3 bg-gradient-to-r from-green-50 to-[#166534] dark:from-green-900/20 dark:to-[#166534]/20 rounded-2xl px-6 py-3 border border-green-200 dark:border-green-700">
+                    <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-[#166534] rounded-full animate-pulse"></div>
                     <span className="text-green-700 dark:text-green-300 font-bold text-sm">3 Unique Ecosystems</span>
                   </div>
                 </div>
@@ -1335,7 +1335,7 @@ export default function ExploreNepal() {
               {/* Ultra Premium Region Cards */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-20">
                 {/* Himalayan Region - Ultra Premium */}
-                <div className="group relative bg-gradient-to-br from-white via-blue-50 to-indigo-50 dark:from-slate-800 dark:via-blue-900/20 dark:to-indigo-900/20 rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-blue-200 dark:border-blue-700">
+                <div className="group relative bg-gradient-to-br from-white via-blue-50 to-indigo-50 dark:from-[#1A2E4A] dark:via-blue-900/20 dark:to-indigo-900/20 rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-blue-200 dark:border-blue-700">
                   
                   {/* Premium Background Effects */}
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-indigo-600/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -1407,7 +1407,7 @@ export default function ExploreNepal() {
                         { icon: "🏔️", text: "Mount Everest (8,848m)", color: "from-blue-500 to-indigo-500" },
                         { icon: "🥾", text: "Annapurna Circuit", color: "from-indigo-500 to-purple-500" },
                         { icon: "🏘️", text: "Sherpa Villages", color: "from-purple-500 to-blue-500" },
-                        { icon: "🏞️", text: "Alpine Lakes", color: "from-blue-500 to-cyan-500" }
+                        { icon: "🏞️", text: "Alpine Lakes", color: "from-blue-500 to-[#1A2E4A]" }
                       ].map((item, idx) => (
                         <div key={idx} className="flex items-center gap-3 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-700 hover:scale-105 transition-transform duration-300">
                           <div className={`w-8 h-8 bg-gradient-to-r ${item.color} rounded-lg flex items-center justify-center text-white text-sm shadow-lg`}>
@@ -1439,14 +1439,14 @@ export default function ExploreNepal() {
                 </div>
 
                 {/* Hilly Region - Ultra Premium */}
-                <div className="group relative bg-gradient-to-br from-white via-green-50 to-emerald-50 dark:from-slate-800 dark:via-green-900/20 dark:to-emerald-900/20 rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-green-200 dark:border-green-700">
+                <div className="group relative bg-gradient-to-br from-white via-green-50 to-[#166534] dark:from-[#1A2E4A] dark:via-green-900/20 dark:to-[#166534]/20 rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-green-200 dark:border-green-700">
                   
                   {/* Premium Background Effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-600/5 via-emerald-600/5 to-teal-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-green-400/20 to-emerald-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-600/5 via-[#15803D]/5 to-[#1A2E4A]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-green-400/20 to-[#166534]/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
                   
                   {/* Hero Image Section */}
-                  <div className="relative h-80 bg-gradient-to-br from-green-600 via-emerald-700 to-teal-800 flex items-center justify-center overflow-hidden">
+                  <div className="relative h-80 bg-gradient-to-br from-green-600 via-[#15803D] to-[#1A2E4A] flex items-center justify-center overflow-hidden">
                     {/* Animated Background Pattern */}
                     <div className="absolute inset-0 opacity-20">
                       <div className="absolute inset-0" style={{
@@ -1489,7 +1489,7 @@ export default function ExploreNepal() {
                   {/* Premium Content Section */}
                   <div className="relative z-10 p-8">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-[#166534] rounded-2xl flex items-center justify-center shadow-lg">
                         <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                         </svg>
@@ -1508,12 +1508,12 @@ export default function ExploreNepal() {
                     {/* Premium Feature List */}
                     <div className="grid grid-cols-2 gap-4 mb-6">
                       {[
-                        { icon: "🏛️", text: "Kathmandu Valley", color: "from-green-500 to-emerald-500" },
-                        { icon: "🏞️", text: "Pokhara Lakes", color: "from-emerald-500 to-teal-500" },
-                        { icon: "🏺", text: "UNESCO Sites", color: "from-teal-500 to-green-500" },
-                        { icon: "🏔️", text: "Hill Stations", color: "from-green-500 to-cyan-500" }
+                        { icon: "🏛️", text: "Kathmandu Valley", color: "from-green-500 to-[#166534]" },
+                        { icon: "🏞️", text: "Pokhara Lakes", color: "from-[#15803D] to-[#1A2E4A]" },
+                        { icon: "🏺", text: "UNESCO Sites", color: "from-[#2356A0] to-green-500" },
+                        { icon: "🏔️", text: "Hill Stations", color: "from-green-500 to-[#1A2E4A]" }
                       ].map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-3 p-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-700 hover:scale-105 transition-transform duration-300">
+                        <div key={idx} className="flex items-center gap-3 p-3 bg-gradient-to-r from-green-50 to-[#166534] dark:from-green-900/20 dark:to-[#166534]/20 rounded-xl border border-green-200 dark:border-green-700 hover:scale-105 transition-transform duration-300">
                           <div className={`w-8 h-8 bg-gradient-to-r ${item.color} rounded-lg flex items-center justify-center text-white text-sm shadow-lg`}>
                             {item.icon}
                           </div>
@@ -1523,18 +1523,18 @@ export default function ExploreNepal() {
                     </div>
 
                     {/* Premium Stats */}
-                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-4 border border-green-200 dark:border-green-700">
+                    <div className="bg-gradient-to-r from-green-50 to-[#166534] dark:from-green-900/20 dark:to-[#166534]/20 rounded-2xl p-4 border border-green-200 dark:border-green-700">
                       <div className="grid grid-cols-3 gap-4 text-center">
                         <div>
                           <div className="text-2xl font-black text-green-600 dark:text-green-400">7</div>
                           <div className="text-xs text-gray-600 dark:text-gray-400 font-medium">UNESCO Sites</div>
                         </div>
                         <div>
-                          <div className="text-2xl font-black text-emerald-600 dark:text-emerald-400">125+</div>
+                          <div className="text-2xl font-black text-[#15803D] dark:text-[#22c55e]">125+</div>
                           <div className="text-xs text-gray-600 dark:text-gray-400 font-medium">Ethnic Groups</div>
                         </div>
                         <div>
-                          <div className="text-2xl font-black text-teal-600 dark:text-teal-400">30°C</div>
+                          <div className="text-2xl font-black text-[#2356A0] dark:text-[#D97706]">30°C</div>
                           <div className="text-xs text-gray-600 dark:text-gray-400 font-medium">Max Temp</div>
                         </div>
                       </div>
@@ -1543,7 +1543,7 @@ export default function ExploreNepal() {
                 </div>
 
                 {/* Terai Region - Ultra Premium */}
-                <div className="group relative bg-gradient-to-br from-white via-amber-50 to-orange-50 dark:from-slate-800 dark:via-amber-900/20 dark:to-orange-900/20 rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-amber-200 dark:border-amber-700">
+                <div className="group relative bg-gradient-to-br from-white via-amber-50 to-orange-50 dark:from-[#1A2E4A] dark:via-amber-900/20 dark:to-orange-900/20 rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-amber-200 dark:border-amber-700">
                   
                   {/* Premium Background Effects */}
                   <div className="absolute inset-0 bg-gradient-to-br from-amber-600/5 via-orange-600/5 to-red-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
@@ -1648,7 +1648,7 @@ export default function ExploreNepal() {
               </div>
 
               {/* Ultra Premium Comparison Chart */}
-              <div className="bg-gradient-to-br from-white via-gray-50 to-white dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 rounded-3xl p-10 shadow-2xl border-2 border-gray-200 dark:border-slate-700 mb-16">
+              <div className="bg-gradient-to-br from-white via-gray-50 to-white dark:from-[#1A2E4A] dark:via-slate-900 dark:to-slate-800 rounded-3xl p-10 shadow-2xl border-2 border-gray-200 dark:border-[#2E4A6B] mb-16">
                 <div className="text-center mb-8">
                   <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-4">Regional Comparison</h3>
                   <p className="text-gray-600 dark:text-gray-400">Discover the unique characteristics of each region</p>
@@ -1657,7 +1657,7 @@ export default function ExploreNepal() {
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
-                      <tr className="border-b-2 border-gray-200 dark:border-slate-600">
+                      <tr className="border-b-2 border-gray-200 dark:border-[#2E4A6B]">
                         <th className="text-left py-4 px-6 font-black text-gray-900 dark:text-white">Characteristic</th>
                         <th className="text-center py-4 px-6 font-black text-blue-600 dark:text-blue-400">Himalayan</th>
                         <th className="text-center py-4 px-6 font-black text-green-600 dark:text-green-400">Hilly</th>
@@ -1665,19 +1665,19 @@ export default function ExploreNepal() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 dark:divide-slate-600">
-                      <tr className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors duration-300">
+                      <tr className="hover:bg-gray-50 dark:hover:bg-[#1E3A5F]/50 transition-colors duration-300">
                         <td className="py-4 px-6 font-semibold text-gray-900 dark:text-white">Elevation Range</td>
                         <td className="py-4 px-6 text-center text-blue-600 dark:text-blue-400 font-bold">4,877m - 8,848m</td>
                         <td className="py-4 px-6 text-center text-green-600 dark:text-green-400 font-bold">610m - 4,877m</td>
                         <td className="py-4 px-6 text-center text-amber-600 dark:text-amber-400 font-bold">60m - 610m</td>
                       </tr>
-                      <tr className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors duration-300">
+                      <tr className="hover:bg-gray-50 dark:hover:bg-[#1E3A5F]/50 transition-colors duration-300">
                         <td className="py-4 px-6 font-semibold text-gray-900 dark:text-white">Climate</td>
                         <td className="py-4 px-6 text-center text-gray-600 dark:text-gray-400">Alpine/Arctic</td>
                         <td className="py-4 px-6 text-center text-gray-600 dark:text-gray-400">Temperate</td>
                         <td className="py-4 px-6 text-center text-gray-600 dark:text-gray-400">Subtropical/Tropical</td>
                       </tr>
-                      <tr className="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors duration-300">
+                      <tr className="hover:bg-gray-50 dark:hover:bg-[#1E3A5F]/50 transition-colors duration-300">
                         <td className="py-4 px-6 font-semibold text-gray-900 dark:text-white">Main Attractions</td>
                         <td className="py-4 px-6 text-center text-gray-600 dark:text-gray-400">Trekking, Mountaineering</td>
                         <td className="py-4 px-6 text-center text-gray-600 dark:text-gray-400">Culture, Heritage Sites</td>
@@ -1704,7 +1704,7 @@ export default function ExploreNepal() {
             <div className="absolute inset-0 opacity-5 dark:opacity-10">
               <div className="absolute inset-0" style={{
                 backgroundImage: `
-                  radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.4) 0%, transparent 50%),
+                  radial-gradient(circle at 25% 25%, rgba(35, 86, 160, 0.4) 0%, transparent 50%),
                   radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.4) 0%, transparent 50%),
                   radial-gradient(circle at 50% 10%, rgba(16, 185, 129, 0.3) 0%, transparent 50%),
                   radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.3) 0%, transparent 50%)
@@ -1716,14 +1716,14 @@ export default function ExploreNepal() {
             <div className="relative z-10">
               {/* Premium Header */}
               <div className="text-center mb-16">
-                <div className="inline-flex items-center gap-4 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 dark:from-teal-900/50 dark:via-cyan-900/50 dark:to-blue-900/50 rounded-full px-10 py-5 mb-8 backdrop-blur-sm border-2 border-teal-200 dark:border-teal-700 shadow-2xl">
-                  <div className="w-4 h-4 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-pulse"></div>
-                  <span className="text-teal-700 dark:text-teal-300 font-black text-xl">Nepal by Numbers</span>
-                  <div className="w-4 h-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-100 dark:from-[#2356A0]/50 dark:via-[#2356A0]/50 dark:to-blue-900/50 rounded-full px-10 py-5 mb-8 backdrop-blur-sm border-2 border-teal-200 dark:border-teal-700 shadow-2xl">
+                  <div className="w-4 h-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse"></div>
+                  <span className="text-[#2356A0] dark:text-[#F59E0B] font-black text-xl">Nepal by Numbers</span>
+                  <div className="w-4 h-4 bg-gradient-to-r from-[#2356A0] to-blue-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                 </div>
                 
                 <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-                  <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
                     Incredible
                   </span>
                   <br />
@@ -1739,22 +1739,22 @@ export default function ExploreNepal() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
                 
                 {/* UNESCO Sites */}
-                <div className="group relative bg-gradient-to-br from-white via-teal-50 to-cyan-50 dark:from-slate-800 dark:via-teal-900/20 dark:to-cyan-900/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-teal-200 dark:border-teal-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-[#2356A0] to-[#1A2E4A] dark:from-[#1A2E4A] dark:via-[#2356A0]/20 dark:to-[#1A2E4A]/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-teal-200 dark:border-teal-700 overflow-hidden">
                   
                   {/* Premium Background Effects */}
-                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000"></div>
-                  <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-gradient-to-br from-cyan-400/15 to-teal-400/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-1000"></div>
+                  <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-[#2356A0]/20 to-[#1A2E4A]/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000"></div>
+                  <div className="absolute -bottom-10 -left-10 w-24 h-24 bg-gradient-to-br from-[#2356A0]/15 to-[#1A2E4A]/15 rounded-full blur-xl group-hover:scale-125 transition-transform duration-1000"></div>
                   
                   <div className="relative z-10 text-center">
                     {/* Premium Icon */}
-                    <div className="w-20 h-20 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    <div className="w-20 h-20 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
                       <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                       </svg>
                     </div>
                     
                     {/* Animated Counter */}
-                    <div className="text-5xl md:text-6xl font-black text-transparent bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text mb-3 group-hover:scale-110 transition-transform duration-500">
+                    <div className="text-5xl md:text-6xl font-black text-transparent bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] bg-clip-text mb-3 group-hover:scale-110 transition-transform duration-500">
                       8
                     </div>
                     
@@ -1762,14 +1762,14 @@ export default function ExploreNepal() {
                     <div className="text-gray-600 dark:text-gray-400 text-sm">World Heritage Recognition</div>
                     
                     {/* Premium Progress Bar */}
-                    <div className="mt-4 bg-gray-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left"></div>
+                    <div className="mt-4 bg-gray-200 dark:bg-[#1E3A5F] rounded-full h-2 overflow-hidden">
+                      <div className="h-full bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left"></div>
                     </div>
                   </div>
                 </div>
 
                 {/* 8000m+ Peaks */}
-                <div className="group relative bg-gradient-to-br from-white via-blue-50 to-indigo-50 dark:from-slate-800 dark:via-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-blue-200 dark:border-blue-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-blue-50 to-indigo-50 dark:from-[#1A2E4A] dark:via-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-blue-200 dark:border-blue-700 overflow-hidden">
                   
                   {/* Premium Background Effects */}
                   <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000"></div>
@@ -1792,14 +1792,14 @@ export default function ExploreNepal() {
                     <div className="text-gray-600 dark:text-gray-400 text-sm">World's Highest Mountains</div>
                     
                     {/* Premium Progress Bar */}
-                    <div className="mt-4 bg-gray-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                    <div className="mt-4 bg-gray-200 dark:bg-[#1E3A5F] rounded-full h-2 overflow-hidden">
                       <div className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
 
                 {/* Ethnic Groups */}
-                <div className="group relative bg-gradient-to-br from-white via-purple-50 to-pink-50 dark:from-slate-800 dark:via-purple-900/20 dark:to-pink-900/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-purple-200 dark:border-purple-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-purple-50 to-pink-50 dark:from-[#1A2E4A] dark:via-purple-900/20 dark:to-pink-900/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-purple-200 dark:border-purple-700 overflow-hidden">
                   
                   {/* Premium Background Effects */}
                   <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000"></div>
@@ -1822,14 +1822,14 @@ export default function ExploreNepal() {
                     <div className="text-gray-600 dark:text-gray-400 text-sm">Cultural Diversity</div>
                     
                     {/* Premium Progress Bar */}
-                    <div className="mt-4 bg-gray-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                    <div className="mt-4 bg-gray-200 dark:bg-[#1E3A5F] rounded-full h-2 overflow-hidden">
                       <div className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left" style={{ animationDelay: '0.4s' }}></div>
                     </div>
                   </div>
                 </div>
 
                 {/* Climate Zones */}
-                <div className="group relative bg-gradient-to-br from-white via-amber-50 to-orange-50 dark:from-slate-800 dark:via-amber-900/20 dark:to-orange-900/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-amber-200 dark:border-amber-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-amber-50 to-orange-50 dark:from-[#1A2E4A] dark:via-amber-900/20 dark:to-orange-900/20 rounded-3xl p-8 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-amber-200 dark:border-amber-700 overflow-hidden">
                   
                   {/* Premium Background Effects */}
                   <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000"></div>
@@ -1852,7 +1852,7 @@ export default function ExploreNepal() {
                     <div className="text-gray-600 dark:text-gray-400 text-sm">Ecological Diversity</div>
                     
                     {/* Premium Progress Bar */}
-                    <div className="mt-4 bg-gray-200 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                    <div className="mt-4 bg-gray-200 dark:bg-[#1E3A5F] rounded-full h-2 overflow-hidden">
                       <div className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-1000 origin-left" style={{ animationDelay: '0.6s' }}></div>
                     </div>
                   </div>
@@ -1867,7 +1867,7 @@ export default function ExploreNepal() {
             <div className="absolute inset-0 opacity-5 dark:opacity-10">
               <div className="absolute inset-0" style={{
                 backgroundImage: `
-                  radial-gradient(circle at 20% 30%, rgba(6, 182, 212, 0.4) 0%, transparent 50%),
+                  radial-gradient(circle at 20% 30%, rgba(35, 86, 160, 0.4) 0%, transparent 50%),
                   radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.4) 0%, transparent 50%),
                   radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.3) 0%, transparent 50%),
                   radial-gradient(circle at 60% 20%, rgba(168, 85, 247, 0.3) 0%, transparent 50%)
@@ -1879,22 +1879,22 @@ export default function ExploreNepal() {
             <div className="relative z-10">
               {/* Ultra Premium Header */}
               <div className="text-center mb-20">
-                <div className="inline-flex items-center gap-4 bg-gradient-to-r from-teal-100 via-cyan-100 to-blue-100 dark:from-teal-900/50 dark:via-cyan-900/50 dark:to-blue-900/50 rounded-full px-12 py-6 mb-10 backdrop-blur-sm border-2 border-teal-200 dark:border-teal-700 shadow-2xl">
+                <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-100 dark:from-[#2356A0]/50 dark:via-[#2356A0]/50 dark:to-blue-900/50 rounded-full px-12 py-6 mb-10 backdrop-blur-sm border-2 border-teal-200 dark:border-teal-700 shadow-2xl">
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-pulse"></div>
-                    <div className="w-3 h-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse"></div>
+                    <div className="w-3 h-3 bg-gradient-to-r from-[#2356A0] to-blue-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
                     <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                   </div>
-                  <span className="text-teal-700 dark:text-teal-300 font-black text-2xl">Our Platform</span>
+                  <span className="text-[#2356A0] dark:text-[#F59E0B] font-black text-2xl">Our Platform</span>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-teal-500 rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-                    <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-                    <div className="w-4 h-4 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full animate-pulse" style={{ animationDelay: '2.5s' }}></div>
+                    <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-[#1A2E4A] rounded-full animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+                    <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-[#1A2E4A] rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse" style={{ animationDelay: '2.5s' }}></div>
                   </div>
                 </div>
                 
                 <h2 className="text-5xl md:text-7xl lg:text-8xl font-black mb-10 leading-tight">
-                  <span className="bg-gradient-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
                     What We
                   </span>
                   <br />
@@ -1908,9 +1908,9 @@ export default function ExploreNepal() {
 
                 {/* Premium Feature Indicators */}
                 <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                  <div className="flex items-center gap-3 bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-2xl px-6 py-3 border border-teal-200 dark:border-teal-700">
-                    <div className="w-3 h-3 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full animate-pulse"></div>
-                    <span className="text-teal-700 dark:text-teal-300 font-bold text-sm">6 Core Features</span>
+                  <div className="flex items-center gap-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/20 dark:to-[#1A2E4A]/20 rounded-2xl px-6 py-3 border border-teal-200 dark:border-teal-700">
+                    <div className="w-3 h-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] rounded-full animate-pulse"></div>
+                    <span className="text-[#2356A0] dark:text-[#F59E0B] font-bold text-sm">6 Core Features</span>
                   </div>
                   <div className="hidden sm:block w-2 h-2 bg-gray-400 rounded-full"></div>
                   <div className="flex items-center gap-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-2xl px-6 py-3 border border-blue-200 dark:border-blue-700">
@@ -1924,7 +1924,7 @@ export default function ExploreNepal() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
                 
                 {/* Interactive Province Maps */}
-                <div className="group relative bg-gradient-to-br from-white via-blue-50 to-indigo-50 dark:from-slate-800 dark:via-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-blue-200 dark:border-blue-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-blue-50 to-indigo-50 dark:from-[#1A2E4A] dark:via-blue-900/20 dark:to-indigo-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-blue-200 dark:border-blue-700 overflow-hidden">
                   
                   {/* Premium Background Effects */}
                   <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
@@ -1960,15 +1960,15 @@ export default function ExploreNepal() {
                 </div>
 
                 {/* Detailed Destination Guides */}
-                <div className="group relative bg-gradient-to-br from-white via-green-50 to-emerald-50 dark:from-slate-800 dark:via-green-900/20 dark:to-emerald-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-green-200 dark:border-green-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-green-50 to-[#166534] dark:from-[#1A2E4A] dark:via-green-900/20 dark:to-[#166534]/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-green-200 dark:border-green-700 overflow-hidden">
                   
                   {/* Premium Background Effects */}
-                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-green-400/20 to-emerald-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
-                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-emerald-400/15 to-green-400/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-1000"></div>
+                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-green-400/20 to-[#166534]/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
+                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-[#15803D]/15 to-green-400/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-1000"></div>
                   
                   <div className="relative z-10 text-center">
                     {/* Premium Icon Container */}
-                    <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                    <div className="w-24 h-24 bg-gradient-to-br from-green-500 to-[#166534] rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
                       <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                       </svg>
@@ -1987,7 +1987,7 @@ export default function ExploreNepal() {
                       <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-xs font-semibold">Detailed</span>
                     </div>
                     
-                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl p-4 border border-green-200 dark:border-green-700">
+                    <div className="bg-gradient-to-r from-green-50 to-[#166534] dark:from-green-900/20 dark:to-[#166534]/20 rounded-2xl p-4 border border-green-200 dark:border-green-700">
                       <span className="text-green-600 dark:text-green-400 font-bold text-sm">
                         Educational and comprehensive content
                       </span>
@@ -1996,7 +1996,7 @@ export default function ExploreNepal() {
                 </div>
 
                 {/* Cultural Heritage Information */}
-                <div className="group relative bg-gradient-to-br from-white via-purple-50 to-pink-50 dark:from-slate-800 dark:via-purple-900/20 dark:to-pink-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-purple-200 dark:border-purple-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-purple-50 to-pink-50 dark:from-[#1A2E4A] dark:via-purple-900/20 dark:to-pink-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-purple-200 dark:border-purple-700 overflow-hidden">
                   
                   {/* Premium Background Effects */}
                   <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-purple-400/20 to-pink-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
@@ -2032,15 +2032,15 @@ export default function ExploreNepal() {
                 </div>
 
                 {/* Geographic Exploration */}
-                <div className="group relative bg-gradient-to-br from-white via-teal-50 to-cyan-50 dark:from-slate-800 dark:via-teal-900/20 dark:to-cyan-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-teal-200 dark:border-teal-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-[#2356A0] to-[#1A2E4A] dark:from-[#1A2E4A] dark:via-[#2356A0]/20 dark:to-[#1A2E4A]/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-teal-200 dark:border-teal-700 overflow-hidden">
                   
                   {/* Premium Background Effects */}
-                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-teal-400/20 to-cyan-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
-                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-cyan-400/15 to-teal-400/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-1000"></div>
+                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-[#2356A0]/20 to-[#1A2E4A]/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
+                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-[#2356A0]/15 to-[#1A2E4A]/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-1000"></div>
                   
                   <div className="relative z-10 text-center">
                     {/* Premium Icon Container */}
-                    <div className="w-24 h-24 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                    <div className="w-24 h-24 bg-gradient-to-br from-[#2356A0] to-[#1A2E4A] rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
                       <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                       </svg>
@@ -2054,13 +2054,13 @@ export default function ExploreNepal() {
                     
                     {/* Premium Feature Tags */}
                     <div className="flex flex-wrap gap-2 justify-center mb-6">
-                      <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 rounded-full text-xs font-semibold">3 Regions</span>
-                      <span className="px-3 py-1 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 rounded-full text-xs font-semibold">12 Climates</span>
-                      <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 rounded-full text-xs font-semibold">Detailed</span>
+                      <span className="px-3 py-1 bg-[#E8EFF8] dark:bg-[#E8EFF8] text-[#2356A0] dark:text-[#F59E0B] rounded-full text-xs font-semibold">3 Regions</span>
+                      <span className="px-3 py-1 bg-[#E8EFF8] dark:bg-[#E8EFF8]/30 text-[#2356A0] dark:text-[#2356A0] rounded-full text-xs font-semibold">12 Climates</span>
+                      <span className="px-3 py-1 bg-[#E8EFF8] dark:bg-[#E8EFF8] text-[#2356A0] dark:text-[#F59E0B] rounded-full text-xs font-semibold">Detailed</span>
                     </div>
                     
-                    <div className="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-2xl p-4 border border-teal-200 dark:border-teal-700">
-                      <span className="text-teal-600 dark:text-teal-400 font-bold text-sm">
+                    <div className="bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/20 dark:to-[#1A2E4A]/20 rounded-2xl p-4 border border-teal-200 dark:border-teal-700">
+                      <span className="text-[#2356A0] dark:text-[#D97706] font-bold text-sm">
                         From 60m to 8,848m elevation
                       </span>
                     </div>
@@ -2068,15 +2068,15 @@ export default function ExploreNepal() {
                 </div>
 
                 {/* Wildlife & Biodiversity */}
-                <div className="group relative bg-gradient-to-br from-white via-emerald-50 to-green-50 dark:from-slate-800 dark:via-emerald-900/20 dark:to-green-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-emerald-200 dark:border-emerald-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-[#15803D] to-green-50 dark:from-[#1A2E4A] dark:via-[#15803D]/20 dark:to-green-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-[#15803D] dark:border-[#15803D] overflow-hidden">
                   
                   {/* Premium Background Effects */}
-                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-emerald-400/20 to-green-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
-                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-green-400/15 to-emerald-400/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-1000"></div>
+                  <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-[#15803D]/20 to-green-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
+                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-gradient-to-br from-green-400/15 to-[#166534]/15 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-1000"></div>
                   
                   <div className="relative z-10 text-center">
                     {/* Premium Icon Container */}
-                    <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 to-green-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
+                    <div className="w-24 h-24 bg-gradient-to-br from-[#15803D] to-green-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
                       <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zM1 15a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 01-1 1H2a1 1 0 01-1-1v-2zm13-1a1 1 0 00-1 1v2a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 00-1-1h-2z" clipRule="evenodd" />
                       </svg>
@@ -2095,8 +2095,8 @@ export default function ExploreNepal() {
                       <span className="px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-full text-xs font-semibold">Flora & Fauna</span>
                     </div>
                     
-                    <div className="bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20 rounded-2xl p-4 border border-emerald-200 dark:border-emerald-700">
-                      <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">
+                    <div className="bg-gradient-to-r from-[#15803D] to-green-50 dark:from-[#15803D]/20 dark:to-green-900/20 rounded-2xl p-4 border border-[#15803D] dark:border-[#15803D]">
+                      <span className="text-[#15803D] dark:text-[#22c55e] font-bold text-sm">
                         Flora and fauna insights
                       </span>
                     </div>
@@ -2104,7 +2104,7 @@ export default function ExploreNepal() {
                 </div>
 
                 {/* Educational Platform */}
-                <div className="group relative bg-gradient-to-br from-white via-orange-50 to-amber-50 dark:from-slate-800 dark:via-orange-900/20 dark:to-amber-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-orange-200 dark:border-orange-700 overflow-hidden">
+                <div className="group relative bg-gradient-to-br from-white via-orange-50 to-amber-50 dark:from-[#1A2E4A] dark:via-orange-900/20 dark:to-amber-900/20 rounded-3xl p-10 shadow-2xl hover:shadow-3xl transition-all duration-700 hover:scale-105 transform-gpu border-2 border-orange-200 dark:border-orange-700 overflow-hidden">
                   
                   {/* Premium Background Effects */}
                   <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-to-br from-orange-400/20 to-amber-400/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
@@ -2148,7 +2148,7 @@ export default function ExploreNepal() {
             <div className="absolute inset-0 opacity-10 dark:opacity-20">
               <div className="absolute inset-0" style={{
                 backgroundImage: `
-                  radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.6) 0%, transparent 50%),
+                  radial-gradient(circle at 20% 20%, rgba(35, 86, 160, 0.6) 0%, transparent 50%),
                   radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.6) 0%, transparent 50%),
                   radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.4) 0%, transparent 50%)
                 `,
@@ -2156,11 +2156,11 @@ export default function ExploreNepal() {
               }}></div>
             </div>
 
-            <div className="relative z-10 bg-gradient-to-br from-teal-600 via-cyan-600 to-blue-700 text-white rounded-3xl p-16 shadow-2xl border border-teal-400/30 overflow-hidden">
+            <div className="relative z-10 bg-gradient-to-br from-[#2356A0] via-[#2356A0] to-blue-700 text-white rounded-3xl p-16 shadow-2xl border border-[#D97706]/30 overflow-hidden">
               
               {/* Premium Floating Elements */}
               <div className="absolute -top-20 -left-20 w-40 h-40 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
-              <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+              <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-[#E8EFF8]/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
               <div className="absolute top-10 right-10 w-32 h-32 bg-blue-400/15 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '4s' }}></div>
               
               {/* Premium Content Container */}
@@ -2185,7 +2185,7 @@ export default function ExploreNepal() {
                   <h2 className="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight">
                     <span className="text-white drop-shadow-2xl">Your Complete</span>
                     <br />
-                    <span className="bg-gradient-to-r from-white via-cyan-200 to-blue-200 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-white via-[#2356A0] to-blue-200 bg-clip-text text-transparent">
                       Nepal Information Hub
                     </span>
                   </h2>
@@ -2222,7 +2222,7 @@ export default function ExploreNepal() {
                     
                     {/* Premium Background Effects */}
                     <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000"></div>
-                    <div className="absolute -bottom-5 -left-5 w-20 h-20 bg-cyan-400/20 rounded-full blur-xl group-hover:scale-125 transition-transform duration-1000"></div>
+                    <div className="absolute -bottom-5 -left-5 w-20 h-20 bg-[#E8EFF8]/20 rounded-full blur-xl group-hover:scale-125 transition-transform duration-1000"></div>
                     
                     <div className="relative z-10 text-center">
                       {/* Premium Icon Container */}
@@ -2278,7 +2278,7 @@ export default function ExploreNepal() {
                     
                     {/* Premium Background Effects */}
                     <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-1000"></div>
-                    <div className="absolute -bottom-5 -left-5 w-20 h-20 bg-teal-400/20 rounded-full blur-xl group-hover:scale-125 transition-transform duration-1000"></div>
+                    <div className="absolute -bottom-5 -left-5 w-20 h-20 bg-[#E8EFF8] rounded-full blur-xl group-hover:scale-125 transition-transform duration-1000"></div>
                     
                     <div className="relative z-10 text-center">
                       {/* Premium Icon Container */}

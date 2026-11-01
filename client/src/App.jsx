@@ -90,14 +90,14 @@ const InspireButton = memo(({ isSignedIn, onClick, theme }) => {
         onClick={onClick}
         className={`relative w-12 h-12 md:w-14 md:h-14 rounded-full border transition-all duration-300 hover:scale-105 active:scale-95 ${
           theme === "dark"
-            ? "bg-slate-800 border-slate-700 hover:border-teal-500/60 hover:bg-slate-750 shadow-lg shadow-black/20"
-            : "bg-white border-slate-200 hover:border-teal-400/60 shadow-md shadow-black/8"
+            ? "bg-[#1A2E4A] border-[#2E4A6B] hover:border-[#D97706]/60 hover:bg-[#1E3A5F] shadow-lg shadow-black/20"
+            : "bg-white border-slate-200 hover:border-[#2356A0]/50 shadow-md shadow-black/8"
         }`}
         title={isSignedIn ? "Inspire My Journey" : "Sign in for personalized recommendations"}
       >
         {/* Icon */}
         <div className={`absolute inset-0 rounded-full flex items-center justify-center ${
-          theme === "dark" ? "text-teal-400" : "text-teal-500"
+          theme === "dark" ? "text-[#F59E0B]" : "text-[#D97706]"
         }`}>
           <FaCompass className="text-lg md:text-xl" />
         </div>
@@ -117,12 +117,12 @@ const InspireButton = memo(({ isSignedIn, onClick, theme }) => {
       {/* Tooltip */}
       <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-3 px-3 py-1.5 rounded-lg text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none ${
         theme === "dark"
-          ? "bg-slate-800 text-slate-200 border border-slate-700"
+          ? "bg-[#1A2E4A] text-slate-200 border border-[#2E4A6B]"
           : "bg-white text-slate-700 border border-slate-200 shadow-sm"
       }`}>
         {isSignedIn ? "Inspire My Journey" : "Sign in for recommendations"}
         <div className={`absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 ${
-          theme === "dark" ? "bg-slate-800 border-l border-t border-slate-700" : "bg-white border-l border-t border-slate-200"
+          theme === "dark" ? "bg-[#1A2E4A] border-l border-t border-[#2E4A6B]" : "bg-white border-l border-t border-slate-200"
         }`} />
       </div>
     </div>
@@ -277,11 +277,10 @@ const MainApp = memo(() => {
     <div className="min-h-screen text-white flex flex-col relative overflow-hidden">
       {/* Static Gradient Background */}
       <div className="fixed inset-0 w-full h-full z-0">
-        {/* Beautiful gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
-        
-        {/* Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-slate-900/30 to-slate-900/50"></div>
+        {/* Deep navy travel industry background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0F1B2D] via-[#1A2E4A] to-[#0F1B2D]"></div>
+        {/* Subtle overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0F1B2D]/50 via-transparent to-[#0F1B2D]/50"></div>
       </div>
 
       {/* Content Container - Above Background */}
@@ -299,10 +298,10 @@ const MainApp = memo(() => {
       <SignedIn>
         <div className="mx-auto mt-20 mb-6 max-w-6xl relative px-4">
           {/* Ultra Professional Container */}
-          <div className="relative bg-white/98 dark:bg-slate-900/98 backdrop-blur-2xl rounded-3xl border border-slate-200/30 dark:border-slate-700/30 shadow-2xl hover:shadow-3xl transition-all duration-700 overflow-hidden group">
+          <div className="relative bg-white/98 dark:bg-[#1A2E4A]/98 backdrop-blur-2xl rounded-3xl border border-slate-200/30 dark:border-[#2E4A6B]/30 shadow-2xl hover:shadow-3xl transition-all duration-700 overflow-hidden group">
             
             {/* Premium Glass Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-white/20 dark:from-slate-800/40 dark:via-transparent dark:to-slate-800/20 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-white/20 dark:from-[#1A2E4A]/40 dark:via-transparent dark:to-[#1A2E4A]/20 pointer-events-none"></div>
             
             {/* Nepal Background Video - Beautiful Nature */}
             <div className="absolute inset-0 opacity-60 dark:opacity-50 transition-opacity duration-700 group-hover:opacity-70 dark:group-hover:opacity-60 overflow-hidden">
@@ -326,11 +325,11 @@ const MainApp = memo(() => {
               </video>
             </div>
             
-            {/* Professional Gradient Overlay - Lighter for better video visibility */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/60 to-white/70 dark:from-slate-900/70 dark:via-slate-900/60 dark:to-slate-900/70"></div>
+            {/* Professional Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/60 to-white/70 dark:from-[#0F1B2D]/70 dark:via-[#0F1B2D]/60 dark:to-[#0F1B2D]/70"></div>
             
             {/* Premium Top Border */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-500/40 to-transparent"></div>
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D97706]/40 to-transparent"></div>
             
             {/* Ultra Professional Content */}
             <div className="relative p-12 md:p-16 text-center z-10">
@@ -338,15 +337,15 @@ const MainApp = memo(() => {
               {/* Executive Header */}
               <div className="mb-10">
                 {/* Premium Status Badge */}
-                <div className="inline-flex items-center gap-3 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800/60 dark:to-slate-700/60 rounded-full px-6 py-3 mb-6 border border-slate-200/50 dark:border-slate-600/50 shadow-lg backdrop-blur-sm">
-                  <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full shadow-sm"></div>
+                <div className="inline-flex items-center gap-3 bg-gradient-to-r from-slate-50 to-slate-100 dark:from-[#1A2E4A]/60 dark:to-[#1E3A5F]/60 rounded-full px-6 py-3 mb-6 border border-slate-200/50 dark:border-[#2E4A6B]/50 shadow-lg backdrop-blur-sm">
+                  <div className="w-2 h-2 bg-gradient-to-r from-[#D97706] to-[#F59E0B] rounded-full shadow-sm"></div>
                   <span className="text-slate-700 dark:text-slate-300 font-semibold text-sm tracking-wider uppercase">Premium Experience</span>
-                  <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-sm"></div>
+                  <div className="w-2 h-2 bg-gradient-to-r from-[#F59E0B] to-[#D97706] rounded-full shadow-sm"></div>
                 </div>
                 
                 {/* Executive Welcome Message */}
                 <h2 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white mb-6 leading-tight">
-                  <span className="bg-gradient-to-r from-slate-900 via-teal-700 to-emerald-800 dark:from-white dark:via-teal-200 dark:to-emerald-200 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-[#0F1B2D] via-[#2356A0] to-[#1A2E4A] dark:from-white dark:via-[#93B8DC] dark:to-[#C4D9EE] bg-clip-text text-transparent">
                     Welcome Back, Explorer
                   </span>
                 </h2>
@@ -360,19 +359,19 @@ const MainApp = memo(() => {
               {/* Executive Stats Section */}
               <div className="grid grid-cols-3 gap-8 mb-12 max-w-2xl mx-auto">
                 <div className="text-center group">
-                  <div className="text-3xl md:text-4xl font-black text-teal-600 dark:text-teal-400 mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
+                  <div className="text-3xl md:text-4xl font-black text-[#D97706] dark:text-[#F59E0B] mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
                   <div className="text-sm text-slate-500 dark:text-slate-400 font-black uppercase tracking-wider">Destinations</div>
-                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-teal-500/30 to-transparent mx-auto mt-2"></div>
+                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-[#D97706]/30 to-transparent mx-auto mt-2"></div>
                 </div>
-                <div className="text-center group border-x border-slate-200/40 dark:border-slate-700/40">
-                  <div className="text-3xl md:text-4xl font-black text-emerald-600 dark:text-emerald-400 mb-2 group-hover:scale-105 transition-transform duration-300">500<span className="text-2xl md:text-3xl">+</span></div>
+                <div className="text-center group border-x border-slate-200/40 dark:border-[#2E4A6B]/40">
+                  <div className="text-3xl md:text-4xl font-black text-[#2356A0] dark:text-[#5B8DC9] mb-2 group-hover:scale-105 transition-transform duration-300">500<span className="text-2xl md:text-3xl">+</span></div>
                   <div className="text-sm text-slate-500 dark:text-slate-400 font-black uppercase tracking-wider">Accommodations</div>
-                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent mx-auto mt-2"></div>
+                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-[#2356A0]/30 to-transparent mx-auto mt-2"></div>
                 </div>
                 <div className="text-center group">
-                  <div className="text-3xl md:text-4xl font-black text-cyan-600 dark:text-cyan-400 mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
+                  <div className="text-3xl md:text-4xl font-black text-[#C0392B] dark:text-[#EF4444] mb-2 group-hover:scale-105 transition-transform duration-300">450<span className="text-2xl md:text-3xl">+</span></div>
                   <div className="text-sm text-slate-500 dark:text-slate-400 font-black uppercase tracking-wider">Experiences</div>
-                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent mx-auto mt-2"></div>
+                  <div className="w-12 h-px bg-gradient-to-r from-transparent via-[#C0392B]/30 to-transparent mx-auto mt-2"></div>
                 </div>
               </div>
               
@@ -381,7 +380,7 @@ const MainApp = memo(() => {
                 {/* Primary Executive Button */}
                 <button 
                   onClick={() => navigate('/explore-nepal')}
-                  className="group relative px-10 py-4 bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 hover:from-teal-700 hover:via-emerald-700 hover:to-cyan-700 text-white rounded-2xl font-medium text-base transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-2xl flex items-center gap-4 min-w-[220px] justify-center overflow-hidden"
+                  className="group relative px-10 py-4 bg-[#C0392B] hover:bg-[#A93226] text-white rounded-2xl font-medium text-base transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-2xl flex items-center gap-4 min-w-[220px] justify-center overflow-hidden"
                 >
                   {/* Premium Shine Effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
@@ -403,9 +402,9 @@ const MainApp = memo(() => {
                 {/* Secondary Executive Button */}
                 <button 
                   onClick={() => navigate('/guide')}
-                  className="group relative px-10 py-4 bg-white/95 dark:bg-slate-800/95 hover:bg-white dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white rounded-2xl font-medium text-base transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-4 border border-slate-200/50 dark:border-slate-600/50 hover:border-slate-300/70 dark:hover:border-slate-500/70 min-w-[220px] justify-center backdrop-blur-sm"
+                  className="group relative px-10 py-4 bg-white/95 dark:bg-[#1A2E4A]/95 hover:bg-white dark:hover:bg-[#1E3A5F] text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white rounded-2xl font-medium text-base transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-4 border border-slate-200/50 dark:border-[#2E4A6B]/50 hover:border-slate-300/70 dark:hover:border-[#3D6A9A]/70 min-w-[220px] justify-center backdrop-blur-sm"
                 >
-                  <svg className="w-5 h-5 text-teal-600 dark:text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-[#D97706] dark:text-[#F59E0B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                   </svg>
                   <span className="tracking-wide">Plan Journey</span>
@@ -417,8 +416,8 @@ const MainApp = memo(() => {
             </div>
             
             {/* Subtle Corner Accents */}
-            <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-teal-500/5 to-transparent rounded-br-3xl"></div>
-            <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-emerald-500/5 to-transparent rounded-tl-3xl"></div>
+            <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-[#D97706]/5 to-transparent rounded-br-3xl"></div>
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-[#2356A0]/5 to-transparent rounded-tl-3xl"></div>
           </div>
         </div>
       </SignedIn>
@@ -426,17 +425,17 @@ const MainApp = memo(() => {
       {/* Ultra Professional Adventure Message */}
       <div className="relative mt-8 mb-10 overflow-hidden">
         <div className="relative z-10 text-center">
-          <div className="inline-flex items-center gap-4 bg-gradient-to-r from-slate-50/95 via-white/95 to-slate-50/95 dark:from-slate-800/95 dark:via-slate-900/95 dark:to-slate-800/95 rounded-full px-8 py-4 mb-6 backdrop-blur-xl border border-slate-200/40 dark:border-slate-700/40 shadow-xl">
+          <div className="inline-flex items-center gap-4 bg-gradient-to-r from-slate-50/95 via-white/95 to-slate-50/95 dark:from-[#1A2E4A]/95 dark:via-[#0F1B2D]/95 dark:to-[#1A2E4A]/95 rounded-full px-8 py-4 mb-6 backdrop-blur-xl border border-slate-200/40 dark:border-[#2E4A6B]/40 shadow-xl">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full shadow-sm"></div>
-              <div className="w-1.5 h-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full shadow-sm animate-pulse" style={{ animationDelay: '0.5s' }}></div>
-              <div className="w-1 h-1 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full shadow-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
+              <div className="w-2 h-2 bg-gradient-to-r from-[#D97706] to-[#F59E0B] rounded-full shadow-sm"></div>
+              <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#F59E0B] to-[#C0392B] rounded-full shadow-sm animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+              <div className="w-1 h-1 bg-gradient-to-r from-[#C0392B] to-[#D97706] rounded-full shadow-sm animate-pulse" style={{ animationDelay: '1s' }}></div>
             </div>
             <span className="text-slate-700 dark:text-slate-300 font-medium text-base tracking-wider">{t('homepage.adventureAwaits')}</span>
             <div className="flex items-center gap-2">
-              <div className="w-1 h-1 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full shadow-sm animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-              <div className="w-1.5 h-1.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full shadow-sm animate-pulse" style={{ animationDelay: '2s' }}></div>
-              <div className="w-2 h-2 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full shadow-sm"></div>
+              <div className="w-1 h-1 bg-gradient-to-r from-[#C0392B] to-[#D97706] rounded-full shadow-sm animate-pulse" style={{ animationDelay: '1.5s' }}></div>
+              <div className="w-1.5 h-1.5 bg-gradient-to-r from-[#F59E0B] to-[#C0392B] rounded-full shadow-sm animate-pulse" style={{ animationDelay: '2s' }}></div>
+              <div className="w-2 h-2 bg-gradient-to-r from-[#D97706] to-[#F59E0B] rounded-full shadow-sm"></div>
             </div>
           </div>
           
@@ -532,13 +531,13 @@ const MainApp = memo(() => {
         </div>
       </div>
 
-      <Suspense fallback={<div className="flex justify-center items-center py-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div></div>}>
+      <Suspense fallback={<div className="flex justify-center items-center py-8"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#D97706] mx-auto mb-4"></div></div>}>
         <ExploreSection />
         <FamousSpots />
         <NaturePlaces />
       </Suspense>
 
-      <Suspense fallback={<div className="flex justify-center items-center py-4"><div className="animate-spin rounded-full h-6 w-6 border-b-2 border-teal-500"></div></div>}>
+      <Suspense fallback={<div className="flex justify-center items-center py-4"><div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#D97706]"></div></div>}>
         <Footer />
       </Suspense>
 
@@ -559,8 +558,8 @@ const ChatButton = memo(({ onClick, theme }) => (
       onClick={onClick}
       className={`group flex items-center gap-2.5 px-4 py-2.5 rounded-full border transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm ${
         theme === "dark"
-          ? "bg-slate-800 border-slate-700 hover:border-teal-500/50 text-slate-300 hover:text-teal-400"
-          : "bg-white border-slate-200 hover:border-teal-400/60 text-slate-600 hover:text-teal-600 shadow-md"
+          ? "bg-[#1A2E4A] border-[#2E4A6B] hover:border-[#D97706]/50 text-slate-300 hover:text-[#F59E0B]"
+          : "bg-white border-slate-200 hover:border-[#2356A0]/60 text-slate-600 hover:text-[#2356A0] shadow-md"
       }`}
     >
       <FaRobot className="text-sm shrink-0" />
@@ -578,9 +577,9 @@ const App = memo(() => (
       <Router>
         <ScrollToTop />
         <Suspense fallback={
-          <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+          <div className="min-h-screen bg-[#0F1B2D] flex items-center justify-center">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#D97706] mx-auto mb-4"></div>
               <p className="text-white text-lg">Loading...</p>
             </div>
           </div>

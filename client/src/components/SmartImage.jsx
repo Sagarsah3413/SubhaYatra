@@ -30,7 +30,7 @@ export default function SmartImage({
     if (!showFallbackIcon) return null;
     return (
       <div
-        className={`flex items-center justify-center bg-slate-100 dark:bg-slate-700 ${className}`}
+        className={`flex items-center justify-center bg-slate-100 dark:bg-[#1E3A5F] ${className}`}
         style={style}
       >
         <Icon className="text-4xl text-slate-400 dark:text-slate-500" />

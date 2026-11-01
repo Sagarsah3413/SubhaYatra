@@ -24,14 +24,14 @@ const AuthSection = ({ theme, onNavigation, onSearchOpen }) => {
     flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
     border transition-all duration-200
     ${theme === 'dark'
-            ? 'border-slate-700 text-slate-300 hover:border-slate-500 hover:text-white hover:bg-slate-800'
-            : 'border-slate-300 text-slate-600 hover:border-slate-400 hover:text-slate-900 hover:bg-slate-50'
+            ? 'border-[#2E4A6B] text-slate-300 hover:border-[#3D6A9A] hover:text-white hover:bg-[#1A2E4A]'
+            : 'border-slate-300 text-slate-600 hover:border-[#2356A0] hover:text-[#1A2E4A] hover:bg-[#E8EFF8]'
         }
   `;
 
     const solidBtn = `
     flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold
-    bg-teal-600 hover:bg-teal-700 text-white
+    bg-[#C0392B] hover:bg-[#A93226] text-white
     transition-all duration-200 shadow-sm hover:shadow-md
   `;
 
@@ -45,7 +45,7 @@ const AuthSection = ({ theme, onNavigation, onSearchOpen }) => {
                 className={`
           p-2 rounded-lg transition-all duration-200
           ${theme === 'dark'
-                        ? 'text-slate-400 hover:text-white hover:bg-slate-800'
+                        ? 'text-slate-400 hover:text-white hover:bg-[#1A2E4A]'
                         : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
                     }
         `}
@@ -82,8 +82,8 @@ const AuthSection = ({ theme, onNavigation, onSearchOpen }) => {
                 <div className={`
           p-1 rounded-xl border transition-all duration-200 pb-0
           ${theme === 'dark'
-                        ? 'border-slate-700 hover:border-teal-600'
-                        : 'border-slate-200 hover:border-teal-400'
+                        ? 'border-[#2E4A6B] hover:border-[#D97706]'
+                        : 'border-slate-200 hover:border-[#2356A0]'
                     }
         `}>
 
@@ -93,9 +93,9 @@ const AuthSection = ({ theme, onNavigation, onSearchOpen }) => {
                             elements: {
                                 avatarBox: "w-7 h-7 rounded-lg ",
                                 userButtonPopoverCard:
-                                    "shadow-2xl  bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl rounded-xl border border-slate-200 dark:border-slate-700 ",
+                                    "shadow-2xl  bg-white/95 dark:bg-[#0F1B2D]/95 backdrop-blur-xl rounded-xl border border-slate-200 dark:border-[#2E4A6B] ",
                                 userButtonPopoverActionButton:
-                                    "hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg",
+                                    "hover:bg-slate-50 dark:hover:bg-[#1A2E4A] rounded-lg",
                                 userButtonPopoverActionButtonText:
                                     "text-slate-700 dark:text-slate-200 text-sm",
                                 userButtonPopoverFooter: "hidden",

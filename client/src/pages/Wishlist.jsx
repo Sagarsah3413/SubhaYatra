@@ -118,10 +118,10 @@ const Wishlist = () => {
 
   if (!isSignedIn) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'}`}>
+      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'}`}>
         <div className="text-center">
           <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 ${
-            theme === 'dark' ? 'bg-slate-800' : 'bg-gray-100'
+            theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-gray-100'
           }`}>
             <FaHeart className="text-4xl text-gray-400" />
           </div>
@@ -131,7 +131,7 @@ const Wishlist = () => {
           </p>
           <button
             onClick={() => navigate('/sign-in')}
-            className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+            className="bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] hover:from-[#2356A0] hover:to-[#1A2E4A] text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
           >
             Sign In
           </button>
@@ -142,9 +142,9 @@ const Wishlist = () => {
 
   if (isLoading) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'}`}>
+      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'}`}>
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-[#2356A0] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className={`text-lg font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
             Loading your wishlist...
           </p>
@@ -155,7 +155,7 @@ const Wishlist = () => {
 
   if (error) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'}`}>
+      <div className={`min-h-screen flex items-center justify-center ${theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'}`}>
         <div className="text-center">
           <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
             theme === 'dark' ? 'bg-red-900/20' : 'bg-red-100'
@@ -167,7 +167,7 @@ const Wishlist = () => {
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300"
+            className="bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] hover:from-[#2356A0] hover:to-[#1A2E4A] text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300"
           >
             Try Again
           </button>
@@ -177,13 +177,13 @@ const Wishlist = () => {
   }
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#0F1B2D] text-white' : 'bg-gray-50 text-gray-900'}`}>
       {/* Hero Section */}
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0">
           <div className={`absolute inset-0 ${
             theme === 'dark' 
-              ? 'bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900' 
+              ? 'bg-gradient-to-br from-[#0F1B2D] via-blue-900 to-indigo-900' 
               : 'bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900'
           }`}></div>
           <div className="absolute inset-0 bg-black/20"></div>
@@ -197,18 +197,18 @@ const Wishlist = () => {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
-              <span className="bg-gradient-to-r from-white via-cyan-200 to-emerald-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-white via-[#2356A0] to-[#166534] bg-clip-text text-transparent">
                 My Wishlist
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-cyan-100 mb-4 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-[#2356A0] mb-4 max-w-4xl mx-auto leading-relaxed">
               Save and organize your dream destinations for future adventures
             </p>
             
             <div className="flex items-center justify-center gap-8 text-sm">
               <div className="flex items-center gap-2">
-                <FaBookmark className="text-teal-400" />
+                <FaBookmark className="text-[#D97706]" />
                 <span>{wishlistItems.length} Saved Places</span>
               </div>
               <div className="flex items-center gap-2">
@@ -235,13 +235,13 @@ const Wishlist = () => {
               placeholder="Search your wishlist..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={`w-full px-6 py-4 rounded-2xl border-2 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-300 ${
+              className={`w-full px-6 py-4 rounded-2xl border-2 focus:outline-none focus:ring-2 focus:ring-[#2356A0] transition-all duration-300 ${
                 theme === 'dark'
-                  ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-400'
+                  ? 'bg-[#1A2E4A] border-[#2E4A6B] text-white placeholder-slate-400'
                   : 'bg-white border-gray-200 text-gray-900 placeholder-gray-500'
               }`}
             />
-            <FaSearch className="absolute right-6 top-1/2 transform -translate-y-1/2 text-teal-500 text-lg" />
+            <FaSearch className="absolute right-6 top-1/2 transform -translate-y-1/2 text-[#2356A0] text-lg" />
           </div>
         </div>
       </section>
@@ -251,7 +251,7 @@ const Wishlist = () => {
         {filteredItems.length === 0 ? (
           <div className="text-center py-20">
             <div className={`w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 ${
-              theme === 'dark' ? 'bg-slate-800' : 'bg-gray-100'
+              theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-gray-100'
             }`}>
               <FaHeart className="text-4xl text-gray-400" />
             </div>
@@ -266,7 +266,7 @@ const Wishlist = () => {
             </p>
             <button
               onClick={() => navigate('/')}
-              className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] hover:from-[#2356A0] hover:to-[#1A2E4A] text-white px-8 py-4 rounded-2xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               Explore Destinations
             </button>
@@ -305,7 +305,7 @@ const WishlistCard = ({ item, theme, onRemove, getCategoryIcon, getDifficultyCol
   return (
     <div className={`group rounded-3xl border transition-all duration-500 hover:transform hover:-translate-y-2 ${
       theme === 'dark'
-        ? 'bg-slate-800/50 border-slate-700 hover:border-slate-600'
+        ? 'bg-[#1A2E4A]/50 border-[#2E4A6B] hover:border-slate-600'
         : 'bg-white border-gray-200 hover:border-gray-300'
     } shadow-lg hover:shadow-2xl overflow-hidden`}>
       {/* Image */}
@@ -350,12 +350,12 @@ const WishlistCard = ({ item, theme, onRemove, getCategoryIcon, getDifficultyCol
 
       {/* Content */}
       <div className="p-6">
-        <h3 className="text-xl font-bold mb-2 group-hover:text-teal-500 transition-colors duration-300">
+        <h3 className="text-xl font-bold mb-2 group-hover:text-[#2356A0] transition-colors duration-300">
           {item.name}
         </h3>
         
         <div className="flex items-center gap-2 mb-3">
-          <FaMapMarkerAlt className="text-teal-500 text-sm" />
+          <FaMapMarkerAlt className="text-[#2356A0] text-sm" />
           <span className={`text-sm ${theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}`}>
             {item.location}
           </span>
@@ -378,12 +378,12 @@ const WishlistCard = ({ item, theme, onRemove, getCategoryIcon, getDifficultyCol
               ({item.reviews} reviews)
             </span>
           </div>
-          <span className="text-base font-semibold text-teal-500">{item.price}</span>
+          <span className="text-base font-semibold text-[#2356A0]">{item.price}</span>
         </div>
 
         <button 
           onClick={handleViewDetails}
-          className="w-full mt-4 bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2"
+          className="w-full mt-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] hover:from-[#2356A0] hover:to-[#1A2E4A] text-white py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center justify-center gap-2"
         >
           <span>View Details</span>
           <FaArrowRight />

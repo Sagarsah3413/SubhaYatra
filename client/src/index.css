@@ -1,6 +1,103 @@
 @import "tailwindcss";
 @import 'leaflet/dist/leaflet.css';
 
+/* ============================================================
+   SUBHAYATRA — LEGACY TRAVEL INDUSTRY DESIGN SYSTEM
+   Palette: Deep Navy · Warm Amber · Nepal Crimson · Off-White
+   Inspired by: Booking.com, Expedia, Nepal Tourism Board
+   ============================================================ */
+
+@theme {
+  /* Primary — Deep Navy */
+  --color-primary-950: #080F1A;
+  --color-primary-900: #0F1B2D;
+  --color-primary-800: #1A2E4A;
+  --color-primary-700: #1E3A5F;
+  --color-primary-600: #2356A0;
+  --color-primary-500: #2E6DB4;
+  --color-primary-400: #5B8DC9;
+  --color-primary-300: #93B8DC;
+  --color-primary-200: #C4D9EE;
+  --color-primary-100: #E8EFF8;
+  --color-primary-50:  #F4F7FC;
+
+  /* Accent — Warm Amber/Gold */
+  --color-accent-700: #92400E;
+  --color-accent-600: #B45309;
+  --color-accent-500: #D97706;
+  --color-accent-400: #F59E0B;
+  --color-accent-300: #FCD34D;
+  --color-accent-200: #FDE68A;
+  --color-accent-100: #FEF3C7;
+  --color-accent-50:  #FFFBEB;
+
+  /* Nepal Red — Heritage & CTA */
+  --color-nepal-700: #7F1D1D;
+  --color-nepal-600: #991B1B;
+  --color-nepal-500: #C0392B;
+  --color-nepal-400: #EF4444;
+  --color-nepal-100: #FDECEA;
+  --color-nepal-50:  #FEF2F2;
+
+  /* Neutral Warm */
+  --color-warm-950: #0C0A09;
+  --color-warm-900: #1C1917;
+  --color-warm-800: #292524;
+  --color-warm-700: #44403C;
+  --color-warm-600: #57534E;
+  --color-warm-500: #78716C;
+  --color-warm-400: #A8A29E;
+  --color-warm-300: #D6D3D1;
+  --color-warm-200: #E7E5E4;
+  --color-warm-100: #F5F5F4;
+  --color-warm-50:  #FAFAF9;
+}
+
+/* ── Semantic tokens ── */
+:root {
+  --bg-base:           #FAFAF9;
+  --bg-surface:        #FFFFFF;
+  --bg-muted:          #F5F5F4;
+  --bg-dark:           #0F1B2D;
+
+  --text-primary:      #111827;
+  --text-secondary:    #374151;
+  --text-muted:        #6B7280;
+  --text-subtle:       #9CA3AF;
+  --text-inverse:      #F9FAFB;
+
+  --border-default:    #E5E7EB;
+  --border-muted:      #F3F4F6;
+  --border-emphasis:   #D1D5DB;
+
+  --success:           #15803D;
+  --success-bg:        #F0FDF4;
+  --warning:           #D97706;
+  --warning-bg:        #FFFBEB;
+  --error:             #DC2626;
+  --error-bg:          #FEF2F2;
+  --info:              #2356A0;
+  --info-bg:           #EFF6FF;
+}
+
+/* ── Dark mode semantic overrides ── */
+.dark {
+  --bg-base:           #0F1B2D;
+  --bg-surface:        #1A2E4A;
+  --bg-muted:          #1E3A5F;
+  --bg-dark:           #080F1A;
+
+  --text-primary:      #F9FAFB;
+  --text-secondary:    #E5E7EB;
+  --text-muted:        #9CA3AF;
+  --text-subtle:       #6B7280;
+  --text-inverse:      #111827;
+
+  --border-default:    #2E4A6B;
+  --border-muted:      #1E3A5F;
+  --border-emphasis:   #3D6A9A;
+}
+
 /* Backdrop blur for section navigation */
 .section-nav-backdrop {
   backdrop-filter: blur(6px);
@@ -131,10 +228,10 @@
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(20, 184, 166, 0.3);
+    box-shadow: 0 0 5px rgba(35, 86, 160, 0.3);
   }
   50% {
-    box-shadow: 0 0 15px rgba(20, 184, 166, 0.6);
+    box-shadow: 0 0 15px rgba(35, 86, 160, 0.6);
   }
 }
 
@@ -314,7 +411,7 @@
 
 /* Progress bar animations */
 .progress-bar {
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+  background: linear-gradient(90deg, #2356A0, #D97706, #C0392B);
   background-size: 200% 100%;
   animation: gradient-shift 3s ease infinite;
 }
@@ -342,10 +439,10 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+    box-shadow: 0 0 0 0 rgba(35, 86, 160, 0.7);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+    box-shadow: 0 0 0 10px rgba(35, 86, 160, 0);
   }
 }
 
@@ -409,7 +506,7 @@
   left: 50%;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(90deg, #2356A0, #D97706);
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
@@ -506,9 +603,9 @@
 
 /* Enhanced accessibility focus styles */
 .focus-enhanced:focus {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #2356A0;
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 4px rgba(35, 86, 160, 0.15);
 }
 
 /* Smooth scroll behavior */
@@ -542,10 +639,10 @@ html {
 
 @keyframes textGlow {
   0%, 100% {
-    text-shadow: 0 0 5px rgba(20, 184, 166, 0.3);
+    text-shadow: 0 0 5px rgba(217, 119, 6, 0.3);
   }
   50% {
-    text-shadow: 0 0 20px rgba(20, 184, 166, 0.6), 0 0 30px rgba(20, 184, 166, 0.4);
+    text-shadow: 0 0 20px rgba(217, 119, 6, 0.6), 0 0 30px rgba(217, 119, 6, 0.4);
   }
 }
 
@@ -584,7 +681,7 @@ html {
 /* Typing animation for text */
 .typewriter {
   overflow: hidden;
-  border-right: 2px solid rgba(20, 184, 166, 0.7);
+  border-right: 2px solid rgba(217, 119, 6, 0.7);
   white-space: nowrap;
   animation: typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite;
 }
@@ -594,7 +691,7 @@ html {
     border-color: transparent;
   }
   50% {
-    border-color: rgba(20, 184, 166, 0.7);
+    border-color: rgba(217, 119, 6, 0.7);
   }
 }
 
@@ -616,10 +713,10 @@ html {
 
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
+    box-shadow: 0 0 20px rgba(35, 86, 160, 0.3);
   }
   50% {
-    box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+    box-shadow: 0 0 30px rgba(35, 86, 160, 0.5);
   }
 }
 
@@ -678,7 +775,7 @@ html {
 
 /* Professional gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #0891b2, #10b981, #06b6d4);
+  background: linear-gradient(135deg, #2356A0, #D97706, #C0392B);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1088,12 +1185,12 @@ html {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #0d9488, #0891b2);
+  background: linear-gradient(to bottom, #2356A0, #1A2E4A);
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #0f766e, #0e7490);
+  background: linear-gradient(to bottom, #1E3A5F, #0F1B2D);
 }
 
 /* Enhanced Shadow Effects */
@@ -1126,10 +1223,10 @@ html {
 /* Chat button pulse effect */
 @keyframes chatPulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.7);
+    box-shadow: 0 0 0 0 rgba(35, 86, 160, 0.7);
   }
   50% {
-    box-shadow: 0 0 0 15px rgba(20, 184, 166, 0);
+    box-shadow: 0 0 0 15px rgba(35, 86, 160, 0);
   }
 }
 

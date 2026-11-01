@@ -208,7 +208,7 @@ const NepaliCalendar = ({
     // compact fallback (used previously)
     const bsNow = BikramSambat.now();
     return (
-      <div className="bg-slate-800 text-white rounded-md p-3 shadow-lg w-48">
+      <div className="bg-[#1A2E4A] text-white rounded-md p-3 shadow-lg w-48">
         <div className="font-semibold text-sm mb-1">NEPALI CALENDAR</div>
         <div className="text-sm">AD: {today.toLocaleDateString()}</div>
         <div className="text-sm">BS: {bsNow.format('YYYY MMMM D')}</div>

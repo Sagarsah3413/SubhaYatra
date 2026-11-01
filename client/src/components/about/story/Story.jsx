@@ -2,16 +2,16 @@ import { FaLightbulb, FaBookOpen } from "react-icons/fa"
 
 const Story = () => {
     return (
-        <section className="py-24 bg-linear-to-br from-gray-50 to-white dark:from-slate-800 dark:to-slate-900">
+        <section className="py-24 bg-linear-to-br from-gray-50 to-white dark:from-[#1A2E4A] dark:to-[#0F1B2D]">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="text-center mb-16">
-                    <div className="inline-flex items-center gap-3 bg-linear-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 rounded-full px-8 py-4 mb-8 border border-teal-200/50 dark:border-teal-700/50">
-                        <FaBookOpen className="text-teal-600 dark:text-teal-400" />
-                        <span className="text-sm font-semibold text-teal-700 dark:text-teal-300">Our Story</span>
+                    <div className="inline-flex items-center gap-3 bg-linear-to-r from-[#2356A0] to-[#1A2E4A] dark:from-[#2356A0]/30 dark:to-[#1A2E4A]/30 rounded-full px-8 py-4 mb-8 border border-teal-200/50 dark:border-teal-700/50">
+                        <FaBookOpen className="text-[#2356A0] dark:text-[#D97706]" />
+                        <span className="text-sm font-semibold text-[#2356A0] dark:text-[#F59E0B]">Our Story</span>
                     </div>
 
                     <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-6 leading-tight">
-                        <span className="bg-linear-to-r from-teal-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">
+                        <span className="bg-linear-to-r from-[#2356A0] via-[#2356A0] to-blue-600 bg-clip-text text-transparent">
                             From Vision to Reality
                         </span>
                     </h2>
@@ -23,7 +23,7 @@ const Story = () => {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-20">
-                    <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-2xl rounded-3xl p-12 border border-gray-200/50 dark:border-slate-700/50 shadow-2xl">
+                    <div className="bg-white/80 dark:bg-[#1A2E4A]/80 backdrop-blur-2xl rounded-3xl p-12 border border-gray-200/50 dark:border-[#2E4A6B]/50 shadow-2xl">
                         <h3 className="text-3xl font-black text-gray-900 dark:text-white mb-6">The Challenge We Addressed</h3>
                         <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
                             Nepal's incredible diversity was often reduced to basic trekking routes and tourist hotspots. Travelers missed authentic experiences,
@@ -35,7 +35,7 @@ const Story = () => {
                         </p>
                     </div>
 
-                    <div className="bg-linear-to-br from-teal-600 via-cyan-600 to-blue-600 rounded-3xl p-12 text-white relative overflow-hidden shadow-2xl">
+                    <div className="bg-linear-to-br from-[#2356A0] via-[#2356A0] to-blue-600 rounded-3xl p-12 text-white relative overflow-hidden shadow-2xl">
                         <div className="absolute inset-0 opacity-10">
                             <div className="absolute inset-0" style={{
                                 backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px)`,

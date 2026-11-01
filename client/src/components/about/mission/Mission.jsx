@@ -2,12 +2,12 @@ import Vision from "./vision/Vision";
 import { FaRocket, FaCheck } from "react-icons/fa";
 const Mission = () => {
     return (
-        <section className="py-24 bg-white dark:bg-slate-900">
+        <section className="py-24 bg-white dark:bg-[#0F1B2D]">
             <div className="max-w-7xl mx-auto px-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                     {/* Mission */}
-                    <div className="bg-linear-to-br from-teal-600 via-cyan-600 to-blue-600 rounded-4xl p-12 text-white relative overflow-hidden shadow-2xl">
+                    <div className="bg-linear-to-br from-[#2356A0] via-[#2356A0] to-blue-600 rounded-4xl p-12 text-white relative overflow-hidden shadow-2xl">
                         <div className="absolute inset-0 opacity-10">
                             <div className="absolute inset-0" style={{
                                 backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px)`,

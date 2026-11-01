@@ -8,18 +8,18 @@ const PrivacyPolicy = () => {
   const { theme } = useTheme();
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-[#0F1B2D] text-white' : 'bg-gray-50 text-gray-900'}`}>
       <Header />
       
       <div className="max-w-4xl mx-auto px-6 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">
           <div className="flex justify-center mb-6">
-            <div className={`p-4 rounded-full ${theme === 'dark' ? 'bg-teal-900/50' : 'bg-teal-100'}`}>
-              <FaShieldAlt className="text-4xl text-teal-600" />
+            <div className={`p-4 rounded-full ${theme === 'dark' ? 'bg-[#E8EFF8]' : 'bg-[#E8EFF8]'}`}>
+              <FaShieldAlt className="text-4xl text-[#2356A0]" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] bg-clip-text text-transparent">
             Privacy Policy
           </h1>
           <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -34,14 +34,14 @@ const PrivacyPolicy = () => {
         <div className="space-y-8">
           
           {/* Information We Collect */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-[#1A2E4A]/50' : 'bg-white'} shadow-lg`}>
             <div className="flex items-center mb-4">
-              <FaUserShield className="text-2xl text-teal-600 mr-3" />
+              <FaUserShield className="text-2xl text-[#2356A0] mr-3" />
               <h2 className="text-2xl font-semibold">Information We Collect</h2>
             </div>
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-medium mb-2 text-teal-600">Personal Information</h3>
+                <h3 className="text-lg font-medium mb-2 text-[#2356A0]">Personal Information</h3>
                 <ul className={`list-disc list-inside space-y-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   <li>Name and contact information when you create an account</li>
                   <li>Email address for communication and account verification</li>
@@ -50,7 +50,7 @@ const PrivacyPolicy = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-2 text-teal-600">Usage Information</h3>
+                <h3 className="text-lg font-medium mb-2 text-[#2356A0]">Usage Information</h3>
                 <ul className={`list-disc list-inside space-y-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   <li>Pages visited and features used on our platform</li>
                   <li>Search queries and interaction patterns</li>
@@ -62,11 +62,11 @@ const PrivacyPolicy = () => {
           </section>
 
           {/* How We Use Your Information */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-[#1A2E4A]/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">How We Use Your Information</h2>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
-                <h3 className="font-medium mb-2 text-teal-600">Service Provision</h3>
+              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-[#1E3A5F]/50' : 'bg-gray-50'}`}>
+                <h3 className="font-medium mb-2 text-[#2356A0]">Service Provision</h3>
                 <ul className={`text-sm space-y-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   <li>• Provide travel recommendations</li>
                   <li>• Process bookings and reservations</li>
@@ -74,8 +74,8 @@ const PrivacyPolicy = () => {
                   <li>• Provide customer support</li>
                 </ul>
               </div>
-              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
-                <h3 className="font-medium mb-2 text-teal-600">Communication</h3>
+              <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-[#1E3A5F]/50' : 'bg-gray-50'}`}>
+                <h3 className="font-medium mb-2 text-[#2356A0]">Communication</h3>
                 <ul className={`text-sm space-y-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   <li>• Send booking confirmations</li>
                   <li>• Share travel updates and tips</li>
@@ -87,29 +87,29 @@ const PrivacyPolicy = () => {
           </section>
 
           {/* Cookies and Tracking */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-[#1A2E4A]/50' : 'bg-white'} shadow-lg`}>
             <div className="flex items-center mb-4">
-              <FaCookie className="text-2xl text-teal-600 mr-3" />
+              <FaCookie className="text-2xl text-[#2356A0] mr-3" />
               <h2 className="text-2xl font-semibold">Cookies and Tracking</h2>
             </div>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               We use cookies and similar technologies to enhance your experience and analyze usage patterns.
             </p>
             <div className="grid md:grid-cols-3 gap-4">
-              <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
-                <h4 className="font-medium text-teal-600 mb-1">Essential Cookies</h4>
+              <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-[#1E3A5F]/50' : 'bg-gray-50'}`}>
+                <h4 className="font-medium text-[#2356A0] mb-1">Essential Cookies</h4>
                 <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   Required for basic site functionality and security.
                 </p>
               </div>
-              <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
-                <h4 className="font-medium text-teal-600 mb-1">Analytics Cookies</h4>
+              <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-[#1E3A5F]/50' : 'bg-gray-50'}`}>
+                <h4 className="font-medium text-[#2356A0] mb-1">Analytics Cookies</h4>
                 <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   Help us understand how you use our platform.
                 </p>
               </div>
-              <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
-                <h4 className="font-medium text-teal-600 mb-1">Preference Cookies</h4>
+              <div className={`p-3 rounded-lg ${theme === 'dark' ? 'bg-[#1E3A5F]/50' : 'bg-gray-50'}`}>
+                <h4 className="font-medium text-[#2356A0] mb-1">Preference Cookies</h4>
                 <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                   Remember your settings and preferences.
                 </p>
@@ -118,7 +118,7 @@ const PrivacyPolicy = () => {
           </section>
 
           {/* Data Sharing */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-[#1A2E4A]/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">Data Sharing and Third Parties</h2>
             <div className="space-y-4">
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -134,11 +134,11 @@ const PrivacyPolicy = () => {
           </section>
 
           {/* Your Rights */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-[#1A2E4A]/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">Your Rights and Choices</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h3 className="text-lg font-medium mb-3 text-teal-600">Data Rights</h3>
+                <h3 className="text-lg font-medium mb-3 text-[#2356A0]">Data Rights</h3>
                 <ul className={`space-y-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   <li>• Access your personal data</li>
                   <li>• Correct inaccurate information</li>
@@ -148,7 +148,7 @@ const PrivacyPolicy = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg font-medium mb-3 text-teal-600">Communication Preferences</h3>
+                <h3 className="text-lg font-medium mb-3 text-[#2356A0]">Communication Preferences</h3>
                 <ul className={`space-y-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                   <li>• Unsubscribe from marketing emails</li>
                   <li>• Manage notification settings</li>
@@ -160,7 +160,7 @@ const PrivacyPolicy = () => {
           </section>
 
           {/* Security */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-[#1A2E4A]/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">Data Security</h2>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               We implement industry-standard security measures to protect your information:
@@ -180,15 +180,15 @@ const PrivacyPolicy = () => {
           </section>
 
           {/* Contact Information */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-[#1A2E4A]/50' : 'bg-white'} shadow-lg`}>
             <div className="flex items-center mb-4">
-              <FaEnvelope className="text-2xl text-teal-600 mr-3" />
+              <FaEnvelope className="text-2xl text-[#2356A0] mr-3" />
               <h2 className="text-2xl font-semibold">Contact Us</h2>
             </div>
             <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               If you have questions about this Privacy Policy or want to exercise your rights, please contact us:
             </p>
-            <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-slate-700/50' : 'bg-gray-50'}`}>
+            <div className={`p-4 rounded-lg ${theme === 'dark' ? 'bg-[#1E3A5F]/50' : 'bg-gray-50'}`}>
               <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                 <strong>Email:</strong> privacy@subhayatra.com<br />
                 <strong>Address:</strong> SubhaYatra, Kathmandu, Nepal<br />
@@ -198,7 +198,7 @@ const PrivacyPolicy = () => {
           </section>
 
           {/* Updates */}
-          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-slate-800/50' : 'bg-white'} shadow-lg`}>
+          <section className={`p-6 rounded-xl ${theme === 'dark' ? 'bg-[#1A2E4A]/50' : 'bg-white'} shadow-lg`}>
             <h2 className="text-2xl font-semibold mb-4">Policy Updates</h2>
             <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
               We may update this Privacy Policy from time to time. We will notify you of any material changes by:

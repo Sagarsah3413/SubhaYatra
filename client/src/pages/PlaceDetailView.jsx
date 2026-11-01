@@ -176,7 +176,7 @@ export default function PlaceDetailView() {
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={onClose}>
         <div 
           className={`relative max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl ${
-            theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+            theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-white'
           }`}
           onClick={(e) => e.stopPropagation()}
         >
@@ -240,7 +240,7 @@ export default function PlaceDetailView() {
                       key={idx}
                       onClick={() => setCurrentImage(idx)}
                       className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                        currentImage === idx ? 'border-teal-500 scale-105' : 'border-transparent opacity-60 hover:opacity-100'
+                        currentImage === idx ? 'border-[#2356A0] scale-105' : 'border-transparent opacity-60 hover:opacity-100'
                       }`}
                     >
                       <img
@@ -273,7 +273,7 @@ export default function PlaceDetailView() {
                 
                 {/* Price Range */}
                 <div className={`inline-block px-4 py-2 rounded-lg ${
-                  theme === 'dark' ? 'bg-teal-900/30 text-teal-400' : 'bg-teal-50 text-teal-700'
+                  theme === 'dark' ? 'bg-[#E8EFF8] text-[#D97706]' : 'bg-[#E8EFF8] text-[#2356A0]'
                 }`}>
                   <span className="font-semibold text-lg">💰 {hotel.price_range || 'Price not available'}</span>
                 </div>
@@ -305,7 +305,7 @@ export default function PlaceDetailView() {
                   <span
                     key={idx}
                     className={`px-3 py-1 rounded-full text-sm ${
-                      theme === 'dark' ? 'bg-slate-700 text-slate-300' : 'bg-gray-100 text-gray-700'
+                      theme === 'dark' ? 'bg-[#1E3A5F] text-slate-300' : 'bg-gray-100 text-gray-700'
                     }`}
                   >
                     {tag.trim()}
@@ -339,7 +339,7 @@ export default function PlaceDetailView() {
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={onClose}>
         <div 
           className={`relative max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl ${
-            theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+            theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-white'
           }`}
           onClick={(e) => e.stopPropagation()}
         >
@@ -403,7 +403,7 @@ export default function PlaceDetailView() {
                       key={idx}
                       onClick={() => setCurrentImage(idx)}
                       className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                        currentImage === idx ? 'border-emerald-500 scale-105' : 'border-transparent opacity-60 hover:opacity-100'
+                        currentImage === idx ? 'border-[#15803D] scale-105' : 'border-transparent opacity-60 hover:opacity-100'
                       }`}
                     >
                       <img
@@ -436,7 +436,7 @@ export default function PlaceDetailView() {
                 
                 {/* Price Range */}
                 <div className={`inline-block px-4 py-2 rounded-lg ${
-                  theme === 'dark' ? 'bg-emerald-900/30 text-emerald-400' : 'bg-emerald-50 text-emerald-700'
+                  theme === 'dark' ? 'bg-emerald-900/30 text-[#22c55e]' : 'bg-emerald-50 text-emerald-700'
                 }`}>
                   <span className="font-semibold text-lg">💰 {restaurant.price_range || 'Price not available'}</span>
                 </div>
@@ -468,7 +468,7 @@ export default function PlaceDetailView() {
                   <span
                     key={idx}
                     className={`px-3 py-1 rounded-full text-sm ${
-                      theme === 'dark' ? 'bg-slate-700 text-slate-300' : 'bg-gray-100 text-gray-700'
+                      theme === 'dark' ? 'bg-[#1E3A5F] text-slate-300' : 'bg-gray-100 text-gray-700'
                     }`}
                   >
                     {tag.trim()}
@@ -485,12 +485,12 @@ export default function PlaceDetailView() {
   if (loading) {
     return (
       <div className={`min-h-screen flex flex-col ${
-        theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+        theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'
       }`}>
         <Header />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
-            <div className="w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <div className="w-16 h-16 border-4 border-[#2356A0] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
             <p className={theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}>
               Loading place details...
             </p>
@@ -504,7 +504,7 @@ export default function PlaceDetailView() {
   if (error || !place) {
     return (
       <div className={`min-h-screen flex flex-col ${
-        theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+        theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'
       }`}>
         <Header />
         <div className="flex-1 flex items-center justify-center">
@@ -517,7 +517,7 @@ export default function PlaceDetailView() {
             </p>
             <button
               onClick={handleBackClick}
-              className="px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+              className="px-6 py-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] text-white rounded-xl font-semibold hover:shadow-lg transition-all"
             >
               Go Back
             </button>
@@ -530,7 +530,7 @@ export default function PlaceDetailView() {
 
   return (
     <div className={`min-h-screen flex flex-col ${
-      theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+      theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'
     }`}>
       <Header />
 
@@ -539,7 +539,7 @@ export default function PlaceDetailView() {
         {/* Image Gallery */}
         {place.images && place.images.length > 0 && (
           <div className={`rounded-2xl overflow-hidden shadow-xl mb-8 ${
-            theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+            theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-white'
           }`}>
             {/* Main Image */}
             <div className="h-96 relative group">
@@ -593,7 +593,7 @@ export default function PlaceDetailView() {
                     onClick={() => setSelectedImage(idx)}
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
                       selectedImage === idx
-                        ? 'border-teal-500 scale-105'
+                        ? 'border-[#2356A0] scale-105'
                         : 'border-transparent opacity-60 hover:opacity-100'
                     }`}
                   >
@@ -611,7 +611,7 @@ export default function PlaceDetailView() {
 
         {/* Place Details */}
         <div className={`rounded-2xl shadow-xl p-8 mb-8 ${
-          theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+          theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-white'
         }`}>
           <div className="flex items-start justify-between mb-6">
             <div>
@@ -645,7 +645,7 @@ export default function PlaceDetailView() {
                   key={idx}
                   className={`px-3 py-1 rounded-full text-sm ${
                     theme === 'dark'
-                      ? 'bg-slate-700 text-slate-300'
+                      ? 'bg-[#1E3A5F] text-slate-300'
                       : 'bg-gray-100 text-gray-700'
                   }`}
                 >
@@ -688,7 +688,7 @@ export default function PlaceDetailView() {
                   } : null
                 }
               })}
-              className="px-6 py-3 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl font-semibold hover:from-teal-700 hover:to-cyan-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
+              className="px-6 py-3 bg-gradient-to-r from-[#2356A0] to-[#1A2E4A] text-white rounded-xl font-semibold hover:from-[#2356A0] hover:to-[#1A2E4A] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
             >
               <span>📅</span>
               <span>Plan Itinerary</span>
@@ -698,7 +698,7 @@ export default function PlaceDetailView() {
               onClick={handleBackClick}
               className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2 ${
                 theme === 'dark'
-                  ? 'bg-slate-700 text-white hover:bg-slate-600'
+                  ? 'bg-[#1E3A5F] text-white hover:bg-slate-600'
                   : 'bg-white text-gray-900 border border-gray-300 hover:bg-gray-50'
               }`}
             >
@@ -711,7 +711,7 @@ export default function PlaceDetailView() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {place.best_season && (
               <div className={`p-4 rounded-xl ${
-                theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+                theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'
               }`}>
                 <div className="text-2xl mb-2">🌤️</div>
                 <div className={`text-sm ${
@@ -729,7 +729,7 @@ export default function PlaceDetailView() {
 
             {place.difficulty_level && (
               <div className={`p-4 rounded-xl ${
-                theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+                theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'
               }`}>
                 <div className="text-2xl mb-2">💪</div>
                 <div className={`text-sm ${
@@ -747,7 +747,7 @@ export default function PlaceDetailView() {
 
             {place.province && (
               <div className={`p-4 rounded-xl ${
-                theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+                theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'
               }`}>
                 <div className="text-2xl mb-2">🗺️</div>
                 <div className={`text-sm ${
@@ -765,7 +765,7 @@ export default function PlaceDetailView() {
 
             {place.accessibility && (
               <div className={`p-4 rounded-xl ${
-                theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+                theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'
               }`}>
                 <div className="text-2xl mb-2">🚗</div>
                 <div className={`text-sm ${
@@ -783,7 +783,7 @@ export default function PlaceDetailView() {
 
             {place.transportation && (
               <div className={`p-4 rounded-xl ${
-                theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+                theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'
               }`}>
                 <div className="text-2xl mb-2">🚌</div>
                 <div className={`text-sm ${
@@ -802,7 +802,7 @@ export default function PlaceDetailView() {
             {/* Events - Same style as transportation */}
             {place.events && place.events.length > 0 && (
               <div className={`p-4 rounded-xl ${
-                theme === 'dark' ? 'bg-slate-900' : 'bg-gray-50'
+                theme === 'dark' ? 'bg-[#0F1B2D]' : 'bg-gray-50'
               }`}>
                 <div className="text-2xl mb-2">🎉</div>
                 <div className={`text-sm ${
@@ -847,8 +847,8 @@ export default function PlaceDetailView() {
                     key={idx}
                     className={`px-3 py-1 rounded-lg text-sm ${
                       theme === 'dark'
-                        ? 'bg-teal-900/30 text-teal-400'
-                        : 'bg-teal-50 text-teal-700'
+                        ? 'bg-[#E8EFF8] text-[#D97706]'
+                        : 'bg-[#E8EFF8] text-[#2356A0]'
                     }`}
                   >
                     {activity.trim()}
@@ -873,7 +873,7 @@ export default function PlaceDetailView() {
                   key={hotel.id}
                   onClick={() => setSelectedHotel(hotel)}
                   className={`rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105 cursor-pointer ${
-                    theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+                    theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-white'
                   }`}
                 >
                   {hotel.image && (
@@ -910,7 +910,7 @@ export default function PlaceDetailView() {
                         </span>
                       </div>
                       <span className={`text-sm font-semibold ${
-                        theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
+                        theme === 'dark' ? 'text-[#D97706]' : 'text-[#2356A0]'
                       }`}>
                         {hotel.price_range}
                       </span>
@@ -936,7 +936,7 @@ export default function PlaceDetailView() {
                   key={restaurant.id}
                   onClick={() => setSelectedRestaurant(restaurant)}
                   className={`rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105 cursor-pointer ${
-                    theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+                    theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-white'
                   }`}
                 >
                   {restaurant.image && (
@@ -973,7 +973,7 @@ export default function PlaceDetailView() {
                         </span>
                       </div>
                       <span className={`text-sm font-semibold ${
-                        theme === 'dark' ? 'text-teal-400' : 'text-teal-600'
+                        theme === 'dark' ? 'text-[#D97706]' : 'text-[#2356A0]'
                       }`}>
                         {restaurant.price_range}
                       </span>
@@ -998,7 +998,7 @@ export default function PlaceDetailView() {
           {loadingSimilar ? (
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
-                <div className="w-12 h-12 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <div className="w-12 h-12 border-4 border-[#2356A0] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
                 <p className={theme === 'dark' ? 'text-slate-300' : 'text-gray-600'}>
                   Finding nearby places...
                 </p>
@@ -1016,7 +1016,7 @@ export default function PlaceDetailView() {
                   });
                 }}
                 className={`rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105 cursor-pointer ${
-                  theme === 'dark' ? 'bg-slate-800' : 'bg-white'
+                  theme === 'dark' ? 'bg-[#1A2E4A]' : 'bg-white'
                 }`}
               >
                 {similarPlace.image && (
@@ -1063,7 +1063,7 @@ export default function PlaceDetailView() {
                     
                     {similarPlace.difficulty_level && (
                       <span className={`text-xs px-2 py-1 rounded-full ${
-                        theme === 'dark' ? 'bg-slate-700 text-slate-300' : 'bg-gray-100 text-gray-700'
+                        theme === 'dark' ? 'bg-[#1E3A5F] text-slate-300' : 'bg-gray-100 text-gray-700'
                       }`}>
                         {similarPlace.difficulty_level}
                       </span>
