@@ -42,6 +42,7 @@ const MenuBar = ({ theme, onNavigation, forceRefreshLocation, selectedLanguage, 
             color: 'teal',
             items: [
                 { name: 'Home', path: '/', icon: '🏠', description: 'Back to home' },
+                { name: 'Explore', path: '/explore', icon: '🧭', description: 'Filter destinations' },
                 { name: 'Explore Nepal', path: '/explore-nepal', icon: '🗺️', description: 'Discover Nepal' },
                 { name: 'All Places', path: '/all-places-detail', icon: '📍', description: 'View all places' },
                 { name: 'Famous Spots', path: '/all-famous-spots', icon: '⭐', description: 'Popular locations' },

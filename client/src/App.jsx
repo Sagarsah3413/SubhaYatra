@@ -40,6 +40,7 @@ const Itinerary = lazy(() => import("./pages/Itinerary"));
 const Wishlist = lazy(() => import("./pages/Wishlist"));
 const Help = lazy(() => import("./pages/Help"));
 const ExploreNepal = lazy(() => import("./pages/ExploreNepal"));
+const ExplorerPage = lazy(() => import("./pages/explorer/ExplorerPage"));
 const FAQ = lazy(() => import("./pages/FAQ"));
 const NewsletterArchive = lazy(() => import("./pages/NewsletterArchive"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
@@ -458,6 +459,7 @@ const App = memo(() => (
             <Route path="/guide" element={<Itinerary />} />
             <Route path="/itinerary" element={<Itinerary />} />
             <Route path="/explore-nepal" element={<ExploreNepal />} />
+            <Route path="/explore" element={<ExplorerPage />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/help" element={<Help />} />
             <Route path="/faq" element={<FAQ />} />

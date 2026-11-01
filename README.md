@@ -546,8 +546,9 @@ VITE_CURRENCY_API_KEY=your_exchangerate_key
 # Clerk Authentication
 VITE_CLERK_PUBLISHABLE_KEY=your_clerk_key
 
-# Cohere AI
-VITE_COHERE_API_KEY=your_cohere_key
+# Note: The Cohere AI key is NOT a frontend variable.
+# It lives only on the backend (COHERE_API_KEY) and the AI chat
+# is proxied through POST /api/chat/cohere.
 
 # Social Media
 VITE_FACEBOOK_URL=https://facebook.com/roamiowanderly
@@ -564,7 +565,8 @@ CLERK_API_KEY=your_clerk_secret_key
 GMAIL_USER=wanderlyroamio@gmail.com
 GMAIL_APP_PASSWORD=your_app_password
 
-# Cohere AI (optional - used by backend if needed)
+# Cohere AI (required for the AI chat assistant "Active Mode")
+# The key stays server-side; the frontend calls POST /api/chat/cohere.
 COHERE_API_KEY=your_cohere_key
 
 # JWT Secret

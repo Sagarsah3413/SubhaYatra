@@ -8,6 +8,7 @@ from ..database import db
 from ..models import Place, Hotel, Restaurant, Event
 from ..cloudinary_helper import upload_multiple
 from ..auth import admin_required
+from .. import facets
 
 places_bp = Blueprint('places', __name__)
 
@@ -147,6 +148,55 @@ def search_places():
     rows    = q.order_by(relevance.desc()).all()
     results = [p.to_dict() for p, _ in rows]
     return jsonify({'query': q_text, 'results': results, 'count': len(results)})
+
+
+# ── Destination facets: constraint-aware explore (additive; derived dataset) ────
+
+@places_bp.route('/places/explore', methods=['GET'])
+def explore_places():
+    """
+    Filter destinations by normalized facets with AND logic:
+      month      : 1-12  (destination's best-season months must include it)
+      difficulty : Easy | Moderate | Hard
+      province   : Koshi | Madhesh | Bagmati | Gandaki | Lumbini | Karnali | Sudurpashchim
+      access     : Road | Road+Hike | Trek | Fly-in
+    Plus pagination: page (>=1), limit (1-100). All filters optional; missing data never matches.
+    Coordinates are only returned for verified records (map_pin_allowed flags this).
+
+    This is a NEW, additive endpoint backed by the derived facets dataset. It does not change the
+    existing /api/places endpoints or the Place DB model.
+    """
+    raw_month = request.args.get('month')
+    try:
+        month = int(raw_month) if raw_month not in (None, '') else None
+    except ValueError:
+        return jsonify({'error': "month must be an integer 1-12"}), 400
+
+    difficulty = request.args.get('difficulty') or None
+    province   = request.args.get('province') or None
+    access     = request.args.get('access') or None
+
+    try:
+        page  = int(request.args.get('page', 1))
+        limit = int(request.args.get('limit', 20))
+    except ValueError:
+        return jsonify({'error': "page and limit must be integers"}), 400
+
+    try:
+        results, meta = facets.filter_facets(
+            month=month, difficulty=difficulty, province=province,
+            access=access, page=page, limit=limit,
+        )
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 400
+
+    return jsonify({'destinations': results, **meta})
+
+
+@places_bp.route('/places/explore/options', methods=['GET'])
+def explore_options():
+    """Valid filter values plus per-value availability counts (coverage) from the derived data."""
+    return jsonify(facets.filter_options())
 
 
 @places_bp.route('/details/<string:item_type>/<path:item_name>', methods=['GET'])

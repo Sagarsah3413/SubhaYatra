@@ -69,6 +69,43 @@ class ChatService {
   }
   
   /**
+   * Send a message to the backend Cohere proxy and get the AI reply.
+   * The Cohere API key lives only on the backend.
+   *
+   * @returns {Promise<{ reply?: string, fallback?: boolean }>}
+   *   On success: { reply }. If the backend signals the AI is unavailable
+   *   (not configured / upstream error), resolves to { fallback: true } so the
+   *   caller can use its local responder instead of throwing.
+   */
+  async sendCohereMessage(message, currency = 'USD') {
+    try {
+      const response = await fetch(`${API_BASE_URL}/cohere`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message, currency })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        // Backend asks us to fall back (unconfigured key, upstream failure).
+        if (data && data.fallback) {
+          return { fallback: true };
+        }
+        throw new Error(data?.error || `Cohere proxy failed: ${response.statusText}`);
+      }
+
+      return data; // { reply }
+    } catch (error) {
+      console.error('Error calling Cohere proxy:', error);
+      // Network-level failure: signal fallback rather than breaking the chat.
+      return { fallback: true };
+    }
+  }
+
+  /**
    * Send a message and get AI reply
    */
   async sendMessage(chatId, message, userId) {

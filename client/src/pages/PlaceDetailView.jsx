@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import { Header } from "../components/header/Header";
 import Footer from "../components/footer/Footer";
+import imageService from "../services/imageService";
 
 export default function PlaceDetailView() {
   const { placeId } = useParams();
@@ -82,21 +83,15 @@ export default function PlaceDetailView() {
           placeData.activities = placeData.activities.split(',').map(a => a.trim()).filter(a => a);
         }
         
-        // Images should already be formatted by backend, but ensure they exist
-        if (!placeData.images || placeData.images.length === 0) {
-          if (placeData.image_url) {
-            const path = placeData.image_url.replace(/\\/g, '/');
-            if (path.startsWith('/datasets/')) {
-              placeData.images = [path];
-            } else if (path.startsWith('destination_images/')) {
-              placeData.images = [`/datasets/${path}`];
-            } else {
-              placeData.images = [`/datasets/destination_images/${path}`];
-            }
-          } else {
-            placeData.images = [];
-          }
-        }
+        // Resolve destination images to browser-accessible URLs using the shared
+        // image resolver (handles raw backslash paths, spaces, parentheses, and
+        // the backend's /api/images/destinations/ route). These are FULL URLs.
+        const rawImagePaths = (Array.isArray(placeData.all_images) && placeData.all_images.length > 0)
+          ? placeData.all_images
+          : (placeData.image_url ? [placeData.image_url] : []);
+        placeData.images = rawImagePaths
+          .map((p) => imageService.getDestinationImageUrl(p))
+          .filter(Boolean);
         
         // Ensure hotels and restaurants exist
         placeData.hotels = placeData.hotels || [];
@@ -536,17 +531,39 @@ export default function PlaceDetailView() {
 
       <div className="flex-1 max-w-7xl mx-auto px-4 pt-24 pb-8 w-full">
 
+        {/* Back navigation — top of content for standard placement */}
+        <button
+          onClick={handleBackClick}
+          className={`group mb-6 inline-flex items-center gap-2 text-sm font-medium transition-colors ${
+            theme === 'dark'
+              ? 'text-slate-400 hover:text-white'
+              : 'text-gray-600 hover:text-gray-900'
+          }`}
+        >
+          <svg
+            className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          <span>Back</span>
+        </button>
+
         {/* Image Gallery */}
         {place.images && place.images.length > 0 && (
           <div className={`rounded-2xl overflow-hidden shadow-xl mb-8 ${
             theme === 'dark' ? 'bg-navy-800' : 'bg-white'
           }`}>
-            {/* Main Image */}
-            <div className="h-96 relative group">
+            {/* Main Image — restrained height with neutral framing. Source images
+                are small thumbnails, so we avoid upscaling to a full hero and use
+                object-contain to present them tidily instead of cropping/stretching. */}
+            <div className={`h-64 sm:h-72 relative group flex items-center justify-center ${
+              theme === 'dark' ? 'bg-navy-900' : 'bg-surface-100'
+            }`}>
               <img
-                src={`http://localhost:8000${place.images[selectedImage]}`}
+                src={place.images[selectedImage]}
                 alt={place.name}
-                className="w-full h-full object-cover"
+                className="max-w-full max-h-full object-contain"
                 onError={(e) => {
                   e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"/>';
                   e.target.style.display = 'none';
@@ -598,7 +615,7 @@ export default function PlaceDetailView() {
                     }`}
                   >
                     <img
-                      src={`http://localhost:8000${img}`}
+                      src={img}
                       alt={`${place.name} ${idx + 1}`}
                       className="w-full h-full object-cover"
                     />
@@ -688,22 +705,10 @@ export default function PlaceDetailView() {
                   } : null
                 }
               })}
-              className="px-6 py-3 bg-gradient-to-r from-navy-700 to-navy-700 text-white rounded-xl font-semibold hover:from-navy-700 hover:to-navy-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
+              className="px-6 py-3 bg-navy-700 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg hover:bg-amber-500 hover:text-navy-950 hover:shadow-xl hover:-translate-y-0.5 flex items-center gap-2"
             >
               <span>📅</span>
               <span>Plan Itinerary</span>
-            </button>
-            
-            <button
-              onClick={handleBackClick}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2 ${
-                theme === 'dark'
-                  ? 'bg-navy-700 text-white hover:bg-slate-600'
-                  : 'bg-white text-gray-900 border border-gray-300 hover:bg-surface-50'
-              }`}
-            >
-              <span>←</span>
-              <span>Back</span>
             </button>
           </div>
 

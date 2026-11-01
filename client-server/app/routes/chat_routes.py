@@ -2,8 +2,10 @@ from flask import Blueprint, request, jsonify
 from ..database import db
 from ..models import Chat, Message, SearchHistory
 from ..ai import get_ai_reply
+from .. import cohere_helper
 from datetime import datetime
 import re
+import requests
 
 # Helper: get clerk_id from request (header or body)
 def _clerk_id(data=None):
@@ -13,6 +15,62 @@ def _clerk_id(data=None):
 
 
 chat_bp = Blueprint("chat", __name__)
+
+# Maximum accepted length of a user chat message (characters).
+MAX_MESSAGE_LENGTH = 4000
+
+
+# ----------- COHERE AI PROXY -----------
+@chat_bp.route("/cohere", methods=["POST"])
+def cohere_chat():
+    """
+    Proxy a single chat message to Cohere, keeping the API key on the backend.
+
+    Request JSON: { "message": str, "currency"?: "USD"|"NPR"|"INR" }
+    Response JSON: { "reply": str }  on success
+                   { "error": str, "fallback": true } with a non-200 otherwise,
+                   so the frontend can fall back to its local responder.
+    """
+    data = request.get_json(silent=True) or {}
+
+    # ── Input validation ──────────────────────────────────────────────────
+    message = data.get("message")
+    if not isinstance(message, str) or not message.strip():
+        return jsonify({"error": "A non-empty 'message' string is required"}), 400
+
+    message = message.strip()
+    if len(message) > MAX_MESSAGE_LENGTH:
+        return jsonify({
+            "error": f"'message' exceeds the maximum length of {MAX_MESSAGE_LENGTH} characters"
+        }), 400
+
+    currency = data.get("currency", "USD")
+    if currency not in ("USD", "NPR", "INR"):
+        currency = "USD"
+
+    # ── Config check ──────────────────────────────────────────────────────
+    if not cohere_helper.is_configured():
+        # Not an error the client caused; signal fallback so the UI uses its
+        # local Smart-Mode responder instead.
+        return jsonify({
+            "error": "AI service is not configured",
+            "fallback": True
+        }), 503
+
+    # ── Call Cohere ─────────────────────────────────────────────────────────
+    try:
+        reply = cohere_helper.generate_reply(message, currency=currency)
+        return jsonify({"reply": reply})
+    except requests.HTTPError as exc:
+        status = exc.response.status_code if exc.response is not None else 502
+        print(f"Cohere HTTP error ({status}): {exc}")
+        return jsonify({"error": "AI service request failed", "fallback": True}), 502
+    except requests.RequestException as exc:
+        print(f"Cohere network error: {exc}")
+        return jsonify({"error": "AI service unavailable", "fallback": True}), 504
+    except Exception as exc:  # noqa: BLE001 - defensive; never leak internals
+        print(f"Cohere proxy error: {exc}")
+        return jsonify({"error": "Unexpected AI service error", "fallback": True}), 500
 
 # ----------- CREATE NEW CHAT -----------
 @chat_bp.route("/new", methods=["POST"])
