@@ -39,9 +39,18 @@ several Nepal-specific competitors already operate.
 
 ## 3. Unique Value Proposition
 
-**Positioning (PROPOSED):** *"SubhaYatra turns your days, budget, and travel month into a
-geographically coherent, season-aware Nepal route — with the permit and safety context the global
-platforms leave out."*
+**Product arc (positioning).** SubhaYatra evolves into a **Nepal Travel Intelligence Platform** along
+a four-stage progression, each stage building on the last:
+**Destination discovery → Explainable recommendations → Travel feasibility → Constraint-based
+itinerary planning** — all on a Phase 0 foundation of data reliability and stability. See
+`IMPLEMENTATION_ROADMAP.md` → "Product Evolution Phases" for dependencies and measurable outcomes.
+Stage 1 (**Destination discovery**) is now **IMPLEMENTED** as the Explorer (`/explore`): month /
+difficulty / province / accessibility filtering over the normalized derived dataset. Stages 2–4
+remain **PROPOSED**, and budget-constrained planning stays deferred until real cost data exists (§4).
+
+**Positioning statement:** *"SubhaYatra turns your days and travel month into a geographically
+coherent, season-aware Nepal route — with the permit and access context the global platforms leave
+out."*
 
 **Defensibility — honest read.** Against global platforms (Booking/TripAdvisor/Google) the gap is
 real: none sequence a Nepal trip around trek-days, road-time, season windows, and permits. **But the

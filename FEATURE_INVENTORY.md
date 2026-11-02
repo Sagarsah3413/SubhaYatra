@@ -25,6 +25,7 @@ Based on a read-only review of the current code (no runtime execution).
 | Nature places | NaturePlaces.jsx, AllNatureDetail.jsx | GET /api/places (filtered) | Place | Fully functional | Near-duplicate listing pages. |
 | Place detail | PlaceDetailView.jsx (`/place/:id`), Detailpage.jsx (`/details`) | GET /api/places/<id>, /details/<type>/<name> | Place + hotels/restaurants/events | Fully functional | Two detail renderers (duplication). GET logs a PlaceView on each view. |
 | Global search | SearchBar.jsx, SearchModal.jsx, SearchResultPageNew.jsx, SearchDropdownList.jsx | GET /api/search | Place/Hotel/Restaurant | Partially functional | Requires `X-Clerk-User-Id`; returns 401 for signed-out users (by design). `SearchResult.jsx` is unrouted dead page. |
+| Explorer (constraint discovery) | pages/explorer/ (ExplorerPage, ExplorerFilters, DestinationCard, ExplorerMap, explorerUtils), explorerService.js; route `/explore`; Header nav | GET /api/places/explore, /api/places/explore/options | Derived `destination_facets` (from app/facets.py) | Fully functional | Four AND-combined filters (month/difficulty/province/accessibility), pagination (resets on filter change), per-card "why this matches" from real fields, access-confidence tiers, verified-only map pins. Serves from the facet JSON snapshot (documented limitation, `EXPLORER_API_VERIFICATION.md`). Verified end-to-end. |
 | Hotels browse | HotelSection, hotelService.js | GET /api/hotels* | Hotel | Fully functional | Filters, featured, count. |
 | Restaurants browse | RestaurantSection, placesService.js | GET /api/restaurants* | Restaurant | Fully functional | Filters, featured, count. |
 | Similar places | (detail pages) | GET /api/places/<id>/similar | Place + pickles | Broken | `similar_places.py` imports nonexistent `SessionLocal` and is **not registered** in app.py. |
@@ -42,9 +43,9 @@ Based on a read-only review of the current code (no runtime execution).
 
 | Feature | Frontend | Backend | Data/Model | Status | Evidence / Notes |
 |---|---|---|---|---|---|
-| AI chat assistant | ChatPage.jsx (Cohere client), chatService.js | POST /api/chat/send, /new, /ai-reply | Chat, Message | Partially functional | Cohere answers with a rich Nepal-aware preamble + USD/NPR/INR toggle. **Key exposed in browser.** Local keyword fallback when Cohere/key unavailable. |
+| AI chat assistant | ChatPage.jsx, chatService.js | POST /api/chat/cohere (proxy), /send, /new, /ai-reply; cohere_helper.py | Chat, Message | Partially functional | Cohere answers with a Nepal-aware preamble + USD/NPR/INR toggle, now **proxied server-side — key is backend-only (`COHERE_API_KEY`), no longer in the browser.** Local keyword fallback when the proxy is unavailable. |
 | Backend AI responder | — | app/ai.py `get_ai_reply` | Place (DB lookup) | Partially functional | ~900-line hardcoded keyword responder; no model. Only reached when frontend uses `/api/chat/send`. |
-| Chat history persistence | ChatPage.jsx sidebar | POST /api/chat/new,/send,/save-local; GET /api/chat/history,/messages | Chat, Message | Broken (for new chats in fallback) | New chat only resets UI; persistence happens via `/send`, which runs only when `aiStatus==='ready'`. Cohere/fallback paths don't call `/save-local`, so history stays empty — matches the reported bug. |
+| Chat history persistence | ChatPage.jsx sidebar | POST /api/chat/new,/send,/save-local; GET /api/chat/history,/messages | Chat, Message | Fully functional | Fixed: the Cohere/fallback path now persists via `/save-local`, so new-chat history is saved (prior "empty sidebar" bug resolved). |
 | Chat search / search-history | ChatPage.jsx | GET/POST/DELETE /api/chat/search*, /search-history* | Chat, SearchHistory | Broken | Handlers use `Chat.user_id`/`SearchHistory.user_id` which don't exist → 500. |
 
 ## Commerce / Hotels
@@ -95,8 +96,10 @@ Based on a read-only review of the current code (no runtime execution).
   + moderation, admin dashboard/users/logs, Clerk auth + user sync, maps, theme, currency toggle,
   Nepali calendar UI, static content pages.
 - **Partially functional:** global search (auth-gated), itinerary planner (localStorage only),
-  AI chat (key exposed; fallback), newsletter/contact (email depends on SMTP), image gallery
-  (serve OK, upload API dead), i18n, weather.
+  AI chat (Cohere now proxied server-side; local fallback), newsletter/contact (email depends on
+  SMTP), image gallery (serve OK, upload API dead), i18n, weather.
+- **Newly fully functional (this cycle):** the Explorer (constraint-based discovery over the
+  normalized dataset) and chat history persistence.
 - **Broken:** backend wishlist, backend itinerary persistence, GET recommendations, chat
   search/search-history, place approve/reject, similar places, `create_admin.py`.
 - **Not implemented:** rooms/booking, server-side user-token verification.

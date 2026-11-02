@@ -3,8 +3,83 @@
 Prioritized, phased development plan derived from `PROJECT_AUDIT.md` and `FEATURE_INVENTORY.md`.
 Effort: **S** (< 0.5 day), **M** (0.5–2 days), **L** (> 2 days). No code was changed; this is a plan.
 
-Guiding principle: fix security and stability first (Phase 0), then make broken core features work
-(Phase 1), then finish partial/UI-only features (Phase 2), then pay down tech debt (Phase 3).
+This roadmap has two complementary views:
+- **Product Evolution Phases** (below) — the staged journey toward a Nepal Travel Intelligence
+  Platform: *Destination discovery → Explainable recommendations → Travel feasibility →
+  Constraint-based itinerary planning*, on a foundation of data reliability and stability.
+- **Engineering Workstream** (further down) — the original fix-first tech-debt plan that *enables*
+  those phases. The product phases reference its items rather than restating them.
+
+Effort: **S** (< 0.5 day), **M** (0.5–2 days), **L** (> 2 days).
+
+---
+
+## Product Evolution Phases
+
+The product matures in five dependency-ordered phases. Each lists its goal, what it depends on, and a
+measurable outcome. Honesty rule from `STRATEGY_REVIEW.md` still applies: never ship capabilities the
+data cannot support (notably budget estimation — see Phase 4).
+
+### Phase 0 — Foundation & stabilization
+**Goal:** data reliability, security, backend stability, and trustworthy infrastructure — the base
+everything else stands on.
+**Includes:** the normalization pipeline + derived `destination_facets` dataset (DONE — see
+`NORMALIZATION_REPORT.md`), the Cohere key moved server-side (DONE), and the remaining Engineering
+Workstream Phase 0 security items (Flask debug, `JWT_SECRET_KEY`, CORS, committed-secret history) and
+the broken-endpoint fixes (Workstream Phase 1.1–1.3).
+**Depends on:** nothing (it is the base).
+**Measurable outcome:** no browser-exposed keys; no 500s on GET recommendations / chat search /
+place moderation; ≥95% of destinations carry parsed season + normalized difficulty + access +
+coordinate-confidence (currently met for season 1,052/1,057, difficulty 1,057/1,057, access
+1,057/1,057).
+
+### Phase 1 — Destination discovery  — **IMPLEMENTED (foundation)**
+**Goal:** let travellers find destinations by month, difficulty, province, and accessibility over
+trustworthy normalized data.
+**Status:** The Explorer (`/explore`) is live — four AND-combined filters, pagination, verified-only
+map pins, served by `GET /api/places/explore` + `/explore/options` over the derived facets.
+**Depends on:** Phase 0 (normalized dataset + facets API).
+**Measurable outcome:** all four filters + combined filtering return correct results against 1,057
+destinations (verified in `EXPLORER_API_VERIFICATION.md`); filter-engagement and result→detail
+click-through tracked per `STRATEGY_REVIEW.md` §6.5.
+
+### Phase 2 — Explainable recommendations
+**Goal:** evolve the rule-based recommender so every suggestion states *why* it matches (season,
+difficulty, province, access), building on the Explorer's per-card "why this matches" line.
+**Depends on:** Phase 1; Engineering Workstream 1.2 (fix GET recommendation endpoints).
+**Measurable outcome:** 100% of returned recommendations carry a factual, field-derived reason; zero
+recommendation endpoints 500; no claim of AI personalization.
+
+### Phase 3 — Travel feasibility
+**Goal:** add season/time feasibility — tell users whether a destination/region is advisable in their
+travel month, with permit and difficulty flags. (Season windows only; **not** live weather — see
+`STRATEGY_REVIEW.md` §5.)
+**Depends on:** Phase 2; normalized `season_months` (DONE) and `permit_hint` (DONE); a curated
+safety/permit source (external, not yet sourced).
+**Measurable outcome:** every destination surfaces a season-window verdict for a chosen month;
+feasibility advice is sourced from real fields or flagged "unavailable" — never guessed.
+
+### Phase 4 — Constraint-based itinerary planning
+**Goal:** generate geographically coherent, time-bounded itineraries from discovery + feasibility.
+**Depends on:** Phase 3; persisted itineraries + unified Clerk auth (Engineering Workstream 1.4/1.5);
+a road/trek travel-time matrix (external, not yet sourced).
+**Measurable outcome:** a user can generate and save a multi-day, season-valid itinerary respecting a
+day budget. **Budget-constrained planning stays DEFERRED** until real cost data exists (no reliable
+cost data today — `STRATEGY_REVIEW.md` §2.1, hotel price 76% placeholder).
+
+---
+
+## Engineering Workstream (enabling tech-debt plan)
+
+The original fix-first plan. Its items are the concrete enabling work the product phases above depend
+on. Guiding principle: fix security and stability first (Workstream Phase 0), then make broken core
+features work (Workstream Phase 1), then finish partial/UI-only features (Workstream Phase 2), then
+pay down tech debt (Workstream Phase 3). Items already completed this cycle are marked **[DONE]**.
+
+**Completed this cycle:** Cohere proxy (0.1 [DONE]), committed Clerk secret replaced with placeholder
+in `.env.example` (0.2 partial — history scrub still pending), chat history persistence in the
+fallback path (1.6 [DONE]), the Explorer + facets API (new Phase 1 product capability), and image
+presentation fixes on the Explorer/detail pages.
 
 ---
 

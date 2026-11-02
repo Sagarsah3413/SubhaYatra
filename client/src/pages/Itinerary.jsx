@@ -1,16 +1,85 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useToast } from '../contexts/ToastContext';
 import { Header } from '../components/header/Header';
 import Footer from '../components/footer/Footer';
+import itineraryService from '../services/itineraryService';
+import { API_URL } from '../config/api';
 import { 
   FaRoute, FaPlus, FaSave, FaInfoCircle, 
   FaCalendarAlt, FaMapMarkerAlt,
   FaHotel, FaUtensils, FaMoneyBillWave, FaDownload,
   FaShare, FaSpinner, FaCheckCircle, FaMountain,
-  FaCompass, FaStar, FaGlobeAsia
+  FaCompass, FaStar, FaGlobeAsia, FaTrash, FaBookmark,
+  FaSignInAlt
 } from 'react-icons/fa';
+
+/**
+ * Map a client-generated itinerary into the backend POST payload.
+ *
+ * Faithful to real generated data — dates and place_ids are sent as null
+ * rather than fabricated, and total_budget stores the budget LEVEL string
+ * (not an invented currency amount).
+ *
+ * dailyPlan → items: each activity in each day becomes one ItineraryItem row,
+ * carrying day_number, place_name (the day's destination), a readable activity
+ * string, a short note (the day's accommodation), and a running order_index.
+ */
+export const buildItineraryPayload = (generatedItinerary) => {
+  const items = [];
+  let orderIndex = 0;
+
+  (generatedItinerary.dailyPlan || []).forEach((day) => {
+    const dayActivities = Array.isArray(day.activities) ? day.activities : [];
+
+    if (dayActivities.length === 0) {
+      // No activity rows for this day — still record the day itself.
+      items.push({
+        day_number: day.day ?? null,
+        place_id: null, // no real numeric id available — do not fabricate
+        place_name: day.destination || '',
+        activity: day.title || '',
+        notes: day.accommodation || '',
+        order_index: orderIndex++,
+      });
+      return;
+    }
+
+    dayActivities.forEach((act) => {
+      // Activities are objects like { time, activity, ... }; build a readable
+      // string. Fall back to the raw value if it's already a string.
+      let activityText;
+      if (act && typeof act === 'object') {
+        activityText = act.time ? `${act.time} - ${act.activity}` : (act.activity || '');
+      } else {
+        activityText = String(act ?? '');
+      }
+
+      items.push({
+        day_number: day.day ?? null,
+        place_id: null, // no real numeric id available — do not fabricate
+        place_name: day.destination || '',
+        activity: activityText,
+        notes: day.accommodation || '',
+        order_index: orderIndex++,
+      });
+    });
+  });
+
+  return {
+    title: generatedItinerary.title,
+    description: generatedItinerary.summary,
+    // Store the budget level string; never invent a currency amount here.
+    total_budget: String(generatedItinerary.budgetLevel),
+    is_public: false,
+    // The generator has no real calendar dates — send null, do not fabricate.
+    start_date: null,
+    end_date: null,
+    items,
+  };
+};
 
 // Enhanced Nepal destinations data with more comprehensive information
 const nepalDestinations = {
@@ -401,9 +470,23 @@ const generateItinerarySummary = (places, duration, budget) => {
 
 const Itinerary = () => {
   const { theme } = useTheme();
-  const { showSuccess } = useToast();
+  const { showSuccess, showWarning, showInfo } = useToast();
+  const { user } = useUser();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('create');
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Clerk identity for persistence. Clerk id scopes every write/list request;
+  // display name is best-effort and may be null.
+  const clerkId = user?.id || null;
+  const userName = user?.fullName || user?.primaryEmailAddress?.emailAddress || null;
+
+  // Saved itineraries (backend-persisted, per Clerk user).
+  const [savedItineraries, setSavedItineraries] = useState([]);
+  const [loadingSaved, setLoadingSaved] = useState(false);
+  const [savedError, setSavedError] = useState(null);
+  const [expandedSavedId, setExpandedSavedId] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedItinerary, setGeneratedItinerary] = useState(null);
   const [availablePlaces, setAvailablePlaces] = useState([]);
@@ -465,37 +548,97 @@ const Itinerary = () => {
     }
   }, [openTab, location.state?.fromDetailPage, hasShownTipsToast, showSuccess]);
 
-  // Save Itinerary to localStorage
-  const handleSaveItinerary = () => {
-    if (!generatedItinerary) {
-      alert('No itinerary to save!');
+  // Load the signed-in user's saved itineraries from the backend.
+  const loadSavedItineraries = async () => {
+    if (!clerkId) {
+      // Signed out — nothing to load; the UI shows a sign-in prompt instead.
+      setSavedItineraries([]);
+      setSavedError(null);
       return;
     }
 
     try {
-      // Get existing saved itineraries
-      const savedItineraries = JSON.parse(localStorage.getItem('savedItineraries') || '[]');
-      
-      // Add timestamp and unique ID
-      const itineraryToSave = {
-        ...generatedItinerary,
-        id: Date.now(),
-        savedAt: new Date().toISOString()
-      };
-      
-      // Add to saved itineraries
-      savedItineraries.push(itineraryToSave);
-      
-      // Save back to localStorage
-      localStorage.setItem('savedItineraries', JSON.stringify(savedItineraries));
-      
+      setLoadingSaved(true);
+      setSavedError(null);
+      const data = await itineraryService.list(clerkId);
+      setSavedItineraries(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Error loading saved itineraries:', error);
+      setSavedError('We could not load your saved trips just now. Please try again in a moment.');
+    } finally {
+      setLoadingSaved(false);
+    }
+  };
+
+  // Keep the saved list in sync with the signed-in user (and refresh on login).
+  useEffect(() => {
+    loadSavedItineraries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clerkId]);
+
+  // Save Itinerary — persists to the backend per Clerk user.
+  const handleSaveItinerary = async () => {
+    if (!generatedItinerary) {
+      showInfo('Nothing to Save', 'Generate an itinerary first, then save it.');
+      return;
+    }
+
+    // Signed-out users cannot persist. Prompt them to sign in rather than
+    // silently saving to localStorage (the old dual-source-of-truth bug).
+    if (!clerkId) {
+      showWarning(
+        'Sign in to Save',
+        'Please sign in to save your itinerary to your account.'
+      );
+      return;
+    }
+
+    try {
+      setIsSaving(true);
+      const payload = buildItineraryPayload(generatedItinerary);
+      await itineraryService.create(clerkId, userName, payload);
+
       showSuccess(
         'Itinerary Saved!',
-        'Your itinerary has been saved successfully. You can access it anytime from your saved itineraries.'
+        'Your itinerary has been saved to your account. You can find it under Saved Trips.'
       );
+
+      // Refresh the saved list so persistence is immediately visible.
+      await loadSavedItineraries();
     } catch (error) {
       console.error('Error saving itinerary:', error);
-      alert('Failed to save itinerary. Please try again.');
+      showWarning(
+        'Save Failed',
+        'We could not save your itinerary. Please try again in a moment.'
+      );
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  // Delete a saved itinerary (owner only), then refresh the list.
+  const handleDeleteSavedItinerary = async (id) => {
+    if (!clerkId) {
+      showWarning('Sign in Required', 'Please sign in to manage your saved trips.');
+      return;
+    }
+
+    const confirmed = window.confirm('Delete this saved itinerary? This cannot be undone.');
+    if (!confirmed) return;
+
+    try {
+      setDeletingId(id);
+      await itineraryService.remove(id, clerkId);
+      showSuccess('Itinerary Deleted', 'The saved trip has been removed from your account.');
+      await loadSavedItineraries();
+    } catch (error) {
+      console.error('Error deleting itinerary:', error);
+      showWarning(
+        'Delete Failed',
+        'We could not delete this itinerary. Please try again in a moment.'
+      );
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -691,7 +834,7 @@ Plan your own trip at: http://localhost:5173/itinerary`;
         setLoadingPlaces(true);
         console.log('🔄 Fetching ALL places from backend...');
         // Fetch ALL places using 'all' parameter
-        const response = await fetch('http://localhost:8000/api/places?limit=all');
+        const response = await fetch(`${API_URL}/api/places?limit=all`);
         if (!response.ok) throw new Error('Failed to fetch places');
         
         const data = await response.json();
@@ -959,10 +1102,11 @@ Plan your own trip at: http://localhost:5173/itinerary`;
       {/* Static Navigation Tabs - New Style */}
       <section className={`${theme === 'dark' ? 'bg-navy-900' : 'bg-surface-50'} py-8`}>
         <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { id: 'create', label: 'Create Plan', icon: FaPlus, color: 'from-navy-600 to-navy-700' },
               { id: 'generated', label: 'Your Itinerary', icon: FaRoute, show: generatedItinerary, color: 'from-purple-500 to-pink-500' },
+              { id: 'saved', label: 'Saved Trips', icon: FaBookmark, color: 'from-emerald-500 to-teal-600' },
               { id: 'tips', label: 'Travel Tips', icon: FaInfoCircle, color: 'from-orange-500 to-red-500' }
             ].filter(tab => tab.show !== false).map((tab) => (
               <button
@@ -1615,10 +1759,11 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                     <div className="flex flex-wrap justify-center gap-4">
                       <button 
                         onClick={handleSaveItinerary}
-                        className="px-8 py-4 bg-gradient-to-r from-navy-700 to-navy-700 text-white rounded-2xl font-bold flex items-center gap-3 hover:from-navy-700 hover:to-navy-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                        disabled={isSaving}
+                        className="px-8 py-4 bg-gradient-to-r from-navy-700 to-navy-700 text-white rounded-2xl font-bold flex items-center gap-3 hover:from-navy-700 hover:to-navy-700 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
-                        <FaSave className="text-lg" />
-                        Save Itinerary
+                        {isSaving ? <FaSpinner className="text-lg animate-spin" /> : <FaSave className="text-lg" />}
+                        {isSaving ? 'Saving...' : 'Save Itinerary'}
                       </button>
                       <button 
                         onClick={handleDownloadPDF}
@@ -1816,6 +1961,160 @@ Plan your own trip at: http://localhost:5173/itinerary`;
                   >
                     Create Itinerary Now
                   </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Travel Tips Tab */}
+          {/* Saved Trips Tab */}
+          {activeTab === 'saved' && (
+            <div className="space-y-12">
+              <div className="text-center mb-12">
+                <h2 className="text-5xl font-black mb-6 bg-gradient-to-r from-navy-700 via-navy-600 to-blue-600 bg-clip-text text-transparent">
+                  Saved Trips
+                </h2>
+                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                  Your itineraries, saved to your account and available anytime.
+                </p>
+              </div>
+
+              {/* Signed out → prompt to sign in (no API call). */}
+              {!clerkId ? (
+                <div className={`max-w-2xl mx-auto p-10 rounded-3xl text-center ${theme === 'dark' ? 'bg-gradient-to-br from-navy-800 to-navy-900 border border-navy-700' : 'bg-gradient-to-br from-white to-gray-50 border border-gray-200'} shadow-2xl`}>
+                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <FaSignInAlt className="text-2xl text-white" />
+                  </div>
+                  <h3 className="text-2xl font-black mb-3">Sign in to see your saved trips</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Create a plan and sign in to save it to your account. Your saved itineraries will appear here.
+                  </p>
+                </div>
+              ) : loadingSaved ? (
+                /* Loading state */
+                <div className="flex flex-col items-center justify-center py-20">
+                  <FaSpinner className="text-5xl text-navy-600 dark:text-amber-400 animate-spin mb-4" />
+                  <p className="text-lg text-gray-600 dark:text-gray-300 font-semibold">Loading your saved trips…</p>
+                </div>
+              ) : savedError ? (
+                /* Error state */
+                <div className={`max-w-2xl mx-auto p-10 rounded-3xl text-center ${theme === 'dark' ? 'bg-navy-800 border border-navy-700' : 'bg-white border border-gray-200'} shadow-2xl`}>
+                  <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">{savedError}</p>
+                  <button
+                    onClick={loadSavedItineraries}
+                    className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-bold hover:shadow-xl transition-all duration-300"
+                  >
+                    Try Again
+                  </button>
+                </div>
+              ) : savedItineraries.length === 0 ? (
+                /* Empty state */
+                <div className={`max-w-2xl mx-auto p-10 rounded-3xl text-center ${theme === 'dark' ? 'bg-gradient-to-br from-navy-800 to-navy-900 border border-navy-700' : 'bg-gradient-to-br from-white to-gray-50 border border-gray-200'} shadow-2xl`}>
+                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <FaBookmark className="text-2xl text-white" />
+                  </div>
+                  <h3 className="text-2xl font-black mb-3">No saved itineraries yet</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
+                    Generate a plan in the Create tab and hit Save Itinerary to keep it here.
+                  </p>
+                </div>
+              ) : (
+                /* Saved list */
+                <div className="max-w-4xl mx-auto space-y-6">
+                  {savedItineraries.map((trip) => {
+                    const isExpanded = expandedSavedId === trip.id;
+                    const createdDate = trip.created_at
+                      ? new Date(trip.created_at).toLocaleDateString()
+                      : null;
+                    return (
+                      <div
+                        key={trip.id}
+                        className={`p-8 rounded-3xl ${theme === 'dark' ? 'bg-gradient-to-br from-navy-800 to-navy-900 border border-navy-700' : 'bg-gradient-to-br from-white to-gray-50 border border-gray-200'} shadow-xl transition-all duration-300`}
+                      >
+                        <div className="flex items-start justify-between gap-4 flex-wrap">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-2xl font-black mb-2 break-words">{trip.title}</h3>
+                            {trip.description && (
+                              <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                                {trip.description}
+                              </p>
+                            )}
+                            <div className="flex flex-wrap gap-3">
+                              {trip.total_budget && (
+                                <span className="px-4 py-2 bg-purple-500/20 text-purple-600 dark:text-purple-400 rounded-full text-sm font-bold">
+                                  💎 {String(trip.total_budget).charAt(0).toUpperCase() + String(trip.total_budget).slice(1)}
+                                </span>
+                              )}
+                              {Array.isArray(trip.items) && trip.items.length > 0 && (
+                                <span className="px-4 py-2 bg-navy-600/20 text-navy-600 dark:text-amber-400 rounded-full text-sm font-bold">
+                                  🗓️ {trip.items.length} planned {trip.items.length === 1 ? 'entry' : 'entries'}
+                                </span>
+                              )}
+                              {createdDate && (
+                                <span className="px-4 py-2 bg-green-500/20 text-green-600 dark:text-green-400 rounded-full text-sm font-bold">
+                                  📅 {createdDate}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col gap-3">
+                            {Array.isArray(trip.items) && trip.items.length > 0 && (
+                              <button
+                                onClick={() => setExpandedSavedId(isExpanded ? null : trip.id)}
+                                className="px-5 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl font-bold text-sm hover:bg-surface-50 dark:hover:bg-gray-800 transition-all duration-300"
+                              >
+                                {isExpanded ? 'Hide Details' : 'View Details'}
+                              </button>
+                            )}
+                            <button
+                              onClick={() => handleDeleteSavedItinerary(trip.id)}
+                              disabled={deletingId === trip.id}
+                              className="px-5 py-3 bg-gradient-to-r from-red-500 to-rose-600 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              {deletingId === trip.id ? (
+                                <FaSpinner className="animate-spin" />
+                              ) : (
+                                <FaTrash />
+                              )}
+                              {deletingId === trip.id ? 'Deleting…' : 'Delete'}
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Expanded day-by-day item list */}
+                        {isExpanded && Array.isArray(trip.items) && trip.items.length > 0 && (
+                          <div className="mt-6 pt-6 border-t-2 border-gray-200 dark:border-gray-700 space-y-3">
+                            {trip.items.map((item, idx) => (
+                              <div
+                                key={item.id ?? idx}
+                                className={`p-4 rounded-xl ${theme === 'dark' ? 'bg-navy-900/60' : 'bg-surface-50'}`}
+                              >
+                                <div className="flex items-center gap-3 flex-wrap">
+                                  {item.day_number != null && (
+                                    <span className="px-3 py-1 bg-navy-600/20 text-navy-600 dark:text-amber-400 rounded-full text-xs font-bold">
+                                      Day {item.day_number}
+                                    </span>
+                                  )}
+                                  {item.place_name && (
+                                    <span className="font-bold text-gray-800 dark:text-gray-100">
+                                      {item.place_name}
+                                    </span>
+                                  )}
+                                </div>
+                                {item.activity && (
+                                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">{item.activity}</p>
+                                )}
+                                {item.notes && (
+                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">🏨 {item.notes}</p>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
             </div>

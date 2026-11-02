@@ -11,8 +11,12 @@ Concise orientation for a Nepal-focused tourism platform. Derived from `PROJECT_
 - **Data/ML:** ~1,263-destination CSV seeded into the DB; recommendations are a rule-based
   keyword/season/difficulty scorer. Pickles (`similarity.pkl`, `svd.pkl`, `vectorizer.pkl`) are
   effectively unused (only the unregistered `similar_places.py` references them).
-- **Integrations:** Clerk, Cohere (frontend chat), Cloudinary (uploads), Gmail/SMTP, OpenWeatherMap,
-  ExchangeRate-API, OSM/Nominatim.
+- **Integrations:** Clerk, Cohere (chat — now **proxied server-side** via `POST /api/chat/cohere`;
+  key is backend-only), Cloudinary (uploads), Gmail/SMTP, OpenWeatherMap, ExchangeRate-API,
+  OSM/Nominatim.
+- **Destination facets:** a normalized derived dataset (`datasets/derived/destination_facets.json`,
+  built by `maintenance/normalize_destinations.py`) is served read-only via
+  `GET /api/places/explore` + `/explore/options` (`app/facets.py`) and powers the Explorer.
 
 ## Key folders
 - `client/src/pages/` — ~30 pages (Explore, FamousSpots, Itinerary, ChatPage, admin/, detail pages).
@@ -20,7 +24,7 @@ Concise orientation for a Nepal-focused tourism platform. Derived from `PROJECT_
 - `client/src/components/`, `contexts/`, `hooks/`, `i18n/` — UI, theme, user-sync, translations.
 - `client-server/app/` — `app.py`, `models.py`, `auth.py`, `ai.py`, `crud.py`, `routes/` (blueprints).
 - `client-server/maintenance/` — `seed_db.py`, `create_admin.py`, `make_superadmin.py`.
-- `client-server/datasets/` — CSV, pickles, image folders.
+- `client-server/datasets/` — CSV, pickles, image folders, and `derived/` (normalized facets).
 
 ## Database & authentication flow
 - **Models:** User, Admin, Place (+ Hotel/Restaurant/Event/Attraction), PlaceView, Wishlist, Review,
@@ -33,14 +37,18 @@ Concise orientation for a Nepal-focused tourism platform. Derived from `PROJECT_
 
 ## Major features
 Working: Clerk auth + user sync, explore/famous/nature listings, place detail, hotels/restaurants
-browse, recommendation form (POST), reviews + moderation, admin dashboard/users/logs, maps, theme,
-currency toggle, Nepali calendar UI, static pages.
-Partial: global search (auth-gated), itinerary planner (localStorage only), AI chat (Cohere + local
-fallback), newsletter/contact (SMTP-dependent), image gallery, i18n, weather.
+browse, **Explorer (constraint-based discovery: month/difficulty/province/accessibility over the
+derived facets, `/explore`)**, recommendation form (POST), reviews + moderation, admin
+dashboard/users/logs, maps, theme, currency toggle, Nepali calendar UI, static pages. Chat history
+now persists in the fallback path.
+Partial: global search (auth-gated), itinerary planner (localStorage only), AI chat (Cohere proxied
+server-side + local fallback), newsletter/contact (SMTP-dependent), image gallery, i18n, weather.
 
 ## Critical bugs & known limitations
-- **HIGH security:** Cohere key shipped in the browser; Clerk **secret** committed in `.env.example`;
-  Flask `debug=True`; hardcoded `JWT_SECRET_KEY` default; unauthenticated writes trust spoofable headers.
+- **HIGH security (partially addressed):** Cohere key now server-side (RESOLVED); Clerk secret
+  replaced with a placeholder in `.env.example` though it remains in older git history (scrub pending);
+  still open — Flask `debug=True`, hardcoded `JWT_SECRET_KEY` default, unauthenticated writes trust
+  spoofable headers.
 - **Broken:** backend wishlist & itinerary (401 auth mismatch); GET recommendations (`db.query`
   misuse); chat search/history (nonexistent `user_id` fields); place approve/reject (undefined
   `AdminLog`); similar-places (unregistered); `create_admin.py` (NameError).
