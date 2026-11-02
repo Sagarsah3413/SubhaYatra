@@ -175,6 +175,45 @@ def admin_required(f):
     return decorated
 
 
+def clerk_user_required(f):
+    """
+    Decorator to protect routes used by Clerk-authenticated end users.
+
+    Reads the `X-Clerk-User-Id` request header (the pattern used by
+    users.py / wishlist.py / search.py) and, on success, populates
+    `request.current_user = {'user_id': <clerk_id>, 'role': 'user'}` so that
+    route code reading `request.current_user['user_id']` keeps working.
+    Optionally captures `X-Clerk-User-Name` as `user_name` when present.
+
+    Usage: @clerk_user_required
+
+    SECURITY: this trusts the unverified `X-Clerk-User-Id` header exactly like
+    the rest of the app does today (users.py / wishlist.py / search.py). It is
+    NOT worse than the current posture, but it is NOT real server-side Clerk
+    token verification. Real Clerk JWT verification is a separate hardening task
+    tracked in IMPLEMENTATION_ROADMAP.md and is intentionally out of scope here.
+    """
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        clerk_id = request.headers.get('X-Clerk-User-Id')
+
+        if not clerk_id:
+            return jsonify({
+                'error': 'Authentication required',
+                'message': 'Missing X-Clerk-User-Id header'
+            }), 401
+
+        request.current_user = {
+            'user_id': clerk_id,
+            'user_name': request.headers.get('X-Clerk-User-Name'),
+            'role': 'user',
+        }
+
+        return f(*args, **kwargs)
+
+    return decorated
+
+
 def optional_token(f):
     """
     Decorator for routes that work with or without token
