@@ -1,0 +1,31 @@
+# Render deployment config for the SubhaYatra Flask backend (free tier).
+# In the Render dashboard: New + > Blueprint, point at this repo; or create a
+# Web Service manually with the build/start commands below and rootDir client-server.
+services:
+  - type: web
+    name: subhayatra-backend
+    runtime: python
+    plan: free
+    rootDir: client-server
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn "app.app:create_app()" --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      # Flask runs without debug in production (create_app does not enable it;
+      # gunicorn serves the WSGI app directly, not app.run()).
+      - key: CORS_ORIGINS
+        value: https://roamiowanderly.vercel.app
+      # Set these in the Render dashboard (do NOT commit real values):
+      #   JWT_SECRET_KEY     - a strong random string
+      #   COHERE_API_KEY     - backend Cohere key (chat proxy)
+      #   CLOUDINARY_CLOUD_NAME / CLOUDINARY_API_KEY / CLOUDINARY_API_SECRET
+      #   EMAIL_USER / EMAIL_PASSWORD or SENDER_EMAIL / SENDER_PASSWORD (optional)
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: COHERE_API_KEY
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false

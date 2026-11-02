@@ -5,6 +5,7 @@ import { FaFacebook, FaInstagram, FaCloudSun, FaDollarSign, FaMapMarkerAlt, FaTh
 import axios from "axios";
 import { fetchWeatherData } from "../../services/weatherService";
 import { fetchCurrencyData, getCurrencySymbol } from "../../services/currencyService";
+import { API_URL } from "../../config/api";
 
 export default function Footer() {
   const location = useLocation();
@@ -84,7 +85,7 @@ export default function Footer() {
     if (email) {
       setIsSubscribing(true);
       try {
-        const response = await axios.post('http://localhost:8000/users/subscribe', { email });
+        const response = await axios.post(`${API_URL}/users/subscribe`, { email });
         
         // Show professional success notification
         setNotification({

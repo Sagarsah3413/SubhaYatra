@@ -4,6 +4,7 @@ import { Header } from "../components/header/Header";
 import { useTheme } from "../contexts/ThemeContext";
 import { useToast } from "../contexts/ToastContext";
 import { FaStar, FaCamera, FaMapMarkerAlt, FaCalendarAlt, FaUser, FaEnvelope, FaEdit, FaHeart, FaThumbsUp, FaThumbsDown, FaTimes, FaCheck, FaUpload, FaImage, FaTrash } from "react-icons/fa";
+import { API_URL } from "../config/api";
 
 export default function WriteReview() {
   const { theme } = useTheme();
@@ -104,7 +105,7 @@ export default function WriteReview() {
       Object.entries(form).forEach(([k, val]) => data.append(k, val));
       images.forEach((file, idx) => data.append(`image_${idx + 1}`, file));
 
-      const res = await fetch("http://localhost:8000/api/reviews", {
+      const res = await fetch(`${API_URL}/api/reviews`, {
         method: "POST",
         body: data,
       });

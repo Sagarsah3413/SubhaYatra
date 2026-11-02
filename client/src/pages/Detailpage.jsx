@@ -37,6 +37,7 @@ import {
 } from "react-icons/fa";
 import ImageGallery from "../components/ImageGallery";
 import SmartImage from "../components/SmartImage";
+import { API_URL } from "../config/api";
 
 export default function DetailPage() {
   const { theme } = useTheme();
@@ -90,7 +91,7 @@ export default function DetailPage() {
     const fetchDetails = async () => {
       try {
         setIsLoading(true);
-        const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+        const API = API_URL;
         const headers = {};
         if (user?.id) {
           headers["X-Clerk-User-Id"] = user.id;
@@ -163,7 +164,7 @@ export default function DetailPage() {
 
       if (isBookmarked) {
         // Remove from wishlist
-        const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/wishlist/${userId}/${placeId}`, {
+        const response = await fetch(`${API_URL}/api/wishlist/${userId}/${placeId}`, {
           method: 'DELETE',
         });
 
@@ -179,7 +180,7 @@ export default function DetailPage() {
         );
       } else {
         // Add to wishlist - send place data in request body
-        const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/wishlist/${userId}/${placeId}`, {
+        const response = await fetch(`${API_URL}/api/wishlist/${userId}/${placeId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -230,7 +231,7 @@ export default function DetailPage() {
           // Use data.id if available, otherwise create identifier from name and type
           const placeId = data.id || `${type}-${encodeURIComponent(name)}`;
           
-          const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/wishlist/${userId}/${placeId}/check`);
+          const response = await fetch(`${API_URL}/api/wishlist/${userId}/${placeId}/check`);
           
           if (response.ok) {
             const result = await response.json();

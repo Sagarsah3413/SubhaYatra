@@ -5,6 +5,7 @@ import { useTheme } from "../contexts/ThemeContext";
 // Components
 import { Header } from "../components/header/Header";
 import Footer from "../components/footer/Footer";
+import { API_URL } from "../config/api";
 
 export default function RecommendationResults() {
   const location = useLocation();
@@ -40,7 +41,7 @@ export default function RecommendationResults() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch('http://localhost:8000/api/recommendations', {
+        const response = await fetch(`${API_URL}/api/recommendations`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -343,7 +344,7 @@ export default function RecommendationResults() {
                   }`}>
                     {place.image ? (
                       <img 
-                        src={`http://localhost:8000${place.image}`}
+                        src={`${API_URL}${place.image}`}
                         alt={place.name}
                         className="w-full h-full object-cover"
                         loading="lazy"

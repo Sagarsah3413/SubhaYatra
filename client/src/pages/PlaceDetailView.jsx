@@ -4,6 +4,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { Header } from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import imageService from "../services/imageService";
+import { API_URL } from "../config/api";
 
 export default function PlaceDetailView() {
   const { placeId } = useParams();
@@ -48,7 +49,7 @@ export default function PlaceDetailView() {
         setError(null);
         
         console.log(`Fetching details for place ID: ${placeId}`);
-        const response = await fetch(`http://localhost:8000/api/places/${placeId}`);
+        const response = await fetch(`${API_URL}/api/places/${placeId}`);
         
         console.log(`Response status: ${response.status}`);
         
@@ -120,7 +121,7 @@ export default function PlaceDetailView() {
       try {
         setLoadingSimilar(true);
         console.log(`🔍 Fetching similar places for place ID: ${id}`);
-        const response = await fetch(`http://localhost:8000/api/places/${id}/similar?limit=6`);
+        const response = await fetch(`${API_URL}/api/places/${id}/similar?limit=6`);
         
         console.log(`Similar places response status: ${response.status}`);
         
@@ -190,7 +191,7 @@ export default function PlaceDetailView() {
             <div>
               <div className="h-96 relative group">
                 <img
-                  src={`http://localhost:8000${hotel.images[currentImage]}`}
+                  src={`${API_URL}${hotel.images[currentImage]}`}
                   alt={hotel.name}
                   className="w-full h-full object-cover"
                   onError={(e) => e.target.style.display = 'none'}
@@ -239,7 +240,7 @@ export default function PlaceDetailView() {
                       }`}
                     >
                       <img
-                        src={`http://localhost:8000${img}`}
+                        src={`${API_URL}${img}`}
                         alt={`${hotel.name} ${idx + 1}`}
                         className="w-full h-full object-cover"
                       />
@@ -353,7 +354,7 @@ export default function PlaceDetailView() {
             <div>
               <div className="h-96 relative group">
                 <img
-                  src={`http://localhost:8000${restaurant.images[currentImage]}`}
+                  src={`${API_URL}${restaurant.images[currentImage]}`}
                   alt={restaurant.name}
                   className="w-full h-full object-cover"
                   onError={(e) => e.target.style.display = 'none'}
@@ -402,7 +403,7 @@ export default function PlaceDetailView() {
                       }`}
                     >
                       <img
-                        src={`http://localhost:8000${img}`}
+                        src={`${API_URL}${img}`}
                         alt={`${restaurant.name} ${idx + 1}`}
                         className="w-full h-full object-cover"
                       />
@@ -884,7 +885,7 @@ export default function PlaceDetailView() {
                   {hotel.image && (
                     <div className="h-48 overflow-hidden relative">
                       <img
-                        src={`http://localhost:8000${hotel.image}`}
+                        src={`${API_URL}${hotel.image}`}
                         alt={hotel.name}
                         className="w-full h-full object-cover"
                         onError={(e) => e.target.style.display = 'none'}
@@ -947,7 +948,7 @@ export default function PlaceDetailView() {
                   {restaurant.image && (
                     <div className="h-48 overflow-hidden relative">
                       <img
-                        src={`http://localhost:8000${restaurant.image}`}
+                        src={`${API_URL}${restaurant.image}`}
                         alt={restaurant.name}
                         className="w-full h-full object-cover"
                         onError={(e) => e.target.style.display = 'none'}
@@ -1027,7 +1028,7 @@ export default function PlaceDetailView() {
                 {similarPlace.image && (
                   <div className="h-48 overflow-hidden">
                     <img
-                      src={`http://localhost:8000${similarPlace.image}`}
+                      src={`${API_URL}${similarPlace.image}`}
                       alt={similarPlace.name}
                       className="w-full h-full object-cover"
                       onError={(e) => e.target.style.display = 'none'}

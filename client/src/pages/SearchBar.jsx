@@ -4,8 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
 import { useUser } from "@clerk/clerk-react";
 import SearchDropdownList from "../components/SearchDropdownList";
-
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { API_URL as API } from "../config/api";
 
 export default function SearchBar({ placeholder, className = "", onSearch = null, category = "all" }) {
   const { theme } = useTheme();

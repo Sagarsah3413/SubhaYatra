@@ -6,7 +6,9 @@
  *   /api/images/restaurants/<dest_folder>/<rest_name>/<file>
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+import { API_URL } from '../config/api';
+
+const API_BASE_URL = API_URL;
 
 function encodePath(path) {
   // Encode each segment individually, preserving slashes

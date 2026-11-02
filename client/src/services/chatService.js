@@ -1,5 +1,7 @@
 // Chat Service - API interactions for chat functionality
-const API_BASE_URL = 'http://localhost:8000/api/chat';
+import { API_URL } from '../config/api';
+
+const API_BASE_URL = `${API_URL}/api/chat`;
 
 class ChatService {
   

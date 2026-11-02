@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UserStatsCard from "../../components/UserStatsCard";
+import { API_URL as API } from "../../config/api";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -45,7 +46,6 @@ export default function AdminDashboard() {
   const [searchHistoryLoading, setSearchHistoryLoading] = useState(false);
   const [searchHistoryFilter, setSearchHistoryFilter] = useState('');
 
-  const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
   const getAuthHeaders = () => {
     const adminData = localStorage.getItem("admin");
     if (!adminData) {

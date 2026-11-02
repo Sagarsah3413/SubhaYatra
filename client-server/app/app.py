@@ -22,11 +22,18 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     # ── CORS ──────────────────────────────────────────────────────────────────
-    CORS(app, origins=[
+    # Allowed origins: localhost for dev + the deployed frontend(s).
+    # Extra production origins can be added via the CORS_ORIGINS env var
+    # (comma-separated) without a code change.
+    default_origins = [
         "http://localhost:5173", "http://localhost:5174", "http://localhost:5175",
         "http://127.0.0.1:5173", "http://127.0.0.1:5174",
-        "https://roamiowanderly-eyk8dfgy6-sagar-kumar-sahs-projects.vercel.app",
-    ], supports_credentials=True)
+        "https://roamiowanderly.vercel.app",
+    ]
+    extra_origins = [
+        o.strip() for o in os.environ.get("CORS_ORIGINS", "").split(",") if o.strip()
+    ]
+    CORS(app, origins=default_origins + extra_origins, supports_credentials=True)
 
     # ── Init DB (creates all tables) ──────────────────────────────────────────
     from .database import init_db

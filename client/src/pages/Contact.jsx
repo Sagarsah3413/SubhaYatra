@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import Footer from "../components/footer/Footer";
 import { Header } from '../components/header/Header';
 import { useTheme } from '../contexts/ThemeContext';
+import { API_URL } from '../config/api';
 import { 
   FaPhone, 
   FaEnvelope, 
@@ -95,7 +96,7 @@ export default function Contact() {
     
     try {
       // Send form data to backend
-      const response = await fetch('http://localhost:8000/api/contact', {
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

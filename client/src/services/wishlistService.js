@@ -1,5 +1,7 @@
 // Wishlist Service for managing user's saved places
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+import { API_BASE } from '../config/api';
+
+const API_BASE_URL = API_BASE;
 
 // Demo user ID - in a real app, this would come from authentication
 const DEMO_USER_ID = 'demo_user_123';

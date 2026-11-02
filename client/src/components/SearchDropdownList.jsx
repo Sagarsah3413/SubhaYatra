@@ -1,6 +1,5 @@
 import { FaMapMarkerAlt, FaHotel, FaUtensils, FaMountain, FaStar } from "react-icons/fa";
-
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { API_URL as API } from "../config/api";
 
 const TYPE_CONFIG = {
   place:      { icon: FaMountain, label: "Place",      color: "text-success", badge: "bg-success-bg/50 text-success" },

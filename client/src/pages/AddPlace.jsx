@@ -3,6 +3,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { useToast } from "../contexts/ToastContext";
 import Footer from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
+import { API_URL } from "../config/api";
 
 const SUGGESTED_TAGS = ["waterfall", "hiking", "temple", "photography", "camping", "hot-springs", "trekking", "wildlife", "heritage", "scenic", "adventure", "peaceful"];
 
@@ -41,7 +42,7 @@ export default function AddPlace() {
   useEffect(() => {
     const checkBackend = async () => {
       try {
-        const response = await fetch("http://localhost:8000/", { method: "GET" });
+        const response = await fetch(`${API_URL}/`, { method: "GET" });
         if (response.ok) {
           setBackendStatus("online");
         } else {
@@ -341,7 +342,7 @@ export default function AddPlace() {
         setMessage("❌ Request timeout. Please try again.");
       };
 
-      xhr.open("POST", "http://localhost:8000/api/places", true);
+      xhr.open("POST", `${API_URL}/api/places`, true);
       xhr.timeout = 30000; // 30 second timeout
       xhr.send(data);
       

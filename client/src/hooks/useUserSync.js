@@ -5,8 +5,7 @@
  */
 import { useEffect, useRef } from 'react';
 import { useUser, useAuth } from '@clerk/clerk-react';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+import { API_URL } from '../config/api';
 
 export function useUserSync() {
   const { user, isSignedIn, isLoaded } = useUser();

@@ -5,6 +5,7 @@ import Footer from "../components/footer/Footer";
 import { Header } from "../components/header/Header";
 import chatService from "../services/chatService";
 import Toast from "../components/Toast";
+import { API_URL } from "../config/api";
 
 export default function ChatPage() {
   const navigate = useNavigate();
@@ -644,7 +645,7 @@ What would you like to know about Nepal?`;
         if (user?.id && chatIdToUse) {
           try {
             // Save the conversation to backend
-            const saveResponse = await fetch(`${chatService.API_BASE_URL || 'http://localhost:8000/api/chat'}/save-local`, {
+            const saveResponse = await fetch(`${chatService.API_BASE_URL || `${API_URL}/api/chat`}/save-local`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

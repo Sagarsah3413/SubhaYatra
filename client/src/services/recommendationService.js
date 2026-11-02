@@ -3,7 +3,9 @@
  * Handles all API calls related to travel recommendations
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+import { API_URL } from '../config/api';
+
+const API_BASE_URL = API_URL;
 
 /**
  * Create a new recommendation request

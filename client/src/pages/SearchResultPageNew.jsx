@@ -6,8 +6,7 @@ import {
   FaArrowLeft, FaSearch, FaSpinner, FaMapMarkerAlt,
   FaStar, FaHotel, FaUtensils, FaMountain, FaChevronRight
 } from "react-icons/fa";
-
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import { API_URL as API } from "../config/api";
 
 // ── Single card ───────────────────────────────────────────────────────────────
 function Card({ item, type, theme, navigate }) {
